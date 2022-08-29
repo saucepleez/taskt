@@ -22,8 +22,9 @@ namespace taskt_updater
             if (args.Length == 0)
             {
                 //args[0] = "https://github.com/rcktrncn/taskt-up-test/releases/download/v3.5.1.5/taskt-uob_v3.5.1.5.zip";
-                string[] newArg = new string[1];
-                newArg[0] = "https://github.com/rcktrncn/taskt-up-test/releases/download/v3.5.1.5/taskt-uob_v3.5.1.5.zip";
+                string[] newArg = new string[2];
+                newArg[0] = "/d";
+                newArg[1] = "https://github.com/rcktrncn/taskt-up-test/releases/download/v3.5.1.5/taskt-uob_v3.5.1.5.zip";
                 args = newArg;
             }
 
@@ -36,9 +37,9 @@ namespace taskt_updater
             {
                 try
                 {
-                    Application.Run(new frmUpdating(args[0]));
+                    Application.Run(new frmUpdating(args[0], args[1]));
                 }
-                catch (System.Reflection.TargetInvocationException)
+                catch
                 {
 
                 }

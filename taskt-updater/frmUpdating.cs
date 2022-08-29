@@ -31,11 +31,23 @@ namespace taskt_updater
             }
         }
 
+        private class ParamSet
+        {
+            public string name { get; private set; }
+            public string value { get; private set; }
+
+            public ParamSet(string name, string value)
+            {
+                this.name = name;
+                this.value = value;
+            }
+        }
+
         #region form events
-        public frmUpdating(string packageURL)
+        public frmUpdating(string paramName, string paramValue)
         {
             InitializeComponent();
-            bgwUpdate.RunWorkerAsync(packageURL);   
+            bgwUpdate.RunWorkerAsync(new ParamSet(paramName, paramValue));   
         }
 
         private void frmUpdating_Load(object sender, EventArgs e)
@@ -50,6 +62,84 @@ namespace taskt_updater
             //get package
             bgwUpdate.ReportProgress(0, "Setting Up...");
 
+            ParamSet param = (ParamSet)e.Argument;
+
+            switch (param.name)
+            {
+                case "/d":
+                    DownloadExtractNewRelease(param.value);
+                    break;
+                case "/c":
+                    CopyNewRelease(param.value);
+                    break;
+                case "/r":
+                default:
+                    break;
+            }
+
+            e.Result = param;
+            //clean up old folder
+            //System.IO.Directory.Delete(tempUpdateFolder);
+        }
+
+        private void bgwUpdate_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            lblUpdate.Text = e.UserState.ToString();
+            //MessageBox.Show(e.UserState.ToString());
+        }
+
+        private void bgwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error is null)
+            {
+                //try
+                //{
+                //    string tasktExePath = topLevelFolder + "\\taskt.exe";
+                //    System.Diagnostics.Process.Start(tasktExePath);
+                //    bgwUpdate.ReportProgress(0, "All Done!");
+                //}
+                //catch
+                //{
+                //    bgwUpdate.ReportProgress(0, "Fail execute taskt. Please run self.");
+                //}
+
+                ParamSet param = (ParamSet)e.Result;
+
+                switch (param.name)
+                {
+                    case "/d":
+                        var zipFileName = Path.GetFileName(param.value);
+                        int dotPosition = zipFileName.LastIndexOf(".");
+                        zipFileName = zipFileName.Substring(0, dotPosition);
+                        var copyProcess = new System.Diagnostics.Process();
+                        copyProcess.StartInfo.FileName = Path.Combine(topLevelFolder, TASKT_WORK_DIR_NAME, zipFileName, "Resources", "taskt-updater.exe");
+                        copyProcess.StartInfo.Arguments = "/c \"" + topLevelFolder + "\"";
+                        copyProcess.Start();
+                        //this.Close();
+                        break;
+                    case "/c":
+                        break;
+                    case "/r":
+                        bgwUpdate.ReportProgress(0, "All Done!");
+                        lblUpdate.Text = "All Done!";
+                        System.Threading.Thread.Sleep(1000);    // Wait a bit
+                        //this.Close();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show(e.Error.ToString());
+            }
+        }
+        #endregion
+
+        #region file folder
+
+        private void DownloadExtractNewRelease(string packageURL)
+        {
             //define update folder
             var tempUpdateFolder = topLevelFolder + "\\" + TASKT_WORK_DIR_NAME + "\\";
 
@@ -61,10 +151,6 @@ namespace taskt_updater
 
             //create folder
             System.IO.Directory.CreateDirectory(tempUpdateFolder);
-          
-
-            //cast arg to string
-            string packageURL = (string)e.Argument;
 
             bgwUpdate.ReportProgress(0, "Downloading Update...");
 
@@ -93,6 +179,11 @@ namespace taskt_updater
                     ExtractZipToDirectory(archive, tempUpdateFolder, true);
                 }
             }
+        }
+
+        private void CopyNewRelease(string localPackagePath)
+        {
+            var tempUpdateFolder = topLevelFolder + "\\" + TASKT_WORK_DIR_NAME + "\\";
 
             string tasktExctractDirName = Path.GetFileName(localPackagePath);
             int dotPosition = tasktExctractDirName.LastIndexOf(".");
@@ -107,45 +198,8 @@ namespace taskt_updater
 
             //copy deployed files to top level
             CopyDirectory(deploymentFolder, topLevelFolder);
-
-            //clean up old folder
-            //System.IO.Directory.Delete(tempUpdateFolder);
         }
 
-        private void bgwUpdate_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            lblUpdate.Text = e.UserState.ToString();
-            //MessageBox.Show(e.UserState.ToString());
-        }
-
-        private void bgwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error is null)
-            {
-                //try
-                //{
-                //    string tasktExePath = topLevelFolder + "\\taskt.exe";
-                //    System.Diagnostics.Process.Start(tasktExePath);
-                //    bgwUpdate.ReportProgress(0, "All Done!");
-                //}
-                //catch
-                //{
-                //    bgwUpdate.ReportProgress(0, "Fail execute taskt. Please run self.");
-                //}
-
-                bgwUpdate.ReportProgress(0, "All Done!");
-                lblUpdate.Text = "All Done!";
-                System.Threading.Thread.Sleep(1000);    // Wait a bit
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show(e.Error.ToString());
-            }
-        }
-        #endregion
-
-        #region file folder
         private void ExtractZipToDirectory(ZipArchive archive, string destinationDirectoryName, bool overwrite)
         {
             if (!overwrite)
