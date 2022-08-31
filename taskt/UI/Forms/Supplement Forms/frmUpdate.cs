@@ -12,7 +12,6 @@ namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmUpdate : ThemedForm
     {
-      
         public frmUpdate(Core.UpdateManifest manifest)
         {
             InitializeComponent();
@@ -23,11 +22,13 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

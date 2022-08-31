@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 namespace taskt.Core
 {
@@ -58,7 +59,7 @@ namespace taskt.Core
             return manifestConfig;
         }
 
-        public static void ShowUpdateResult(bool silent = true)
+        public static void ShowUpdateResult(bool skipBeta, bool silent = true)
         {
             taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
             Core.UpdateManifest manifest = new Core.UpdateManifest();
@@ -79,41 +80,52 @@ namespace taskt.Core
                 return;
             }
 
+            bool startUpdate = false;
             if (manifest.RemoteVersionNewer)
             {
-                //Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
-                //if (frmUpdate.ShowDialog() == DialogResult.OK)
-                //{
-
-                //    //move update exe to root folder for execution
-                //    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
-                //    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
-
-                //    if (!System.IO.File.Exists(updaterExecutionResources))
-                //    {
-                //        MessageBox.Show("taskt-updater.exe not found in resources directory!");
-                //        return;
-                //    }
-                //    else
-                //    {
-                //        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
-                //    }
-
-                //    var updateProcess = new System.Diagnostics.Process();
-                //    updateProcess.StartInfo.FileName = updaterExecutableDestination;
-                //    updateProcess.StartInfo.Arguments = manifest.PackageURL;
-
-                //    updateProcess.Start();
-                //    Application.Exit();
-                //}
-                using (var fm = new taskt.UI.Forms.Supplement_Forms.frmUpdate(manifest))
+                if (!manifest.Beta)
                 {
-                    fm.ShowDialog();
+                    startUpdate = true;
+                }
+                else if (manifest.Beta && !skipBeta)
+                {
+                    startUpdate = true;
+                }
+            }
+
+            if (startUpdate)
+            {
+                using (UI.Forms.Supplement_Forms.frmUpdate frmUpdate = new UI.Forms.Supplement_Forms.frmUpdate(manifest))
+                {
+                    if (frmUpdate.ShowDialog() == DialogResult.OK)
+                    {
+
+                        //move update exe to root folder for execution
+                        var updaterExecutionResources = System.IO.Path.Combine(Application.StartupPath, "Resources", "taskt-updater.exe");
+                        //var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+
+                        if (!System.IO.File.Exists(updaterExecutionResources))
+                        {
+                            //MessageBox.Show("taskt-updater.exe not found in Resources folder!");
+                            using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt-updater.exe not found in Resources folder!", "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                            {
+                                fm.ShowDialog();
+                            }
+                            return;
+                        }
+
+                        var updateProcess = new System.Diagnostics.Process();
+                        //updateProcess.StartInfo.FileName = updaterExecutableDestination;
+                        updateProcess.StartInfo.FileName = updaterExecutionResources;
+                        updateProcess.StartInfo.Arguments = "/d " + manifest.PackageURL;
+
+                        updateProcess.Start();
+                        Application.Exit();
+                    }
                 }
             }
             else
             {
-                //MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
                 if (!silent)
                 {
                     using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt is currently up-to-date!", "No Updates Available", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
@@ -168,7 +180,7 @@ namespace taskt.Core
                     manifestConfig.RemoteVersionNewer = false;
                 }
 
-                if (manifestConfig.RemoteVersionNewer)
+                if (manifestConfig.RemoteVersionNewer && !manifestConfig.Beta)
                 {
                     // show new version message
                     using (var fm = new taskt.UI.Forms.Supplement_Forms.frmUpdate(manifestConfig))
@@ -190,6 +202,7 @@ namespace taskt.Core
     {
         //from manifest
         public string RemoteVersion { get; set; }
+        public bool Beta { get; set; }
         public string PackageURL { get; set; }
 
         //helpers

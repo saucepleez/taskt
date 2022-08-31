@@ -654,6 +654,7 @@ namespace taskt.UI.Forms
             btn.Click += (sender, e) => btnCheckUpdate_Click(sender, e);
 
             createCheckBox("chkUpdate", "Check for update at startup", newAppSettings.ClientSettings, "CheckForUpdateAtStartup", true);
+            createCheckBox("chkSkipBeta", "Skip Beta version", newAppSettings.ClientSettings, "SkipBetaVersionUpdate", true);
         }
         #endregion
 
@@ -1147,7 +1148,7 @@ namespace taskt.UI.Forms
             //        fm.ShowDialog();
             //    }
             //}
-            taskt.Core.ApplicationUpdate.ShowUpdateResult(false);
+            taskt.Core.ApplicationUpdate.ShowUpdateResult(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
         }
         #endregion
 
