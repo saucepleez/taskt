@@ -68,41 +68,38 @@ namespace taskt_updater
             {
                 case "/d":
                     DownloadExtractNewRelease(param.value);
+                    bgwUpdate.ReportProgress(0, "New Release Downloaded!!");
+                    lblUpdate.Text = "New Release Extracted!!";
+                    System.Threading.Thread.Sleep(1000);    // Wait a bit
                     break;
                 case "/c":
                     CopyNewRelease(param.value);
+                    bgwUpdate.ReportProgress(0, "New Release Copied!!");
+                    lblUpdate.Text = "New Release Copied!!";
+                    System.Threading.Thread.Sleep(1000);    // Wait a bit
                     break;
                 case "/r":
+                    RemoveDownloadRelease();
+                    bgwUpdate.ReportProgress(0, "All Done!");
+                    lblUpdate.Text = "All Done!";
+                    System.Threading.Thread.Sleep(1000);    // Wait a bit
+                    break;
                 default:
                     break;
             }
 
             e.Result = param;
-            //clean up old folder
-            //System.IO.Directory.Delete(tempUpdateFolder);
         }
 
         private void bgwUpdate_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             lblUpdate.Text = e.UserState.ToString();
-            //MessageBox.Show(e.UserState.ToString());
         }
 
         private void bgwUpdate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error is null)
             {
-                //try
-                //{
-                //    string tasktExePath = topLevelFolder + "\\taskt.exe";
-                //    System.Diagnostics.Process.Start(tasktExePath);
-                //    bgwUpdate.ReportProgress(0, "All Done!");
-                //}
-                //catch
-                //{
-                //    bgwUpdate.ReportProgress(0, "Fail execute taskt. Please run self.");
-                //}
-
                 ParamSet param = (ParamSet)e.Result;
 
                 switch (param.name)
@@ -111,19 +108,24 @@ namespace taskt_updater
                         var zipFileName = Path.GetFileName(param.value);
                         int dotPosition = zipFileName.LastIndexOf(".");
                         zipFileName = zipFileName.Substring(0, dotPosition);
+
+                        string tasktFolder = Directory.GetParent(topLevelFolder).FullName;
                         var copyProcess = new System.Diagnostics.Process();
-                        copyProcess.StartInfo.FileName = Path.Combine(topLevelFolder, TASKT_WORK_DIR_NAME, zipFileName, "Resources", "taskt-updater.exe");
+                        copyProcess.StartInfo.FileName = Path.Combine(tasktFolder, TASKT_WORK_DIR_NAME, zipFileName, "Resources", "taskt-updater.exe");
                         copyProcess.StartInfo.Arguments = "/c \"" + topLevelFolder + "\"";
                         copyProcess.Start();
-                        //this.Close();
+                        this.Close();
                         break;
                     case "/c":
+                        string newTasktFolder = Directory.GetParent(topLevelFolder).Parent.Parent.FullName;
+                        var removeProcess = new System.Diagnostics.Process();
+                        removeProcess.StartInfo.FileName = Path.Combine(newTasktFolder, "Resources", "taskt-updater.exe");
+                        removeProcess.StartInfo.Arguments = "/r \"" + newTasktFolder + "\"";
+                        removeProcess.Start();
+                        this.Close();
                         break;
                     case "/r":
-                        bgwUpdate.ReportProgress(0, "All Done!");
-                        lblUpdate.Text = "All Done!";
-                        System.Threading.Thread.Sleep(1000);    // Wait a bit
-                        //this.Close();
+                        this.Close();
                         break;
                     default:
                         break;
@@ -181,23 +183,30 @@ namespace taskt_updater
             }
         }
 
-        private void CopyNewRelease(string localPackagePath)
+        private void CopyNewRelease(string oldTasktFolder)
         {
-            var tempUpdateFolder = topLevelFolder + "\\" + TASKT_WORK_DIR_NAME + "\\";
-
-            string tasktExctractDirName = Path.GetFileName(localPackagePath);
-            int dotPosition = tasktExctractDirName.LastIndexOf(".");
-            tasktExctractDirName = tasktExctractDirName.Substring(0, dotPosition);
-
             //create deployment folder reference
-            var deploymentFolder = tempUpdateFolder + tasktExctractDirName + "\\";
+            var deploymentFolder = Path.GetDirectoryName(topLevelFolder);
 
             bgwUpdate.ReportProgress(0, "Deployed to " + deploymentFolder);
 
             bgwUpdate.ReportProgress(0, "Updating Files...");
 
-            //copy deployed files to top level
-            CopyDirectory(deploymentFolder, topLevelFolder);
+            if (oldTasktFolder.StartsWith("\"") && oldTasktFolder.EndsWith("\""))
+            {
+                oldTasktFolder = oldTasktFolder.Substring(1, oldTasktFolder.Length - 2);
+            }
+
+            CopyDirectory(deploymentFolder, oldTasktFolder);
+        }
+
+        private void RemoveDownloadRelease()
+        {
+            bgwUpdate.ReportProgress(0, "Remove Downloaded Files...");
+
+            string tasktFolder = Directory.GetParent(topLevelFolder).FullName;
+
+            DeleteDirectory(Path.Combine(tasktFolder, TASKT_WORK_DIR_NAME));
         }
 
         private void ExtractZipToDirectory(ZipArchive archive, string destinationDirectoryName, bool overwrite)
@@ -228,11 +237,11 @@ namespace taskt_updater
             while (stack.Count > 0)
             {
                 var folders = stack.Pop();
+
                 Directory.CreateDirectory(folders.Target);
                 foreach (var file in Directory.GetFiles(folders.Source, "*.*"))
                 {
                     var destPath = Path.Combine(folders.Target, Path.GetFileName(file));
-                    //Console.WriteLine(destPath);
                     if (destPath != myPath)
                     {
                         try
@@ -259,25 +268,33 @@ namespace taskt_updater
                 }
             }
         }
-        private void DeleteDirectory(string source, string target)
+        private void DeleteDirectory(string target)
         {
-            var stack = new Stack<Folders>();
-            stack.Push(new Folders(source, target));
+            var stack = new Stack<string>();
+            stack.Push(target);
 
             while (stack.Count > 0)
             {
-                var folders = stack.Pop();
-                Directory.CreateDirectory(folders.Target);
-                var files = Directory.GetFiles(folders.Source, "*.*");
+                var currentFolder = stack.Pop();
+
+                var files = Directory.GetFiles(currentFolder, "*.*");
                 foreach (var file in files)
                 {
                     File.Delete(file);
                 }
 
-                var dirs = Directory.GetDirectories(folders.Source);
-                foreach (var folder in dirs)
+                var dirs = Directory.GetDirectories(currentFolder);
+                if (dirs.Length > 0)
                 {
-                    stack.Push(new Folders(folder, Path.Combine(folders.Target, Path.GetFileName(folder))));
+                    stack.Push(currentFolder);
+                    foreach (var folder in dirs)
+                    {
+                        stack.Push(Path.Combine(currentFolder, folder));
+                    }
+                }
+                else
+                {
+                    Directory.Delete(currentFolder);
                 }
             }
         }

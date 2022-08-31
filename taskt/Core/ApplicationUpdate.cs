@@ -89,20 +89,21 @@ namespace taskt.Core
 
                         //move update exe to root folder for execution
                         var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
-                        var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+                        //var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
 
-                        if (!System.IO.File.Exists(updaterExecutionResources))
-                        {
-                            MessageBox.Show("taskt-updater.exe not found in resources directory!");
-                            return;
-                        }
-                        else
-                        {
-                            System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
-                        }
+                        //if (!System.IO.File.Exists(updaterExecutionResources))
+                        //{
+                        //    MessageBox.Show("taskt-updater.exe not found in resources directory!");
+                        //    return;
+                        //}
+                        //else
+                        //{
+                        //    System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
+                        //}
 
                         var updateProcess = new System.Diagnostics.Process();
-                        updateProcess.StartInfo.FileName = updaterExecutableDestination;
+                        //updateProcess.StartInfo.FileName = updaterExecutableDestination;
+                        updateProcess.StartInfo.FileName = updaterExecutionResources;
                         updateProcess.StartInfo.Arguments = manifest.PackageURL;
 
                         updateProcess.Start();
