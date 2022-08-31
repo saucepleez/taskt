@@ -194,6 +194,7 @@ namespace taskt.Core
     {
         //from manifest
         public string RemoteVersion { get; set; }
+        public bool Beta { get; set; }
         public string PackageURL { get; set; }
 
         //helpers
