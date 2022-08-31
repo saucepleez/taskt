@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,64 +16,71 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command convert a List to Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertListToDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the List to convert")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**vList** or **{{{vList}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
+        [PropertyDescription("Supply the List to convert")]
+        [InputSpecification("")]
+        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyValidationRule("List to Convert", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List to Convert")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the Dictionary Keys")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**vKeys** or **{{{vKeys}}}**")]
-        [Attributes.PropertyAttributes.Remarks("If keys is empty, Dictionary key is item0, item1, ...")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
+        [PropertyDescription("Supply the Dictionary Keys Name List")]
+        [InputSpecification("")]
+        [SampleUsage("**vKeys** or **{{{vKeys}}}**")]
+        [Remarks("If keys is empty, Dictionary key is item0, item1, ...")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyDisplayText(true, "Dictionary Keys Name List")]
         public string v_Keys { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of items in the List is greater than the number of Keys")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Try Create Keys")]
+        [PropertyDescription("When the number of items in the List is greater than the number of Keys")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Ignore")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Try Create Keys")]
         public string v_KeysNotEnough { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of Keys is greater than the number of items in the List")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Insert Empty Value")]
+        [PropertyDescription("When the number of Keys is greater than the number of items in the List")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Ignore")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Insert Empty Value")]
         public string v_ListItemNotEnough { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the Dictionary")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyDescription("Please select the variable to receive the Dictionary Variable")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary")]
         public string v_applyToVariableName { get; set; }
 
         public ConvertListToDictionaryCommand()
@@ -85,19 +93,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //get variable by regular name
-            //Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
-            //if (listVariable == null)
-            //{
-            //    throw new Exception(v_InputList + " does not exists.");
-            //}
-            //else if (!(listVariable.VariableValue is List<string>))
-            //{
-            //    throw new Exception(v_InputList + " is not supported List");
-            //}
-            //List<string> targetList = (List<string>)listVariable.VariableValue;
             List<string> targetList = v_InputList.GetListVariable(engine);
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
@@ -110,26 +107,8 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //Script.ScriptVariable keysVariable = v_Keys.GetRawVariable(engine);
-                //if (keysVariable == null)
-                //{
-                //    throw new Exception(v_Keys + " does not exists.");
-                //}
-                //else if (!(keysVariable.VariableValue is List<string>))
-                //{
-                //    throw new Exception(v_Keys + " is not supported List.");
-                //}
-                //List<string> targetKeys = (List<string>)keysVariable.VariableValue;
                 List<string> targetKeys = v_Keys.GetListVariable(engine);
 
-                //if (String.IsNullOrEmpty(v_KeysNotEnough))
-                //{
-                //    v_KeysNotEnough = "Ignore";
-                //}
-                //if (String.IsNullOrEmpty(v_ListItemNotEnough))
-                //{
-                //    v_ListItemNotEnough = "Ignore";
-                //}
                 string keysNotEnough = v_KeysNotEnough.GetUISelectionValue("v_KeysNotEnough", this, engine);
                 string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
 
@@ -198,37 +177,36 @@ namespace taskt.Core.Automation.Commands
             }
             myDic.StoreInUserVariable(engine, v_applyToVariableName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
+        //    return RenderedControls;
+        //}
 
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Convert List '" + this.v_InputList + "' To Dictionary '" + this.v_applyToVariableName + "']";
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Convert List '" + this.v_InputList + "' To Dictionary '" + this.v_applyToVariableName + "']";
-        }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //    if (String.IsNullOrEmpty(this.v_InputList))
+        //    {
+        //        this.validationResult += "List is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
+        //    {
+        //        this.validationResult += "Variable to recieve the Dictionary is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            if (String.IsNullOrEmpty(this.v_InputList))
-            {
-                this.validationResult += "List is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariableName))
-            {
-                this.validationResult += "Variable to recieve the Dictionary is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }

@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get an item from a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get an item from a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetListItemCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
@@ -38,16 +41,18 @@ namespace taskt.Core.Automation.Commands
         [Remarks("**-1** means index of the last row. If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Position")]
+        [PropertyDisplayText(true, "Index")]
         public string v_ItemIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Assign to Variable")]
+        [PropertyDescription("Please specify a Variable Name to Store Result")]
         [InputSpecification("Select or provide a variable from the variable list")]
         [SampleUsage("**vSomeVariable**")]
         [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_UserVariableName { get; set; }
 
         public GetListItemCommand()
@@ -61,71 +66,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            //var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
-            //int index = int.Parse(itemIndex);
-            ////get variable by regular name
-            //Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == v_ListName).FirstOrDefault();
-
-            ////user may potentially include brackets []
-            //if (listVariable == null)
-            //{
-            //    listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == v_ListName).FirstOrDefault();
-            //}
-
-            ////if still null then throw exception
-            //if (listVariable == null)
-            //{
-            //    throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            //}
-
-            //dynamic listToIndex;
-            //if (listVariable.VariableValue is List<string>)
-            //{
-            //    listToIndex = (List<string>)listVariable.VariableValue;
-            //}
-            //else if (listVariable.VariableValue is List<MailItem>)
-            //{
-            //    listToIndex = (List<MailItem>)listVariable.VariableValue;
-            //}
-            //else if (listVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
-            //{
-            //    listToIndex = (List<OpenQA.Selenium.IWebElement>)listVariable.VariableValue;
-            //}
-            //else if ((listVariable.VariableValue.ToString().StartsWith("[")) && (listVariable.VariableValue.ToString().EndsWith("]")) && (listVariable.VariableValue.ToString().Contains(",")))
-            //{
-            //    //automatically handle if user has given a json array
-            //    Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
-
-            //    var itemList = new List<string>();
-            //    foreach (var jsonItem in jsonArray)
-            //    {
-            //        var value = (Newtonsoft.Json.Linq.JValue)jsonItem;
-            //        itemList.Add(value.ToString());
-            //    }
-
-            //    listVariable.VariableValue = itemList;
-            //    listToIndex = itemList;
-            //}
-            //else
-            //{
-            //    throw new System.Exception("Complex Variable List Type<T> Not Supported");
-            //}
-
-            //var item = listToIndex[index];
-
-            //Script.ScriptVariable newListItem = new Script.ScriptVariable
-            //{
-            //    VariableName = v_UserVariableName,
-            //    VariableValue = item
-            //};
-
-            ////Overwrites variable if it already exists
-            //if (engine.VariableList.Exists(x => x.VariableName == newListItem.VariableName))
-            //{
-            //    Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newListItem.VariableName).FirstOrDefault();
-            //    engine.VariableList.Remove(temp);
-            //}
-            //engine.VariableList.Add(newListItem);
 
             var listVariable = v_ListName.GetRawVariable(engine);
             if (listVariable == null)
@@ -172,8 +112,9 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
-                index = int.Parse(itemIndex);
+                //var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
+                //index = int.Parse(itemIndex);
+                index = v_ItemIndex.ConvertToUserVariableAsInteger("Index", engine);
             }
             
             if (index < 0)
@@ -201,25 +142,19 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ListName", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ItemIndex", this, editor));
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [From '{v_ListName}', Index: '{v_ItemIndex}', Store In: '{v_UserVariableName}']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [From '{v_ListName}', Index: '{v_ItemIndex}', Store In: '{v_UserVariableName}']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

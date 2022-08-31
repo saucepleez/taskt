@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,28 +16,34 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command convert a JSON array to a list.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertListToJSONCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the List to convert")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**vList** or **{{{vList}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
+        [PropertyDescription("Supply the List to convert")]
+        [InputSpecification("")]
+        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the JSON")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON, true)]
+        [PropertyDescription("Please select the variable to receive the JSON")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
         public string v_applyToVariableName { get; set; }
 
         public ConvertListToJSONCommand()
@@ -49,23 +56,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            //var listName = v_InputList.ConvertToUserVariable(sender);
-
-            ////get variable by regular name
-            //Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == listName).FirstOrDefault();
-
-            ////user may potentially include brackets []
-            //if (listVariable == null)
-            //{
-            //    listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == listName).FirstOrDefault();
-            //}
-
-            ////if still null then throw exception
-            //if (listVariable == null)
-            //{
-            //    throw new System.Exception("Complex Variable '" + listName + "' or '" + listName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            //}
+            var engine = (Engine.AutomationEngineInstance)sender;
+            
             List<string> targetList = v_InputList.GetListVariable(engine);
 
             // convert json
@@ -81,48 +73,37 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            //create standard group controls
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_InputList", this));
-            //var TargetListControl = CommandControls.CreateStandardComboboxFor("v_InputList", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_InputList", this, new Control[] { TargetListControl }, editor));
-            //RenderedControls.Add(TargetListControl);
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
+        //    return RenderedControls;
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //}
 
-            return RenderedControls;
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Convert list " + this.v_InputList + ", Apply Result(s) To List Variable: " + this.v_applyToVariableName + "]";
+        //}
 
-        }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Convert list " + this.v_InputList + ", Apply Result(s) To List Variable: " + this.v_applyToVariableName + "]";
-        }
+        //    if (String.IsNullOrEmpty(this.v_InputList))
+        //    {
+        //        this.validationResult += "List is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
+        //    {
+        //        this.validationResult += "Variable to recieve the list is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_InputList))
-            {
-                this.validationResult += "List is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariableName))
-            {
-                this.validationResult += "Variable to recieve the list is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }

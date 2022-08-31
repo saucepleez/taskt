@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get the item count of a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the item count of a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetListCountCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -27,15 +29,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Assign to Variable")]
+        [PropertyDescription("Please specify a Variable Name to Store Result")]
         [InputSpecification("Select or provide a variable from the variable list")]
         [SampleUsage("**vSomeVariable**")]
         [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
         public string v_UserVariableName { get; set; }
 
         public GetListCountCommand()
@@ -49,54 +55,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            //get variable by regular name
-            //Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == v_ListName).FirstOrDefault();
-
-            ////user may potentially include brackets []
-            //if (listVariable == null)
-            //{
-            //    listVariable = engine.VariableList.Where(x => x.VariableName.ApplyVariableFormatting(engine) == v_ListName).FirstOrDefault();
-            //}
-
-            ////if still null then throw exception
-            //if (listVariable == null)
-            //{
-            //    throw new System.Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            //}
-
-            //dynamic listToCount; 
-            //if (listVariable.VariableValue is List<string>)
-            //{
-            //    listToCount = (List<string>)listVariable.VariableValue;
-            //}
-            //else if (listVariable.VariableValue is List<MailItem>)
-            //{
-            //    listToCount = (List<MailItem>)listVariable.VariableValue;
-            //}
-            //else if (listVariable.VariableValue is List<OpenQA.Selenium.IWebElement>)
-            //{
-            //    listToCount = (List<OpenQA.Selenium.IWebElement>)listVariable.VariableValue;
-            //}
-            //else if ((listVariable.VariableValue.ToString().StartsWith("[")) && (listVariable.VariableValue.ToString().EndsWith("]")) && (listVariable.VariableValue.ToString().Contains(",")))
-            //{
-            //    //automatically handle if user has given a json array
-            //    Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
-
-            //    var itemList = new List<string>();
-            //    foreach (var item in jsonArray)
-            //    {
-            //        var value = (Newtonsoft.Json.Linq.JValue)item;
-            //        itemList.Add(value.ToString());
-            //    }
-
-            //    listVariable.VariableValue = itemList;
-            //    listToCount = itemList;
-            //}
-            //else
-            //{
-            //    throw new System.Exception("Complex Variable List Type<T> Not Supported");
-            //}
-
+            
             var listVariable = v_ListName.GetRawVariable(engine);
             dynamic listToCount;
 
@@ -134,41 +93,36 @@ namespace taskt.Core.Automation.Commands
             count.StoreInUserVariable(sender, v_UserVariableName);
         }
         
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ListName", this, editor));
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [From '{v_ListName}', Store In: '{v_UserVariableName}']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [From '{v_ListName}', Store In: '{v_UserVariableName}']";
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_ListName))
-            {
-                this.validationResult += "List Name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_UserVariableName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_ListName))
+        //    {
+        //        this.validationResult += "List Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }

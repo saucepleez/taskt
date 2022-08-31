@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,64 +16,73 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command convert a List to a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertListToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the List to convert")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**vList** or **{{{vList}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
+        [PropertyDescription("Supply the List to convert")]
+        [InputSpecification("")]
+        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyValidationRule("List to Convert", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List to Convert")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the DataTable Columns")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**vColumns** or **{{{vColumnss}}}**")]
-        [Attributes.PropertyAttributes.Remarks("If Columns is empty, DataTable column is column0, column1, ...")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
+        [PropertyDescription("Supply the DataTable Columns Name List")]
+        [InputSpecification("")]
+        [SampleUsage("**vColumns** or **{{{vColumns}}}**")]
+        [Remarks("If Columns is empty, DataTable column is column0, column1, ...")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyDisplayText(true, "Columns Name List")]
         public string v_Columns { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of items in the List is greater than the number of Columns")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Try Create Columns")]
+        [PropertyDescription("When the number of items in the List is greater than the number of Columns")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Ignore")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Try Create Columns")]
+        [PropertyDisplayText(false, "")]
         public string v_ColumnsNotEnough { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("When the number of Columns is greater than the number of items in the List")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true, "Ignore")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ignore")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Insert Empty Value")]
+        [PropertyDescription("When the number of Columns is greater than the number of items in the List")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Ignore")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Insert Empty Value")]
+        [PropertyDisplayText(false, "")]
         public string v_ListItemNotEnough { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the DataTable")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyDescription("Please select the variable to receive the DataTable")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_applyToVariableName { get; set; }
 
         public ConvertListToDataTableCommand()
@@ -85,19 +95,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //get variable by regular name
-            //Script.ScriptVariable listVariable = v_InputList.GetRawVariable(engine);
-            //if (listVariable == null)
-            //{
-            //    throw new Exception(v_InputList + " does not exists.");
-            //}
-            //else if (!(listVariable.VariableValue is List<string>))
-            //{
-            //    throw new Exception(v_InputList + " is not supported List");
-            //}
-            //List<string> targetList = (List<string>)listVariable.VariableValue;
             List<string> targetList = v_InputList.GetListVariable(engine);
 
             DataTable myDT = new DataTable();
@@ -112,26 +111,8 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //Script.ScriptVariable keysVariable = v_Columns.GetRawVariable(engine);
-                //if (keysVariable == null)
-                //{
-                //    throw new Exception(v_Columns + " does not exists.");
-                //}
-                //else if (!(keysVariable.VariableValue is List<string>))
-                //{
-                //    throw new Exception(v_Columns + " is not supported List.");
-                //}
-                //List<string> targetColumns = (List<string>)keysVariable.VariableValue;
                 List<string> targetColumns = v_Columns.GetListVariable(engine);
 
-                //if (String.IsNullOrEmpty(v_ColumnsNotEnough))
-                //{
-                //    v_ColumnsNotEnough = "Ignore";
-                //}
-                //if (String.IsNullOrEmpty(v_ListItemNotEnough))
-                //{
-                //    v_ListItemNotEnough = "Ignore";
-                //}
                 string columnsNotEnough = v_ColumnsNotEnough.GetUISelectionValue("v_ColumnsNotEnough", this, engine);
                 string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
 
@@ -212,37 +193,37 @@ namespace taskt.Core.Automation.Commands
             }
             myDT.StoreInUserVariable(engine, v_applyToVariableName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
+        //    return RenderedControls;
 
-        }
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Convert List '" + this.v_InputList + "' To DataTable '" + this.v_applyToVariableName + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Convert List '" + this.v_InputList + "' To DataTable '" + this.v_applyToVariableName + "']";
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_InputList))
-            {
-                this.validationResult += "List is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariableName))
-            {
-                this.validationResult += "Variable to recieve the DataTable is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_InputList))
+        //    {
+        //        this.validationResult += "List is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
+        //    {
+        //        this.validationResult += "Variable to recieve the DataTable is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
