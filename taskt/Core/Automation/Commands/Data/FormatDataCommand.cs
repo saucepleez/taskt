@@ -80,29 +80,54 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+
             //get variablized string
-            var variableString = v_InputValue.ConvertToUserVariable(sender);
+            //var variableString = v_InputValue.ConvertToUserVariable(sender);
 
             //get formatting
-            var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
+            //var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
 
             //var variableName = v_applyToVariableName.ConvertToUserVariable(sender);
 
-
-            string formattedString = "";
+            //string formattedString = "";
             switch (v_FormatType)
             {
                 case "Date":
-                    if (DateTime.TryParse(variableString, out var parsedDate))
+                    //if (DateTime.TryParse(variableString, out var parsedDate))
+                    //{
+                    //    formattedString = parsedDate.ToString(formatting);
+                    //}
+
+                    var inner0 = ExtensionMethods.GetInnerVariableName(0, engine);
+
+                    var dateTimeFromText = new CreateDateTimeFromTextCommand()
                     {
-                        formattedString = parsedDate.ToString(formatting);
-                    }
+                        v_Text = v_InputValue,
+                        v_DateTime = inner0
+                    };
+                    dateTimeFromText.RunCommand(engine);
+                    var formatDateTime = new FormatDateTimeCommand()
+                    {
+                        v_DateTime = inner0,
+                        v_Format = v_ToStringFormat,
+                        v_Result = v_applyToVariableName
+                    };
+                    formatDateTime.RunCommand(engine);
                     break;
                 case "Number":
-                    if (Decimal.TryParse(variableString, out var parsedDecimal))
+                    //if (Decimal.TryParse(variableString, out var parsedDecimal))
+                    //{
+                    //    formattedString = parsedDecimal.ToString(formatting);
+                    //}
+
+                    var formatNumber = new FormatNumberCommand()
                     {
-                        formattedString = parsedDecimal.ToString(formatting);
-                    }
+                        v_Number = v_InputValue,
+                        v_Format = v_ToStringFormat,
+                        v_Result = v_applyToVariableName
+                    };
+                    formatNumber.RunCommand(engine);
                     break;
                 case "Path":
                     //switch(formatting.ToLower())
@@ -140,21 +165,24 @@ namespace taskt.Core.Automation.Commands
                     //        formattedString = "";
                     //        break;
                     //}
-                    formattedString = FilePathControls.formatFileFolderPath(variableString, formatting);
+                    var variableString = v_InputValue.ConvertToUserVariable(engine);
+                    var formatting = v_ToStringFormat.ConvertToUserVariable(engine);
+                    var formattedString = FilePathControls.formatFileFolderPath(variableString, formatting);
+                    formattedString.StoreInUserVariable(engine, v_applyToVariableName);
                     break;
                     
                 default:
                     throw new Exception("Formatter Type Not Supported: " + v_FormatType);
             }
 
-            if (formattedString == "")
-            {
-                throw new InvalidDataException("Unable to convert '" + variableString + "' to type '" + v_FormatType + "'");
-            }
-            else
-            {
-                formattedString.StoreInUserVariable(sender, v_applyToVariableName);
-            }
+            //if (formattedString == "")
+            //{
+            //    throw new InvalidDataException("Unable to convert '" + variableString + "' to type '" + v_FormatType + "'");
+            //}
+            //else
+            //{
+            //    formattedString.StoreInUserVariable(sender, v_applyToVariableName);
+            //}
         }
 
         private void lnkFormatChecker_Click(object sender, EventArgs e)
