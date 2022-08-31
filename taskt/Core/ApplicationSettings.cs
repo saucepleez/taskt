@@ -502,6 +502,7 @@ namespace taskt.Core
         public bool RememberCommandEditorSizeAndPosition { get; set; }
 
         public bool CheckForUpdateAtStartup { get; set; }
+        public bool SkipBetaVersionUpdate { get; set; }
 
         private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
@@ -547,6 +548,7 @@ namespace taskt.Core
             RememberCommandEditorSizeAndPosition = true;
 
             CheckForUpdateAtStartup = true;
+            SkipBetaVersionUpdate = true;
         }
 
         public string replaceClientKeyword(string targetString)
