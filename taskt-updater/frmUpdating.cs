@@ -110,9 +110,10 @@ namespace taskt_updater
                         zipFileName = zipFileName.Substring(0, dotPosition);
 
                         string tasktFolder = Directory.GetParent(topLevelFolder).FullName;
+
                         var copyProcess = new System.Diagnostics.Process();
                         copyProcess.StartInfo.FileName = Path.Combine(tasktFolder, TASKT_WORK_DIR_NAME, zipFileName, "Resources", "taskt-updater.exe");
-                        copyProcess.StartInfo.Arguments = "/c \"" + topLevelFolder + "\"";
+                        copyProcess.StartInfo.Arguments = "/c \"" + tasktFolder + "\"";
                         copyProcess.Start();
                         this.Close();
                         break;
@@ -143,13 +144,16 @@ namespace taskt_updater
         private void DownloadExtractNewRelease(string packageURL)
         {
             //define update folder
-            var tempUpdateFolder = topLevelFolder + "\\" + TASKT_WORK_DIR_NAME + "\\";
+            var tempUpdateFolder = Path.Combine(Directory.GetParent(topLevelFolder).FullName, TASKT_WORK_DIR_NAME);
+
+            // DBG
+            //MessageBox.Show("temp: " + tempUpdateFolder + "\r\nURL: " + packageURL);
 
             //delete existing
-            if (Directory.Exists(tempUpdateFolder))
-            {
-                System.IO.Directory.Delete(tempUpdateFolder, true);
-            }
+            //if (Directory.Exists(tempUpdateFolder))
+            //{
+            //    System.IO.Directory.Delete(tempUpdateFolder, true);
+            //}
 
             //create folder
             System.IO.Directory.CreateDirectory(tempUpdateFolder);
@@ -186,7 +190,7 @@ namespace taskt_updater
         private void CopyNewRelease(string oldTasktFolder)
         {
             //create deployment folder reference
-            var deploymentFolder = Path.GetDirectoryName(topLevelFolder);
+            var deploymentFolder = Directory.GetParent(topLevelFolder).FullName;
 
             bgwUpdate.ReportProgress(0, "Deployed to " + deploymentFolder);
 
@@ -197,6 +201,9 @@ namespace taskt_updater
                 oldTasktFolder = oldTasktFolder.Substring(1, oldTasktFolder.Length - 2);
             }
 
+            // DBG
+            //MessageBox.Show("dep: " + deploymentFolder + "\r\nold: " + oldTasktFolder);
+
             CopyDirectory(deploymentFolder, oldTasktFolder);
         }
 
@@ -204,9 +211,12 @@ namespace taskt_updater
         {
             bgwUpdate.ReportProgress(0, "Remove Downloaded Files...");
 
-            string tasktFolder = Directory.GetParent(topLevelFolder).FullName;
+            string tempFolder = Path.Combine(Directory.GetParent(topLevelFolder).FullName, TASKT_WORK_DIR_NAME);
 
-            DeleteDirectory(Path.Combine(tasktFolder, TASKT_WORK_DIR_NAME));
+            // DBG
+            //MessageBox.Show("temp: " + tempFolder);
+
+            DeleteDirectory(tempFolder);
         }
 
         private void ExtractZipToDirectory(ZipArchive archive, string destinationDirectoryName, bool overwrite)
