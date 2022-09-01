@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,25 +17,31 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to modify List Index.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify List Index.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetListIndexCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a List Variable Name to modify")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vList** or **{{{vList}}}**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List)]
+        [PropertyDescription("Please select a List Variable Name to modify")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vList** or **{{{vList}}}**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
         public string v_ListName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please set the current Index of the List")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's index should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **-1** or **{{{vIndex}}}**")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("Please set the current Index of the List")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter the input that the variable's index should be set to.")]
+        [SampleUsage("**0** or **-1** or **{{{vIndex}}}**")]
+        [Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Index")]
         public string v_Index { get; set; }
         public SetListIndexCommand()
         {
@@ -47,16 +54,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //get sending instance
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            //var requiredVariable = LookupVariable(engine);
-
-            ////if still not found and user has elected option, create variable at runtime
-            //if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
-            //{
-            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-            //    requiredVariable = LookupVariable(engine);
-            //}
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             var requiredVariable = v_ListName.GetRawVariable(engine);
 
@@ -81,74 +79,51 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        //private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+
+        //public override string GetDisplayValue()
         //{
-        //    //search for the variable
-        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_ListName).FirstOrDefault();
-
-        //    //if variable was not found but it starts with variable naming pattern
-        //    if ((requiredVariable == null) && (v_ListName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_ListName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-        //    {
-        //        //reformat and attempt
-        //        var reformattedVariable = v_ListName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-        //        requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-        //    }
-
-        //    return requiredVariable;
+        //    return base.GetDisplayValue() + " [Set List Index List: '" + v_ListName + "', index: '" + v_Index + "']";
         //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Set List Index List: '" + v_ListName + "', index: '" + v_Index + "']";
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            //create control for variable name
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
+        //    return RenderedControls;
+        //}
 
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Index", this, editor));
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    if (String.IsNullOrEmpty(this.v_ListName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_Index))
+        //    {
+        //        this.validationResult += "Index is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        int idx;
+        //        if (int.TryParse(this.v_Index, out idx))
+        //        {
+        //            if (idx < 0)
+        //            {
+        //                this.validationResult += "Specify a value of 0 or more for index.\n";
+        //                this.IsValid = false;
+        //            }
+        //        }
+        //    }
 
-            return RenderedControls;
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_ListName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_Index))
-            {
-                this.validationResult += "Index is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                int idx;
-                if (int.TryParse(this.v_Index, out idx))
-                {
-                    if (idx < 0)
-                    {
-                        this.validationResult += "Specify a value of 0 or more for index.\n";
-                        this.IsValid = false;
-                    }
-                }
-            }
-
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
