@@ -565,10 +565,10 @@ namespace taskt.Core.Automation.Commands
             if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
             {
                 object value = prop.GetValue(command);
-                if (value is System.Data.DataTable)
-                {
-                    return "";
-                }
+                //if (value is System.Data.DataTable)
+                //{
+                //    return "";
+                //}
 
                 Attributes.PropertyAttributes.PropertyDisplayText dispProp = (Attributes.PropertyAttributes.PropertyDisplayText)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyDisplayText));
                 if ((dispProp == null) || (!dispProp.parameterDisplay))
@@ -577,11 +577,24 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
+                    string dispValue;
                     if (value == null)
                     {
-                        value = "";
+                        dispValue = "''";
                     }
-                    return dispProp.parameterName + ": '" + value + "', ";
+                    else if (value is System.Data.DataTable)
+                    {
+                        dispValue = ((System.Data.DataTable)value).Rows.Count + " items";
+                    }
+                    else if (!(value is string))
+                    {
+                        dispValue = "'" + value.ToString() + "'";
+                    }
+                    else
+                    {
+                        dispValue = "'" + value + "'";
+                    }
+                    return dispProp.parameterName + ": " + dispValue + ", ";
                 }
             }
             else
