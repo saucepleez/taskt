@@ -7,6 +7,7 @@ using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using System.Drawing;
 using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,32 +17,36 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new Dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Dictionary Variable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
-        [Attributes.PropertyAttributes.SampleUsage("**vMyDictionary** or **{{{vMyDictionary}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Create Dictionary<string, string>")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary)]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyDescription("Please Indicate Dictionary Variable Name")]
+        [InputSpecification("Indicate a unique reference name for later use")]
+        [SampleUsage("**vMyDictionary** or **{{{vMyDictionary}}}**")]
+        [Remarks("Create Dictionary<string, string>")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary")]
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Define Keys and Values")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the Keys and Values required for your dictionary")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Keys", "Keys", false)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Values", "Values", false)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ColumnNameDataGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDescription("Define Keys and Values")]
+        [InputSpecification("Enter the Keys and Values required for your dictionary")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewColumnSettings("Keys", "Keys", false)]
+        [PropertyDataGridViewColumnSettings("Values", "Values", false)]
+        [PropertyDataGridViewSetting(true, true, true)]
+        [PropertyDataGridViewCellEditEvent("ColumnNameDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDisplayText(true, "Items")]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -58,8 +63,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            //var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             Dictionary<string, string> outputDictionary = new Dictionary<string, string>();
 
@@ -68,60 +72,24 @@ namespace taskt.Core.Automation.Commands
                 outputDictionary.Add(rwColumnName.Field<string>("Keys"), rwColumnName.Field<string>("Values"));
             }
 
-            //add or override existing variable
-            //if (engine.VariableList.Any(f => f.VariableName == dictionaryName))
-            //{
-            //    var selectedVariable = engine.VariableList.Where(f => f.VariableName == dictionaryName).FirstOrDefault();
-            //    selectedVariable.VariableValue = outputDictionary;
-            //}
-            //else
-            //{
-            //    Script.ScriptVariable newDictionary = new Script.ScriptVariable
-            //    {
-            //        VariableName = dictionaryName,
-            //        VariableValue = outputDictionary
-            //    };
-
-            //    engine.VariableList.Add(newDictionary);
-            //}
             outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            //initialize Datatable
-            //this.v_ColumnNameDataTable = new System.Data.DataTable
-            //{
-            //    TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            //};
-            //this.v_ColumnNameDataTable.Columns.Add("Keys");
-            //this.v_ColumnNameDataTable.Columns.Add("Values");
-
-            //create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_DictionaryName", this, editor));
-
-            //RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
-
-            //ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
-            //ColumnNameDataGridViewHelper.Tag = "column-a-editable";
-            //ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
-
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
 
-            //ColumnNameDataGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
-            //ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
             ColumnNameDataGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
 
             return RenderedControls;
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
+        //}
 
         private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -153,17 +121,17 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(v_DictionaryName))
-            {
-                this.IsValid = false;
-                this.validationResult += "Dictionary Variable Name is empty.\n";
-            }
+        //    if (String.IsNullOrEmpty(v_DictionaryName))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Dictionary Variable Name is empty.\n";
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }

@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to filter Dictionary value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FilterDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary to Filter")]
         public string v_InputDictionary { get; set; }
 
         [XmlAttribute]
@@ -40,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Numeric")]
         [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
@@ -50,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertySelectionChangeEvent("cmbFilterAction_SelectionChangeCommited")]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
 
         [XmlElement]
@@ -75,6 +79,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Filtered Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
         public string v_OutputDictionary { get; set; }
 
         [XmlIgnore]
@@ -151,9 +156,9 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [ Dictionary: '" + this.v_InputDictionary + "', Type: '" + this.v_OutputDictionary + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDictionary + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [ Dictionary: '" + this.v_InputDictionary + "', Type: '" + this.v_OutputDictionary + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDictionary + "']";
+        //}
     }
 }
