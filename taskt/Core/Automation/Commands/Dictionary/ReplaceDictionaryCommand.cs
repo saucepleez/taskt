@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to relace Dictionary value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ReplaceDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary to Replace")]
         public string v_TargetDictionary { get; set; }
 
         [XmlAttribute]
@@ -40,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Numeric")]
         [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
@@ -50,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertySelectionChangeEvent("cmbReplaceAction_SelectionChangeCommited")]
         [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
         public string v_ReplaceAction { get; set; }
 
         [XmlElement]
@@ -70,6 +74,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDisplayText(true, "Replace Value")]
         public string v_ReplaceValue { get; set; }
 
         [XmlIgnore]
@@ -146,9 +151,9 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [ Dictionary: '" + this.v_TargetDictionary + "', Type: '" + this.v_ReplaceValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_ReplaceValue + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [ Dictionary: '" + this.v_TargetDictionary + "', Type: '" + this.v_ReplaceValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_ReplaceValue + "']";
+        //}
     }
 }

@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set value in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set value in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary")]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
@@ -40,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "Current Position")]
+        [PropertyDisplayText(true, "Key")]
         public string v_Key { get; set; }
 
         [XmlAttribute]
@@ -50,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyDisplayText(true, "Value")]
         public string v_Value { get; set; }
 
         public SetDictionaryValueCommand()
@@ -64,7 +69,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
             Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
 
             string vKey = "";
@@ -97,20 +101,20 @@ namespace taskt.Core.Automation.Commands
             }
         }
         
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [From: {v_InputData}, Set: {v_Key}, Value: {v_Value}]";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [From: {v_InputData}, Set: {v_Key}, Value: {v_Value}]";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

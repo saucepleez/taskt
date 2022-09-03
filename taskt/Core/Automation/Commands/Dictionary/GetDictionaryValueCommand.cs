@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get value in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get value in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary")]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
@@ -40,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "Current Position")]
+        [PropertyDisplayText(true, "Key")]
         public string v_Key { get; set; }
 
         [XmlAttribute]
@@ -51,7 +55,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
         public string v_OutputVariable { get; set; }
 
         public GetDictionaryValueCommand()
@@ -67,26 +72,6 @@ namespace taskt.Core.Automation.Commands
             //Retrieve Dictionary by name
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            //var dataSetVariable = LookupVariable(engine);
-
-            ////Declare local dictionary and assign output
-            //Dictionary<string,string> dict = (Dictionary<string,string>)dataSetVariable.VariableValue;
-            //Script.ScriptVariable Output = new Script.ScriptVariable
-            //{
-            //    VariableName = v_OutputVariable,
-            //    VariableValue = dict[vKey]
-            //};
-
-            ////Overwrites variable if it already exists
-            //if (engine.VariableList.Exists(x => x.VariableName == Output.VariableName))
-            //{
-            //    Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == Output.VariableName).FirstOrDefault();
-            //    engine.VariableList.Remove(temp);
-            //}
-            ////Add to variable list
-            //engine.VariableList.Add(Output);
-
-            //Dictionary<string, string> dic = (Dictionary<string, string>)v_InputData.GetRawVariable(engine).VariableValue;
             Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
 
             string vKey = "";
@@ -118,39 +103,21 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
             }
         }
-        //private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+
+        //public override List<Control> Render(frmCommandEditor editor)
         //{
-        //    //search for the variable
-        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputData).FirstOrDefault();
+        //    base.Render(editor);
 
-        //    //if variable was not found but it starts with variable naming pattern
-        //    if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-        //    {
-        //        //reformat and attempt
-        //        var reformattedVariable = v_InputData.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-        //        requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-        //    }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        //    return requiredVariable;
+        //    return RenderedControls;
         //}
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputVariable", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Key", this, editor));
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [From: {v_InputData}, Get: {v_Key}, Store In: {v_OutputVariable}]";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [From: {v_InputData}, Get: {v_Key}, Store In: {v_OutputVariable}]";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{
