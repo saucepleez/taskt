@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you want to set an item in a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set an item in a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetListItemCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
@@ -38,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("**-1** means index of the last row. If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Position")]
+        [PropertyDisplayText(true, "Index")]
         public string v_ItemIndex { get; set; }
 
         [XmlAttribute]
@@ -47,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Value")]
         public string v_NewValue { get; set; }
 
         public SetListItemCommand()
@@ -102,19 +107,19 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [From '{v_ListName}', Index: '{v_ItemIndex}', Store In: '{v_NewValue}']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [From '{v_ListName}', Index: '{v_ItemIndex}', Store In: '{v_NewValue}']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

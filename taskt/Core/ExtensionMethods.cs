@@ -28,7 +28,7 @@ namespace taskt.Core
             }
             else
             {
-                throw new Exception(parameterName + " is not a integer number.");
+                throw new Exception(parameterName + " '" + str + "' is not a integer number.");
             }
         }
 
@@ -42,7 +42,7 @@ namespace taskt.Core
             }
             else
             {
-                throw new Exception(parameterName + " is not a number.");
+                throw new Exception(parameterName + " '" + str + "' is not a number.");
             }
         }
 
@@ -56,7 +56,7 @@ namespace taskt.Core
             }
             else
             {
-                throw new Exception(parameterName + " is not a boolean.");
+                throw new Exception(parameterName + " '" + str + "' is not a boolean.");
             }
         }
 
@@ -70,7 +70,7 @@ namespace taskt.Core
             }
             else
             {
-                throw new Exception(parameterName + " is not a DateTime.");
+                throw new Exception(parameterName + " '" + str + "' is not a DateTime.");
             }
         }
 
