@@ -28,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -39,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Index")]
         [PropertyIsOptional(true, "Column Name")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -50,6 +52,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
         public string v_DataColumnIndex { get; set; }
 
         [XmlAttribute]
@@ -63,6 +66,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("Converted DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Converted DataTable")]
         public string v_OutputVariableName { get; set; }
 
         public ConvertDataTableColumnToDataTableCommand()
@@ -77,7 +81,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
             DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
             string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
@@ -86,7 +89,6 @@ namespace taskt.Core.Automation.Commands
             switch (colType)
             {
                 case "column name":
-                    //var colName = v_DataColumnIndex.ConvertToUserVariable(engine);
                     string colName = DataTableControls.GetColumnName(srcDT, v_DataColumnIndex, engine);
                     myDT.Columns.Add(colName);
                     for (int i = 0; i < srcDT.Rows.Count; i++)
@@ -97,7 +99,6 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "index":
-                    //int colIdx = int.Parse(v_DataColumnIndex.ConvertToUserVariable(engine));
                     int colIndex = DataTableControls.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
                     myDT.Columns.Add(srcDT.Columns[colIndex].ColumnName);
                     for (int i = 0; i < srcDT.Rows.Count; i++)
@@ -111,20 +112,20 @@ namespace taskt.Core.Automation.Commands
             myDT.StoreInUserVariable(engine, v_OutputVariableName);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
         
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Column '" + v_DataColumnIndex + "' to DataTable '" + v_OutputVariableName + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Column '" + v_DataColumnIndex + "' to DataTable '" + v_OutputVariableName + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

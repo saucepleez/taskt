@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,28 +19,29 @@ namespace taskt.Core.Automation.Commands
     public class AddDataTableRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Variable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a existing DataTable to add rows to.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please indicate the DataTable Variable Name")]
+        [InputSpecification("Enter a existing DataTable to add rows to.")]
+        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Define Data")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the Column Names required for each column of data")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Data", "Data", false)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("AddDataGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [Attributes.PropertyAttributes.PropertyCustomUIHelper("Load Column Names From Existing Table", "LoadSchemaControl_Click", "load_column")]
+        [PropertyDescription("Define Data")]
+        [InputSpecification("Enter the Column Names required for each column of data")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(true, true, true)]
+        [PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
+        [PropertyDataGridViewColumnSettings("Data", "Data", false)]
+        [PropertyDataGridViewCellEditEvent("AddDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyCustomUIHelper("Load Column Names From Existing Table", "LoadSchemaControl_Click", "load_column")]
         public DataTable v_AddDataDataTable { get; set; }
 
 
@@ -61,7 +63,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             DataTable dataTable = v_DataTableName.GetDataTableVariable(engine);
 
             var newRow = dataTable.NewRow();
@@ -156,17 +158,17 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_DataTableName))
-            {
-                this.validationResult += "DataTable Name is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_DataTableName))
+        //    {
+        //        this.validationResult += "DataTable Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
