@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Column to DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Column to DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableColumnToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
