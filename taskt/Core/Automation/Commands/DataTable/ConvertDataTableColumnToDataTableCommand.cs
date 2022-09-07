@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("Converted DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Converted DataTable")]
+        [PropertyDisplayText(true, "Store")]
         public string v_OutputVariableName { get; set; }
 
         public ConvertDataTableColumnToDataTableCommand()
