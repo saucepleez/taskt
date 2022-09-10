@@ -17,6 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new Dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDictionaryCommand : ScriptCommand
     {
@@ -45,6 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Keys", "Keys", false)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
         [PropertyDataGridViewSetting(true, true, true)]
+        [PropertyControlIntoCommandField("ColumnNameDataGridViewHelper")]
         [PropertyDataGridViewCellEditEvent("ColumnNameDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
         public DataTable v_ColumnNameDataTable { get; set; }
@@ -74,22 +76,6 @@ namespace taskt.Core.Automation.Commands
 
             outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            ColumnNameDataGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
-
-            return RenderedControls;
-        }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
-        //}
 
         private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -120,6 +106,22 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
+
+        //    ColumnNameDataGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{
