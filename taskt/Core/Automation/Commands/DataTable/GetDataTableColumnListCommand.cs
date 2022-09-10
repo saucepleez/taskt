@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get the column name List of a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the column name List of a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetDataTableColumnListCommand : ScriptCommand
     {
         [XmlAttribute]
