@@ -11,6 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get the DataTable value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the DataTable value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetDataTableValueCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -23,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -34,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Index")]
         [PropertyUISelectionOption("Column Name")]
         [PropertyIsOptional(true, "Column Name")]
+        [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -43,6 +47,8 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
         public string v_ColumnIndex { get; set; }
 
         [XmlAttribute]
@@ -53,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Row")]
+        [PropertyDisplayText(true, "Row")]
         public string v_RowIndex { get; set; }
 
         [XmlAttribute]
@@ -64,6 +71,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_UserVariableName { get; set; }
 
         public GetDataTableValueCommand()

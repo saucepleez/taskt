@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,45 +19,45 @@ namespace taskt.Core.Automation.Commands
     public class ParseDatasetRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the name of the variable containing the datasource")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Supply the name of the variable containing the datasource")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Select or provide a variable")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("")]
         public string v_DatasetName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Select Column Parse Type")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("By Column Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("By Column Index")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please Select Column Parse Type")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("By Column Name")]
+        [PropertyUISelectionOption("By Column Index")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_ColumnParseType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify Column Name or Index")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Specify Column Name or Index")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
         public string v_ColumnParameter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted column data")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyDescription("Please select the variable to receive the extracted column data")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Specify Alternate Row Number")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("If not executing within a loop, select the applicable index of the row required")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **vRowNumber**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Optional - Specify Alternate Row Number")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("If not executing within a loop, select the applicable index of the row required")]
+        [SampleUsage("**0** or **vRowNumber**")]
+        [Remarks("")]
         public string v_SpecifiedRow { get; set; }
         public ParseDatasetRowCommand()
         {
@@ -70,7 +71,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //try to find dataset based on variable name
             var dataSourceVariable = engine.VariableList.FirstOrDefault(f => engine.engineSettings.VariableStartMarker + f.VariableName + engine.engineSettings.VariableEndMarker == v_DatasetName);
@@ -91,7 +92,7 @@ namespace taskt.Core.Automation.Commands
             var columnName = v_ColumnParameter.ConvertToUserVariable(sender);
             var parseStrat = v_ColumnParseType.ConvertToUserVariable(sender);
             //get datatable
-            var dataTable = (System.Data.DataTable)dataSourceVariable.VariableValue;
+            var dataTable = (DataTable)dataSourceVariable.VariableValue;
 
             int requiredRowNumber;
 
@@ -139,8 +140,6 @@ namespace taskt.Core.Automation.Commands
             return RenderedControls;
 
         }
-
-
 
         public override string GetDisplayValue()
         {
