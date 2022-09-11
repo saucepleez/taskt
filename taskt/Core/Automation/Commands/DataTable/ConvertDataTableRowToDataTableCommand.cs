@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConvertDataTableRowToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -39,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "Current Row")]
+        [PropertyDisplayText(true, "Row")]
         public string v_DataRowIndex { get; set; }
 
         [XmlAttribute]
@@ -52,6 +56,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("Result DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_OutputVariableName { get; set; }
 
         public ConvertDataTableRowToDataTableCommand()
@@ -66,27 +71,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //DataTable srcDT = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
             DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
-            //int index = 0;
-            //if (String.IsNullOrEmpty(v_DataRowIndex))
-            //{
-            //    index = v_DataTableName.GetRawVariable(engine).CurrentPosition;
-            //}
-            //else
-            //{
-            //    index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
-            //    if (index < 0)
-            //    {
-            //        index = srcDT.Rows.Count + index;
-            //    }
-            //}
-
-            //if ((index < 0) || (index >= srcDT.Rows.Count))
-            //{
-            //    throw new Exception("Strange Row Index " + v_DataRowIndex + ", parsed " + index);
-            //}
             int index = DataTableControls.GetRowIndex(v_DataTableName, v_DataRowIndex, engine);
 
             DataTable myDT = new DataTable();
@@ -102,20 +88,20 @@ namespace taskt.Core.Automation.Commands
             myDT.StoreInUserVariable(engine, v_OutputVariableName);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
         
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Row '" + v_DataRowIndex + "' to DataTable '" + v_OutputVariableName + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Row '" + v_DataRowIndex + "' to DataTable '" + v_OutputVariableName + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

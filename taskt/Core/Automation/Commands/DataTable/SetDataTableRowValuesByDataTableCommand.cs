@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set a DataTable Row values to a DataTable by a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a DataTable Row values to a DataTable by a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetDataTableRowValuesByDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable to setted", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable to setted")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -38,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Row")]
+        [PropertyDisplayText(true, "Row to setted")]
         public string v_RowIndex { get; set; }
 
         [XmlAttribute]
@@ -49,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("DataTable to set", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable to set")]
         public string v_RowName { get; set; }
 
         [XmlAttribute]
@@ -59,6 +64,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Row")]
+        [PropertyDisplayText(true, "Row to set")]
         public string v_SrcRowIndex { get; set; }
 
         [XmlAttribute]
@@ -87,40 +93,10 @@ namespace taskt.Core.Automation.Commands
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
             DataTable addDT = v_RowName.GetDataTableVariable(engine);
 
-            //string vRowIndex = v_RowIndex.ConvertToUserVariable(engine);
-            //int rowIndex = int.Parse(vRowIndex);
-            //if ((rowIndex < 0) || (rowIndex >= myDT.Rows.Count))
-            //{
-            //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
-            //}
             int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
-            //string vSrcRowIndex = v_SrcRowIndex.ConvertToUserVariable(engine);
-            //int srcRowIndex = int.Parse(vSrcRowIndex);
-            //if ((srcRowIndex < 0) || (srcRowIndex >= addDT.Rows.Count))
-            //{
-            //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
-            //}
             int srcRowIndex = DataTableControls.GetRowIndex(v_RowName, v_SrcRowIndex, engine);
 
-            //string notExistsKey;
-            //if (String.IsNullOrEmpty(v_NotExistsKey))
-            //{
-            //    notExistsKey = "Ignore";
-            //}
-            //else
-            //{
-            //    notExistsKey = v_NotExistsKey.ConvertToUserVariable(engine);
-            //}
-            //notExistsKey = notExistsKey.ToLower();
-            //switch (notExistsKey)
-            //{
-            //    case "ignore":
-            //    case "error":
-            //        break;
-            //    default:
-            //        throw new Exception("Strange value in if Dictionary key does not exists " + v_NotExistsKey);
-            //}
             string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
 
             // get columns list
@@ -144,19 +120,19 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Row '" + v_RowIndex + "' By DataTable '" + v_RowName + "' Row '" + v_SrcRowIndex + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Row '" + v_RowIndex + "' By DataTable '" + v_RowName + "' Row '" + v_SrcRowIndex + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

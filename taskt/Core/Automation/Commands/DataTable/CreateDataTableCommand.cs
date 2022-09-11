@@ -7,6 +7,7 @@ using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using System.Drawing;
 using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,31 +17,36 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new DataTable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate DataTable Variable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
-        [Attributes.PropertyAttributes.SampleUsage("**vMyDatatable** or **{{{vMyDatatable}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyDescription("Please Indicate DataTable Variable Name")]
+        [InputSpecification("Indicate a unique reference name for later use")]
+        [SampleUsage("**vMyDatatable** or **{{{vMyDatatable}}}**")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Define Column Names")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the Column Names required for each column of data")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(true, true, true)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ColumnNamesGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("ColumnNamesGridViewHelper")]
+        [PropertyDescription("Define Column Names")]
+        [InputSpecification("Enter the Column Names required for each column of data")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(true, true, true)]
+        [PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
+        [PropertyDataGridViewCellEditEvent("ColumnNamesGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyControlIntoCommandField("ColumnNamesGridViewHelper")]
+        [PropertyDisplayText(true, "Columns")]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         [XmlIgnore]
@@ -65,61 +71,33 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dataTableName = v_DataTableName.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
+            //var dataTableName = v_DataTableName.ConvertToUserVariable(sender);
 
-            DataTable Dt = new DataTable();
+            DataTable newDT = new DataTable();
 
             foreach(DataRow rwColumnName in v_ColumnNameDataTable.Rows)
             {
-                Dt.Columns.Add(rwColumnName.Field<string>("Column Name"));
+                newDT.Columns.Add(rwColumnName.Field<string>("Column Name"));
             }
 
-            //add or override existing variable
-            //if (engine.VariableList.Any(f => f.VariableName == dataTableName))
-            //{
-            //    var selectedVariable = engine.VariableList.Where(f => f.VariableName == dataTableName).FirstOrDefault();
-            //    selectedVariable.VariableValue = Dt;
-            //}
-            //else
-            //{
-            //    Script.ScriptVariable newDataTable = new Script.ScriptVariable
-            //    {
-            //        VariableName = dataTableName,
-            //        VariableValue = Dt
-            //    };
-
-            //    engine.VariableList.Add(newDataTable);
-            //}
-            Dt.StoreInUserVariable(engine, v_DataTableName);
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            //create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
-            //RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
-
-            //ColumnNamesGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
-            //ColumnNamesGridViewHelper.Tag = "column-a-editable";
-            //ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            //ColumnNamesGridViewHelper = (DataGridView)System.Linq.Enumerable.Where(ctrls, t => (t.Name == "v_ColumnNameDataTable")).FirstOrDefault();
-            //ColumnNamesGridViewHelper.Tag = "column-a-editable";
-            //ColumnNamesGridViewHelper.CellClick += ColumnNamesGridViewHelper_CellClick;
-            //ColumnNamesGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
-
-            return RenderedControls;
+            newDT.StoreInUserVariable(engine, v_DataTableName);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [Name: '{v_DataTableName}' with {v_ColumnNameDataTable.Rows.Count} Columns]";
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [Name: '{v_DataTableName}' with {v_ColumnNameDataTable.Rows.Count} Columns]";
+        //}
 
         private void ColumnNamesGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -151,17 +129,17 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_DataTableName))
-            {
-                this.validationResult += "DataTable Name is emtpy.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_DataTableName))
+        //    {
+        //        this.validationResult += "DataTable Name is emtpy.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }

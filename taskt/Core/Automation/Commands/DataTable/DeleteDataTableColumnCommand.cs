@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to delete a column to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a column to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DeleteDataTableColumnCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,10 +30,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the Column type (Default is Column Name)")]
+        [PropertyDescription("Please specify the Column type")]
         [InputSpecification("")]
         [SampleUsage("**Column Name** or **Index**")]
         [Remarks("")]
@@ -39,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Column Name")]
         [PropertyUISelectionOption("Index")]
         [PropertyIsOptional(true, "Column Name")]
+        [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -50,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
         public string v_DeleteColumnName { get; set; }
 
         public DeleteDataTableColumnCommand()
@@ -65,70 +70,34 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            //string colType = "Column Name";
-            //if (!String.IsNullOrEmpty(v_ColumnType))
-            //{
-            //    colType = v_ColumnType.ConvertToUserVariable(engine);
-            //}
-            //colType = colType.ToLower();
             string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
-
-            //switch (colType)
-            //{
-            //    case "column name":
-            //    case "index":
-            //        break;
-            //    default:
-            //        throw new Exception("Strange column type " + v_ColumnType);
-            //        break;
-            //}
 
             if (colType == "column name")
             {
-                //string trgColumn = v_DeleteColumnName.ConvertToUserVariable(engine);
-
-                //for (int i = 0; i < myDT.Columns.Count; i++)
-                //{
-                //    if (myDT.Columns[i].ColumnName == trgColumn)
-                //    {
-                //        myDT.Columns.Remove(trgColumn);
-                //        return;
-                //    }
-                //}
-                //throw new Exception("Column " + v_DeleteColumnName + " does not exists");
                 string trgColumn = DataTableControls.GetColumnName(myDT, v_DeleteColumnName, engine);
                 myDT.Columns.Remove(trgColumn);
             }
             else
             {
-                //string tCol = v_DeleteColumnName.ConvertToUserVariable(engine);
-                //int colIndex = int.Parse(tCol);
-                //if ((colIndex >= 0) && (colIndex < myDT.Columns.Count))
-                //{
-                //    myDT.Columns.RemoveAt(colIndex);
-                //}
-                //else
-                //{
-                //    throw new Exception("Column index " + v_DeleteColumnName + " does not exists");
-                //}
                 int colIndex = DataTableControls.GetColumnIndex(myDT, v_DeleteColumnName, engine);
                 myDT.Columns.RemoveAt(colIndex);
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Delete DataTable '" + v_DataTableName + "' Column '" + v_DeleteColumnName + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Delete DataTable '" + v_DataTableName + "' Column '" + v_DeleteColumnName + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

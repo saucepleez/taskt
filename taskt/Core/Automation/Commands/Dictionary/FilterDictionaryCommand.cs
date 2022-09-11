@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to filter Dictionary value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FilterDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary to Filter")]
         public string v_InputDictionary { get; set; }
 
         [XmlAttribute]
@@ -38,8 +41,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
+        [PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
         [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
@@ -48,8 +53,10 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyControlIntoCommandField("FilterActionComboboxHelper")]
         [PropertySelectionChangeEvent("cmbFilterAction_SelectionChangeCommited")]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
 
         [XmlElement]
@@ -62,6 +69,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        [PropertyControlIntoCommandField("FilterParametersGridViewHelper")]
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
@@ -75,6 +83,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Filtered Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
         public string v_OutputDictionary { get; set; }
 
         [XmlIgnore]
@@ -131,29 +140,28 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
-            FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
-            FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
-
-            return RenderedControls;
-        }
-
         public override void AfterShown()
         {
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [ Dictionary: '" + this.v_InputDictionary + "', Type: '" + this.v_OutputDictionary + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDictionary + "']";
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
+
+        //    TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
+        //    FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
+        //    FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [ Dictionary: '" + this.v_InputDictionary + "', Type: '" + this.v_OutputDictionary + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDictionary + "']";
+        //}
     }
 }

@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Filter Rows by reference to Column values.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Filter Rows by reference to Column values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FilterDataTableRowByColumnValueCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("DataTable to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable to Filter")]
         public string v_InputDataTable { get; set; }
 
         [XmlAttribute]
@@ -39,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Index")]
         [PropertyIsOptional(true, "Column Name")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -50,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
         public string v_TargetColumnIndex { get; set; }
 
         [XmlAttribute]
@@ -62,6 +66,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Numeric")]
         [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
@@ -72,6 +77,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertySelectionChangeEvent("cmbFilterAction_SelectionChangeCommited")]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
 
         [XmlElement]
@@ -97,6 +103,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Filtered DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New DataTable")]
         public string v_OutputDataTable { get; set; }
 
         [XmlIgnore]
@@ -194,9 +201,9 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [ DataTable: '" + this.v_InputDataTable + "', Column: '" + this.v_TargetColumnIndex + "', Type: '" + this.v_OutputDataTable + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDataTable + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [ DataTable: '" + this.v_InputDataTable + "', Column: '" + this.v_TargetColumnIndex + "', Type: '" + this.v_OutputDataTable + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDataTable + "']";
+        //}
     }
 }

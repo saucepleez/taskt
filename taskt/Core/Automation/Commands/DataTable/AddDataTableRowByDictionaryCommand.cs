@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add a DataTable Row to a DataTable by a Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a DataTable Row to a DataTable by a Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class AddDataTableRowByDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -39,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary")]
         public string v_RowName { get; set; }
 
         [XmlAttribute]
@@ -64,48 +68,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //Script.ScriptVariable dtVar = v_DataTableName.GetRawVariable(engine);
-            //DataTable myDT;
-            //if (!(dtVar.VariableValue is DataTable))
-            //{
-            //    throw new Exception(v_DataTableName + " is not DataTable");
-            //}
-            //else
-            //{
-            //    myDT = (DataTable)dtVar.VariableValue;
-            //}
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            //Script.ScriptVariable rowVar = v_RowName.GetRawVariable(engine);
-            //Dictionary<string, string> myDic;
-            //if (!(rowVar.VariableValue is Dictionary<string, string>))
-            //{
-            //    throw new Exception(v_RowName + " is not supported Dictionary");
-            //}
-            //else
-            //{
-            //    myDic = (Dictionary<string, string>)rowVar.VariableValue;
-            //}
             Dictionary<string, string> myDic = v_RowName.GetDictionaryVariable(engine);
 
-            //string notExistsKey;
-            //if (String.IsNullOrEmpty(v_NotExistsKey))
-            //{
-            //    notExistsKey = "Ignore";
-            //}
-            //else
-            //{
-            //    notExistsKey = v_NotExistsKey.ConvertToUserVariable(engine);
-            //}
-            //notExistsKey = notExistsKey.ToLower();
-            //switch (notExistsKey)
-            //{
-            //    case "ignore":
-            //    case "error":
-            //        break;
-            //    default:
-            //        throw new Exception("Strange value in if Dictionary key does not exists " + v_NotExistsKey);
-            //}
             string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
 
             // get columns list
@@ -126,19 +92,19 @@ namespace taskt.Core.Automation.Commands
             myDT.Rows.Add(row);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Add DataTable '" + v_DataTableName + "' Row By Dictionary '" + v_RowName + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Add DataTable '" + v_DataTableName + "' Row By Dictionary '" + v_RowName + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

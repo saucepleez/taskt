@@ -43,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
         [PropertyDataGridViewCellEditEvent("ListValuesDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDisplayText(true, "Items")]
         public DataTable v_ListValues { get; set; }
 
         [XmlIgnore]

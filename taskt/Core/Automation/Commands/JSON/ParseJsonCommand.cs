@@ -15,6 +15,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ParseJsonCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -26,20 +28,24 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Specify a JSON extractor")]
+        [PropertyDescription("Specify a JSON extractor (JSONPath)")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Input a JSON token extractor")]
         [SampleUsage("**$.id**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyCustomUIHelper("JSONPath Helper", "lnkJsonPathHelper_Click")]
+        [PropertyValidationRule("JSON extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Extractor")]
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the extracted JSON")]
+        [PropertyDescription("Please select the variable to receive the extracted Result")]
         [InputSpecification("Select or provide a variable from the variable list")]
         [SampleUsage("**vSomeVariable**")]
         [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
@@ -47,6 +53,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
         public string v_applyToVariableName { get; set; }
 
         public ParseJsonCommand()
@@ -90,7 +98,6 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Error Occured Parsing Tokens: " + ex.ToString());
             }
  
-
             //select results
             try
             {
@@ -100,7 +107,6 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
             }
-        
 
             //add results to result list since list<string> is supported
             foreach (var result in searchResults)
@@ -122,25 +128,6 @@ namespace taskt.Core.Automation.Commands
             requiredComplexVariable.VariableValue = resultList;
 
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            //create standard group controls
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_JsonExtractor", this, editor));
-
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
-
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-            return RenderedControls;
-        }
-
         public void lnkJsonPathHelper_Click(object sender, EventArgs e)
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
@@ -153,32 +140,41 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Selector: " + v_JsonExtractor + ", Apply Result(s) To Variable: " + v_applyToVariableName + "]";
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            if (String.IsNullOrEmpty(this.v_InputValue))
-            {
-                this.validationResult += "JSON text is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_JsonExtractor))
-            {
-                this.validationResult += "JSON extractor is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariableName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    return RenderedControls;
+        //}
 
-            return this.IsValid;
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Selector: " + v_JsonExtractor + ", Apply Result(s) To Variable: " + v_applyToVariableName + "]";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_InputValue))
+        //    {
+        //        this.validationResult += "JSON text is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_JsonExtractor))
+        //    {
+        //        this.validationResult += "JSON extractor is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -16,6 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get the DataTable value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the DataTable value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetDataTableValueCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -39,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Index")]
         [PropertyUISelectionOption("Column Name")]
         [PropertyIsOptional(true, "Column Name")]
+        [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -48,6 +47,8 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
         public string v_ColumnIndex { get; set; }
 
         [XmlAttribute]
@@ -58,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Row")]
+        [PropertyDisplayText(true, "Row")]
         public string v_RowIndex { get; set; }
 
         [XmlAttribute]
@@ -69,6 +71,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_UserVariableName { get; set; }
 
         public GetDataTableValueCommand()
@@ -84,38 +87,18 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
-            //string columnType = "Column Name";
-            //if (!String.IsNullOrEmpty(v_ColumnType))
-            //{
-            //    columnType = v_ColumnType.ConvertToUserVariable(engine);
-            //}
-            //columnType = columnType.ToLower();
-            //switch (columnType)
-            //{
-            //    case "column name":
-            //    case "index":
-            //        break;
-            //    default:
-            //        throw new Exception("Strange column type " + v_ColumnType);
-            //        break;
-            //}
+
             string columnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
             string columnPosition = v_ColumnIndex.ConvertToUserVariable(engine);
 
-            //string vRow = v_RowIndex.ConvertToUserVariable(engine);
-            //int rowIndex = int.Parse(vRow);
-            //if ((rowIndex < 0) || (rowIndex >= myDT.Rows.Count))
-            //{
-            //    throw new Exception("Row Index is less than 0 or exceeds the number of rows in the DataTable");
-            //}
+
             int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             string v;
             if (columnType == "column name")
             {
                 v = (myDT.Rows[rowIndex][columnPosition] == null) ? "" : myDT.Rows[rowIndex][columnPosition].ToString();
-                
             }
             else
             {
@@ -124,20 +107,20 @@ namespace taskt.Core.Automation.Commands
             }
             v.StoreInUserVariable(engine, v_UserVariableName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [DataTable '" + v_DataTableName + "' Column '" + v_ColumnIndex+ "' Row '" + v_RowIndex + "', Store In: '" + v_UserVariableName + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [DataTable '" + v_DataTableName + "' Column '" + v_ColumnIndex+ "' Row '" + v_RowIndex + "', Store In: '" + v_UserVariableName + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

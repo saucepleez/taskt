@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to set a column to a DataTable by a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a column to a DataTable by a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetDataTableColumnValuesByDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable to setted", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable to setted")]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -39,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Index")]
         [PropertyIsOptional(true, "Column Name")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -50,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
         public string v_SetColumnName { get; set; }
 
         [XmlAttribute]
@@ -62,6 +67,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("DataTable to set", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable to set")]
         public string v_SetDataTableName { get; set; }
 
         [XmlAttribute]
@@ -102,22 +108,6 @@ namespace taskt.Core.Automation.Commands
 
             DataTable setDT = v_SetDataTableName.GetDataTableVariable(engine);
 
-            //string ifRowNotEnough = "Ignore";
-            //if (!String.IsNullOrEmpty(v_IfRowNotEnough))
-            //{
-            //    ifRowNotEnough = v_IfRowNotEnough.ConvertToUserVariable(engine);
-            //}
-            //ifRowNotEnough = ifRowNotEnough.ToLower();
-            //switch (ifRowNotEnough)
-            //{
-            //    case "ignore":
-            //    case "add rows":
-            //    case "error":
-            //        break;
-            //    default:
-            //        throw new Exception("Strange value If the number of rows is less than the List " + v_IfRowNotEnough);
-            //        break;
-            //}
             string ifRowNotEnough = v_IfRowNotEnough.GetUISelectionValue("v_IfRowNotEnough", this, engine);
 
             // rows check
@@ -134,21 +124,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            //string ifListNotEnough = "Ignore";
-            //if (!String.IsNullOrEmpty(v_IfSetDataTableNotEnough))
-            //{
-            //    ifListNotEnough = v_IfSetDataTableNotEnough.ConvertToUserVariable(engine);
-            //}
-            //ifListNotEnough = ifListNotEnough.ToLower();
-            //switch (ifListNotEnough)
-            //{
-            //    case "ignore":
-            //    case "error":
-            //        break;
-            //    default:
-            //        throw new Exception("Strange value If the number of List items is less than the rows to setted " + v_IfSetDataTableNotEnough);
-            //        break;
-            //}
             string ifListNotEnough = v_IfSetDataTableNotEnough.GetUISelectionValue("v_IfSetDataTableNotEnough", this, engine);
 
             if ((myDT.Rows.Count > setDT.Rows.Count) && (ifListNotEnough == "error"))
@@ -156,25 +131,9 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("The number of DataTable items is less than the rows to settedd");
             }
 
-            //string colType = "Column Name";
-            //if (!String.IsNullOrEmpty(v_ColumnType))
-            //{
-            //    colType = v_ColumnType.ConvertToUserVariable(engine);
-            //}
-            //colType = colType.ToLower();
-            //switch (colType)
-            //{
-            //    case "column name":
-            //    case "index":
-            //        break;
-            //    default:
-            //        throw new Exception("Strange column type " + v_ColumnType);
-            //        break;
-            //}
             string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
             // column name check
-            //string trgColName = v_SetColumnName.ConvertToUserVariable(engine);
             string trgColName;
             if (colType == "column name")
             {
@@ -185,43 +144,7 @@ namespace taskt.Core.Automation.Commands
                 int colIndex = DataTableControls.GetColumnIndex(setDT, v_SetColumnName, engine);
                 trgColName = setDT.Columns[colIndex].ColumnName;
             }
-            //bool isExistsCol = false;
-            //if (colType == "column name")
-            //{
-            //    for (int i = 0; i < setDT.Columns.Count; i++)
-            //    {
-            //        if (trgColName == setDT.Columns[i].ColumnName)
-            //        {
-            //            isExistsCol = true;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    int colIndex = int.Parse(trgColName);
-            //    if ((colIndex >= 0) && (colIndex < setDT.Columns.Count))
-            //    {
-            //        isExistsCol = true;
-            //        trgColName = setDT.Columns[colIndex].ColumnName;
-            //    }
-            //}
-            //if (!isExistsCol)
-            //{
-            //    throw new Exception("Column " + v_SetColumnName + " does not exists in DataTable to set");
-            //}
-            //isExistsCol = false;
-            //for (int i = 0; i < myDT.Columns.Count; i++)
-            //{
-            //    if (trgColName == myDT.Columns[i].ColumnName)
-            //    {
-            //        isExistsCol = true;
-            //        break;
-            //    }
-            //}
-            //if (!isExistsCol)
-            //{
-            //    throw new Exception("Column " + v_SetColumnName + " does not exists in DataTable to setted");
-            //}
+
             if (!DataTableControls.isColumnExists(myDT, trgColName))
             {
                 throw new Exception("Column " + v_SetColumnName + " does not exists in DataTable to setted");
@@ -241,20 +164,20 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Column Name '" + v_SetColumnName + "' DataTable '" + v_SetDataTableName + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Column Name '" + v_SetColumnName + "' DataTable '" + v_SetDataTableName + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{
