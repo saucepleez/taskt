@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create new List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create new List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateListCommand : ScriptCommand
     {
@@ -42,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
+        [PropertyControlIntoCommandField("ListValuesGridViewHelper")]
         [PropertyDataGridViewCellEditEvent("ListValuesDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
         public DataTable v_ListValues { get; set; }
@@ -72,18 +74,6 @@ namespace taskt.Core.Automation.Commands
             newList.StoreInUserVariable(engine, v_ListName);
         }
         
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            ListValuesGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ListValues")[0];
-
-            return RenderedControls;
-        }
-        
         private void ListValuesDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex >= 0)
@@ -109,6 +99,19 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
+
+        //    ListValuesGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ListValues")[0];
+
+        //    return RenderedControls;
+        //}
+
         //public override string GetDisplayValue()
         //{
         //    return base.GetDisplayValue() + $" [Create List '{v_ListName}']";
