@@ -18,6 +18,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.SubGruop("Search")]
     [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. XPath does not support to use parent and sibling for root element.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetElementFromElementByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -31,6 +33,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Element")]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
@@ -43,6 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "XPath")]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
@@ -57,6 +61,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlIgnore]
@@ -97,29 +102,26 @@ namespace taskt.Core.Automation.Commands
             AutomationElement res = dic[resElem.Attribute("Hash").Value];
             res.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            XPathTextBox = (TextBox)ctrls.GetControlsByName("v_SearchXPath", CommandControls.CommandControlType.Body)[0];
-
-            return RenderedControls;
-        }
-
         private void lnkInspectTool_Clicked(object sender, EventArgs e)
         {
             AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(XPathTextBox);
         }
 
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', XPath: '" + v_SearchXPath + "', Store: '" + v_AutomationElementVariable + "']";
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
+        //    XPathTextBox = (TextBox)ctrls.GetControlsByName("v_SearchXPath", CommandControls.CommandControlType.Body)[0];
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', XPath: '" + v_SearchXPath + "', Store: '" + v_AutomationElementVariable + "']";
+        //}
     }
 }
