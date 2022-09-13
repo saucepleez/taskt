@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.SubGruop("Action")]
     [Attributes.ClassAttributes.Description("This command allows you to Scroll AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Scroll AutomationElement.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationScrollElementCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Element")]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -40,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("ScrollBar Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
         public string v_ScrollBarType { get; set; }
 
         [XmlAttribute]
@@ -53,6 +57,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Scroll Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Method")]
         public string v_DirectionAndAmount{ get; set; }
 
         public UIAutomationScrollElementCommand()
@@ -89,23 +94,6 @@ namespace taskt.Core.Automation.Commands
             }
 
             object scrollPtn;
-            //if (targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
-            //{
-            //    ScrollPattern sp = (ScrollPattern)scrollPtn;
-            //    switch (scrollbarType)
-            //    {
-            //        case "horizonal":
-            //            sp.ScrollHorizontal(amount);
-            //            break;
-            //        case "vertical":
-            //            sp.ScrollVertical(amount);
-            //            break;
-            //    }
-            //}
-            //else
-            //{
-            //    throw new Exception("AutomationElement '" + v_TargetElement + "' does not have ScrollBar");
-            //}
             if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
             {
                 if (targetElement.Current.ControlType == ControlType.ScrollBar)
@@ -133,20 +121,20 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrl);
+        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrl);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', ScrollBar Type: " + v_ScrollBarType + ", Scroll Method: " + v_DirectionAndAmount + "]";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', ScrollBar Type: " + v_ScrollBarType + ", Scroll Method: " + v_DirectionAndAmount + "]";
+        //}
 
     }
 }
