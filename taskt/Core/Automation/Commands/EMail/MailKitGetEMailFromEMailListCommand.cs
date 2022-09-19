@@ -14,6 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get EMail from EMailList.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMail from EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MailKitGetEMailFromEMailListCommand : ScriptCommand
     {
         [XmlAttribute]
