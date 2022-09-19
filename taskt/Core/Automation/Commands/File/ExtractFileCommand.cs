@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using taskt.Core.IO;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,49 +18,61 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command extracts files from a compressed file")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExtractFileCommand : ScriptCommand
     {
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter the file path or location (ex. C:\\myfile.zip, {{{vFilePath}}}, https://temp.com/myfile.zip)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"**C:\temp\myfile.zip** , **{{{vFilePath}}}** or **https://temp.com/myfile.zip**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please enter the file path or location")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
+        [SampleUsage(@"**C:\temp\myfile.zip** , **{{{vFilePath}}}** or **https://temp.com/myfile.zip**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "File")]
         public string v_FilePathOrigin { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the extraction folder (ex. C:\\temp\\myzip\\, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"**C:\temp\** or **{{{vFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the extraction folder")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
+        [SampleUsage(@"**C:\temp\** or **{{{vFilePath}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Extract Folder")]
         public string v_PathDestination { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Create folder if destination does not exist (default is No)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether the directory should be created if it does not already exist.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Create folder if destination does not exist")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Specify whether the directory should be created if it does not already exist.")]
+        [SampleUsage("Select **Yes** or **No**")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "No")]
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate the archive password (ex. mypass, {{{vPassword}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter archive files password.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"**mypass** or {{{vPass}}}")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Indicate the archive password")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter archive files password.")]
+        [SampleUsage(@"**mypass** or {{{vPass}}}")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true)]
         public string v_Password { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate the variable to receive a list of extracted file names")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyDescription("Indicate the variable to receive a list of extracted file names")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyIsOptional(true)]
         public string v_applyToVariableName { get; set; }
 
         public ExtractFileCommand()
@@ -72,7 +85,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //get absolute variable path or URL to source file
             var vSourceFile = v_FilePathOrigin.ConvertToUserVariable(sender);
@@ -95,13 +108,13 @@ namespace taskt.Core.Automation.Commands
             if (vSourceFile.StartsWith("http://") || vSourceFile.StartsWith("https://") || vSourceFile.StartsWith("www."))
             {
                 //create temp directory
-                var tempDir = Core.IO.Folders.GetFolder(Folders.FolderType.TempFolder);
-                var tempFile = System.IO.Path.Combine(tempDir, $"{ Guid.NewGuid()}." + vFileType);
+                var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);
+                var tempFile = Path.Combine(tempDir, $"{ Guid.NewGuid()}." + vFileType);
 
                 //check if directory does not exist then create directory
-                if (!System.IO.Directory.Exists(tempDir))
+                if (!Directory.Exists(tempDir))
                 {
-                    System.IO.Directory.CreateDirectory(tempDir);
+                    Directory.CreateDirectory(tempDir);
                 }
 
                 // Create webClient to download the file for extraction
@@ -127,7 +140,7 @@ namespace taskt.Core.Automation.Commands
 
 
             // Check if file exists before proceeding
-            if (!System.IO.File.Exists(vLocalSourceFile))
+            if (!File.Exists(vLocalSourceFile))
             {
                 throw new FileNotFoundException($"Could not find file: {vLocalSourceFile}");
             }
@@ -190,49 +203,49 @@ namespace taskt.Core.Automation.Commands
             }
 
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePathOrigin", this, editor));
+        //    //create standard group controls
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePathOrigin", this, editor));
             
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_PathDestination", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_PathDestination", this, editor));
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
             
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Password", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Password", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
+        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+        //    RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+        //    RenderedControls.Add(VariableNameControl);
 
-            return RenderedControls;
+        //    return RenderedControls;
 
-        }
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [Source File: '{v_FilePathOrigin}', Destination Folder: '{v_PathDestination}'";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [Source File: '{v_FilePathOrigin}', Destination Folder: '{v_PathDestination}'";
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_FilePathOrigin))
-            {
-                this.validationResult += "File path is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_PathDestination))
-            {
-                this.validationResult += "Extraction folder is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (String.IsNullOrEmpty(this.v_FilePathOrigin))
+        //    {
+        //        this.validationResult += "File path is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_PathDestination))
+        //    {
+        //        this.validationResult += "Extraction folder is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
