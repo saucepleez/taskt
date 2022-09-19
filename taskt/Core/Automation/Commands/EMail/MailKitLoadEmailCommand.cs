@@ -14,6 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to load EMail from File.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load EMail from File.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MailKitLoadEmailCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -28,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Path")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
@@ -41,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyDisplayText(true, "Store")]
         public string v_MailName { get; set; }
 
         public MailKitLoadEmailCommand()
@@ -61,19 +65,20 @@ namespace taskt.Core.Automation.Commands
             var mail = MimeKit.MimeMessage.Load(path);
             mail.StoreInUserVariable(engine, v_MailName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Path: '" + v_FilePath + "', Store: '" + v_MailName + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Path: '" + v_FilePath + "', Store: '" + v_MailName + "']";
+        //}
     }
 }

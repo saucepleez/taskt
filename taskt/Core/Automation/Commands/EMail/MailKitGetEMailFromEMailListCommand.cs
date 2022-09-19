@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyDisplayText(true, "EMailList")]
         public string v_MailListName { get; set; }
 
         [XmlAttribute]
@@ -38,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "CurrentPosition")]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Index")]
         public string v_Index { get; set; }
 
         [XmlAttribute]
@@ -52,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("EMail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyDisplayText(true, "Store")]
         public string v_MailVariable { get; set; }
 
         public MailKitGetEMailFromEMailListCommand()
@@ -101,20 +104,21 @@ namespace taskt.Core.Automation.Commands
                 newMes.StoreInUserVariable(engine, v_MailVariable);
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            string index = (v_Index == null) ? "" : v_Index;
-            return base.GetDisplayValue() + " [EMailList: '" + v_MailListName + "', Index: '" + index + "', Store: '" + v_MailVariable + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    string index = (v_Index == null) ? "" : v_Index;
+        //    return base.GetDisplayValue() + " [EMailList: '" + v_MailListName + "', Index: '" + index + "', Store: '" + v_MailVariable + "']";
+        //}
     }
 }

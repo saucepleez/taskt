@@ -14,6 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Addresses from EMail.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Addresses from EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MailKitGetAddressesAsListCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -27,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyDisplayText(true, "EMail")]
         public string v_MailName { get; set; }
 
         [XmlAttribute]
@@ -48,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Resent-BCC")]
         [PropertyUISelectionOption("Resent-Reply-To")]
         [PropertyValidationRule("Address Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
         public string v_AddressesType { get; set; }
 
         [XmlAttribute]
@@ -62,6 +66,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Addresses Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyDisplayText(true, "Store")]
         public string v_AddressesList { get; set; }
 
         public MailKitGetAddressesAsListCommand()
@@ -122,19 +127,20 @@ namespace taskt.Core.Automation.Commands
             }
             addresses.StoreInUserVariable(engine, v_AddressesList);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Type: '" + v_AddressesType + "', Store: '" + v_AddressesList + "']"; ;
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Type: '" + v_AddressesType + "', Store: '" + v_AddressesList + "']"; ;
+        //}
     }
 }
