@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Result is **TRUE** or **FALSE**")]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Store")]
         public string v_UserVariableName { get; set; }
 
