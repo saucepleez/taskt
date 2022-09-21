@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
 
             //(System.IO.File.Exists(targetFile) ? "TRUE" : "FALSE").StoreInUserVariable(engine, v_UserVariableName);
-            (System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
+            System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
         }
 
         //public override List<Control> Render(frmCommandEditor editor)
