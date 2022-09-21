@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vFileName}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
         public string v_TargetFileName { get; set; }
@@ -35,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Please specify the information type.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vFileName}}}**")]
+        [SampleUsage("")]
         [Remarks("")]
         [PropertyUISelectionOption("File size")]
         [PropertyUISelectionOption("Readonly file")]

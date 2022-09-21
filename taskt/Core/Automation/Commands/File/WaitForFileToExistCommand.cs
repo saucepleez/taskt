@@ -4,34 +4,43 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
     [Attributes.ClassAttributes.Description("This command waits for a file to exist at a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to wait for a file to exist before proceeding.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WaitForFileToExistCommand : ScriptCommand
     {
-
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file (ex. C:\\temp\\myfile.txt, {{{vFilePath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the directory of the file")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the file.")]
+        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "File")]
         public string v_FileName { get; set; }
 
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate how many seconds to wait for the file to exist (ex. 10, {{{vWaitTime}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Specify how long to wait before an error will occur because the file is not found.")]
-        [Attributes.PropertyAttributes.SampleUsage("**10** or **20** or **{{{vWaitTime}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Indicate how many seconds to wait for the file to exist")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Specify how long to wait before an error will occur because the file is not found.")]
+        [SampleUsage("**10** or **20** or **{{{vWaitTime}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Wait")]
         public string v_WaitTime { get; set; }
 
         public WaitForFileToExistCommand()
@@ -44,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //convert items to variables
             var fileName = v_FileName.ConvertToUserVariable(sender);
@@ -78,49 +87,50 @@ namespace taskt.Core.Automation.Commands
                 System.Threading.Thread.Sleep(1000);
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WaitTime", this, editor));
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WaitTime", this, editor));
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [file: " + v_FileName + ", wait " + v_WaitTime + "s]";
-        }
+        //    return RenderedControls;
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [file: " + v_FileName + ", wait " + v_WaitTime + "s]";
+        //}
 
-            if (String.IsNullOrEmpty(this.v_FileName))
-            {
-                this.validationResult += "File is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_WaitTime))
-            {
-                this.validationResult += "Wait time is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                int v;
-                if (int.TryParse(this.v_WaitTime, out v))
-                {
-                    if (v < 0)
-                    {
-                        this.validationResult += "Specify a value of 0 or more for wait time.\n";
-                        this.IsValid = false;
-                    }
-                }
-            }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            return this.IsValid;
-        }
+        //    if (String.IsNullOrEmpty(this.v_FileName))
+        //    {
+        //        this.validationResult += "File is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_WaitTime))
+        //    {
+        //        this.validationResult += "Wait time is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        int v;
+        //        if (int.TryParse(this.v_WaitTime, out v))
+        //        {
+        //            if (v < 0)
+        //            {
+        //                this.validationResult += "Specify a value of 0 or more for wait time.\n";
+        //                this.IsValid = false;
+        //            }
+        //        }
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }

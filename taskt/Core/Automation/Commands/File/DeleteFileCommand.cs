@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("File Path")]
         [PropertyDisplayText(true, "File")]
         public string v_SourceFilePath { get; set; }

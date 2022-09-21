@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Folder")]
         public string v_SourceFolderPath { get; set; }
@@ -38,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**hello** or **{{{vFileName}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "empty and search all files")]
         [PropertyDisplayText(true, "Name")]
         public string v_SearchFileName { get; set; }
@@ -61,6 +63,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**txt** or **{{{vExtension}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "empty and search all files")]
         public string v_SearchExtension { get; set; }
 

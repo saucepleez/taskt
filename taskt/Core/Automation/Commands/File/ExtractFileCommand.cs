@@ -31,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage(@"**C:\temp\myfile.zip** , **{{{vFilePath}}}** or **https://temp.com/myfile.zip**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
         public string v_FilePathOrigin { get; set; }
@@ -43,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage(@"**C:\temp\** or **{{{vFilePath}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Extract Folder")]
         public string v_PathDestination { get; set; }
