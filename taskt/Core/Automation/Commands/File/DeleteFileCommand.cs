@@ -18,7 +18,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DeleteFileCommand : ScriptCommand
     {
-
         [XmlAttribute]
         [PropertyDescription("Please indicate the File Path to Delete.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -28,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("File Path")]
+        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
         public string v_SourceFilePath { get; set; }
 
