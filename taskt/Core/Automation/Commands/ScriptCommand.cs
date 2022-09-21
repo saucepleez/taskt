@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
 using taskt.UI.CustomControls;
+using OpenQA.Selenium.DevTools.V102.Inspector;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -594,7 +595,15 @@ namespace taskt.Core.Automation.Commands
                     {
                         dispValue = "'" + value + "'";
                     }
-                    return dispProp.parameterName + ": " + dispValue + ", ";
+
+                    if (dispProp.afterText != "")
+                    {
+                        return dispProp.parameterName + ": " + dispValue + " " + dispProp.afterText + ", ";
+                    }
+                    else
+                    {
+                        return dispProp.parameterName + ": " + dispValue + ", ";
+                    }
                 }
             }
             else

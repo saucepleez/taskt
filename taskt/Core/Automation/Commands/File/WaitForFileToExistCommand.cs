@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Wait")]
+        [PropertyDisplayText(true, "Wait", "s")]
         public string v_WaitTime { get; set; }
 
         public WaitForFileToExistCommand()
