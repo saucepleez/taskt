@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a existence of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckFolderExistsCommand : ScriptCommand
     {
         [XmlAttribute]
