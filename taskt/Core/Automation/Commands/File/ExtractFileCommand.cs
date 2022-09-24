@@ -132,14 +132,11 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 // Free not needed resources
-                uri = null;
                 if (webclient != null)
                 {
                     webclient.Dispose();
-                    webclient = null;
                 }
             }
-
 
             // Check if file exists before proceeding
             if (!File.Exists(vLocalSourceFile))
@@ -162,7 +159,6 @@ namespace taskt.Core.Automation.Commands
             
             try
             {
-    
                 using (Stream stream = File.OpenRead(vLocalSourceFile))
                 {
                     IReader reader;
@@ -179,7 +175,6 @@ namespace taskt.Core.Automation.Commands
                         reader = ReaderFactory.Open(stream, new ReaderOptions() { Password = vPassword });
                     }
            
-
                     while (reader.MoveToNextEntry())
                     {
                         if (!reader.Entry.IsDirectory)
@@ -196,15 +191,13 @@ namespace taskt.Core.Automation.Commands
                 {
                     engine.StoreComplexObjectInVariable(v_applyToVariableName, fileList);
                 }
-
-
             }
             catch (Exception)
             {
                 throw; 
             }
-
         }
+
         //public override List<Control> Render(frmCommandEditor editor)
         //{
         //    base.Render(editor);
