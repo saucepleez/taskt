@@ -57,7 +57,8 @@ namespace taskt.Core.Automation.Commands
 
             //convert items to variables
             var fileName = v_FileName.ConvertToUserVariable(sender);
-            var pauseTime = int.Parse(v_WaitTime.ConvertToUserVariable(sender));
+            //var pauseTime = int.Parse(v_WaitTime.ConvertToUserVariable(sender));
+            int pauseTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
 
             //determine when to stop waiting based on user config
             var stopWaiting = DateTime.Now.AddSeconds(pauseTime);
@@ -69,7 +70,6 @@ namespace taskt.Core.Automation.Commands
             //while file has not been found
             while (!fileFound)
             {
-
                 //if file exists at the file path
                 if (System.IO.File.Exists(fileName))
                 {
