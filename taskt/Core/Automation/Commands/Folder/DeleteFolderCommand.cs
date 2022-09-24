@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -13,15 +14,21 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command deletes a folder from a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to delete a folder from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DeleteFolderCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source folder (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the folder.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the path to the source folder")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the folder.")]
+        [SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Folder Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Folder")]
         public string v_SourceFolderPath { get; set; }
 
         public DeleteFolderCommand()
@@ -34,38 +41,37 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
             //apply variable logic
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
 
             //delete folder
             System.IO.Directory.Delete(sourceFolder, true);
-
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
-
-            return RenderedControls;
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [delete " + v_SourceFolderPath + "']";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            if (String.IsNullOrEmpty(this.v_SourceFolderPath))
-            {
-                this.validationResult += "Source folder is empty.\n";
-                this.IsValid = false;
-            }
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
 
-            return this.IsValid;
-        }
+        //    return RenderedControls;
+        //}
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [delete " + v_SourceFolderPath + "']";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_SourceFolderPath))
+        //    {
+        //        this.validationResult += "Source folder is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }

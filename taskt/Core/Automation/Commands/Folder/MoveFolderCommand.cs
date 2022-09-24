@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -13,51 +14,68 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command moves a folder to a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to move a folder to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MoveFolderCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate whether to move or copy the folder (default is Move Folder)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Move Folder")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Copy Folder")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to move the folder or copy the folder. Moving will remove the folder from the original path while Copying will not.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select either **Move Folder** or **Copy Folder**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Indicate whether to move or copy the folder")]
+        [PropertyUISelectionOption("Move Folder")]
+        [PropertyUISelectionOption("Copy Folder")]
+        [InputSpecification("Specify whether you intend to move the folder or copy the folder. Moving will remove the folder from the original path while Copying will not.")]
+        [SampleUsage("Select either **Move Folder** or **Copy Folder**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Move Folder")]
+        [PropertyDisplayText(true, "Operation")]
         public string v_OperationType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source folder (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the folder.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the path to the source folder")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the folder.")]
+        [SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Target Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Target Folder")]
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to move/copy to (ex. C:\\temp\\newfolder, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the new path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\newPath** or **{{{vTextFolderPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the folder to move/copy to")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        [InputSpecification("Enter or Select the new path to the file.")]
+        [SampleUsage("**C:\\temp\\newPath** or **{{{vTextFolderPath}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Folder to Move/Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Move/Copy")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Create folder if destination does not exist (default is No)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether the directory should be created if it does not already exist.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Create folder if destination does not exist")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Specify whether the directory should be created if it does not already exist.")]
+        [SampleUsage("Select **Yes** or **No**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "No")]
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Delete folder if it already exists (defualt is No)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether the folder should be deleted first if it is already found to exist.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Delete folder if it already exists")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Specify whether the folder should be deleted first if it is already found to exist.")]
+        [SampleUsage("Select **Yes** or **No**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "No")]
         public string v_DeleteExisting { get; set; }
 
         public MoveFolderCommand()
@@ -74,7 +92,7 @@ namespace taskt.Core.Automation.Commands
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
             var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(sender);
 
-            if (!System.IO.Directory.Exists(destinationFolder))
+            if (!Directory.Exists(destinationFolder))
             {
                 var vCreateDirectory = v_CreateDirectory.ConvertToUserVariable(sender);
                 if (String.IsNullOrEmpty(vCreateDirectory))
@@ -91,10 +109,10 @@ namespace taskt.Core.Automation.Commands
             DirectoryInfo sourceFolderInfo = new DirectoryInfo(sourceFolder);
 
             //create final path
-            var finalPath = System.IO.Path.Combine(destinationFolder, sourceFolderInfo.Name);
+            var finalPath = Path.Combine(destinationFolder, sourceFolderInfo.Name);
 
             //delete if it already exists per user
-            if (System.IO.Directory.Exists(finalPath))
+            if (Directory.Exists(finalPath))
             {
                 var vDeleteExisting = v_DeleteExisting.ConvertToUserVariable(sender);
                 if (String.IsNullOrEmpty(vDeleteExisting))
@@ -169,39 +187,40 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationDirectory", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteExisting", this, editor));
-            return RenderedControls;
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [" + v_OperationType + " from '" + v_SourceFolderPath + "' to '" + v_DestinationDirectory + "']";
-        }
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationDirectory", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteExisting", this, editor));
+        //    return RenderedControls;
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [" + v_OperationType + " from '" + v_SourceFolderPath + "' to '" + v_DestinationDirectory + "']";
+        //}
 
-            if (String.IsNullOrEmpty(this.v_SourceFolderPath))
-            {
-                this.validationResult += "Source folder is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_DestinationDirectory))
-            {
-                this.validationResult += "Move/copy folder is empty.\n";
-                this.IsValid = false;
-            }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            return this.IsValid;
-        }
+        //    if (String.IsNullOrEmpty(this.v_SourceFolderPath))
+        //    {
+        //        this.validationResult += "Source folder is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_DestinationDirectory))
+        //    {
+        //        this.validationResult += "Move/copy folder is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }

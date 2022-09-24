@@ -8,7 +8,6 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Folder Operation Commands")]
     [Attributes.ClassAttributes.Description("This command waits for a folder to exist at a specified destination")]
@@ -16,7 +15,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     public class WaitForFolderToExistCommand : ScriptCommand
     {
-
         [XmlAttribute]
         [PropertyDescription("Please indicate the path of the folder")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -24,8 +22,10 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter or Select the path to the folder.")]
         [SampleUsage("**C:\\temp\\myfolder** or **{{{vFolderPath}}}**")]
         [Remarks("")]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Folder Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Folder")]
         public string v_FolderName { get; set; }
 
 
@@ -36,7 +36,9 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**10** or **20** or **{{{vWaitTime}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Wait Time", "s")]
         public string v_WaitTime { get; set; }
 
         public WaitForFolderToExistCommand()
@@ -46,7 +48,6 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
-
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
@@ -64,7 +65,6 @@ namespace taskt.Core.Automation.Commands
             //while file has not been found
             while (!folderFound)
             {
-
                 //if file exists at the folder path
                 if (System.IO.Directory.Exists(folder))
                 {
@@ -83,19 +83,19 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
             
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Folder: " + v_FolderName + ", Wait " + v_WaitTime + "s]";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Folder: " + v_FolderName + ", Wait " + v_WaitTime + "s]";
+        //}
     }
 }

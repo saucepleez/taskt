@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Source File", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Target File", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
         public string v_SourceFilePath { get; set; }
 
