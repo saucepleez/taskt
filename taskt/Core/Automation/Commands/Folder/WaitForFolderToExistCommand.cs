@@ -13,6 +13,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command waits for a folder to exist at a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to wait for a folder to exist before proceeding.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WaitForFolderToExistCommand : ScriptCommand
     {
         [XmlAttribute]
