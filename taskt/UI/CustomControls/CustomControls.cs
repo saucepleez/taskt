@@ -767,6 +767,7 @@ namespace taskt.UI
             {"WriteTextFileCommand", "taskt.Properties.Resources.command_files"},
 
             // UIAutomation
+            {"UIAutomationCheckElementExistByXPathCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationClickElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationExpandCollapseItemsInElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetChildElementCommand", "taskt.Properties.Resources.command_window"},
@@ -786,6 +787,7 @@ namespace taskt.UI
             {"UIAutomationSelectItemInElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationSetTextToElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationScrollElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationWaitForElementExistByXPathCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
             {"AddVariableCommand", "taskt.Properties.Resources.command_function"},
