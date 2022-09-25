@@ -206,6 +206,16 @@ namespace taskt.UI.Forms.Supplement_Forms
                 }
             }
         }
+        public static void ShowFormatCheckerFormLinkClicked(ComboBox formatComboBox, string type = "")
+        {
+            using (var fm = new frmFormatChecker(type))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    formatComboBox.Text = fm.Format;
+                }
+            }
+        }
         #endregion
     }
 }
