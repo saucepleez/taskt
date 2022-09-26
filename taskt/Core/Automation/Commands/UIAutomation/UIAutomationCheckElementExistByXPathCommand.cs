@@ -16,8 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.Description("This command allows you to wait AutomationElement .")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to wait AutomationElement .")]
+    [Attributes.ClassAttributes.Description("This command allows you to check AutomationElement existence.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check AutomationElement existence.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationWaitForElementExistByXPathCommand : ScriptCommand
