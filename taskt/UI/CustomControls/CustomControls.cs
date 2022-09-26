@@ -767,6 +767,7 @@ namespace taskt.UI
             {"WriteTextFileCommand", "taskt.Properties.Resources.command_files"},
 
             // UIAutomation
+            {"UIAutomationCheckElementExistCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationCheckElementExistByXPathCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationClickElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationExpandCollapseItemsInElementCommand", "taskt.Properties.Resources.command_window"},

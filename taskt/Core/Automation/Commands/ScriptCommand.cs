@@ -354,6 +354,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WriteTextFileCommand))]
 
     // UIAutomation
+    [XmlInclude(typeof(UIAutomationCheckElementExistCommand))]
     [XmlInclude(typeof(UIAutomationCheckElementExistByXPathCommand))]
     [XmlInclude(typeof(UIAutomationClickElementCommand))]
     [XmlInclude(typeof(UIAutomationExpandCollapseItemsInElementCommand))]
