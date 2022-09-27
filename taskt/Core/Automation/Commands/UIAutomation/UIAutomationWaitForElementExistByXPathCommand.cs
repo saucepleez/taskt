@@ -16,11 +16,11 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement using by XPath.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. XPath does not support to use parent and sibling for root element.")]
+    [Attributes.ClassAttributes.Description("This command allows you to Wait until the AutomationElement exists using by XPath.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the AutomationElement exists using by XPath.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetElementFromElementByXPathCommand : ScriptCommand
+    public class UIAutomationWaitForElementExistByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify AutomationElement Variable")]
@@ -50,28 +50,21 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
+        [PropertyDescription("Please specify how many seconds to wait for the AutomationElement to exist")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
+        [SampleUsage("**10** or **{{{vWait}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
-        public string v_AutomationElementVariable { get; set; }
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Wait", "s")]
+        public string v_WaitTime { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private TextBox XPathTextBox;
-
-        public UIAutomationGetElementFromElementByXPathCommand()
+        public UIAutomationWaitForElementExistByXPathCommand()
         {
-            this.CommandName = "UIAutomationGetElementFromElementByXPathCommand";
-            this.SelectionName = "Get Element From Element By XPath";
+            this.CommandName = "UIAutomationWaitForElementExistByXPathCommand";
+            this.SelectionName = "Wait For Element Exist By XPath";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -82,46 +75,39 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            Dictionary<string, AutomationElement> dic;
-
-            XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
-
             string xpath = v_SearchXPath.ConvertToUserVariable(engine);
             if (!xpath.StartsWith("."))
             {
                 xpath = "." + xpath;
             }
 
-            XElement resElem = xml.XPathSelectElement(xpath);
+            int pauseTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
+            var stopWaiting = DateTime.Now.AddSeconds(pauseTime);
 
-            if (resElem == null)
+            bool elementFound = false;
+            while (!elementFound)
             {
-                throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
-            }
+                XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
+                XElement resElem = xml.XPathSelectElement(xpath);
+                if (resElem != null)
+                {
+                    elementFound = true;
+                }
 
-            AutomationElement res = dic[resElem.Attribute("Hash").Value];
-            res.StoreInUserVariable(engine, v_AutomationElementVariable);
+                if (DateTime.Now > stopWaiting)
+                {
+                    throw new Exception("AutomationElement was not found in time!");
+                }
+
+                engine.ReportProgress("AutomationElement Not Yet Found... " + (int)((stopWaiting - DateTime.Now).TotalSeconds) + "s remain");
+                System.Threading.Thread.Sleep(1000);
+            }
         }
+
         private void lnkInspectTool_Clicked(object sender, EventArgs e)
         {
-            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(XPathTextBox);
+            TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
+            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(txt);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    XPathTextBox = (TextBox)ctrls.GetControlsByName("v_SearchXPath", CommandControls.CommandControlType.Body)[0];
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', XPath: '" + v_SearchXPath + "', Store: '" + v_AutomationElementVariable + "']";
-        //}
     }
 }

@@ -7,18 +7,18 @@ using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Xml.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Child Element from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child Element from AutomationElement. Search only for Child Elements.")]
+    [Attributes.ClassAttributes.Description("This command allows you to Wait until the AutomationElement exists.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the AutomationElement exists.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetChildElementCommand : ScriptCommand
+    public class UIAutomationWaitForElementExistCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify AutomationElement Variable")]
@@ -29,10 +29,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Root Element")]
-        public string v_RootElement { get; set; }
+        public string v_TargetElement { get; set; }
 
         [XmlElement]
         [PropertyDescription("Set Search Parameters")]
@@ -43,7 +43,6 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
-        [PropertyIsOptional(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(false, false, true)]
         [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
@@ -53,38 +52,25 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Child Element Index")]
+        [PropertyDescription("Please specify how many seconds to wait for the AutomationElement to exist")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        [SampleUsage("**10** or **{{{vWait}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Index")]
-        public string v_Index { get; set; }
-
-        [XmlAttribute]
-        [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
-        [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
-        public string v_AutomationElementVariable { get; set; }
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Wait", "s")]
+        public string v_WaitTime { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
         private DataGridView SearchParametersGridViewHelper;
 
-        public UIAutomationGetChildElementCommand()
+        public UIAutomationWaitForElementExistCommand()
         {
-            this.CommandName = "UIAutomationGetChildElementCommand";
-            this.SelectionName = "Get Child Element";
+            this.CommandName = "UIAutomationWaitForElementExistCommand";
+            this.SelectionName = "Wait For Element Exist";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -93,17 +79,27 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_RootElement.GetAutomationElementVariable(engine);
-            int index = v_Index.ConvertToUserVariableAsInteger("v_Index", engine);
+            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            var elems = AutomationElementControls.GetChildrenElements(rootElement, v_SearchParameters, engine);
-            if (elems.Count > 0)
+            int pauseTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
+            var stopWaiting = DateTime.Now.AddSeconds(pauseTime);
+
+            bool elementFound = false;
+            while (!elementFound)
             {
-                elems[index].StoreInUserVariable(engine, v_AutomationElementVariable);
-            }
-            else
-            {
-                throw new Exception("AutomationElement not found");
+                AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
+                if (elem != null)
+                {
+                    elementFound = true;
+                }
+
+                if (DateTime.Now > stopWaiting)
+                {
+                    throw new Exception("AutomationElement was not found in time!");
+                }
+
+                engine.ReportProgress("AutomationElement Not Yet Found... " + (int)((stopWaiting - DateTime.Now).TotalSeconds) + "s remain");
+                System.Threading.Thread.Sleep(1000);
             }
         }
 
@@ -116,28 +112,9 @@ namespace taskt.Core.Automation.Commands
         {
             AutomationElementControls.InspectToolParserClicked(v_SearchParameters);
         }
-
         private void lnkGUIInspectTool_Click(object sender, EventArgs e)
         {
             AutomationElementControls.GUIInspectTool_UsedByInspectResult_Clicked(v_SearchParameters);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    SearchParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_ActionParameters", CommandControls.CommandControlType.Body)[0];
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Root Element: '" + v_RootElement + "', Index: " + v_Index + ", Store: '" + v_AutomationElementVariable + "']";
-        //}
-
     }
 }

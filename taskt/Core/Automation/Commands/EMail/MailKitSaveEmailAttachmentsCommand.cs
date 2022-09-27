@@ -14,6 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to save EMail Attachments.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save EMail Attachments.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MailKitSaveEmailAttachmentsCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -27,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyDisplayText(true, "EMail")]
         public string v_MailName { get; set; }
 
         [XmlAttribute]
@@ -39,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Path")]
         public string v_SaveFolder { get; set; }
 
         public MailKitSaveEmailAttachmentsCommand()
@@ -70,19 +74,20 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Folder: '" + v_SaveFolder + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Folder: '" + v_SaveFolder + "']";
+        //}
     }
 }

@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,24 +15,32 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command returns existence of folder paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a existence of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckFolderExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify the path of the folder you want to check for existence (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfolder** or **{{{vFolderPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Specify the path of the folder you want to check for existence")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the file.")]
+        [SampleUsage("**C:\\temp\\myfolder** or **{{{vFolderPath}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Folder")]
         public string v_TargetFolderName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify the variable to assign the result")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("Result is **TRUE** or **FALSE**")]
-        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean, true)]
+        [PropertyDescription("Specify the variable to assign the result")]
+        [InputSpecification("")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("Result is **TRUE** or **FALSE**")]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
+        [PropertyValidationRule("Resut", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_UserVariableName { get; set; }
 
         public CheckFolderExistsCommand()
@@ -44,46 +53,48 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             //apply variable logic
             var targetFile = v_TargetFolderName.ConvertToUserVariable(sender);
 
-            (System.IO.Directory.Exists(targetFile) ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_UserVariableName);
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TargetFolderName", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
-            return RenderedControls;
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Check: '" + v_TargetFolderName + "', Result In: '" + v_UserVariableName + "']";
+            //(System.IO.Directory.Exists(targetFile) ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_UserVariableName);
+            System.IO.Directory.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            if (String.IsNullOrEmpty(this.v_TargetFolderName))
-            {
-                this.validationResult += "Target folder is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_UserVariableName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TargetFolderName", this, editor));
 
-            return this.IsValid;
-        }
+        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
+        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
+        //    RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
+        //    RenderedControls.Add(VariableNameControl);
+
+        //    return RenderedControls;
+        //}
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Check: '" + v_TargetFolderName + "', Result In: '" + v_UserVariableName + "']";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_TargetFolderName))
+        //    {
+        //        this.validationResult += "Target folder is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }

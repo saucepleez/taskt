@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -13,19 +14,22 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command deletes a file from a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to detete a file from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DeleteFileCommand : ScriptCommand
     {
-
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file. (ex. c:\\temp\\myfile.txt, {{{vFilePath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the File Path to Delete.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the file.")]
+        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "File")]
         public string v_SourceFilePath { get; set; }
-
-
 
         public DeleteFileCommand()
         {
@@ -37,39 +41,38 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
             //apply variable logic
             var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
 
             //delete file
             System.IO.File.Delete(sourceFile);
-
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
-
-            return RenderedControls;
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [delete " + v_SourceFilePath + "']";
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
 
-            if (String.IsNullOrEmpty(this.v_SourceFilePath))
-            {
-                this.validationResult += "Source file is empty.\n";
-                this.IsValid = false;
-            }
+        //    return RenderedControls;
+        //}
 
-            return this.IsValid;
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [delete " + v_SourceFilePath + "']";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_SourceFilePath))
+        //    {
+        //        this.validationResult += "Source file is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }

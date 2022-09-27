@@ -464,10 +464,12 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     {
         public bool parameterDisplay = false;
         public string parameterName = "";
-        public PropertyDisplayText(bool show, string name)
+        public string afterText = "";
+        public PropertyDisplayText(bool show, string name, string afterText = "")
         {
             this.parameterDisplay = show;
             this.parameterName = name;
+            this.afterText = afterText;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to filter List value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter List value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FilterListCommand : ScriptCommand
     {
@@ -40,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
+        [PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
         [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
@@ -51,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyControlIntoCommandField("FilterActionComboboxHelper")]
         [PropertySelectionChangeEvent("cmbFilterAction_SelectionChangeCommited")]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
@@ -66,6 +69,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        [PropertyControlIntoCommandField("FilterParametersGridViewHelper")]
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
@@ -137,25 +141,25 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
-            FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
-            FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
-
-            return RenderedControls;
-        }
-
         public override void AfterShown()
         {
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
+
+        //    TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
+        //    FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
+        //    FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
+
+        //    return RenderedControls;
+        //}
 
         //public override string GetDisplayValue()
         //{

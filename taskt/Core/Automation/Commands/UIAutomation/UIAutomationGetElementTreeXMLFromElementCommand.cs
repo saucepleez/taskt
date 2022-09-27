@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.SubGruop("Get")]
     [Attributes.ClassAttributes.Description("This command allows you to get Element Tree XML from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Element Tree XML from AutomationElement. XML content is based on WinAppDriver UI Recorder.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetElementTreeXMLFromElementCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Element")]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -41,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_XMLVariable { get; set; }
 
         public UIAutomationGetElementTreeXMLFromElementCommand()
@@ -64,20 +68,20 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrl);
+        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrl);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Store: '" + v_XMLVariable + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Store: '" + v_XMLVariable + "']";
+        //}
 
     }
 }

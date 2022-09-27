@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
 using taskt.UI.CustomControls;
+using OpenQA.Selenium.DevTools.V102.Inspector;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -187,6 +188,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(CheckFileExistsCommand))]
     [XmlInclude(typeof(DeleteFileCommand))]
     [XmlInclude(typeof(ExtractFileCommand))]
+    [XmlInclude(typeof(FormatFilePathCommnad))]
     [XmlInclude(typeof(GetFileInfoCommand))]
     [XmlInclude(typeof(GetFilesCommand))]
     [XmlInclude(typeof(MoveFileCommand))]
@@ -197,6 +199,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(CheckFolderExistsCommand))]
     [XmlInclude(typeof(CreateFolderCommand))]
     [XmlInclude(typeof(DeleteFolderCommand))]
+    [XmlInclude(typeof(FormatFolderPathCommnad))]
     [XmlInclude(typeof(GetFoldersCommand))]
     [XmlInclude(typeof(MoveFolderCommand))]
     [XmlInclude(typeof(RenameFolderCommand))]
@@ -278,15 +281,16 @@ namespace taskt.Core.Automation.Commands
 
     // Misc
     [XmlInclude(typeof(ClipboardClearTextCommand))]
-    [XmlInclude(typeof(CommentCommand))]
-    [XmlInclude(typeof(EncryptionCommand))]
     [XmlInclude(typeof(ClipboardGetTextCommand))]
-    [XmlInclude(typeof(PingCommand))]
-    [XmlInclude(typeof(SMTPSendEmailCommand))]
-    [XmlInclude(typeof(SequenceCommand))]
     [XmlInclude(typeof(ClipboardSetTextCommand))]
-    [XmlInclude(typeof(MessageBoxCommand))]
+    [XmlInclude(typeof(CommentCommand))]
     [XmlInclude(typeof(CreateShortcutCommand))]
+    [XmlInclude(typeof(EncryptionCommand))]
+    [XmlInclude(typeof(MessageBoxCommand))]
+    [XmlInclude(typeof(PingCommand))]
+    [XmlInclude(typeof(PlaySystemSoundCommand))]
+    [XmlInclude(typeof(SequenceCommand))]
+    [XmlInclude(typeof(SMTPSendEmailCommand))]
 
     // NLG
     [XmlInclude(typeof(NLGCreateInstanceCommand))]
@@ -351,6 +355,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WriteTextFileCommand))]
 
     // UIAutomation
+    [XmlInclude(typeof(UIAutomationCheckElementExistByXPathCommand))]
+    [XmlInclude(typeof(UIAutomationCheckElementExistCommand))]
     [XmlInclude(typeof(UIAutomationClickElementCommand))]
     [XmlInclude(typeof(UIAutomationExpandCollapseItemsInElementCommand))]
     [XmlInclude(typeof(UIAutomationGetChildElementCommand))]
@@ -370,6 +376,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(UIAutomationSelectItemInElementCommand))]
     [XmlInclude(typeof(UIAutomationSetTextToElementCommand))]
     [XmlInclude(typeof(UIAutomationScrollElementCommand))]
+    [XmlInclude(typeof(UIAutomationWaitForElementExistByXPathCommand))]
+    [XmlInclude(typeof(UIAutomationWaitForElementExistCommand))]
 
     // Variable
     [XmlInclude(typeof(VariableCommand))]
@@ -594,7 +602,15 @@ namespace taskt.Core.Automation.Commands
                     {
                         dispValue = "'" + value + "'";
                     }
-                    return dispProp.parameterName + ": " + dispValue + ", ";
+
+                    if (dispProp.afterText != "")
+                    {
+                        return dispProp.parameterName + ": " + dispValue + " " + dispProp.afterText + ", ";
+                    }
+                    else
+                    {
+                        return dispProp.parameterName + ": " + dispValue + ", ";
+                    }
                 }
             }
             else

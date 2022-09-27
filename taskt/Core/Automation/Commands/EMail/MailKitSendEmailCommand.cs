@@ -14,6 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to send EMail using SMTP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an EMail and have access to SMTP server credentials to generate an EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MailKitSendEmailCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -25,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("SMTP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Host")]
         public string v_SMTPHost { get; set; }
 
         [XmlAttribute]
@@ -36,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("SMTP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Port")]
         public string v_SMTPPort { get; set; }
 
         [XmlAttribute]
@@ -69,6 +73,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("From Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "From")]
         public string v_SMTPFromEmail { get; set; }
 
         [XmlAttribute]
@@ -80,6 +85,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("To Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "To")]
         public string v_SMTPToEmail { get; set; }
 
         [XmlAttribute]
@@ -113,6 +119,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "")]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Subject")]
         public string v_SMTPSubject { get; set; }
 
         [XmlAttribute]
@@ -281,19 +288,20 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [From: '" + v_SMTPFromEmail + "', To Address: '" + v_SMTPToEmail + "', Subject: '" + v_SMTPSubject + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [From: '" + v_SMTPFromEmail + "', To Address: '" + v_SMTPToEmail + "', Subject: '" + v_SMTPSubject + "']";
+        //}
     }
 }

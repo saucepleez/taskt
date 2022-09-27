@@ -14,6 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get EMailList(EMails) using POP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get MailList(EMails) using POP protocol. Result Variable Type is EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MailKitRecieveEmailListUsingPOPCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -25,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("POP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Host")]
         public string v_POPHost { get; set; }
 
         [XmlAttribute]
@@ -36,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("POP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Port")]
         public string v_POPPort { get; set; }
 
         [XmlAttribute]
@@ -46,6 +50,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "User")]
         public string v_POPUserName { get; set; }
 
         [XmlAttribute]
@@ -87,6 +92,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("EMailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyDisplayText(true, "Store")]
         public string v_MailListName { get; set; }
 
         public MailKitRecieveEmailListUsingPOPCommand()
@@ -153,19 +159,20 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Host: '" + v_POPHost + "', User: '" + v_POPUserName + "', Store: '" + v_MailListName + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Host: '" + v_POPHost + "', User: '" + v_POPUserName + "', Store: '" + v_MailListName + "']";
+        //}
     }
 }

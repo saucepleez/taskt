@@ -14,6 +14,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get Text from EMail.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Text from EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MailKitGetEMailTextCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -27,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyDisplayText(true, "EMail")]
         public string v_MailName { get; set; }
 
         [XmlAttribute]
@@ -46,6 +49,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Resent-Message-ID")]
         [PropertyUISelectionOption("Resent-Date")]
         [PropertyValidationRule("Text Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
         public string v_TextType { get; set; }
 
         [XmlAttribute]
@@ -58,6 +62,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Text Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_ResultVariable { get; set; }
 
         public MailKitGetEMailTextCommand()
@@ -126,20 +131,21 @@ namespace taskt.Core.Automation.Commands
 
             res.StoreInUserVariable(engine, v_ResultVariable);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Type: '" + v_TextType + "', Store: '" + v_ResultVariable + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Type: '" + v_TextType + "', Store: '" + v_ResultVariable + "']";
+        //}
 
         public override void addInstance(InstanceCounter counter)
         {

@@ -16,11 +16,11 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement using by XPath.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. XPath does not support to use parent and sibling for root element.")]
+    [Attributes.ClassAttributes.Description("This command allows you to check AutomationElement existence.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check AutomationElement existence.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetElementFromElementByXPathCommand : ScriptCommand
+    public class UIAutomationCheckElementExistByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please specify AutomationElement Variable")]
@@ -50,28 +50,24 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
+        [PropertyDescription("Please specify a Variable to store Result")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**vElement** or **{{{vElement}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Store")]
-        public string v_AutomationElementVariable { get; set; }
+        public string v_Result { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private TextBox XPathTextBox;
-
-        public UIAutomationGetElementFromElementByXPathCommand()
+        public UIAutomationCheckElementExistByXPathCommand()
         {
-            this.CommandName = "UIAutomationGetElementFromElementByXPathCommand";
-            this.SelectionName = "Get Element From Element By XPath";
+            this.CommandName = "UIAutomationCheckElementExistByXPathCommand";
+            this.SelectionName = "Check Element Exist By XPath";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
@@ -82,9 +78,7 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            Dictionary<string, AutomationElement> dic;
-
-            XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
+            XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
 
             string xpath = v_SearchXPath.ConvertToUserVariable(engine);
             if (!xpath.StartsWith("."))
@@ -93,35 +87,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             XElement resElem = xml.XPathSelectElement(xpath);
-
-            if (resElem == null)
-            {
-                throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
-            }
-
-            AutomationElement res = dic[resElem.Attribute("Hash").Value];
-            res.StoreInUserVariable(engine, v_AutomationElementVariable);
+            (resElem != null).StoreInUserVariable(engine, v_Result);
         }
         private void lnkInspectTool_Clicked(object sender, EventArgs e)
         {
-            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(XPathTextBox);
+            TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
+            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(txt);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    XPathTextBox = (TextBox)ctrls.GetControlsByName("v_SearchXPath", CommandControls.CommandControlType.Body)[0];
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Root Element: '" + v_TargetElement + "', XPath: '" + v_SearchXPath + "', Store: '" + v_AutomationElementVariable + "']";
-        //}
     }
 }

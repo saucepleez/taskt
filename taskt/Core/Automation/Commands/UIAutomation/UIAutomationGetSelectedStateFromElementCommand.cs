@@ -16,6 +16,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.SubGruop("Get")]
     [Attributes.ClassAttributes.Description("This command allows you to get Selected State from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selected State from AutomationElement.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetSelectedStateFromElementCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -29,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Element")]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -43,6 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
         public string v_ResultVariable { get; set; }
 
         public UIAutomationGetSelectedStateFromElementCommand()
@@ -76,20 +80,20 @@ namespace taskt.Core.Automation.Commands
             checkState.StoreInUserVariable(engine, v_ResultVariable);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrl);
+        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrl);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Store: '" + v_ResultVariable + "']";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Store: '" + v_ResultVariable + "']";
+        //}
 
     }
 }

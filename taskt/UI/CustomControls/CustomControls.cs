@@ -602,6 +602,7 @@ namespace taskt.UI
             {"CheckFileExistsCommand", "taskt.Properties.Resources.command_files"},
             {"DeleteFileCommand", "taskt.Properties.Resources.command_files"},
             {"ExtractFileCommand", "taskt.Properties.Resources.command_files"},
+            {"FormatFilePathCommand", "taskt.Properties.Resources.command_files"},
             {"GetFileInfoCommand", "taskt.Properties.Resources.command_files"},
             {"GetFilesCommand", "taskt.Properties.Resources.command_files"},
             {"MoveFileCommand", "taskt.Properties.Resources.command_files"},
@@ -612,6 +613,7 @@ namespace taskt.UI
             {"CheckFolderExistsCommand", "taskt.Properties.Resources.command_files"},
             {"CreateFolderCommand", "taskt.Properties.Resources.command_files"},
             {"DeleteFolderCommand", "taskt.Properties.Resources.command_files"},
+            {"FormatFolderPathCommand", "taskt.Properties.Resources.command_files"},
             {"GetFoldersCommand", "taskt.Properties.Resources.command_files"},
             {"MoveFolderCommand", "taskt.Properties.Resources.command_files"},
             {"RenameFolderCommand", "taskt.Properties.Resources.command_files"},
@@ -692,16 +694,17 @@ namespace taskt.UI
             {"NextLoopCommand", "taskt.Properties.Resources.command_nextloop"},
 
             // Misc
-            {"CommentCommand", "taskt.Properties.Resources.command_comment"},
-            {"EncryptionCommand", "taskt.Properties.Resources.command_input"},
             {"ClipboardClearTextCommand", "taskt.Properties.Resources.command_files"},
             {"ClipboardSetTextCommand", "taskt.Properties.Resources.command_files"},
             {"ClipboardGetTextCommand", "taskt.Properties.Resources.command_files"},
+            {"CommentCommand", "taskt.Properties.Resources.command_comment"},
             {"CreateShortcutCommand", "taskt.Properties.Resources.command_files"},
+            {"EncryptionCommand", "taskt.Properties.Resources.command_input"},
+            {"MessageBoxCommand", "taskt.Properties.Resources.command_comment"},
             {"PingCommand", "taskt.Properties.Resources.command_web"},
+            {"PlaySystemSoundCommand", "taskt.Properties.Resources.command_files"},
             {"SMTPSendEmailCommand", "taskt.Properties.Resources.command_smtp"},
             {"SequenceCommand", "taskt.Properties.Resources.command_sequence"},
-            {"MessageBoxCommand", "taskt.Properties.Resources.command_comment"},
 
             // NLG
             {"NLGCreateInstanceCommand", "taskt.Properties.Resources.command_nlg"},
@@ -765,6 +768,8 @@ namespace taskt.UI
             {"WriteTextFileCommand", "taskt.Properties.Resources.command_files"},
 
             // UIAutomation
+            {"UIAutomationCheckElementExistCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationCheckElementExistByXPathCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationClickElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationExpandCollapseItemsInElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationGetChildElementCommand", "taskt.Properties.Resources.command_window"},
@@ -784,6 +789,8 @@ namespace taskt.UI
             {"UIAutomationSelectItemInElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationSetTextToElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationScrollElementCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationWaitForElementExistByXPathCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationWaitForElementExistCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
             {"AddVariableCommand", "taskt.Properties.Resources.command_function"},
