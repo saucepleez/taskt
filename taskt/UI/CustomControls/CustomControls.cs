@@ -694,16 +694,17 @@ namespace taskt.UI
             {"NextLoopCommand", "taskt.Properties.Resources.command_nextloop"},
 
             // Misc
-            {"CommentCommand", "taskt.Properties.Resources.command_comment"},
-            {"EncryptionCommand", "taskt.Properties.Resources.command_input"},
             {"ClipboardClearTextCommand", "taskt.Properties.Resources.command_files"},
             {"ClipboardSetTextCommand", "taskt.Properties.Resources.command_files"},
             {"ClipboardGetTextCommand", "taskt.Properties.Resources.command_files"},
+            {"CommentCommand", "taskt.Properties.Resources.command_comment"},
             {"CreateShortcutCommand", "taskt.Properties.Resources.command_files"},
+            {"EncryptionCommand", "taskt.Properties.Resources.command_input"},
+            {"MessageBoxCommand", "taskt.Properties.Resources.command_comment"},
             {"PingCommand", "taskt.Properties.Resources.command_web"},
+            {"PlaySystemSoundCommand", "taskt.Properties.Resources.command_files"},
             {"SMTPSendEmailCommand", "taskt.Properties.Resources.command_smtp"},
             {"SequenceCommand", "taskt.Properties.Resources.command_sequence"},
-            {"MessageBoxCommand", "taskt.Properties.Resources.command_comment"},
 
             // NLG
             {"NLGCreateInstanceCommand", "taskt.Properties.Resources.command_nlg"},

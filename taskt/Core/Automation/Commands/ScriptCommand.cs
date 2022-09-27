@@ -281,15 +281,16 @@ namespace taskt.Core.Automation.Commands
 
     // Misc
     [XmlInclude(typeof(ClipboardClearTextCommand))]
-    [XmlInclude(typeof(CommentCommand))]
-    [XmlInclude(typeof(EncryptionCommand))]
     [XmlInclude(typeof(ClipboardGetTextCommand))]
-    [XmlInclude(typeof(PingCommand))]
-    [XmlInclude(typeof(SMTPSendEmailCommand))]
-    [XmlInclude(typeof(SequenceCommand))]
     [XmlInclude(typeof(ClipboardSetTextCommand))]
-    [XmlInclude(typeof(MessageBoxCommand))]
+    [XmlInclude(typeof(CommentCommand))]
     [XmlInclude(typeof(CreateShortcutCommand))]
+    [XmlInclude(typeof(EncryptionCommand))]
+    [XmlInclude(typeof(MessageBoxCommand))]
+    [XmlInclude(typeof(PingCommand))]
+    [XmlInclude(typeof(PlaySystemSoundCommand))]
+    [XmlInclude(typeof(SequenceCommand))]
+    [XmlInclude(typeof(SMTPSendEmailCommand))]
 
     // NLG
     [XmlInclude(typeof(NLGCreateInstanceCommand))]
