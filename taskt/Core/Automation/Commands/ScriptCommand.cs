@@ -354,8 +354,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(WriteTextFileCommand))]
 
     // UIAutomation
-    [XmlInclude(typeof(UIAutomationCheckElementExistCommand))]
     [XmlInclude(typeof(UIAutomationCheckElementExistByXPathCommand))]
+    [XmlInclude(typeof(UIAutomationCheckElementExistCommand))]
     [XmlInclude(typeof(UIAutomationClickElementCommand))]
     [XmlInclude(typeof(UIAutomationExpandCollapseItemsInElementCommand))]
     [XmlInclude(typeof(UIAutomationGetChildElementCommand))]
@@ -376,6 +376,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(UIAutomationSetTextToElementCommand))]
     [XmlInclude(typeof(UIAutomationScrollElementCommand))]
     [XmlInclude(typeof(UIAutomationWaitForElementExistByXPathCommand))]
+    [XmlInclude(typeof(UIAutomationWaitForElementExistCommand))]
 
     // Variable
     [XmlInclude(typeof(VariableCommand))]

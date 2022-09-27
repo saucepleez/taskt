@@ -789,6 +789,7 @@ namespace taskt.UI
             {"UIAutomationSetTextToElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationScrollElementCommand", "taskt.Properties.Resources.command_window"},
             {"UIAutomationWaitForElementExistByXPathCommand", "taskt.Properties.Resources.command_window"},
+            {"UIAutomationWaitForElementExistCommand", "taskt.Properties.Resources.command_window"},
 
             // Variable
             {"AddVariableCommand", "taskt.Properties.Resources.command_function"},
