@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyFirstValue("%kwd_excel_default_instance%")]
+        [PropertyFirstValue("%kwd_default_excel_instance%")]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
         public string v_InstanceName { get; set; }
