@@ -1,15 +1,30 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core
 {
-    internal class ExcelControls
+    internal static class ExcelControls
     {
         public static Application getExcelInstance(Automation.Engine.AutomationEngineInstance engine, string instanceName)
         {
             var excelObject = engine.GetAppInstance(instanceName);
 
             return (Application)excelObject;
+        }
+
+        public static Microsoft.Office.Interop.Excel.Application getExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        {
+            string ins = instanceName.ConvertToUserVariable(engine);
+            var instanceObject = engine.GetAppInstance(ins);
+            if (instanceObject is Application)
+            {
+                return (Application)instanceObject;
+            }
+            else
+            {
+                throw new Exception("Instance '" + instanceName + "' is not Excel Instance");
+            }
         }
 
         public static Worksheet getWorksheet(Automation.Engine.AutomationEngineInstance engine, Application excelInstance, string sheetName)

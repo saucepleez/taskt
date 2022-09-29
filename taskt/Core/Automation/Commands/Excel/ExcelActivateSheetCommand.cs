@@ -54,9 +54,10 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+            var excelInstance = ExcelControls.getExcelInstance(v_InstanceName, engine);
 
             string sheetToActive = v_SheetName.ConvertToUserVariable(sender);
 
