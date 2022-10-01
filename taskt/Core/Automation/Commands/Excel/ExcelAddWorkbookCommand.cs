@@ -40,12 +40,13 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
+            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            var excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+            //var excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
+            var excelInstance = v_InstanceName.getExcelInstance(engine);
 
             excelInstance.Workbooks.Add();            
         }
