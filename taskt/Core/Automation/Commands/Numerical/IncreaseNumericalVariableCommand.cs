@@ -67,11 +67,12 @@ namespace taskt.Core.Automation.Commands
 
             var variableValue = variableName.ConvertToUserVariableAsDecimal("Variable Name", engine);
 
-            if (String.IsNullOrEmpty(v_Value))
-            {
-                v_Value = "1";
-            }
-            var add = v_Value.ConvertToUserVariableAsDecimal("Value", engine);
+            //if (String.IsNullOrEmpty(v_Value))
+            //{
+            //    v_Value = "1";
+            //}
+            //var add = v_Value.ConvertToUserVariableAsDecimal("Value", engine);
+            var add = v_Value.ConvertToUserVariableAsDecimal("v_Value", "Value", engine, this);
 
             (variableValue + add).ToString().StoreInUserVariable(engine, variableName);
         }
