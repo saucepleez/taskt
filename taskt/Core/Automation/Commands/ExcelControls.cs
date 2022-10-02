@@ -26,6 +26,34 @@ namespace taskt.Core
             }
         }
 
+        public static Worksheet GetExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        {
+            var sheet = sheetVariable.ConvertToUserVariable(engine);
+            if (sheet == engine.engineSettings.CurrentWorksheetKeyword)
+            {
+                return (Worksheet)excelInstance.ActiveSheet;
+            }
+            else if (sheet == engine.engineSettings.NextWorksheetKeyword)
+            {
+                return getNextWorksheet(excelInstance);
+            }
+            else if (sheet == engine.engineSettings.PreviousWorksheetKeyword)
+            {
+                return getPreviousWorksheet(excelInstance);
+            }
+            else
+            {
+                try
+                {
+                    return (Worksheet)excelInstance.Worksheets[sheet];
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public static Worksheet getWorksheet(Automation.Engine.AutomationEngineInstance engine, Application excelInstance, string sheetName)
         {
             if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
