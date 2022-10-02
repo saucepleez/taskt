@@ -104,7 +104,8 @@ namespace taskt.Core.Automation.Commands
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             var excelInstance = v_InstanceName.getExcelInstance(engine);
 
-            var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
+            //var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
+            var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
 
             //var valueType = v_ValueType.ConvertToUserVariable(sender);
             //if (String.IsNullOrEmpty(valueType))
