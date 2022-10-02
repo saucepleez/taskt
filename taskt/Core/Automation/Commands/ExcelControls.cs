@@ -12,7 +12,7 @@ namespace taskt.Core
             return (Application)excelObject;
         }
 
-        public static Microsoft.Office.Interop.Excel.Application getExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        public static Application getExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
             string ins = instanceName.ConvertToUserVariable(engine);
             var instanceObject = engine.GetAppInstance(ins);
@@ -272,6 +272,20 @@ namespace taskt.Core
                     break;
             }
             return --lastColumn;
+        }
+
+        public static string ConvertToUserVariableAsExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        {
+            var location = value.ConvertToUserVariable(engine);
+            try
+            {
+                var rg = excelInstance.Range[location]; // location validate test
+                return location;
+            }
+            catch
+            {
+                throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
+            }
         }
     }
 }
