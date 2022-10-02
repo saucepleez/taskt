@@ -60,10 +60,12 @@ namespace taskt.Core.Automation.Commands
             //var excelInstance = ExcelControls.getExcelInstance(v_InstanceName, engine);
             var excelInstance = v_InstanceName.getExcelInstance(engine);
 
-            string sheetToActive = v_SheetName.ConvertToUserVariable(sender);
-
             Microsoft.Office.Interop.Excel.Worksheet currentSheet = ExcelControls.getCurrentWorksheet(excelInstance);
-            Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetToActive);
+
+            //string sheetToActive = v_SheetName.ConvertToUserVariable(sender);
+            //Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetToActive);
+            Microsoft.Office.Interop.Excel.Worksheet targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
+
             if (targetSheet != null)
             {
                 if (currentSheet.Name != targetSheet.Name)
@@ -73,7 +75,8 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Worksheet " + sheetToActive + " does not exists.");
+                //throw new Exception("Worksheet " + sheetToActive + " does not exists.");
+                throw new Exception("Worksheet '" + v_SheetName + "' does not exists.");
             }
         }
 
