@@ -305,14 +305,48 @@ namespace taskt.Core
         public static string ConvertToUserVariableAsExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
             var location = value.ConvertToUserVariable(engine);
+            //try
+            //{
+            //    var rg = excelInstance.Range[location]; // location validate test
+            //    return location;
+            //}
+            //catch
+            //{
+            //    throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
+            //}
+            if (CheckCorrectRange(location, excelInstance))
+            {
+                return location;
+            }
+            else
+            {
+                throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
+            }
+        }
+
+        public static bool CheckCorrectRange(this string range, Application excelInstance)
+        {
             try
             {
-                var rg = excelInstance.Range[location]; // location validate test
-                return location;
+                var rg = excelInstance.Range[range];
+                return true;
             }
             catch
             {
-                throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
+                return false;
+            }
+        }
+
+        public static bool CheckCorrectRC(int row, int column, Application excelInstance)
+        {
+            try
+            {
+                var rc = excelInstance.Cells[row, column];
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
