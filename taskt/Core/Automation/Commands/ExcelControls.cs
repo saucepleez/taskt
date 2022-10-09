@@ -26,7 +26,7 @@ namespace taskt.Core
             }
         }
 
-        public static Worksheet GetExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        public static Worksheet GetExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, bool returnNullIfSheetDoesNotExists = false)
         {
             var sheet = sheetVariable.ConvertToUserVariable(engine);
             if (sheet == engine.engineSettings.CurrentWorksheetKeyword)
@@ -49,37 +49,44 @@ namespace taskt.Core
                 }
                 catch
                 {
-                    return null;
+                    if (returnNullIfSheetDoesNotExists)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw new Exception("Worksheet " + sheet + " does not exists.");
+                    }
                 }
             }
         }
 
-        public static Worksheet getWorksheet(Automation.Engine.AutomationEngineInstance engine, Application excelInstance, string sheetName)
-        {
-            if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
-            {
-                return (Worksheet)excelInstance.ActiveSheet;
-            }
-            else if (sheetName == engine.engineSettings.NextWorksheetKeyword)
-            {
-                return getNextWorksheet(excelInstance);
-            }
-            else if (sheetName == engine.engineSettings.PreviousWorksheetKeyword)
-            {
-                return getPreviousWorksheet(excelInstance);
-            }
-            else
-            {
-                try
-                {
-                    return (Worksheet)excelInstance.Worksheets[sheetName];
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
+        //public static Worksheet getWorksheet(Automation.Engine.AutomationEngineInstance engine, Application excelInstance, string sheetName)
+        //{
+        //    if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
+        //    {
+        //        return (Worksheet)excelInstance.ActiveSheet;
+        //    }
+        //    else if (sheetName == engine.engineSettings.NextWorksheetKeyword)
+        //    {
+        //        return getNextWorksheet(excelInstance);
+        //    }
+        //    else if (sheetName == engine.engineSettings.PreviousWorksheetKeyword)
+        //    {
+        //        return getPreviousWorksheet(excelInstance);
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            return (Worksheet)excelInstance.Worksheets[sheetName];
+        //        }
+        //        catch
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //}
 
         public static Worksheet getCurrentWorksheet(Application excelInstance)
         {
