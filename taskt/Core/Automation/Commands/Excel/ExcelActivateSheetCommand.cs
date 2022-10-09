@@ -66,17 +66,22 @@ namespace taskt.Core.Automation.Commands
             //Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetToActive);
             Microsoft.Office.Interop.Excel.Worksheet targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
 
-            if (targetSheet != null)
+            //if (targetSheet != null)
+            //{
+            //    if (currentSheet.Name != targetSheet.Name)
+            //    {
+            //        targetSheet.Select();
+            //    }
+            //}
+            //else
+            //{
+            //    //throw new Exception("Worksheet " + sheetToActive + " does not exists.");
+            //    throw new Exception("Worksheet '" + v_SheetName + "' does not exists.");
+            //}
+
+            if (currentSheet.Name != targetSheet.Name)
             {
-                if (currentSheet.Name != targetSheet.Name)
-                {
-                    targetSheet.Select();
-                }
-            }
-            else
-            {
-                //throw new Exception("Worksheet " + sheetToActive + " does not exists.");
-                throw new Exception("Worksheet '" + v_SheetName + "' does not exists.");
+                targetSheet.Select();
             }
         }
 

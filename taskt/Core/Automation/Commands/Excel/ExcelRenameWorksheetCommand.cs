@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -87,14 +84,15 @@ namespace taskt.Core.Automation.Commands
             var targetSheet = v_sourceSheet.GetExcelWorksheet(engine, excelInstance);
 
             var newName = v_newName.ConvertToUserVariable(sender);
-            if (targetSheet != null)
-            {
-                targetSheet.Name = newName;
-            }
-            else
-            {
-                throw new Exception("Worksheet " + v_sourceSheet + " does not exists.");
-            }
+            //if (targetSheet != null)
+            //{
+            //    targetSheet.Name = newName;
+            //}
+            //else
+            //{
+            //    throw new Exception("Worksheet " + v_sourceSheet + " does not exists.");
+            //}
+            targetSheet.Name = newName;
         }
 
         //public override List<Control> Render(frmCommandEditor editor)

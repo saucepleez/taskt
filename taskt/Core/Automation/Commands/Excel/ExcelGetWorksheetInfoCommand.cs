@@ -100,10 +100,10 @@ namespace taskt.Core.Automation.Commands
 
             //Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetName);
             var targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
-            if (targetSheet == null)
-            {
-                throw new Exception("Worksheet " + v_SheetName + " does not exists.");
-            }
+            //if (targetSheet == null)
+            //{
+            //    throw new Exception("Worksheet " + v_SheetName + " does not exists.");
+            //}
 
             string ret = "";
             int idx = 1;

@@ -82,14 +82,15 @@ namespace taskt.Core.Automation.Commands
             //}
 
             var targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
-            if (targetSheet != null)
-            {
-                targetSheet.Delete();
-            }
-            else
-            {
-                throw new Exception("Worksheet " + v_SheetName + " does not exists.");
-            }
+            //if (targetSheet != null)
+            //{
+            //    targetSheet.Delete();
+            //}
+            //else
+            //{
+            //    throw new Exception("Worksheet " + v_SheetName + " does not exists.");
+            //}
+            targetSheet.Delete();
         }
 
         //public override List<Control> Render(frmCommandEditor editor)

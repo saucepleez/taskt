@@ -95,7 +95,7 @@ namespace taskt.Core.Automation.Commands
 
             //string targetSheet = v_SheetName.ConvertToUserVariable(sender);
             //Microsoft.Office.Interop.Excel.Worksheet sht = ExcelControls.getWorksheet(engine, excelInstance, targetSheet);
-            var sht = v_SheetName.GetExcelWorksheet(engine, excelInstance);
+            var sht = v_SheetName.GetExcelWorksheet(engine, excelInstance, true);
 
             //(sht != null ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
             (sht != null).StoreInUserVariable(engine, v_applyToVariable);
