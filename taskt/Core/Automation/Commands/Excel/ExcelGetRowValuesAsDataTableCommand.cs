@@ -186,11 +186,11 @@ namespace taskt.Core.Automation.Commands
 
             if (!ExcelControls.CheckCorrectRC(rowIndex, columnStartIndex, excelInstance))
             {
-                throw new Exception("Strange Start Location. Row: " + rowIndex + ", Column: " + columnStartIndex);
+                throw new Exception("Invalid Start Location. Row: " + rowIndex + ", Column: " + columnStartIndex);
             }
             if (!ExcelControls.CheckCorrectRC(rowIndex, columnEndIndex, excelInstance))
             {
-                throw new Exception("Strange Start Location. Row: " + rowIndex + ", Column: " + columnEndIndex);
+                throw new Exception("Invalid End Location. Row: " + rowIndex + ", Column: " + columnEndIndex);
             }
 
             Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -14,6 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command get Row values as Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Row values as Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExcelGetRowValuesAsDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -27,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Instance Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyFirstValue("%kwd_default_excel_instance%")]
+        [PropertyDisplayText(true, "Instance")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Row Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        [PropertyDisplayText(true, "Row")]
         public string v_RowIndex { get; set; }
 
         [XmlAttribute]
@@ -50,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Range")]
         [PropertyUISelectionOption("RC")]
         [PropertyValueSensitive(false)]
+        [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -62,6 +64,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        [PropertyDisplayText(true, "Start Column")]
         public string v_ColumnStart { get; set; }
 
         [XmlAttribute]
@@ -74,6 +77,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("End Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        [PropertyDisplayText(true, "End Column")]
         public string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
@@ -86,6 +90,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
@@ -101,6 +106,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Cell")]
         [PropertyValueSensitive(false)]
+        [PropertyDisplayText(true, "Value Type")]
         public string v_ValueType { get; set; }
 
         public ExcelGetRowValuesAsDictionaryCommand()
@@ -115,15 +121,17 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
+            //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
+            var excelInstance = v_InstanceName.getExcelInstance(engine);
             var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
 
             //int rowIndex = int.Parse(v_RowIndex.ConvertToUserVariable(engine));
-            int rowIndex = v_RowIndex.ConvertToUserVariableAsInteger("Row Index", engine);
-            if (rowIndex < 1)
-            {
-                throw new Exception("Row index is less than 1");
-            }
+            //int rowIndex = v_RowIndex.ConvertToUserVariableAsInteger("Row Index", engine);
+            //if (rowIndex < 1)
+            //{
+            //    throw new Exception("Row index is less than 1");
+            //}
+            int rowIndex = v_RowIndex.ConvertToUserVariableAsInteger("v_RowIndex", "Row Index", engine, this);
 
             string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
 
@@ -132,8 +140,6 @@ namespace taskt.Core.Automation.Commands
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
-                    //columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
-                    //columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
                     if (String.IsNullOrEmpty(v_ColumnStart))
                     {
                         v_ColumnStart = "A";
@@ -151,8 +157,6 @@ namespace taskt.Core.Automation.Commands
 
                     break;
                 case "rc":
-                    //columnStartIndex = int.Parse(v_ColumnStart.ConvertToUserVariable(engine));
-                    //columnEndIndex = int.Parse(v_ColumnEnd.ConvertToUserVariable(engine));
                     if (String.IsNullOrEmpty(v_ColumnStart))
                     {
                         v_ColumnStart = "1";
@@ -168,10 +172,10 @@ namespace taskt.Core.Automation.Commands
                         columnEndIndex = v_ColumnEnd.ConvertToUserVariableAsInteger("Column End", engine);
                     }
 
-                    if ((columnStartIndex < 0) || (columnEndIndex < 0))
-                    {
-                        throw new Exception("Column is less than 0");
-                    }
+                    //if ((columnStartIndex < 0) || (columnEndIndex < 0))
+                    //{
+                    //    throw new Exception("Column is less than 0");
+                    //}
                     break;
             }
             if (columnStartIndex > columnEndIndex)
@@ -179,6 +183,15 @@ namespace taskt.Core.Automation.Commands
                 int t = columnStartIndex;
                 columnStartIndex = columnEndIndex;
                 columnEndIndex = t;
+            }
+
+            if (!ExcelControls.CheckCorrectRC(rowIndex, columnStartIndex, excelInstance))
+            {
+                throw new Exception("Invalid Start Location. Row: " + rowIndex + ", Column: " + columnStartIndex);
+            }
+            if (!ExcelControls.CheckCorrectRC(rowIndex, columnEndIndex, excelInstance))
+            {
+                throw new Exception("Invalid End Location. Row: " + rowIndex + ", Column: " + columnEndIndex);
             }
 
             Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);
@@ -193,19 +206,20 @@ namespace taskt.Core.Automation.Commands
 
             newDic.StoreInUserVariable(engine, v_userVariableName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctls);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctls);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Get " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowIndex + "' as Dictionary '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Get " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowIndex + "' as Dictionary '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
+        //}
     }
 }

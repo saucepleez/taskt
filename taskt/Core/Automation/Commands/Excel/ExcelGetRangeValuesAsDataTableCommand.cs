@@ -207,7 +207,7 @@ namespace taskt.Core.Automation.Commands
             }
             if (!ExcelControls.CheckCorrectRC(rowEndIndex, columnEndIndex, excelInstance))
             {
-                throw new Exception("Invalid start Location. Row: " + rowEndIndex + ", Column: " + columnEndIndex);
+                throw new Exception("Invalid End Location. Row: " + rowEndIndex + ", Column: " + columnEndIndex);
             }
 
             Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);

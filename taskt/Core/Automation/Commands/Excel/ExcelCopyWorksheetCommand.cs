@@ -93,6 +93,11 @@ namespace taskt.Core.Automation.Commands
             //}
 
             var targetSheet = v_sourceSheet.GetExcelWorksheet(engine, excelInstance);
+            if (targetSheet == null)
+            {
+                throw new Exception("Worksheet " + v_sourceSheet + " does not exists.");
+            }
+
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
             var newName = v_newSheetName.ConvertToUserVariable(sender);
