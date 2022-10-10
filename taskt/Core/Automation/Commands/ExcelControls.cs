@@ -14,7 +14,7 @@ namespace taskt.Core
         //    return (Application)excelObject;
         //}
 
-        public static Application getExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
             string ins = instanceName.ConvertToUserVariable(engine);
             var instanceObject = engine.GetAppInstance(ins);
@@ -30,13 +30,13 @@ namespace taskt.Core
 
         public static (Application instance, Worksheet sheet) GetExcelInstanceAndSheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
-            var instanceObject = instanceName.getExcelInstance(engine);
-            return (instanceObject, instanceObject.ActiveSheet);
+            var instanceObject = instanceName.GetExcelInstance(engine);
+            return (instanceObject, GetCurrentWorksheet(instanceObject));
         }
 
         public static (Application instance, Worksheet sheet) GetExcelInstanceAndSheet(this (string instanceName, string sheetName) info, Automation.Engine.AutomationEngineInstance engine)
         {
-            var instanceObject = info.instanceName.getExcelInstance(engine);
+            var instanceObject = info.instanceName.GetExcelInstance(engine);
             var sheet = info.sheetName.GetExcelWorksheet(engine, instanceObject);
             return (instanceObject, sheet);
         }
@@ -46,15 +46,58 @@ namespace taskt.Core
             var sheet = sheetVariable.ConvertToUserVariable(engine);
             if (sheet == engine.engineSettings.CurrentWorksheetKeyword)
             {
-                return (Worksheet)excelInstance.ActiveSheet;
+                try
+                {
+                    //return (Worksheet)excelInstance.ActiveSheet;
+                    return GetCurrentWorksheet(excelInstance);
+                }
+                catch
+                {
+                    if (returnNullIfSheetDoesNotExists)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw new Exception("No Worksheet exists.");
+                    }
+                }
             }
             else if (sheet == engine.engineSettings.NextWorksheetKeyword)
             {
-                return getNextWorksheet(excelInstance);
+                try
+                {
+                    return GetNextWorksheet(excelInstance);
+                }
+                catch
+                {
+                    if (returnNullIfSheetDoesNotExists)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw new Exception("Next Worksheet not found.");
+                    }
+                }
             }
             else if (sheet == engine.engineSettings.PreviousWorksheetKeyword)
             {
-                return getPreviousWorksheet(excelInstance);
+                try
+                {
+                    return GetPreviousWorksheet(excelInstance);
+                }
+                catch
+                {
+                    if (returnNullIfSheetDoesNotExists)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw new Exception("Previous Worksheet not found.");
+                    }
+                }
             }
             else
             {
@@ -103,17 +146,25 @@ namespace taskt.Core
         //    }
         //}
 
-        public static Worksheet getCurrentWorksheet(Application excelInstance)
+        public static Worksheet GetCurrentWorksheet(Application excelInstance)
         {
-            return (Worksheet)excelInstance.ActiveSheet;
+            if (excelInstance.Sheets.Count == 0)
+            {
+                throw new Exception("No Worksheets exists.");
+            }
+            else
+            {
+                return excelInstance.ActiveSheet;
+            }
         }
 
-        public static Worksheet getNextWorksheet(Application excelInstance, Worksheet mySheet = null)
+        public static Worksheet GetNextWorksheet(Application excelInstance, Worksheet mySheet = null)
         {
             Worksheet currentSheet;
             if (mySheet == null)
             {
-                currentSheet = (Worksheet)excelInstance.ActiveSheet;
+                //currentSheet = (Worksheet)excelInstance.ActiveSheet;
+                currentSheet = GetCurrentWorksheet(excelInstance);
             }
             else
             {
@@ -138,12 +189,13 @@ namespace taskt.Core
                 return null;
             }
         }
-        public static Worksheet getPreviousWorksheet(Application excelInstance, Worksheet mySheet = null)
+        public static Worksheet GetPreviousWorksheet(Application excelInstance, Worksheet mySheet = null)
         {
             Worksheet currentSheet;
             if (mySheet == null)
             {
-                currentSheet = (Worksheet)excelInstance.ActiveSheet;
+                //currentSheet = (Worksheet)excelInstance.ActiveSheet;
+                currentSheet = GetCurrentWorksheet(excelInstance);
             }
             else
             {
