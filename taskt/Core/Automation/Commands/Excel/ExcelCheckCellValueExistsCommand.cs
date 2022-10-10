@@ -105,10 +105,11 @@ namespace taskt.Core.Automation.Commands
 
             //var excelInstance = v_InstanceName.GetExcelInstance(engine);
             //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndSheet(engine);
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             //var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
-            var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
+            //var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
+            var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             //var valueType = v_ValueType.ConvertToUserVariable(sender);
             //if (String.IsNullOrEmpty(valueType))
@@ -121,13 +122,16 @@ namespace taskt.Core.Automation.Commands
             switch (valueType)
             {
                 case "cell":
-                    valueState= !String.IsNullOrEmpty((string)excelSheet.Range[targetAddress].Text);
+                    //valueState= !String.IsNullOrEmpty((string)excelSheet.Range[targetAddress].Text);
+                    valueState = !String.IsNullOrEmpty((string)rg.Text);
                     break;
                 case "formula":
-                    valueState = ((string)excelInstance.Range[targetAddress].Formula).StartsWith("=");
+                    //valueState = ((string)excelInstance.Range[targetAddress].Formula).StartsWith("=");
+                    valueState = ((string)rg.Formula).StartsWith("=");
                     break;
                 case "back color":
-                    valueState = ((long)excelInstance.Range[targetAddress].Interior.Color) != 16777215;
+                    //valueState = ((long)excelInstance.Range[targetAddress].Interior.Color) != 16777215;
+                    valueState = ((long)rg.Interior.Color) != 16777215;
                     break;
                 //default:
                 //    throw new Exception("Value type " + valueType + " is not support.");

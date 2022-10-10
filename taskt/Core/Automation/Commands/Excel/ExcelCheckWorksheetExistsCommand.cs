@@ -91,11 +91,13 @@ namespace taskt.Core.Automation.Commands
 
             //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //string targetSheet = v_SheetName.ConvertToUserVariable(sender);
             //Microsoft.Office.Interop.Excel.Worksheet sht = ExcelControls.getWorksheet(engine, excelInstance, targetSheet);
-            var sht = v_SheetName.GetExcelWorksheet(engine, excelInstance, true);
+            //var sht = v_SheetName.GetExcelWorksheet(engine, excelInstance, true);
+
+            (_, var sht) = (v_InstanceName, v_SheetName).GetExcelInstanceAndWorksheet(engine, true);
 
             //(sht != null ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
             (sht != null).StoreInUserVariable(engine, v_applyToVariable);

@@ -114,7 +114,11 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             //var vRow = v_CellRow.ConvertToUserVariable(sender);
             //var vCol = v_CellColumn.ConvertToUserVariable(sender);
@@ -129,11 +133,12 @@ namespace taskt.Core.Automation.Commands
             //}
             //int row = v_CellRow.ConvertToUserVariableAsInteger("Row", engine);
             //int col = v_CellColumn.ConvertToUserVariableAsInteger("Column", engine);
-            int row = v_CellRow.ConvertToUserVariableAsInteger("v_CellRow", "Row", engine, this);
-            int col = v_CellColumn.ConvertToUserVariableAsInteger("v_CellColumn", "Column", engine, this);
 
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            //int row = v_CellRow.ConvertToUserVariableAsInteger("v_CellRow", "Row", engine, this);
+            //int col = v_CellColumn.ConvertToUserVariableAsInteger("v_CellColumn", "Column", engine, this);
 
+            var rg = ((v_CellRow, "v_CellRow"), (v_CellColumn, "v_CellColumn")).GetExcelRange(engine, excelInstance, excelSheet, this);
+            
             //var valueType = v_ValueType.ConvertToUserVariable(sender);
             //if (String.IsNullOrEmpty(valueType))
             //{
@@ -145,13 +150,16 @@ namespace taskt.Core.Automation.Commands
             switch (valueType)
             {
                 case "cell":
-                    valueState = !String.IsNullOrEmpty((string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Text);
+                    //valueState = !String.IsNullOrEmpty((string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Text);
+                    valueState = !String.IsNullOrEmpty((string)rg.Text);
                     break;
                 case "formula":
-                    valueState = ((string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Formula).StartsWith("=");
+                    //valueState = ((string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Formula).StartsWith("=");
+                    valueState = ((string)rg.Formula).StartsWith("=");
                     break;
                 case "back Color":
-                    valueState = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Interior.Color) != 16777215;
+                    //valueState = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Interior.Color) != 16777215;
+                    valueState = ((long)rg.Interior.Color) != 16777215;
                     break;
                 //default:
                 //    throw new Exception("Value type " + valueType + " is not support.");

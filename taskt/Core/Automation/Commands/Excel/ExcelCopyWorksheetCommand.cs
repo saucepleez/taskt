@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //var targetSheetName = v_sourceSheet.ConvertToUserVariable(engine);
             //Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, targetSheetName);
@@ -92,11 +92,13 @@ namespace taskt.Core.Automation.Commands
             //    throw new Exception("Worksheet " + targetSheetName + " does not exists.");
             //}
 
-            var targetSheet = v_sourceSheet.GetExcelWorksheet(engine, excelInstance);
+            //var targetSheet = v_sourceSheet.GetExcelWorksheet(engine, excelInstance);
             //if (targetSheet == null)
             //{
             //    throw new Exception("Worksheet " + v_sourceSheet + " does not exists.");
             //}
+
+            (var excelInstance, var targetSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
