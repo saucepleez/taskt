@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Management.Instrumentation;
 using Microsoft.Office.Interop.Excel;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.Core
 {
@@ -24,6 +26,19 @@ namespace taskt.Core
             {
                 throw new Exception("Instance '" + instanceName + "' is not Excel Instance");
             }
+        }
+
+        public static (Application instance, Worksheet sheet) GetExcelInstanceAndSheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        {
+            var instanceObject = instanceName.getExcelInstance(engine);
+            return (instanceObject, instanceObject.ActiveSheet);
+        }
+
+        public static (Application instance, Worksheet sheet) GetExcelInstanceAndSheet(this (string instanceName, string sheetName) info, Automation.Engine.AutomationEngineInstance engine)
+        {
+            var instanceObject = info.instanceName.getExcelInstance(engine);
+            var sheet = info.sheetName.GetExcelWorksheet(engine, instanceObject);
+            return (instanceObject, sheet);
         }
 
         public static Worksheet GetExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, bool returnNullIfSheetDoesNotExists = false)
@@ -329,6 +344,27 @@ namespace taskt.Core
             {
                 throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
             }
+        }
+
+        public static (int row, int column) ConvertToUserVariableAsExcelRCLocation(this ((string rowName, string rowValue) row, (string columnName, string columnValue) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, ScriptCommand command)
+        {
+            int row = location.row.rowValue.ConvertToUserVariableAsInteger(location.row.rowName, "Row", engine, command);
+            int column = location.column.columnValue.ConvertToUserVariableAsInteger(location.column.columnName, "Column", engine, command);
+
+            if (CheckCorrectRC(row, column, excelInstance))
+            {
+                return (row, column);
+            }
+            else
+            {
+                throw new Exception("Invalid Location. Row: " + row + ", Column: " + column);
+            }
+        }
+
+        public static Range GetExcelRange(this ((string rowName, string rowValue) row, (string columnName, string columnValue) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        {
+            var rc = location.ConvertToUserVariableAsExcelRCLocation(engine, excelInstance, command);
+            return excelSheet.Cells[rc.row, rc.column];
         }
 
         public static bool CheckCorrectRange(this string range, Application excelInstance)

@@ -94,7 +94,11 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+
+            //var excelInstance = v_InstanceName.getExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndSheet(engine);
+
 
             //var vRow = v_ExcelCellRow.ConvertToUserVariable(sender);
             //var vColumn = v_ExcelCellColumn.ConvertToUserVariable(sender);
@@ -102,10 +106,11 @@ namespace taskt.Core.Automation.Commands
             //int row, col;
             //row = int.Parse(vRow);
             //col = int.Parse(vColumn);
-            int row = v_ExcelCellRow.ConvertToUserVariableAsInteger("v_ExcelCellRow", "Row", engine, this);
-            int col = v_ExcelCellColumn.ConvertToUserVariableAsInteger("v_ExcelCellColumn", "Column", engine, this);
+            //int row = v_ExcelCellRow.ConvertToUserVariableAsInteger("v_ExcelCellRow", "Row", engine, this);
+            //int col = v_ExcelCellColumn.ConvertToUserVariableAsInteger("v_ExcelCellColumn", "Column", engine, this);
+            //(int row, int col) = ((v_ExcelCellRow, "v_ExcelCellRow"), (v_ExcelCellColumn, "v_ExcelCellColumn")).ConvertToUserVariableAsExcelRCLocation(engine, excelInstance, this);
 
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            var rg = ((v_ExcelCellRow, "v_ExcelCellRow"), (v_ExcelCellColumn, "v_ExcelCellColumn")).GetExcelRange(engine, excelInstance, excelSheet, this);
 
             //var valueType = v_ValueType.ConvertToUserVariable(sender);
             //if (String.IsNullOrEmpty(valueType))
@@ -118,19 +123,24 @@ namespace taskt.Core.Automation.Commands
             switch (valueType)
             {
                 case "cell":
-                    cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Text;
+                    //cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Text;
+                    cellValue = rg.Text;
                     break;
                 case "formula":
-                    cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Formula;
+                    //cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Formula;
+                    cellValue = rg.Formula;
                     break;
                 case "format":
-                    cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).NumberFormatLocal;
+                    //cellValue = (string)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).NumberFormatLocal;
+                    cellValue = rg.NumberFormatLocal;
                     break;
                 case "font color":
-                    cellValue = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Font.Color).ToString();
+                    //cellValue = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Font.Color).ToString();
+                    cellValue = rg.Font.Color.ToString();
                     break;
                 case "back color":
-                    cellValue = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Interior.Color).ToString();
+                    //cellValue = ((long)((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Interior.Color).ToString();
+                    cellValue = rg.Interior.Color.ToString();
                     break;
                 //default:
                 //    throw new Exception("Value type " + valueType + " is not support.");
