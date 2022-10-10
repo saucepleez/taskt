@@ -356,5 +356,32 @@ namespace taskt.Core
                 return false;
             }
         }
+
+        public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Application excelInstance, bool throwExceptionWhenInvalidRange = true)
+        {
+            if (!CheckCorrectRC(startRow, startColumn, excelInstance))
+            {
+                if (throwExceptionWhenInvalidRange)
+                {
+                    throw new Exception("Invalid Start Location. Row: " + startRow + ", Column: " + startColumn);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (!CheckCorrectRC(endRow, endColumn, excelInstance))
+            {
+                if (throwExceptionWhenInvalidRange)
+                {
+                    throw new Exception("Invalid End Location. Row: " + endRow + ", Column: " + endColumn);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
