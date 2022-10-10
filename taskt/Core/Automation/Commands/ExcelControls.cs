@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Management.Instrumentation;
 using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Commands;
 
@@ -28,16 +27,16 @@ namespace taskt.Core
             }
         }
 
-        public static (Application instance, Worksheet sheet) GetExcelInstanceAndSheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        public static (Application instance, Worksheet sheet) GetExcelInstanceAndWorksheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
             var instanceObject = instanceName.GetExcelInstance(engine);
             return (instanceObject, GetCurrentWorksheet(instanceObject));
         }
 
-        public static (Application instance, Worksheet sheet) GetExcelInstanceAndSheet(this (string instanceName, string sheetName) info, Automation.Engine.AutomationEngineInstance engine)
+        public static (Application instance, Worksheet sheet) GetExcelInstanceAndWorksheet(this (string instanceName, string sheetName) info, Automation.Engine.AutomationEngineInstance engine, bool returnNullIfSheetDoesNotExists = false)
         {
             var instanceObject = info.instanceName.GetExcelInstance(engine);
-            var sheet = info.sheetName.GetExcelWorksheet(engine, instanceObject);
+            var sheet = info.sheetName.GetExcelWorksheet(engine, instanceObject, returnNullIfSheetDoesNotExists);
             return (instanceObject, sheet);
         }
 
@@ -411,6 +410,12 @@ namespace taskt.Core
             {
                 throw new Exception("Invalid Location. Row: " + row + ", Column: " + column);
             }
+        }
+
+        public static Range GetExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        {
+            string pos = location.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
+            return excelSheet.Range[pos];
         }
 
         public static Range GetExcelRange(this ((string rowName, string rowValue) row, (string columnName, string columnValue) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
