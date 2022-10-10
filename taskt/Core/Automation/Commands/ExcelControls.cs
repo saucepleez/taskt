@@ -346,7 +346,7 @@ namespace taskt.Core
             }
         }
 
-        public static (int row, int column) ConvertToUserVariableAsExcelRCLocation(this ((string rowName, string rowValue) row, (string columnName, string columnValue) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, ScriptCommand command)
+        public static (int row, int column) ConvertToUserVariableAsExcelRCLocation(this ((string rowValue, string rowName) row, (string columnValue, string columnName) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, ScriptCommand command)
         {
             int row = location.row.rowValue.ConvertToUserVariableAsInteger(location.row.rowName, "Row", engine, command);
             int column = location.column.columnValue.ConvertToUserVariableAsInteger(location.column.columnName, "Column", engine, command);
