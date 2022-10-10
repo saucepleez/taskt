@@ -202,14 +202,15 @@ namespace taskt.Core.Automation.Commands
                 columnEndIndex = t;
             }
 
-            if (!ExcelControls.CheckCorrectRC(excelRowIndex, columnStartIndex, excelInstance))
-            {
-                throw new Exception("Invalid Start Location. Row: " + excelRowIndex + ", Column: " + excelRowIndex);
-            }
-            if (!ExcelControls.CheckCorrectRC(excelRowIndex, columnEndIndex, excelInstance))
-            {
-                throw new Exception("Invalid End Location. Row: " + excelRowIndex + ", Column: " + columnEndIndex);
-            }
+            //if (!ExcelControls.CheckCorrectRC(excelRowIndex, columnStartIndex, excelInstance))
+            //{
+            //    throw new Exception("Invalid Start Location. Row: " + excelRowIndex + ", Column: " + excelRowIndex);
+            //}
+            //if (!ExcelControls.CheckCorrectRC(excelRowIndex, columnEndIndex, excelInstance))
+            //{
+            //    throw new Exception("Invalid End Location. Row: " + excelRowIndex + ", Column: " + columnEndIndex);
+            //}
+            ExcelControls.CheckCorrectRCRange(excelRowIndex, columnStartIndex, excelRowIndex, columnEndIndex, excelInstance);
 
             int dtRowIndex = int.Parse(v_DataTableRowIndex.ConvertToUserVariable(engine));
             if (dtRowIndex < 0)

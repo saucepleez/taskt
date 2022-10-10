@@ -179,14 +179,15 @@ namespace taskt.Core.Automation.Commands
             }
             int range = rowEnd - rowStart + 1;
 
-            if (!ExcelControls.CheckCorrectRC(rowStart, columnIndex, excelInstance))
-            {
-                throw new Exception("Invalid Start Location. Row: " + rowStart + ", Column: " + columnIndex);
-            }
-            if (!ExcelControls.CheckCorrectRC(rowEnd, columnIndex, excelInstance))
-            {
-                throw new Exception("Invalid End Location. Row: " + rowEnd + ", Column: " + columnIndex);
-            }
+            //if (!ExcelControls.CheckCorrectRC(rowStart, columnIndex, excelInstance))
+            //{
+            //    throw new Exception("Invalid Start Location. Row: " + rowStart + ", Column: " + columnIndex);
+            //}
+            //if (!ExcelControls.CheckCorrectRC(rowEnd, columnIndex, excelInstance))
+            //{
+            //    throw new Exception("Invalid End Location. Row: " + rowEnd + ", Column: " + columnIndex);
+            //}
+            ExcelControls.CheckCorrectRCRange(rowStart, columnIndex, rowEnd, columnIndex, excelInstance);
 
             string ifListNotEnough = v_IfListNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
             if (ifListNotEnough == "error")
