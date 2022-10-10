@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
 
             //var excelInstance = v_InstanceName.GetExcelInstance(engine);
             //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndSheet(engine);
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             int i = 1;            
             int lastUsedRow;
