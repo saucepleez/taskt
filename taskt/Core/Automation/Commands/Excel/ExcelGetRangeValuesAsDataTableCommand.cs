@@ -132,7 +132,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
             var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
 
             string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);

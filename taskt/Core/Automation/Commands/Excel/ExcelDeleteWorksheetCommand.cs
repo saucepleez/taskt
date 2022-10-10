@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
 
             //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
 
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //var targetSheetName = v_SheetName.ConvertToUserVariable(engine);
             //Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, targetSheetName);

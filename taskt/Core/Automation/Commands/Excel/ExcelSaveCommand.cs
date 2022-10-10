@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
             ////convert object
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //save
             excelInstance.ActiveWorkbook.Save();

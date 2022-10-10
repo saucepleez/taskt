@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
             //var excelObject = engine.GetAppInstance(vInstance);
             ////convert object
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //var fileName = v_FileName.ConvertToUserVariable(engine);
             //fileName = Core.FilePathControls.formatFilePath(fileName, engine);

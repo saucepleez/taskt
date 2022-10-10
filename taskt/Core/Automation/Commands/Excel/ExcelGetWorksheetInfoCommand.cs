@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             var sheetName = v_SheetName.ConvertToUserVariable(sender);
             //Microsoft.Office.Interop.Excel.Worksheet targetSheet;
@@ -124,11 +124,11 @@ namespace taskt.Core.Automation.Commands
                     ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
                     break;
                 case "next sheet":
-                    var nextSht = ExcelControls.getNextWorksheet(excelInstance, targetSheet);
+                    var nextSht = ExcelControls.GetNextWorksheet(excelInstance, targetSheet);
                     ret = (nextSht == null) ? "" : nextSht.Name;
                     break;
                 case "previous sheet":
-                    var prevSht = ExcelControls.getPreviousWorksheet(excelInstance, targetSheet);
+                    var prevSht = ExcelControls.GetPreviousWorksheet(excelInstance, targetSheet);
                     ret = (prevSht == null) ? "" : prevSht.Name;
                     break;
                 case "sheet index":

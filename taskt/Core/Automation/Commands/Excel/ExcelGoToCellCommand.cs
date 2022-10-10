@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
 

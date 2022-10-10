@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
             //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
-            var excelInstance = v_InstanceName.getExcelInstance(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //var infoType = v_InfoType.ConvertToUserVariable(sender);
             var infoType = v_InfoType.GetUISelectionValue("v_InfoType", this, engine);

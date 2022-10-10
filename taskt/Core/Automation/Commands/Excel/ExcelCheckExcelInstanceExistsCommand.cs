@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
             //}
             try
             {
-                var excelInstance = v_InstanceName.getExcelInstance(engine);
+                var excelInstance = v_InstanceName.GetExcelInstance(engine);
                 true.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch
