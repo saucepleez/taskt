@@ -5,12 +5,12 @@ namespace taskt.Core
 {
     internal static class ExcelControls
     {
-        public static Application getExcelInstance(Automation.Engine.AutomationEngineInstance engine, string instanceName)
-        {
-            var excelObject = engine.GetAppInstance(instanceName);
+        //public static Application getExcelInstance(Automation.Engine.AutomationEngineInstance engine, string instanceName)
+        //{
+        //    var excelObject = engine.GetAppInstance(instanceName);
 
-            return (Application)excelObject;
-        }
+        //    return (Application)excelObject;
+        //}
 
         public static Application getExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
