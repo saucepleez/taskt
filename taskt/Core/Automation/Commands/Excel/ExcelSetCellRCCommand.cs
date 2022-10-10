@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Schema;
-using System;
+﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
