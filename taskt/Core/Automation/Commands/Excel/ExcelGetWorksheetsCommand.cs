@@ -102,7 +102,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                Func<string, string, bool> func;
+                Func<string, string, bool> func = null;
 
                 //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
                 //if (String.IsNullOrEmpty(searchMethod))
@@ -122,9 +122,9 @@ namespace taskt.Core.Automation.Commands
                     case "end with":
                         func = (sht, search) => { return sht.EndsWith(search); };
                         break;
-                    default:
-                        throw new Exception("Search method " + searchMethod + " is not support.");
-                        break;
+                    //default:
+                    //    throw new Exception("Search method " + searchMethod + " is not support.");
+                    //    break;
                 }
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)
                 {

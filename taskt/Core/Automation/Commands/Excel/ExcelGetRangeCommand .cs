@@ -60,13 +60,16 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var excelObject = engine.GetAppInstance(vInstance);
+
+            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+
             var targetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
             var targetAddress2 = v_ExcelCellAddress2.ConvertToUserVariable(sender);
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             Microsoft.Office.Interop.Excel.Range cellValue;
             if (targetAddress2 != "")
                 cellValue = excelSheet.Range[targetAddress1, targetAddress2];

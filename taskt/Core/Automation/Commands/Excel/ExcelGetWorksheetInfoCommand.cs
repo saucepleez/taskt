@@ -85,9 +85,9 @@ namespace taskt.Core.Automation.Commands
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            var sheetName = v_SheetName.ConvertToUserVariable(sender);
+            //var sheetName = v_SheetName.ConvertToUserVariable(sender);
             //Microsoft.Office.Interop.Excel.Worksheet targetSheet;
             //if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
             //{
@@ -99,11 +99,13 @@ namespace taskt.Core.Automation.Commands
             //}
 
             //Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, sheetName);
-            var targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
+            //var targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
             //if (targetSheet == null)
             //{
             //    throw new Exception("Worksheet " + v_SheetName + " does not exists.");
             //}
+
+            (var excelInstance, var targetSheet) = (v_InstanceName, v_SheetName).GetExcelInstanceAndWorksheet(engine);
 
             string ret = "";
             int idx = 1;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Schema;
+using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -92,7 +93,10 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             //var vRow = v_ExcelCellRow.ConvertToUserVariable(sender);
             //var vCol = v_ExcelCellColumn.ConvertToUserVariable(sender);
@@ -100,12 +104,13 @@ namespace taskt.Core.Automation.Commands
             //row = int.Parse(vRow);
             //col = int.Parse(vCol);
 
-            int row = v_ExcelCellRow.ConvertToUserVariableAsInteger("v_ExcelCellRow", "Row", engine, this);
-            int col = v_ExcelCellColumn.ConvertToUserVariableAsInteger("v_ExcelCellColumn", "Column", engine, this);
+            //int row = v_ExcelCellRow.ConvertToUserVariableAsInteger("v_ExcelCellRow", "Row", engine, this);
+            //int col = v_ExcelCellColumn.ConvertToUserVariableAsInteger("v_ExcelCellColumn", "Column", engine, this);
+
+            var rg = ((v_ExcelCellRow, "v_ExcelCellRow"), (v_ExcelCellColumn, "v_ExcelCellColumn")).GetExcelRange(engine, excelInstance, excelSheet, this);
 
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             //((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Value = targetText;
 
             //var valueType = v_ValueType.ConvertToUserVariable(sender);
@@ -129,7 +134,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             // set range
-            Microsoft.Office.Interop.Excel.Range rg = (Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col];
+            //Microsoft.Office.Interop.Excel.Range rg = (Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col];
 
             switch (valueType)
             {

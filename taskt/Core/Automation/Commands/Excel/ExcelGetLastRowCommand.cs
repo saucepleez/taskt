@@ -66,7 +66,10 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelSheet = excelInstance.ActiveSheet;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             if (String.IsNullOrEmpty(v_ColumnLetter))
             {
@@ -74,8 +77,8 @@ namespace taskt.Core.Automation.Commands
             }
             var columnLetter = v_ColumnLetter.ConvertToUserVariable(engine);
 
-            var excelSheet = excelInstance.ActiveSheet;
-            var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, columnLetter).End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
+            //var lastRow = (int)excelSheet.Cells(excelSheet.Rows.Count, columnLetter).End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
+            var lastRow = (int)excelSheet.Cells[excelSheet.Rows.Count, columnLetter].End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
             lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
         }
