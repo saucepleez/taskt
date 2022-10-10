@@ -82,12 +82,15 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             //var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
-            var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
+            //var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
 
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             //var valueType = v_ValueType.ConvertToUserVariable(sender);
             //if (String.IsNullOrEmpty(valueType))
@@ -100,19 +103,24 @@ namespace taskt.Core.Automation.Commands
             switch (valueType)
             {
                 case "cell":
-                    cellValue= (string)excelSheet.Range[targetAddress].Text;
+                    //cellValue= (string)excelSheet.Range[targetAddress].Text;
+                    cellValue = (string)rg.Text;
                     break;
                 case "formula":
-                    cellValue = (string)excelInstance.Range[targetAddress].Formula;
+                    //cellValue = (string)excelInstance.Range[targetAddress].Formula;
+                    cellValue = (string)rg.Formula;
                     break;
                 case "format":
-                    cellValue = (string)excelInstance.Range[targetAddress].NumberFormatLocal;
+                    //cellValue = (string)excelInstance.Range[targetAddress].NumberFormatLocal;
+                    cellValue = (string)rg.NumberFormatLocal;
                     break;
                 case "font color":
-                    cellValue = ((long)excelInstance.Range[targetAddress].Font.Color).ToString();
+                    //cellValue = ((long)excelInstance.Range[targetAddress].Font.Color).ToString();
+                    cellValue = ((long)rg.Font.Color).ToString();
                     break;
                 case "back color":
-                    cellValue = ((long)excelInstance.Range[targetAddress].Interior.Color).ToString();
+                    //cellValue = ((long)excelInstance.Range[targetAddress].Interior.Color).ToString();
+                    cellValue = ((long)rg.Interior.Color).ToString();
                     break;
                 //default:
                 //    throw new Exception("Value type " + valueType + " is not support.");

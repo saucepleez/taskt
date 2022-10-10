@@ -56,11 +56,13 @@ namespace taskt.Core.Automation.Commands
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var sheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
 
-            var sheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            sheetName.StoreInUserVariable(sender, v_applyToVariable);
+            //sheetName.StoreInUserVariable(sender, v_applyToVariable);
+            excelSheet.Name.StoreInUserVariable(engine, v_applyToVariable);
         }
 
         //public override List<Control> Render(frmCommandEditor editor)

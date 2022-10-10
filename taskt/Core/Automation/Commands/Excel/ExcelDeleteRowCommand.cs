@@ -62,13 +62,13 @@ namespace taskt.Core.Automation.Commands
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
-
-            Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             string rowToDelete = v_RowNumber.ConvertToUserVariable(sender);
 
-            var cells = workSheet.Range["A" + rowToDelete, Type.Missing];
+            var cells = excelSheet.Range["A" + rowToDelete, Type.Missing];
             var entireRow = cells.EntireRow;
             if (v_ShiftUp == "Yes")
             {
