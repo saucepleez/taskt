@@ -102,7 +102,10 @@ namespace taskt.Core.Automation.Commands
             //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             //var excelObject = engine.GetAppInstance(vInstance);
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndSheet(engine);
 
             //var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
             var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
@@ -113,8 +116,6 @@ namespace taskt.Core.Automation.Commands
             //    valueType = "Cell";
             //}
             var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
 
             bool valueState = false;
             switch (valueType)

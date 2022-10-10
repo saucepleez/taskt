@@ -52,9 +52,11 @@ namespace taskt.Core.Automation.Commands
             //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             //var excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
 
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndSheet(engine);
+
             int test = 0;
             test = excelSheet.Columns.Count;
             var lastUsedRow = excelSheet.Cells.Find("*", System.Reflection.Missing.Value,
