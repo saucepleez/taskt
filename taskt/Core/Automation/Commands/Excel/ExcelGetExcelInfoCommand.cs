@@ -85,16 +85,33 @@ namespace taskt.Core.Automation.Commands
                     ret = excelInstance.ActiveWorkbook.FullName;
                     break;
                 case "current sheet":
-                    ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+                    ret = ExcelControls.GetCurrentWorksheet(excelInstance).Name;
                     break;
                 case "number of sheets":
                     ret = excelInstance.Worksheets.Count.ToString();
                     break;
                 case "first sheet":
-                    ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
+                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
+                    if (excelInstance.Worksheets.Count > 0)
+                    {
+                        ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
+                    }
+                    else
+                    {
+                        ret = "";
+                    }
                     break;
                 case "last sheet":
-                    ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
+                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
+                    if (excelInstance.Worksheets.Count > 0)
+                    {
+                        ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
+                    }
+                    else
+                    {
+                        ret = "";
+                    }
                     break;
                 //default:
                 //    throw new Exception("Information type " + infoType + " is not support.");
