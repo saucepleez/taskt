@@ -122,11 +122,10 @@ namespace taskt.Core.Automation.Commands
                     //var d = mail.Date.DateTime;
                     (mail.Date.DateTime).StoreInUserVariable(engine, v_ResultVariable);
                     return;
-                    break;
+
                 case "resent-date":
                     (mail.ResentDate.DateTime).StoreInUserVariable(engine, v_ResultVariable);
                     return;
-                    break;
             }
 
             res.StoreInUserVariable(engine, v_ResultVariable);

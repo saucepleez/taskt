@@ -411,12 +411,10 @@ namespace taskt.Core
                 case "taskt.EngineContext":
                     result = engine.GetEngineContext();
                     return true;
-                    break;
 
                 case "File.CurrentScriptFile":
                     result = engine.FileName;
                     return true;
-                    break;
 
                 default:
                     break;

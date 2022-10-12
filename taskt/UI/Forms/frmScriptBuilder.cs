@@ -948,7 +948,6 @@ namespace taskt.UI.Forms
             {
                 case CommandEditorState.Normal:
                     return;
-                    break;
 
                 case CommandEditorState.Search:
                 case CommandEditorState.AdvencedSearch:
@@ -958,7 +957,6 @@ namespace taskt.UI.Forms
 
                 default:
                     return;
-                    break;
             }
 
             if (this.MatchedLines == 0)

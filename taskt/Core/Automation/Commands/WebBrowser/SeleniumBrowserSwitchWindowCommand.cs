@@ -98,7 +98,6 @@ namespace taskt.Core.Automation.Commands
 
                 default:
                     throw new NotImplementedException($"Specified match type '{matchType}' is not supported for switching windows. Use either 'Window URL' or 'Window Title'");
-                    break;
             }
 
             bool exactMatchRequired = v_MatchSpecification.ConvertToUserVariable(sender) == "Exact Match Only";

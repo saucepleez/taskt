@@ -99,7 +99,6 @@ namespace taskt.Core.Automation.Commands
                     break;
                 default:
                     throw new Exception(infoType + " is not support.");
-                    break;
             }
 
             ret.StoreInUserVariable(sender, v_UserVariableName);

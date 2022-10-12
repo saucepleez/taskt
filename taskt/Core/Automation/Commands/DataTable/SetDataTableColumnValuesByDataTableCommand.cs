@@ -118,9 +118,9 @@ namespace taskt.Core.Automation.Commands
                     case "ignore":
                     case "add rows":
                         break;
+
                     case "error":
                         throw new Exception("The number of rows is less than the DataTable to set");
-                        break;
                 }
             }
 
