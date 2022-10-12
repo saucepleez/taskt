@@ -143,8 +143,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             int excelColumnIndex = 0;
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))

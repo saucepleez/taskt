@@ -142,8 +142,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
+            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             //int excelRowIndex = int.Parse(v_ExcelRowIndex.ConvertToUserVariable(engine));
             //int excelRowIndex = v_ExcelRowIndex.ConvertToUserVariableAsInteger("Excel Row Index", engine);

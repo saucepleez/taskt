@@ -64,13 +64,15 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+
+            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+
             var dataSetVariable = LookupVariable(engine);
             var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
-            var excelObject = engine.GetAppInstance(vInstance);
-
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
 
             DataTable Dt = (DataTable)dataSetVariable.VariableValue;
             if (string.IsNullOrEmpty(targetAddress)) throw new ArgumentNullException("columnName");
