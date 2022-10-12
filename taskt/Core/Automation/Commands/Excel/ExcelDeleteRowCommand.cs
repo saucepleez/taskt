@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using System.Linq;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,29 +18,32 @@ namespace taskt.Core.Automation.Commands
     public class ExcelDeleteRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please Enter the instance name")]
+        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [SampleUsage("**myInstance** or **excelInstance**")]
+        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate the row number to delete")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the number of the row that should be deleted.")]
-        [Attributes.PropertyAttributes.SampleUsage("1, 5, {vNumber}")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Indicate the row number to delete")]
+        [InputSpecification("Enter the number of the row that should be deleted.")]
+        [SampleUsage("1, 5, {vNumber}")]
+        [Remarks("")]
         public string v_RowNumber { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Should the cells below shift upward after deletion?")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate whether the row below will be shifted up to replace the old row.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select 'Yes' or 'No'")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Should the cells below shift upward after deletion?")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Indicate whether the row below will be shifted up to replace the old row.")]
+        [SampleUsage("Select 'Yes' or 'No'")]
+        [Remarks("")]
         public string v_ShiftUp { get; set; }
+
         public ExcelDeleteRowCommand()
         {
             this.CommandName = "ExcelDeleteRowCommand";
@@ -49,41 +53,40 @@ namespace taskt.Core.Automation.Commands
 
             this.v_InstanceName = "";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var excelObject = engine.GetAppInstance(vInstance);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-          
+            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-                Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-                Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
+            string rowToDelete = v_RowNumber.ConvertToUserVariable(sender);
 
-                string rowToDelete = v_RowNumber.ConvertToUserVariable(sender);
-
-                var cells = workSheet.Range["A" + rowToDelete, Type.Missing];
-                var entireRow = cells.EntireRow;
-                if (v_ShiftUp == "Yes")
-                {
-                    entireRow.Delete();
-                }
-                else
-                {
-                    entireRow.Clear();
-                }
-
-
-            
+            var cells = excelSheet.Range["A" + rowToDelete, Type.Missing];
+            var entireRow = cells.EntireRow;
+            if (v_ShiftUp == "Yes")
+            {
+                entireRow.Delete();
+            }
+            else
+            {
+                entireRow.Clear();
+            }
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
             //create standard group controls
             var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel);
+            CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Excel);
             RenderedControls.AddRange(instanceCtrls);
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RowNumber", this, editor));

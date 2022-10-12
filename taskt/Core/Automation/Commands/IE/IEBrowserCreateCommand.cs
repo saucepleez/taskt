@@ -57,7 +57,9 @@ namespace taskt.Core.Automation.Commands
                 WaitForReadyState(newBrowserSession);
                 newBrowserSession.Visible = true;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) 
+            {
+            }
 
             //add app instance
             engine.AddAppInstance(instanceName, newBrowserSession);

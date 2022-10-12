@@ -347,7 +347,6 @@ namespace taskt.Core.Automation.Commands
                     return ControlType.Window;
                 default:
                     throw new Exception("Strange ControlType '" + controlTypeName + "'");
-                    break;
             }
         }
 

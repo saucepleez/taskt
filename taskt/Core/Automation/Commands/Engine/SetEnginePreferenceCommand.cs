@@ -110,18 +110,15 @@ namespace taskt.Core.Automation.Commands
                 case "Enable Automatic Calculations":
                 case "Disable Automatic Calculations":
                     return base.GetDisplayValue() + $" [{v_PreferenceType}]";
-                    break;
 
                 case "Start Variable Marker":
                 case "End Variable Marker":
                 case "Engine Delay":
                 case "Current Window Keyword":
                     return base.GetDisplayValue() + " [" + v_PreferenceType +" set '" + (String.IsNullOrEmpty(v_ParameterValue) ? "" : v_ParameterValue) + "']";
-                    break;
 
                 default:
                     return base.GetDisplayValue() + $" [{v_PreferenceType}]";
-                    break;
             }
             
         }

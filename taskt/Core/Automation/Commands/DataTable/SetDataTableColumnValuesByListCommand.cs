@@ -120,7 +120,6 @@ namespace taskt.Core.Automation.Commands
                         break;
                     case "error":
                         throw new Exception("The number of rows is less than the List");
-                        break;
                 }
             }
 

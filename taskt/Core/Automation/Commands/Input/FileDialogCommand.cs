@@ -116,7 +116,6 @@ namespace taskt.Core.Automation.Commands
                     break;
                 default:
                     throw new Exception("Dialog Type " + dialogType + " is not support.");
-                    break;
             }
             if (result != null)
             {
