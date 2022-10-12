@@ -230,7 +230,6 @@ namespace taskt.Core
                     break;
                 default:
                     return null;
-                    break;
             }
             return (isUsed) ? targetDic["used"] : targetDic["created"];
         }
@@ -395,56 +394,39 @@ namespace taskt.Core
             {
                 case "automationelement":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.AutomationElement;
-                    break;
                 case "boolean":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean;
-                    break;
                 case "color":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Color;
-                    break;
                 case "database":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase;
-                    break;
                 case "datatable":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataTable;
-                    break;
                 case "datetime":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DateTime;
-                    break;
                 case "dictionary":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Dictionary;
-                    break;
                 case "excel":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel;
-                    break;
                 case "ie":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE;
-                    break;
                 case "json":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.JSON;
-                    break;
                 case "list":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.List;
-                    break;
                 case "mailkitemail":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMail;
-                    break;
                 case "mailkitemaillist":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMailList;
-                    break;
                 case "stopwatch":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
-                    break;
                 case "web browser":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
-                    break;
                 case "word":
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word;
-                    break;
                 case "none":
                 default:
                     return Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none;
-                    break;
             }
         }
     }

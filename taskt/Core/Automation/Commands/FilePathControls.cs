@@ -215,34 +215,28 @@ namespace taskt.Core
                 case "filename":
                 case "fn":
                     return Path.GetFileName(path);
-                    break;
 
                 case "folder":
                 case "directory":
                 case "dir":
                     return Path.GetDirectoryName(path);
-                    break;
 
                 case "filewithoutextension":
                 case "filenamewithoutextension":
                 case "fnwoext":
                     return Path.GetFileNameWithoutExtension(path);
-                    break;
 
                 case "extension":
                 case "ext":
                     return Path.GetExtension(path);
-                    break;
 
                 case "drive":
                 case "drivename":
                 case "root":
                     return Path.GetPathRoot(path);
-                    break;
 
                 default:
                     return "";
-                    break;
             }
         }
 

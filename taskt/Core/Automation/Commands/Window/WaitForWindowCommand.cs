@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            var waitUntil = v_LengthToWait.ConvertToUserVariableAsInteger("Length to Wait", sender);
+            var waitUntil = v_LengthToWait.ConvertToUserVariableAsInteger("Length to Wait", engine);
             var endDateTime = DateTime.Now.AddSeconds(waitUntil);
 
             bool isFind = false;

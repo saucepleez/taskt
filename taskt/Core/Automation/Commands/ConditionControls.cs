@@ -95,7 +95,6 @@ namespace taskt.Core.Automation.Commands
 
                 default:
                     throw new Exception("If type not recognized!");
-                    break;
             }
             
             return ifResult;
@@ -165,7 +164,6 @@ namespace taskt.Core.Automation.Commands
                     break;
                 default:
                     throw new Exception("Strange Operand " + param["Operand"]);
-                    break;
             }
             return ifResult;
         }
@@ -208,7 +206,6 @@ namespace taskt.Core.Automation.Commands
 
                 default:
                     throw new Exception("Strange Operand " + param["Operand"]);
-                    break;
             }
             return ifResult;
         }
@@ -254,7 +251,6 @@ namespace taskt.Core.Automation.Commands
 
                 default:
                     throw new Exception("Strange Operand " + param["Operand"]);
-                    break;
             }
             return ifResult;
         }
@@ -343,15 +339,12 @@ namespace taskt.Core.Automation.Commands
             {
                 case "it does exist":
                     return existCheck;
-                    break;
 
                 case "it does not exist":
                     return !existCheck;
-                    break;
 
                 default:
                     throw new Exception("True When is strange value " + param["True When"]);
-                    break;
             }
         }
         private static bool DetermineStatementTruth_Folder(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
@@ -363,15 +356,12 @@ namespace taskt.Core.Automation.Commands
             {
                 case "it does exist":
                     return existCheck;
-                    break;
 
                 case "it does not exist":
                     return !existCheck;
-                    break;
 
                 default:
                     throw new Exception("True When is strange value " + param["True When"]);
-                    break;
             }
         }
 
@@ -414,13 +404,10 @@ namespace taskt.Core.Automation.Commands
             {
                 case "true":
                     return value;
-                    break;
                 case "false":
                     return !value;
-                    break;
                 default:
                     throw new Exception("Value Is " + param["Value Is"] + " is not support.");
-                    break;
             }
         }
         private static bool DetermineStatementTruth_BooleanCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
@@ -435,23 +422,18 @@ namespace taskt.Core.Automation.Commands
             {
                 case "is equal to":
                     return (value1 == value2);
-                    break;
 
                 case "is not equal to":
                     return (value1 != value2);
-                    break;
 
                 case "both are true":
                     return (value1 & value2);
-                    break;
 
                 case "both or one of them are true":
                     return (value1 | value2);
-                    break;
 
                 default:
                     throw new Exception("Value Is " + param["Value Is"] + " is not support.");
-                    break;
             }
         }
 
@@ -1124,82 +1106,63 @@ namespace taskt.Core.Automation.Commands
             {
                 case "numeric compare":
                     return commandPrefix + " [Numeric Compare] (" + param["Value1"] + " " + param["Operand"] + " " + param["Value2"] + ")";
-                    break;
 
                 case "date compare":
                     return commandPrefix + " [Date Compare] (" + param["Value1"] + " " + param["Operand"] + " " + param["Value2"] + ")";
-                    break;
 
                 case "text compare":
                     return commandPrefix + " [Text Compare] (" + param["Value1"] + " " + param["Operand"] + " " + param["Value2"] + ")";
-                    break;
 
                 case "variable has value":
                     return commandPrefix + " (Variable " + param["Variable Name"] + " Has Value)";
-                    break;
 
                 case "variable is numeric":
                     return commandPrefix + " (Variable " + param["Variable Name"] + " Is Numeric)";
-                    break;
 
                 case "error occured":
                     return commandPrefix + " (Error Occured on Line Number " + param["Line Number"] + ")";
-                    break;
 
 
                 case "error did not occur":
                     return commandPrefix + " (Error Did Not Occur on Line Number " + param["Line Number"] + ")";
-                    break;
 
                 case "window name exists":
                     return commandPrefix + " [Window Name Exists] (Name: " + param["Window Name"] + ")";
-                    break;
 
                 case "active window name is":
                     return commandPrefix + " [Active Window Name Is] (Name: " + param["Window Name"] + ")";
-                    break;
 
                 case "file exists":
                     return commandPrefix + " [File Exists] (File: " + param["File Path"] + ")";
-                    break;
 
 
                 case "folder exists":
                     return commandPrefix + " [Folder Exists] (Folder: " + param["Folder Path"] + ")";
-                    break;
 
 
                 case "web element exists":
                     return commandPrefix + " [Web Element Exists] (" + param["Element Search Method"] + ": " + param["Element Search Parameter"] + ")";
-                    break;
 
                 case "gui element exists":
                     return commandPrefix + " [GUI Element Exists] (Find " + param["Element Search Parameter"] + " Element In " + param["Window Name"] + ")";
-                    break;
 
                 case "boolean":
                     return commandPrefix + " [Boolean] (" + param["Variable Name"] + " is " + param["Value Is"] + ")";
-                    break;
 
                 case "boolean compare":
                     return commandPrefix + " [Boolean Compare] (" + param["Value1"] + " " + param["Operand"] + " " + param["Value2"] + ")";
-                    break;
 
                 case "list compare":
                     return commandPrefix + " [List Compare] ('" + param["List1"] + "' and '" + param["List2"] + "')";
-                    break;
 
                 case "dictionary compare":
                     return commandPrefix + " [Dictionary Compare] ('" + param["Dictionary1"] + "' and '" + param["Dictionary2"] + "')";
-                    break;
 
                 case "datatable compare":
                     return commandPrefix + " [DataTable Compare] ('" + param["DataTable1"] + "' and '" + param["DataTable2"] + "')";
-                    break;
 
                 default:
                     return commandPrefix + " .... ";
-                    break;
             }
         }
         #endregion

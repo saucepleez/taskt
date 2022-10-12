@@ -28,7 +28,6 @@ namespace taskt.Core.Automation.Commands
                     break;
                 default:
                     throw new Exception("Search method " + searchMethod + " is not support.");
-                    break;
             }
             return ret;
         }

@@ -345,6 +345,7 @@
     <Compile Include="Core\Automation\Commands\List\GetVarianceFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\MathListControls.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PlaySystemSoundCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NumberControls.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\CreateNumberVariableCommand.cs" />

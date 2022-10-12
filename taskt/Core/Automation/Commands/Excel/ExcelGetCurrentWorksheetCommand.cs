@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -13,26 +10,32 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get current sheet name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExcelGetCurrentWorksheetCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Please Enter the instance name")]
+        [InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
+        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Instance")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive a sheet name")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [PropertyDescription("Please select the variable name to receive a sheet name")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Store")]
         public string v_applyToVariable { get; set; }
 
         public ExcelGetCurrentWorksheetCommand()
@@ -44,55 +47,60 @@ namespace taskt.Core.Automation.Commands
 
             this.v_InstanceName = "";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelObject = engine.GetAppInstance(vInstance);
+            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            //var excelObject = engine.GetAppInstance(vInstance);
+            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
+            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            //var sheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
 
-            var sheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            sheetName.StoreInUserVariable(sender, v_applyToVariable);
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-            {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-            }
-
-            return RenderedControls;
+            //sheetName.StoreInUserVariable(sender, v_applyToVariable);
+            excelSheet.Name.StoreInUserVariable(engine, v_applyToVariable);
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            if (String.IsNullOrEmpty(this.v_InstanceName))
-            {
-                this.validationResult += "Instance is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_applyToVariable))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
+        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+        //    {
+        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+        //    }
 
-            return this.IsValid;
-        }
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_InstanceName))
+        //    {
+        //        this.validationResult += "Instance is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_applyToVariable))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }

@@ -149,16 +149,12 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 case "Number":
                     return 0;
-                    break;
                 case "DateTime":
                     return 1;
-                    break;
                 case "File Folder":
                     return 2;
-                    break;
                 default:
                     return 0;
-                    break;
             }
         }
 
