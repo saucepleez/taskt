@@ -126,12 +126,12 @@ namespace taskt.Core.Automation.Commands
                     ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
                     break;
                 case "next sheet":
-                    var nextSht = ExcelControls.GetNextWorksheet(excelInstance, targetSheet);
-                    ret = (nextSht == null) ? "" : nextSht.Name;
+                    var nextSheet = engine.engineSettings.NextWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
+                    ret = (nextSheet == null) ? "" : nextSheet.Name;
                     break;
                 case "previous sheet":
-                    var prevSht = ExcelControls.GetPreviousWorksheet(excelInstance, targetSheet);
-                    ret = (prevSht == null) ? "" : prevSht.Name;
+                    var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
+                    ret = (prevSheet == null) ? "" : prevSheet.Name;
                     break;
                 case "sheet index":
                     foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)

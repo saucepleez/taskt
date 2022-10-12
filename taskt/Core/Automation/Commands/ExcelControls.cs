@@ -145,11 +145,11 @@ namespace taskt.Core
         //    }
         //}
 
-        public static Worksheet GetCurrentWorksheet(Application excelInstance)
+        private static Worksheet GetCurrentWorksheet(Application excelInstance)
         {
             if (excelInstance.Sheets.Count == 0)
             {
-                throw new Exception("No Worksheets exists.");
+                return null;
             }
             else
             {
@@ -157,13 +157,20 @@ namespace taskt.Core
             }
         }
 
-        public static Worksheet GetNextWorksheet(Application excelInstance, Worksheet mySheet = null)
+        private static Worksheet GetNextWorksheet(Application excelInstance, Worksheet mySheet = null)
         {
             Worksheet currentSheet;
             if (mySheet == null)
             {
-                //currentSheet = (Worksheet)excelInstance.ActiveSheet;
-                currentSheet = GetCurrentWorksheet(excelInstance);
+                try
+                {
+                    //currentSheet = (Worksheet)excelInstance.ActiveSheet;
+                    currentSheet = GetCurrentWorksheet(excelInstance);
+                }
+                catch
+                {
+                    return null;
+                }
             }
             else
             {
@@ -188,13 +195,20 @@ namespace taskt.Core
                 return null;
             }
         }
-        public static Worksheet GetPreviousWorksheet(Application excelInstance, Worksheet mySheet = null)
+        private static Worksheet GetPreviousWorksheet(Application excelInstance, Worksheet mySheet = null)
         {
             Worksheet currentSheet;
             if (mySheet == null)
             {
-                //currentSheet = (Worksheet)excelInstance.ActiveSheet;
-                currentSheet = GetCurrentWorksheet(excelInstance);
+                try
+                {
+                    //currentSheet = (Worksheet)excelInstance.ActiveSheet;
+                    currentSheet = GetCurrentWorksheet(excelInstance);
+                }
+                catch
+                {
+                    return null;
+                }
             }
             else
             {

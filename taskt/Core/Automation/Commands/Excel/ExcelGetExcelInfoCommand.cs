@@ -85,8 +85,8 @@ namespace taskt.Core.Automation.Commands
                     ret = excelInstance.ActiveWorkbook.FullName;
                     break;
                 case "current sheet":
-                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
-                    ret = ExcelControls.GetCurrentWorksheet(excelInstance).Name;
+                    var sheet = engine.engineSettings.CurrentWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
+                    ret = (sheet == null) ? "" : sheet.Name;
                     break;
                 case "number of sheets":
                     ret = excelInstance.Worksheets.Count.ToString();
