@@ -33,6 +33,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Number")]
         public string v_NumberValue { get; set; }
 

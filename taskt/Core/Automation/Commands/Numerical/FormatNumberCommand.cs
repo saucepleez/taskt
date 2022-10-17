@@ -22,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**123** or **{{{vNumber}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Number")]
         public string v_Number { get; set; }
@@ -34,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0.#** or **C** or **{{{vFormat}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Format")]
         public string v_Format { get; set; }
