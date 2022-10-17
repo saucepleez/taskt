@@ -160,7 +160,7 @@ namespace taskt.Core.Automation.Commands
             //    v_RowStart = "1";
             //}
             //int rowStart = v_RowStart.ConvertToUserVariableAsInteger("Row Start", engine);
-            int rowStart = v_RowStart.ConvertToUserVariableAsInteger("v_rowStart", "Start Row", engine, this);
+            int rowStart = v_RowStart.ConvertToUserVariableAsInteger("v_RowStart", "Start Row", engine, this);
 
             int rowEnd;
             if (String.IsNullOrEmpty(v_RowEnd))
