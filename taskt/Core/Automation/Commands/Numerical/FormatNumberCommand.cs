@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.IO;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -67,7 +63,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            decimal value = v_Number.ConvertToUserVariableAsDecimal("Number", engine);
+            //decimal value = v_Number.ConvertToUserVariableAsDecimal("Number", engine);
+            decimal value = (v_Number, "v_Number").ConvertToUserVariableAsDecimal(engine);
 
             string format = v_Format.ConvertToUserVariable(engine);
 
