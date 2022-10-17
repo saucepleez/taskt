@@ -56,6 +56,12 @@ namespace taskt.Core.Automation.Commands
         {
             var tp = command.GetType();
             var myProp = tp.GetProperty(propertyName);
+
+            if (myProp == null)
+            {
+                throw new Exception("Property '" + propertyName + "' does not exists.");
+            }
+
             var optAttr = (PropertyIsOptional)myProp.GetCustomAttribute(typeof(PropertyIsOptional));
             if (optAttr != null)
             {
