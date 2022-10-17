@@ -6,9 +6,9 @@ namespace taskt.Core.Automation.Commands
 {
     internal static class NumberControls
     {
-        public static int ConvertToUserVariableAsInteger(this (string propertyValue, string propertyDescription) nv, Engine.AutomationEngineInstance engine)
+        public static int ConvertToUserVariableAsInteger(this (string propertyValue, string propertyDescription) tpValueName, Engine.AutomationEngineInstance engine)
         {
-            string convertedText = nv.propertyValue.ConvertToUserVariable(engine);
+            string convertedText = tpValueName.propertyValue.ConvertToUserVariable(engine);
             int v;
             if (int.TryParse(convertedText, out v))
             {
@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception(nv.propertyDescription + " '" + nv.propertyValue + "' is not a integer number.");
+                throw new Exception(tpValueName.propertyDescription + " '" + tpValueName.propertyValue + "' is not a integer number.");
             }
         }
 
@@ -25,9 +25,9 @@ namespace taskt.Core.Automation.Commands
             return (propertyValue, propertyDescription).ConvertToUserVariableAsInteger(engine);
         }
 
-        public static decimal ConvertToUserVariableAsDecimal(this (string propertyValue, string propertyDescription) nv, Engine.AutomationEngineInstance engine)
+        public static decimal ConvertToUserVariableAsDecimal(this (string propertyValue, string propertyDescription) tpValueName, Engine.AutomationEngineInstance engine)
         {
-            string convertedText = nv.propertyValue.ConvertToUserVariable(engine);
+            string convertedText = tpValueName.propertyValue.ConvertToUserVariable(engine);
             decimal v;
             if (decimal.TryParse(convertedText, out v))
             {
@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception(nv.propertyDescription + " '" + nv.propertyValue + "' is not a number.");
+                throw new Exception(tpValueName.propertyDescription + " '" + tpValueName.propertyValue + "' is not a number.");
             }
         }
 
@@ -44,9 +44,9 @@ namespace taskt.Core.Automation.Commands
             return (propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
         }
 
-        public static int ConvertToUserVariableAsInteger(this (string propertyValue, string propertyName, string propertyDescription) kvd, Engine.AutomationEngineInstance engine, ScriptCommand command)
+        public static int ConvertToUserVariableAsInteger(this (string propertyValue, string propertyName, string propertyDescription) tpValueNameDesc, Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
-            decimal decValue = kvd.ConvertToUserVariableAsDecimal(engine, command);
+            decimal decValue = tpValueNameDesc.ConvertToUserVariableAsDecimal(engine, command);
             int value;
             try
             {
@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                throw new Exception(kvd.propertyDescription + " is out of Integer Range.");
+                throw new Exception(tpValueNameDesc.propertyDescription + " is out of Integer Range.");
             }
         }
 
@@ -64,31 +64,31 @@ namespace taskt.Core.Automation.Commands
             return (propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(engine, command);
         }
 
-        public static decimal ConvertToUserVariableAsDecimal(this (string propertyValue, string propertyName, string propertyDescription) kvd, Engine.AutomationEngineInstance engine, ScriptCommand command)
+        public static decimal ConvertToUserVariableAsDecimal(this (string propertyValue, string propertyName, string propertyDescription) tpValueNameDesc, Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
             var tp = command.GetType();
-            var myProp = tp.GetProperty(kvd.propertyName);
+            var myProp = tp.GetProperty(tpValueNameDesc.propertyName);
 
             if (myProp == null)
             {
-                throw new Exception("Property '" + kvd.propertyName + "' does not exists.");
+                throw new Exception("Property '" + tpValueNameDesc.propertyName + "' does not exists.");
             }
 
             var optAttr = (PropertyIsOptional)myProp.GetCustomAttribute(typeof(PropertyIsOptional));
             if (optAttr != null)
             {
-                if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(kvd.propertyValue)))
+                if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(tpValueNameDesc.propertyValue)))
                 {
-                    kvd.propertyValue = optAttr.setBlankToValue;
+                    tpValueNameDesc.propertyValue = optAttr.setBlankToValue;
                 }
             }
 
-            decimal v = kvd.propertyValue.ConvertToUserVariableAsDecimal(kvd.propertyName, engine);
+            decimal v = tpValueNameDesc.propertyValue.ConvertToUserVariableAsDecimal(tpValueNameDesc.propertyName, engine);
 
             var validateAttr = (PropertyValidationRule)myProp.GetCustomAttribute(typeof(PropertyValidationRule));
             if (validateAttr != null)
             {
-                if (CheckValidate(v, validateAttr, kvd.propertyDescription))
+                if (CheckValidate(v, validateAttr, tpValueNameDesc.propertyDescription))
                 {
                     return v;
                 }
@@ -103,10 +103,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static decimal ConvertToUserVariableAsDecimal(this string propertyValue, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine, ScriptCommand command)
-        {
-            return (propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsDecimal(engine, command);
-        }
+        //public static decimal ConvertToUserVariableAsDecimal(this string propertyValue, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine, ScriptCommand command)
+        //{
+        //    return (propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsDecimal(engine, command);
+        //}
 
         private static bool CheckValidate(decimal value, PropertyValidationRule validateAttr, string parameterDescription)
         {
