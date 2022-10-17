@@ -20,8 +20,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**100** or **{{{vNum}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Number")]
         public string v_Numeric { get; set; }
