@@ -56,11 +56,11 @@ namespace taskt.Core.Automation.Commands
         //    return new PropertyData(tpValueName.propertyValue, tpValueName.propertyDescription).ConvertToUserVariableAsDecimal(engine);
         //}
 
-        public static decimal ConvertToUserVariableAsDecimal(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
-        {
-            //return (propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
-            return new PropertyConvertTag(propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
-        }
+        //public static decimal ConvertToUserVariableAsDecimal(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
+        //{
+        //    //return (propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
+        //    return new PropertyConvertTag(propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
+        //}
 
         public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
