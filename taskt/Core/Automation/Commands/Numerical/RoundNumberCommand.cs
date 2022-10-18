@@ -65,7 +65,8 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //var num = v_Numeric.ConvertToUserVariableAsDecimal("Numeric", engine);
-            var num = (v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
+            //var num = (v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
+            decimal num = new PropertyConvertTag(v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
 
             var round = v_RoundType.GetUISelectionValue("v_RoundType", this, engine);
 

@@ -62,7 +62,8 @@ namespace taskt.Core.Automation.Commands
             var variableValue = variableName.ConvertToUserVariableAsDecimal("Variable Name", engine);
 
             //var add = v_Value.ConvertToUserVariableAsDecimal("v_Value", "Value", engine, this);
-            var add = (v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(engine, this);
+            //var add = (v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(engine, this);
+            var add = new PropertyConvertTag(v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(engine, this);
 
             (variableValue + add).ToString().StoreInUserVariable(engine, variableName);
         }
