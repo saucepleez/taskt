@@ -10,6 +10,43 @@ using System.Threading.Tasks;
 using taskt.Core.Automation;
 namespace taskt.Core
 {
+    public class PropertyConvertTag
+    {
+        public string Name
+        {
+            get;
+        }
+        public string Value
+        {
+            get;
+            set;
+        }
+        public string Description
+        {
+            get;
+        }
+        public bool HasName
+        {
+            get;
+        }
+
+        public PropertyConvertTag(string value, string description)
+        {
+            this.Value = value;
+            this.Description = description;
+            this.Name = "";
+            this.HasName = false;
+        }
+        public PropertyConvertTag(string value, string name, string description)
+        {
+            this.Value = value;
+            this.Name = name;
+            this.Description = description;
+
+            this.HasName = !(string.IsNullOrEmpty(this.Name));
+        }
+    }
+
     public static class ExtensionMethods
     {
         private static List<char> autoCalucationSkipChars = new List<char>()
