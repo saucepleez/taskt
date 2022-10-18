@@ -19,7 +19,7 @@ namespace taskt.Core
         public string Value
         {
             get;
-            set;
+            private set;
         }
         public string Description
         {
@@ -44,6 +44,10 @@ namespace taskt.Core
             this.Description = description;
 
             this.HasName = !(string.IsNullOrEmpty(this.Name));
+        }
+        public void SetNewValue(string value)
+        {
+            this.Value = value;
         }
     }
 

@@ -113,7 +113,8 @@ namespace taskt.Core.Automation.Commands
             {
                 if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(prop.Value)))
                 {
-                    prop.Value = optAttr.setBlankToValue;
+                    //prop.Value = optAttr.setBlankToValue;
+                    prop.SetNewValue(optAttr.setBlankToValue);
                 }
             }
 
