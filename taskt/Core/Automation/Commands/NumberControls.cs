@@ -62,9 +62,9 @@ namespace taskt.Core.Automation.Commands
         //    return new PropertyConvertTag(propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
         //}
 
-        public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine, ScriptCommand command)
+        public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
-            decimal decValue = prop.ConvertToUserVariableAsDecimal(engine, command);
+            decimal decValue = prop.ConvertToUserVariableAsDecimal(command, engine);
             try
             {
                 int value = (int)decValue;
@@ -92,14 +92,24 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
+        public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyName, string propertyDescription, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        {
+            return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(command, engine);
+        }
+
         public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
             //return (propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(engine, command);
-            return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(engine, command);
+            return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(command, engine);
         }
 
-        public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine, ScriptCommand command)
+        public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
+            if (!prop.HasName)
+            {
+                throw new Exception("Property name does not specified.");
+            }
+
             var tp = command.GetType();
             var myProp = tp.GetProperty(prop.Name);
 
