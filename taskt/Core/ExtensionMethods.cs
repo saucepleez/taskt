@@ -1256,15 +1256,15 @@ namespace taskt.Core
             }
         }
 
-        public static string GetUISelectionValue(this string text, string propertyName, Core.Automation.Commands.ScriptCommand command, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static string GetUISelectionValue(this PropertyConvertTag p, Core.Automation.Commands.ScriptCommand command, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            var prop = command.GetType().GetProperty(propertyName);
+            var prop = command.GetType().GetProperty(p.Name);
             var propIsOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
 
             string convText = (propIsOpt == null) ? "" : propIsOpt.setBlankToValue;
-            if (!String.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(p.Value))
             {
-                convText = text.ConvertToUserVariable(engine);
+                convText = p.Value.ConvertToUserVariable(engine);
             }
 
             var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
@@ -1286,7 +1286,7 @@ namespace taskt.Core
                 else
                 {
                     convText = convText.ToLower();
-                    foreach(var opt in options)
+                    foreach (var opt in options)
                     {
                         if (convText == opt.uiOption.ToLower())
                         {
@@ -1295,13 +1295,68 @@ namespace taskt.Core
                     }
                 }
 
-                var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
-                throw new Exception("Parameter '" + desc.propertyDescription + "' has strange value '" + text + "'");
+                // not found, throw error
+                string description = p.Description;
+                if (string.IsNullOrEmpty(description))
+                {
+                    var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
+                    description = desc.propertyDescription;
+                }
+                throw new Exception("Parameter '" + description + "' has strange value '" + p.Value + "'");
             }
             else
             {
                 return convText;
             }
+        }
+
+        public static string GetUISelectionValue(this string text, string propertyName, Core.Automation.Commands.ScriptCommand command, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            //var prop = command.GetType().GetProperty(propertyName);
+            //var propIsOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
+
+            //string convText = (propIsOpt == null) ? "" : propIsOpt.setBlankToValue;
+            //if (!String.IsNullOrEmpty(text))
+            //{
+            //    convText = text.ConvertToUserVariable(engine);
+            //}
+
+            //var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
+            //if (options.Length > 0)
+            //{
+            //    var propCaseSensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive));
+            //    bool isCaseSensitive = (propCaseSensitive == null) ? false : propCaseSensitive.caseSensitive;
+
+            //    if (isCaseSensitive)
+            //    {
+            //        foreach (var opt in options)
+            //        {
+            //            if (convText == opt.uiOption)
+            //            {
+            //                return convText;
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        convText = convText.ToLower();
+            //        foreach(var opt in options)
+            //        {
+            //            if (convText == opt.uiOption.ToLower())
+            //            {
+            //                return convText;
+            //            }
+            //        }
+            //    }
+
+            //    var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
+            //    throw new Exception("Parameter '" + desc.propertyDescription + "' has strange value '" + text + "'");
+            //}
+            //else
+            //{
+            //    return convText;
+            //}
+            return new PropertyConvertTag(text, propertyName, "").GetUISelectionValue(command, engine);
         }
     }
 }
