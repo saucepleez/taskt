@@ -58,94 +58,15 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Check Worksheet Exists";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
-            //var excelObject = engine.GetAppInstance(vInstance);
-
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            //string targetSheet = v_SheetName.ConvertToUserVariable(sender);
-
-            //if (targetSheet == engine.engineSettings.CurrentWorksheetKeyword)
-            //{
-            //    "TRUE".StoreInUserVariable(sender, v_applyToVariable);
-            //}
-            //else
-            //{
-            //    bool result = false;
-            //    foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
-            //    {
-            //        if (sht.Name == targetSheet)
-            //        {
-            //            result = true;
-            //            break;
-            //        }
-            //    }
-            //    (result ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
-            //}
-
-            //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
-
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-
-            //string targetSheet = v_SheetName.ConvertToUserVariable(sender);
-            //Microsoft.Office.Interop.Excel.Worksheet sht = ExcelControls.getWorksheet(engine, excelInstance, targetSheet);
-            //var sht = v_SheetName.GetExcelWorksheet(engine, excelInstance, true);
 
             (_, var sht) = (v_InstanceName, v_SheetName).GetExcelInstanceAndWorksheet(engine, true);
 
-            //(sht != null ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_applyToVariable);
             (sht != null).StoreInUserVariable(engine, v_applyToVariable);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Check Existance Sheet Name: " + v_SheetName + ", Instance Name: '" + v_InstanceName + "', Result: '" + v_applyToVariable + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SheetName))
-        //    {
-        //        this.validationResult += "Sheet is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariable))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
