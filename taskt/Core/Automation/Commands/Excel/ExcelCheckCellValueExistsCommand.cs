@@ -102,7 +102,7 @@ namespace taskt.Core.Automation.Commands
 
             var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
-            var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            var valueType = new PropertyConvertTag(v_ValueType, "v_ValueType", "Value Type").GetUISelectionValue(this, engine);
 
             bool valueState = false;
             switch (valueType)
