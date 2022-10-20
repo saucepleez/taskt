@@ -51,90 +51,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //if (targetSheet == engine.engineSettings.CurrentWorksheetKeyword)
-            //{
-            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Delete();
-            //}
-            //else
-            //{
-            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[targetSheet]).Delete();
-            //}
-
-            //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
-
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-
-            //var targetSheetName = v_SheetName.ConvertToUserVariable(engine);
-            //Microsoft.Office.Interop.Excel.Worksheet targetSheet = ExcelControls.getWorksheet(engine, excelInstance, targetSheetName);
-
-            //if (targetSheet != null)
-            //{
-            //    targetSheet.Delete();
-            //}
-            //else
-            //{
-            //    throw new Exception("Worksheet " + targetSheetName + " does not exists.");
-            //}
-
-            //var targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
-
             (_, var targetSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
-            
-            //if (targetSheet != null)
-            //{
-            //    targetSheet.Delete();
-            //}
-            //else
-            //{
-            //    throw new Exception("Worksheet " + v_SheetName + " does not exists.");
-            //}
+
             targetSheet.Delete();
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_sourceSheet", this, editor));
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SheetName))
-        //    {
-        //        this.validationResult += "Worksheet is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {

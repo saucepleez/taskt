@@ -50,19 +50,10 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Delete Cell";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //Microsoft.Office.Interop.Excel.Worksheet workSheet = excelInstance.ActiveSheet;
             (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             string range = v_Range.ConvertToUserVariable(sender);
