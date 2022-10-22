@@ -77,14 +77,14 @@ namespace taskt.Core.Automation.Commands
         public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
-            cnv.Add("v_sourceSheet", "convertToIntermediateExcelSheet");
+            cnv.Add(nameof(v_sourceSheet), "convertToIntermediateExcelSheet");
             convertToIntermediate(settings, cnv, variables);
         }
 
         public override void convertToRaw(EngineSettings settings)
         {
             var cnv = new Dictionary<string, string>();
-            cnv.Add("v_sourceSheet", "convertToRawExcelSheet");
+            cnv.Add(nameof(v_sourceSheet), "convertToRawExcelSheet");
             convertToRaw(settings, cnv);
         }
     }

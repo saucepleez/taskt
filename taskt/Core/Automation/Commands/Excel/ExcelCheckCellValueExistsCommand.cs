@@ -102,7 +102,7 @@ namespace taskt.Core.Automation.Commands
 
             var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
-            var valueType = new PropertyConvertTag(v_ValueType, "v_ValueType", "Value Type").GetUISelectionValue(this, engine);
+            var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
 
             bool valueState = false;
             switch (valueType)
@@ -122,7 +122,7 @@ namespace taskt.Core.Automation.Commands
         }
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            (var body, var lblValueType, var lbl2ndValueType) = this.ControlsList.GetAllPropertyControl("v_ValueType");
+            (var body, var lblValueType, var lbl2ndValueType) = this.ControlsList.GetAllPropertyControl(nameof(v_ValueType));
             ComboBox cmbValueType = (ComboBox)body;
 
             string searchedKey = cmbValueType.SelectedItem.ToString();

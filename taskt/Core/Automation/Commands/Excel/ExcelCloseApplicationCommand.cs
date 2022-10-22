@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             //check if workbook exists and save
             if (excelInstance.ActiveWorkbook != null)
             {
-                string vSaved = new PropertyConvertTag(v_ExcelSaveOnExit, "v_ExcelSaveOnExit", "Save Setting").GetUISelectionValue(this, engine);
+                string vSaved = new PropertyConvertTag(v_ExcelSaveOnExit, nameof(v_ExcelSaveOnExit), "Save Setting").GetUISelectionValue(this, engine);
 
                 excelInstance.ActiveWorkbook.Close((vSaved == "true"));
             }
