@@ -6,6 +6,17 @@ namespace taskt.Core.Automation.Commands
 {
     internal static class NumberControls
     {
+        // now test code
+        private static int ConvertToUserVariableAsInteger(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
+        {
+            var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' is not exists."); ;
+            string valueStr = propInfo.GetValue(command)?.ToString() ?? "";
+
+            int value = valueStr.ConvertToUserVariableAsInteger(propertyDescription, engine);
+
+            return value;
+        }
+
         public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
         {
             string convertedText = prop.Value.ConvertToUserVariable(engine);
