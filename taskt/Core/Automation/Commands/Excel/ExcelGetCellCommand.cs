@@ -82,29 +82,33 @@ namespace taskt.Core.Automation.Commands
             var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             //var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-            var valueType = new PropertyConvertTag(v_ValueType, "v_ValueType", "Value Type").GetUISelectionValue(this, engine);
+            var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
 
-            string cellValue = "";
-            switch (valueType)
-            {
-                case "cell":
-                    cellValue = (string)rg.Text;
-                    break;
-                case "formula":
-                    cellValue = (string)rg.Formula;
-                    break;
-                case "format":
-                    cellValue = (string)rg.NumberFormatLocal;
-                    break;
-                case "font color":
-                    cellValue = ((long)rg.Font.Color).ToString();
-                    break;
-                case "back color":
-                    cellValue = ((long)rg.Interior.Color).ToString();
-                    break;
-            }
-             
-            cellValue.StoreInUserVariable(sender, v_userVariableName);            
+            //string cellValue = "";
+            //switch (valueType)
+            //{
+            //    case "cell":
+            //        cellValue = (string)rg.Text;
+            //        break;
+            //    case "formula":
+            //        cellValue = (string)rg.Formula;
+            //        break;
+            //    case "format":
+            //        cellValue = (string)rg.NumberFormatLocal;
+            //        break;
+            //    case "font color":
+            //        cellValue = ((long)rg.Font.Color).ToString();
+            //        break;
+            //    case "back color":
+            //        cellValue = ((long)rg.Interior.Color).ToString();
+            //        break;
+            //}
+
+            var func = ExcelControls.GetCellValueFunctionFromRange(valueType);
+
+            //cellValue.StoreInUserVariable(sender, v_userVariableName);
+
+            func(rg).StoreInUserVariable(sender, v_userVariableName);
         }
     }
 }
