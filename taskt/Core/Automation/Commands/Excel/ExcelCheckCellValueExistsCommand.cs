@@ -102,22 +102,27 @@ namespace taskt.Core.Automation.Commands
 
             var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
-            var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
+            //var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
+            var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
-            bool valueState = false;
-            switch (valueType)
-            {
-                case "cell":
-                    valueState = !String.IsNullOrEmpty((string)rg.Text);
-                    break;
-                case "formula":
-                    valueState = ((string)rg.Formula).StartsWith("=");
-                    break;
-                case "back color":
-                    valueState = ((long)rg.Interior.Color) != 16777215;
-                    break;
-            }
-             
+            var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
+
+            //bool valueState = false;
+            //switch (valueType)
+            //{
+            //    case "cell":
+            //        valueState = !String.IsNullOrEmpty((string)rg.Text);
+            //        break;
+            //    case "formula":
+            //        valueState = ((string)rg.Formula).StartsWith("=");
+            //        break;
+            //    case "back color":
+            //        valueState = ((long)rg.Interior.Color) != 16777215;
+            //        break;
+            //}
+
+            bool valueState = chkFunc(rg);
+            
             valueState.StoreInUserVariable(engine, v_userVariableName);            
         }
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)

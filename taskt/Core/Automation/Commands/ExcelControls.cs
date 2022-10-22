@@ -234,6 +234,26 @@ namespace taskt.Core
             }
         }
 
+        public static Func<Range, bool> CheckCellValueFunctionFromRange(string valueType)
+        {
+            Func<Range, bool> func = null;
+            switch (valueType)
+            {
+                case "cell":
+                    func = (rg) => { return !String.IsNullOrEmpty((string)rg.Text); };
+                    break;
+
+                case "formula":
+                    func = (rg) => { return ((string)rg.Formula).StartsWith("="); };
+                    break;
+
+                case "back color":
+                    func = (rg) => { return ((long)rg.Interior.Color) != 16777215; };
+                    break;
+            }
+            return func;
+        }
+
         public static Func<Range, string> GetCellValueFunctionFromRange(string valueType)
         {
             Func<Range, string> getFunc = null;

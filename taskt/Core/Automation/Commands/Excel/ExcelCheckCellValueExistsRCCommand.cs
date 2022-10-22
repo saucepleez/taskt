@@ -113,23 +113,27 @@ namespace taskt.Core.Automation.Commands
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             var rg = ((v_CellRow, nameof(v_CellRow)), (v_CellColumn, nameof(v_CellColumn))).GetExcelRange(engine, excelInstance, excelSheet, this);
-            
-            var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
 
-            bool valueState = false;
-            switch (valueType)
-            {
-                case "cell":
-                    valueState = !String.IsNullOrEmpty((string)rg.Text);
-                    break;
-                case "formula":
-                    valueState = ((string)rg.Formula).StartsWith("=");
-                    break;
-                case "back Color":
-                    valueState = ((long)rg.Interior.Color) != 16777215;
-                    break;
-            }
-      
+            //var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
+            var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+
+            var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
+
+            //bool valueState = false;
+            //switch (valueType)
+            //{
+            //    case "cell":
+            //        valueState = !String.IsNullOrEmpty((string)rg.Text);
+            //        break;
+            //    case "formula":
+            //        valueState = ((string)rg.Formula).StartsWith("=");
+            //        break;
+            //    case "back Color":
+            //        valueState = ((long)rg.Interior.Color) != 16777215;
+            //        break;
+            //}
+
+            var valueState = chkFunc(rg);
             valueState.StoreInUserVariable(engine, v_userVariableName);
         }
 
