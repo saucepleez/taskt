@@ -194,7 +194,7 @@ namespace taskt.Core.Automation.Commands
             //}
             ExcelControls.CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelInstance);
 
-            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);
+            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
             DataTable newDT = new DataTable();
             newDT.Rows.Add();

@@ -234,7 +234,46 @@ namespace taskt.Core
             }
         }
 
-        public static Func<Worksheet, int, int, string> getCellValueFunction(string valueType)
+        public static Func<Range, string> GetCellValueFunctionFromRange(string valueType)
+        {
+            Func<Range, string> getFunc = null;
+            switch (valueType)
+            {
+                case "cell":
+                    getFunc = (rg) =>
+                    {
+                        return (string)rg.Text;
+                    };
+                    break;
+                case "formula":
+                    getFunc = (rg) =>
+                    {
+                        return (string)rg.Formula;
+                    };
+                    break;
+                case "format":
+                    getFunc = (rg) =>
+                    {
+                        return (string)rg.NumberFormatLocal;
+                    };
+                    break;
+                case "fore color":
+                    getFunc = (rg) =>
+                    {
+                        return ((long)rg.Font.Color).ToString();
+                    };
+                    break;
+                case "back color":
+                    getFunc = (rg) =>
+                    {
+                        return ((long)rg.Interior.Color).ToString();
+                    };
+                    break;
+            }
+            return getFunc;
+        }
+
+        public static Func<Worksheet, int, int, string> GetCellValueFunction(string valueType)
         {
             Func<Worksheet, int, int, string> getFunc = null;
             switch (valueType)

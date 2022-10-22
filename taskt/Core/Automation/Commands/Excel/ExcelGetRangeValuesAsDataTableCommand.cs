@@ -212,7 +212,7 @@ namespace taskt.Core.Automation.Commands
             //}
             ExcelControls.CheckCorrectRCRange(rowStartIndex, columnStartIndex, rowEndIndex, columnEndIndex, excelInstance);
 
-            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);
+            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
             int rowRange = rowEndIndex - rowStartIndex + 1;
             int colRange = columnEndIndex - columnStartIndex + 1;

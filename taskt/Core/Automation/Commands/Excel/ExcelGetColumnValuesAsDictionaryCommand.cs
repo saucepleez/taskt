@@ -179,7 +179,7 @@ namespace taskt.Core.Automation.Commands
             //}
             ExcelControls.CheckCorrectRCRange(rowStart, columnIndex, rowEnd, columnIndex, excelInstance);
 
-            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);
+            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
             Dictionary<string, string> newDic = new Dictionary<string, string>();
 
