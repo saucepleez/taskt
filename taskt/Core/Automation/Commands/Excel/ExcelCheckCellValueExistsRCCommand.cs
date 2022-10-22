@@ -133,8 +133,9 @@ namespace taskt.Core.Automation.Commands
             //        break;
             //}
 
-            var valueState = chkFunc(rg);
-            valueState.StoreInUserVariable(engine, v_userVariableName);
+            //var valueState = chkFunc(rg);
+            //valueState.StoreInUserVariable(engine, v_userVariableName);
+            chkFunc(rg).StoreInUserVariable(engine, v_userVariableName);
         }
 
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)

@@ -93,10 +93,11 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            var rg = ((v_ExcelCellRow, "v_ExcelCellRow"), (v_ExcelCellColumn, "v_ExcelCellColumn")).GetExcelRange(engine, excelInstance, excelSheet, this);
+            var rg = ((v_ExcelCellRow, nameof(v_ExcelCellRow)), (v_ExcelCellColumn, nameof(v_ExcelCellColumn))).GetExcelRange(engine, excelInstance, excelSheet, this);
 
             //var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-            var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
+            //var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
+            var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
             var func = ExcelControls.GetCellValueFunctionFromRange(valueType);
 
