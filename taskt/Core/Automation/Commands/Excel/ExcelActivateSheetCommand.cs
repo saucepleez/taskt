@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InstanceName = "";
+            //this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
