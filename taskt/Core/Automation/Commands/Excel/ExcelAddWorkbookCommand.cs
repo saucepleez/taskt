@@ -54,7 +54,8 @@ namespace taskt.Core.Automation.Commands
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //var ifWorkbookExists = v_IfWorkbookExists.GetUISelectionValue("v_IfWorkbookExists", this, engine);
-            var ifWorkbookExists = new PropertyConvertTag(v_IfWorkbookExists, nameof(v_IfWorkbookExists), "If Workbook exists").GetUISelectionValue(this, engine);
+            //var ifWorkbookExists = new PropertyConvertTag(v_IfWorkbookExists, nameof(v_IfWorkbookExists), "If Workbook exists").GetUISelectionValue(this, engine);
+            var ifWorkbookExists = this.GetUISelectionValue(nameof(v_IfWorkbookExists), "If Workbook exists", engine);
 
             if (excelInstance.Workbooks.Count > 0)
             {
