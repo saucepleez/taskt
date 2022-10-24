@@ -12,23 +12,13 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.WebSockets;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace taskt.UI.Forms
 {
@@ -1996,12 +1986,10 @@ namespace taskt.UI.Forms
                 newCommandForm.appSettings = this.appSettings;
                 if (specificCommand != "")
                     newCommandForm.defaultStartupCommand = specificCommand;
-
                 //if a command was selected
                 if (newCommandForm.ShowDialog() == DialogResult.OK)
                 {
                     ChangeSaveState(true);
-
                     //add to listview
                     AddCommandToListView(newCommandForm.selectedCommand);
                 }
@@ -2017,7 +2005,6 @@ namespace taskt.UI.Forms
             {
                 return;
             }
-
             if (tvCommands.SelectedNode.Level == 1)
             {
                 if (tvCommands.SelectedNode.Nodes.Count > 0)

@@ -366,7 +366,7 @@ namespace taskt.UI.CustomControls
 
     public class UIMenuStripColorTable : ProfessionalColorTable
     {
-      
+
         public override Color MenuItemPressedGradientBegin
         {
             get { return Color.FromArgb(59, 59, 59); }
@@ -379,10 +379,10 @@ namespace taskt.UI.CustomControls
         {
             get { return Color.FromArgb(59, 59, 59); }
         }
-        
+
         public override Color MenuItemSelected
         {
-            get { return Color.FromArgb(59,59,59); }
+            get { return Color.FromArgb(59, 59, 59); }
         }
         public override Color ToolStripDropDownBackground
         {
@@ -391,7 +391,7 @@ namespace taskt.UI.CustomControls
 
         public override Color MenuBorder
         {
-            get { return Color.FromArgb(30,30,30); }
+            get { return Color.FromArgb(30, 30, 30); }
         }
 
         public override Color ImageMarginGradientBegin
@@ -420,7 +420,7 @@ namespace taskt.UI
 {
     public static class Images
     {
-        //private static Dictionary<string, Image> imageList = new Dictionary<string, Image>();
+        private static Dictionary<string, Image> imageList = new Dictionary<string, Image>();
         private static ImageList uiImages = new ImageList();
         private static Dictionary<string, string> imageCommandTable = new Dictionary<string, string>()
         {
@@ -939,11 +939,11 @@ namespace taskt.UI
         }
         public static ImageList UIImageList()
         {
-            //Dictionary<string, Image> imageIcons = UIImageDictionary();
-            //if (imageList.Count == 0)
-            //{
-            //    UIImageDictionary();
-            //}
+            Dictionary<string, Image> imageIcons = UIImageDictionary();
+            if (imageList.Count == 0)
+            {
+                UIImageDictionary();
+            }
 
             //ImageList uiImages = new ImageList();
 
@@ -1024,7 +1024,7 @@ namespace taskt.UI
                         canvas.SmoothingMode = SmoothingMode.AntiAlias;
                         canvas.InterpolationMode = InterpolationMode.HighQualityBicubic;
                         canvas.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                        canvas.DrawImage(oldImage, new Rectangle(new Point(0, 0), new Size(16,16)));
+                        canvas.DrawImage(oldImage, new Rectangle(new Point(0, 0), new Size(16, 16)));
                         return newImage;
                     }
                 }
@@ -1046,22 +1046,22 @@ namespace taskt.UI
 
         public static Image GetUIImage(string commandName)
         {
-            ////var uiImageDictionary = UIImageDictionary();
-            //if (imageList.Count == 0)
-            //{
-            //    UIImageDictionary();
-            //}
+            //var uiImageDictionary = UIImageDictionary();
+            if (imageList.Count == 0)
+            {
+                UIImageDictionary();
+            }
 
-            //Image uiImage;
-            //try
-            //{
-            //    //uiImage = uiImageDictionary[commandName];
-            //    uiImage = imageList[commandName];
-            //}
-            //catch (Exception)
-            //{
-            //    uiImage = Properties.Resources.command_files;
-            //}
+            Image uiImage;
+            try
+            {
+                //uiImage = uiImageDictionary[commandName];
+                uiImage = imageList[commandName];
+            }
+            catch (Exception)
+            {
+                uiImage = Properties.Resources.command_files;
+            }
 
             if (uiImages.Images.Count == 0)
             {

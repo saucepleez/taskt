@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
             //advanced parameters
 
             this.v_AdvancedParameters = new DataTable();
-         
+
             this.v_AdvancedParameters.Columns.Add("Parameter Name");
             this.v_AdvancedParameters.Columns.Add("Parameter Value");
             this.v_AdvancedParameters.Columns.Add("Content Type");
@@ -114,7 +114,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-           // var engine = (Engine.AutomationEngineInstance)sender;
+            // var engine = (Engine.AutomationEngineInstance)sender;
 
             try
             {
@@ -126,57 +126,46 @@ namespace taskt.Core.Automation.Commands
             {
                 throw ex;
             }
-         
-            
+
+
 
         }
         public string ExecuteRESTRequest(object sender)
         {
             //get engine instance
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             //get parameters
             var targetURL = v_BaseURL.ConvertToUserVariable(sender);
             var targetEndpoint = v_APIEndPoint.ConvertToUserVariable(sender);
             var targetMethod = v_APIMethodType.ConvertToUserVariable(sender);
-
             //client
             var client = new RestClient(targetURL);
-
             //methods
             Method method = (Method)Enum.Parse(typeof(Method), targetMethod);
-            
             //rest request
             var request = new RestRequest(targetEndpoint, method);
-
             //get parameters
             var apiParameters = (from rw in v_RESTParameters.AsEnumerable()
                                  where rw.Field<string>("Parameter Type") == "PARAMETER"
                                  select rw);
-
             //get headers
             var apiHeaders = (from rw in v_RESTParameters.AsEnumerable()
                               where rw.Field<string>("Parameter Type") == "HEADER"
                               select rw);
-
             //for each api parameter
             foreach (var param in apiParameters)
             {
                 var paramName = ((string)param["Parameter Name"]).ConvertToUserVariable(sender);
                 var paramValue = ((string)param["Parameter Value"]).ConvertToUserVariable(sender);
-
                 request.AddParameter(paramName, paramValue);
             }
-
             //for each header
             foreach (var header in apiHeaders)
             {
                 var paramName = ((string)header["Parameter Name"]).ConvertToUserVariable(sender);
                 var paramValue = ((string)header["Parameter Value"]).ConvertToUserVariable(sender);
-
                 request.AddHeader(paramName, paramValue);
             }
-
             //get json body
             var jsonBody = (from rw in v_RESTParameters.AsEnumerable()
                             where rw.Field<string>("Parameter Type") == "JSON BODY"
@@ -202,7 +191,6 @@ namespace taskt.Core.Automation.Commands
                 request.AddFile(paramName, fileData);
 
             }
-
             //add advanced parameters
             foreach (DataRow rw in this.v_AdvancedParameters.Rows)
             {
@@ -210,32 +198,17 @@ namespace taskt.Core.Automation.Commands
                 var paramValue = rw.Field<string>("Parameter Value").ConvertToUserVariable(sender);
                 var paramType = rw.Field<string>("Parameter Type").ConvertToUserVariable(sender);
                 var contentType = rw.Field<string>("Content Type").ConvertToUserVariable(sender);
-
-                var param = new Parameter();
-
-                if (!string.IsNullOrEmpty(contentType))
-                    param.ContentType = contentType;
-
-                if (!string.IsNullOrEmpty(paramType))
-                    param.Type = (ParameterType)System.Enum.Parse(typeof(ParameterType), paramType);
-                
-                   
-                param.Name = paramName;
-                param.Value = paramValue;
-
-                request.Parameters.Add(param);
+                var param = Parameter.CreateParameter(paramName, paramValue, (ParameterType)System.Enum.Parse(typeof(ParameterType), paramType), false);
+                request.Parameters.AddParameter(param);
             }
-
             var requestFormat = v_RequestFormat.ConvertToUserVariable(sender);
             if (string.IsNullOrEmpty(requestFormat))
             {
                 requestFormat = "Xml";
             }
             request.RequestFormat = (DataFormat)System.Enum.Parse(typeof(DataFormat), requestFormat);
-     
-            
             //execute client request
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             //add service response for tracking
@@ -253,8 +226,6 @@ namespace taskt.Core.Automation.Commands
                 //content failed to parse simply return it
                 return content;
             }
-           
-
         }
 
         public override List<Control> Render(frmCommandEditor editor)
@@ -266,11 +237,11 @@ namespace taskt.Core.Automation.Commands
 
             var apiEndPointControlSet = CommandControls.CreateDefaultInputGroupFor("v_APIEndPoint", this, editor);
             RenderedControls.AddRange(apiEndPointControlSet);
-      
+
 
             var apiMethodLabel = CommandControls.CreateDefaultLabelFor("v_APIMethodType", this);
             var apiMethodDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_APIMethodType", this);
-     
+
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_RequestFormat", this, editor));
 
             foreach (Method method in (Method[])Enum.GetValues(typeof(Method)))
@@ -278,7 +249,7 @@ namespace taskt.Core.Automation.Commands
                 apiMethodDropdown.Items.Add(method.ToString());
             }
 
-     
+
             RenderedControls.Add(apiMethodLabel);
             RenderedControls.Add(apiMethodDropdown);
 
@@ -291,7 +262,7 @@ namespace taskt.Core.Automation.Commands
             //RESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             //RESTParametersGridViewHelper.AutoGenerateColumns = false;
 
-            RESTParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_RESTParameters", true, true, false, -1, 140, false );
+            RESTParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_RESTParameters", true, true, false, -1, 140, false);
             RESTParametersGridViewHelper.CellClick += RESTParametersGridViewHelper_CellClick;
 
             var selectColumn = new DataGridViewComboBoxColumn();
@@ -309,7 +280,7 @@ namespace taskt.Core.Automation.Commands
             paramValueColumn.HeaderText = "Value";
             paramValueColumn.DataPropertyName = "Parameter Value";
             RESTParametersGridViewHelper.Columns.Add(paramValueColumn);
-       
+
             //RESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_RESTParameters", false, DataSourceUpdateMode.OnPropertyChanged);
             RenderedControls.Add(RESTParametersGridViewHelper);
 
@@ -344,7 +315,7 @@ namespace taskt.Core.Automation.Commands
             var advParamType = new DataGridViewComboBoxColumn();
             advParamType.HeaderText = "Parameter Type";
             advParamType.DataPropertyName = "Parameter Type";
-            advParamType.DataSource = new string[] { "Cookie", "GetOrPost", "HttpHeader", "QueryString", "RequestBody", "URLSegment", "QueryStringWithoutEncode"};
+            advParamType.DataSource = new string[] { "Cookie", "GetOrPost", "HttpHeader", "QueryString", "RequestBody", "URLSegment", "QueryStringWithoutEncode" };
             AdvancedRESTParametersGridViewHelper.Columns.Add(advParamType);
 
             //AdvancedRESTParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_AdvancedParameters", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -362,7 +333,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [URL: " + v_BaseURL +  v_APIEndPoint + "]";
+            return base.GetDisplayValue() + " [URL: " + v_BaseURL + v_APIEndPoint + "]";
         }
 
         public void RESTParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)

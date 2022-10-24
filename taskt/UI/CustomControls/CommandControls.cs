@@ -170,15 +170,11 @@ namespace taskt.UI.CustomControls
         {
             //Todo: Test
             var controlList = new List<Control>();
-
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-
             var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
             var input = CreateDropdownFor(parameterName, parent, variableProperties);
             var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
-
             controlList.Add(label);
-
             var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
             if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
             {
@@ -186,14 +182,12 @@ namespace taskt.UI.CustomControls
                 label2.Name = "lbl2_" + parameterName;
                 controlList.Add(label2);
             }
-
             controlList.AddRange(helpers);
             if (additionalLinks != null)
             {
                 controlList.AddRange(additionalLinks);
             }
             controlList.Add(input);
-
             return controlList;
 
         }
@@ -238,7 +232,17 @@ namespace taskt.UI.CustomControls
             newLabel.BackColor = theme.BackColor;
             return newLabel;
         }
-        public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
+
+        /// <summary>
+        /// 创建Label标签
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <param name="parent"></param>
+        /// <param name="pInfo"></param>
+        /// 新增参数,设置Label标签颜色
+        /// <param name="importflag"></param>
+        /// <returns></returns>
+        public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null, bool importflag = false)
         {
             PropertyInfo variableProperties;
             if (pInfo == null)
@@ -249,12 +253,9 @@ namespace taskt.UI.CustomControls
             {
                 variableProperties = pInfo;
             }
-
             var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription), true);
-
             // var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
             var settings = CurrentEditor.appSettings.EngineSettings;
-
             Label inputLabel = CreateSimpleLabel();
             if (propertyAttributesAssigned.Length > 0)
             {
@@ -293,15 +294,16 @@ namespace taskt.UI.CustomControls
             {
                 inputLabel.Text = parameterName;
             }
-
-            //var theme = CurrentEditor.Theme.Label;
-            //inputLabel.AutoSize = true;
-            //inputLabel.Font = new Font("Segoe UI Light", 12);
-            //inputLabel.ForeColor = Color.White;
-            //inputLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            //inputLabel.ForeColor = theme.FontColor;
-            //inputLabel.BackColor = theme.BackColor;
-
+            if (importflag)
+            {
+                var theme = CurrentEditor.Theme.Label;
+                inputLabel.AutoSize = true;
+                inputLabel.Font = new Font("Segoe UI Light", 12);
+                inputLabel.ForeColor = Color.Red;
+                //inputLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+                //inputLabel.ForeColor = theme.FontColor;
+                //inputLabel.BackColor = theme.BackColor;
+            }
             inputLabel.Name = "lbl_" + parameterName;
             return inputLabel;
         }
@@ -443,7 +445,8 @@ namespace taskt.UI.CustomControls
             return helperControl;
         }
 
-        public static List<Control> CreateUIHelpersFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, UI.Forms.frmCommandEditor editor, PropertyInfo pInfo = null)
+        public static List<Control> CreateUIHelpersFor(string parameterName, Core.Automation.Commands.ScriptCommand parent,
+                                     Control[] targetControls, UI.Forms.frmCommandEditor editor, PropertyInfo pInfo = null)
         {
             PropertyInfo variableProperties;
             if (pInfo == null)

@@ -16,12 +16,39 @@ namespace taskt.Core.Automation.Commands
     public class OutlookEmailCommand : ScriptCommand
     {
         [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Select Email Type")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Outlook")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("GMail")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yahoo")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("QQMail")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("163Mail")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_MailTypes { get; set; }
+
+        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Recipients (; delimited)")]
         [Attributes.PropertyAttributes.InputSpecification("Enter the Email Addresses of the recipients in semicolon seperated values")]
         [Attributes.PropertyAttributes.SampleUsage("test@test.com;test2@test.com")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_Recipients { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter a CC Address (; delimited)")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the Email Addresses of the recipients in semicolon seperated values")]
+        [Attributes.PropertyAttributes.SampleUsage("test@test.com;test2@test.com")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_Ccs { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Please Enter a BCC Address(; delimited)")]
+        [Attributes.PropertyAttributes.InputSpecification("Enter the Email Addresses of the recipients in semicolon seperated values")]
+        [Attributes.PropertyAttributes.SampleUsage("test@test.com;test2@test.com")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        public string v_Bccs { get; set; }
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Attachment File Path (Optional)")]
@@ -68,57 +95,71 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var mailtype = v_MailTypes.ConvertToUserVariable(sender);
             var vRecipients = v_Recipients.ConvertToUserVariable(sender);
+            var vCcs = v_Ccs.ConvertToUserVariable(sender);
+            var vBccs = v_Bccs.ConvertToUserVariable(sender);
             var vAttachment = v_Attachment.ConvertToUserVariable(sender);
             var vSubject = v_Subject.ConvertToUserVariable(sender);
             var vBody = v_Body.ConvertToUserVariable(sender);
             var vBodyType = v_BodyType.ConvertToUserVariable(sender);
-            var splittext = vRecipients.Split(';');
-            Microsoft.Office.Interop.Outlook.Application outlookApp = new Microsoft.Office.Interop.Outlook.Application();
-            Microsoft.Office.Interop.Outlook.MailItem mail = (Microsoft.Office.Interop.Outlook.MailItem)outlookApp.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
-            Microsoft.Office.Interop.Outlook.AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
-            if (currentUser.Type == "EX")
+            var splittext = vRecipients.Contains(';') ? vRecipients.Split(';') : new[] { vRecipients };
+            switch (mailtype)
             {
-                Microsoft.Office.Interop.Outlook.ExchangeUser manager = currentUser.GetExchangeUser().GetExchangeUserManager();
-                // Add recipient using display name, alias, or smtp address
-                foreach (var t in splittext)
-                    mail.Recipients.Add(t.ToString());
-                mail.Recipients.ResolveAll();
-                mail.Subject = vSubject;
-                if (vBodyType == "HTML")
-                {
-                    mail.HTMLBody = vBody;
-                }
-                else
-                {
-                    mail.Body = vBody;
-                }
-                if (!string.IsNullOrEmpty(vAttachment))
-                {
-                    if (vAttachment.Contains("&"))
+                //Extend other mailboxes
+                case "Outlook":
+                    Microsoft.Office.Interop.Outlook.Application outlookApp = new Microsoft.Office.Interop.Outlook.Application();
+                    Microsoft.Office.Interop.Outlook.MailItem mail = (Microsoft.Office.Interop.Outlook.MailItem)outlookApp.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+                    Microsoft.Office.Interop.Outlook.AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
+                    if (currentUser.Type == "EX")
                     {
-                        foreach (var v in vAttachment.Split('&'))
-                            mail.Attachments.Add(v);
+                        Microsoft.Office.Interop.Outlook.ExchangeUser manager = currentUser.GetExchangeUser().GetExchangeUserManager();
+                        // Add recipient using display name, alias, or smtp address
+                        foreach (var t in splittext)
+                            mail.Recipients.Add(t.ToString());
+                        mail.Recipients.ResolveAll();
+                        mail.Subject = vSubject;
+                        if (!string.IsNullOrEmpty(vCcs))
+                            mail.CC = vCcs;
+                        if (!string.IsNullOrEmpty(vBccs))
+                            mail.BCC = vBccs;
+                        if (vBodyType == "HTML")
+                        {
+                            mail.HTMLBody = vBody;
+                        }
+                        else
+                        {
+                            mail.Body = vBody;
+                        }
+                        if (!string.IsNullOrEmpty(vAttachment))
+                        {
+                            if (vAttachment.Contains("&"))
+                            {
+                                foreach (var v in vAttachment.Split('&'))
+                                    mail.Attachments.Add(v);
+                            }
+                            else
+                                mail.Attachments.Add(vAttachment);
+                        }
+                        mail.Send();
                     }
-                    else
-                        mail.Attachments.Add(vAttachment);
-                }
-                mail.Send();
-
+                    break;
+                default:
+                    break;
             }
         }
 
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MailTypes", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Recipients", this, editor));
-
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Ccs", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Bccs", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Subject", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Body", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_BodyType", this, editor));
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Attachment", this, editor));
-
             return RenderedControls;
         }
 
