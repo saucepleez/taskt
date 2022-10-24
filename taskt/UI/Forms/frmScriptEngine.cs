@@ -102,9 +102,6 @@ namespace taskt.UI.Forms
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
-
-
-
         }
         public frmScriptEngine()
         {
@@ -178,11 +175,7 @@ namespace taskt.UI.Forms
             {
                 engineInstance.ExecuteScriptXML(xmlData);
             }
-
-
         }
-
-
 
         /// <summary>
         /// Triggers the automation engine to stop based on a hooked key press

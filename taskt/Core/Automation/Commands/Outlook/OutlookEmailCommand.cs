@@ -68,32 +68,23 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
             var vRecipients = v_Recipients.ConvertToUserVariable(sender);
             var vAttachment = v_Attachment.ConvertToUserVariable(sender);
             var vSubject = v_Subject.ConvertToUserVariable(sender);
             var vBody = v_Body.ConvertToUserVariable(sender);
             var vBodyType = v_BodyType.ConvertToUserVariable(sender);
-
             var splittext = vRecipients.Split(';');
-
             Microsoft.Office.Interop.Outlook.Application outlookApp = new Microsoft.Office.Interop.Outlook.Application();
-
             Microsoft.Office.Interop.Outlook.MailItem mail = (Microsoft.Office.Interop.Outlook.MailItem)outlookApp.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
-            Microsoft.Office.Interop.Outlook.AddressEntry currentUser =
-                outlookApp.Session.CurrentUser.AddressEntry;
+            Microsoft.Office.Interop.Outlook.AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;
             if (currentUser.Type == "EX")
             {
-                Microsoft.Office.Interop.Outlook.ExchangeUser manager =
-                    currentUser.GetExchangeUser().GetExchangeUserManager();
+                Microsoft.Office.Interop.Outlook.ExchangeUser manager = currentUser.GetExchangeUser().GetExchangeUserManager();
                 // Add recipient using display name, alias, or smtp address
-                foreach(var t in splittext)
+                foreach (var t in splittext)
                     mail.Recipients.Add(t.ToString());
-
                 mail.Recipients.ResolveAll();
-
                 mail.Subject = vSubject;
-
                 if (vBodyType == "HTML")
                 {
                     mail.HTMLBody = vBody;
@@ -102,15 +93,21 @@ namespace taskt.Core.Automation.Commands
                 {
                     mail.Body = vBody;
                 }
- 
                 if (!string.IsNullOrEmpty(vAttachment))
-                   mail.Attachments.Add(vAttachment);
-
+                {
+                    if (vAttachment.Contains("&"))
+                    {
+                        foreach (var v in vAttachment.Split('&'))
+                            mail.Attachments.Add(v);
+                    }
+                    else
+                        mail.Attachments.Add(vAttachment);
+                }
                 mail.Send();
-                
+
             }
         }
-      
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
