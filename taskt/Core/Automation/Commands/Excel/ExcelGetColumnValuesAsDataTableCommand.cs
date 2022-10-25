@@ -123,7 +123,7 @@ namespace taskt.Core.Automation.Commands
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
-                    columnIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
+                    columnIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
                     break;
                 case "rc":
                     columnIndex = v_ColumnIndex.ConvertToUserVariableAsInteger("Column Index", engine);
@@ -156,7 +156,7 @@ namespace taskt.Core.Automation.Commands
             Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
             DataTable newDT = new DataTable();
-            newDT.Columns.Add(ExcelControls.getColumnName(excelSheet, columnIndex));
+            newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, columnIndex));
 
             int tblRow = 0;
             for (int i = rowStart; i <= rowEnd; i++)

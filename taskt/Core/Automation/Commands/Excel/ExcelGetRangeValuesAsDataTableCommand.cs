@@ -145,14 +145,14 @@ namespace taskt.Core.Automation.Commands
             switch(v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
-                    columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
                         columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
                     }
                     break;
 
@@ -221,7 +221,7 @@ namespace taskt.Core.Automation.Commands
             // set columns
             for (int i = 0; i < colRange; i++) 
             {
-                newDT.Columns.Add(ExcelControls.getColumnName(excelSheet, columnStartIndex + i));
+                newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, columnStartIndex + i));
             }
 
             for (int i = 0; i < rowRange; i++)

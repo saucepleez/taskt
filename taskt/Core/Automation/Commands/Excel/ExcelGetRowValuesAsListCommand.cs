@@ -143,14 +143,14 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_ColumnStart = "A";
                     }
-                    columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
                         columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
                     }
                     break;
                 case "rc":

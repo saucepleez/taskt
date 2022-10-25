@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
-                    columnIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine)) ;
+                    columnIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine)) ;
                     break;
                 case "rc":
                     //columnIndex = int.Parse(v_ColumnIndex.ConvertToUserVariable(engine));

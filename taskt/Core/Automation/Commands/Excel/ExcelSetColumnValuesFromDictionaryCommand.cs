@@ -139,7 +139,7 @@ namespace taskt.Core.Automation.Commands
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
-                    columnIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
+                    columnIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
                     break;
                 case "rc":
                     columnIndex = v_ColumnIndex.ConvertToUserVariableAsInteger("Column Index", engine);
@@ -205,7 +205,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDic.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.setCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
 
             // copy key list
             string[] keys = new string[myDic.Keys.Count];

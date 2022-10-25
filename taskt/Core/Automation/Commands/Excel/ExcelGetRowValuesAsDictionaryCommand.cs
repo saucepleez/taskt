@@ -145,7 +145,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_ColumnStart = "A";
                     }
-                    columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
@@ -153,7 +153,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
                     }
 
                     break;
@@ -202,7 +202,7 @@ namespace taskt.Core.Automation.Commands
 
             for (int i = columnStartIndex; i <= columnEndIndex; i++)
             {
-                string keyName = ExcelControls.getAddress(excelSheet, rowIndex, i);
+                string keyName = ExcelControls.GetAddress(excelSheet, rowIndex, i);
                 newDic.Add(keyName, getFunc(excelSheet, i, rowIndex));
             }
 

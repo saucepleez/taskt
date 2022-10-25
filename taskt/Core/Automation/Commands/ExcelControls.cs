@@ -332,7 +332,7 @@ namespace taskt.Core
             return getFunc;
         }
 
-        public static Action<string, Worksheet, int, int> setCellValueFunction(string valueType)
+        public static Action<string, Worksheet, int, int> SetCellValueFunction(string valueType)
         {
             Action<string, Worksheet, int, int> setFunc = null;
             switch (valueType)
@@ -371,13 +371,20 @@ namespace taskt.Core
 
             return setFunc;
         }
-        
-        public static int getColumnIndex(Worksheet sheet, string columnName)
+
+        public static int GetColumnIndex(Worksheet sheet, string columnName)
         {
-            return ((Range)sheet.Columns[columnName]).Column;
+            if (CheckCorrectColumnName(columnName, sheet))
+            {
+                return ((Range)sheet.Columns[columnName]).Column;
+            }
+            else
+            {
+                throw new Exception("Strange Column Name '" + columnName + "'");
+            }
         }
 
-        public static string getColumnName(Worksheet sheet, int columnIndex)
+        public static string GetColumnName(Worksheet sheet, int columnIndex)
         {
             if (columnIndex < 1)
             {
@@ -389,14 +396,14 @@ namespace taskt.Core
             }
         }
 
-        public static string getAddress(Worksheet sheet, int row, int column)
+        public static string GetAddress(Worksheet sheet, int row, int column)
         {
             return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
         }
 
         public static int getLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
         {
-            return getLastRowIndex(sheet, getColumnIndex(sheet, column), startRow, targetType);
+            return getLastRowIndex(sheet, GetColumnIndex(sheet, column), startRow, targetType);
         }
 
         public static int getLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
@@ -423,7 +430,7 @@ namespace taskt.Core
 
         public static int getLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
         {
-            return getLastColumnIndex(sheet, row, getColumnIndex(sheet, startColum), targetType);
+            return getLastColumnIndex(sheet, row, GetColumnIndex(sheet, startColum), targetType);
         }
 
         public static int getLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
@@ -495,6 +502,49 @@ namespace taskt.Core
         {
             var rc = location.ConvertToUserVariableAsExcelRCLocation(engine, excelInstance, command);
             return excelSheet.Cells[rc.row, rc.column];
+        }
+
+        public static bool CheckCorrectColumnName(string columnName, Application excelInstance)
+        {
+            try
+            {
+                var col = excelInstance.Columns[columnName];
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool CheckCorrectColumnName(string columnName, Worksheet excelSheet)
+        {
+            try
+            {
+                var col = excelSheet.Columns[columnName];
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool CheckCorrectColumnIndex(int columnIndex, Application excelInstance)
+        {
+            return CheckCorrectRC(1, columnIndex, excelInstance);
+        }
+        public static bool CheckCorrectColumnIndex(int columnIndex, Worksheet excelInstance)
+        {
+            try
+            {
+                var rg = excelInstance.Cells[1, columnIndex];
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static bool CheckCorrectRange(this string range, Application excelInstance)

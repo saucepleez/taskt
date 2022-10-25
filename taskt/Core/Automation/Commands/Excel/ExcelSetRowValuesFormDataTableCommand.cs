@@ -165,7 +165,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_ColumnStart = "A";
                     }
-                    columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
@@ -173,7 +173,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
                     }
                     break;
                 case "rc":
@@ -239,7 +239,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDT.Columns.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.setCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

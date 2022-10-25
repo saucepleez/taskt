@@ -151,7 +151,7 @@ namespace taskt.Core.Automation.Commands
             switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             {
                 case "range":
-                    excelColumnIndex = ExcelControls.getColumnIndex(excelSheet, v_ExcelColumnIndex.ConvertToUserVariable(engine));
+                    excelColumnIndex = ExcelControls.GetColumnIndex(excelSheet, v_ExcelColumnIndex.ConvertToUserVariable(engine));
                     break;
                 case "rc":
                     excelColumnIndex = v_ExcelColumnIndex.ConvertToUserVariableAsInteger("Excel Column", engine);
@@ -223,7 +223,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDT.Rows.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.setCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {
