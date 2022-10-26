@@ -398,7 +398,14 @@ namespace taskt.Core
 
         public static string GetAddress(Worksheet sheet, int row, int column)
         {
-            return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
+            if (CheckCorrectRC(row, column, sheet))
+            {
+                return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
+            }
+            else
+            {
+                throw new Exception("Strange Excel Location. Row: " + row + ", Column: " + column);
+            }
         }
 
         public static int getLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
@@ -455,18 +462,27 @@ namespace taskt.Core
             return --lastColumn;
         }
 
+        public static int GetColumnIndex(string columnValueName, string columnTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command)
+        {
+            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+
+            int columnIndex = 0;
+            switch (columnType)
+            {
+                case "range":
+                    string col = command.ConvertToUserVariable(columnValueName, "Column", engine);
+                    columnIndex = GetColumnIndex(excelSheet, col);
+                    break;
+                case "rc":
+                    columnIndex = command.ConvertToUserVariableAsInteger(columnValueName, "Column", engine);
+                    break;
+            }
+            return columnIndex;
+        }
+
         public static string ConvertToUserVariableAsExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
             var location = value.ConvertToUserVariable(engine);
-            //try
-            //{
-            //    var rg = excelInstance.Range[location]; // location validate test
-            //    return location;
-            //}
-            //catch
-            //{
-            //    throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
-            //}
             if (CheckCorrectRange(location, excelInstance))
             {
                 return location;
@@ -504,11 +520,22 @@ namespace taskt.Core
             return excelSheet.Cells[rc.row, rc.column];
         }
 
-        public static bool CheckCorrectColumnName(string columnName, Application excelInstance)
+        #region check methods
+        public static bool CheckCorrectColumnName(string columnName, Worksheet excelSheet)
+        {
+            return CheckCorrectRange(columnName + "1", excelSheet);
+        }
+
+        public static bool CheckCorrectColumnIndex(int columnIndex, Worksheet excelSheet)
+        {
+            return CheckCorrectRC(1, columnIndex, excelSheet);
+        }
+
+        public static bool CheckCorrectRange(string range, Worksheet excelSheet)
         {
             try
             {
-                var col = excelInstance.Columns[columnName];
+                var rg = excelSheet.Range[range];
                 return true;
             }
             catch
@@ -517,34 +544,32 @@ namespace taskt.Core
             }
         }
 
-        public static bool CheckCorrectColumnName(string columnName, Worksheet excelSheet)
+        public static bool CheckCorrectRC(int row, int column, Worksheet excelSheet)
         {
             try
             {
-                var col = excelSheet.Columns[columnName];
+                var rc = excelSheet.Cells[row, column];
                 return true;
             }
             catch
             {
                 return false;
             }
+        }
+
+        public static bool CheckCorrectColumnName(string columnName, Application excelInstance)
+        {
+            return CheckCorrectRange(columnName + "1", excelInstance);
+        }
+
+        public static bool CheckCorrectRowIndex(int rowIndex, Application excelInstance)
+        {
+            return CheckCorrectRC(rowIndex, 1, excelInstance);
         }
 
         public static bool CheckCorrectColumnIndex(int columnIndex, Application excelInstance)
         {
             return CheckCorrectRC(1, columnIndex, excelInstance);
-        }
-        public static bool CheckCorrectColumnIndex(int columnIndex, Worksheet excelInstance)
-        {
-            try
-            {
-                var rg = excelInstance.Cells[1, columnIndex];
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         public static bool CheckCorrectRange(this string range, Application excelInstance)
@@ -599,5 +624,6 @@ namespace taskt.Core
             }
             return true;
         }
+        #endregion
     }
 }
