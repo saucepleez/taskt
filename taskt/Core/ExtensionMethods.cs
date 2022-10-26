@@ -8,6 +8,8 @@ using System.Text;
 using System.Reflection;
 using System.Threading.Tasks;
 using taskt.Core.Automation;
+using taskt.Core.Automation.Commands;
+
 namespace taskt.Core
 {
     public class PropertyConvertTag
@@ -85,6 +87,14 @@ namespace taskt.Core
             {
                 throw new Exception(parameterName + " '" + str + "' is not a DateTime.");
             }
+        }
+
+        public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
+        {
+            var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
+            string propValue = propInfo.GetValue(command)?.ToString() ?? "";
+
+            return propValue.ConvertToUserVariable(engine);
         }
 
         /// <summary>

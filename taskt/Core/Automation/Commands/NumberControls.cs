@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Core;
+using System;
 using System.Reflection;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -6,15 +7,26 @@ namespace taskt.Core.Automation.Commands
 {
     internal static class NumberControls
     {
-        // now test code
-        private static int ConvertToUserVariableAsInteger(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
+        public static int ConvertToUserVariableAsInteger(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
+        {
+            decimal decValue = command.ConvertToUserVariableAsDecimal(propertyName, propertyDescription, engine);
+            try
+            {
+                int value = (int)decValue;
+                return value;
+            }
+            catch
+            {
+                throw new Exception(propertyDescription + " is out of Integer Range.");
+            }
+        }
+
+        public static decimal ConvertToUserVariableAsDecimal(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' is not exists."); ;
             string valueStr = propInfo.GetValue(command)?.ToString() ?? "";
 
-            int value = valueStr.ConvertToUserVariableAsInteger(propertyDescription, engine);
-
-            return value;
+            return new PropertyConvertTag(valueStr, propertyName, propertyDescription).ConvertToUserVariableAsDecimal(propInfo, engine);
         }
 
         public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
@@ -124,12 +136,46 @@ namespace taskt.Core.Automation.Commands
             var tp = command.GetType();
             var myProp = tp.GetProperty(prop.Name);
 
-            if (myProp == null)
-            {
-                throw new Exception("Property '" + prop.Name + "' does not exists.");
-            }
+            //if (myProp == null)
+            //{
+            //    throw new Exception("Property '" + prop.Name + "' does not exists.");
+            //}
 
-            var optAttr = (PropertyIsOptional)myProp.GetCustomAttribute(typeof(PropertyIsOptional));
+            //var optAttr = (PropertyIsOptional)myProp.GetCustomAttribute(typeof(PropertyIsOptional));
+            //if (optAttr != null)
+            //{
+            //    if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(prop.Value)))
+            //    {
+            //        //prop.Value = optAttr.setBlankToValue;
+            //        prop.SetNewValue(optAttr.setBlankToValue);
+            //    }
+            //}
+
+            //decimal v = prop.ConvertToUserVariableAsDecimal(engine);
+
+            //var validateAttr = (PropertyValidationRule)myProp.GetCustomAttribute(typeof(PropertyValidationRule));
+            //if (validateAttr != null)
+            //{
+            //    if (CheckValidate(v, validateAttr, prop.Description))
+            //    {
+            //        return v;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Validation Error");
+            //    }
+            //}
+            //else
+            //{
+            //    return v;
+            //}
+
+            return prop.ConvertToUserVariableAsDecimal(myProp, engine);
+        }
+
+        public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, PropertyInfo propInfo, Engine.AutomationEngineInstance engine)
+        {
+            var optAttr = propInfo.GetCustomAttribute<PropertyIsOptional>();
             if (optAttr != null)
             {
                 if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(prop.Value)))
@@ -141,7 +187,7 @@ namespace taskt.Core.Automation.Commands
 
             decimal v = prop.ConvertToUserVariableAsDecimal(engine);
 
-            var validateAttr = (PropertyValidationRule)myProp.GetCustomAttribute(typeof(PropertyValidationRule));
+            var validateAttr = propInfo.GetCustomAttribute<PropertyValidationRule>();
             if (validateAttr != null)
             {
                 if (CheckValidate(v, validateAttr, prop.Description))
