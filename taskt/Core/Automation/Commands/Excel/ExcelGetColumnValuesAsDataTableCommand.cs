@@ -119,20 +119,23 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            int columnIndex = 0;
-            switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
-            {
-                case "range":
-                    columnIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
-                    break;
-                case "rc":
-                    columnIndex = v_ColumnIndex.ConvertToUserVariableAsInteger("Column Index", engine);
-                    break;
-            }
+            //int columnIndex = 0;
+            //switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
+            //{
+            //    case "range":
+            //        columnIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
+            //        break;
+            //    case "rc":
+            //        columnIndex = v_ColumnIndex.ConvertToUserVariableAsInteger("Column Index", engine);
+            //        break;
+            //}
+            int columnIndex = ExcelControls.GetColumnIndex(nameof(v_ColumnIndex), nameof(v_ColumnType), engine, excelSheet, this);
 
-            string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            //string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
-            int rowStart = v_RowStart.ConvertToUserVariableAsInteger("v_RowStart", "Start Row", engine, this);
+            //int rowStart = v_RowStart.ConvertToUserVariableAsInteger("v_RowStart", "Start Row", engine, this);
+            int rowStart = this.ConvertToUserVariableAsInteger(nameof(v_RowStart), "Start Row", engine);
 
             int rowEnd;
             if (String.IsNullOrEmpty(v_RowEnd))
@@ -141,7 +144,8 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                rowEnd = v_RowEnd.ConvertToUserVariableAsInteger("End Row", engine);
+                //rowEnd = v_RowEnd.ConvertToUserVariableAsInteger("End Row", engine);
+                rowEnd = this.ConvertToUserVariableAsInteger(nameof(v_RowEnd), "End Row", engine);
             }
 
             if (rowStart > rowEnd)

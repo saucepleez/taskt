@@ -66,15 +66,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //var infoType = v_InfoType.ConvertToUserVariable(sender);
-            var infoType = v_InfoType.GetUISelectionValue("v_InfoType", this, engine);
+            //var infoType = v_InfoType.GetUISelectionValue("v_InfoType", this, engine);
+            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
             string ret = "";
             switch (infoType)
             {
@@ -92,7 +87,6 @@ namespace taskt.Core.Automation.Commands
                     ret = excelInstance.Worksheets.Count.ToString();
                     break;
                 case "first sheet":
-                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
                     if (excelInstance.Worksheets.Count > 0)
                     {
                         ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
@@ -103,7 +97,6 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
                 case "last sheet":
-                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
                     if (excelInstance.Worksheets.Count > 0)
                     {
                         ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
@@ -113,55 +106,9 @@ namespace taskt.Core.Automation.Commands
                         ret = "";
                     }
                     break;
-                //default:
-                //    throw new Exception("Information type " + infoType + " is not support.");
-                //    break;
             }
 
             ret.StoreInUserVariable(sender, v_applyToVariable);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get Info: '" + v_InfoType + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_InfoType))
-        //    {
-        //        this.validationResult += "Information type is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariable))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
