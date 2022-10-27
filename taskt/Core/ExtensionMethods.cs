@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using taskt.Core.Automation;
 using taskt.Core.Automation.Commands;
+using System.Reflection.Emit;
 
 namespace taskt.Core
 {
@@ -89,12 +90,28 @@ namespace taskt.Core
             }
         }
 
-        public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
+        public static string GetRawPropertyString(this ScriptCommand command, string propertyName, string propertyDescription)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
-            string propValue = propInfo.GetValue(command)?.ToString() ?? "";
+            object propValue = propInfo.GetValue(command);
 
-            return propValue.ConvertToUserVariable(engine);
+            if (propValue is DataTable)
+            {
+                throw new Exception(propertyName + " is DataTable.");
+            }
+            else
+            {
+                return propValue?.ToString() ?? "";
+            }
+        }
+
+        public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
+        {
+            //var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
+            //string propValue = propInfo.GetValue(command)?.ToString() ?? "";
+
+            //return propValue.ConvertToUserVariable(engine);
+            return GetRawPropertyString(command, propertyName, propertyDescription).ConvertToUserVariable(engine);
         }
 
         /// <summary>
