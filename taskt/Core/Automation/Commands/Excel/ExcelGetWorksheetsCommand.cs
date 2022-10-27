@@ -68,31 +68,17 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Worksheets";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             List<string> sheetNames = new List<string>();
 
             var targetSheetName = v_SheetName.ConvertToUserVariable(sender);
-            //if (targetSheetName == engine.engineSettings.CurrentWorksheetKeyword)
-            //{
-            //    targetSheetName = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name;
-            //}
-            //Microsoft.Office.Interop.Excel.Worksheet searchedSheet = ExcelControls.getWorksheet(engine, excelInstance, targetSheetName);
-            //if (searchedSheet != null)
-            //{
-            //    targetSheetName = searchedSheet.Name;
-            //}
-
+            
             if (String.IsNullOrEmpty(targetSheetName))
             {
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)
@@ -104,12 +90,8 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-                //if (String.IsNullOrEmpty(searchMethod))
-                //{
-                //    searchMethod = "Contains";
-                //}
-                var searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
+                //var searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
+                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
 
                 switch (searchMethod)
                 {
@@ -122,10 +104,8 @@ namespace taskt.Core.Automation.Commands
                     case "end with":
                         func = (sht, search) => { return sht.EndsWith(search); };
                         break;
-                    //default:
-                    //    throw new Exception("Search method " + searchMethod + " is not support.");
-                    //    break;
                 }
+
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)
                 {
                     if (func(sh.Name, targetSheetName))
@@ -135,59 +115,8 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            ////get variable
-            //var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariable).FirstOrDefault();
-
-            ////create if var does not exist
-            //if (requiredComplexVariable == null)
-            //{
-            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_applyToVariable, CurrentPosition = 0 });
-            //    requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariable).FirstOrDefault();
-            //}
-
-            ////assign value to variable
-            //requiredComplexVariable.VariableValue = sheetNames;
-
             sheetNames.StoreInUserVariable(engine, v_applyToVariable);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get Sheet Name: " + v_SearchMethod + " '" + v_SheetName + "', Instance Name: '" + v_InstanceName + "', Result '" + v_applyToVariable + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (string.IsNullOrEmpty(this.v_applyToVariable))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {

@@ -46,28 +46,14 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Save Workbook As";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //convert variables
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            ////get excel app object
-            //var excelObject = engine.GetAppInstance(vInstance);
-            ////convert object
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //var fileName = v_FileName.ConvertToUserVariable(engine);
-            //fileName = Core.FilePathControls.formatFilePath(fileName, engine);
-            //if (!Core.FilePathControls.hasExtension(fileName))
-            //{
-            //    fileName += ".xlsx";
-            //}
             string fileName;
             if (FilePathControls.containsFileCounter(v_FileName, engine))
             {
@@ -83,46 +69,5 @@ namespace taskt.Core.Automation.Commands
             excelInstance.ActiveWorkbook.SaveAs(fileName);
             excelInstance.DisplayAlerts = true;
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Save To '" + v_FileName + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_FileName))
-        //    {
-        //        this.validationResult += "File is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

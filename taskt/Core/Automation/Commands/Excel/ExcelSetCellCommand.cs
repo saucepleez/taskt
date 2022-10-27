@@ -70,23 +70,13 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Set Cell";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            //var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
-            //var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
             var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
@@ -103,82 +93,26 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            //var valueType = v_ValueType.ConvertToUserVariable(sender);
-            //if (String.IsNullOrWhiteSpace(valueType))
-            //{
-            //    valueType = "Cell";
-            //}
             var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
 
             switch (valueType)
             {
                 case "cell":
-                    //excelSheet.Range[targetAddress].Value = targetText;
                     rg.Value = targetText;
                     break;
                 case "formula":
-                    //excelSheet.Range[targetAddress].Formula = targetText;
                     rg.Formula = targetText;
                     break;
                 case "format":
-                    //excelSheet.Range[targetAddress].NumberFormatLocal = targetText;
                     rg.NumberFormatLocal = targetText;
                     break;
                 case "font color":
-                    //excelSheet.Range[targetAddress].Font.Color = long.Parse(targetText);
-                    //excelSheet.Range[targetAddress].Font.Color = colorToSet;
                     rg.Font.Color = colorToSet;
                     break;
                 case "back color":
-                    //excelSheet.Range[targetAddress].Interior.Color = long.Parse(targetText);
-                    //excelSheet.Range[targetAddress].Interior.Color = colorToSet;
                     rg.Interior.Color = colorToSet;
                     break;
-                //default:
-                //    throw new Exception(valueType + " is not support.");
-                //    break;
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set Cell " + v_ValueType + " '" + v_ExcelCellAddress + "' to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_ExcelCellAddress))
-        //    {
-        //        this.validationResult += "Cell location is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

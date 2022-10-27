@@ -33,62 +33,16 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Save Workbook";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            ////convert variables
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
-            ////get excel app object
-            //var excelObject = engine.GetAppInstance(vInstance);
-
-            ////convert object
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //save
             excelInstance.ActiveWorkbook.Save();
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Excel);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']"; ;
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

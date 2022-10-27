@@ -45,69 +45,16 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Go To Cell";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
-
-            //var location = v_CellLocation.ConvertToUserVariable(sender);
-            //var location = v_CellLocation.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
 
             var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
 
-            //excelSheet.Range[location].Select();
             rg.Select();
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_CellLocation", this, editor));
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Go To: '" + v_CellLocation + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_CellLocation))
-        //    {
-        //        this.validationResult += "Cell location is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

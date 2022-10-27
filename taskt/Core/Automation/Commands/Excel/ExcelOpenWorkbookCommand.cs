@@ -58,32 +58,13 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Open Workbook";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //var vFilePath = v_FilePath.ConvertToUserVariable(sender);
-            //vFilePath = Core.FilePathControls.formatFilePath(vFilePath, engine);
-            //if (!System.IO.File.Exists(vFilePath) && !Core.FilePathControls.hasExtension(vFilePath))
-            //{
-            //    string[] exts = new string[] { ".xlsx", ".xlsm", ".xls", ".csv", ".ods" };
-            //    foreach(string ext in exts)
-            //    {
-            //        if (System.IO.File.Exists(vFilePath + ext))
-            //        {
-            //            vFilePath += ext;
-            //            break;
-            //        }
-            //    }
-            //}
             string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls", "csv", "ods" }, true);
 
             var pass = v_Password.ConvertToUserVariable(sender);
@@ -97,46 +78,5 @@ namespace taskt.Core.Automation.Commands
                 excelInstance.Workbooks.Open(vFilePath, Password: pass);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Open from '" + v_FilePath + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_FilePath))
-        //    {
-        //        this.validationResult += "File is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
