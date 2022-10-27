@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Commands;
 
@@ -408,12 +409,12 @@ namespace taskt.Core
             }
         }
 
-        public static int getLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
+        public static int GetLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
         {
-            return getLastRowIndex(sheet, GetColumnIndex(sheet, column), startRow, targetType);
+            return GetLastRowIndex(sheet, GetColumnIndex(sheet, column), startRow, targetType);
         }
 
-        public static int getLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
+        public static int GetLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
         {
             int lastRow = startRow;
             switch (targetType.ToLower())
@@ -435,12 +436,12 @@ namespace taskt.Core
             return --lastRow;
         }
 
-        public static int getLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
+        public static int GetLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
         {
-            return getLastColumnIndex(sheet, row, GetColumnIndex(sheet, startColum), targetType);
+            return GetLastColumnIndex(sheet, row, GetColumnIndex(sheet, startColum), targetType);
         }
 
-        public static int getLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
+        public static int GetLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
         {
             int lastColumn = startColum;
             switch (targetType.ToLower())
@@ -462,7 +463,7 @@ namespace taskt.Core
             return --lastColumn;
         }
 
-        public static int GetColumnIndex(string columnValueName, string columnTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command)
+        public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command)
         {
             string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
 
@@ -477,7 +478,31 @@ namespace taskt.Core
                     columnIndex = command.ConvertToUserVariableAsInteger(columnValueName, "Column", engine);
                     break;
             }
-            return columnIndex;
+
+            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+
+            int rowStartIndex = command.ConvertToUserVariableAsInteger(rowStartName, "Start Row", engine);
+            string rowEndValue = command.ConvertToUserVariable(rowEndName, "End Row", engine);
+            int rowEndIndex;
+            if (String.IsNullOrEmpty(rowEndValue))
+            {
+                rowEndIndex = GetLastRowIndex(excelSheet, columnIndex, rowStartIndex, valueType);
+            }
+            else
+            {
+                rowEndIndex = command.ConvertToUserVariableAsInteger(rowEndName, "End Row", engine);
+            }
+
+            if (rowStartIndex > rowEndIndex)
+            {
+                int t = rowStartIndex;
+                rowStartIndex = rowEndIndex;
+                rowEndIndex = t;
+            }
+
+            CheckCorrectRCRange(rowStartIndex, columnIndex, rowEndIndex, columnIndex, excelSheet);
+
+            return (columnIndex, rowStartIndex, rowEndIndex, valueType);
         }
 
         public static string ConvertToUserVariableAsExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
@@ -612,6 +637,32 @@ namespace taskt.Core
                 }
             }
             if (!CheckCorrectRC(endRow, endColumn, excelInstance))
+            {
+                if (throwExceptionWhenInvalidRange)
+                {
+                    throw new Exception("Invalid End Location. Row: " + endRow + ", Column: " + endColumn);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Worksheet excelSheet, bool throwExceptionWhenInvalidRange = true)
+        {
+            if (!CheckCorrectRC(startRow, startColumn, excelSheet))
+            {
+                if (throwExceptionWhenInvalidRange)
+                {
+                    throw new Exception("Invalid Start Location. Row: " + startRow + ", Column: " + startColumn);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (!CheckCorrectRC(endRow, endColumn, excelSheet))
             {
                 if (throwExceptionWhenInvalidRange)
                 {

@@ -119,17 +119,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            //int rowIndex = int.Parse(v_RowIndex.ConvertToUserVariable(engine));
-            //int rowIndex = v_RowIndex.ConvertToUserVariableAsInteger("Row Index", engine);
-            //if (rowIndex < 1)
-            //{
-            //    throw new Exception("Row index is less than 1");
-            //}
             int rowIndex = v_RowIndex.ConvertToUserVariableAsInteger("v_RowIndex", "Row", engine, this);
 
             string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
@@ -147,7 +138,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
-                        columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
                     }
                     else
                     {
@@ -164,19 +155,16 @@ namespace taskt.Core.Automation.Commands
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
-                        columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
                     }
                     else
                     {
                         columnEndIndex = v_ColumnEnd.ConvertToUserVariableAsInteger("Column End", engine);
                     }
 
-                    //if ((columnStartIndex < 0) || (columnEndIndex < 0))
-                    //{
-                    //    throw new Exception("Column is less than 0");
-                    //}
                     break;
             }
+
             if (columnStartIndex > columnEndIndex)
             {
                 int t = columnStartIndex;
@@ -184,14 +172,6 @@ namespace taskt.Core.Automation.Commands
                 columnEndIndex = t;
             }
 
-            //if (!ExcelControls.CheckCorrectRC(rowIndex, columnStartIndex, excelInstance))
-            //{
-            //    throw new Exception("Invalid Start Location. Row: " + rowIndex + ", Column: " + columnStartIndex);
-            //}
-            //if (!ExcelControls.CheckCorrectRC(rowIndex, columnEndIndex, excelInstance))
-            //{
-            //    throw new Exception("Invalid End Location. Row: " + rowIndex + ", Column: " + columnEndIndex);
-            //}
             ExcelControls.CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelInstance);
 
             Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
@@ -209,20 +189,5 @@ namespace taskt.Core.Automation.Commands
 
             newDT.StoreInUserVariable(engine, v_userVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowIndex + "' as DataTable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

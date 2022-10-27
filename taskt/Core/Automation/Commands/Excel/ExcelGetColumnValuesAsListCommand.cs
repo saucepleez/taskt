@@ -121,44 +121,12 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            //int columnIndex = 0;
-            //switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
-            //{
-            //    case "range":
-            //        columnIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine)) ;
-            //        break;
-            //    case "rc":
-            //        //columnIndex = int.Parse(v_ColumnIndex.ConvertToUserVariable(engine));
-            //        columnIndex = v_ColumnIndex.ConvertToUserVariableAsInteger("Column Index", engine);
-            //        break;
-            //}
-            int columnIndex = ExcelControls.GetColumnIndex(nameof(v_ColumnIndex), nameof(v_ColumnType), engine, excelSheet, this);
-
-            //string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
-
-            //int rowStart = v_RowStart.ConvertToUserVariableAsInteger("v_RowStart", "Start Row", engine, this);
-            int rowStart = this.ConvertToUserVariableAsInteger(nameof(v_RowStart), "Start Row", engine);
-
-            int rowEnd;
-            if (String.IsNullOrEmpty(v_RowEnd))
-            {
-                rowEnd = ExcelControls.getLastRowIndex(excelSheet, columnIndex, rowStart, valueType);
-            }
-            else
-            {
-                //rowEnd = v_RowEnd.ConvertToUserVariableAsInteger("End Row", engine);
-                rowEnd = this.ConvertToUserVariableAsInteger(nameof(v_RowEnd), "End Row", engine);
-            }
-
-            if (rowStart > rowEnd)
-            {
-                int t = rowStart;
-                rowStart = rowEnd;
-                rowEnd = t;
-            }
-
-            ExcelControls.CheckCorrectRCRange(rowStart, columnIndex, rowEnd, columnIndex, excelInstance);
+            (int columnIndex, int rowStart, int rowEnd, string valueType) =
+                ExcelControls.GetRangeIndeiesColumnDirection(
+                    nameof(v_ColumnIndex), nameof(v_ColumnType),
+                    nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType),
+                    engine, excelSheet, this
+                );
 
             Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 

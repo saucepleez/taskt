@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
-                        columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
                     }
                     else
                     {
@@ -166,7 +166,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
-                        columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
                     }
                     else
                     {
