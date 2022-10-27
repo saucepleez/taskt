@@ -62,6 +62,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "1")]
         [PropertyDisplayText(true, "Start Row")]
         public string v_RowStart { get; set; }
 
@@ -72,6 +73,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**1** or **2** or **{{{vRow}}}**")]
         [Remarks("")]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "Last Row")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "End Row")]
         public string v_RowEnd { get; set; }
