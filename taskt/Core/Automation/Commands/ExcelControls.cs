@@ -482,7 +482,7 @@ namespace taskt.Core
             string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
 
             int rowStartIndex = command.ConvertToUserVariableAsInteger(rowStartName, "Start Row", engine);
-            string rowEndValue = command.ConvertToUserVariable(rowEndName, "End Row", engine);
+            string rowEndValue = command.GetRawPropertyString(rowEndName, "End Row");
             int rowEndIndex;
             if (String.IsNullOrEmpty(rowEndValue))
             {
@@ -490,7 +490,7 @@ namespace taskt.Core
             }
             else
             {
-                rowEndIndex = command.ConvertToUserVariableAsInteger(rowEndName, "End Row", engine);
+                rowEndIndex = rowEndValue.ConvertToUserVariableAsInteger("End Row", engine);
             }
 
             if (rowStartIndex > rowEndIndex)
@@ -503,6 +503,70 @@ namespace taskt.Core
             CheckCorrectRCRange(rowStartIndex, columnIndex, rowEndIndex, columnIndex, excelSheet);
 
             return (columnIndex, rowStartIndex, rowEndIndex, valueType);
+        }
+
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(string rowValueName, string columnTypeName, string columnStartName, string columnEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command)
+        {
+            int rowIndex = command.ConvertToUserVariableAsInteger(rowValueName, "Row Index", engine);
+
+            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+
+            int columnStartIndex = 0;
+            int columnEndIndex = 0;
+
+            string columnStartValue = command.GetRawPropertyString(columnStartName, "Start Column");
+            string columnEndValue = command.GetRawPropertyString(columnEndName, "End Column");
+
+            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+            switch (columnType)
+            {
+                case "range":
+                    if (String.IsNullOrEmpty(columnStartValue))
+                    {
+                        columnStartValue = "A";
+                    }
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ConvertToUserVariable(engine));
+
+                    
+                    if (String.IsNullOrEmpty(columnEndValue))
+                    {
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                    }
+                    else
+                    {
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ConvertToUserVariable(engine));
+                    }
+                    break;
+
+                case "rc":
+                    if (String.IsNullOrEmpty(columnStartValue))
+                    {
+                        columnStartValue = "1";
+                    }
+                    columnStartIndex = columnStartValue.ConvertToUserVariableAsInteger("Start Column", engine);
+
+                    if (String.IsNullOrEmpty(columnEndValue))
+                    {
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                    }
+                    else
+                    {
+                        columnEndIndex = columnEndValue.ConvertToUserVariableAsInteger("Column End", engine);
+                    }
+
+                    break;
+            }
+
+            if (columnStartIndex > columnEndIndex)
+            {
+                int t = columnStartIndex;
+                columnStartIndex = columnEndIndex;
+                columnEndIndex = t;
+            }
+
+            ExcelControls.CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelSheet);
+
+            return (rowIndex, columnStartIndex, columnEndIndex, valueType);
         }
 
         public static string ConvertToUserVariableAsExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
