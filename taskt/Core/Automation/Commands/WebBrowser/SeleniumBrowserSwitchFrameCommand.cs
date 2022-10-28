@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
 
         private void NameOrIDValidate()
         {
-            if (!String.IsNullOrEmpty(this.v_FrameParameter))
+            if (String.IsNullOrEmpty(this.v_FrameParameter))
             {
                 this.validationResult += "Frame Search Parameter is empty.\n";
                 this.IsValid = false;

@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var listName = v_InputList.ConvertToUserVariable(sender);
+            var listName = v_InputList.ConvertToUserVariable(sender, true);
 
             //get variable by regular name
             Script.ScriptVariable listVariable = engine.VariableList.Where(x => x.VariableName == listName).FirstOrDefault();

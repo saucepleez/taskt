@@ -34,7 +34,7 @@ namespace taskt.UI.Forms
         void OnHookStopped(object sender, EventArgs e)
         {
 
-          //  isRecording = false;
+            //  isRecording = false;
 
             GlobalHook.HookStopped -= new EventHandler(OnHookStopped);
 
@@ -150,7 +150,7 @@ namespace taskt.UI.Forms
 
         private void frmSequenceRecorder_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void chkGroupIntoSequences_CheckedChanged(object sender, EventArgs e)
@@ -186,7 +186,7 @@ namespace taskt.UI.Forms
                 GlobalHook.HookStopped += new EventHandler(OnHookStopped);
                 GlobalHook.StartScreenRecordingHook(chkCaptureClicks.Checked, chkCaptureMouse.Checked, chkGroupMovesIntoSequences.Checked, chkCaptureKeyboard.Checked, chkCaptureWindowEvents.Checked, chkActivateTopLeft.Checked, chkTrackWindowSize.Checked, chkTrackWindowsOpenLocation.Checked, samplingResolution, txtHookStop.Text);
                 lblRecording.Text = "Press '" + txtHookStop.Text + "' key to stop recording!";
-               // WindowHook.StartHook();
+                // WindowHook.StartHook();
 
 
 
@@ -214,14 +214,28 @@ namespace taskt.UI.Forms
             if (chkTrackWindowsOpenLocation.Checked)
                 chkActivateTopLeft.Checked = false;
         }
+
+        /// <summary>
+        /// 新增鼠标间隔时间
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtHookResolution_TextChanged(object sender, EventArgs e)
+        {
+            string _txtHookValue = txtHookResolution.Text;
+            if (!string.IsNullOrEmpty(_txtHookValue) && Convert.ToInt32(_txtHookValue) < 3)
+            {
+                txtHookResolution.Text = "3";
+            }
+        }
     }
 }
 
 
-    
 
 
-    
+
+
 
 
 

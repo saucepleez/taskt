@@ -134,7 +134,7 @@ namespace taskt.Core.Script
                     {
                         serializer.Serialize(writer, script);
                     }
-                }  
+                }
             }
 
             return script;
@@ -173,7 +173,7 @@ namespace taskt.Core.Script
                     return deserializedData;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -184,7 +184,7 @@ namespace taskt.Core.Script
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
 
             var actions = new Script();
-            foreach(taskt.Core.Automation.Commands.ScriptCommand cmd in commands)
+            foreach (taskt.Core.Automation.Commands.ScriptCommand cmd in commands)
             {
                 actions.AddNewParentCommand(cmd);
             }
@@ -255,30 +255,28 @@ namespace taskt.Core.Script
         /// </summary>
         public string GetDisplayValue(string requiredProperty = "")
         {
-           
             if (VariableValue is string)
             {
                 switch (requiredProperty)
                 {
                     case "type":
                     case "Type":
-                    case "TYPE":
+                    case "TYPE":  
                         return "BASIC";
                     default:
                         return (string)VariableValue;
                 }
-              
             }
-            else if(VariableValue is DataTable)
+            else if (VariableValue is DataTable)
             {
-                DataTable dataTable = (DataTable)VariableValue;              
+                DataTable dataTable = (DataTable)VariableValue;
                 var dataRow = dataTable.Rows[CurrentPosition];
-                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);            
+                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
             }
             else
             {
                 List<string> requiredValue = (List<string>)VariableValue;
-                switch(requiredProperty)
+                switch (requiredProperty)
                 {
                     case "count":
                     case "Count":
@@ -289,13 +287,13 @@ namespace taskt.Core.Script
                     case "INDEX":
                         return CurrentPosition.ToString();
                     case "tojson":
-                    case "ToJson":                
+                    case "ToJson":
                     case "toJson":
                     case "TOJSON":
                         return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
                     case "topipe":
                     case "ToPipe":
-                    case "toPipe":                
+                    case "toPipe":
                     case "TOPIPE":
                         return String.Join("|", requiredValue);
                     case "first":
@@ -314,7 +312,7 @@ namespace taskt.Core.Script
                         return requiredValue[CurrentPosition];
                 }
             }
-           
+
         }
     }
 

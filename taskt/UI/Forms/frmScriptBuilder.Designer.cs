@@ -182,7 +182,7 @@
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpControls.Size = new System.Drawing.Size(979, 558);
+            this.tlpControls.Size = new System.Drawing.Size(1215, 745);
             this.tlpControls.TabIndex = 2;
             // 
             // menuStrip1
@@ -201,7 +201,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 41);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.ShowItemToolTips = true;
-            this.menuStrip1.Size = new System.Drawing.Size(979, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1215, 30);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -432,7 +432,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 152);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(979, 5);
+            this.panel1.Size = new System.Drawing.Size(1215, 5);
             this.panel1.TabIndex = 13;
             // 
             // splitContainer1
@@ -453,7 +453,7 @@
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.splitContainer1.Panel2.Controls.Add(this.pnlCommandHelper);
             this.splitContainer1.Panel2.Controls.Add(this.lstScriptActions);
-            this.splitContainer1.Size = new System.Drawing.Size(973, 364);
+            this.splitContainer1.Size = new System.Drawing.Size(1209, 551);
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -467,7 +467,7 @@
             this.tvCommands.Location = new System.Drawing.Point(0, 0);
             this.tvCommands.Name = "tvCommands";
             this.tvCommands.ShowLines = false;
-            this.tvCommands.Size = new System.Drawing.Size(238, 364);
+            this.tvCommands.Size = new System.Drawing.Size(238, 551);
             this.tvCommands.TabIndex = 8;
             this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
             this.tvCommands.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tvCommands_KeyPress);
@@ -491,7 +491,7 @@
             this.pnlCommandHelper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCommandHelper.Location = new System.Drawing.Point(0, 0);
             this.pnlCommandHelper.Name = "pnlCommandHelper";
-            this.pnlCommandHelper.Size = new System.Drawing.Size(731, 364);
+            this.pnlCommandHelper.Size = new System.Drawing.Size(967, 551);
             this.pnlCommandHelper.TabIndex = 7;
             // 
             // lnkStartEdit
@@ -671,7 +671,7 @@
             this.lstScriptActions.Margin = new System.Windows.Forms.Padding(5);
             this.lstScriptActions.Name = "lstScriptActions";
             this.lstScriptActions.OwnerDraw = true;
-            this.lstScriptActions.Size = new System.Drawing.Size(731, 364);
+            this.lstScriptActions.Size = new System.Drawing.Size(967, 551);
             this.lstScriptActions.TabIndex = 6;
             this.lstScriptActions.UseCompatibleStateImageBehavior = false;
             this.lstScriptActions.View = System.Windows.Forms.View.Details;
@@ -704,7 +704,7 @@
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(979, 41);
+            this.pnlHeader.Size = new System.Drawing.Size(1215, 41);
             this.pnlHeader.TabIndex = 2;
             // 
             // pnlMain
@@ -714,7 +714,7 @@
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Margin = new System.Windows.Forms.Padding(0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(979, 41);
+            this.pnlMain.Size = new System.Drawing.Size(1215, 41);
             this.pnlMain.TabIndex = 2;
             theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
             theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
@@ -753,10 +753,10 @@
             this.tlpControls.SetColumnSpan(this.pnlStatus, 3);
             this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlStatus.Location = new System.Drawing.Point(0, 527);
+            this.pnlStatus.Location = new System.Drawing.Point(0, 714);
             this.pnlStatus.Margin = new System.Windows.Forms.Padding(0);
             this.pnlStatus.Name = "pnlStatus";
-            this.pnlStatus.Size = new System.Drawing.Size(979, 31);
+            this.pnlStatus.Size = new System.Drawing.Size(1215, 31);
             this.pnlStatus.TabIndex = 3;
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
             // 
@@ -773,7 +773,7 @@
             this.pnlControlContainer.Location = new System.Drawing.Point(0, 71);
             this.pnlControlContainer.Margin = new System.Windows.Forms.Padding(0);
             this.pnlControlContainer.Name = "pnlControlContainer";
-            this.pnlControlContainer.Size = new System.Drawing.Size(979, 81);
+            this.pnlControlContainer.Size = new System.Drawing.Size(1215, 81);
             this.pnlControlContainer.TabIndex = 7;
             this.pnlControlContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlControlContainer_Paint);
             // 
@@ -1287,12 +1287,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(979, 558);
+            this.ClientSize = new System.Drawing.Size(1215, 745);
             this.Controls.Add(this.tlpControls);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmScriptBuilder";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "taskt";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmScriptBuilder_FormClosing);
             this.Load += new System.EventHandler(this.frmScriptBuilder_Load);

@@ -1052,22 +1052,21 @@ namespace taskt.UI
                 UIImageDictionary();
             }
 
-            Image uiImage;
-            try
-            {
-                //uiImage = uiImageDictionary[commandName];
-                uiImage = imageList[commandName];
-            }
-            catch (Exception)
-            {
-                uiImage = Properties.Resources.command_files;
-            }
+            //Image uiImage;
+            //try
+            //{
+            //    //uiImage = uiImageDictionary[commandName];
+            //    uiImage = imageList[commandName];
+            //}
+            //catch (Exception)
+            //{
+            //    uiImage = Properties.Resources.command_files;
+            //}
 
             if (uiImages.Images.Count == 0)
             {
                 UIImageList();
             }
-
             Image retImage;
             try
             {
