@@ -60,6 +60,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Store")]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         public string v_applyToVariable { get; set; }
 
         public ExcelGetWorksheetsCommand()
