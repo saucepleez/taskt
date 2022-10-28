@@ -52,6 +52,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         public string v_Password { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Specify If Worksheet Exists")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**Error** or **Ignore** or **Open**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Open")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfWorksheetExists { get; set; }
+
         public ExcelOpenWorkbookCommand()
         {
             this.CommandName = "ExcelOpenWorkbookCommand";
@@ -69,13 +81,48 @@ namespace taskt.Core.Automation.Commands
 
             var pass = v_Password.ConvertToUserVariable(sender);
 
-            if (String.IsNullOrEmpty(pass))
+            int worksheets;
+            try
             {
-                excelInstance.Workbooks.Open(vFilePath);
+                worksheets = excelInstance.Worksheets.Count;
+            }
+            catch
+            {
+                worksheets = 0;
+            }
+
+            if (worksheets == 0) 
+            {
+                if (String.IsNullOrEmpty(pass))
+                {
+                    excelInstance.Workbooks.Open(vFilePath);
+                }
+                else
+                {
+                    excelInstance.Workbooks.Open(vFilePath, Password: pass);
+                }
             }
             else
             {
-                excelInstance.Workbooks.Open(vFilePath, Password: pass);
+                switch(this.GetUISelectionValue(nameof(v_IfWorksheetExists), "If Worksheet Exists", engine))
+                {
+                    case "error":
+                        throw new Exception("Excel Instance '" + v_InstanceName + "' has Worksheets.");
+                        break;
+                    case "ignore":
+                        // nothing
+                        break;
+                    case "open":
+                        if (String.IsNullOrEmpty(pass))
+                        {
+                            excelInstance.Workbooks.Open(vFilePath);
+                        }
+                        else
+                        {
+                            excelInstance.Workbooks.Open(vFilePath, Password: pass);
+                        }
+                        break;
+                }
             }
         }
     }
