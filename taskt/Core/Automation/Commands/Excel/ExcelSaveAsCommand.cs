@@ -40,6 +40,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "File")]
         public string v_FileName { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Specify If Excel File Exists")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**Error** or **Overwrite** or **Ignore**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Overwrite")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfExcelFileExists { get; set; }
+
         public ExcelSaveAsCommand()
         {
             this.CommandName = "ExcelSaveAsCommand";
@@ -64,10 +76,40 @@ namespace taskt.Core.Automation.Commands
                 fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
             }
 
-            //overwrite and save
-            excelInstance.DisplayAlerts = false;
-            excelInstance.ActiveWorkbook.SaveAs(fileName);
-            excelInstance.DisplayAlerts = true;
+            Action saveAsProcess = () =>
+            {
+                //overwrite and save
+                excelInstance.DisplayAlerts = false;
+                excelInstance.ActiveWorkbook.SaveAs(fileName);
+                excelInstance.DisplayAlerts = true;
+            };
+
+            if (excelInstance.ActiveWorkbook != null)
+            {
+                if (!System.IO.File.Exists(fileName))
+                {
+                    saveAsProcess();
+                }
+                else
+                {
+                    switch(this.GetUISelectionValue(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
+                    {
+                        case "error":
+                            throw new Exception("Excel file '" + v_FileName + "' is already exists.");
+                            break;
+                        case "overwrite":
+                            saveAsProcess();
+                            break;
+                        case "ignore":
+                            // nothing
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Excel Instance '" + v_InstanceName + "' has no Workbook.");
+            }
         }
     }
 }
