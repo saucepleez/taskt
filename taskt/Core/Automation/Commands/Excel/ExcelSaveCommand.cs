@@ -41,8 +41,22 @@ namespace taskt.Core.Automation.Commands
 
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //save
-            excelInstance.ActiveWorkbook.Save();
+            if (excelInstance.ActiveWorkbook != null)
+            {
+                if (System.IO.File.Exists(excelInstance.ActiveWorkbook.FullName))
+                {
+                    //save
+                    excelInstance.ActiveWorkbook.Save();
+                }
+                else
+                {
+                    throw new Exception("Excel Instance '" + v_InstanceName + "' Workbook does not saved Excel File.");
+                }
+            }
+            else
+            {
+                throw new Exception("Excel Instance '" + v_InstanceName + "' has no Workbook.");
+            }
         }
     }
 }
