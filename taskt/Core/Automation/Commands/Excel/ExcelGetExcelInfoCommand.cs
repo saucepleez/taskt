@@ -59,8 +59,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Excel Info";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
@@ -74,34 +72,42 @@ namespace taskt.Core.Automation.Commands
             switch (infoType)
             {
                 case "file name":
-                    ret = excelInstance.ActiveWorkbook.Name;
+                    ret = excelInstance.ActiveWorkbook?.Name ?? "";
                     break;
                 case "full path file name":
-                    ret = excelInstance.ActiveWorkbook.FullName;
+                    ret = excelInstance.ActiveWorkbook?.FullName ?? "";
                     break;
                 case "current sheet":
                     var sheet = engine.engineSettings.CurrentWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
                     ret = (sheet == null) ? "" : sheet.Name;
                     break;
                 case "number of sheets":
-                    ret = excelInstance.Worksheets.Count.ToString();
+                    try
+                    {
+                        ret = excelInstance.Worksheets.Count.ToString();
+                    }
+                    catch
+                    {
+                        ret = "0";
+                    }
                     break;
                 case "first sheet":
-                    if (excelInstance.Worksheets.Count > 0)
+                    try
                     {
+
                         ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
                     }
-                    else
+                    catch
                     {
                         ret = "";
                     }
                     break;
                 case "last sheet":
-                    if (excelInstance.Worksheets.Count > 0)
+                    try
                     {
                         ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
                     }
-                    else
+                    catch
                     {
                         ret = "";
                     }
