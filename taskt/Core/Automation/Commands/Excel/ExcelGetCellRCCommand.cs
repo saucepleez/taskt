@@ -83,8 +83,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Cell RC";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)

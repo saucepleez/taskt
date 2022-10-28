@@ -44,8 +44,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Current Worksheet";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
