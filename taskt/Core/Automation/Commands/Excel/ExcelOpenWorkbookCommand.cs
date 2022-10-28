@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.Commands
                 worksheets = 0;
             }
 
-            if (worksheets == 0) 
+            Action openFileProcess = () =>
             {
                 if (String.IsNullOrEmpty(pass))
                 {
@@ -101,6 +101,11 @@ namespace taskt.Core.Automation.Commands
                 {
                     excelInstance.Workbooks.Open(vFilePath, Password: pass);
                 }
+            };
+
+            if (worksheets == 0) 
+            {
+                openFileProcess();
             }
             else
             {
@@ -113,14 +118,7 @@ namespace taskt.Core.Automation.Commands
                         // nothing
                         break;
                     case "open":
-                        if (String.IsNullOrEmpty(pass))
-                        {
-                            excelInstance.Workbooks.Open(vFilePath);
-                        }
-                        else
-                        {
-                            excelInstance.Workbooks.Open(vFilePath, Password: pass);
-                        }
+                        openFileProcess();
                         break;
                 }
             }
