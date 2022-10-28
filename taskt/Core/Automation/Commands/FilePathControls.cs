@@ -36,6 +36,8 @@ namespace taskt.Core
 
         public static bool containsFileCounter(string path, Core.Automation.Engine.AutomationEngineInstance engine)
         {
+            path = path ?? "";
+
             var settings = engine.engineSettings;
             if (path.Contains(settings.wrapVariableMarker("FileCounter.F0")))
             {
@@ -100,6 +102,8 @@ namespace taskt.Core
 
         public static string formatFilePath_ContainsFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
         {
+            vPath = vPath ?? "";
+
             string f0 = engine.engineSettings.wrapVariableMarker("FileCounter.F0");
             string f00 = engine.engineSettings.wrapVariableMarker("FileCounter.F00");
             string f000 = engine.engineSettings.wrapVariableMarker("FileCounter.F000");
@@ -146,6 +150,7 @@ namespace taskt.Core
 
         public static string formatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
         {
+            vPath = vPath ?? "";
             string path = vPath.ConvertToUserVariable(engine);
 
             if (!hasFolderPath(path))
