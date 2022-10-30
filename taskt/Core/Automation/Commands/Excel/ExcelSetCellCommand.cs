@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
+            var rg = v_ExcelCellAddress.ConvertToExcelRange(engine, excelInstance, excelSheet, this);
 
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
 

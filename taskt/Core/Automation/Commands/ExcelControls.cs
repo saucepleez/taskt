@@ -9,13 +9,6 @@ namespace taskt.Core
 {
     internal static class ExcelControls
     {
-        //public static Application getExcelInstance(Automation.Engine.AutomationEngineInstance engine, string instanceName)
-        //{
-        //    var excelObject = engine.GetAppInstance(instanceName);
-
-        //    return (Application)excelObject;
-        //}
-
         public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
             string ins = instanceName.ConvertToUserVariable(engine);
@@ -120,33 +113,6 @@ namespace taskt.Core
                 }
             }
         }
-
-        //public static Worksheet getWorksheet(Automation.Engine.AutomationEngineInstance engine, Application excelInstance, string sheetName)
-        //{
-        //    if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
-        //    {
-        //        return (Worksheet)excelInstance.ActiveSheet;
-        //    }
-        //    else if (sheetName == engine.engineSettings.NextWorksheetKeyword)
-        //    {
-        //        return getNextWorksheet(excelInstance);
-        //    }
-        //    else if (sheetName == engine.engineSettings.PreviousWorksheetKeyword)
-        //    {
-        //        return getPreviousWorksheet(excelInstance);
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            return (Worksheet)excelInstance.Worksheets[sheetName];
-        //        }
-        //        catch
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
 
         private static Worksheet GetCurrentWorksheet(Application excelInstance)
         {
@@ -693,7 +659,8 @@ namespace taskt.Core
             return (rowIndex, columnStartIndex, columnEndIndex, valueType);
         }
 
-        public static string ConvertToUserVariableAsExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        #region convert methods
+        public static string ConvertToExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
             var location = value.ConvertToUserVariable(engine);
             if (CheckCorrectRange(location, excelInstance))
@@ -706,11 +673,10 @@ namespace taskt.Core
             }
         }
 
-        public static (int row, int column) ConvertToUserVariableAsExcelRCLocation(this ((string rowValue, string rowName) row, (string columnValue, string columnName) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, ScriptCommand command)
+        public static (int row, int column) ConvertToExcelRCLocation(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
-            int row = location.row.rowValue.ConvertToUserVariableAsInteger(location.row.rowName, "Row", engine, command);
-            int column = location.column.columnValue.ConvertToUserVariableAsInteger(location.column.columnName, "Column", engine, command);
-
+            int row = command.ConvertToUserVariableAsInteger(rowPropertyName, "Row", engine);
+            int column = command.ConvertToUserVariableAsInteger(columnPropertyName, "Column", engine);
             if (CheckCorrectRC(row, column, excelInstance))
             {
                 return (row, column);
@@ -721,17 +687,18 @@ namespace taskt.Core
             }
         }
 
-        public static Range GetExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        public static Range ConvertToExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
         {
-            string pos = location.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
+            string pos = location.ConvertToExcelRangeLocation(engine, excelInstance);
             return excelSheet.Range[pos];
         }
 
-        public static Range GetExcelRange(this ((string rowName, string rowValue) row, (string columnName, string columnValue) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        public static Range ConvertToExcelRange(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet)
         {
-            var rc = location.ConvertToUserVariableAsExcelRCLocation(engine, excelInstance, command);
+            var rc = command.ConvertToExcelRCLocation(rowPropertyName, columnPropertyName, engine, excelInstance);
             return excelSheet.Cells[rc.row, rc.column];
         }
+        #endregion
 
         #region check methods
         public static bool CheckCorrectColumnName(string columnName, Worksheet excelSheet)
