@@ -1023,10 +1023,7 @@ namespace taskt.Core
         {
             StoreInUserVariable(targetVariable, value, sender, false);
         }
-        public static void StoreInUserVariable(this System.Drawing.Color value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
+
 
         public static void StoreInUserVariable(this System.Windows.Automation.AutomationElement value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
@@ -1055,7 +1052,7 @@ namespace taskt.Core
             return engine.engineSettings.wrapVariableMarker(str);
         }
 
-        private static void StoreInUserVariable(string userVariable, object variableValue, Core.Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
+        public static void StoreInUserVariable(string userVariable, object variableValue, Core.Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
         {
             userVariable = parseVariableName(userVariable, engine);
 
@@ -1149,19 +1146,6 @@ namespace taskt.Core
             else
             {
                 throw new Exception("Variable " + variableName + " is not DateTime");
-            }
-        }
-
-        public static System.Drawing.Color GetColorVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is System.Drawing.Color)
-            {
-                return (System.Drawing.Color)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not Color");
             }
         }
 

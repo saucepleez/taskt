@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            var rg = v_ExcelCellAddress.ConvertToExcelRange(engine, excelInstance, excelSheet, this);
+            var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             //var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
             var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
