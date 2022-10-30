@@ -182,7 +182,8 @@ namespace taskt.Core.Automation.Commands
 
             for (int i = 0; i < max; i++)
             {
-                string setValue = (myDT.Rows[dtRowIndex][i] == null) ? "" : myDT.Rows[dtRowIndex][i].ToString();
+                //string setValue = (myDT.Rows[dtRowIndex][i] == null) ? "" : myDT.Rows[dtRowIndex][i].ToString();
+                string setValue = myDT.Rows[dtRowIndex][i]?.ToString() ?? "";
                 setFunc(setValue, excelSheet, columnStartIndex + i, excelRowIndex);
             }
         }
