@@ -8,8 +8,52 @@ using System.Text;
 using System.Reflection;
 using System.Threading.Tasks;
 using taskt.Core.Automation;
+using taskt.Core.Automation.Commands;
+using System.Reflection.Emit;
+
 namespace taskt.Core
 {
+    public class PropertyConvertTag
+    {
+        public string Name
+        {
+            get;
+        }
+        public string Value
+        {
+            get;
+            private set;
+        }
+        public string Description
+        {
+            get;
+        }
+        public bool HasName
+        {
+            get;
+        }
+
+        public PropertyConvertTag(string value, string description)
+        {
+            this.Value = value;
+            this.Description = description;
+            this.Name = "";
+            this.HasName = false;
+        }
+        public PropertyConvertTag(string value, string name, string description)
+        {
+            this.Value = value;
+            this.Name = name;
+            this.Description = description;
+
+            this.HasName = !(string.IsNullOrEmpty(this.Name));
+        }
+        public void SetNewValue(string value)
+        {
+            this.Value = value;
+        }
+    }
+
     public static class ExtensionMethods
     {
         private static List<char> autoCalucationSkipChars = new List<char>()
@@ -44,6 +88,30 @@ namespace taskt.Core
             {
                 throw new Exception(parameterName + " '" + str + "' is not a DateTime.");
             }
+        }
+
+        public static string GetRawPropertyString(this ScriptCommand command, string propertyName, string propertyDescription)
+        {
+            var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
+            object propValue = propInfo.GetValue(command);
+
+            if (propValue is DataTable)
+            {
+                throw new Exception(propertyName + " is DataTable.");
+            }
+            else
+            {
+                return propValue?.ToString() ?? "";
+            }
+        }
+
+        public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
+        {
+            //var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
+            //string propValue = propInfo.GetValue(command)?.ToString() ?? "";
+
+            //return propValue.ConvertToUserVariable(engine);
+            return GetRawPropertyString(command, propertyName, propertyDescription).ConvertToUserVariable(engine);
         }
 
         /// <summary>
@@ -1215,53 +1283,6 @@ namespace taskt.Core
             }
         }
 
-        public static string GetUISelectionValue(this string text, string propertyName, Core.Automation.Commands.ScriptCommand command, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            var prop = command.GetType().GetProperty(propertyName);
-            var propIsOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
-
-            string convText = (propIsOpt == null) ? "" : propIsOpt.setBlankToValue;
-            if (!String.IsNullOrEmpty(text))
-            {
-                convText = text.ConvertToUserVariable(engine);
-            }
-
-            var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
-            if (options.Length > 0)
-            {
-                var propCaseSensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive));
-                bool isCaseSensitive = (propCaseSensitive == null) ? false : propCaseSensitive.caseSensitive;
-
-                if (isCaseSensitive)
-                {
-                    foreach (var opt in options)
-                    {
-                        if (convText == opt.uiOption)
-                        {
-                            return convText;
-                        }
-                    }
-                }
-                else
-                {
-                    convText = convText.ToLower();
-                    foreach(var opt in options)
-                    {
-                        if (convText == opt.uiOption.ToLower())
-                        {
-                            return convText;
-                        }
-                    }
-                }
-
-                var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
-                throw new Exception("Parameter '" + desc.propertyDescription + "' has strange value '" + text + "'");
-            }
-            else
-            {
-                return convText;
-            }
-        }
     }
 }
 

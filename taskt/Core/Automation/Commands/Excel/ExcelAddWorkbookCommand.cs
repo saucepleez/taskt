@@ -28,63 +28,54 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Instance")]
         public string v_InstanceName { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Workbook Exists")]
+        [InputSpecification("")]
+        [SampleUsage("**Ignore** or **Error** or **Add**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Add")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfWorkbookExists { get; set; }
+
         public ExcelAddWorkbookCommand()
         {
             this.CommandName = "ExcelAddWorkbookCommand";
             this.SelectionName = "Add Workbook";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //var excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            excelInstance.Workbooks.Add();            
+            //var ifWorkbookExists = v_IfWorkbookExists.GetUISelectionValue("v_IfWorkbookExists", this, engine);
+            //var ifWorkbookExists = new PropertyConvertTag(v_IfWorkbookExists, nameof(v_IfWorkbookExists), "If Workbook exists").GetUISelectionValue(this, engine);
+            var ifWorkbookExists = this.GetUISelectionValue(nameof(v_IfWorkbookExists), "If Workbook exists", engine);
+
+            if (excelInstance.Workbooks.Count > 0)
+            {
+                switch (ifWorkbookExists)
+                {
+                    case "error":
+                        throw new Exception("Excel Instance '" + v_InstanceName + "' has Workbook.");
+
+                    case "ignore":
+                        break;
+
+                    case "add":
+                        excelInstance.Workbooks.Add();
+                        break;
+                }
+            }
+            else
+            {
+                excelInstance.Workbooks.Add();
+            }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Excel);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

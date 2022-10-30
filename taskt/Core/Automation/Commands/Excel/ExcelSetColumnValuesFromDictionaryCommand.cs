@@ -130,68 +130,23 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
-
-            int columnIndex = 0;
-            switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
-            {
-                case "range":
-                    columnIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine));
-                    break;
-                case "rc":
-                    columnIndex = v_ColumnIndex.ConvertToUserVariableAsInteger("Column Index", engine);
-                    break;
-            }
-
-            //if (columnIndex < 1)
-            //{
-            //    throw new Exception("Column index is less than 1");
-            //}
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             Dictionary<string, string> myDic = v_DictionaryVariable.GetDictionaryVariable(engine);
 
-            //int rowStart = int.Parse(v_RowStart.ConvertToUserVariable(engine));
-            //int rowEnd = int.Parse(v_RowEnd.ConvertToUserVariable(engine));
-            //if (String.IsNullOrEmpty(v_RowStart))
-            //{
-            //    v_RowStart = "1";
-            //}
-            //int rowStart = v_RowStart.ConvertToUserVariableAsInteger("Row Start", engine);
-            int rowStart = v_RowStart.ConvertToUserVariableAsInteger("v_RowStart", "Start Row", engine, this);
+            (int columnIndex, int rowStart, int rowEnd, string valueType) =
+                ExcelControls.GetRangeIndeiesColumnDirection(
+                    nameof(v_ColumnIndex), nameof(v_ColumnType),
+                    nameof(v_RowStart), nameof(v_RowEnd),
+                    nameof(v_ValueType), engine, excelSheet, this,
+                    myDic
+                );
 
-            int rowEnd;
-            if (String.IsNullOrEmpty(v_RowEnd))
-            {
-                rowEnd = rowStart + myDic.Count - 1;
-            }
-            else
-            {
-                rowEnd = v_RowEnd.ConvertToUserVariableAsInteger("Row End", engine);
-            }
-
-            if (rowStart > rowEnd)
-            {
-                int t = rowStart;
-                rowStart = rowEnd;
-                rowEnd = t;
-            }
             int range = rowEnd - rowStart + 1;
 
-            //if (!ExcelControls.CheckCorrectRC(rowStart, columnIndex, excelInstance))
-            //{
-            //    throw new Exception("Invalid Start Location. Row: " + rowStart + ", Column: " + columnIndex);
-            //}
-            //if (!ExcelControls.CheckCorrectRC(rowEnd, columnIndex, excelInstance))
-            //{
-            //    throw new Exception("Invalid End Location. Row: " + rowEnd + ", Column: " + columnIndex);
-            //}
-            ExcelControls.CheckCorrectRCRange(rowStart, columnIndex, rowEnd, columnIndex, excelInstance);
-
-            string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
-            if (ifListNotEnough == "error")
+            //string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
+            string ifDictionaryNotEnough = this.GetUISelectionValue(nameof(v_IfDictionaryNotEnough), "If Dictionary Not Enough", engine);
+            if (ifDictionaryNotEnough == "error")
             {
                 if (range > myDic.Count)
                 {
@@ -205,7 +160,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDic.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.setCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
 
             // copy key list
             string[] keys = new string[myDic.Keys.Count];
@@ -216,20 +171,5 @@ namespace taskt.Core.Automation.Commands
                 setFunc(myDic[keys[i]], excelSheet, columnIndex, rowStart + i);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set " + v_ValueType + " Values From '" + v_RowStart + "' to '" + v_RowEnd + "' Column '" + v_ColumnIndex + "' from Dictionary '" + v_DictionaryVariable + "', Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

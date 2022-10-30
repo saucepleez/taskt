@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.IO;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -26,8 +20,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**100** or **{{{vNum}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Number")]
         public string v_Numeric { get; set; }
@@ -71,7 +64,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var num = v_Numeric.ConvertToUserVariableAsDecimal("Numeric", engine);
+            //var num = v_Numeric.ConvertToUserVariableAsDecimal("Numeric", engine);
+            //var num = (v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
+            decimal num = new PropertyConvertTag(v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
 
             var round = v_RoundType.GetUISelectionValue("v_RoundType", this, engine);
 
@@ -90,20 +85,6 @@ namespace taskt.Core.Automation.Commands
             }
 
             res.ToString().StoreInUserVariable(engine, v_Result);
-
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Variable: '" + v_Numeric + "', Type: '" + v_RoundType + "', Result: '" + v_Result + "']";
-        //}
     }
 }

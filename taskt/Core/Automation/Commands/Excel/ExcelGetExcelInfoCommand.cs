@@ -59,109 +59,62 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Excel Info";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //Microsoft.Office.Interop.Excel.Application excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //var infoType = v_InfoType.ConvertToUserVariable(sender);
-            var infoType = v_InfoType.GetUISelectionValue("v_InfoType", this, engine);
+            //var infoType = v_InfoType.GetUISelectionValue("v_InfoType", this, engine);
+            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
             string ret = "";
             switch (infoType)
             {
                 case "file name":
-                    ret = excelInstance.ActiveWorkbook.Name;
+                    ret = excelInstance.ActiveWorkbook?.Name ?? "";
                     break;
                 case "full path file name":
-                    ret = excelInstance.ActiveWorkbook.FullName;
+                    ret = excelInstance.ActiveWorkbook?.FullName ?? "";
                     break;
                 case "current sheet":
                     var sheet = engine.engineSettings.CurrentWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
                     ret = (sheet == null) ? "" : sheet.Name;
                     break;
                 case "number of sheets":
-                    ret = excelInstance.Worksheets.Count.ToString();
+                    try
+                    {
+                        ret = excelInstance.Worksheets.Count.ToString();
+                    }
+                    catch
+                    {
+                        ret = "0";
+                    }
                     break;
                 case "first sheet":
-                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
-                    if (excelInstance.Worksheets.Count > 0)
+                    try
                     {
+
                         ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
                     }
-                    else
+                    catch
                     {
                         ret = "";
                     }
                     break;
                 case "last sheet":
-                    //ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
-                    if (excelInstance.Worksheets.Count > 0)
+                    try
                     {
                         ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
                     }
-                    else
+                    catch
                     {
                         ret = "";
                     }
                     break;
-                //default:
-                //    throw new Exception("Information type " + infoType + " is not support.");
-                //    break;
             }
 
             ret.StoreInUserVariable(sender, v_applyToVariable);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get Info: '" + v_InfoType + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_InfoType))
-        //    {
-        //        this.validationResult += "Information type is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariable))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

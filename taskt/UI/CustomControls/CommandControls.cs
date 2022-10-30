@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1813,6 +1814,77 @@ namespace taskt.UI.CustomControls
             return targetString.Replace("*", "").Replace("**", "").Replace("|", "");
         }
 
+        public static Control GetPropertyControl(this Dictionary<string, Control> controls, string propertyName)
+        {
+            if (controls.ContainsKey(propertyName))
+            {
+                return controls[propertyName];
+            }
+            else
+            {
+                throw new Exception("Control '" + propertyName + "' does not exists.");
+            }
+        }
+        public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string propertyName)
+        {
+            if (controls.ContainsKey("lbl_" + propertyName))
+            {
+                return (Label)controls["lbl_" + propertyName];
+            }
+            else
+            {
+                throw new Exception("Label 'lbl_" + propertyName + "' does not exists.");
+            }
+        }
+        public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string propertyName)
+        {
+            if (controls.ContainsKey("lbl2_" + propertyName))
+            {
+                return (Label)controls["lbl2_" + propertyName];
+            }
+            else
+            {
+                throw new Exception("2nd Label 'lbl2_" + propertyName + "' does not exists.");
+            }
+        }
+        public static (Control body, Label label, Label label2nd) GetAllPropertyControl(this Dictionary<string, Control> controls, string propertyName, bool throwWhenLabelNotExists = true, bool throwWhen2ndLabelNotExists = false)
+        {
+            Control body = controls.GetPropertyControl(propertyName);
+
+            Label label;
+            try
+            {
+                label = controls.GetPropertyControlLabel(propertyName);
+            }
+            catch (Exception ex)
+            {
+                if (throwWhenLabelNotExists)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    label = null;
+                }
+            }
+            Label label2nd;
+            try
+            {
+                label2nd = controls.GetPropertyControl2ndLabel(propertyName);
+            }
+            catch (Exception ex)
+            {
+                if (throwWhen2ndLabelNotExists)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    label2nd = null;
+                }
+            }
+            return (body, label, label2nd);
+        }
     }
 
 

@@ -33,8 +33,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Create Excel Application";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
@@ -48,40 +46,5 @@ namespace taskt.Core.Automation.Commands
 
             engine.AddAppInstance(vInstance, newExcelSession);
         }
-
-    //    public override List<Control> Render(frmCommandEditor editor)
-    //    {
-    //        base.Render(editor);
-
-    //        //create standard group controls
-    //        var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-    //        RenderedControls.AddRange(ctrls);
-    //        //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-    //        if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-    //        {
-    //            this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-    //        }
-
-    //        return RenderedControls;
-    //    }
-
-    //    public override string GetDisplayValue()
-    //    {
-    //        return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-    //    }
-
-    //    public override bool IsValidate(frmCommandEditor editor)
-    //    {
-    //        base.IsValidate(editor);
-
-    //        if (String.IsNullOrEmpty(this.v_InstanceName))
-    //        {
-    //            this.validationResult += "Instance is empty.\n";
-    //            this.IsValid = false;
-    //        }
-
-    //        return this.IsValid;
-    //    }
     }
 }

@@ -44,8 +44,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Close Excel Application";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
@@ -53,19 +51,13 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             //check if workbook exists and save
             if (excelInstance.ActiveWorkbook != null)
             {
-                //string vSaved = v_ExcelSaveOnExit.ConvertToUserVariable(sender);
-                //if (String.IsNullOrEmpty(vSaved))
-                //{
-                //    vSaved = "False";
-                //}
-                string vSaved = v_ExcelSaveOnExit.GetUISelectionValue("v_ExcelSaveOnExit", this, engine);
+                //string vSaved = new PropertyConvertTag(v_ExcelSaveOnExit, nameof(v_ExcelSaveOnExit), "Save Setting").GetUISelectionValue(this, engine);
+                string vSaved = this.GetUISelectionValue(nameof(v_ExcelSaveOnExit), "Save Setting", engine);
 
                 excelInstance.ActiveWorkbook.Close((vSaved == "true"));
             }
@@ -76,42 +68,5 @@ namespace taskt.Core.Automation.Commands
             //remove instance
             engine.RemoveAppInstance(vInstance);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    ////RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelSaveOnExit", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ExcelSaveOnExit", this, editor));
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Save On Close: " + v_ExcelSaveOnExit + ", Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
