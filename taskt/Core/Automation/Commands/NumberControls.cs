@@ -205,7 +205,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    if (value >= rangeAttr.min && value <= rangeAttr.max)
+                    if (value >= (decimal)rangeAttr.min && value <= (decimal)rangeAttr.max)
                     {
                         throw new Exception(parameterDescription + " is in range (" + rangeAttr.min + " to " + rangeAttr.max + ")");
                     }
@@ -219,7 +219,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    if (value < rangeAttr.min || value > rangeAttr.max)
+                    if (value < (decimal)rangeAttr.min || value > (decimal)rangeAttr.max)
                     {
                         throw new Exception(parameterDescription + " is out of range (" + rangeAttr.min + " to " + rangeAttr.max + ")");
                     }

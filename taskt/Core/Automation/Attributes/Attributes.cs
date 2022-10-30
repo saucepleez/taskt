@@ -455,9 +455,9 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyValueRange : System.Attribute
     {
-        public decimal min;
-        public decimal max;
-        public PropertyValueRange(decimal min, decimal max)
+        public double min;
+        public double max;
+        public PropertyValueRange(double min, double max)
         {
             this.min = min;
             this.max = max;
