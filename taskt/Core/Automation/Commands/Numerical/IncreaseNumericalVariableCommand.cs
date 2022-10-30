@@ -59,12 +59,10 @@ namespace taskt.Core.Automation.Commands
                 variableName = engine.engineSettings.wrapVariableMarker(v_VariableName);
             }
 
-            //var variableValue = variableName.ConvertToUserVariableAsDecimal("Variable Name", engine);
             var variableValue = new PropertyConvertTag(variableName, "Variable Name").ConvertToUserVariableAsDecimal(engine);
 
-            //var add = v_Value.ConvertToUserVariableAsDecimal("v_Value", "Value", engine, this);
-            //var add = (v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(engine, this);
-            var add = new PropertyConvertTag(v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(this, engine);
+            //var add = new PropertyConvertTag(v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(this, engine);
+            var add = this.ConvertToUserVariableAsDecimal(nameof(v_Value), "Value To Increase", engine);
 
             (variableValue + add).ToString().StoreInUserVariable(engine, variableName);
         }
