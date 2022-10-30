@@ -723,10 +723,9 @@ namespace taskt.Core.Automation.Commands
             }
             if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.LessThanZero)
             {
-                double v;
-                if (double.TryParse(value, out v))
+                if (decimal.TryParse(value, out decimal v))
                 {
-                    if (v < 0.0)
+                    if (v < 0)
                     {
                         this.validationResult += paramShortName + " is less than zero.\n";
                         result = false;
@@ -735,10 +734,9 @@ namespace taskt.Core.Automation.Commands
             }
             if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.GreaterThanZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.GreaterThanZero)
             {
-                double v;
-                if (double.TryParse(value, out v))
+                if (decimal.TryParse(value, out decimal v))
                 {
-                    if (v > 0.0)
+                    if (v > 0)
                     {
                         this.validationResult += paramShortName + " is greater than zero.\n";
                         result = false;
@@ -747,10 +745,9 @@ namespace taskt.Core.Automation.Commands
             }
             if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.EqualsZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.EqualsZero)
             {
-                double v;
-                if (double.TryParse(value, out v))
+                if (decimal.TryParse(value, out decimal v))
                 {
-                    if (v == 0.0)
+                    if (v == 0)
                     {
                         this.validationResult += paramShortName + " is equals zero.\n";
                         result = false;
@@ -759,10 +756,9 @@ namespace taskt.Core.Automation.Commands
             }
             if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotEqualsZero) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotEqualsZero)
             {
-                double v;
-                if (double.TryParse(value, out v))
+                if (decimal.TryParse(value, out decimal v))
                 {
-                    if (v != 0.0)
+                    if (v != 0)
                     {
                         this.validationResult += paramShortName + " is not equals zero.\n";
                         result = false;
@@ -773,7 +769,47 @@ namespace taskt.Core.Automation.Commands
             {
                 if (!IsUISelectionValue(propertyName, value, prop))
                 {
-                    this.validationResult += paramShortName + " is strange value '" + value + "'";
+                    this.validationResult += paramShortName + " is strange value '" + value + "'.\n";
+                    result = false;
+                }
+            }
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Between) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.Between)
+            {
+                var rangeAttr = prop.GetCustomAttribute<Attributes.PropertyAttributes.PropertyValueRange>();
+                if (rangeAttr != null)
+                {
+                    if (decimal.TryParse(value, out decimal v))
+                    {
+                        if (v >= (decimal)rangeAttr.min && v <= (decimal)rangeAttr.max)
+                        {
+                            this.validationResult += paramShortName + " is in range.\n";
+                            result = false;
+                        }
+                    }
+                }
+                else
+                {
+                    this.validationResult += paramShortName + " is Between rule. But don't have Range.\n";
+                    result = false;
+                }
+            }
+            if ((flags & Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotBetween) == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.NotBetween)
+            {
+                var rangeAttr = prop.GetCustomAttribute<Attributes.PropertyAttributes.PropertyValueRange>();
+                if (rangeAttr != null)
+                {
+                    if (decimal.TryParse(value, out decimal v))
+                    {
+                        if (v < (decimal)rangeAttr.min || v > (decimal)rangeAttr.max)
+                        {
+                            this.validationResult += paramShortName + " is out of range.\n";
+                            result = false;
+                        }
+                    }
+                }
+                else
+                {
+                    this.validationResult += paramShortName + " is NotBetween rule. But don't have Range.\n";
                     result = false;
                 }
             }
