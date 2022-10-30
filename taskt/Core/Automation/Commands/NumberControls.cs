@@ -42,19 +42,6 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        //public static int ConvertToUserVariableAsInteger(this (string propertyValue, string propertyDescription) tpValueName, Engine.AutomationEngineInstance engine)
-        //{
-        //    string convertedText = tpValueName.propertyValue.ConvertToUserVariable(engine);
-        //    if (int.TryParse(convertedText, out int v))
-        //    {
-        //        return v;
-        //    }
-        //    else
-        //    {
-        //        throw new Exception(tpValueName.propertyDescription + " '" + tpValueName.propertyValue + "' is not a integer number.");
-        //    }
-        //}
-
         public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             //return (propertyValue, propertyDescription).ConvertToUserVariableAsInteger(engine);
@@ -74,16 +61,6 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        //public static decimal ConvertToUserVariableAsDecimal(this (string propertyValue, string propertyDescription) tpValueName, Engine.AutomationEngineInstance engine)
-        //{
-        //    return new PropertyData(tpValueName.propertyValue, tpValueName.propertyDescription).ConvertToUserVariableAsDecimal(engine);
-        //}
-
-        //public static decimal ConvertToUserVariableAsDecimal(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
-        //{
-        //    //return (propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
-        //    return new PropertyConvertTag(propertyValue, propertyDescription).ConvertToUserVariableAsDecimal(engine);
-        //}
 
         public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
@@ -98,23 +75,6 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception(prop.Description + " is out of Integer Range.");
             }
         }
-
-        //public static int ConvertToUserVariableAsInteger(this (string propertyValue, string propertyName, string propertyDescription) tpValueNameDesc, Engine.AutomationEngineInstance engine, ScriptCommand command)
-        //{
-        //    //decimal decValue = tpValueNameDesc.ConvertToUserVariableAsDecimal(engine, command);
-        //    decimal decValue = new PropertyConvertTag(tpValueNameDesc.propertyValue, tpValueNameDesc.propertyName, tpValueNameDesc.propertyDescription).ConvertToUserVariableAsDecimal(engine, command);
-        //    int value;
-        //    try
-        //    {
-        //        value = (int)decValue;
-        //        return value;
-        //    }
-        //    catch
-        //    {
-        //        throw new Exception(tpValueNameDesc.propertyDescription + " is out of Integer Range.");
-        //    }
-        //}
-
         public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyName, string propertyDescription, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
             return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(command, engine);
@@ -204,50 +164,6 @@ namespace taskt.Core.Automation.Commands
                 return v;
             }
         }
-
-        //public static decimal ConvertToUserVariableAsDecimal(this (string propertyValue, string propertyName, string propertyDescription) tpValueNameDesc, Engine.AutomationEngineInstance engine, ScriptCommand command)
-        //{
-        //    var tp = command.GetType();
-        //    var myProp = tp.GetProperty(tpValueNameDesc.propertyName);
-
-        //    if (myProp == null)
-        //    {
-        //        throw new Exception("Property '" + tpValueNameDesc.propertyName + "' does not exists.");
-        //    }
-
-        //    var optAttr = (PropertyIsOptional)myProp.GetCustomAttribute(typeof(PropertyIsOptional));
-        //    if (optAttr != null)
-        //    {
-        //        if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(tpValueNameDesc.propertyValue)))
-        //        {
-        //            tpValueNameDesc.propertyValue = optAttr.setBlankToValue;
-        //        }
-        //    }
-
-        //    decimal v = tpValueNameDesc.propertyValue.ConvertToUserVariableAsDecimal(tpValueNameDesc.propertyName, engine);
-
-        //    var validateAttr = (PropertyValidationRule)myProp.GetCustomAttribute(typeof(PropertyValidationRule));
-        //    if (validateAttr != null)
-        //    {
-        //        if (CheckValidate(v, validateAttr, tpValueNameDesc.propertyDescription))
-        //        {
-        //            return v;
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("Validation Error");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return v;
-        //    }
-        //}
-
-        //public static decimal ConvertToUserVariableAsDecimal(this string propertyValue, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine, ScriptCommand command)
-        //{
-        //    return (propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsDecimal(engine, command);
-        //}
 
         private static bool CheckValidate(decimal value, PropertyValidationRule validateAttr, string parameterDescription)
         {
