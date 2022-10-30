@@ -71,21 +71,5 @@ namespace taskt.Core.Automation.Commands
             Color co = Color.FromArgb(255, r, g, b);
             co.StoreInUserVariable(engine, v_Color);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Name: '" + v_Color + "', From: '" + v_ExcelColor + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
     }
 }
