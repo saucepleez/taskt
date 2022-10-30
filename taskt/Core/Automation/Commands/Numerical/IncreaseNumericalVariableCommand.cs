@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.IO;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -65,29 +59,14 @@ namespace taskt.Core.Automation.Commands
                 variableName = engine.engineSettings.wrapVariableMarker(v_VariableName);
             }
 
-            var variableValue = variableName.ConvertToUserVariableAsDecimal("Variable Name", engine);
+            //var variableValue = variableName.ConvertToUserVariableAsDecimal("Variable Name", engine);
+            var variableValue = new PropertyConvertTag(variableName, "Variable Name").ConvertToUserVariableAsDecimal(engine);
 
-            //if (String.IsNullOrEmpty(v_Value))
-            //{
-            //    v_Value = "1";
-            //}
-            //var add = v_Value.ConvertToUserVariableAsDecimal("Value", engine);
-            var add = v_Value.ConvertToUserVariableAsDecimal("v_Value", "Value", engine, this);
+            //var add = v_Value.ConvertToUserVariableAsDecimal("v_Value", "Value", engine, this);
+            //var add = (v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(engine, this);
+            var add = new PropertyConvertTag(v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(this, engine);
 
             (variableValue + add).ToString().StoreInUserVariable(engine, variableName);
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Variable: '" + v_VariableName + "', Increase: '" + v_Value + "']";
-        //}
     }
 }

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Runtime.CompilerServices;
 using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Commands;
 
@@ -6,13 +9,6 @@ namespace taskt.Core
 {
     internal static class ExcelControls
     {
-        //public static Application getExcelInstance(Automation.Engine.AutomationEngineInstance engine, string instanceName)
-        //{
-        //    var excelObject = engine.GetAppInstance(instanceName);
-
-        //    return (Application)excelObject;
-        //}
-
         public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
             string ins = instanceName.ConvertToUserVariable(engine);
@@ -118,33 +114,6 @@ namespace taskt.Core
             }
         }
 
-        //public static Worksheet getWorksheet(Automation.Engine.AutomationEngineInstance engine, Application excelInstance, string sheetName)
-        //{
-        //    if (sheetName == engine.engineSettings.CurrentWorksheetKeyword)
-        //    {
-        //        return (Worksheet)excelInstance.ActiveSheet;
-        //    }
-        //    else if (sheetName == engine.engineSettings.NextWorksheetKeyword)
-        //    {
-        //        return getNextWorksheet(excelInstance);
-        //    }
-        //    else if (sheetName == engine.engineSettings.PreviousWorksheetKeyword)
-        //    {
-        //        return getPreviousWorksheet(excelInstance);
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            return (Worksheet)excelInstance.Worksheets[sheetName];
-        //        }
-        //        catch
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
-
         private static Worksheet GetCurrentWorksheet(Application excelInstance)
         {
             if (excelInstance.Sheets.Count == 0)
@@ -234,7 +203,66 @@ namespace taskt.Core
             }
         }
 
-        public static Func<Worksheet, int, int, string> getCellValueFunction(string valueType)
+        public static Func<Range, bool> CheckCellValueFunctionFromRange(string valueType)
+        {
+            Func<Range, bool> func = null;
+            switch (valueType)
+            {
+                case "cell":
+                    func = (rg) => { return !String.IsNullOrEmpty((string)rg.Text); };
+                    break;
+
+                case "formula":
+                    func = (rg) => { return ((string)rg.Formula).StartsWith("="); };
+                    break;
+
+                case "back color":
+                    func = (rg) => { return ((long)rg.Interior.Color) != 16777215; };
+                    break;
+            }
+            return func;
+        }
+
+        public static Func<Range, string> GetCellValueFunctionFromRange(string valueType)
+        {
+            Func<Range, string> getFunc = null;
+            switch (valueType)
+            {
+                case "cell":
+                    getFunc = (rg) =>
+                    {
+                        return (string)rg.Text;
+                    };
+                    break;
+                case "formula":
+                    getFunc = (rg) =>
+                    {
+                        return (string)rg.Formula;
+                    };
+                    break;
+                case "format":
+                    getFunc = (rg) =>
+                    {
+                        return (string)rg.NumberFormatLocal;
+                    };
+                    break;
+                case "fore color":
+                    getFunc = (rg) =>
+                    {
+                        return ((long)rg.Font.Color).ToString();
+                    };
+                    break;
+                case "back color":
+                    getFunc = (rg) =>
+                    {
+                        return ((long)rg.Interior.Color).ToString();
+                    };
+                    break;
+            }
+            return getFunc;
+        }
+
+        public static Func<Worksheet, int, int, string> GetCellValueFunction(string valueType)
         {
             Func<Worksheet, int, int, string> getFunc = null;
             switch (valueType)
@@ -273,7 +301,60 @@ namespace taskt.Core
             return getFunc;
         }
 
-        public static Action<string, Worksheet, int, int> setCellValueFunction(string valueType)
+        public static Action<string, Worksheet, Range> SetCellValueFunctionFromRange(string valueType)
+        {
+            Action<string, Worksheet, Range> setFunc = null;
+
+            Func<string, long> longConvert = (str) =>
+            {
+                if (long.TryParse(str, out long v))
+                {
+                    return v;
+                }
+                else
+                {
+                    throw new Exception("Value '" + str + "' is not color.");
+                }
+            };
+
+            switch (valueType)
+            {
+                case "cell":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Value = value;
+                    };
+                    break;
+                case "formula":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Formula = value;
+                    };
+                    break;
+                case "format":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.NumberFormatLocal = value;
+                    };
+                    break;
+                case "fore color":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Font.Color = longConvert(value);
+                    };
+                    break;
+                case "back color":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Interior.Color = longConvert(value);
+                    };
+                    break;
+            }
+
+            return setFunc;
+        }
+
+        public static Action<string, Worksheet, int, int> SetCellValueFunction(string valueType)
         {
             Action<string, Worksheet, int, int> setFunc = null;
             switch (valueType)
@@ -312,13 +393,20 @@ namespace taskt.Core
 
             return setFunc;
         }
-        
-        public static int getColumnIndex(Worksheet sheet, string columnName)
+
+        public static int GetColumnIndex(Worksheet sheet, string columnName)
         {
-            return ((Range)sheet.Columns[columnName]).Column;
+            if (CheckCorrectColumnName(columnName, sheet))
+            {
+                return ((Range)sheet.Columns[columnName]).Column;
+            }
+            else
+            {
+                throw new Exception("Strange Column Name '" + columnName + "'");
+            }
         }
 
-        public static string getColumnName(Worksheet sheet, int columnIndex)
+        public static string GetColumnName(Worksheet sheet, int columnIndex)
         {
             if (columnIndex < 1)
             {
@@ -330,17 +418,24 @@ namespace taskt.Core
             }
         }
 
-        public static string getAddress(Worksheet sheet, int row, int column)
+        public static string GetAddress(Worksheet sheet, int row, int column)
         {
-            return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
+            if (CheckCorrectRC(row, column, sheet))
+            {
+                return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
+            }
+            else
+            {
+                throw new Exception("Strange Excel Location. Row: " + row + ", Column: " + column);
+            }
         }
 
-        public static int getLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
+        public static int GetLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
         {
-            return getLastRowIndex(sheet, getColumnIndex(sheet, column), startRow, targetType);
+            return GetLastRowIndex(sheet, GetColumnIndex(sheet, column), startRow, targetType);
         }
 
-        public static int getLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
+        public static int GetLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
         {
             int lastRow = startRow;
             switch (targetType.ToLower())
@@ -362,12 +457,12 @@ namespace taskt.Core
             return --lastRow;
         }
 
-        public static int getLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
+        public static int GetLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
         {
-            return getLastColumnIndex(sheet, row, getColumnIndex(sheet, startColum), targetType);
+            return GetLastColumnIndex(sheet, row, GetColumnIndex(sheet, startColum), targetType);
         }
 
-        public static int getLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
+        public static int GetLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
         {
             int lastColumn = startColum;
             switch (targetType.ToLower())
@@ -389,18 +484,185 @@ namespace taskt.Core
             return --lastColumn;
         }
 
-        public static string ConvertToUserVariableAsExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
+        {
+            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+
+            int columnIndex = 0;
+            switch (columnType)
+            {
+                case "range":
+                    string col = command.ConvertToUserVariable(columnValueName, "Column", engine);
+                    columnIndex = GetColumnIndex(excelSheet, col);
+                    break;
+                case "rc":
+                    columnIndex = command.ConvertToUserVariableAsInteger(columnValueName, "Column", engine);
+                    break;
+            }
+
+            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+
+            int rowStartIndex = command.ConvertToUserVariableAsInteger(rowStartName, "Start Row", engine);
+            string rowEndValue = command.GetRawPropertyString(rowEndName, "End Row");
+            int rowEndIndex;
+            if (String.IsNullOrEmpty(rowEndValue))
+            {
+                if (targetObject == null)
+                {
+                    rowEndIndex = GetLastRowIndex(excelSheet, columnIndex, rowStartIndex, valueType);
+                }
+                else
+                {
+                    int size;
+                    if (targetObject is List<string>)
+                    {
+                        size = ((List<string>)targetObject).Count;
+                    }
+                    else if (targetObject is Dictionary<string, string>)
+                    {
+                        size = ((Dictionary<string, string>)targetObject).Count;
+                    }
+                    else if (targetObject is System.Data.DataTable)
+                    {
+                        size = ((System.Data.DataTable)targetObject).Rows.Count;
+                    }
+                    else if (targetObject is int)
+                    {
+                        size = (int)targetObject;
+                    }
+                    else
+                    {
+                        throw new Exception("target object is strange data.");
+                    }
+                    rowEndIndex = rowStartIndex + size - 1;
+                }
+            }
+            else
+            {
+                rowEndIndex = rowEndValue.ConvertToUserVariableAsInteger("End Row", engine);
+            }
+
+            if (rowStartIndex > rowEndIndex)
+            {
+                int t = rowStartIndex;
+                rowStartIndex = rowEndIndex;
+                rowEndIndex = t;
+            }
+
+            CheckCorrectRCRange(rowStartIndex, columnIndex, rowEndIndex, columnIndex, excelSheet);
+
+            return (columnIndex, rowStartIndex, rowEndIndex, valueType);
+        }
+
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(string rowValueName, string columnTypeName, string columnStartName, string columnEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
+        {
+            int rowIndex = command.ConvertToUserVariableAsInteger(rowValueName, "Row Index", engine);
+
+            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+
+            int columnStartIndex = 0;
+            int columnEndIndex = 0;
+
+            string columnStartValue = command.GetRawPropertyString(columnStartName, "Start Column");
+            string columnEndValue = command.GetRawPropertyString(columnEndName, "End Column");
+
+            Func<int> getLastRowFromObject = () =>
+            {
+                int size;
+                if (targetObject is List<string>)
+                {
+                    size = ((List<string>)targetObject).Count;
+                }
+                else if (targetObject is Dictionary<string, string>)
+                {
+                    size = ((Dictionary<string, string>)targetObject).Count;
+                }
+                else if (targetObject is System.Data.DataTable)
+                {
+                    size = ((System.Data.DataTable)targetObject).Columns.Count;
+                }
+                else if (targetObject is int)
+                {
+                    size = (int)targetObject;
+                }
+                else
+                {
+                    throw new Exception("target object is strange data.");
+                }
+                return columnStartIndex + size - 1;
+            };
+
+            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+            switch (columnType)
+            {
+                case "range":
+                    if (String.IsNullOrEmpty(columnStartValue))
+                    {
+                        columnStartValue = "A";
+                    }
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ConvertToUserVariable(engine));
+
+                    
+                    if (String.IsNullOrEmpty(columnEndValue))
+                    {
+                        if (targetObject == null)
+                        {
+                            columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        }
+                        else
+                        {
+                            columnEndIndex = getLastRowFromObject();
+                        }
+                    }
+                    else
+                    {
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ConvertToUserVariable(engine));
+                        
+                    }
+                    break;
+
+                case "rc":
+                    if (String.IsNullOrEmpty(columnStartValue))
+                    {
+                        columnStartValue = "1";
+                    }
+                    columnStartIndex = columnStartValue.ConvertToUserVariableAsInteger("Start Column", engine);
+
+                    if (String.IsNullOrEmpty(columnEndValue))
+                    {
+                        if (targetObject == null)
+                        {
+                            columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        }
+                        else
+                        {
+                            columnEndIndex = getLastRowFromObject();
+                        }
+                    }
+                    else
+                    {
+                        columnEndIndex = columnEndValue.ConvertToUserVariableAsInteger("Column End", engine);
+                    }
+
+                    break;
+            }
+
+            if (columnStartIndex > columnEndIndex)
+            {
+                int t = columnStartIndex;
+                columnStartIndex = columnEndIndex;
+                columnEndIndex = t;
+            }
+
+            CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelSheet);
+
+            return (rowIndex, columnStartIndex, columnEndIndex, valueType);
+        }
+
+        #region convert methods
+        public static string ConvertToExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
             var location = value.ConvertToUserVariable(engine);
-            //try
-            //{
-            //    var rg = excelInstance.Range[location]; // location validate test
-            //    return location;
-            //}
-            //catch
-            //{
-            //    throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
-            //}
             if (CheckCorrectRange(location, excelInstance))
             {
                 return location;
@@ -411,11 +673,10 @@ namespace taskt.Core
             }
         }
 
-        public static (int row, int column) ConvertToUserVariableAsExcelRCLocation(this ((string rowValue, string rowName) row, (string columnValue, string columnName) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, ScriptCommand command)
+        public static (int row, int column) ConvertToExcelRCLocation(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
-            int row = location.row.rowValue.ConvertToUserVariableAsInteger(location.row.rowName, "Row", engine, command);
-            int column = location.column.columnValue.ConvertToUserVariableAsInteger(location.column.columnName, "Column", engine, command);
-
+            int row = command.ConvertToUserVariableAsInteger(rowPropertyName, "Row", engine);
+            int column = command.ConvertToUserVariableAsInteger(columnPropertyName, "Column", engine);
             if (CheckCorrectRC(row, column, excelInstance))
             {
                 return (row, column);
@@ -426,16 +687,69 @@ namespace taskt.Core
             }
         }
 
-        public static Range GetExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        public static Range ConvertToExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
         {
-            string pos = location.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
+            string pos = location.ConvertToExcelRangeLocation(engine, excelInstance);
             return excelSheet.Range[pos];
         }
 
-        public static Range GetExcelRange(this ((string rowName, string rowValue) row, (string columnName, string columnValue) column) location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        public static Range ConvertToExcelRange(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet)
         {
-            var rc = location.ConvertToUserVariableAsExcelRCLocation(engine, excelInstance, command);
+            var rc = command.ConvertToExcelRCLocation(rowPropertyName, columnPropertyName, engine, excelInstance);
             return excelSheet.Cells[rc.row, rc.column];
+        }
+        #endregion
+
+        #region check methods
+        public static bool CheckCorrectColumnName(string columnName, Worksheet excelSheet)
+        {
+            return CheckCorrectRange(columnName + "1", excelSheet);
+        }
+
+        public static bool CheckCorrectColumnIndex(int columnIndex, Worksheet excelSheet)
+        {
+            return CheckCorrectRC(1, columnIndex, excelSheet);
+        }
+
+        public static bool CheckCorrectRange(string range, Worksheet excelSheet)
+        {
+            try
+            {
+                var rg = excelSheet.Range[range];
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool CheckCorrectRC(int row, int column, Worksheet excelSheet)
+        {
+            try
+            {
+                var rc = excelSheet.Cells[row, column];
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool CheckCorrectColumnName(string columnName, Application excelInstance)
+        {
+            return CheckCorrectRange(columnName + "1", excelInstance);
+        }
+
+        public static bool CheckCorrectRowIndex(int rowIndex, Application excelInstance)
+        {
+            return CheckCorrectRC(rowIndex, 1, excelInstance);
+        }
+
+        public static bool CheckCorrectColumnIndex(int columnIndex, Application excelInstance)
+        {
+            return CheckCorrectRC(1, columnIndex, excelInstance);
         }
 
         public static bool CheckCorrectRange(this string range, Application excelInstance)
@@ -490,5 +804,32 @@ namespace taskt.Core
             }
             return true;
         }
+        public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Worksheet excelSheet, bool throwExceptionWhenInvalidRange = true)
+        {
+            if (!CheckCorrectRC(startRow, startColumn, excelSheet))
+            {
+                if (throwExceptionWhenInvalidRange)
+                {
+                    throw new Exception("Invalid Start Location. Row: " + startRow + ", Column: " + startColumn);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (!CheckCorrectRC(endRow, endColumn, excelSheet))
+            {
+                if (throwExceptionWhenInvalidRange)
+                {
+                    throw new Exception("Invalid End Location. Row: " + endRow + ", Column: " + endColumn);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        #endregion
     }
 }

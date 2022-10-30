@@ -117,8 +117,10 @@ namespace taskt.Core.Automation.Commands
                     isBoolCompare = bool.TryParse(param["Value1"], out tempBool) && bool.TryParse(param["Value2"], out tempBool);
                     break;
                 default:
-                    value1 = param["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
-                    value2 = param["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
+                    //value1 = param["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
+                    //value2 = param["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
+                    value1 = new PropertyConvertTag(param["Value1"], "Value1").ConvertToUserVariableAsDecimal(engine);
+                    value2 = new PropertyConvertTag(param["Value2"], "Value2").ConvertToUserVariableAsDecimal(engine);
                     break;
             }
 
@@ -1409,7 +1411,8 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                trgValue = trgText.ConvertToUserVariableAsDecimal("Value", engine);
+                //trgValue = trgText.ConvertToUserVariableAsDecimal("Value", engine);
+                trgValue = new PropertyConvertTag(trgText, "Value").ConvertToUserVariableAsDecimal(engine);
             }
             catch(Exception ex)
             {
@@ -1434,8 +1437,10 @@ namespace taskt.Core.Automation.Commands
             {
                 case "between":
                 case "not between":
-                    value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
-                    value2 = parameters["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
+                    //value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
+                    //value2 = parameters["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
+                    value1 = new PropertyConvertTag(parameters["Value1"], "Value1").ConvertToUserVariableAsDecimal(engine);
+                    value2 = new PropertyConvertTag(parameters["Value2"], "Value2").ConvertToUserVariableAsDecimal(engine);
                     if (value1 > value2)
                     {
                         decimal t = value1;
@@ -1444,7 +1449,8 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
                 default:
-                    value1 = parameters["Value"].ConvertToUserVariableAsDecimal("Value", engine);
+                    //value1 = parameters["Value"].ConvertToUserVariableAsDecimal("Value", engine);
+                    value1 = new PropertyConvertTag(parameters["Value"], "Value").ConvertToUserVariableAsDecimal(engine);
                     break;
             }
 

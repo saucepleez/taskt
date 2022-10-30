@@ -40,34 +40,32 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "File")]
         public string v_FileName { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Specify If Excel File Exists")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**Error** or **Overwrite** or **Ignore**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Overwrite")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfExcelFileExists { get; set; }
+
         public ExcelSaveAsCommand()
         {
             this.CommandName = "ExcelSaveAsCommand";
             this.SelectionName = "Save Workbook As";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //convert variables
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            ////get excel app object
-            //var excelObject = engine.GetAppInstance(vInstance);
-            ////convert object
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //var fileName = v_FileName.ConvertToUserVariable(engine);
-            //fileName = Core.FilePathControls.formatFilePath(fileName, engine);
-            //if (!Core.FilePathControls.hasExtension(fileName))
-            //{
-            //    fileName += ".xlsx";
-            //}
             string fileName;
             if (FilePathControls.containsFileCounter(v_FileName, engine))
             {
@@ -78,51 +76,40 @@ namespace taskt.Core.Automation.Commands
                 fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
             }
 
-            //overwrite and save
-            excelInstance.DisplayAlerts = false;
-            excelInstance.ActiveWorkbook.SaveAs(fileName);
-            excelInstance.DisplayAlerts = true;
+            Action saveAsProcess = () =>
+            {
+                //overwrite and save
+                excelInstance.DisplayAlerts = false;
+                excelInstance.ActiveWorkbook.SaveAs(fileName);
+                excelInstance.DisplayAlerts = true;
+            };
+
+            if (excelInstance.ActiveWorkbook != null)
+            {
+                if (!System.IO.File.Exists(fileName))
+                {
+                    saveAsProcess();
+                }
+                else
+                {
+                    switch(this.GetUISelectionValue(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
+                    {
+                        case "error":
+                            throw new Exception("Excel file '" + v_FileName + "' is already exists.");
+                            break;
+                        case "overwrite":
+                            saveAsProcess();
+                            break;
+                        case "ignore":
+                            // nothing
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Excel Instance '" + v_InstanceName + "' has no Workbook.");
+            }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Save To '" + v_FileName + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_FileName))
-        //    {
-        //        this.validationResult += "File is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

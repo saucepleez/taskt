@@ -131,45 +131,43 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            //string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
-            int rowStartIndex = v_RowStart.ConvertToUserVariableAsInteger("Start Row", engine);
+            //int rowStartIndex = v_RowStart.ConvertToUserVariableAsInteger("Start Row", engine);
+            int rowStartIndex = this.ConvertToUserVariableAsInteger(nameof(v_RowStart), "Start Row", engine);
 
             int columnStartIndex = 0;
             int columnEndIndex = 0;
-            switch(v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
+            //switch(v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
+            switch(this.GetUISelectionValue(nameof(v_ColumnType), "Column Type", engine))
             {
                 case "range":
-                    columnStartIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
-                        columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
                     }
                     break;
 
                 case "rc":
-                    columnStartIndex = v_ColumnStart.ConvertToUserVariableAsInteger("Column Start", engine);
+                    //columnStartIndex = v_ColumnStart.ConvertToUserVariableAsInteger("Column Start", engine);
+                    columnStartIndex = this.ConvertToUserVariableAsInteger(nameof(v_ColumnStart), "Column Start", engine);
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
-                        columnEndIndex = ExcelControls.getLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
+                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = v_ColumnEnd.ConvertToUserVariableAsInteger("Column End", engine);
+                        //columnEndIndex = v_ColumnEnd.ConvertToUserVariableAsInteger("Column End", engine);
+                        columnEndIndex = this.ConvertToUserVariableAsInteger(nameof(v_ColumnEnd), "Column End", engine);
                     }
-                    //if ((columnStartIndex < 0) || (columnEndIndex < 0))
-                    //{
-                    //    throw new Exception("Column is less than 0");
-                    //}
                     break;
             }
 
@@ -183,17 +181,13 @@ namespace taskt.Core.Automation.Commands
             int rowEndIndex;
             if (String.IsNullOrEmpty(v_RowEnd))
             {
-                rowEndIndex = ExcelControls.getLastRowIndex(excelSheet, columnStartIndex, rowStartIndex, valueType);
+                rowEndIndex = ExcelControls.GetLastRowIndex(excelSheet, columnStartIndex, rowStartIndex, valueType);
             }
             else
             {
-                rowEndIndex = v_RowEnd.ConvertToUserVariableAsInteger("Row End", engine);
+                //rowEndIndex = v_RowEnd.ConvertToUserVariableAsInteger("Row End", engine);
+                rowEndIndex = this.ConvertToUserVariableAsInteger(nameof(v_RowEnd), "Row End", engine);
             }
-
-            //if ((rowStartIndex < 1) || (rowEndIndex < 1))
-            //{
-            //    throw new Exception("Row index is less than 1");
-            //}
 
             if (rowStartIndex > rowEndIndex)
             {
@@ -202,17 +196,9 @@ namespace taskt.Core.Automation.Commands
                 rowEndIndex = t;
             }
 
-            //if (!ExcelControls.CheckCorrectRC(rowStartIndex, columnStartIndex, excelInstance))
-            //{
-            //    throw new Exception("Invalid start Location. Row: " + rowStartIndex + ", Column: " + columnStartIndex);
-            //}
-            //if (!ExcelControls.CheckCorrectRC(rowEndIndex, columnEndIndex, excelInstance))
-            //{
-            //    throw new Exception("Invalid End Location. Row: " + rowEndIndex + ", Column: " + columnEndIndex);
-            //}
             ExcelControls.CheckCorrectRCRange(rowStartIndex, columnStartIndex, rowEndIndex, columnEndIndex, excelInstance);
 
-            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);
+            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
             int rowRange = rowEndIndex - rowStartIndex + 1;
             int colRange = columnEndIndex - columnStartIndex + 1;
@@ -221,7 +207,7 @@ namespace taskt.Core.Automation.Commands
             // set columns
             for (int i = 0; i < colRange; i++) 
             {
-                newDT.Columns.Add(ExcelControls.getColumnName(excelSheet, columnStartIndex + i));
+                newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, columnStartIndex + i));
             }
 
             for (int i = 0; i < rowRange; i++)
@@ -235,20 +221,5 @@ namespace taskt.Core.Automation.Commands
 
             newDT.StoreInUserVariable(engine, v_userVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get " + v_ValueType + " Values From '" + v_ColumnStart + "' to '" + v_ColumnEnd + "' Row '" + v_RowStart + "' to '" + v_RowEnd + "' as DataTable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

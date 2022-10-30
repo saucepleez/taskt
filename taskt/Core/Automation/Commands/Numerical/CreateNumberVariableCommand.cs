@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.IO;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -39,6 +33,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Number")]
         public string v_NumberValue { get; set; }
 

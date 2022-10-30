@@ -71,116 +71,45 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Get Cell";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            //var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
-            //var targetAddress = v_ExcelCellAddress.ConvertToUserVariableAsExcelRangeLocation(engine, excelInstance);
+            var rg = v_ExcelCellAddress.ConvertToExcelRange(engine, excelInstance, excelSheet, this);
 
-            var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
+            //var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            //var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
+            var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
-            //var valueType = v_ValueType.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(valueType))
+            //string cellValue = "";
+            //switch (valueType)
             //{
-            //    valueType = "Cell";
+            //    case "cell":
+            //        cellValue = (string)rg.Text;
+            //        break;
+            //    case "formula":
+            //        cellValue = (string)rg.Formula;
+            //        break;
+            //    case "format":
+            //        cellValue = (string)rg.NumberFormatLocal;
+            //        break;
+            //    case "font color":
+            //        cellValue = ((long)rg.Font.Color).ToString();
+            //        break;
+            //    case "back color":
+            //        cellValue = ((long)rg.Interior.Color).ToString();
+            //        break;
             //}
-            var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
 
-            string cellValue = "";
-            switch (valueType)
-            {
-                case "cell":
-                    //cellValue= (string)excelSheet.Range[targetAddress].Text;
-                    cellValue = (string)rg.Text;
-                    break;
-                case "formula":
-                    //cellValue = (string)excelInstance.Range[targetAddress].Formula;
-                    cellValue = (string)rg.Formula;
-                    break;
-                case "format":
-                    //cellValue = (string)excelInstance.Range[targetAddress].NumberFormatLocal;
-                    cellValue = (string)rg.NumberFormatLocal;
-                    break;
-                case "font color":
-                    //cellValue = ((long)excelInstance.Range[targetAddress].Font.Color).ToString();
-                    cellValue = ((long)rg.Font.Color).ToString();
-                    break;
-                case "back color":
-                    //cellValue = ((long)excelInstance.Range[targetAddress].Interior.Color).ToString();
-                    cellValue = ((long)rg.Interior.Color).ToString();
-                    break;
-                //default:
-                //    throw new Exception("Value type " + valueType + " is not support.");
-                //    break;
-            }
-             
-            cellValue.StoreInUserVariable(sender, v_userVariableName);            
+            var func = ExcelControls.GetCellValueFunctionFromRange(valueType);
+
+            //cellValue.StoreInUserVariable(sender, v_userVariableName);
+
+            func(rg).StoreInUserVariable(sender, v_userVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    ////create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
-
-        //    ////create control for variable name
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    //RenderedControls.Add(VariableNameControl);
-
-        //    var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get " + v_ValueType + " Value From '" + v_ExcelCellAddress + "' and apply to variable '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_ExcelCellAddress))
-        //    {
-        //        this.validationResult += "Address is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_userVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

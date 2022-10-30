@@ -53,12 +53,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            //var excelInstance = ExcelControls.getExcelInstance(engine, vInstance);
-
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
             excelInstance.Worksheets.Add();
 
@@ -69,53 +63,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        //public override List<Control> Render(frmCommandEditor editor)
+        //public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateInferenceDefaultControlGroupFor("v_InstanceName", this, editor));
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add("v_SheetName", "convertToIntermediateExcelSheet");
+        //    convertToIntermediate(settings, cnv, variables);
         //}
 
-        //public override bool IsValidate(frmCommandEditor editor)
+        //public override void convertToRaw(EngineSettings settings)
         //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add("v_SheetName", "convertToRawExcelSheet");
+        //    convertToRaw(settings, cnv);
         //}
-
-        public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_SheetName", "convertToIntermediateExcelSheet");
-            convertToIntermediate(settings, cnv, variables);
-        }
-
-        public override void convertToRaw(EngineSettings settings)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_SheetName", "convertToRawExcelSheet");
-            convertToRaw(settings, cnv);
-        }
     }
 }

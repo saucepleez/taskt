@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.IO;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -26,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**123** or **{{{vNumber}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Number")]
         public string v_Number { get; set; }
@@ -38,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0.#** or **C** or **{{{vFormat}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Format")]
         public string v_Format { get; set; }
@@ -67,7 +65,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            decimal value = v_Number.ConvertToUserVariableAsDecimal("Number", engine);
+            //decimal value = v_Number.ConvertToUserVariableAsDecimal("Number", engine);
+            //decimal value = (v_Number, "Number").ConvertToUserVariableAsDecimal(engine);
+            decimal value = new PropertyConvertTag(v_Number, "Number").ConvertToUserVariableAsDecimal(engine);
 
             string format = v_Format.ConvertToUserVariable(engine);
 

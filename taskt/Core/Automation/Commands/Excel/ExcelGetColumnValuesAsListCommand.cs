@@ -119,67 +119,16 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var excelInstance = ExcelControls.getExcelInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            int columnIndex = 0;
-            switch (v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
-            {
-                case "range":
-                    columnIndex = ExcelControls.getColumnIndex(excelSheet, v_ColumnIndex.ConvertToUserVariable(engine)) ;
-                    break;
-                case "rc":
-                    //columnIndex = int.Parse(v_ColumnIndex.ConvertToUserVariable(engine));
-                    columnIndex = v_ColumnIndex.ConvertToUserVariableAsInteger("Column Index", engine);
-                    break;
-            }
+            (int columnIndex, int rowStart, int rowEnd, string valueType) =
+                ExcelControls.GetRangeIndeiesColumnDirection(
+                    nameof(v_ColumnIndex), nameof(v_ColumnType),
+                    nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType),
+                    engine, excelSheet, this
+                );
 
-            //if (columnIndex < 1)
-            //{
-            //    throw new Exception("Column index is less than 1");
-            //}
-
-            string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-
-            //int rowStart = int.Parse(v_RowStart.ConvertToUserVariable(engine));
-            //int rowEnd = int.Parse(v_RowEnd.ConvertToUserVariable(engine));
-            //if (String.IsNullOrEmpty(v_RowStart))
-            //{
-            //    v_RowStart = "1";
-            //}
-            //int rowStart = v_RowStart.ConvertToUserVariableAsInteger("Row Start", engine);
-            int rowStart = v_RowStart.ConvertToUserVariableAsInteger("v_RowStart", "Start Row", engine, this);
-
-            int rowEnd;
-            if (String.IsNullOrEmpty(v_RowEnd))
-            {
-                rowEnd = ExcelControls.getLastRowIndex(excelSheet, columnIndex, rowStart, valueType);
-            }
-            else
-            {
-                rowEnd = v_RowEnd.ConvertToUserVariableAsInteger("End Row", engine);
-            }
-
-            if (rowStart > rowEnd)
-            {
-                int t = rowStart;
-                rowStart = rowEnd;
-                rowEnd = t;
-            }
-
-            //if (!ExcelControls.CheckCorrectRC(rowStart, columnIndex, excelInstance))
-            //{
-            //    throw new Exception("Strange Start Location. Row: " + rowStart + ", Column: " + columnIndex);
-            //}
-            //if (!ExcelControls.CheckCorrectRC(rowEnd, columnIndex, excelInstance))
-            //{
-            //    throw new Exception("Strange End Location. Row: " + rowStart + ", Column: " + columnIndex);
-            //}
-            ExcelControls.CheckCorrectRCRange(rowStart, columnIndex, rowEnd, columnIndex, excelInstance);
-
-            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.getCellValueFunction(valueType);
+            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
             List<string> newList = new List<string>();
 
@@ -190,20 +139,5 @@ namespace taskt.Core.Automation.Commands
 
             newList.StoreInUserVariable(engine, v_userVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get " + v_ValueType + " Values From '" + v_RowStart + "' to '" + v_RowEnd + "' Column '" + v_ColumnIndex + "' as List '" + v_userVariableName + "', Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

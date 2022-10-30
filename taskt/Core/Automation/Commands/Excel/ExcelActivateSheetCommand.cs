@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InstanceName = "";
+            //this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
@@ -131,14 +131,14 @@ namespace taskt.Core.Automation.Commands
         public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
-            cnv.Add("v_SheetName", "convertToIntermediateExcelSheet");
+            cnv.Add(nameof(v_SheetName), "convertToIntermediateExcelSheet");
             convertToIntermediate(settings, cnv, variables);
         }
 
         public override void convertToRaw(EngineSettings settings)
         {
             var cnv = new Dictionary<string, string>();
-            cnv.Add("v_SheetName", "convertToRawExcelSheet");
+            cnv.Add(nameof(v_SheetName), "convertToRawExcelSheet");
             convertToRaw(settings, cnv);
         }
     }

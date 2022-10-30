@@ -499,6 +499,10 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         public List<Control> RenderedControls;
 
+        [XmlIgnore]
+        [NonSerialized]
+        protected Dictionary<string, Control> ControlsList;
+
         public ScriptCommand()
         {
             this.DisplayForeColor = System.Drawing.Color.SteelBlue;
@@ -638,6 +642,13 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+
+                ControlsList = new Dictionary<string, Control>();
+                foreach(Control control in RenderedControls)
+                {
+                    ControlsList.Add(control.Name, control);
+                }
+
                 return RenderedControls;
             }
         }
