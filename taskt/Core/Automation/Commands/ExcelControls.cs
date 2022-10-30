@@ -600,6 +600,32 @@ namespace taskt.Core
             string columnStartValue = command.GetRawPropertyString(columnStartName, "Start Column");
             string columnEndValue = command.GetRawPropertyString(columnEndName, "End Column");
 
+            Func<int> getLastRowFromObject = () =>
+            {
+                int size;
+                if (targetObject is List<string>)
+                {
+                    size = ((List<string>)targetObject).Count;
+                }
+                else if (targetObject is Dictionary<string, string>)
+                {
+                    size = ((Dictionary<string, string>)targetObject).Count;
+                }
+                else if (targetObject is System.Data.DataTable)
+                {
+                    size = ((System.Data.DataTable)targetObject).Columns.Count;
+                }
+                else if (targetObject is int)
+                {
+                    size = (int)targetObject;
+                }
+                else
+                {
+                    throw new Exception("target object is strange data.");
+                }
+                return columnStartIndex + size - 1;
+            };
+
             string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
             switch (columnType)
             {
@@ -613,11 +639,19 @@ namespace taskt.Core
                     
                     if (String.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        if (targetObject == null)
+                        {
+                            columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        }
+                        else
+                        {
+                            columnEndIndex = getLastRowFromObject();
+                        }
                     }
                     else
                     {
                         columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ConvertToUserVariable(engine));
+                        
                     }
                     break;
 
@@ -636,28 +670,7 @@ namespace taskt.Core
                         }
                         else
                         {
-                            int size;
-                            if (targetObject is List<string>)
-                            {
-                                size = ((List<string>)targetObject).Count;
-                            }
-                            else if (targetObject is Dictionary<string, string>)
-                            {
-                                size = ((Dictionary<string, string>)targetObject).Count;
-                            }
-                            else if (targetObject is System.Data.DataTable)
-                            {
-                                size = ((System.Data.DataTable)targetObject).Columns.Count;
-                            }
-                            else if (targetObject is int)
-                            {
-                                size = (int)targetObject;
-                            }
-                            else
-                            {
-                                throw new Exception("target object is strange data.");
-                            }
-                            columnEndIndex = columnStartIndex + size - 1;
+                            columnEndIndex = getLastRowFromObject();
                         }
                     }
                     else
