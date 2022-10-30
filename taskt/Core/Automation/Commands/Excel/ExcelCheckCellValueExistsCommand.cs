@@ -28,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
+        [PropertyFirstValue("%kwd_default_excel_instance%")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]

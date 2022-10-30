@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
+        [PropertyFirstValue("%kwd_default_excel_instance%")]
         public string v_InstanceName { get; set; }
 
         public ExcelCreateApplicationCommand()
