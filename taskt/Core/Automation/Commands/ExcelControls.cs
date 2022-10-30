@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Runtime.CompilerServices;
 using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Commands;
@@ -333,6 +335,59 @@ namespace taskt.Core
             return getFunc;
         }
 
+        public static Action<string, Worksheet, Range> SetCellValueFunctionFromRange(string valueType)
+        {
+            Action<string, Worksheet, Range> setFunc = null;
+
+            Func<string, long> longConvert = (str) =>
+            {
+                if (long.TryParse(str, out long v))
+                {
+                    return v;
+                }
+                else
+                {
+                    throw new Exception("Value '" + str + "' is not color.");
+                }
+            };
+
+            switch (valueType)
+            {
+                case "cell":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Value = value;
+                    };
+                    break;
+                case "formula":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Formula = value;
+                    };
+                    break;
+                case "format":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.NumberFormatLocal = value;
+                    };
+                    break;
+                case "fore color":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Font.Color = longConvert(value);
+                    };
+                    break;
+                case "back color":
+                    setFunc = (value, sheet, rg) =>
+                    {
+                        rg.Interior.Color = longConvert(value);
+                    };
+                    break;
+            }
+
+            return setFunc;
+        }
+
         public static Action<string, Worksheet, int, int> SetCellValueFunction(string valueType)
         {
             Action<string, Worksheet, int, int> setFunc = null;
@@ -463,7 +518,7 @@ namespace taskt.Core
             return --lastColumn;
         }
 
-        public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command)
+        public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
         {
             string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
 
@@ -486,7 +541,35 @@ namespace taskt.Core
             int rowEndIndex;
             if (String.IsNullOrEmpty(rowEndValue))
             {
-                rowEndIndex = GetLastRowIndex(excelSheet, columnIndex, rowStartIndex, valueType);
+                if (targetObject == null)
+                {
+                    rowEndIndex = GetLastRowIndex(excelSheet, columnIndex, rowStartIndex, valueType);
+                }
+                else
+                {
+                    int size;
+                    if (targetObject is List<string>)
+                    {
+                        size = ((List<string>)targetObject).Count;
+                    }
+                    else if (targetObject is Dictionary<string, string>)
+                    {
+                        size = ((Dictionary<string, string>)targetObject).Count;
+                    }
+                    else if (targetObject is System.Data.DataTable)
+                    {
+                        size = ((System.Data.DataTable)targetObject).Rows.Count;
+                    }
+                    else if (targetObject is int)
+                    {
+                        size = (int)targetObject;
+                    }
+                    else
+                    {
+                        throw new Exception("target object is strange data.");
+                    }
+                    rowEndIndex = rowStartIndex + size - 1;
+                }
             }
             else
             {
@@ -505,7 +588,7 @@ namespace taskt.Core
             return (columnIndex, rowStartIndex, rowEndIndex, valueType);
         }
 
-        public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(string rowValueName, string columnTypeName, string columnStartName, string columnEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command)
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(string rowValueName, string columnTypeName, string columnStartName, string columnEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
         {
             int rowIndex = command.ConvertToUserVariableAsInteger(rowValueName, "Row Index", engine);
 
@@ -547,7 +630,35 @@ namespace taskt.Core
 
                     if (String.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        if (targetObject == null)
+                        {
+                            columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        }
+                        else
+                        {
+                            int size;
+                            if (targetObject is List<string>)
+                            {
+                                size = ((List<string>)targetObject).Count;
+                            }
+                            else if (targetObject is Dictionary<string, string>)
+                            {
+                                size = ((Dictionary<string, string>)targetObject).Count;
+                            }
+                            else if (targetObject is System.Data.DataTable)
+                            {
+                                size = ((System.Data.DataTable)targetObject).Columns.Count;
+                            }
+                            else if (targetObject is int)
+                            {
+                                size = (int)targetObject;
+                            }
+                            else
+                            {
+                                throw new Exception("target object is strange data.");
+                            }
+                            columnEndIndex = columnStartIndex + size - 1;
+                        }
                     }
                     else
                     {
@@ -564,7 +675,7 @@ namespace taskt.Core
                 columnEndIndex = t;
             }
 
-            ExcelControls.CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelSheet);
+            CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelSheet);
 
             return (rowIndex, columnStartIndex, columnEndIndex, valueType);
         }
