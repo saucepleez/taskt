@@ -148,9 +148,10 @@ namespace taskt.Core.Automation.Commands
             decimal v = prop.ConvertToUserVariableAsDecimal(engine);
 
             var validateAttr = propInfo.GetCustomAttribute<PropertyValidationRule>();
+            var rangeAttr = propInfo.GetCustomAttribute<PropertyValueRange>();
             if (validateAttr != null)
             {
-                if (CheckValidate(v, validateAttr, prop.Description))
+                if (CheckValidate(v, validateAttr, prop.Description, rangeAttr))
                 {
                     return v;
                 }
@@ -165,7 +166,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static bool CheckValidate(decimal value, PropertyValidationRule validateAttr, string parameterDescription)
+        private static bool CheckValidate(decimal value, PropertyValidationRule validateAttr, string parameterDescription, PropertyValueRange rangeAttr)
         {
             var rule = validateAttr.errorRule;
             if ((rule & PropertyValidationRule.ValidationRuleFlags.EqualsZero) == PropertyValidationRule.ValidationRuleFlags.EqualsZero)
@@ -194,6 +195,34 @@ namespace taskt.Core.Automation.Commands
                 if  (value > 0)
                 {
                     throw new Exception(parameterDescription + " is Greater Than Zero.");
+                }
+            }
+            if ((rule & PropertyValidationRule.ValidationRuleFlags.Between) == PropertyValidationRule.ValidationRuleFlags.Between)
+            {
+                if (rangeAttr == null)
+                {
+                    throw new Exception(parameterDescription + " has no range attribute.");
+                }
+                else
+                {
+                    if (value >= rangeAttr.min && value <= rangeAttr.max)
+                    {
+                        throw new Exception(parameterDescription + " is in range (" + rangeAttr.min + " to " + rangeAttr.max + ")");
+                    }
+                }
+            }
+            if ((rule & PropertyValidationRule.ValidationRuleFlags.NotBetween) == PropertyValidationRule.ValidationRuleFlags.NotBetween)
+            {
+                if (rangeAttr == null)
+                {
+                    throw new Exception(parameterDescription + " has no range attribute.");
+                }
+                else
+                {
+                    if (value < rangeAttr.min || value > rangeAttr.max)
+                    {
+                        throw new Exception(parameterDescription + " is out of range (" + rangeAttr.min + " to " + rangeAttr.max + ")");
+                    }
                 }
             }
             return true;
