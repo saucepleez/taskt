@@ -60,7 +60,9 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            int color = v_ExcelColor.ConvertToUserVariableAsInteger("Excel Color", engine);
+            //int color = v_ExcelColor.ConvertToUserVariableAsInteger("Excel Color", engine);
+            int color = this.ConvertToUserVariableAsInteger(nameof(v_ExcelColor), "Excel Color", engine);
+
             color &= 0xFFFFFF;
             int r = color & 0xFF;
             color >>= 8;
