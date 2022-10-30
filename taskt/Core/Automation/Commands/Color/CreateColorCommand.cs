@@ -43,7 +43,8 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Values range from 0 to 255")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Red", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Red", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 255)]
         [PropertyDisplayText(true, "Red")]
         public string v_Red { get; set; }
 
@@ -55,7 +56,8 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Values range from 0 to 255")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Green", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Green", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 255)]
         [PropertyDisplayText(true, "Green")]
         public string v_Green { get; set; }
 
@@ -67,7 +69,8 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Values range from 0 to 255")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Blue", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Blue", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 255)]
         [PropertyDisplayText(true, "Blue")]
         public string v_Blue { get; set; }
 
@@ -96,34 +99,22 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            int r = v_Red.ConvertToUserVariableAsInteger("Red", engine);
-            int g = v_Green.ConvertToUserVariableAsInteger("Green", engine);
-            int b = v_Blue.ConvertToUserVariableAsInteger("Blue", engine);
+            //int r = v_Red.ConvertToUserVariableAsInteger("Red", engine);
+            //int g = v_Green.ConvertToUserVariableAsInteger("Green", engine);
+            //int b = v_Blue.ConvertToUserVariableAsInteger("Blue", engine);
+            int r = this.ConvertToUserVariableAsInteger(nameof(v_Red), "Red", engine);
+            int g = this.ConvertToUserVariableAsInteger(nameof(v_Green), "Green", engine);
+            int b = this.ConvertToUserVariableAsInteger(nameof(v_Blue), "Blue", engine);
 
-            if (string.IsNullOrEmpty(v_Alpha))
-            {
-                v_Alpha = "255";
-            }
-            int a = v_Alpha.ConvertToUserVariableAsInteger("Alpha", engine);
+            //if (string.IsNullOrEmpty(v_Alpha))
+            //{
+            //    v_Alpha = "255";
+            //}
+            //int a = v_Alpha.ConvertToUserVariableAsInteger("Alpha", engine);
+            int a = this.ConvertToUserVariableAsInteger(nameof(v_Alpha), "Alpha", engine);
 
             Color co = Color.FromArgb(a, r, g, b);
             co.StoreInUserVariable(engine, v_Color);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Name: '" + v_Color + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
     }
 }
