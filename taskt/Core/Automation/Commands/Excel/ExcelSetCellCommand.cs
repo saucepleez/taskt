@@ -81,38 +81,42 @@ namespace taskt.Core.Automation.Commands
 
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
-            long colorToSet = 0;
-            switch (targetText)
-            {
-                case "fore color":
-                case "back color":
-                    if (long.TryParse(targetText, out colorToSet))
-                    {
-                        throw new Exception("Value to set '" + targetText + "' is not color.");
-                    }
-                    break;
-            }
+            //long colorToSet = 0;
+            //switch (targetText)
+            //{
+            //    case "fore color":
+            //    case "back color":
+            //        if (long.TryParse(targetText, out colorToSet))
+            //        {
+            //            throw new Exception("Value to set '" + targetText + "' is not color.");
+            //        }
+            //        break;
+            //}
 
-            var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            //var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
+            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
-            switch (valueType)
-            {
-                case "cell":
-                    rg.Value = targetText;
-                    break;
-                case "formula":
-                    rg.Formula = targetText;
-                    break;
-                case "format":
-                    rg.NumberFormatLocal = targetText;
-                    break;
-                case "font color":
-                    rg.Font.Color = colorToSet;
-                    break;
-                case "back color":
-                    rg.Interior.Color = colorToSet;
-                    break;
-            }
+            //switch (valueType)
+            //{
+            //    case "cell":
+            //        rg.Value = targetText;
+            //        break;
+            //    case "formula":
+            //        rg.Formula = targetText;
+            //        break;
+            //    case "format":
+            //        rg.NumberFormatLocal = targetText;
+            //        break;
+            //    case "font color":
+            //        rg.Font.Color = colorToSet;
+            //        break;
+            //    case "back color":
+            //        rg.Interior.Color = colorToSet;
+            //        break;
+            //}
+
+            var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
+            setFunc(targetText, excelSheet, rg);
         }
     }
 }

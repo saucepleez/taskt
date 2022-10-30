@@ -89,128 +89,17 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
-
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
-
-            //var vRow = v_ExcelCellRow.ConvertToUserVariable(sender);
-            //var vCol = v_ExcelCellColumn.ConvertToUserVariable(sender);
-            //int row, col;
-            //row = int.Parse(vRow);
-            //col = int.Parse(vCol);
-
-            //int row = v_ExcelCellRow.ConvertToUserVariableAsInteger("v_ExcelCellRow", "Row", engine, this);
-            //int col = v_ExcelCellColumn.ConvertToUserVariableAsInteger("v_ExcelCellColumn", "Column", engine, this);
 
             var rg = ((v_ExcelCellRow, "v_ExcelCellRow"), (v_ExcelCellColumn, "v_ExcelCellColumn")).GetExcelRange(engine, excelInstance, excelSheet, this);
 
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
-            //((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Value = targetText;
+            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
-            //var valueType = v_ValueType.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(valueType))
-            //{
-            //    valueType = "Cell";
-            //}
+            var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
 
-            var valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
-
-            long colorToSet = 0;
-            switch (valueType)
-            {
-                case "fore color":
-                case "back color":
-                    if (!long.TryParse(targetText, out colorToSet))
-                    {
-                        throw new Exception("Text to set '" + targetText + "' is not color.");
-                    }
-                    break;
-            }
-
-            // set range
-            //Microsoft.Office.Interop.Excel.Range rg = (Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col];
-
-            switch (valueType)
-            {
-                case "cell":
-                    //((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Value = targetText;
-                    rg.Value = targetText;
-                    break;
-                case "formula":
-                    //((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Formula = targetText;
-                    rg.Formula = targetText;
-                    break;
-                case "format":
-                    //((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).NumberFormatLocal = targetText;
-                    rg.NumberFormatLocal = targetText;
-                    break;
-                case "font color":
-                    //((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Font.Color = long.Parse(targetText);
-                    //rg.Font.Color = long.Parse(targetText);
-                    rg.Font.Color = colorToSet;
-                    break;
-                case "back color":
-                    //((Microsoft.Office.Interop.Excel.Range)excelSheet.Cells[row, col]).Interior.Color = long.Parse(targetText);
-                    //rg.Interior.Color = long.Parse(targetText);
-                    rg.Interior.Color = colorToSet;
-                    break;
-                //default:
-                //    throw new Exception(valueType + " is not support.");
-                //    break;
-            }
+            setFunc(targetText, excelSheet, rg);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellRow", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellColumn", this, editor));
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set Cell " + v_ValueType + " Row: " + v_ExcelCellRow + ", Column: " + v_ExcelCellColumn + " to '" + v_TextToSet + "', Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_ExcelCellRow))
-        //    {
-        //        this.validationResult += "Row is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_ExcelCellColumn))
-        //    {
-        //        this.validationResult += "Column is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
