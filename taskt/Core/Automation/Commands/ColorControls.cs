@@ -4,6 +4,13 @@ namespace taskt.Core.Automation.Commands
 {
     internal static class ColorControls
     {
+        /// <summary>
+        /// Get Color variable from Variable name. This type is System.Drawing.Color.
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Variable not Color</exception>
         public static System.Drawing.Color GetColorVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);

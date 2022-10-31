@@ -5,12 +5,12 @@ namespace taskt.Core.Automation.Commands
     internal static class DateTimeControls
     {
         /// <summary>
-        /// Convert Property Value to DateTime
+        /// Get DateTime variable from Variable Name.
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">Variable not DateTime</exception>
         public static DateTime GetDateTimeVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);

@@ -7,6 +7,15 @@ namespace taskt.Core.Automation.Commands
 {
     internal static class NumberControls
     {
+        /// <summary>
+        /// Convert property value to integer from property name. This method supports validate, first value.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyDescription"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static int ConvertToUserVariableAsInteger(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             decimal decValue = command.ConvertToUserVariableAsDecimal(propertyName, propertyDescription, engine);
@@ -21,6 +30,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// convert property value to decimal from property name. This method supports validate, first value.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyDescription"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static decimal ConvertToUserVariableAsDecimal(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' is not exists."); ;
@@ -29,6 +47,13 @@ namespace taskt.Core.Automation.Commands
             return new PropertyConvertTag(valueStr, propertyName, propertyDescription).ConvertToUserVariableAsDecimal(propInfo, engine);
         }
 
+        /// <summary>
+        /// convert property value to integer from PropertyConvertTag that specified property name, etc.
+        /// </summary>
+        /// <param name="prop"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
         {
             string convertedText = prop.Value.ConvertToUserVariable(engine);
@@ -42,12 +67,26 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// convert specified value to integer.
+        /// </summary>
+        /// <param name="propertyValue"></param>
+        /// <param name="propertyDescription"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             //return (propertyValue, propertyDescription).ConvertToUserVariableAsInteger(engine);
             return new PropertyConvertTag(propertyValue, propertyDescription).ConvertToUserVariableAsInteger(engine);
         }
 
+        /// <summary>
+        /// convert property value to decimal from PropertyConvertTag that specified property name, etc.
+        /// </summary>
+        /// <param name="prop"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
         {
             string convertedText = prop.Value.ConvertToUserVariable(engine);
@@ -61,78 +100,85 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        //public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    decimal decValue = prop.ConvertToUserVariableAsDecimal(command, engine);
+        //    try
+        //    {
+        //        int value = (int)decValue;
+        //        return value;
+        //    }
+        //    catch
+        //    {
+        //        throw new Exception(prop.Description + " is out of Integer Range.");
+        //    }
+        //}
+        //public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyName, string propertyDescription, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(command, engine);
+        //}
 
-        public static int ConvertToUserVariableAsInteger(this PropertyConvertTag prop, ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            decimal decValue = prop.ConvertToUserVariableAsDecimal(command, engine);
-            try
-            {
-                int value = (int)decValue;
-                return value;
-            }
-            catch
-            {
-                throw new Exception(prop.Description + " is out of Integer Range.");
-            }
-        }
-        public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyName, string propertyDescription, ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(command, engine);
-        }
+        //public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine, ScriptCommand command)
+        //{
+        //    //return (propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(engine, command);
+        //    return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(command, engine);
+        //}
 
-        public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine, ScriptCommand command)
-        {
-            //return (propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(engine, command);
-            return new PropertyConvertTag(propertyValue, propertyName, propertyDescription).ConvertToUserVariableAsInteger(command, engine);
-        }
+        //public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    if (!prop.HasName)
+        //    {
+        //        throw new Exception("Property name does not specified.");
+        //    }
 
-        public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            if (!prop.HasName)
-            {
-                throw new Exception("Property name does not specified.");
-            }
+        //    var tp = command.GetType();
+        //    var myProp = tp.GetProperty(prop.Name);
 
-            var tp = command.GetType();
-            var myProp = tp.GetProperty(prop.Name);
+        //    //if (myProp == null)
+        //    //{
+        //    //    throw new Exception("Property '" + prop.Name + "' does not exists.");
+        //    //}
 
-            //if (myProp == null)
-            //{
-            //    throw new Exception("Property '" + prop.Name + "' does not exists.");
-            //}
+        //    //var optAttr = (PropertyIsOptional)myProp.GetCustomAttribute(typeof(PropertyIsOptional));
+        //    //if (optAttr != null)
+        //    //{
+        //    //    if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(prop.Value)))
+        //    //    {
+        //    //        //prop.Value = optAttr.setBlankToValue;
+        //    //        prop.SetNewValue(optAttr.setBlankToValue);
+        //    //    }
+        //    //}
 
-            //var optAttr = (PropertyIsOptional)myProp.GetCustomAttribute(typeof(PropertyIsOptional));
-            //if (optAttr != null)
-            //{
-            //    if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(prop.Value)))
-            //    {
-            //        //prop.Value = optAttr.setBlankToValue;
-            //        prop.SetNewValue(optAttr.setBlankToValue);
-            //    }
-            //}
+        //    //decimal v = prop.ConvertToUserVariableAsDecimal(engine);
 
-            //decimal v = prop.ConvertToUserVariableAsDecimal(engine);
+        //    //var validateAttr = (PropertyValidationRule)myProp.GetCustomAttribute(typeof(PropertyValidationRule));
+        //    //if (validateAttr != null)
+        //    //{
+        //    //    if (CheckValidate(v, validateAttr, prop.Description))
+        //    //    {
+        //    //        return v;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        throw new Exception("Validation Error");
+        //    //    }
+        //    //}
+        //    //else
+        //    //{
+        //    //    return v;
+        //    //}
 
-            //var validateAttr = (PropertyValidationRule)myProp.GetCustomAttribute(typeof(PropertyValidationRule));
-            //if (validateAttr != null)
-            //{
-            //    if (CheckValidate(v, validateAttr, prop.Description))
-            //    {
-            //        return v;
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("Validation Error");
-            //    }
-            //}
-            //else
-            //{
-            //    return v;
-            //}
+        //    return prop.ConvertToUserVariableAsDecimal(myProp, engine);
+        //}
 
-            return prop.ConvertToUserVariableAsDecimal(myProp, engine);
-        }
-
+        /// <summary>
+        /// convert property value to decimal from PropertyConvertTag that specified property name, etc. This method supports validate, first value.
+        /// </summary>
+        /// <param name="prop"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, PropertyInfo propInfo, Engine.AutomationEngineInstance engine)
         {
             var optAttr = propInfo.GetCustomAttribute<PropertyIsOptional>();
