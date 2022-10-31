@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// Get selected value from property name.  This method supports check selection value, first value, case sensitive.
+        /// Get selected item value from property name.  This method supports check selection value, first value, case sensitive.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="propertyName"></param>
@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// Get selected value from PropertyConvertTag that specified property name, etc.  This method supports check selection value, first value, case sensitive.
+        /// Get selected item value from PropertyConvertTag that specified property name, etc.  This method supports check selection value, first value, case sensitive.
         /// </summary>
         /// <param name="p"></param>
         /// <param name="command"></param>
@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// Get & Convert selected value by specified target value, target property name.  This method supports check selection value, first value, case sensitive.
+        /// Get or Convert to selected item value by specified target value, target property name.  This method supports check selection value, first value, case sensitive.
         /// </summary>
         /// <param name="text"></param>
         /// <param name="propertyName"></param>
