@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert property value to integer from PropertyConvertTag that specified property name, etc.
+        /// convert specified value to int from PropertyConvertTag that specified value, description.
         /// </summary>
         /// <param name="prop"></param>
         /// <param name="engine"></param>
@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert property value to decimal from PropertyConvertTag that specified property name, etc.
+        /// convert specified value to decimal from PropertyConvertTag that specified value, description.
         /// </summary>
         /// <param name="prop"></param>
         /// <param name="engine"></param>
