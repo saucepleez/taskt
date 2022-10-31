@@ -1019,11 +1019,6 @@ namespace taskt.Core
         {
             StoreInUserVariable(targetVariable, value, sender, false);
         }
-        public static void StoreInUserVariable(this DateTime value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
 
         public static void StoreInUserVariable(this System.Windows.Automation.AutomationElement value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
@@ -1134,18 +1129,6 @@ namespace taskt.Core
             else
             {
                 throw new Exception("Variable " + variableName + " is not DataTable");
-            }
-        }
-        public static DateTime GetDateTimeVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is DateTime)
-            {
-                return (DateTime)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not DateTime");
             }
         }
 
