@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Second", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.Between)]
+        [PropertyValidationRule("Second", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyValueRange(0, 59)]
         [PropertyDisplayText(true, "Second")]
         public string v_Second { get; set; }
