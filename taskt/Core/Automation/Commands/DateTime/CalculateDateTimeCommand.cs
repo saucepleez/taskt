@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -97,8 +92,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var myDT = v_DateTime.GetDateTimeVariable(engine);
-            string meth = v_CalculationMethod.GetUISelectionValue("v_CalculationMethod", this, engine);
-            int value = v_Value.ConvertToUserVariableAsInteger("Value", engine);
+
+            //string meth = v_CalculationMethod.GetUISelectionValue("v_CalculationMethod", this, engine);
+            string meth = this.GetUISelectionValue(nameof(v_CalculationMethod), "Calculation Method", engine);
+
+            //int value = v_Value.ConvertToUserVariableAsInteger("Value", engine);
+            int value = this.ConvertToUserVariableAsInteger(nameof(v_Value), "Value", engine);
 
             string[] method = meth.Split(' ');
             if (method[0] == "substract")
@@ -130,21 +129,5 @@ namespace taskt.Core.Automation.Commands
             }
             calcDT.StoreInUserVariable(engine, v_Result);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [DateTime: '" + v_DateTime + "', Method: '" + v_CalculationMethod + "', Value: '" + v_Value + "', Store: '" + v_Result + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
     }
 }
