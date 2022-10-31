@@ -7,9 +7,9 @@ namespace taskt.Core.Automation.Commands
         public static System.Drawing.Color GetColorVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is System.Drawing.Color)
+            if (v.VariableValue is System.Drawing.Color color)
             {
-                return (System.Drawing.Color)v.VariableValue;
+                return color;
             }
             else
             {
