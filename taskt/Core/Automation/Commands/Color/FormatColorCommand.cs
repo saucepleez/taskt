@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
