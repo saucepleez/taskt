@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -15,8 +12,7 @@ namespace taskt.Core.Automation.Commands
             List<decimal> numList = new List<decimal>();
             foreach(var value in list)
             {
-                decimal v;
-                if (decimal.TryParse(value, out v))
+                if (decimal.TryParse(value, out decimal v))
                 {
                     numList.Add(v);
                 }
