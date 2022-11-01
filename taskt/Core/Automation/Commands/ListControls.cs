@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     internal static class ListControls
     {
         /// <summary>
-        /// get List variable from variable name
+        /// get List&lt;string&gt; variable from variable name
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
