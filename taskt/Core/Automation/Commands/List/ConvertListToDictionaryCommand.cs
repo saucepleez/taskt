@@ -104,8 +104,10 @@ namespace taskt.Core.Automation.Commands
             {
                 List<string> targetKeys = v_Keys.GetListVariable(engine);
 
-                string keysNotEnough = v_KeysNotEnough.GetUISelectionValue("v_KeysNotEnough", this, engine);
-                string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
+                //string keysNotEnough = v_KeysNotEnough.GetUISelectionValue("v_KeysNotEnough", this, engine);
+                string keysNotEnough = this.GetUISelectionValue(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
+                //string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
+                string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
 
                 if ((keysNotEnough == "error") && (targetList.Count > targetKeys.Count))
                 {
