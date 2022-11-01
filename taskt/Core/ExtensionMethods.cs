@@ -1000,11 +1000,6 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", sender, false);
         }
 
-        public static void StoreInUserVariable<Type>(this List<Type> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
         public static void StoreInUserVariable(this Dictionary<string, string> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
             StoreInUserVariable(targetVariable, value, sender, false);
@@ -1093,18 +1088,6 @@ namespace taskt.Core
             }
         }
 
-        public static List<string> GetListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is List<string>)
-            {
-                return (List<string>)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not supported List");
-            }
-        }
 
         public static Dictionary<string, string> GetDictionaryVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
