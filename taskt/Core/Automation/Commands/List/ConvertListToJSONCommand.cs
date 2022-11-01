@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -61,11 +56,10 @@ namespace taskt.Core.Automation.Commands
             List<string> targetList = v_InputList.GetListVariable(engine);
 
             // convert json
-            string convertedList;
             try
             {
                 //convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(listVariable.VariableValue);
-                convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(targetList);
+                string convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(targetList);
                 convertedList.StoreInUserVariable(sender, v_applyToVariableName);
             }
             catch (Exception ex)
@@ -73,37 +67,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
             }
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Convert list " + this.v_InputList + ", Apply Result(s) To List Variable: " + this.v_applyToVariableName + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InputList))
-        //    {
-        //        this.validationResult += "List is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
-        //    {
-        //        this.validationResult += "Variable to recieve the list is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
