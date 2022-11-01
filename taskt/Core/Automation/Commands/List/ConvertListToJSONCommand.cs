@@ -58,7 +58,6 @@ namespace taskt.Core.Automation.Commands
             // convert json
             try
             {
-                //convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(listVariable.VariableValue);
                 string convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(targetList);
                 convertedList.StoreInUserVariable(sender, v_applyToVariableName);
             }
