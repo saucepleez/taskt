@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
 
             var notNumeric = v_IfValueIsNotNumeric.GetUISelectionValue("v_IfValueIsNotNumeric", this, engine);
 
-            var list = MathListControls.ConvertToDecimalList(v_InputList, (notNumeric == "ignore"), engine);
+            var list = ListControls.ConvertToDecimalList(v_InputList, (notNumeric == "ignore"), engine);
 
             list.Sum().ToString().StoreInUserVariable(engine, v_Result);
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace taskt.Core.Automation.Commands
 {
-    internal class MathListControls
+    internal static class ListControls
     {
         public static List<decimal> ConvertToDecimalList(string listName, bool ignoreNotNumeric, Engine.AutomationEngineInstance engine)
         {
