@@ -125,12 +125,7 @@ namespace taskt.UI.Forms.Supplemental
 
                 if (chkRunAfterCompile.Checked)
                     System.Diagnostics.Process.Start(result.PathToAssembly);
-              
-
             }
-
-
-
         }
 
         private void uiBtnSave_Click(object sender, EventArgs e)

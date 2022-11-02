@@ -59,6 +59,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new taskt.UI.CustomControls.UISplitContainer();
             this.tvCommands = new taskt.UI.CustomControls.UITreeView();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.commands_filter_value = new System.Windows.Forms.TextBox();
             this.pnlCommandHelper = new System.Windows.Forms.Panel();
             this.lnkStartEdit = new System.Windows.Forms.LinkLabel();
             this.flwRecentFiles = new taskt.UI.CustomControls.UIFlowLayoutPanel();
@@ -128,6 +130,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.pnlCommandHelper.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -447,6 +450,7 @@
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.splitContainer1.Panel1.Controls.Add(this.tvCommands);
+            this.splitContainer1.Panel1.Controls.Add(this.panel2);
             // 
             // splitContainer1.Panel2
             // 
@@ -460,17 +464,36 @@
             // tvCommands
             // 
             this.tvCommands.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
-            this.tvCommands.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tvCommands.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvCommands.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tvCommands.ForeColor = System.Drawing.Color.White;
-            this.tvCommands.Location = new System.Drawing.Point(0, 0);
+            this.tvCommands.Location = new System.Drawing.Point(0, 34);
             this.tvCommands.Name = "tvCommands";
-            this.tvCommands.ShowLines = false;
-            this.tvCommands.Size = new System.Drawing.Size(238, 551);
+            this.tvCommands.Size = new System.Drawing.Size(238, 517);
             this.tvCommands.TabIndex = 8;
             this.tvCommands.DoubleClick += new System.EventHandler(this.tvCommands_DoubleClick);
             this.tvCommands.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tvCommands_KeyPress);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.commands_filter_value);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(238, 34);
+            this.panel2.TabIndex = 10;
+            // 
+            // commands_filter_value
+            // 
+            this.commands_filter_value.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.commands_filter_value.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.commands_filter_value.Location = new System.Drawing.Point(0, 0);
+            this.commands_filter_value.Name = "commands_filter_value";
+            this.commands_filter_value.Size = new System.Drawing.Size(238, 21);
+            this.commands_filter_value.TabIndex = 9;
+            this.commands_filter_value.Text = "<请输入过滤条件>";
+            this.commands_filter_value.TextChanged += new System.EventHandler(this.commands_filter_value_TextChanged);
             // 
             // pnlCommandHelper
             // 
@@ -730,9 +753,9 @@
             this.lblMainLogo.Location = new System.Drawing.Point(2, -1);
             this.lblMainLogo.Margin = new System.Windows.Forms.Padding(0);
             this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(82, 45);
+            this.lblMainLogo.Size = new System.Drawing.Size(177, 45);
             this.lblMainLogo.TabIndex = 0;
-            this.lblMainLogo.Text = "taskt";
+            this.lblMainLogo.Text = "taskt-3.6.0.0";
             this.lblMainLogo.Click += new System.EventHandler(this.lblMainLogo_Click);
             // 
             // lblCoordinatorInfo
@@ -1308,6 +1331,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.pnlCommandHelper.ResumeLayout(false);
             this.pnlCommandHelper.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -1436,6 +1461,8 @@
         private System.Windows.Forms.ToolStripMenuItem editThisCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteSelectedToolStripMenuItem;
         private System.Windows.Forms.LinkLabel lnkStartEdit;
+        private System.Windows.Forms.TextBox commands_filter_value;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -95,7 +96,6 @@ namespace taskt.UI.Forms
         {
             //load all commands
             automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
-
             //set controls double buffered
             foreach (Control control in Controls)
             {
@@ -103,14 +103,11 @@ namespace taskt.UI.Forms
                     BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                     null, control, new object[] { true });
             }
-
             //create undo list
             undoList = new List<List<ListViewItem>>();
-
             //get app settings
             appSettings = new Core.ApplicationSettings();
             appSettings = appSettings.GetOrCreateApplicationSettings();
-
             if (appSettings.ServerSettings.ServerConnectionEnabled && appSettings.ServerSettings.HTTPGuid == Guid.Empty)
             {
                 Core.Server.HttpServerClient.GetGuid();
@@ -119,22 +116,12 @@ namespace taskt.UI.Forms
             {
                 Core.Server.HttpServerClient.CheckIn();
             }
-
             Core.Server.HttpServerClient.associatedBuilder = this;
-
             Core.Server.LocalTCPListener.Initialize(this);
-            //Core.Sockets.SocketClient.Initialize();
-            //Core.Sockets.SocketClient.associatedBuilder = this;
-
-
-            //handle action bar preference
-            //hide action panel
-
             if (this.editMode)
             {
                 tlpControls.RowStyles[1].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[1].Height = 0;
-
                 tlpControls.RowStyles[2].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[2].Height = 81;
 
@@ -149,15 +136,8 @@ namespace taskt.UI.Forms
                 tlpControls.RowStyles[1].SizeType = SizeType.Absolute;
                 tlpControls.RowStyles[1].Height = 0;
             }
-
-
-
-
-
-
             //get scripts folder
             var rpaScriptsFolder = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-
             if (!System.IO.Directory.Exists(rpaScriptsFolder))
             {
                 using (UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
@@ -168,7 +148,6 @@ namespace taskt.UI.Forms
                     }
                 }
             }
-
             //get latest files for recent files list on load
             GenerateRecentFiles();
 
@@ -180,8 +159,6 @@ namespace taskt.UI.Forms
             {
                 scriptVariables = new List<Core.Script.ScriptVariable>();
             }
-
-
             //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
 
             //instantiate and populate display icons for commands
@@ -189,13 +166,9 @@ namespace taskt.UI.Forms
 
             //set image list
             lstScriptActions.SmallImageList = uiImages;
-
-
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
-
             tvCommands.SuspendLayout();
-
             if (appSettings.ClientSettings.GroupingBySubgroup)
             {
                 var groupedCommands = automationCommands.GroupBy(f => new { f.DisplayGroup, f.DisplaySubGroup })
@@ -213,7 +186,6 @@ namespace taskt.UI.Forms
                         pGroup = new TreeNode(primaryGroup.Key.DisplayGroup);
                         prevPrimayGroup = primaryGroup.Key.DisplayGroup;
                     }
-
                     string prevSubGroup = "----";
                     TreeNode sGroup = null;
                     foreach (var cmd in primaryGroup)
@@ -259,15 +231,12 @@ namespace taskt.UI.Forms
             else
             {
                 var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
-
                 foreach (var cmd in groupedCommands)
                 {
                     TreeNode newGroup = new TreeNode(cmd.Key);
-
                     foreach (var subcmd in cmd)
                     {
                         TreeNode subNode = new TreeNode(subcmd.ShortName);
-
                         if (!subcmd.Command.CustomRendering)
                         {
                             subNode.ForeColor = Color.Red;
@@ -279,21 +248,15 @@ namespace taskt.UI.Forms
             }
             tvCommands.Sort();
             tvCommands.ResumeLayout();
-
-            //tvCommands.ImageList = uiImages;
-
+            tvCommands.ImageList = uiImages;
             //start attended mode if selected
             if (appSettings.ClientSettings.StartupMode == "Attended Task Mode")
             {
-
                 this.WindowState = FormWindowState.Minimized;
                 var frmAttended = new frmAttendedMode();
                 frmAttended.Show();
-
             }
-
             this.dontSaveFlag = false;
-
             // release
             GC.Collect();
 
@@ -301,10 +264,7 @@ namespace taskt.UI.Forms
         private void GenerateRecentFiles()
         {
             flwRecentFiles.Controls.Clear();
-
-
             var scriptPath = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
-
             if (!System.IO.Directory.Exists(scriptPath))
             {
                 lblRecentFiles.Text = "Script Folder does not exist";
@@ -315,15 +275,9 @@ namespace taskt.UI.Forms
                 flwRecentFiles.Hide();
                 return;
             }
-
-
-
             var directory = new System.IO.DirectoryInfo(scriptPath);
-
             var recentFiles = directory.GetFiles()
                 .OrderByDescending(file => file.LastWriteTime).Select(f => f.Name);
-
-
             if (recentFiles.Count() == 0)
             {
                 //Label noFilesLabel = new Label();
@@ -371,18 +325,17 @@ namespace taskt.UI.Forms
         }
         private void pnlControlContainer_Paint(object sender, PaintEventArgs e)
         {
+            Rectangle rect = new Rectangle(0, 0, pnlControlContainer.Width, pnlControlContainer.Height);
+            using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.White, Color.WhiteSmoke, LinearGradientMode.Vertical))
+            {
+                e.Graphics.FillRectangle(brush, rect);
+            }
 
-            //Rectangle rect = new Rectangle(0, 0, pnlControlContainer.Width, pnlControlContainer.Height);
-            //using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.White, Color.WhiteSmoke, LinearGradientMode.Vertical))
-            //{
-            //    e.Graphics.FillRectangle(brush, rect);
-            //}
-
-            //Pen steelBluePen = new Pen(Color.SteelBlue, 2);
-            //Pen lightSteelBluePen = new Pen(Color.LightSteelBlue, 1);
-            ////e.Graphics.DrawLine(steelBluePen, 0, 0, pnlControlContainer.Width, 0);
-            //e.Graphics.DrawLine(lightSteelBluePen, 0, 0, pnlControlContainer.Width, 0);
-            //e.Graphics.DrawLine(lightSteelBluePen, 0, pnlControlContainer.Height - 1, pnlControlContainer.Width, pnlControlContainer.Height - 1);
+            Pen steelBluePen = new Pen(Color.SteelBlue, 2);
+            Pen lightSteelBluePen = new Pen(Color.LightSteelBlue, 1);
+            //e.Graphics.DrawLine(steelBluePen, 0, 0, pnlControlContainer.Width, 0);
+            e.Graphics.DrawLine(lightSteelBluePen, 0, 0, pnlControlContainer.Width, 0);
+            e.Graphics.DrawLine(lightSteelBluePen, 0, pnlControlContainer.Height - 1, pnlControlContainer.Width, pnlControlContainer.Height - 1);
 
         }
         private void lblMainLogo_Click(object sender, EventArgs e)
@@ -972,11 +925,9 @@ namespace taskt.UI.Forms
             newCommand.Text = cmdDetails.GetDisplayValue();
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
             newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-            //cmdDetails.RenderedControls = null;
             newCommand.Tag = cmdDetails;
             newCommand.ForeColor = cmdDetails.DisplayForeColor;
             newCommand.BackColor = Color.DimGray;
-            //newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
             newCommand.ImageIndex = taskt.UI.Images.GetUIImageList(cmdDetails.GetType().Name);
             return newCommand;
         }
@@ -987,9 +938,7 @@ namespace taskt.UI.Forms
             {
                 pnlCommandHelper.Hide();
             }
-
             var command = CreateScriptCommandListViewItem(selectedCommand);
-
             //insert to end by default
             var insertionIndex = lstScriptActions.Items.Count;
 
@@ -2112,28 +2061,20 @@ namespace taskt.UI.Forms
         private void SearchForItemInListView()
         {
             var searchCriteria = txtCommandSearch.Text;
-
             if (searchCriteria == "")
             {
                 searchCriteria = tsSearchBox.Text;
             }
-
             var matchingItems = (from ListViewItem itm in lstScriptActions.Items
                                  where itm.Text.Contains(searchCriteria)
                                  select itm).ToList();
-
-
             int? matchCount = matchingItems.Count();
             int totalMatches = matchCount ?? 0;
-
-
             if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
             {
                 reqdIndex = 0;
             }
-
             lblTotalResults.Show();
-
             if (totalMatches == 0)
             {
                 reqdIndex = -1;
@@ -2151,28 +2092,14 @@ namespace taskt.UI.Forms
                 tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
                 lblTotalResults.Text = totalMatches + " total results found";
             }
-
-
-
-
-
             matchingSearchIndex = new List<int>();
             foreach (ListViewItem itm in matchingItems)
             {
                 matchingSearchIndex.Add(itm.Index);
                 itm.BackColor = Color.LightGoldenrodYellow;
             }
-
-
-
             currentIndex = matchingItems[reqdIndex].Index;
-
-
             lstScriptActions.Invalidate();
-
-
-
-
             lstScriptActions.EnsureVisible(currentIndex);
         }
 
@@ -2460,7 +2387,124 @@ namespace taskt.UI.Forms
             }
         }
 
-    }
+        private void groupBox1_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.Clear(this.BackColor);
+        }
 
+        /// <summary>
+        /// 执行过滤条件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void commands_filter_value_TextChanged(object sender, EventArgs e)
+        {
+            Load_Commands_filters();
+        }
+
+
+        private void Load_Commands_filters()
+        {
+            string _filter_value = commands_filter_value.Text;
+            if (_filter_value.Equals("<请输入过滤条件>")) return;
+            tvCommands.SuspendLayout();
+            tvCommands.Nodes.Clear();
+            bool isAddFlag = false;
+            if (appSettings.ClientSettings.GroupingBySubgroup)
+            {
+                var groupedCommands = automationCommands.GroupBy(f => new { f.DisplayGroup, f.DisplaySubGroup }).OrderBy(f => f.Key.DisplayGroup);
+                string prevPrimayGroup = "----";
+                TreeNode pGroup = null;
+                foreach (var primaryGroup in groupedCommands)
+                {
+                    if (primaryGroup.Key.DisplayGroup != prevPrimayGroup)
+                    {
+                        if (prevPrimayGroup != "----")
+                        {
+                            tvCommands.Nodes.Add(pGroup);
+                        }
+                        pGroup = new TreeNode(primaryGroup.Key.DisplayGroup);
+                        prevPrimayGroup = primaryGroup.Key.DisplayGroup;
+                    }
+                    string prevSubGroup = "----";
+                    TreeNode sGroup = null;
+                    foreach (var cmd in primaryGroup)
+                    {
+                        if (!string.IsNullOrEmpty(_filter_value))
+                        {
+                            if (cmd.ShortName.ToUpper().Contains(_filter_value.ToUpper())) isAddFlag = true;
+                            else isAddFlag = false;
+                        }
+                        else isAddFlag = true;
+                        if (cmd.DisplaySubGroup != prevSubGroup)
+                        {
+                            if (prevSubGroup != "----")
+                            {
+                                if (isAddFlag && prevSubGroup != "")
+                                {
+                                    pGroup.Nodes.Add(sGroup);
+                                }
+                            }
+                            prevSubGroup = cmd.DisplaySubGroup;
+                            if (cmd.DisplaySubGroup != "")
+                            {
+                                sGroup = new TreeNode(cmd.DisplaySubGroup);
+                            }
+                        }
+                        TreeNode subNode = new TreeNode(cmd.ShortName);
+                        if (!cmd.Command.CustomRendering)
+                        {
+                            subNode.ForeColor = Color.Red;
+                        }
+                        if (isAddFlag)
+                        {
+                            if (cmd.DisplaySubGroup == "")
+                            {
+                                pGroup.Nodes.Add(subNode);
+                            }
+                            else
+                            {
+                                sGroup.Nodes.Add(subNode);
+                            }
+                        }
+                    }
+                    if (isAddFlag && prevSubGroup != "")
+                    {
+                        pGroup.Nodes.Add(sGroup);
+                    }
+                }
+                if (isAddFlag)
+                    tvCommands.Nodes.Add(pGroup);
+            }
+            else
+            {
+                var groupedCommands = automationCommands.GroupBy(f => f.DisplayGroup);
+                foreach (var cmd in groupedCommands)
+                {
+                    TreeNode newGroup = new TreeNode(cmd.Key);
+                    foreach (var subcmd in cmd)
+                    {
+                        if (!string.IsNullOrEmpty(_filter_value))
+                        {
+                            if (subcmd.ShortName.ToUpper().Contains(_filter_value.ToUpper())) isAddFlag = true;
+                            else isAddFlag = false;
+                        }
+                        else isAddFlag = true;
+                        TreeNode subNode = new TreeNode(subcmd.ShortName);
+                        if (!subcmd.Command.CustomRendering)
+                        {
+                            subNode.ForeColor = Color.Red;
+                        }
+                        if (isAddFlag)
+                            newGroup.Nodes.Add(subNode);
+                    }
+                    if (isAddFlag)
+                        tvCommands.Nodes.Add(newGroup);
+                }
+            }
+            tvCommands.ResumeLayout();
+            tvCommands.ImageList = uiImages;
+        }
+    }
 }
 
