@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get list&lt;string&gt; to List&lt;decimal&gt; from variable name
+        /// get List&lt;string&gt; to List&lt;decimal&gt; from variable name
         /// </summary>
         /// <param name="listName"></param>
         /// <param name="ignoreNotNumeric"></param>
