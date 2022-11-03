@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -68,33 +63,27 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var notNumeric = v_IfValueIsNotNumeric.GetUISelectionValue("v_IfValueIsNotNumeric", this, engine);
+            //var notNumeric = v_IfValueIsNotNumeric.GetUISelectionValue("v_IfValueIsNotNumeric", this, engine);
+            var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
 
             var list = ListControls.ConvertToDecimalList(v_InputList, (notNumeric == "ignore"), engine);
 
-            decimal ave = list.Average();
-
-            decimal sum = 0;
-            foreach(var v in list)
+            if (list.Count() > 0)
             {
-                sum += (v - ave) * (v - ave);
+                decimal ave = list.Average();
+
+                decimal sum = 0;
+                foreach (var v in list)
+                {
+                    sum += (v - ave) * (v - ave);
+                }
+
+                (sum / list.Count()).ToString().StoreInUserVariable(engine, v_Result);
             }
-
-            (sum / list.Count()).ToString().StoreInUserVariable(engine, v_Result);
+            else
+            {
+                "0".StoreInUserVariable(engine, v_Result);
+            }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [ List: " + this.v_InputList + ", Store: " + this.v_Result + "]";
-        //}
     }
 }
