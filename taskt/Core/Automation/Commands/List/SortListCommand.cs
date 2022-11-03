@@ -82,15 +82,16 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            //string sortOrder = v_SortOrder.GetUISelectionValue("v_SortOrder", this, engine);
+            string sortOrder = this.GetUISelectionValue(nameof(v_SortOrder), "Sort Order", engine);
 
-            string sortOrder = v_SortOrder.GetUISelectionValue("v_SortOrder", this, engine);
-
-            string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
+            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
+            string targetType = this.GetUISelectionValue(nameof(v_TargetType), "Target Type", engine);
 
             switch (targetType)
             {
                 case "text":
+                    List<string> targetList = v_InputList.GetListVariable(engine);
                     List<string> newList = new List<string>();
                     newList.AddRange(targetList);
 
@@ -103,11 +104,12 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "number":
-                    List<decimal> valueList = new List<decimal>();
-                    foreach(var v in targetList)
-                    {
-                        valueList.Add(decimal.Parse(v));
-                    }
+                    List<decimal> targetValueList = v_InputList.GetDecimalListVariable(false, engine);
+                    List<decimal> valueList = new List<decimal>(targetValueList);
+                    //foreach(var v in targetValueList)
+                    //{
+                    //    valueList.Add(decimal.Parse(v));
+                    //}
                     valueList.Sort();
                     if (sortOrder == "descending")
                     {
@@ -124,36 +126,5 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Sort List " + this.v_InputList + ", To: " + this.v_OutputList + ", Order: " + this.v_SortOrder + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InputList))
-        //    {
-        //        this.validationResult += "List is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_OutputList))
-        //    {
-        //        this.validationResult += "Sorted list is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

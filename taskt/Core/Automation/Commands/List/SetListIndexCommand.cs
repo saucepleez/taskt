@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Drawing;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -78,52 +72,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Index is not >= 0");
             }
         }
-
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set List Index List: '" + v_ListName + "', index: '" + v_Index + "']";
-        //}
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_ListName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_Index))
-        //    {
-        //        this.validationResult += "Index is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int idx;
-        //        if (int.TryParse(this.v_Index, out idx))
-        //        {
-        //            if (idx < 0)
-        //            {
-        //                this.validationResult += "Specify a value of 0 or more for index.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
