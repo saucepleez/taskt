@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
             //var notNumeric = v_IfValueIsNotNumeric.GetUISelectionValue("v_IfValueIsNotNumeric", this, engine);
             var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
 
-            var list = ListControls.ConvertToDecimalList(v_InputList, (notNumeric == "ignore"), engine);
+            var list = ListControls.GetDecimalListVariable(v_InputList, (notNumeric == "ignore"), engine);
 
             list.Max().ToString().StoreInUserVariable(engine, v_Result);
         }

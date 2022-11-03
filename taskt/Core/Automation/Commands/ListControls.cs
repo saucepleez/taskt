@@ -31,14 +31,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert list&lt;string&gt; to List&lt;decimal&gt; from variable name
+        /// get list&lt;string&gt; to List&lt;decimal&gt; from variable name
         /// </summary>
         /// <param name="listName"></param>
         /// <param name="ignoreNotNumeric"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static List<decimal> ConvertToDecimalList(string listName, bool ignoreNotNumeric, Engine.AutomationEngineInstance engine)
+        public static List<decimal> GetDecimalListVariable(this string listName, bool ignoreNotNumeric, Engine.AutomationEngineInstance engine)
         {
             var list = listName.GetListVariable(engine);
 
