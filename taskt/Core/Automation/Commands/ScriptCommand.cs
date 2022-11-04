@@ -20,6 +20,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(FormatDataCommand))]
     [XmlInclude(typeof(GetListCountCommand))]
     [XmlInclude(typeof(GetListItemCommand))]
+    [XmlInclude(typeof(SetListItemCommand))]
+    [XmlInclude(typeof(RemoveListItemCommand))]
     [XmlInclude(typeof(GetWordCountCommand))]
     [XmlInclude(typeof(GetWordLengthCommand))]
     [XmlInclude(typeof(LogDataCommand))]
@@ -55,6 +57,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(AddDictionaryCommand))]
     [XmlInclude(typeof(CreateDictionaryCommand))]
     [XmlInclude(typeof(GetDictionaryValueCommand))]
+    [XmlInclude(typeof(SetDictionaryValueCommand))]
+    [XmlInclude(typeof(RemoveDictionaryValueCommand))]
     [XmlInclude(typeof(LoadDictionaryCommand))]
 
     // Engine

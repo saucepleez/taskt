@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Linq;
-using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 using taskt.UI.CustomControls;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -30,8 +30,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("myData")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputData { get; set; }
-
-
 
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please indicate the key")]
@@ -73,21 +71,19 @@ namespace taskt.Core.Automation.Commands
             //Add to variable list
             engine.VariableList.Add(Output);
         }
+
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {
-            //search for the variable
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_InputData).FirstOrDefault();
-
-            //if variable was not found but it starts with variable naming pattern
             if ((requiredVariable == null) && (v_InputData.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_InputData.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
             {
                 //reformat and attempt
                 var reformattedVariable = v_InputData.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
                 requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
             }
-
             return requiredVariable;
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -95,9 +91,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputVariable", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Key", this, editor));
-
-
-
             return RenderedControls;
         }
 

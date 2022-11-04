@@ -257,6 +257,7 @@ namespace taskt.UI.Forms
                 frmAttended.Show();
             }
             this.dontSaveFlag = false;
+            commands_filter_value.Text = "";
             // release
             GC.Collect();
 
@@ -1950,7 +1951,7 @@ namespace taskt.UI.Forms
         private void tvCommands_DoubleClick(object sender, EventArgs e)
         {
             //exit if parent node is clicked
-            if (tvCommands.SelectedNode.Parent == null)
+            if (tvCommands.SelectedNode == null || tvCommands.SelectedNode.Parent == null)
             {
                 return;
             }
@@ -2432,8 +2433,10 @@ namespace taskt.UI.Forms
                     {
                         if (!string.IsNullOrEmpty(_filter_value))
                         {
-                            if (cmd.ShortName.ToUpper().Contains(_filter_value.ToUpper())) isAddFlag = true;
-                            else isAddFlag = false;
+                            if (cmd.ShortName.ToUpper().Contains(_filter_value.ToUpper()))
+                                isAddFlag = true;
+                            else
+                                isAddFlag = false;
                         }
                         else isAddFlag = true;
                         if (cmd.DisplaySubGroup != prevSubGroup)
@@ -2468,13 +2471,12 @@ namespace taskt.UI.Forms
                             }
                         }
                     }
-                    if (isAddFlag && prevSubGroup != "")
+                    if (prevSubGroup != "")
                     {
                         pGroup.Nodes.Add(sGroup);
                     }
                 }
-                if (isAddFlag)
-                    tvCommands.Nodes.Add(pGroup);
+                tvCommands.Nodes.Add(pGroup);
             }
             else
             {
@@ -2498,8 +2500,7 @@ namespace taskt.UI.Forms
                         if (isAddFlag)
                             newGroup.Nodes.Add(subNode);
                     }
-                    if (isAddFlag)
-                        tvCommands.Nodes.Add(newGroup);
+                    tvCommands.Nodes.Add(newGroup);
                 }
             }
             tvCommands.ResumeLayout();

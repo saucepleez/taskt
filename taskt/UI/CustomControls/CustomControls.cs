@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.CustomControls
 {
@@ -436,6 +437,8 @@ namespace taskt.UI
             {"FormatDataCommand", "taskt.Properties.Resources.command_function"},
             {"GetListCountCommand", "taskt.Properties.Resources.command_function"},
             {"GetListItemCommand", "taskt.Properties.Resources.command_function"},
+            {"SetListItemCommand", "taskt.Properties.Resources.command_function"},
+            {"RemoveListItemCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordLengthCommand", "taskt.Properties.Resources.command_function"},
             {"GetWordCountCommand", "taskt.Properties.Resources.command_function"},
             {"LogDataCommand", "taskt.Properties.Resources.command_files"},
@@ -474,6 +477,8 @@ namespace taskt.UI
             {"AddDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"CreateDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
             {"GetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"SetDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
+            {"RemoveDictionaryValueCommand", "taskt.Properties.Resources.command_dictionary"},
             {"LoadDictionaryCommand", "taskt.Properties.Resources.command_dictionary"},
 
             // Engine
@@ -700,6 +705,8 @@ namespace taskt.UI
             uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetListCountCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetListItemCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("SetListItemCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("RemoveListItemCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
             uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
@@ -737,6 +744,8 @@ namespace taskt.UI
             uiImages.Add("AddDictionaryCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("SetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("RemoveDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
             uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_dictionary);
 
             // Engine
@@ -1033,10 +1042,11 @@ namespace taskt.UI
 
         public static int GetUIImageList(string commandName)
         {
-            //return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
             try
             {
-                return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
+                if (imageCommandTable.ContainsKey(commandName))
+                    return uiImages.Images.IndexOfKey(imageCommandTable[commandName]);
+                else return -1;
             }
             catch (Exception)
             {
@@ -1046,37 +1056,24 @@ namespace taskt.UI
 
         public static Image GetUIImage(string commandName)
         {
-            //var uiImageDictionary = UIImageDictionary();
             if (imageList.Count == 0)
             {
                 UIImageDictionary();
             }
-
-            //Image uiImage;
-            //try
-            //{
-            //    //uiImage = uiImageDictionary[commandName];
-            //    uiImage = imageList[commandName];
-            //}
-            //catch (Exception)
-            //{
-            //    uiImage = Properties.Resources.command_files;
-            //}
-
             if (uiImages.Images.Count == 0)
             {
                 UIImageList();
             }
-            Image retImage;
+            Image retImage = null;
             try
             {
-                retImage = uiImages.Images[uiImages.Images.IndexOfKey(imageCommandTable[commandName])];
+                if (imageCommandTable.ContainsKey(commandName))
+                    retImage = uiImages.Images[uiImages.Images.IndexOfKey(imageCommandTable[commandName])];
             }
             catch (Exception)
             {
                 retImage = uiImages.Images[uiImages.Images.IndexOfKey("taskt.Properties.Resources.command_files")];
             }
-
             return retImage;
         }
     }
