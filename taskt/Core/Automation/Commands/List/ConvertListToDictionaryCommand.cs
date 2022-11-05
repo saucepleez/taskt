@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -29,9 +30,26 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Supply the Dictionary Keys Name List")]
+        [PropertyDescription("Please Select Dictionary Keys Type")]
         [InputSpecification("")]
-        [SampleUsage("**vKeys** or **{{{vKeys}}}**")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Key Prefix")]
+        [PropertyUISelectionOption("List")]
+        [PropertyUISelectionOption("Comma Separated")]
+        [PropertyUISelectionOption("Space Separated")]
+        [PropertyUISelectionOption("Tab Separated")]
+        [PropertyUISelectionOption("NewLine Separated")]
+        [PropertyUISelectionOption("Key Prefix")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDisplayText(true, "Dictionary Keys Type")]
+        public string v_KeyType { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Supply the Dictionary Keys Name")]
+        [InputSpecification("")]
+        [SampleUsage("**a,b,c** or **{{{vKeys}}}**")]
         [Remarks("If keys is empty, Dictionary key is item0, item1, ...")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true)]
@@ -92,21 +110,13 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_InputList.GetListVariable(engine);
 
-            Dictionary<string, string> myDic = new Dictionary<string, string>();
-            if (String.IsNullOrEmpty(v_Keys))
-            {
-                for (int i = 0; i < targetList.Count; i++)
-                {
-                    myDic.Add("item" + i.ToString(), targetList[i]);
-                }
-            }
-            else
-            {
-                List<string> targetKeys = v_Keys.GetListVariable(engine);
+            var keyType = this.GetUISelectionValue(nameof(v_KeyType), "Key Type", engine);
 
-                //string keysNotEnough = v_KeysNotEnough.GetUISelectionValue("v_KeysNotEnough", this, engine);
+            Dictionary<string, string> myDic = new Dictionary<string, string>();
+
+            Action<List<string>> dicUseKeys = new Action<List<string>>((targetKeys) =>
+            {
                 string keysNotEnough = this.GetUISelectionValue(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
-                //string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
                 string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
 
                 if ((keysNotEnough == "error") && (targetList.Count > targetKeys.Count))
@@ -171,8 +181,129 @@ namespace taskt.Core.Automation.Commands
                             break;
                     }
                 }
+            });
+
+            List<string> keysList;
+            switch (keyType)
+            {
+                case "list":
+                    keysList = v_Keys.GetListVariable(engine);
+                    dicUseKeys(keysList);
+                    break;
+                case "comma separated":
+                    keysList = v_Keys.ConvertToUserVariable(engine).Split(',').ToList();
+                    dicUseKeys(keysList);
+                    break;
+                case "space separated":
+                    keysList = v_Keys.ConvertToUserVariable(engine).Split(' ').ToList();
+                    dicUseKeys(keysList);
+                    break;
+                case "tab separated":
+                    keysList = v_Keys.ConvertToUserVariable(engine).Split('\t').ToList();
+                    dicUseKeys(keysList);
+                    break;
+                case "newline separated":
+                    keysList = v_Keys.ConvertToUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
+                    dicUseKeys(keysList);
+                    break;
+                case "key prefix":
+                    string prefix;
+                    if (String.IsNullOrEmpty(v_Keys))
+                    {
+                        prefix = "item";
+                    }
+                    else
+                    {
+                        prefix = v_Keys.ConvertToUserVariable(engine);
+                    }
+                    for (int i = 0; i < targetList.Count; i++)
+                    {
+                        myDic.Add(prefix + i.ToString(), targetList[i]);
+                    }
+                    break;
             }
             myDic.StoreInUserVariable(engine, v_applyToVariableName);
+
+            //if (String.IsNullOrEmpty(v_Keys))
+            //{
+            //    for (int i = 0; i < targetList.Count; i++)
+            //    {
+            //        myDic.Add("item" + i.ToString(), targetList[i]);
+            //    }
+            //}
+            //else
+            //{
+            //    List<string> targetKeys = v_Keys.GetListVariable(engine);
+
+            //    //string keysNotEnough = v_KeysNotEnough.GetUISelectionValue("v_KeysNotEnough", this, engine);
+            //    string keysNotEnough = this.GetUISelectionValue(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
+            //    //string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
+            //    string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
+
+            //    if ((keysNotEnough == "error") && (targetList.Count > targetKeys.Count))
+            //    {
+            //        throw new Exception("The number of keys in " + v_Keys + " is not enough");
+            //    }
+            //    if ((listItemNotEnough == "error") && (targetKeys.Count > targetList.Count))
+            //    {
+            //        throw new Exception("The number of List items in " + v_InputList + " is not enough");
+            //    }
+
+            //    if (targetList.Count == targetKeys.Count)
+            //    {
+            //        for (int i = 0; i < targetList.Count; i++)
+            //        {
+            //            myDic.Add(targetKeys[i], targetList[i]);
+            //        }
+            //    }
+            //    else if (targetList.Count > targetKeys.Count)
+            //    {
+            //        switch (keysNotEnough)
+            //        {
+            //            case "ignore":
+            //                for (int i = 0; i < targetKeys.Count; i++)
+            //                {
+            //                    myDic.Add(targetKeys[i], targetList[i]);
+            //                }
+            //                break;
+
+            //            case "try create keys":
+            //                for (int i = 0; i < targetKeys.Count; i++)
+            //                {
+            //                    myDic.Add(targetKeys[i], targetList[i]);
+            //                }
+            //                for (int i = targetKeys.Count; i < targetList.Count; i++)
+            //                {
+            //                    myDic.Add("item" + i.ToString(), targetList[i]);
+            //                }
+            //                break;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        switch (listItemNotEnough)
+            //        {
+            //            case "ignore":
+            //                for (int i = 0; i < targetList.Count; i++)
+            //                {
+            //                    myDic.Add(targetKeys[i], targetList[i]);
+            //                }
+            //                break;
+
+            //            case "insert empty value":
+            //                for (int i = 0; i < targetList.Count; i++)
+            //                {
+            //                    myDic.Add(targetKeys[i], targetList[i]);
+            //                }
+            //                for (int i = targetList.Count; i < targetKeys.Count; i++)
+            //                {
+            //                    myDic.Add(targetKeys[i], "");
+            //                }
+            //                break;
+            //        }
+            //    }
+            //}
+            //myDic.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }
