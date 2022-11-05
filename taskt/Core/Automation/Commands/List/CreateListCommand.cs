@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
-        [PropertyControlIntoCommandField("ListValuesGridViewHelper")]
+        //[PropertyControlIntoCommandField("ListValuesGridViewHelper")]
         [PropertyDataGridViewCellEditEvent("ListValuesDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
         public DataTable v_ListValues { get; set; }
