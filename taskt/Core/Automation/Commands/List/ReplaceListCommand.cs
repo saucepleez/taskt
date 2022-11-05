@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
         [PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
-        [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
