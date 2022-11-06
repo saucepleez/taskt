@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
         [PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
-        [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyControlIntoCommandField("FilterActionComboboxHelper")]
-        [PropertySelectionChangeEvent("cmbFilterAction_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
@@ -114,14 +114,24 @@ namespace taskt.Core.Automation.Commands
 
             var targetDic = v_InputDictionary.GetDictionaryVariable(engine);
 
-            string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
+            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
+            //string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
+            var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
+            var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);
 
             var res = new Dictionary<string, string>();
 
+            //foreach(var item in targetDic)
+            //{
+            //    if (ConditionControls.FilterDeterminStatementTruth(item.Value, targetType, filterAction, v_FilterActionParameterTable, engine))
+            //    {
+            //        res.Add(item.Key, item.Value);
+            //    }
+            //}
+
             foreach(var item in targetDic)
             {
-                if (ConditionControls.FilterDeterminStatementTruth(item.Value, targetType, filterAction, v_FilterActionParameterTable, engine))
+                if (checkFunc(item.Value, parameters))
                 {
                     res.Add(item.Key, item.Value);
                 }
@@ -145,23 +155,5 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
-        //    FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
-        //    FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [ Dictionary: '" + this.v_InputDictionary + "', Type: '" + this.v_OutputDictionary + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDictionary + "']";
-        //}
     }
 }
