@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -1479,6 +1480,245 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        public static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc(string targetTypeName, string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
+        {
+            string tp = command.GetUISelectionValue(targetTypeName, "Target Type", engine);
+            switch (tp)
+            {
+                case "text":
+                    return GetFilterDeterminStatementTruthFunc_Text(filterActionName, parameters, engine, command);
+
+                default:
+                    return GetFilterDeterminStatementTruthFunc_Numeric(filterActionName, parameters, engine, command); ;
+            }
+        }
+
+        private static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc_Text(string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
+        {
+            //string filterAction = command.GetUISelectionValue(filterActionName, "Filter Action", engine);
+            string filterAction = command.ConvertToUserVariable(filterActionName, "Filter Action", engine).ToLower();
+            Func<string, string, bool> checkFunc = null;
+            switch (filterAction)
+            {
+                case "contains":
+                    checkFunc = (a, b) =>
+                    {
+                        return a.Contains(b);
+                    };
+                    break;
+                case "not contains":
+                    checkFunc = (a, b) =>
+                    {
+                        return !a.Contains(b);
+                    };
+                    break;
+                case "starts with":
+                    checkFunc = (a, b) =>
+                    {
+                        return a.StartsWith(b);
+                    };
+                    break;
+                case "not starts with":
+                    checkFunc = (a, b) =>
+                    {
+                        return !a.StartsWith(b);
+                    };
+                    break;
+                case "ends with":
+                    checkFunc = (a, b) =>
+                    {
+                        return a.EndsWith(b);
+                    };
+                    break;
+                case "not ends with":
+                    checkFunc = (a, b) =>
+                    {
+                        return !a.EndsWith(b);
+                    };
+                    break;
+                case "is equal to":
+                    checkFunc = (a, b) =>
+                    {
+                        return (a == b);
+                    };
+                    break;
+                case "is not equal to":
+                    checkFunc = (a, b) =>
+                    {
+                        return (a != b);
+                    };
+                    break;
+
+                case "is numeric":
+                    checkFunc = (a, b) =>
+                    {
+                        return decimal.TryParse(a, out _);
+                    };
+                    break;
+                case "is not numeric":
+                    checkFunc = (a, b) =>
+                    {
+                        return !decimal.TryParse(a, out _);
+                    };
+                    break;
+                default:
+                    throw new Exception("Strange Filter Type '" + filterAction + "'.");
+            }
+
+            Func<string, Dictionary<string, string>, bool> retFunc;
+            switch (filterAction)
+            {
+                case "is numeric":
+                case "is not numeric":
+                    retFunc = (targetText, p) =>
+                    {
+                        return checkFunc(targetText, "");
+                    };
+                    break;
+                default:
+                    if (parameters["Case Sensitive"].ToLower() == "no")
+                    {
+                        retFunc = (targetText, p) =>
+                        {
+                            return checkFunc(targetText.ToLower(), p["Value"].ToLower());
+                        };
+                    }
+                    else
+                    {
+                        retFunc = (targetText, p) =>
+                        {
+                            return checkFunc(targetText, p["Value"]);
+                        };
+                    }
+                    break;
+            }
+            return retFunc;
+        }
+        private static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc_Numeric(string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
+        {
+            //string filterAction = command.GetUISelectionValue(filterActionName, "Filter Action", engine);
+            string filterAction = command.ConvertToUserVariable(filterActionName, "Filter Action", engine).ToLower();
+
+            Func<string, Dictionary<string, string>, (decimal trgValue, decimal value1, decimal value2)> convFunc;
+            switch (filterAction)
+            {
+                case "between":
+                case "not between":
+                    convFunc = (txt, p) =>
+                    {
+                        decimal tv = new PropertyConvertTag(txt, "Value").ConvertToUserVariableAsDecimal(engine);
+                        decimal v1 = new PropertyConvertTag(p["Value1"], "Compared Value1").ConvertToUserVariableAsDecimal(engine);
+                        decimal v2 = new PropertyConvertTag(p["Value2"], "Compared Value2").ConvertToUserVariableAsDecimal(engine);
+                        return (tv, v1, v2);
+                    };
+                    break;
+                default:
+                    convFunc = (txt, p) =>
+                    {
+                        decimal tv = new PropertyConvertTag(txt, "Value").ConvertToUserVariableAsDecimal(engine);
+                        decimal v1 = new PropertyConvertTag(p["Value"], "Compared Value").ConvertToUserVariableAsDecimal(engine);
+                        return (tv, v1, 0);
+                    };
+                    break;
+            }
+
+            Func<string, Dictionary<string, string>, bool> checkFunc = null;
+            switch (filterAction)
+            {
+                case "is equal to":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, _) = convFunc(targetText, p);
+                        return (trgValue == value1);
+                    };
+                    break;
+                case "is not equal to":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, _) = convFunc(targetText, p);
+                        return (trgValue != value1);
+                    };
+                    break;
+                case "is greater than":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, _) = convFunc(targetText, p);
+                        return (trgValue > value1);
+                    };
+                    break;
+                case "is greater than or equal to":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, _) = convFunc(targetText, p);
+                        return (trgValue >= value1);
+                    };
+                    break;
+                case "is less than":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, _) = convFunc(targetText, p);
+                        return (trgValue < value1);
+                    };
+                    break;
+                case "is less than or equal to":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, _) = convFunc(targetText, p);
+                        return (trgValue <= value1);
+                    };
+                    break;
+
+                case "between":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, decimal value2) = convFunc(targetText, p);
+                        return ((trgValue >= value1) && (trgValue <= value2));
+                    };
+                    break;
+                case "not between":
+                    checkFunc = (targetText, p) =>
+                    {
+                        (decimal trgValue, decimal value1, decimal value2) = convFunc(targetText, p);
+                        return ((trgValue < value1) || (trgValue > value2));
+                    };
+                    break;
+                default:
+                    throw new Exception("Strange Filter Type '" + filterAction + "'.");
+            }
+
+            Func<string, Dictionary<string, string>, bool> retFunc = null;
+            switch(parameters["If Not Numeric"].ToLower())
+            {
+                case "error":
+                    retFunc = (targetText, p) =>
+                    {
+                        try 
+                        {
+                            return checkFunc(targetText, p);
+                        }
+                        catch(Exception ex)
+                        {
+                            throw ex;
+                        }
+                    };
+                    break;
+                case "ignore":
+                    retFunc = (targetText, p) =>
+                    {
+                        try
+                        {
+                            return checkFunc(targetText, p);
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    };
+                    break;
+            }
+
+            return retFunc;
+        }
         #endregion
     }
 }
