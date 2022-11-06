@@ -171,7 +171,6 @@ namespace taskt.Core.Automation.Commands
             //}
             for (int i = 0; i < rows; i++)
             {
-                //string value = (targetDT.Rows[i][colIndex] == null) ? "" : targetDT.Rows[i][colIndex].ToString();
                 string value = targetDT.Rows[i][colIndex]?.ToString() ?? "";
                 if (checkFunc(value, parameters))
                 {
