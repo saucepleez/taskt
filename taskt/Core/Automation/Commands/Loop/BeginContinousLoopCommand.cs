@@ -6,10 +6,6 @@ using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to repeat actions continuously.  Any 'Begin Loop' command must have a following 'End Loop' command.")]
@@ -29,30 +25,20 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
             Core.Automation.Commands.BeginContinousLoopCommand loopCommand = (Core.Automation.Commands.BeginContinousLoopCommand)parentCommand.ScriptCommand;
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-
             engine.ReportProgress("Starting Continous Loop From Line " + loopCommand.LineNumber);
-
             while (true)
             {
-
-
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
-                    if (engine.IsCancellationPending)
-                        return;
-
+                    if (engine.IsCancellationPending) return;
                     engine.ExecuteCommand(cmd);
-
                     if (engine.CurrentLoopCancelled)
                     {
                         engine.ReportProgress("Exiting Loop From Line " + loopCommand.LineNumber);
                         engine.CurrentLoopCancelled = false;
                         return;
                     }
-
                     if (engine.CurrentLoopContinuing)
                     {
                         engine.ReportProgress("Continuing Next Loop From Line " + loopCommand.LineNumber);
@@ -65,10 +51,8 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", this));
             RenderedControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", this, 100, 300));
-
             return RenderedControls;
         }
 

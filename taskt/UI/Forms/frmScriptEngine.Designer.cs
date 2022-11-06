@@ -115,7 +115,7 @@
             this.uiBtnCancel.DisplayText = "Cancel";
             this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
+            this.uiBtnCancel.Image = global::robot_worker.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
             this.uiBtnCancel.Location = new System.Drawing.Point(633, 2);
             this.uiBtnCancel.Name = "uiBtnCancel";
@@ -132,7 +132,7 @@
             this.uiBtnPause.DisplayText = "Pause";
             this.uiBtnPause.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnPause.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnPause.Image = global::taskt.Properties.Resources.command_pause;
+            this.uiBtnPause.Image = global::robot_worker.Properties.Resources.command_pause;
             this.uiBtnPause.IsMouseOver = false;
             this.uiBtnPause.Location = new System.Drawing.Point(579, 2);
             this.uiBtnPause.Name = "uiBtnPause";
@@ -145,7 +145,7 @@
             // pbBotIcon
             // 
             this.pbBotIcon.BackColor = System.Drawing.Color.Transparent;
-            this.pbBotIcon.Image = global::taskt.Properties.Resources.executing;
+            this.pbBotIcon.Image = global::robot_worker.Properties.Resources.executing;
             this.pbBotIcon.Location = new System.Drawing.Point(7, 52);
             this.pbBotIcon.Name = "pbBotIcon";
             this.pbBotIcon.Size = new System.Drawing.Size(675, 135);

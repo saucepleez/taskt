@@ -236,7 +236,7 @@
             this.uiBtnShowScheduleManager.DisplayText = "Launch Task Scheduler";
             this.uiBtnShowScheduleManager.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnShowScheduleManager.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uiBtnShowScheduleManager.Image = global::taskt.Properties.Resources.command_files;
+            this.uiBtnShowScheduleManager.Image = global::robot_worker.Properties.Resources.command_files;
             this.uiBtnShowScheduleManager.IsMouseOver = false;
             this.uiBtnShowScheduleManager.Location = new System.Drawing.Point(469, 4);
             this.uiBtnShowScheduleManager.Name = "uiBtnShowScheduleManager";
@@ -253,7 +253,7 @@
             this.uiBtnOk.DisplayText = "Add";
             this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uiBtnOk.Image = global::taskt.Properties.Resources.logo;
+            this.uiBtnOk.Image = global::robot_worker.Properties.Resources.logo;
             this.uiBtnOk.IsMouseOver = false;
             this.uiBtnOk.Location = new System.Drawing.Point(7, 390);
             this.uiBtnOk.Name = "uiBtnOk";

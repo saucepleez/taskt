@@ -129,7 +129,7 @@
             this.uiPictureButton1.DisplayText = "Load DLL";
             this.uiPictureButton1.DisplayTextBrush = System.Drawing.Color.White;
             this.uiPictureButton1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.uiPictureButton1.Image = global::taskt.Properties.Resources.command_run_code;
+            this.uiPictureButton1.Image = global::robot_worker.Properties.Resources.command_run_code;
             this.uiPictureButton1.IsMouseOver = false;
             this.uiPictureButton1.Location = new System.Drawing.Point(12, 34);
             this.uiPictureButton1.Name = "uiPictureButton1";
@@ -146,7 +146,7 @@
             this.uiBtnOk.DisplayText = "Ok";
             this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOk.Image = global::taskt.Properties.Resources.various_ok_button;
+            this.uiBtnOk.Image = global::robot_worker.Properties.Resources.various_ok_button;
             this.uiBtnOk.IsMouseOver = false;
             this.uiBtnOk.Location = new System.Drawing.Point(11, 428);
             this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);

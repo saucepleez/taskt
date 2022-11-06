@@ -77,7 +77,7 @@
             // 
             // pbRefresh
             // 
-            this.pbRefresh.Image = global::taskt.Properties.Resources.command_startloop;
+            this.pbRefresh.Image = global::robot_worker.Properties.Resources.command_startloop;
             this.pbRefresh.Location = new System.Drawing.Point(14, 114);
             this.pbRefresh.Name = "pbRefresh";
             this.pbRefresh.Size = new System.Drawing.Size(32, 30);
@@ -101,7 +101,7 @@
             // 
             // pbRecord
             // 
-            this.pbRecord.Image = global::taskt.Properties.Resources.various_record_button;
+            this.pbRecord.Image = global::robot_worker.Properties.Resources.various_record_button;
             this.pbRecord.Location = new System.Drawing.Point(409, 114);
             this.pbRecord.Name = "pbRecord";
             this.pbRecord.Size = new System.Drawing.Size(32, 30);

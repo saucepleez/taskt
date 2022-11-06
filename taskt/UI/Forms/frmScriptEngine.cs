@@ -236,7 +236,7 @@ namespace taskt.UI.Forms
 
             AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
 
-            if(CloseWhenDone)
+            if (CloseWhenDone)
             {
                 engineInstance.tasktEngineUI.Invoke((Action)delegate () { this.Close(); });
             }
@@ -309,7 +309,7 @@ namespace taskt.UI.Forms
 
                 if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
                 {
-                    pbBotIcon.Image = Properties.Resources.error;
+                    pbBotIcon.Image = robot_worker.Properties.Resources.error;
                 }
 
                 if (mainLogoText.Contains("(error)"))
@@ -538,7 +538,7 @@ namespace taskt.UI.Forms
             if (InvokeRequired)
             {
                 var d = new ShowFolderDialogDelegate(ShowFolderDialog);
-                Invoke(d, new object[] {  });
+                Invoke(d, new object[] { });
                 return null;
             }
             else
@@ -619,14 +619,14 @@ namespace taskt.UI.Forms
             if (uiBtnPause.DisplayText == "Pause")
             {
                 lstSteppingCommands.Items.Add("[User Requested Pause]");
-                uiBtnPause.Image = Properties.Resources.action_bar_run;
+                uiBtnPause.Image = robot_worker.Properties.Resources.action_bar_run;
                 uiBtnPause.DisplayText = "Resume";
                 engineInstance.PauseScript();
             }
             else
             {
                 lstSteppingCommands.Items.Add("[User Requested Resume]");
-                uiBtnPause.Image = Properties.Resources.command_pause;
+                uiBtnPause.Image = robot_worker.Properties.Resources.command_pause;
                 uiBtnPause.DisplayText = "Pause";
                 engineInstance.ResumeScript();
             }

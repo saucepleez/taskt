@@ -222,7 +222,7 @@
             this.restartApplicationToolStripMenuItem,
             this.closeApplicationToolStripMenuItem});
             this.fileActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.fileActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.fileActionsToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_new;
             this.fileActionsToolStripMenuItem.Name = "fileActionsToolStripMenuItem";
             this.fileActionsToolStripMenuItem.Size = new System.Drawing.Size(101, 26);
             this.fileActionsToolStripMenuItem.Text = "&File Actions";
@@ -231,7 +231,7 @@
             // 
             this.newToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.newToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.newToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.newToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_new;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
@@ -241,7 +241,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.openToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_open;
+            this.openToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_open;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
@@ -256,7 +256,7 @@
             // importFileToolStripMenuItem
             // 
             this.importFileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.importFileToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_import;
+            this.importFileToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_import;
             this.importFileToolStripMenuItem.Name = "importFileToolStripMenuItem";
             this.importFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
             this.importFileToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
@@ -271,7 +271,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.saveToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_save;
+            this.saveToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_save;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
@@ -281,7 +281,7 @@
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.saveAsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_saveas;
+            this.saveAsToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_saveas;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
@@ -297,7 +297,7 @@
             // restartApplicationToolStripMenuItem
             // 
             this.restartApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.restartApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_restart;
+            this.restartApplicationToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_restart;
             this.restartApplicationToolStripMenuItem.Name = "restartApplicationToolStripMenuItem";
             this.restartApplicationToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.restartApplicationToolStripMenuItem.Text = "&Restart Application";
@@ -306,7 +306,7 @@
             // closeApplicationToolStripMenuItem
             // 
             this.closeApplicationToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.closeApplicationToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_close;
+            this.closeApplicationToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_close;
             this.closeApplicationToolStripMenuItem.Name = "closeApplicationToolStripMenuItem";
             this.closeApplicationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.closeApplicationToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
@@ -320,7 +320,7 @@
             this.settingsToolStripMenuItem,
             this.showSearchBarToolStripMenuItem});
             this.modifyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.modifyToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.modifyToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_options;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
             this.modifyToolStripMenuItem.Size = new System.Drawing.Size(82, 26);
             this.modifyToolStripMenuItem.Text = "&Options";
@@ -328,7 +328,7 @@
             // variablesToolStripMenuItem
             // 
             this.variablesToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.variablesToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_variable;
+            this.variablesToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_variable;
             this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
             this.variablesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.variablesToolStripMenuItem.Text = "&Variable Manager";
@@ -337,7 +337,7 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.settingsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.settingsToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_options;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.settingsToolStripMenuItem.Text = "&Settings Manager";
@@ -346,7 +346,7 @@
             // showSearchBarToolStripMenuItem
             // 
             this.showSearchBarToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.showSearchBarToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.showSearchBarToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_options;
             this.showSearchBarToolStripMenuItem.Name = "showSearchBarToolStripMenuItem";
             this.showSearchBarToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.showSearchBarToolStripMenuItem.Text = "Show Search &Bar";
@@ -359,7 +359,7 @@
             this.scheduleToolStripMenuItem,
             this.runToolStripMenuItem});
             this.scriptActionsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.scriptActionsToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
+            this.scriptActionsToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_record;
             this.scriptActionsToolStripMenuItem.Name = "scriptActionsToolStripMenuItem";
             this.scriptActionsToolStripMenuItem.Size = new System.Drawing.Size(115, 26);
             this.scriptActionsToolStripMenuItem.Text = "&Script Actions";
@@ -367,7 +367,7 @@
             // recordToolStripMenuItem
             // 
             this.recordToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.recordToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_record;
+            this.recordToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_record;
             this.recordToolStripMenuItem.Name = "recordToolStripMenuItem";
             this.recordToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.recordToolStripMenuItem.Text = "R&ecord";
@@ -376,7 +376,7 @@
             // scheduleToolStripMenuItem
             // 
             this.scheduleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.scheduleToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_schedule;
+            this.scheduleToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_schedule;
             this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
             this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.scheduleToolStripMenuItem.Text = "&Schedule";
@@ -385,7 +385,7 @@
             // runToolStripMenuItem
             // 
             this.runToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.runToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
+            this.runToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_run;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.runToolStripMenuItem.Text = "&Run";
@@ -394,7 +394,7 @@
             // saveAndRunToolStripMenuItem
             // 
             this.saveAndRunToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.saveAndRunToolStripMenuItem.Image = global::taskt.Properties.Resources.action_bar_run;
+            this.saveAndRunToolStripMenuItem.Image = global::robot_worker.Properties.Resources.action_bar_run;
             this.saveAndRunToolStripMenuItem.Name = "saveAndRunToolStripMenuItem";
             this.saveAndRunToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.saveAndRunToolStripMenuItem.Size = new System.Drawing.Size(115, 26);
@@ -413,7 +413,7 @@
             // tsSearchButton
             // 
             this.tsSearchButton.ForeColor = System.Drawing.Color.White;
-            this.tsSearchButton.Image = global::taskt.Properties.Resources.command_search;
+            this.tsSearchButton.Image = global::robot_worker.Properties.Resources.command_search;
             this.tsSearchButton.Name = "tsSearchButton";
             this.tsSearchButton.Size = new System.Drawing.Size(28, 26);
             this.tsSearchButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -555,7 +555,7 @@
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Image = global::taskt.Properties.Resources.recent_files;
+            this.pictureBox4.Image = global::robot_worker.Properties.Resources.recent_files;
             this.pictureBox4.Location = new System.Drawing.Point(12, 210);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(84, 84);
@@ -565,7 +565,7 @@
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Image = global::taskt.Properties.Resources.links_header;
+            this.pictureBox3.Image = global::robot_worker.Properties.Resources.links_header;
             this.pictureBox3.Location = new System.Drawing.Point(12, 108);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(84, 84);
@@ -575,7 +575,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::taskt.Properties.Resources.item_header;
+            this.pictureBox1.Image = global::robot_worker.Properties.Resources.item_header;
             this.pictureBox1.Location = new System.Drawing.Point(12, 8);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(84, 84);
@@ -820,7 +820,7 @@
             // 
             // pbSearch
             // 
-            this.pbSearch.Image = global::taskt.Properties.Resources.command_search;
+            this.pbSearch.Image = global::robot_worker.Properties.Resources.command_search;
             this.pbSearch.Location = new System.Drawing.Point(158, 18);
             this.pbSearch.Name = "pbSearch";
             this.pbSearch.Size = new System.Drawing.Size(16, 16);
@@ -889,7 +889,7 @@
             this.btnSequenceImport.DisplayText = "Import";
             this.btnSequenceImport.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.btnSequenceImport.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnSequenceImport.Image = global::taskt.Properties.Resources.action_bar_import;
+            this.btnSequenceImport.Image = global::robot_worker.Properties.Resources.action_bar_import;
             this.btnSequenceImport.IsMouseOver = false;
             this.btnSequenceImport.Location = new System.Drawing.Point(110, 18);
             this.btnSequenceImport.Name = "btnSequenceImport";
@@ -906,7 +906,7 @@
             this.uiBtnKeep.DisplayText = "Keep";
             this.uiBtnKeep.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnKeep.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnKeep.Image = global::taskt.Properties.Resources.action_bar_record;
+            this.uiBtnKeep.Image = global::robot_worker.Properties.Resources.action_bar_record;
             this.uiBtnKeep.IsMouseOver = false;
             this.uiBtnKeep.Location = new System.Drawing.Point(2, 18);
             this.uiBtnKeep.Name = "uiBtnKeep";
@@ -923,7 +923,7 @@
             this.uiPictureButton3.DisplayText = "Close";
             this.uiPictureButton3.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiPictureButton3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiPictureButton3.Image = global::taskt.Properties.Resources.action_bar_schedule;
+            this.uiPictureButton3.Image = global::robot_worker.Properties.Resources.action_bar_schedule;
             this.uiPictureButton3.IsMouseOver = false;
             this.uiPictureButton3.Location = new System.Drawing.Point(54, 18);
             this.uiPictureButton3.Name = "uiPictureButton3";
@@ -959,7 +959,7 @@
             this.uiBtnImport.DisplayText = "Import";
             this.uiBtnImport.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnImport.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnImport.Image = global::taskt.Properties.Resources.action_bar_import;
+            this.uiBtnImport.Image = global::robot_worker.Properties.Resources.action_bar_import;
             this.uiBtnImport.IsMouseOver = false;
             this.uiBtnImport.Location = new System.Drawing.Point(100, 19);
             this.uiBtnImport.Name = "uiBtnImport";
@@ -976,7 +976,7 @@
             this.uiBtnSaveAs.DisplayText = "Save As";
             this.uiBtnSaveAs.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnSaveAs.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnSaveAs.Image = global::taskt.Properties.Resources.action_bar_saveas;
+            this.uiBtnSaveAs.Image = global::robot_worker.Properties.Resources.action_bar_saveas;
             this.uiBtnSaveAs.IsMouseOver = false;
             this.uiBtnSaveAs.Location = new System.Drawing.Point(198, 19);
             this.uiBtnSaveAs.Name = "uiBtnSaveAs";
@@ -993,7 +993,7 @@
             this.uiBtnSave.DisplayText = "Save";
             this.uiBtnSave.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnSave.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnSave.Image = global::taskt.Properties.Resources.action_bar_save;
+            this.uiBtnSave.Image = global::robot_worker.Properties.Resources.action_bar_save;
             this.uiBtnSave.IsMouseOver = false;
             this.uiBtnSave.Location = new System.Drawing.Point(149, 19);
             this.uiBtnSave.Name = "uiBtnSave";
@@ -1010,7 +1010,7 @@
             this.uiBtnNew.DisplayText = "New";
             this.uiBtnNew.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.uiBtnNew.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.uiBtnNew.Image = global::robot_worker.Properties.Resources.action_bar_new;
             this.uiBtnNew.IsMouseOver = false;
             this.uiBtnNew.Location = new System.Drawing.Point(2, 19);
             this.uiBtnNew.Name = "uiBtnNew";
@@ -1027,7 +1027,7 @@
             this.uiBtnOpen.DisplayText = "Open";
             this.uiBtnOpen.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOpen.Image = global::taskt.Properties.Resources.action_bar_open;
+            this.uiBtnOpen.Image = global::robot_worker.Properties.Resources.action_bar_open;
             this.uiBtnOpen.IsMouseOver = false;
             this.uiBtnOpen.Location = new System.Drawing.Point(51, 19);
             this.uiBtnOpen.Name = "uiBtnOpen";
@@ -1061,7 +1061,7 @@
             this.uiBtnRecordSequence.DisplayText = "Record";
             this.uiBtnRecordSequence.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnRecordSequence.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnRecordSequence.Image = global::taskt.Properties.Resources.action_bar_record;
+            this.uiBtnRecordSequence.Image = global::robot_worker.Properties.Resources.action_bar_record;
             this.uiBtnRecordSequence.IsMouseOver = false;
             this.uiBtnRecordSequence.Location = new System.Drawing.Point(2, 18);
             this.uiBtnRecordSequence.Name = "uiBtnRecordSequence";
@@ -1078,7 +1078,7 @@
             this.uiBtnRunScript.DisplayText = "Run";
             this.uiBtnRunScript.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnRunScript.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnRunScript.Image = global::taskt.Properties.Resources.action_bar_run;
+            this.uiBtnRunScript.Image = global::robot_worker.Properties.Resources.action_bar_run;
             this.uiBtnRunScript.IsMouseOver = false;
             this.uiBtnRunScript.Location = new System.Drawing.Point(104, 18);
             this.uiBtnRunScript.Name = "uiBtnRunScript";
@@ -1095,7 +1095,7 @@
             this.uiBtnScheduleManagement.DisplayText = "Schedule";
             this.uiBtnScheduleManagement.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnScheduleManagement.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnScheduleManagement.Image = global::taskt.Properties.Resources.action_bar_schedule;
+            this.uiBtnScheduleManagement.Image = global::robot_worker.Properties.Resources.action_bar_schedule;
             this.uiBtnScheduleManagement.IsMouseOver = false;
             this.uiBtnScheduleManagement.Location = new System.Drawing.Point(51, 18);
             this.uiBtnScheduleManagement.Name = "uiBtnScheduleManagement";
@@ -1129,7 +1129,7 @@
             this.uiBtnClearAll.DisplayText = "Clear";
             this.uiBtnClearAll.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnClearAll.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnClearAll.Image = global::taskt.Properties.Resources.action_bar_clear;
+            this.uiBtnClearAll.Image = global::robot_worker.Properties.Resources.action_bar_clear;
             this.uiBtnClearAll.IsMouseOver = false;
             this.uiBtnClearAll.Location = new System.Drawing.Point(108, 19);
             this.uiBtnClearAll.Name = "uiBtnClearAll";
@@ -1146,7 +1146,7 @@
             this.uiBtnSettings.DisplayText = "Settings";
             this.uiBtnSettings.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnSettings.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnSettings.Image = global::taskt.Properties.Resources.action_bar_options;
+            this.uiBtnSettings.Image = global::robot_worker.Properties.Resources.action_bar_options;
             this.uiBtnSettings.IsMouseOver = false;
             this.uiBtnSettings.Location = new System.Drawing.Point(59, 19);
             this.uiBtnSettings.Name = "uiBtnSettings";
@@ -1163,7 +1163,7 @@
             this.uiBtnAddVariable.DisplayText = "Variables";
             this.uiBtnAddVariable.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnAddVariable.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnAddVariable.Image = global::taskt.Properties.Resources.action_bar_variable;
+            this.uiBtnAddVariable.Image = global::robot_worker.Properties.Resources.action_bar_variable;
             this.uiBtnAddVariable.IsMouseOver = false;
             this.uiBtnAddVariable.Location = new System.Drawing.Point(6, 19);
             this.uiBtnAddVariable.Name = "uiBtnAddVariable";

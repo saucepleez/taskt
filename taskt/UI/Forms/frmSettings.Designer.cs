@@ -302,7 +302,7 @@
             this.uiBtnOpen.DisplayText = "Ok";
             this.uiBtnOpen.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOpen.Image = global::taskt.Properties.Resources.various_ok_button;
+            this.uiBtnOpen.Image = global::robot_worker.Properties.Resources.various_ok_button;
             this.uiBtnOpen.IsMouseOver = false;
             this.uiBtnOpen.Location = new System.Drawing.Point(3, 532);
             this.uiBtnOpen.Name = "uiBtnOpen";

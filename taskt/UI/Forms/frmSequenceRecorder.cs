@@ -194,7 +194,7 @@ namespace taskt.UI.Forms
 
 
                 uiBtnRecord.DisplayText = "Stop";
-                uiBtnRecord.Image = taskt.Properties.Resources.various_stop_button;
+                uiBtnRecord.Image = robot_worker.Properties.Resources.various_stop_button;
 
             }
             else

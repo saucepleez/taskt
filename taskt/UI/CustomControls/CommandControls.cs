@@ -487,7 +487,7 @@ namespace taskt.UI.CustomControls
                         //show variable selector
                         helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
                         helperControl.CommandDisplay = "Insert Variable";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_variable_helper;
+                        helperControl.DrawIcon = robot_worker.Properties.Resources.taskt_variable_helper;
                         helperControl.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
                         break;
 
@@ -495,7 +495,7 @@ namespace taskt.UI.CustomControls
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
                         helperControl.CommandDisplay = "Select a File";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_file_helper;
+                        helperControl.DrawIcon = robot_worker.Properties.Resources.taskt_file_helper;
                         helperControl.Click += (sender, e) => ShowFileSelector(sender, e, editor);
                         break;
 
@@ -503,7 +503,7 @@ namespace taskt.UI.CustomControls
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
                         helperControl.CommandDisplay = "Select a Folder";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_folder_helper;
+                        helperControl.DrawIcon = robot_worker.Properties.Resources.taskt_folder_helper;
                         helperControl.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
                         break;
 
@@ -511,7 +511,7 @@ namespace taskt.UI.CustomControls
                         //show file selector
                         helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
                         helperControl.CommandDisplay = "Capture Reference Image";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
+                        helperControl.DrawIcon = robot_worker.Properties.Resources.taskt_element_helper;
                         helperControl.Click += (sender, e) => ShowImageCapture(sender, e, editor);
 
                         taskt.UI.CustomControls.CommandItemControl testRun = new taskt.UI.CustomControls.CommandItemControl();
@@ -537,7 +537,7 @@ namespace taskt.UI.CustomControls
                         helperControl.CommandImage = UI.Images.GetUIImage("SendMouseMoveCommand");
                         helperControl.CommandDisplay = "Capture Mouse Position";
                         //helperControl.ForeColor = Color.AliceBlue;
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
+                        helperControl.DrawIcon = robot_worker.Properties.Resources.taskt_element_helper;
                         helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
                         break;
                     case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:

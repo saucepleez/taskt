@@ -518,7 +518,7 @@ namespace taskt.Core.Automation.Commands
             //helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
             CommandItemControl helperControl = CommandControls.CreateUIHelper();
             helperControl.CommandDisplay = "Element Recorder";
-            helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
+            helperControl.DrawIcon = robot_worker.Properties.Resources.taskt_element_helper;
             helperControl.Click += ShowRecorder;
 
             //automation type
@@ -539,7 +539,7 @@ namespace taskt.Core.Automation.Commands
 
             var emptyParameterLink = CommandControls.CreateUIHelper();
             emptyParameterLink.CommandDisplay = "Add empty parameters";
-            emptyParameterLink.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
+            emptyParameterLink.DrawIcon = robot_worker.Properties.Resources.taskt_command_helper;
             emptyParameterLink.Click += (sender, e) => EmptySearchParameterClicked(sender, e);
 
             //create search parameters   

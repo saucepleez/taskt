@@ -15,12 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.CustomControls
 {
@@ -206,7 +202,7 @@ namespace taskt.UI.CustomControls
         }
         public UIPictureButton()
         {
-            this.Image = Properties.Resources.logo;
+            this.Image = robot_worker.Properties.Resources.logo;
             this.DisplayTextBrush = Color.White;
             this.Size = new Size(48, 48);
             this.DisplayText = "Text";
@@ -695,251 +691,251 @@ namespace taskt.UI
             Dictionary<string, Image> uiImages = new Dictionary<string, Image>();
 
             // API
-            uiImages.Add("ExecuteDLLCommand", taskt.Properties.Resources.command_run_code);
-            uiImages.Add("RESTCommand", taskt.Properties.Resources.command_run_code);
-            uiImages.Add("HTTPRequestCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("HTTPQueryResultCommand", taskt.Properties.Resources.command_search);
+            uiImages.Add("ExecuteDLLCommand", robot_worker.Properties.Resources.command_run_code);
+            uiImages.Add("RESTCommand", robot_worker.Properties.Resources.command_run_code);
+            uiImages.Add("HTTPRequestCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("HTTPQueryResultCommand", robot_worker.Properties.Resources.command_search);
 
             // Data
-            uiImages.Add("DateCalculationCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("FormatDataCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetListCountCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetListItemCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("SetListItemCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("RemoveListItemCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetWordLengthCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("GetWordCountCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("LogDataCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("MathCalculationCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("ModifyVariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("ParseDatasetRowCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("ParseJsonArrayCommand", taskt.Properties.Resources.command_parse);
-            uiImages.Add("ParseJsonCommand", taskt.Properties.Resources.command_parse);
-            uiImages.Add("ParseJsonModelCommand", taskt.Properties.Resources.command_parse);
-            uiImages.Add("PDFTextExtractionCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("RegExExtractorCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("StringReplaceCommand", taskt.Properties.Resources.command_string);
-            uiImages.Add("StringSplitCommand", taskt.Properties.Resources.command_string);
-            uiImages.Add("StringSubstringCommand", taskt.Properties.Resources.command_string);
-            uiImages.Add("TextExtractorCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("DateCalculationCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("FormatDataCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("GetListCountCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("GetListItemCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("SetListItemCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("RemoveListItemCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("GetWordLengthCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("GetWordCountCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("LogDataCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("MathCalculationCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("ModifyVariableCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("ParseDatasetRowCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("ParseJsonArrayCommand", robot_worker.Properties.Resources.command_parse);
+            uiImages.Add("ParseJsonCommand", robot_worker.Properties.Resources.command_parse);
+            uiImages.Add("ParseJsonModelCommand", robot_worker.Properties.Resources.command_parse);
+            uiImages.Add("PDFTextExtractionCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("RegExExtractorCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("StringReplaceCommand", robot_worker.Properties.Resources.command_string);
+            uiImages.Add("StringSplitCommand", robot_worker.Properties.Resources.command_string);
+            uiImages.Add("StringSubstringCommand", robot_worker.Properties.Resources.command_string);
+            uiImages.Add("TextExtractorCommand", robot_worker.Properties.Resources.command_function);
 
             // Database
-            uiImages.Add("DatabaseDefineConnectionCommand", taskt.Properties.Resources.command_database);
-            uiImages.Add("DatabaseExecuteQueryCommand", taskt.Properties.Resources.command_database);
+            uiImages.Add("DatabaseDefineConnectionCommand", robot_worker.Properties.Resources.command_database);
+            uiImages.Add("DatabaseExecuteQueryCommand", robot_worker.Properties.Resources.command_database);
 
             // DataTable
-            uiImages.Add("LoadTaskCommand", taskt.Properties.Resources.command_start_process);
-            uiImages.Add("UnloadTaskCommand", taskt.Properties.Resources.command_stop_process);
-            uiImages.Add("ExcelAddWorksheetCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("AddDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("CreateDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("FilterDataTableCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("GetDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("GetDataRowCountCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("GetDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("RemoveDataRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("WriteDataRowValueCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("LoadTaskCommand", robot_worker.Properties.Resources.command_start_process);
+            uiImages.Add("UnloadTaskCommand", robot_worker.Properties.Resources.command_stop_process);
+            uiImages.Add("ExcelAddWorksheetCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("AddDataRowCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("CreateDataTableCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("FilterDataTableCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowCountCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("GetDataRowValueCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("RemoveDataRowCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("WriteDataRowValueCommand", robot_worker.Properties.Resources.command_spreadsheet);
 
             // Dictionary
-            uiImages.Add("AddDictionaryCommand", taskt.Properties.Resources.command_dictionary);
-            uiImages.Add("CreateDictionaryCommand", taskt.Properties.Resources.command_dictionary);
-            uiImages.Add("GetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
-            uiImages.Add("SetDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
-            uiImages.Add("RemoveDictionaryValueCommand", taskt.Properties.Resources.command_dictionary);
-            uiImages.Add("LoadDictionaryCommand", taskt.Properties.Resources.command_dictionary);
+            uiImages.Add("AddDictionaryCommand", robot_worker.Properties.Resources.command_dictionary);
+            uiImages.Add("CreateDictionaryCommand", robot_worker.Properties.Resources.command_dictionary);
+            uiImages.Add("GetDictionaryValueCommand", robot_worker.Properties.Resources.command_dictionary);
+            uiImages.Add("SetDictionaryValueCommand", robot_worker.Properties.Resources.command_dictionary);
+            uiImages.Add("RemoveDictionaryValueCommand", robot_worker.Properties.Resources.command_dictionary);
+            uiImages.Add("LoadDictionaryCommand", robot_worker.Properties.Resources.command_dictionary);
 
             // Engine
-            uiImages.Add("ErrorHandlingCommand", taskt.Properties.Resources.command_error);
-            uiImages.Add("GetDataCommand", taskt.Properties.Resources.command_server);  // get bot data
-            uiImages.Add("PauseCommand", taskt.Properties.Resources.command_pause);
-            uiImages.Add("SetEngineDelayCommand", taskt.Properties.Resources.command_pause);
-            uiImages.Add("ShowEngineContextCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SetEnginePreferenceCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("StopwatchCommand", taskt.Properties.Resources.command_stopwatch);
-            uiImages.Add("UploadDataCommand", taskt.Properties.Resources.command_server);   // upload bot store
+            uiImages.Add("ErrorHandlingCommand", robot_worker.Properties.Resources.command_error);
+            uiImages.Add("GetDataCommand", robot_worker.Properties.Resources.command_server);  // get bot data
+            uiImages.Add("PauseCommand", robot_worker.Properties.Resources.command_pause);
+            uiImages.Add("SetEngineDelayCommand", robot_worker.Properties.Resources.command_pause);
+            uiImages.Add("ShowEngineContextCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("SetEnginePreferenceCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("StopwatchCommand", robot_worker.Properties.Resources.command_stopwatch);
+            uiImages.Add("UploadDataCommand", robot_worker.Properties.Resources.command_server);   // upload bot store
 
             // Error
-            uiImages.Add("CatchExceptionCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("EndTryCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("FinallyCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("ThrowExceptionCommand", taskt.Properties.Resources.command_try);
-            uiImages.Add("TryCommand", taskt.Properties.Resources.command_try);
+            uiImages.Add("CatchExceptionCommand", robot_worker.Properties.Resources.command_try);
+            uiImages.Add("EndTryCommand", robot_worker.Properties.Resources.command_try);
+            uiImages.Add("FinallyCommand", robot_worker.Properties.Resources.command_try);
+            uiImages.Add("ThrowExceptionCommand", robot_worker.Properties.Resources.command_try);
+            uiImages.Add("TryCommand", robot_worker.Properties.Resources.command_try);
 
             // Excel
-            uiImages.Add("ExcelActivateSheetCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelAddWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelAppendCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelAppendRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelCloseApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelCreateDatasetCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelCreateApplicationCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelDeleteCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelDeleteRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetLastRowCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetRangeCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGetRangeCommandAsDT", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelGoToCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelOpenWorkbookCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelRunMacroCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSaveCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSaveAsCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSetCellCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelSplitRangeByColumnCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelWriteRangeCommand", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Add("ExcelWriteRowCommand", taskt.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelActivateSheetCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelAddWorkbookCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelAppendCellCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelAppendRowCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelCloseApplicationCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelCreateDatasetCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelCreateApplicationCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelDeleteCellCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelDeleteRowCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetCellCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetLastRowCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetRangeCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGetRangeCommandAsDT", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelGoToCellCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelOpenWorkbookCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelRunMacroCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSaveCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSaveAsCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSetCellCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelSplitRangeByColumnCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelWriteRangeCommand", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Add("ExcelWriteRowCommand", robot_worker.Properties.Resources.command_spreadsheet);
 
             // File
-            uiImages.Add("DeleteFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("ExtractFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("GetFilesCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("MoveFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("RenameFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WaitForFileToExistCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("DeleteFileCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("ExtractFileCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("GetFilesCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("MoveFileCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("RenameFileCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WaitForFileToExistCommand", robot_worker.Properties.Resources.command_files);
 
             // Folder
-            uiImages.Add("CreateFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("DeleteFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("GetFoldersCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("MoveFolderCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("RenameFolderCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("CreateFolderCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("DeleteFolderCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("GetFoldersCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("MoveFolderCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("RenameFolderCommand", robot_worker.Properties.Resources.command_files);
 
             // IE
-            uiImages.Add("IEBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("IEBrowserCreateCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("IEBrowserElementCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("WebBrowserFindBrowserCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("IEBrowserNavigateCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserCloseCommand", robot_worker.Properties.Resources.command_window_close);
+            uiImages.Add("IEBrowserCreateCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserElementCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("WebBrowserFindBrowserCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("IEBrowserNavigateCommand", robot_worker.Properties.Resources.command_web);
 
             // If
-            uiImages.Add("BeginIfCommand", taskt.Properties.Resources.command_begin_if);
-            uiImages.Add("BeginMultiIfCommand", taskt.Properties.Resources.command_begin_multi_if);
-            uiImages.Add("ElseCommand", taskt.Properties.Resources.command_else);
-            uiImages.Add("EndIfCommand", taskt.Properties.Resources.command_end_if);
+            uiImages.Add("BeginIfCommand", robot_worker.Properties.Resources.command_begin_if);
+            uiImages.Add("BeginMultiIfCommand", robot_worker.Properties.Resources.command_begin_multi_if);
+            uiImages.Add("ElseCommand", robot_worker.Properties.Resources.command_else);
+            uiImages.Add("EndIfCommand", robot_worker.Properties.Resources.command_end_if);
 
             // Image
-            uiImages.Add("ImageRecognitionCommand", taskt.Properties.Resources.command_camera);
-            uiImages.Add("OCRCommand", taskt.Properties.Resources.command_camera);
-            uiImages.Add("ScreenshotCommand", taskt.Properties.Resources.command_camera);
+            uiImages.Add("ImageRecognitionCommand", robot_worker.Properties.Resources.command_camera);
+            uiImages.Add("OCRCommand", robot_worker.Properties.Resources.command_camera);
+            uiImages.Add("ScreenshotCommand", robot_worker.Properties.Resources.command_camera);
 
             // Input
-            uiImages.Add("HTMLInputCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("UserInputCommand", taskt.Properties.Resources.command_input); // prompt
-            uiImages.Add("SendAdvancedKeyStrokesCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendHotkeyCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendKeysCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendMouseMoveCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("SendMouseClickCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("UIAutomationCommand", taskt.Properties.Resources.command_input);
+            uiImages.Add("HTMLInputCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("UserInputCommand", robot_worker.Properties.Resources.command_input); // prompt
+            uiImages.Add("SendAdvancedKeyStrokesCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("SendHotkeyCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("SendKeysCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("SendMouseMoveCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("SendMouseClickCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("UIAutomationCommand", robot_worker.Properties.Resources.command_input);
 
             // Loop
-            uiImages.Add("BeginLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginMultiLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("EndLoopCommand", taskt.Properties.Resources.command_endloop);
-            uiImages.Add("ExitLoopCommand", taskt.Properties.Resources.command_exitloop);
-            uiImages.Add("BeginContinousLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginListLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("BeginNumberOfTimesLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("NextLoopCommand", taskt.Properties.Resources.command_nextloop);
+            uiImages.Add("BeginLoopCommand", robot_worker.Properties.Resources.command_startloop);
+            uiImages.Add("BeginMultiLoopCommand", robot_worker.Properties.Resources.command_startloop);
+            uiImages.Add("EndLoopCommand", robot_worker.Properties.Resources.command_endloop);
+            uiImages.Add("ExitLoopCommand", robot_worker.Properties.Resources.command_exitloop);
+            uiImages.Add("BeginContinousLoopCommand", robot_worker.Properties.Resources.command_startloop);
+            uiImages.Add("BeginListLoopCommand", robot_worker.Properties.Resources.command_startloop);
+            uiImages.Add("BeginNumberOfTimesLoopCommand", robot_worker.Properties.Resources.command_startloop);
+            uiImages.Add("NextLoopCommand", robot_worker.Properties.Resources.command_nextloop);
 
             // Misc
-            uiImages.Add("CommentCommand", taskt.Properties.Resources.command_comment);
-            uiImages.Add("EncryptionCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("ClipboardGetTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("PingCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SMTPSendEmailCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("SequenceCommand", taskt.Properties.Resources.command_sequence);
-            uiImages.Add("ClipboardSetTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("MessageBoxCommand", taskt.Properties.Resources.command_comment);
+            uiImages.Add("CommentCommand", robot_worker.Properties.Resources.command_comment);
+            uiImages.Add("EncryptionCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("ClipboardGetTextCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("PingCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SMTPSendEmailCommand", robot_worker.Properties.Resources.command_smtp);
+            uiImages.Add("SequenceCommand", robot_worker.Properties.Resources.command_sequence);
+            uiImages.Add("ClipboardSetTextCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("MessageBoxCommand", robot_worker.Properties.Resources.command_comment);
 
             // NLG
-            uiImages.Add("NLGCreateInstanceCommand", taskt.Properties.Resources.command_nlg);
-            uiImages.Add("NLGGeneratePhraseCommand", taskt.Properties.Resources.command_nlg);
-            uiImages.Add("NLGSetParameterCommand", taskt.Properties.Resources.command_nlg);
+            uiImages.Add("NLGCreateInstanceCommand", robot_worker.Properties.Resources.command_nlg);
+            uiImages.Add("NLGGeneratePhraseCommand", robot_worker.Properties.Resources.command_nlg);
+            uiImages.Add("NLGSetParameterCommand", robot_worker.Properties.Resources.command_nlg);
 
             // Outlook
-            uiImages.Add("OutlookDeleteEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookForwardEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookGetEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookMoveEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookReplyToEmailsCommand", taskt.Properties.Resources.command_smtp);
-            uiImages.Add("OutlookEmailCommand", taskt.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookDeleteEmailsCommand", robot_worker.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookForwardEmailsCommand", robot_worker.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookGetEmailsCommand", robot_worker.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookMoveEmailsCommand", robot_worker.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookReplyToEmailsCommand", robot_worker.Properties.Resources.command_smtp);
+            uiImages.Add("OutlookEmailCommand", robot_worker.Properties.Resources.command_smtp);
 
             // Program
-            uiImages.Add("RunCustomCodeCommand", taskt.Properties.Resources.command_script);
-            uiImages.Add("RunScriptCommand", taskt.Properties.Resources.command_script);
-            uiImages.Add("StartProcessCommand", taskt.Properties.Resources.command_start_process);
-            uiImages.Add("StopProcessCommand", taskt.Properties.Resources.command_stop_process);
+            uiImages.Add("RunCustomCodeCommand", robot_worker.Properties.Resources.command_script);
+            uiImages.Add("RunScriptCommand", robot_worker.Properties.Resources.command_script);
+            uiImages.Add("StartProcessCommand", robot_worker.Properties.Resources.command_start_process);
+            uiImages.Add("StopProcessCommand", robot_worker.Properties.Resources.command_stop_process);
 
             // Regex
-            uiImages.Add("GetRegexMatchesCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("GetRegexMatchesCommand", robot_worker.Properties.Resources.command_function);
 
             // Remote
-            uiImages.Add("RemoteAPICommand", taskt.Properties.Resources.command_remote);
-            uiImages.Add("RemoteTaskCommand", taskt.Properties.Resources.command_remote);
+            uiImages.Add("RemoteAPICommand", robot_worker.Properties.Resources.command_remote);
+            uiImages.Add("RemoteTaskCommand", robot_worker.Properties.Resources.command_remote);
 
             // System
-            uiImages.Add("EnvironmentVariableCommand", taskt.Properties.Resources.command_system);
-            uiImages.Add("RemoteDesktopCommand", taskt.Properties.Resources.command_system);
-            uiImages.Add("OSVariableCommand", taskt.Properties.Resources.command_system);
-            uiImages.Add("SystemActionCommand", taskt.Properties.Resources.command_script);
+            uiImages.Add("EnvironmentVariableCommand", robot_worker.Properties.Resources.command_system);
+            uiImages.Add("RemoteDesktopCommand", robot_worker.Properties.Resources.command_system);
+            uiImages.Add("OSVariableCommand", robot_worker.Properties.Resources.command_system);
+            uiImages.Add("SystemActionCommand", robot_worker.Properties.Resources.command_script);
 
             // Task
-            uiImages.Add("RunTaskCommand", taskt.Properties.Resources.command_start_process);
-            uiImages.Add("StopTaskCommand", taskt.Properties.Resources.command_stop_process);
+            uiImages.Add("RunTaskCommand", robot_worker.Properties.Resources.command_start_process);
+            uiImages.Add("StopTaskCommand", robot_worker.Properties.Resources.command_stop_process);
 
             // Text
-            uiImages.Add("ReadTextFileCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WriteTextFileCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("ReadTextFileCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WriteTextFileCommand", robot_worker.Properties.Resources.command_files);
 
             // Variable
-            uiImages.Add("AddToVariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("AddVariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("VariableCommand", taskt.Properties.Resources.command_function);
-            uiImages.Add("SetVariableIndexCommand", taskt.Properties.Resources.command_function);
+            uiImages.Add("AddToVariableCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("AddVariableCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("VariableCommand", robot_worker.Properties.Resources.command_function);
+            uiImages.Add("SetVariableIndexCommand", robot_worker.Properties.Resources.command_function);
 
             // Web
-            uiImages.Add("SeleniumBrowserCloseCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("SeleniumBrowserCreateCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserElementActionCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserExecuteScriptCommand", taskt.Properties.Resources.command_script);
-            uiImages.Add("SeleniumBrowserInfoCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserNavigateBackCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserNavigateForwardCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserNavigateURLCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserRefreshCommand", taskt.Properties.Resources.command_web);
-            uiImages.Add("SeleniumBrowserSwitchFrameCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SeleniumBrowserSwitchWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SeleniumBrowserTakeScreenshotCommand", taskt.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserCloseCommand", robot_worker.Properties.Resources.command_window_close);
+            uiImages.Add("SeleniumBrowserCreateCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserElementActionCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserExecuteScriptCommand", robot_worker.Properties.Resources.command_script);
+            uiImages.Add("SeleniumBrowserInfoCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserNavigateBackCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserNavigateForwardCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserNavigateURLCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserRefreshCommand", robot_worker.Properties.Resources.command_web);
+            uiImages.Add("SeleniumBrowserSwitchFrameCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("SeleniumBrowserSwitchWindowCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("SeleniumBrowserTakeScreenshotCommand", robot_worker.Properties.Resources.command_web);
 
             // Window
-            uiImages.Add("ActivateWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("CloseWindowCommand", taskt.Properties.Resources.command_window_close);
-            uiImages.Add("MoveWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("ResizeWindowCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("SetWindowStateCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("WaitForWindowCommand", taskt.Properties.Resources.command_window);
+            uiImages.Add("ActivateWindowCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("CloseWindowCommand", robot_worker.Properties.Resources.command_window_close);
+            uiImages.Add("MoveWindowCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("ResizeWindowCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("SetWindowStateCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("WaitForWindowCommand", robot_worker.Properties.Resources.command_window);
 
             // Word
-            uiImages.Add("WordAddDocumentCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordAppendDataTableCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordAppendImageCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordAppendTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordCloseApplicationCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordCreateApplicationCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordExportToPDFCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordOpenDocumentCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordReadDocumentCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordReplaceTextCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordSaveCommand", taskt.Properties.Resources.command_files);
-            uiImages.Add("WordSaveAsCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("WordAddDocumentCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordAppendDataTableCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordAppendImageCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordAppendTextCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordCloseApplicationCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordCreateApplicationCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordExportToPDFCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordOpenDocumentCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordReadDocumentCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordReplaceTextCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordSaveCommand", robot_worker.Properties.Resources.command_files);
+            uiImages.Add("WordSaveAsCommand", robot_worker.Properties.Resources.command_files);
 
             //// NOTHING ///
-            uiImages.Add("BeginExcelDatasetLoopCommand", taskt.Properties.Resources.command_startloop);
-            uiImages.Add("ThickAppClickItemCommand", taskt.Properties.Resources.command_input);
-            uiImages.Add("ThickAppGetTextCommand", taskt.Properties.Resources.command_search);
-            uiImages.Add("Setcommand_windowtateCommand", taskt.Properties.Resources.command_window);
-            uiImages.Add("_NotFoundCommand", taskt.Properties.Resources.command_files);
+            uiImages.Add("BeginExcelDatasetLoopCommand", robot_worker.Properties.Resources.command_startloop);
+            uiImages.Add("ThickAppClickItemCommand", robot_worker.Properties.Resources.command_input);
+            uiImages.Add("ThickAppGetTextCommand", robot_worker.Properties.Resources.command_search);
+            uiImages.Add("Setcommand_windowtateCommand", robot_worker.Properties.Resources.command_window);
+            uiImages.Add("_NotFoundCommand", robot_worker.Properties.Resources.command_files);
 
             // release
             //GC.Collect();
@@ -980,42 +976,42 @@ namespace taskt.UI
 
             //    uiImages.Images.Add(icon.Key, icon.Value);
             //}
-            uiImages.Images.Add("taskt.Properties.Resources.command_begin_if", taskt.Properties.Resources.command_begin_if);
-            uiImages.Images.Add("taskt.Properties.Resources.command_begin_multi_if", taskt.Properties.Resources.command_begin_multi_if);
-            uiImages.Images.Add("taskt.Properties.Resources.command_camera", taskt.Properties.Resources.command_camera);
-            uiImages.Images.Add("taskt.Properties.Resources.command_comment", taskt.Properties.Resources.command_comment);
-            uiImages.Images.Add("taskt.Properties.Resources.command_database", taskt.Properties.Resources.command_database);
-            uiImages.Images.Add("taskt.Properties.Resources.command_dictionary", taskt.Properties.Resources.command_dictionary);
-            uiImages.Images.Add("taskt.Properties.Resources.command_else", taskt.Properties.Resources.command_else);
-            uiImages.Images.Add("taskt.Properties.Resources.command_endloop", taskt.Properties.Resources.command_endloop);
-            uiImages.Images.Add("taskt.Properties.Resources.command_end_if", taskt.Properties.Resources.command_end_if);
-            uiImages.Images.Add("taskt.Properties.Resources.command_error", taskt.Properties.Resources.command_error);
-            uiImages.Images.Add("taskt.Properties.Resources.command_exitloop", taskt.Properties.Resources.command_exitloop);
-            uiImages.Images.Add("taskt.Properties.Resources.command_files", taskt.Properties.Resources.command_files);
-            uiImages.Images.Add("taskt.Properties.Resources.command_function", taskt.Properties.Resources.command_function);
-            uiImages.Images.Add("taskt.Properties.Resources.command_input", taskt.Properties.Resources.command_input);
-            uiImages.Images.Add("taskt.Properties.Resources.command_nextloop", taskt.Properties.Resources.command_nextloop);
-            uiImages.Images.Add("taskt.Properties.Resources.command_nlg", taskt.Properties.Resources.command_nlg);
-            uiImages.Images.Add("taskt.Properties.Resources.command_parse", taskt.Properties.Resources.command_parse);
-            uiImages.Images.Add("taskt.Properties.Resources.command_pause", taskt.Properties.Resources.command_pause);
-            uiImages.Images.Add("taskt.Properties.Resources.command_remote", taskt.Properties.Resources.command_remote);
-            uiImages.Images.Add("taskt.Properties.Resources.command_run_code", taskt.Properties.Resources.command_run_code);
-            uiImages.Images.Add("taskt.Properties.Resources.command_script", taskt.Properties.Resources.command_script);
-            uiImages.Images.Add("taskt.Properties.Resources.command_search", taskt.Properties.Resources.command_search);
-            uiImages.Images.Add("taskt.Properties.Resources.command_sequence", taskt.Properties.Resources.command_sequence);
-            uiImages.Images.Add("taskt.Properties.Resources.command_server", taskt.Properties.Resources.command_server);
-            uiImages.Images.Add("taskt.Properties.Resources.command_smtp", taskt.Properties.Resources.command_smtp);
-            uiImages.Images.Add("taskt.Properties.Resources.command_spreadsheet", taskt.Properties.Resources.command_spreadsheet);
-            uiImages.Images.Add("taskt.Properties.Resources.command_startloop", taskt.Properties.Resources.command_startloop);
-            uiImages.Images.Add("taskt.Properties.Resources.command_start_process", taskt.Properties.Resources.command_start_process);
-            uiImages.Images.Add("taskt.Properties.Resources.command_stopwatch", taskt.Properties.Resources.command_stopwatch);
-            uiImages.Images.Add("taskt.Properties.Resources.command_stop_process", taskt.Properties.Resources.command_stop_process);
-            uiImages.Images.Add("taskt.Properties.Resources.command_string", taskt.Properties.Resources.command_string);
-            uiImages.Images.Add("taskt.Properties.Resources.command_system", taskt.Properties.Resources.command_system);
-            uiImages.Images.Add("taskt.Properties.Resources.command_try", taskt.Properties.Resources.command_try);
-            uiImages.Images.Add("taskt.Properties.Resources.command_web", taskt.Properties.Resources.command_web);
-            uiImages.Images.Add("taskt.Properties.Resources.command_window", taskt.Properties.Resources.command_window);
-            uiImages.Images.Add("taskt.Properties.Resources.command_window_close", taskt.Properties.Resources.command_window_close);
+            uiImages.Images.Add("taskt.Properties.Resources.command_begin_if", robot_worker.Properties.Resources.command_begin_if);
+            uiImages.Images.Add("taskt.Properties.Resources.command_begin_multi_if", robot_worker.Properties.Resources.command_begin_multi_if);
+            uiImages.Images.Add("taskt.Properties.Resources.command_camera", robot_worker.Properties.Resources.command_camera);
+            uiImages.Images.Add("taskt.Properties.Resources.command_comment", robot_worker.Properties.Resources.command_comment);
+            uiImages.Images.Add("taskt.Properties.Resources.command_database", robot_worker.Properties.Resources.command_database);
+            uiImages.Images.Add("taskt.Properties.Resources.command_dictionary", robot_worker.Properties.Resources.command_dictionary);
+            uiImages.Images.Add("taskt.Properties.Resources.command_else", robot_worker.Properties.Resources.command_else);
+            uiImages.Images.Add("taskt.Properties.Resources.command_endloop", robot_worker.Properties.Resources.command_endloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_end_if", robot_worker.Properties.Resources.command_end_if);
+            uiImages.Images.Add("taskt.Properties.Resources.command_error", robot_worker.Properties.Resources.command_error);
+            uiImages.Images.Add("taskt.Properties.Resources.command_exitloop", robot_worker.Properties.Resources.command_exitloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_files", robot_worker.Properties.Resources.command_files);
+            uiImages.Images.Add("taskt.Properties.Resources.command_function", robot_worker.Properties.Resources.command_function);
+            uiImages.Images.Add("taskt.Properties.Resources.command_input", robot_worker.Properties.Resources.command_input);
+            uiImages.Images.Add("taskt.Properties.Resources.command_nextloop", robot_worker.Properties.Resources.command_nextloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_nlg", robot_worker.Properties.Resources.command_nlg);
+            uiImages.Images.Add("taskt.Properties.Resources.command_parse", robot_worker.Properties.Resources.command_parse);
+            uiImages.Images.Add("taskt.Properties.Resources.command_pause", robot_worker.Properties.Resources.command_pause);
+            uiImages.Images.Add("taskt.Properties.Resources.command_remote", robot_worker.Properties.Resources.command_remote);
+            uiImages.Images.Add("taskt.Properties.Resources.command_run_code", robot_worker.Properties.Resources.command_run_code);
+            uiImages.Images.Add("taskt.Properties.Resources.command_script", robot_worker.Properties.Resources.command_script);
+            uiImages.Images.Add("taskt.Properties.Resources.command_search", robot_worker.Properties.Resources.command_search);
+            uiImages.Images.Add("taskt.Properties.Resources.command_sequence", robot_worker.Properties.Resources.command_sequence);
+            uiImages.Images.Add("taskt.Properties.Resources.command_server", robot_worker.Properties.Resources.command_server);
+            uiImages.Images.Add("taskt.Properties.Resources.command_smtp", robot_worker.Properties.Resources.command_smtp);
+            uiImages.Images.Add("taskt.Properties.Resources.command_spreadsheet", robot_worker.Properties.Resources.command_spreadsheet);
+            uiImages.Images.Add("taskt.Properties.Resources.command_startloop", robot_worker.Properties.Resources.command_startloop);
+            uiImages.Images.Add("taskt.Properties.Resources.command_start_process", robot_worker.Properties.Resources.command_start_process);
+            uiImages.Images.Add("taskt.Properties.Resources.command_stopwatch", robot_worker.Properties.Resources.command_stopwatch);
+            uiImages.Images.Add("taskt.Properties.Resources.command_stop_process", robot_worker.Properties.Resources.command_stop_process);
+            uiImages.Images.Add("taskt.Properties.Resources.command_string", robot_worker.Properties.Resources.command_string);
+            uiImages.Images.Add("taskt.Properties.Resources.command_system", robot_worker.Properties.Resources.command_system);
+            uiImages.Images.Add("taskt.Properties.Resources.command_try", robot_worker.Properties.Resources.command_try);
+            uiImages.Images.Add("taskt.Properties.Resources.command_web", robot_worker.Properties.Resources.command_web);
+            uiImages.Images.Add("taskt.Properties.Resources.command_window", robot_worker.Properties.Resources.command_window);
+            uiImages.Images.Add("taskt.Properties.Resources.command_window_close", robot_worker.Properties.Resources.command_window_close);
 
             // release
             //imageIcons.Clear();

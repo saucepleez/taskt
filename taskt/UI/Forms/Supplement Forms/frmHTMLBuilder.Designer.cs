@@ -86,7 +86,7 @@
             this.uiBtnOK.DisplayText = "Save";
             this.uiBtnOK.DisplayTextBrush = System.Drawing.Color.SteelBlue;
             this.uiBtnOK.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOK.Image = global::taskt.Properties.Resources.various_ok_button;
+            this.uiBtnOK.Image = global::robot_worker.Properties.Resources.various_ok_button;
             this.uiBtnOK.IsMouseOver = false;
             this.uiBtnOK.Location = new System.Drawing.Point(3, 3);
             this.uiBtnOK.Name = "uiBtnOK";
@@ -103,7 +103,7 @@
             this.uiBtnCancel.DisplayText = "Close";
             this.uiBtnCancel.DisplayTextBrush = System.Drawing.Color.SteelBlue;
             this.uiBtnCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
+            this.uiBtnCancel.Image = global::robot_worker.Properties.Resources.various_cancel_button;
             this.uiBtnCancel.IsMouseOver = false;
             this.uiBtnCancel.Location = new System.Drawing.Point(57, 3);
             this.uiBtnCancel.Name = "uiBtnCancel";
