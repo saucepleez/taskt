@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyControlIntoCommandField("ReplaceActionComboboxHelper")]
-        [PropertySelectionChangeEvent("cmbReplaceAction_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
         [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
         public string v_ReplaceAction { get; set; }
@@ -106,16 +106,27 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_TargetList.GetListVariable(engine);
 
-            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            string targetType = this.GetUISelectionValue(nameof(v_TargetType), "Target Type", engine);
-            //string replaceAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
-            string replaceAction = this.GetUISelectionValue(nameof(v_ReplaceAction), "Replace Action", engine);
+            ////string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
+            //string targetType = this.GetUISelectionValue(nameof(v_TargetType), "Target Type", engine);
+            ////string replaceAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
+            //string replaceAction = this.GetUISelectionValue(nameof(v_ReplaceAction), "Replace Action", engine);
+
+            var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
+            var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
             string newValue = v_ReplaceValue.ConvertToUserVariable(engine);
 
+            //for (int i = targetList.Count - 1; i >= 0; i--)
+            //{
+            //    if (ConditionControls.FilterDeterminStatementTruth(targetList[i], targetType, replaceAction, v_ReplaceActionParameterTable, engine))
+            //    {
+            //        targetList[i] = newValue;
+            //    }
+            //}
+
             for (int i = targetList.Count - 1; i >= 0; i--)
             {
-                if (ConditionControls.FilterDeterminStatementTruth(targetList[i], targetType, replaceAction, v_ReplaceActionParameterTable, engine))
+                if (checkFunc(targetList[i], parameters))
                 {
                     targetList[i] = newValue;
                 }
@@ -124,18 +135,22 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)
         {
-            ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
+            //ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
+            ConditionControls.AddFilterActionItems((ComboBox)ControlsList[nameof(v_TargetType)], (ComboBox)ControlsList[nameof(v_ReplaceAction)]);
         }
 
         private void cmbReplaceAction_SelectionChangeCommited(object sender, EventArgs e)
         {
-            ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
+            //ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
+            ConditionControls.RenderFilter(v_ReplaceActionParameterTable, (DataGridView)ControlsList[nameof(v_ReplaceActionParameterTable)], (ComboBox)ControlsList[nameof(v_ReplaceAction)], (ComboBox)ControlsList[nameof(v_TargetType)]);
         }
 
         public override void AfterShown()
         {
-            ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
-            ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
+            //ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
+            ConditionControls.AddFilterActionItems((ComboBox)ControlsList[nameof(v_TargetType)], (ComboBox)ControlsList[nameof(v_ReplaceAction)]);
+            //ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
+            ConditionControls.RenderFilter(v_ReplaceActionParameterTable, (DataGridView)ControlsList[nameof(v_ReplaceActionParameterTable)], (ComboBox)ControlsList[nameof(v_ReplaceAction)], (ComboBox)ControlsList[nameof(v_TargetType)]);
         }
     }
 }
