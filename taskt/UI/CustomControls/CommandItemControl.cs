@@ -28,8 +28,8 @@ namespace taskt.UI.CustomControls
         public CommandItemControl()
         {
             InitializeComponent();
-            this.CommandImage = Properties.Resources.command_comment;
-            this.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
+            this.CommandImage = robot_worker.Properties.Resources.command_comment;
+            this.DrawIcon = robot_worker.Properties.Resources.taskt_command_helper;
         }
         public Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType HelperType { get; set; }
         public object DataSource { get; set; }

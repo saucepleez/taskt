@@ -77,7 +77,7 @@
             this.uiAccept.DisplayText = "Accept";
             this.uiAccept.DisplayTextBrush = System.Drawing.Color.Black;
             this.uiAccept.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.uiAccept.Image = global::taskt.Properties.Resources.action_bar_save;
+            this.uiAccept.Image = global::robot_worker.Properties.Resources.action_bar_save;
             this.uiAccept.IsMouseOver = false;
             this.uiAccept.Location = new System.Drawing.Point(3, 3);
             this.uiAccept.Name = "uiAccept";
@@ -93,7 +93,7 @@
             this.uiClose.DisplayText = "Close";
             this.uiClose.DisplayTextBrush = System.Drawing.Color.Black;
             this.uiClose.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.uiClose.Image = global::taskt.Properties.Resources.command_error;
+            this.uiClose.Image = global::robot_worker.Properties.Resources.command_error;
             this.uiClose.IsMouseOver = false;
             this.uiClose.Location = new System.Drawing.Point(53, 3);
             this.uiClose.Name = "uiClose";

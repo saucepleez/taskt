@@ -201,12 +201,8 @@ namespace taskt.Core.Automation.Commands
                 string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                   where rw.Field<string>("Parameter Name") == "Value2"
                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
                 value1 = value1.ConvertToUserVariable(sender);
                 value2 = value2.ConvertToUserVariable(sender);
-
-
-
                 DateTime dt1, dt2;
                 dt1 = DateTime.Parse(value1);
                 dt2 = DateTime.Parse(value2);
@@ -248,22 +244,16 @@ namespace taskt.Core.Automation.Commands
                 string value2 = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                   where rw.Field<string>("Parameter Name") == "Value2"
                                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
                 string caseSensitive = ((from rw in v_LoopActionParameterTable.AsEnumerable()
                                          where rw.Field<string>("Parameter Name") == "Case Sensitive"
                                          select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
                 value1 = value1.ConvertToUserVariable(sender);
                 value2 = value2.ConvertToUserVariable(sender);
-
                 if (caseSensitive == "No")
                 {
                     value1 = value1.ToUpper();
                     value2 = value2.ToUpper();
                 }
-
-
-
                 switch (operand)
                 {
                     case "contains":

@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using taskt.Core.Server;
 namespace taskt.Core.Automation.Engine
 {
@@ -33,7 +31,7 @@ namespace taskt.Core.Automation.Engine
         public string FileName { get; set; }
         public Core.Server.Task taskModel { get; set; }
         public bool serverExecution { get; set; }
-        public List<IRestResponse> ServiceResponses { get; set; }
+        public List<RestResponse> ServiceResponses { get; set; }
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -69,7 +67,7 @@ namespace taskt.Core.Automation.Engine
             }
       
             AppInstances = new Dictionary<string, object>();
-            ServiceResponses = new List<IRestResponse>();
+            //ServiceResponses = new List<IRestResponse>();
             DataTables = new List<DataTable>();
 
             //this value can be later overriden by script
@@ -123,8 +121,6 @@ namespace taskt.Core.Automation.Engine
         public void ExecuteScript(string data, bool dataIsFile)
         {
             Core.Client.EngineBusy = true;
-
-
             try
             {
  
@@ -143,9 +139,6 @@ namespace taskt.Core.Automation.Engine
                 {
                     preLoadedTask = PreloadedTasks.Any(f => f.Key == data);
                 }
-      
-
-              
                 //get automation script
                 Core.Script.Script automationScript;
                 if (dataIsFile && (!preLoadedTask))

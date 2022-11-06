@@ -94,7 +94,7 @@
             this.uiBtnOk.DisplayText = "Ok";
             this.uiBtnOk.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnOk.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOk.Image = global::taskt.Properties.Resources.various_ok_button;
+            this.uiBtnOk.Image = global::robot_worker.Properties.Resources.various_ok_button;
             this.uiBtnOk.IsMouseOver = false;
             this.uiBtnOk.Location = new System.Drawing.Point(9, -4);
             this.uiBtnOk.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);

@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using taskt.Core.Automation;
 namespace taskt.Core
 {
     public static class ExtensionMethods
@@ -15,48 +12,34 @@ namespace taskt.Core
         /// Replaces variable placeholders ([variable]) with variable text.
         /// </summary>
         /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
-        public static string ConvertToUserVariable(this String str, object sender)
+        /// 新增转换标志,解决JSON转换异常
+        public static string ConvertToUserVariable(this String str, object sender, bool isreturn = false)
         {
-            if (str == null)
-                return string.Empty;
-
-            if (sender == null)
-                return str;
-
-            if (str.Length < 2)
+            if (str == null) return string.Empty;
+            if (isreturn || sender == null || str.Length < 2)
             {
                 return str;
             }
-
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
-
             var searchList = new List<Core.Script.ScriptVariable>();
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
 
-
             //custom variable markers
             var startVariableMarker = engine.engineSettings.VariableStartMarker;
             var endVariableMarker = engine.engineSettings.VariableEndMarker;
-
             //split by custom markers
             string[] potentialVariables = str.Split(new string[] { startVariableMarker, endVariableMarker }, StringSplitOptions.None);
-
             foreach (var potentialVariable in potentialVariables)
             {
-
                 //complex variable handling
                 if (potentialVariable.Contains("=>"))
                 {
                     var complexJsonVariable = potentialVariable;
-
                     //detect potential variables and replace
                     string[] potentialSubVariables = complexJsonVariable.Split(new string[] { "^" }, StringSplitOptions.None);
-
                     foreach (var potentialSubVariable in potentialSubVariables)
                     {
                         var matchingVar = (from vars in searchList
@@ -72,12 +55,8 @@ namespace taskt.Core
                         }
 
                     }
-
-
-
                     //split by json select token pointer
                     var element = complexJsonVariable.Split(new string[] { "=>" }, StringSplitOptions.None);
-
                     //verify length
                     if (element.Length >= 2)
                     {
@@ -110,7 +89,7 @@ namespace taskt.Core
                                 else
                                 {
                                     //attempt to match object based on user defined pattern
-                                    JObject parsedObject = JObject.Parse(complexJson);        
+                                    JObject parsedObject = JObject.Parse(complexJson);
                                     match = parsedObject.SelectToken(jsonPattern);
                                 }
 
@@ -121,7 +100,7 @@ namespace taskt.Core
                                     str = str.Replace(startVariableMarker + potentialVariable + endVariableMarker, match.ToString());
                                     continue;
                                 }
-                        
+
                             }
                         }
                     }
@@ -146,21 +125,15 @@ namespace taskt.Core
                                 where vars.VariableName == varcheckname
                                 select vars).FirstOrDefault();
 
-
-                if (potentialVariable.Length == 0)
-                    continue;
-
+                if (potentialVariable.Length == 0) continue;
 
                 if (potentialVariable == "taskt.EngineContext")
                 {
                     varCheck.VariableValue = engine.GetEngineContext();
                 }
-
-
                 if (varCheck != null)
                 {
                     var searchVariable = startVariableMarker + potentialVariable + endVariableMarker;
-
                     if (str.Contains(searchVariable))
                     {
                         if (useDirectElementIndex)
@@ -185,11 +158,7 @@ namespace taskt.Core
                             {
                                 cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnName).ToString();
                             }
-
-
                             str = str.Replace(searchVariable, cellItem);
-
-
                         }
                         else if (potentialVariable.Split('.').Length == 2) // This handles vVariable.count 
                         {
@@ -211,15 +180,12 @@ namespace taskt.Core
                         {
 
                         }
-                       
                     }
                 }
-
                 else if ((potentialVariable.Contains("ds") && (potentialVariable.Contains("."))))
                 {
                     //peform dataset check
                     var splitVariable = potentialVariable.Split('.');
-
                     if (splitVariable.Length == 3)
                     {
                         string dsleading = splitVariable[0];
@@ -227,7 +193,6 @@ namespace taskt.Core
                         string columnRequired = splitVariable[2];
 
                         var datasetVariable = variableList.Where(f => f.VariableName == datasetName).FirstOrDefault();
-
                         if (datasetVariable == null)
                             continue;
 
@@ -249,11 +214,7 @@ namespace taskt.Core
                     }
 
                 }
-
-
             }
-
-
             if (!engine.AutoCalculateVariables)
             {
                 return str;
@@ -270,21 +231,18 @@ namespace taskt.Core
                 mathChars.Add('\r');
                 mathChars.Add('\n');
                 mathChars.Add('\t');
-
                 //if the string matches the char then return
                 //as the user does not want to do math
                 if (mathChars.Any(f => f.ToString() == str) || (mathChars.Any(f => str.StartsWith(f.ToString()))))
                 {
                     return str;
                 }
-
                 //bypass math for types that are dates
                 DateTime dateTest;
                 if ((DateTime.TryParse(str, out dateTest) && (str.Length > 6)))
                 {
                     return str;
                 }
-
                 //test if math is required
                 try
                 {
@@ -297,8 +255,6 @@ namespace taskt.Core
                     return str;
                 }
             }
-
-           
         }
         /// <summary>
         /// Stores value of the string to a user-defined variable.
@@ -326,7 +282,7 @@ namespace taskt.Core
             {
                 v_userVariableName = targetVariable,
                 v_Input = str,
-                v_ReplaceInputVariables = "No"            
+                v_ReplaceInputVariables = "No"
             };
             newVariableCommand.RunCommand(sender);
         }
@@ -379,9 +335,6 @@ namespace taskt.Core
             }
         }
 
-       
     }
-
-
 }
 

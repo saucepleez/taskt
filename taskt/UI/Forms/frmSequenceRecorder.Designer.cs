@@ -34,6 +34,7 @@
             this.chkCaptureKeyboard = new System.Windows.Forms.CheckBox();
             this.lblRecording = new System.Windows.Forms.Label();
             this.pnlOptions = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtHookStop = new System.Windows.Forms.TextBox();
             this.chkTrackWindowsOpenLocation = new System.Windows.Forms.CheckBox();
@@ -113,6 +114,7 @@
             // pnlOptions
             // 
             this.pnlOptions.BackColor = System.Drawing.Color.Transparent;
+            this.pnlOptions.Controls.Add(this.label7);
             this.pnlOptions.Controls.Add(this.label6);
             this.pnlOptions.Controls.Add(this.txtHookStop);
             this.pnlOptions.Controls.Add(this.chkTrackWindowsOpenLocation);
@@ -134,6 +136,17 @@
             this.pnlOptions.Name = "pnlOptions";
             this.pnlOptions.Size = new System.Drawing.Size(506, 321);
             this.pnlOptions.TabIndex = 7;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.AliceBlue;
+            this.label7.Location = new System.Drawing.Point(215, 132);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(78, 13);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "最小值为3秒";
             // 
             // label6
             // 
@@ -260,7 +273,8 @@
             this.txtHookResolution.Name = "txtHookResolution";
             this.txtHookResolution.Size = new System.Drawing.Size(52, 22);
             this.txtHookResolution.TabIndex = 7;
-            this.txtHookResolution.Text = "0";
+            this.txtHookResolution.Text = "3";
+            this.txtHookResolution.TextChanged += new System.EventHandler(this.txtHookResolution_TextChanged);
             // 
             // chkCaptureWindowEvents
             // 
@@ -311,7 +325,7 @@
             this.uiBtnRecord.DisplayText = "Start";
             this.uiBtnRecord.DisplayTextBrush = System.Drawing.Color.AliceBlue;
             this.uiBtnRecord.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.uiBtnRecord.Image = global::taskt.Properties.Resources.various_record_button;
+            this.uiBtnRecord.Image = global::robot_worker.Properties.Resources.various_record_button;
             this.uiBtnRecord.IsMouseOver = false;
             this.uiBtnRecord.Location = new System.Drawing.Point(11, 333);
             this.uiBtnRecord.Name = "uiBtnRecord";
@@ -363,5 +377,6 @@
         private System.Windows.Forms.CheckBox chkTrackWindowsOpenLocation;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtHookStop;
+        private System.Windows.Forms.Label label7;
     }
 }

@@ -59,8 +59,8 @@
             this.tlpBuilder.RowCount = 3;
             this.tlpBuilder.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.80672F));
             this.tlpBuilder.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.19328F));
-            this.tlpBuilder.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 93F));
-            this.tlpBuilder.Size = new System.Drawing.Size(827, 451);
+            this.tlpBuilder.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.tlpBuilder.Size = new System.Drawing.Size(1079, 557);
             this.tlpBuilder.TabIndex = 0;
             // 
             // panel1
@@ -73,7 +73,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(821, 54);
+            this.panel1.Size = new System.Drawing.Size(1073, 73);
             this.panel1.TabIndex = 2;
             // 
             // uiBtnSample
@@ -83,13 +83,14 @@
             this.uiBtnSample.DisplayText = "Sample";
             this.uiBtnSample.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnSample.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.uiBtnSample.Image = global::taskt.Properties.Resources.action_bar_new;
+            this.uiBtnSample.Image = global::robot_worker.Properties.Resources.action_bar_new;
             this.uiBtnSample.IsMouseOver = false;
             this.uiBtnSample.Location = new System.Drawing.Point(218, 3);
             this.uiBtnSample.Name = "uiBtnSample";
-            this.uiBtnSample.Size = new System.Drawing.Size(52, 48);
+            this.uiBtnSample.Size = new System.Drawing.Size(52, 44);
             this.uiBtnSample.TabIndex = 19;
             this.uiBtnSample.TabStop = false;
+            this.uiBtnSample.Text = "Sample";
             this.uiBtnSample.Click += new System.EventHandler(this.uiBtnSample_Click);
             // 
             // uiBtnSave
@@ -99,13 +100,14 @@
             this.uiBtnSave.DisplayText = "Save";
             this.uiBtnSave.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnSave.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.uiBtnSave.Image = global::taskt.Properties.Resources.action_bar_save;
+            this.uiBtnSave.Image = global::robot_worker.Properties.Resources.action_bar_save;
             this.uiBtnSave.IsMouseOver = false;
             this.uiBtnSave.Location = new System.Drawing.Point(334, 3);
             this.uiBtnSave.Name = "uiBtnSave";
-            this.uiBtnSave.Size = new System.Drawing.Size(52, 48);
+            this.uiBtnSave.Size = new System.Drawing.Size(52, 44);
             this.uiBtnSave.TabIndex = 18;
             this.uiBtnSave.TabStop = false;
+            this.uiBtnSave.Text = "Save";
             this.uiBtnSave.Click += new System.EventHandler(this.uiBtnSave_Click);
             // 
             // chkRunAfterCompile
@@ -126,7 +128,7 @@
             this.lblHeader.BackColor = System.Drawing.Color.Transparent;
             this.lblHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeader.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblHeader.Location = new System.Drawing.Point(3, 9);
+            this.lblHeader.Location = new System.Drawing.Point(3, 8);
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(203, 37);
             this.lblHeader.TabIndex = 15;
@@ -139,13 +141,14 @@
             this.uiBtnCompile.DisplayText = "Compile";
             this.uiBtnCompile.DisplayTextBrush = System.Drawing.Color.White;
             this.uiBtnCompile.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            this.uiBtnCompile.Image = global::taskt.Properties.Resources.action_bar_run;
+            this.uiBtnCompile.Image = global::robot_worker.Properties.Resources.action_bar_run;
             this.uiBtnCompile.IsMouseOver = false;
             this.uiBtnCompile.Location = new System.Drawing.Point(276, 3);
             this.uiBtnCompile.Name = "uiBtnCompile";
-            this.uiBtnCompile.Size = new System.Drawing.Size(52, 48);
+            this.uiBtnCompile.Size = new System.Drawing.Size(52, 44);
             this.uiBtnCompile.TabIndex = 1;
             this.uiBtnCompile.TabStop = false;
+            this.uiBtnCompile.Text = "Compile";
             this.uiBtnCompile.Click += new System.EventHandler(this.utBtnCompile_Click);
             // 
             // lstCompilerResults
@@ -154,27 +157,27 @@
             this.lstCompilerResults.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstCompilerResults.FormattingEnabled = true;
             this.lstCompilerResults.ItemHeight = 15;
-            this.lstCompilerResults.Location = new System.Drawing.Point(3, 360);
+            this.lstCompilerResults.Location = new System.Drawing.Point(3, 473);
             this.lstCompilerResults.Name = "lstCompilerResults";
-            this.lstCompilerResults.Size = new System.Drawing.Size(821, 88);
+            this.lstCompilerResults.Size = new System.Drawing.Size(1073, 81);
             this.lstCompilerResults.TabIndex = 3;
             // 
             // rtbCode
             // 
             this.rtbCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbCode.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbCode.Location = new System.Drawing.Point(3, 63);
+            this.rtbCode.Location = new System.Drawing.Point(3, 82);
             this.rtbCode.Name = "rtbCode";
-            this.rtbCode.Size = new System.Drawing.Size(821, 291);
+            this.rtbCode.Size = new System.Drawing.Size(1073, 385);
             this.rtbCode.TabIndex = 4;
             this.rtbCode.Text = "";
             this.rtbCode.TextChanged += new System.EventHandler(this.rtbCode_TextChanged);
             // 
             // frmCodeBuilder
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 451);
+            this.ClientSize = new System.Drawing.Size(1079, 557);
             this.Controls.Add(this.tlpBuilder);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCodeBuilder";

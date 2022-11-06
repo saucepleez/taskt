@@ -47,35 +47,27 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var dataSetVariable = LookupVariable(engine);
             var vSearchItem = v_SearchItem.ConvertToUserVariable(engine);
-
             DataTable Dt = new DataTable();
             Dt = (DataTable)dataSetVariable.VariableValue;
             var t = new List<Tuple<string, string>>();
+
             var listPairs = vSearchItem.Split('}');
             int i = 0;
-
             listPairs = listPairs.Take(listPairs.Count() - 1).ToArray();
             foreach (string item in listPairs)
             {
-                string temp;
-                temp = item.Trim('{');
-                var tempList = temp.Split(',');
+                var tempList = item.Trim('{').Split(',');
                 t.Insert(i, Tuple.Create(tempList[0], tempList[1]));
                 i++;
             }
-
-
             List<DataRow> listrows = Dt.AsEnumerable().ToList();
             List<DataRow> templist = new List<DataRow>();
 
             foreach (Tuple<string, string> tuple in t)
             {
-
-
                 foreach (DataRow item in listrows)
                 {
                     if (item[tuple.Item1] != null)
@@ -89,7 +81,7 @@ namespace taskt.Core.Automation.Commands
             }
             DataTable outputDT = new DataTable();
             int x = 0;
-            foreach(DataColumn column in Dt.Columns)
+            foreach (DataColumn column in Dt.Columns)
             {
                 outputDT.Columns.Add(Dt.Columns[x].ToString());
                 x++;
@@ -104,18 +96,14 @@ namespace taskt.Core.Automation.Commands
                 VariableName = v_OutputDTName,
                 VariableValue = outputDT
             };
-
             //Overwrites variable if it already exists
             if (engine.VariableList.Exists(y => y.VariableName == newDatatable.VariableName))
             {
                 Script.ScriptVariable temp = engine.VariableList.Where(y => y.VariableName == newDatatable.VariableName).FirstOrDefault();
                 engine.VariableList.Remove(temp);
             }
-
             engine.VariableList.Add(newDatatable);
             dataSetVariable.VariableValue = Dt;
-
-
         }
         private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
         {
@@ -145,7 +133,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue()+ "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_DataTableName + " and put them in DataTable: "+ v_OutputDTName+"]";
+            return base.GetDisplayValue() + "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_DataTableName + " and put them in DataTable: " + v_OutputDTName + "]";
         }
     }
 }

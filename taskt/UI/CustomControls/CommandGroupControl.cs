@@ -12,13 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.CustomControls
@@ -50,7 +44,7 @@ namespace taskt.UI.CustomControls
 
         private void CommandSelectionControl_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(Properties.Resources.command_files, 5, 0, 32, 32);
+            e.Graphics.DrawImage(robot_worker.Properties.Resources.command_files, 5, 0, 32, 32);
             e.Graphics.DrawString(this.GroupName, this.Font, new SolidBrush(this.ForeColor), 39, 10);
         }
 

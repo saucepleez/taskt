@@ -28,24 +28,17 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             foreach (var item in v_scriptActions)
             {
-
                 //exit if cancellation pending
                 if (engine.IsCancellationPending)
                 {
                     return;
                 }
-
                 //only run if not commented
                 if (!item.IsCommented)
                     item.RunCommand(sender);
-
-
-
             }
 
         }

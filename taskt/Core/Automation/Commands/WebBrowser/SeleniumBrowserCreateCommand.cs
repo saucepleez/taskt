@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OpenQA.Selenium.DevTools;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
@@ -76,37 +78,34 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Resources");
-            
+            var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Resources");
             var seleniumEngine = v_EngineType.ConvertToUserVariable(sender);
             if (String.IsNullOrEmpty(seleniumEngine))
             {
                 seleniumEngine = "Chrome";
             }
-
             var instanceName = v_InstanceName.ConvertToUserVariable(sender);
-
             OpenQA.Selenium.DriverService driverService;
             OpenQA.Selenium.IWebDriver webDriver;
-
             if (seleniumEngine == "Chrome")
             {
                 OpenQA.Selenium.Chrome.ChromeOptions options = new OpenQA.Selenium.Chrome.ChromeOptions();
-
                 if (!string.IsNullOrEmpty(v_SeleniumOptions))
                 {
                     var convertedOptions = v_SeleniumOptions.ConvertToUserVariable(sender);
                     options.AddArguments(convertedOptions);
                 }
-
                 driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(driverPath);
                 webDriver = new OpenQA.Selenium.Chrome.ChromeDriver((OpenQA.Selenium.Chrome.ChromeDriverService)driverService, options);
             }
             else if (seleniumEngine == "Edge")
             {
                 OpenQA.Selenium.Edge.EdgeOptions options = new OpenQA.Selenium.Edge.EdgeOptions();
-
+                if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                {
+                    var convertedOptions = v_SeleniumOptions.ConvertToUserVariable(sender);
+                    options.AddArguments(convertedOptions);
+                }
                 driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(driverPath, "msedgedriver.exe");
                 webDriver = new OpenQA.Selenium.Edge.EdgeDriver((OpenQA.Selenium.Edge.EdgeDriverService)driverService, options);
             }
@@ -114,7 +113,11 @@ namespace taskt.Core.Automation.Commands
             {
                 OpenQA.Selenium.Firefox.FirefoxOptions options = new OpenQA.Selenium.Firefox.FirefoxOptions();
                 options.BrowserExecutableLocation = @"c:\Program Files\Mozilla Firefox\firefox.exe";
-
+                if (!string.IsNullOrEmpty(v_SeleniumOptions))
+                {
+                    var convertedOptions = v_SeleniumOptions.ConvertToUserVariable(sender);
+                    options.AddArguments(convertedOptions);
+                }
                 driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(driverPath);
                 webDriver = new OpenQA.Selenium.Firefox.FirefoxDriver((OpenQA.Selenium.Firefox.FirefoxDriverService)driverService, options);
             }
@@ -123,12 +126,8 @@ namespace taskt.Core.Automation.Commands
                 driverService = OpenQA.Selenium.IE.InternetExplorerDriverService.CreateDefaultService(driverPath);
                 webDriver = new OpenQA.Selenium.IE.InternetExplorerDriver((OpenQA.Selenium.IE.InternetExplorerDriverService)driverService, new OpenQA.Selenium.IE.InternetExplorerOptions());
             }
-
-
             //add app instance
             engine.AddAppInstance(instanceName, webDriver);
-
-
             var instanceTracking = v_InstanceTracking.ConvertToUserVariable(sender);
             if (String.IsNullOrEmpty(instanceTracking))
             {
@@ -139,7 +138,6 @@ namespace taskt.Core.Automation.Commands
             {
                 GlobalAppInstances.AddInstance(instanceName, webDriver);
             }
-
             //handle window type on startup - https://github.com/saucepleez/taskt/issues/22
             var browserWindowOption = v_BrowserWindowOption.ConvertToUserVariable(sender);
             if (String.IsNullOrEmpty(browserWindowOption))
@@ -161,8 +159,6 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
-
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EngineType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_InstanceTracking", this, editor));
@@ -173,7 +169,6 @@ namespace taskt.Core.Automation.Commands
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
             }
-
             return RenderedControls;
         }
 
@@ -185,13 +180,11 @@ namespace taskt.Core.Automation.Commands
         public override bool IsValidate(frmCommandEditor editor)
         {
             base.IsValidate(editor);
-
             if (String.IsNullOrEmpty(this.v_InstanceName))
             {
                 this.validationResult += "Instance is empty.\n";
                 this.IsValid = false;
             }
-
             return this.IsValid;
         }
     }

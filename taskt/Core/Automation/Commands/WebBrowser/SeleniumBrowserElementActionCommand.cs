@@ -39,13 +39,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Link Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By XPath")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By ID")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Tag Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Class Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By CSS Selector")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Link Text")]
         [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
         [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -66,7 +59,6 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Matching Elements")]
         [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
@@ -226,7 +218,7 @@ namespace taskt.Core.Automation.Commands
                                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
                     string encryptedData = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                           where rw.Field<string>("Parameter Name") == "Encrypted Text"
+                                            where rw.Field<string>("Parameter Name") == "Encrypted Text"
                                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
 
@@ -246,7 +238,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         textToSet = Core.EncryptionServices.DecryptString(textToSet, "TASKT");
                     }
-                   
+
                     string[] potentialKeyPresses = textToSet.Split('{', '}');
 
                     Type seleniumKeys = typeof(OpenQA.Selenium.Keys);
@@ -277,13 +269,13 @@ namespace taskt.Core.Automation.Commands
                 case "Get Options":
 
                     string applyToVarName = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                           where rw.Field<string>("Parameter Name") == "Variable Name"
-                                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+                                             where rw.Field<string>("Parameter Name") == "Variable Name"
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
 
                     string attribName = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                            where rw.Field<string>("Parameter Name") == "Attribute Name"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                                         where rw.Field<string>("Parameter Name") == "Attribute Name"
+                                         select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
 
                     var optionsItems = new List<string>();
@@ -296,7 +288,7 @@ namespace taskt.Core.Automation.Commands
                         var optionValue = option.GetAttribute(attribName);
                         optionsItems.Add(optionValue);
                     }
-                 
+
                     var requiredVariable = engine.VariableList.Where(x => x.VariableName == applyToVarName).FirstOrDefault();
 
                     if (requiredVariable == null)
@@ -313,19 +305,19 @@ namespace taskt.Core.Automation.Commands
                 case "Select Option":
 
                     string selectionType = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                             where rw.Field<string>("Parameter Name") == "Selection Type"
-                                             select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                                            where rw.Field<string>("Parameter Name") == "Selection Type"
+                                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
                     string selectionParam = (from rw in v_WebActionParameterTable.AsEnumerable()
-                                            where rw.Field<string>("Parameter Name") == "Selection Parameter"
-                                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                                             where rw.Field<string>("Parameter Name") == "Selection Parameter"
+                                             select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
 
 
                     seleniumInstance.SwitchTo().ActiveElement();
 
                     var el = (IWebElement)element;
                     var selectionElement = new SelectElement(el);
-                
+
                     switch (selectionType)
                     {
                         case "Select By Index":
@@ -375,7 +367,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         elementValue = "1";
                         if (element is ReadOnlyCollection<IWebElement>)
-                            elementValue = ((ReadOnlyCollection<IWebElement>)element).Count().ToString(); 
+                            elementValue = ((ReadOnlyCollection<IWebElement>)element).Count().ToString();
                     }
                     else
                     {
@@ -401,7 +393,8 @@ namespace taskt.Core.Automation.Commands
 
                     //set json settings
                     JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Error = (serializer, err) => {
+                    settings.Error = (serializer, err) =>
+                    {
                         err.ErrorContext.Handled = true;
                     };
 
@@ -441,30 +434,30 @@ namespace taskt.Core.Automation.Commands
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="seleniumInstance"></param>
+        /// <param name="searchParameter"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private object FindElement(OpenQA.Selenium.IWebDriver seleniumInstance, string searchParameter)
         {
             object element = null;
-
-
-
             switch (v_SeleniumSearchType)
             {
                 case "Find Element By XPath":
                     element = seleniumInstance.FindElement(By.XPath(searchParameter));
                     break;
-
                 case "Find Element By ID":
                     element = seleniumInstance.FindElement(By.Id(searchParameter));
                     break;
-
                 case "Find Element By Name":
                     element = seleniumInstance.FindElement(By.Name(searchParameter));
                     break;
-
                 case "Find Element By Tag Name":
                     element = seleniumInstance.FindElement(By.TagName(searchParameter));
                     break;
-
                 case "Find Element By Class Name":
                     element = seleniumInstance.FindElement(By.ClassName(searchParameter));
                     break;
@@ -475,39 +468,9 @@ namespace taskt.Core.Automation.Commands
                 case "Find Element By Link Text":
                     element = seleniumInstance.FindElement(By.LinkText(searchParameter));
                     break;
-
-                case "Find Elements By XPath":
-                    element = seleniumInstance.FindElements(By.XPath(searchParameter));
-                    break;
-
-                case "Find Elements By ID":
-                    element = seleniumInstance.FindElements(By.Id(searchParameter));
-                    break;
-
-                case "Find Elements By Name":
-                    element = seleniumInstance.FindElements(By.Name(searchParameter));
-                    break;
-
-                case "Find Elements By Tag Name":
-                    element = seleniumInstance.FindElements(By.TagName(searchParameter));
-                    break;
-
-                case "Find Elements By Class Name":
-                    element = seleniumInstance.FindElements(By.ClassName(searchParameter));
-                    break;
-
-                case "Find Elements By CSS Selector":
-                    element = seleniumInstance.FindElements(By.CssSelector(searchParameter));
-                    break;
-
-                case "Find Elements By Link Text":
-                    element = seleniumInstance.FindElements(By.LinkText(searchParameter));
-                    break;
-
                 default:
                     throw new Exception("Element Search Type was not found: " + v_SeleniumSearchType);
             }
-
             return element;
         }
 
@@ -762,13 +725,13 @@ namespace taskt.Core.Automation.Commands
                     return;
 
                 var warning = MessageBox.Show($"Warning! Text should only be encrypted one time and is not reversible in the builder.  Would you like to proceed and convert '{targetElement.Value.ToString()}' to an encrypted value?", "Encryption Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-               
+
                 if (warning == DialogResult.Yes)
                 {
                     targetElement.Value = EncryptionServices.EncryptString(targetElement.Value.ToString(), "TASKT");
                     ElementsGridViewHelper.Rows[2].Cells[1].Value = "Encrypted";
                 }
-               
+
             }
         }
 

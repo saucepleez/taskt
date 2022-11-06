@@ -13,13 +13,11 @@
 //limitations under the License.
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Xml;
-using System.Data;
+using System.Xml.Serialization;
 
 namespace taskt.Core.Script
 {
@@ -58,22 +56,15 @@ namespace taskt.Core.Script
         public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, string scriptFilePath = "")
         {
             var script = new Core.Script.Script();
-
             //save variables to file
-
             script.Variables = scriptVariables;
-
             //save listview tags to command list
-
             int lineNumber = 1;
-
             List<Core.Script.ScriptAction> subCommands = new List<Core.Script.ScriptAction>();
-
             foreach (ListViewItem commandItem in scriptCommands)
             {
                 var command = (Core.Automation.Commands.ScriptCommand)commandItem.Tag;
                 command.LineNumber = lineNumber;
-
                 if ((command is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (command is Core.Automation.Commands.BeginContinousLoopCommand) || (command is Core.Automation.Commands.BeginListLoopCommand) || (command is Core.Automation.Commands.BeginIfCommand) || (command is Core.Automation.Commands.BeginMultiIfCommand) || (command is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (command is Core.Automation.Commands.TryCommand) || (command is Core.Automation.Commands.BeginLoopCommand) || (command is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     if (subCommands.Count == 0)  //if this is the first loop
@@ -111,11 +102,9 @@ namespace taskt.Core.Script
                     var parentCommand = subCommands[subCommands.Count - 1];
                     parentCommand.AddAdditionalAction(command);
                 }
-
                 //increment line number
                 lineNumber++;
             }
-
             //output to xml file
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
             var settings = new XmlWriterSettings
@@ -134,7 +123,7 @@ namespace taskt.Core.Script
                     {
                         serializer.Serialize(writer, script);
                     }
-                }  
+                }
             }
 
             return script;
@@ -173,7 +162,7 @@ namespace taskt.Core.Script
                     return deserializedData;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -184,7 +173,7 @@ namespace taskt.Core.Script
             XmlSerializer serializer = new XmlSerializer(typeof(Script));
 
             var actions = new Script();
-            foreach(taskt.Core.Automation.Commands.ScriptCommand cmd in commands)
+            foreach (taskt.Core.Automation.Commands.ScriptCommand cmd in commands)
             {
                 actions.AddNewParentCommand(cmd);
             }
@@ -255,30 +244,28 @@ namespace taskt.Core.Script
         /// </summary>
         public string GetDisplayValue(string requiredProperty = "")
         {
-           
             if (VariableValue is string)
             {
                 switch (requiredProperty)
                 {
                     case "type":
                     case "Type":
-                    case "TYPE":
+                    case "TYPE":  
                         return "BASIC";
                     default:
                         return (string)VariableValue;
                 }
-              
             }
-            else if(VariableValue is DataTable)
+            else if (VariableValue is DataTable)
             {
-                DataTable dataTable = (DataTable)VariableValue;              
+                DataTable dataTable = (DataTable)VariableValue;
                 var dataRow = dataTable.Rows[CurrentPosition];
-                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);            
+                return Newtonsoft.Json.JsonConvert.SerializeObject(dataRow.ItemArray);
             }
             else
             {
                 List<string> requiredValue = (List<string>)VariableValue;
-                switch(requiredProperty)
+                switch (requiredProperty)
                 {
                     case "count":
                     case "Count":
@@ -289,13 +276,13 @@ namespace taskt.Core.Script
                     case "INDEX":
                         return CurrentPosition.ToString();
                     case "tojson":
-                    case "ToJson":                
+                    case "ToJson":
                     case "toJson":
                     case "TOJSON":
                         return Newtonsoft.Json.JsonConvert.SerializeObject(requiredValue);
                     case "topipe":
                     case "ToPipe":
-                    case "toPipe":                
+                    case "toPipe":
                     case "TOPIPE":
                         return String.Join("|", requiredValue);
                     case "first":
@@ -314,7 +301,7 @@ namespace taskt.Core.Script
                         return requiredValue[CurrentPosition];
                 }
             }
-           
+
         }
     }
 

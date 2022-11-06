@@ -2,30 +2,30 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="setup variables" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a75b3ca2-aa91-4c9a-9fe8-82982cb9da61" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="setup variables" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vCounter" v_Input="1" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="9d52e8e3-48b5-49cd-8168-8cc7ac0ae678" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vCounter" v_Input="1" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPowerLevel" v_Input="8500" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="6b12e58f-639e-436d-aef1-6aef9700e729" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPowerLevel" v_Input="8500" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" v_Comment="loop 10 times as an example" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4f8a32cb-4e06-444b-8760-89c61d7aeb84" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" v_Comment="loop 10 times as an example" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="10" />
+      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandID="99162f9f-ed28-4da4-b311-7a57ab81736a" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="10" v_LoopStart="0" />
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="show power level" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="137158e1-b316-4933-904a-800534801403" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" v_Comment="show power level" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The current power level is [vPowerLevel]" v_AutoCloseAfter="0" />
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="336023a3-881c-4700-88e9-1c6117fb3dd3" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The current power level is [vPowerLevel]" v_AutoCloseAfter="0" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="perform if test" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="47a8bca9-e6cb-4de3-a450-06606c536b0e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="perform if test" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="BeginIfCommand" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <ScriptCommand xsi:type="BeginIfCommand" CommandID="321992c0-985b-4c0b-85da-9f17656ab2cd" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
           <v_IfActionParameterTable>
             <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
               <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9AcPionPara15Table060418.051533" msdata:UseCurrentLocale="true">
@@ -62,43 +62,37 @@
           </v_IfActionParameterTable>
         </ScriptCommand>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="evaluated true" CommandEnabled="true" />
+          <ScriptCommand xsi:type="CommentCommand" CommandID="14e4071e-74a1-4922-97b5-f9eaaae1c396" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="evaluated true" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That number is over 9000" v_AutoCloseAfter="0" />
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="0cae44a5-d76e-4ea2-a061-673b8ec2b66c" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That number is over 9000" v_AutoCloseAfter="0" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="ElseCommand" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="ElseCommand" CommandID="186d5f34-0385-49ee-a9a7-20fe771e898b" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" v_Comment="evaluated false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="CommentCommand" CommandID="e7e3e7e6-7d8b-4cff-936d-c653bdcef581" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" v_Comment="evaluated false" CommandEnabled="true" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That number is under 9000" v_AutoCloseAfter="0" />
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="28e916eb-7454-4e53-9ecb-3805badcd7fc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That number is under 9000" v_AutoCloseAfter="0" />
         </AdditionalScriptCommands>
         <AdditionalScriptCommands>
-          <ScriptCommand xsi:type="EndIfCommand" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" />
+          <ScriptCommand xsi:type="EndIfCommand" CommandID="10889f4b-1366-49bc-9cf7-a3d0f37a93bd" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" />
         </AdditionalScriptCommands>
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Increment by 100" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="b415d0fe-5f6a-486b-9546-860572735347" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Increment by 100" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPowerLevel" v_Input="[vPowerLevel]+100" />
+        <ScriptCommand xsi:type="VariableCommand" CommandID="03f94002-327d-4242-a8cb-5de9d1176685" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPowerLevel" v_Input="[vPowerLevel]+100" v_ReplaceInputVariables="Yes" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="EndLoopCommand" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" />
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="2330fc5d-cb11-4582-b4e4-1ad925338615" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" />
       </AdditionalScriptCommands>
     </ScriptAction>
   </Commands>
   <Variables>
-    <ScriptVariable>
-      <currentPosition>0</currentPosition>
-      <variableName>vPowerLevel</variableName>
-    </ScriptVariable>
-    <ScriptVariable>
-      <currentPosition>0</currentPosition>
-      <variableName>vCounter</variableName>
-    </ScriptVariable>
+    <ScriptVariable />
+    <ScriptVariable />
   </Variables>
 </Script>

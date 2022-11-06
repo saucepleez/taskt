@@ -28,7 +28,7 @@ namespace taskt.Core
         public void Save(ApplicationSettings appSettings)
         {
             //create settings directory
-           
+
             var settingsDir = Core.IO.Folders.GetFolder(Folders.FolderType.SettingsFolder);
 
             //if directory does not exist then create directory
@@ -38,7 +38,7 @@ namespace taskt.Core
             }
 
             //create file path
-            var filePath =  System.IO.Path.Combine(settingsDir, "AppSettings.xml");
+            var filePath = System.IO.Path.Combine(settingsDir, "AppSettings.xml");
 
             //create filestream
             var fileStream = System.IO.File.Create(filePath);
@@ -184,7 +184,7 @@ namespace taskt.Core
             InsertVariableAtCursor = true;
             InsertElseAutomatically = false;
             InsertCommentIfLoopAbove = false;
-            GroupingBySubgroup = true;
+            GroupingBySubgroup = false;
             DontShowValidationMessage = false;
             ShowSampleUsageInDescription = true;
             DefaultBrowserInstanceName = "RPABrowser";

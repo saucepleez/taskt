@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -474,7 +475,7 @@ namespace taskt.Core.Server
 
             var client = new RestSharp.RestClient(endpoint);
             var request = new RestSharp.RestRequest();
-            request.Method = RestSharp.Method.POST;
+            request.Method = RestSharp.Method.Post;
             request.AddHeader("Content-Type", "text/plain");
 
             if (listenerSettings.RequireListenerAuthenticationKey)
@@ -570,7 +571,7 @@ namespace taskt.Core.Server
             request.Timeout = int.Parse(timeout);
 
 
-            RestSharp.IRestResponse resp = client.Execute(request);
+            RestSharp.RestResponse resp = client.Execute(request);
 
             string content;
             if (resp.ErrorMessage is null)
