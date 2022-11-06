@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertySelectionChangeEvent("cmbReplaceAction_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
         [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
         public string v_ReplaceAction { get; set; }
@@ -105,20 +105,33 @@ namespace taskt.Core.Automation.Commands
 
             var targetDT = v_InputDataTable.GetDataTableVariable(engine);
 
-            string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            string filterAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
+            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
+            //string filterAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
+            var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
+            var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
             string newValue = v_NewValue.ConvertToUserVariable(engine);
 
             int cols = targetDT.Columns.Count;
             int rows = targetDT.Rows.Count;
 
+            //for (int i = 0; i < rows; i++)
+            //{
+            //    for (int j = 0; j < cols; j++)
+            //    {
+            //        string value = (targetDT.Rows[i][j] == null) ? "" : targetDT.Rows[i][j].ToString();
+            //        if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_ReplaceActionParameterTable, engine))
+            //        {
+            //            targetDT.Rows[i][j] = newValue;
+            //        }
+            //    }
+            //}
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    string value = (targetDT.Rows[i][j] == null) ? "" : targetDT.Rows[i][j].ToString();
-                    if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_ReplaceActionParameterTable, engine))
+                    string value = targetDT.Rows[i][j]?.ToString() ?? "";
+                    if (checkFunc(value, parameters))
                     {
                         targetDT.Rows[i][j] = newValue;
                     }
