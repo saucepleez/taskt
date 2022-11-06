@@ -1478,7 +1478,7 @@ namespace taskt.Core.Automation.Commands
         //}
 
         /// <summary>
-        /// Get Check Methods for Filter/Replace List/Dictionary/DataTable commands
+        /// Get Check Methods to Filter/Replace for List/Dictionary/DataTable commands
         /// </summary>
         /// <param name="targetTypeName"></param>
         /// <param name="filterActionName"></param>
