@@ -1477,6 +1477,15 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
+        /// <summary>
+        /// Get Check Methods for Filter/Replace List/Dictionary/DataTable commands
+        /// </summary>
+        /// <param name="targetTypeName"></param>
+        /// <param name="filterActionName"></param>
+        /// <param name="parameters"></param>
+        /// <param name="engine"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
         public static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc(string targetTypeName, string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
             string tp = command.GetUISelectionValue(targetTypeName, "Target Type", engine);
