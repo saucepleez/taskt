@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        [PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
+        //[PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyControlIntoCommandField("ReplaceActionComboboxHelper")]
+        //[PropertyControlIntoCommandField("ReplaceActionComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
         [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        [PropertyControlIntoCommandField("ReplaceParametersGridViewHelper")]
+        //[PropertyControlIntoCommandField("ReplaceParametersGridViewHelper")]
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
@@ -78,17 +78,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Replace Value")]
         public string v_ReplaceValue { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox TargetTypeComboboxHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private ComboBox TargetTypeComboboxHelper;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox ReplaceActionComboboxHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private ComboBox ReplaceActionComboboxHelper;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ReplaceParametersGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView ReplaceParametersGridViewHelper;
 
         public ReplaceListCommand()
         {
