@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertySelectionChangeEvent("cmbFilterAction_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
@@ -146,18 +146,34 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
+            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
+            //string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
+            var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
+            var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_ColumnType), nameof(v_FilterAction), parameters, engine, this);
 
             var res = DataTableControls.CloneColumnName(targetDT);
 
             int cols = targetDT.Columns.Count;
 
             int rows = targetDT.Rows.Count;
+            //for (int i = 0; i < rows; i++)
+            //{
+            //    string value = (targetDT.Rows[i][colIndex] == null) ? "" : targetDT.Rows[i][colIndex].ToString();
+            //    if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_FilterActionParameterTable, engine))
+            //    {
+            //        int r = res.Rows.Count;
+            //        res.Rows.Add();
+            //        for (int j = 0; j < cols; j++)
+            //        {
+            //            res.Rows[r][j] = targetDT.Rows[i][j];
+            //        }
+            //    }
+            //}
             for (int i = 0; i < rows; i++)
             {
-                string value = (targetDT.Rows[i][colIndex] == null) ? "" : targetDT.Rows[i][colIndex].ToString();
-                if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_FilterActionParameterTable, engine))
+                //string value = (targetDT.Rows[i][colIndex] == null) ? "" : targetDT.Rows[i][colIndex].ToString();
+                string value = targetDT.Rows[i][colIndex]?.ToString() ?? "";
+                if (checkFunc(value, parameters))
                 {
                     int r = res.Rows.Count;
                     res.Rows.Add();
