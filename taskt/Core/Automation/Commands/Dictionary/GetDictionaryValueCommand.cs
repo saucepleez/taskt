@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Set Empty")]
         [PropertyIsOptional(true, "Error")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_IfKeyNotExists { get; set; }
+        public string v_IfKeyDoesNotExists { get; set; }
 
         public GetDictionaryValueCommand()
         {
@@ -106,7 +106,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyNotExists), "Key Not Exists", engine);
+                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExists)
                 {
                     case "error":

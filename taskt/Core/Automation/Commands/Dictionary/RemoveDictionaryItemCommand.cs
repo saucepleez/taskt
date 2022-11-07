@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Ignore")]
         [PropertyIsOptional(true, "Error")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_IfKeyNotExists { get; set; }
+        public string v_IfKeyDoesNotExists { get; set; }
 
         public RemoveDictionaryItemCommand()
         {
@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
 
             if (!dic.Remove(vKey))
             {
-                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyNotExists), "Key Not Exists", engine);
+                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExists)
                 {
                     case "error":

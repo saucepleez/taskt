@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Add")]
         [PropertyIsOptional(true, "Error")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_IfKeyNotExists { get; set; }
+        public string v_IfKeyDoesNotExists { get; set; }
 
         public SetDictionaryValueCommand()
         {
@@ -99,13 +99,14 @@ namespace taskt.Core.Automation.Commands
             //}
             (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
+            string valueToSet = v_Value.ConvertToUserVariable(engine);
             if (dic.ContainsKey(vKey))
             {
-                dic[vKey] = v_Value.ConvertToUserVariable(engine);
+                dic[vKey] = valueToSet;
             }
             else
             {
-                string ifNotExits = this.GetUISelectionValue(nameof(v_IfKeyNotExists), "Key Not Exists", engine);
+                string ifNotExits = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExits)
                 {
                     case "error":
@@ -114,7 +115,7 @@ namespace taskt.Core.Automation.Commands
                     case "ignore":
                         break;
                     case "add":
-                        dic.Add(vKey, v_Value.ConvertToUserVariable(engine));
+                        dic.Add(vKey, valueToSet);
                         break;
                 }
             }
