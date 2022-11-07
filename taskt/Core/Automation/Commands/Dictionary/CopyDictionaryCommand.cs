@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -66,38 +61,5 @@ namespace taskt.Core.Automation.Commands
 
             newDic.StoreInUserVariable(engine, v_OutputName);
         }
-        
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Dictionary: '" + v_InputData + "', Result: '" + v_OutputName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_InputData))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_OutputName))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "New Dictionary is empty.\n";
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -66,38 +61,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Dictionary does not has key name " + vKey);
             }
         }
-        
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [From: {v_InputData}, Key: {v_Key}]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_InputData))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_Key))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Key is empty.\n";
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
