@@ -51,6 +51,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Value")]
         public string v_Value { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Key does not Exists")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Add")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_IfKeyNotExists { get; set; }
+
         public SetDictionaryValueCommand()
         {
             this.CommandName = "SetDictionaryValueCommand";
@@ -88,11 +101,22 @@ namespace taskt.Core.Automation.Commands
 
             if (dic.ContainsKey(vKey))
             {
-                dic[vKey] = v_Value.ConvertToUserVariable(sender);
+                dic[vKey] = v_Value.ConvertToUserVariable(engine);
             }
             else
             {
-                throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+                string ifNotExits = this.GetUISelectionValue(nameof(v_IfKeyNotExists), "Key Not Exists", engine);
+                switch (ifNotExits)
+                {
+                    case "error":
+                        throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+
+                    case "ignore":
+                        break;
+                    case "add":
+                        dic.Add(vKey, v_Value.ConvertToUserVariable(engine));
+                        break;
+                }
             }
         }
     }

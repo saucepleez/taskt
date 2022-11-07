@@ -40,6 +40,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Key")]
         public string v_Key { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Key does not Exists")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_IfKeyNotExists { get; set; }
+
         public RemoveDictionaryItemCommand()
         {
             this.CommandName = "RemoveDictionaryItemCommand";
@@ -59,7 +71,12 @@ namespace taskt.Core.Automation.Commands
 
             if (!dic.Remove(vKey))
             {
-                throw new Exception("Dictionary does not has key name " + vKey);
+                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyNotExists), "Key Not Exists", engine);
+                switch (ifNotExists)
+                {
+                    case "error":
+                        throw new Exception("Dictionary does not has key name " + vKey);
+                }
             }
         }
     }
