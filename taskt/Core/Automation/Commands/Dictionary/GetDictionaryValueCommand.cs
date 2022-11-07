@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -66,28 +64,29 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            
-            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
 
-            string vKey;
-            if (String.IsNullOrEmpty(v_Key))
-            {
-                var variable = v_InputData.GetRawVariable(engine);
-                int pos = variable.CurrentPosition;
-                string[] keys = dic.Keys.ToArray();
-                if ((pos >= 0) && (pos < keys.Length))
-                {
-                    vKey = keys[pos];
-                }
-                else
-                {
-                    throw new Exception("Strange Current Position value in Dictionary " + pos);
-                }
-            }
-            else
-            {
-                vKey = v_Key.ConvertToUserVariable(sender);
-            }
+            //Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+
+            //string vKey;
+            //if (String.IsNullOrEmpty(v_Key))
+            //{
+            //    var variable = v_InputData.GetRawVariable(engine);
+            //    int pos = variable.CurrentPosition;
+            //    string[] keys = dic.Keys.ToArray();
+            //    if ((pos >= 0) && (pos < keys.Length))
+            //    {
+            //        vKey = keys[pos];
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Strange Current Position value in Dictionary " + pos);
+            //    }
+            //}
+            //else
+            //{
+            //    vKey = v_Key.ConvertToUserVariable(sender);
+            //}
+            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
             if (dic.ContainsKey(vKey))
             {

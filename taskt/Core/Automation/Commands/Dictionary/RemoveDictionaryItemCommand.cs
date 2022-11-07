@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -37,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Key", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyIsOptional(true, "Current Position")]
         [PropertyDisplayText(true, "Key")]
         public string v_Key { get; set; }
 
@@ -52,10 +51,12 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vKey = v_Key.ConvertToUserVariable(sender);
+            //var vKey = v_Key.ConvertToUserVariable(sender);
 
-            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
-            
+            //Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+
+            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
+
             if (!dic.Remove(vKey))
             {
                 throw new Exception("Dictionary does not has key name " + vKey);
