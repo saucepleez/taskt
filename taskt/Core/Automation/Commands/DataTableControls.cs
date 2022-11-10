@@ -7,9 +7,35 @@ using System.Data;
 
 namespace taskt.Core
 {
-    internal class DataTableControls
+    internal static class DataTableControls
     {
-        public System.Data.DataTable CreateDataTable(string connection, string query)
+        /// <summary>
+        /// get DataTable variable from variable name
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static DataTable GetDataTableVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            Script.ScriptVariable v = variableName.GetRawVariable(engine);
+            if (v.VariableValue is DataTable)
+            {
+                return (DataTable)v.VariableValue;
+            }
+            else
+            {
+                throw new Exception("Variable " + variableName + " is not DataTable");
+            }
+        }
+
+        public static void StoreInUserVariable(this DataTable value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
+
+        public static System.Data.DataTable CreateDataTable(string connection, string query)
         {
             //create vars
             var dataTable = new DataTable();

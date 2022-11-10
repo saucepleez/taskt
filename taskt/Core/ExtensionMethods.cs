@@ -1000,12 +1000,6 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", sender, false);
         }
 
-
-        public static void StoreInUserVariable(this DataTable value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
         public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
             StoreInUserVariable(targetVariable, value, sender, false);
@@ -1081,20 +1075,6 @@ namespace taskt.Core
             else
             {
                 return searchedVaiable;
-            }
-        }
-
-
-        public static DataTable GetDataTableVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is DataTable)
-            {
-                return (DataTable)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not DataTable");
             }
         }
 
