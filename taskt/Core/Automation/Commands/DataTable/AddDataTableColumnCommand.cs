@@ -40,6 +40,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Column")]
         public string v_AddColumnName { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Column Exists")]
+        [InputSpecification("")]
+        [SampleUsage("**Error** or **Ignore** or **Replace**")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Replace")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfColumnExists { get; set; }
+
         public AddDataTableColumnCommand()
         {
             this.CommandName = "AddDataTableColumnCommand";
@@ -56,11 +68,24 @@ namespace taskt.Core.Automation.Commands
 
             string newColName = v_AddColumnName.ConvertToUserVariable(engine);
 
+            string ifColumnExists = this.GetUISelectionValue(nameof(v_IfColumnExists), "If Column Exists", engine);
+
             for (int i = 0; i < myDT.Columns.Count; i++)
             {
                 if (newColName == myDT.Columns[i].ColumnName)
                 {
-                    throw new Exception("Column Name " + v_AddColumnName + " is already exists");
+                    switch (ifColumnExists)
+                    {
+                        case "error":
+                            throw new Exception("Column Name " + v_AddColumnName + " is already exists");
+
+                        case "ignore":
+                            return;
+
+                        case "replace":
+                            myDT.Columns.Remove(newColName);
+                            break;
+                    }
                 }
             }
 
