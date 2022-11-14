@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using taskt.Core.Automation.Commands;
+using System.Runtime.CompilerServices;
 
 namespace taskt.Core
 {
@@ -19,15 +21,33 @@ namespace taskt.Core
         public static DataTable GetDataTableVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is DataTable)
+            if (v.VariableValue is DataTable table)
             {
-                return (DataTable)v.VariableValue;
+                return table;
             }
             else
             {
                 throw new Exception("Variable " + variableName + " is not DataTable");
             }
         }
+
+        /// <summary>
+        /// get DataTable variable and Column Index from variable name property and column properies
+        /// </summary>
+        /// <param name="commnad"></param>
+        /// <param name="tableName"></param>
+        /// <param name="columnTypeName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndex(this ScriptCommand commnad, string tableName, string columnTypeName, string columnName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            var targetTable = commnad.ConvertToUserVariable(tableName, "DataTable", engine);
+            var table = targetTable.GetDataTableVariable(engine);
+            var index = commnad.GetColumnIndex(table, columnTypeName, columnName, engine);
+            return (table, index);
+        }
+
 
         public static void StoreInUserVariable(this DataTable value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
@@ -126,27 +146,61 @@ namespace taskt.Core
 
         public static int GetColumnIndex(DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
         {
-            int index;
-            if (int.TryParse(columnIndex.ConvertToUserVariable(engine), out index))
+            //int index;
+            //if (int.TryParse(columnIndex.ConvertToUserVariable(engine), out index))
+            //{
+            //    if (index < 0)
+            //    {
+            //        index = table.Columns.Count + index;
+            //    }
+            //    if (isColumnExists(table, index))
+            //    {
+            //        return index;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
+            //    }
+            //}
+            //else
+            //{
+            //    throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
+            //}
+            int index = new PropertyConvertTag(columnIndex, "Column Index").ConvertToUserVariableAsInteger(engine);
+            if (index < 0)
             {
-                if (index < 0)
-                {
-                    index = table.Columns.Count + index;
-                }
-                if (isColumnExists(table, index))
-                {
-                    return index;
-                }
-                else
-                {
-                    throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
-                }
+                index = table.Columns.Count + index;
+            }
+            if (isColumnExists(table, index))
+            {
+                return index;
             }
             else
             {
                 throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
             }
         }
+
+        public static int GetColumnIndex(this ScriptCommand command, DataTable table, string columnTypeName, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        {
+            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+
+            int columnIndex = 0;
+            switch(columnType)
+            {
+                case "column name":
+                    string targetColumnName = command.ConvertToUserVariable(columnName, "Column Name", engine);
+                    columnIndex = GetColumnIndexFromName(table, targetColumnName, engine);
+                    break;
+
+                case "index":
+                    string targetColumnIndex = command.ConvertToUserVariable(columnName, "Column Index", engine);
+                    columnIndex = GetColumnIndex(table, targetColumnIndex, engine);
+                    break;
+            }
+            return columnIndex;
+        }
+
 
         public static int GetColumnIndexFromName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
