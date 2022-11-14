@@ -102,7 +102,7 @@ namespace taskt.Core.Automation.Commands
             string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
 
             //Query required from workbook using OLEDB
-            DataTableControls dataSetCommand = new DataTableControls();
+            //DataTableControls dataSetCommand = new DataTableControls();
 
             string param = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=""" + vFilePath + @""";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""";
             string queue = "Select " + vKeyColumn + "," + vValueColumn + " From " + "[" + vSheet + "$]";
@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
             // DBG
             //MessageBox.Show(param + "\n" + queue);
 
-            DataTable requiredData = dataSetCommand.CreateDataTable(param, queue);
+            DataTable requiredData = DataTableControls.CreateDataTable(param, queue);
             var dictlist = requiredData.AsEnumerable().Select(x => new
             {
                 keys = (string)x[v_KeyColumn],

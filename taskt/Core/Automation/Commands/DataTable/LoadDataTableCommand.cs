@@ -83,11 +83,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTableControls dataSetCommand = new DataTableControls();
+            //DataTableControls dataSetCommand = new DataTableControls();
 
             string filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
 
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ConvertToUserVariable(sender)};IMEX=1""", "Select * From [" + v_SheetName.ConvertToUserVariable(sender) + "$]");
+            DataTable requiredData = DataTableControls.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ConvertToUserVariable(sender)};IMEX=1""", "Select * From [" + v_SheetName.ConvertToUserVariable(sender) + "$]");
 
             requiredData.StoreInUserVariable(engine, v_DataSetName);
         }
