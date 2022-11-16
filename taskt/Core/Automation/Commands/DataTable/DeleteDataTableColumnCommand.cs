@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -68,53 +62,24 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            if (colType == "column name")
-            {
-                string trgColumn = DataTableControls.GetColumnName(myDT, v_DeleteColumnName, engine);
-                myDT.Columns.Remove(trgColumn);
-            }
-            else
-            {
-                int colIndex = DataTableControls.GetColumnIndex(myDT, v_DeleteColumnName, engine);
-                myDT.Columns.RemoveAt(colIndex);
-            }
+            //string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+
+            //if (colType == "column name")
+            //{
+            //    string trgColumn = DataTableControls.GetColumnName(myDT, v_DeleteColumnName, engine);
+            //    myDT.Columns.Remove(trgColumn);
+            //}
+            //else
+            //{
+            //    int colIndex = DataTableControls.GetColumnIndex(myDT, v_DeleteColumnName, engine);
+            //    myDT.Columns.RemoveAt(colIndex);
+            //}
+            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DeleteColumnName), engine);
+
+            myDT.Columns.RemoveAt(colIndex);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Delete DataTable '" + v_DataTableName + "' Column '" + v_DeleteColumnName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_DeleteColumnName))
-        //    {
-        //        this.validationResult += "Column Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
