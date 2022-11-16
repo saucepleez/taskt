@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -67,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                 Dictionary<string, string> tDic = new Dictionary<string, string>();
                 for (int i = 0; i < srcDT.Columns.Count; i++)
                 {
-                    tDic.Add(srcDT.Columns[i].ColumnName, srcDT.Rows[j][i].ToString());
+                    tDic.Add(srcDT.Columns[i].ColumnName, srcDT.Rows[j][i]?.ToString() ?? "");
                 }
 
                 jsonList.Add(tDic);
@@ -76,37 +72,5 @@ namespace taskt.Core.Automation.Commands
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonList);
             json.StoreInUserVariable(engine, v_OutputVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-        
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' to JSON '" + v_OutputVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_OutputVariableName))
-        //    {
-        //        this.validationResult += "Result JSON is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

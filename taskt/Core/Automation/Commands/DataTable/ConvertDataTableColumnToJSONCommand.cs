@@ -104,12 +104,23 @@ namespace taskt.Core.Automation.Commands
             //        break;
             //}
 
-            (var srcDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
-            List<string> myList = new List<string>();
-            for (int i = 0; i < srcDT.Rows.Count; i++)
+            //(var srcDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
+            //List<string> myList = new List<string>();
+            //for (int i = 0; i < srcDT.Rows.Count; i++)
+            //{
+            //    myList.Add(srcDT.Rows[i][colIndex]?.ToString() ?? "");
+            //}
+
+            var listCommand = new ConvertDataTableColumnToListCommand
             {
-                myList.Add(srcDT.Rows[i][colIndex]?.ToString() ?? "");
-            }
+                v_DataTableName = this.v_DataTableName,
+                v_ColumnType = this.v_ColumnType,
+                v_DataColumnIndex = this.v_DataColumnIndex,
+                v_OutputVariableName = ExtensionMethods.GetInnerVariableName(0, engine)
+            };
+            listCommand.RunCommand(engine);
+
+            List<string> myList = (List<string>)ExtensionMethods.GetInnerVariable(0, engine).VariableValue;
 
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(myList);
             json.StoreInUserVariable(engine, v_OutputVariableName);

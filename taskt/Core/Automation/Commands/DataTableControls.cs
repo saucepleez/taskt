@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
+using System.Linq;
 using taskt.Core.Automation.Commands;
-using System.Runtime.CompilerServices;
 
 namespace taskt.Core
 {
@@ -34,17 +31,54 @@ namespace taskt.Core
         /// <summary>
         /// get DataTable variable and Column Index from variable name property and column properies
         /// </summary>
-        /// <param name="commnad"></param>
+        /// <param name="command"></param>
         /// <param name="tableName"></param>
         /// <param name="columnTypeName"></param>
         /// <param name="columnName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndex(this ScriptCommand commnad, string tableName, string columnTypeName, string columnName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            var targetTable = commnad.ConvertToUserVariable(tableName, "DataTable", engine);
+            var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
             var table = targetTable.GetDataTableVariable(engine);
-            var index = commnad.GetColumnIndex(table, columnTypeName, columnName, engine);
+            var index = command.GetColumnIndex(table, columnTypeName, columnName, engine);
+            return (table, index);
+        }
+
+        /// <summary>
+        /// get DataTable variable and Row Index from variable name property and row name property. If row index is empty, return value is current position.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="tableName"></param>
+        /// <param name="rowName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static (DataTable table, int rowIndex) GetDataTableVariableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
+            var table = targetTable.GetDataTableVariable(engine);
+
+            var rowValue = command.ConvertToUserVariable(rowName, "Row Index", engine);
+            int index;
+            if (String.IsNullOrEmpty(rowValue))
+            {
+                index = targetTable.GetRawVariable(engine).CurrentPosition;
+            }
+            else
+            {
+                index = command.ConvertToUserVariableAsInteger(rowName, "Row Index", engine);
+            }
+            if (index < 0)
+            {
+                index += table.Rows.Count;
+            }
+
+            if ((index < 0) || (index >= table.Rows.Count))
+            {
+                throw new Exception("Strange Row Index '" + rowName + "', parsed '" + index + "'");
+            }
+
             return (table, index);
         }
 
@@ -81,18 +115,19 @@ namespace taskt.Core
             return dataTable;
         }
 
-        public static int GetRowIndex(string dataTableName, string rowIndex, Automation.Engine.AutomationEngineInstance engine)
+        public static int GetRowIndex(string dataTableName, string rowIndexName, Automation.Engine.AutomationEngineInstance engine)
         {
             var srcDT = dataTableName.GetDataTableVariable(engine);
 
             int index;
-            if (String.IsNullOrEmpty(rowIndex))
+            if (String.IsNullOrEmpty(rowIndexName))
             {
                 index = dataTableName.GetRawVariable(engine).CurrentPosition;
             }
             else
             {
-                index = int.Parse(rowIndex.ConvertToUserVariable(engine));
+                //index = int.Parse(rowIndex.ConvertToUserVariable(engine));
+                index = new PropertyConvertTag(rowIndexName, "Row Index").ConvertToUserVariableAsInteger(engine);
                 if (index < 0)
                 {
                     index = srcDT.Rows.Count + index;
@@ -101,7 +136,7 @@ namespace taskt.Core
 
             if ((index < 0) || (index >= srcDT.Rows.Count))
             {
-                throw new Exception("Strange Row Index " + rowIndex + ", parsed " + index);
+                throw new Exception("Strange Row Index " + rowIndexName + ", parsed " + index);
             }
 
             return index;
