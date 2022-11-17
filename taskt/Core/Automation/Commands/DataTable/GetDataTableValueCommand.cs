@@ -86,25 +86,30 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            string columnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+            //string columnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
-            string columnPosition = v_ColumnIndex.ConvertToUserVariable(engine);
+            //string columnPosition = v_ColumnIndex.ConvertToUserVariable(engine);
 
 
-            int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            //int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
-            string v;
-            if (columnType == "column name")
-            {
-                v = (myDT.Rows[rowIndex][columnPosition] == null) ? "" : myDT.Rows[rowIndex][columnPosition].ToString();
-            }
-            else
-            {
-                int colIndex = int.Parse(columnPosition);
-                v = (myDT.Rows[rowIndex][colIndex] == null) ? "" : myDT.Rows[rowIndex][colIndex].ToString();
-            }
+            //string v;
+            //if (columnType == "column name")
+            //{
+            //    v = (myDT.Rows[rowIndex][columnPosition] == null) ? "" : myDT.Rows[rowIndex][columnPosition].ToString();
+            //}
+            //else
+            //{
+            //    int colIndex = int.Parse(columnPosition);
+            //    v = (myDT.Rows[rowIndex][colIndex] == null) ? "" : myDT.Rows[rowIndex][colIndex].ToString();
+            //}
+
+            (var myDT, var rowIndex, var columnIndex) = this.GetDataTableVariableAndRowColumnIndeies(nameof(v_DataTableName), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
+
+            string v = myDT.Rows[rowIndex][columnIndex]?.ToString() ?? "";
+
             v.StoreInUserVariable(engine, v_UserVariableName);
         }
     }

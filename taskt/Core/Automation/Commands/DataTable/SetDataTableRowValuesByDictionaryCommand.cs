@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -79,15 +74,35 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            //int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowValues, engine);
+            (var myDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
+
             var myDic = v_RowValues.GetDictionaryVariable(engine);
 
-            int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowValues, engine);
-
-            string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
+            //string ifNotExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
+            string ifKeyNotExists = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Not Exists", engine);
 
             // get columns list
-            List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
+            //List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
+            new GetDataTableColumnListCommand
+            {
+                v_DataTableName = this.v_DataTableName,
+                v_OutputList = ExtensionMethods.GetInnerVariableName(0, engine)
+            }.RunCommand(engine);
+            var columns = (List<string>)ExtensionMethods.GetInnerVariable(0, engine).VariableValue;
+
+            if (ifKeyNotExists == "error")
+            {
+                // check key and throw exception
+                foreach(var item in myDic)
+                {
+                    if (!columns.Contains(item.Key))
+                    {
+                        throw new Exception("Column name " + item.Key + " does not exists");
+                    }
+                }
+            }
 
             foreach(var item in myDic)
             {
@@ -95,60 +110,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     myDT.Rows[rowIndex][item.Key] = item.Value;
                 }
-                else if (notExistsKey == "error")
-                {
-                    throw new Exception("Column name " + item.Key + " does not exists");
-                }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Row '" + v_RowIndex + "' By Dictionary '" + v_RowValues + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_RowIndex))
-        //    {
-        //        this.validationResult += "Row Index is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int index;
-        //        if (int.TryParse(v_RowIndex, out index))
-        //        {
-        //            if (index < 0)
-        //            {
-        //                this.validationResult += "Row Index is less than 0.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_RowValues))
-        //    {
-        //        this.validationResult += "Dictionary Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

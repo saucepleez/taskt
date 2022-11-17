@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -90,18 +85,27 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
-            DataTable addDT = v_RowName.GetDataTableVariable(engine);
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            //int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            (var myDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
 
-            int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            //DataTable addDT = v_RowName.GetDataTableVariable(engine);
+            //int srcRowIndex = DataTableControls.GetRowIndex(v_RowName, v_SrcRowIndex, engine);
+            (var addDT, var srcRowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_RowName), nameof(v_SrcRowIndex), engine);
 
-            int srcRowIndex = DataTableControls.GetRowIndex(v_RowName, v_SrcRowIndex, engine);
-
-            string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
+            //string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
+            string ifNotColumnExists = this.GetUISelectionValue(nameof(v_NotExistsKey), "Column not exists", engine);
 
             // get columns list
-            List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
-            if (notExistsKey == "error")
+            //List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
+            new GetDataTableColumnListCommand
+            {
+                v_DataTableName = this.v_DataTableName,
+                v_OutputList = ExtensionMethods.GetInnerVariableName(0, engine)
+            }.RunCommand(engine);
+            var columns = (List<string>)ExtensionMethods.GetInnerVariable(0, engine).VariableValue;
+
+            if (ifNotColumnExists == "error")
             {
                 for (int i = 0; i < addDT.Columns.Count; i++)
                 {
@@ -119,71 +123,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Row '" + v_RowIndex + "' By DataTable '" + v_RowName + "' Row '" + v_SrcRowIndex + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name to setted is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_RowIndex))
-        //    {
-        //        this.validationResult += "Row index to setted is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int index;
-        //        if (int.TryParse(this.v_RowIndex, out index))
-        //        {
-        //            if (index < 0)
-        //            {
-        //                this.validationResult += "Row index to setted is less than 0.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_RowName))
-        //    {
-        //        this.validationResult += "DataTable name to set is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SrcRowIndex))
-        //    {
-        //        this.validationResult += "Row Index to set is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int index;
-        //        if (int.TryParse(this.v_SrcRowIndex, out index))
-        //        {
-        //            if (index < 0)
-        //            {
-        //                this.validationResult += "Row index to setted is less than 0.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

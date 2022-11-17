@@ -196,11 +196,6 @@ namespace taskt.Core.Automation.Commands
         {
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
-        }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [ DataTable: '" + this.v_InputDataTable + "', Column: '" + this.v_TargetColumnIndex + "', Type: '" + this.v_NewValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_NewValue + "']";
-        //}
+        
     }
 }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -104,12 +100,27 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            //string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+
+            //string trgColumnName;
+            //if (colType == "column name")
+            //{
+            //    trgColumnName = DataTableControls.GetColumnName(myDT, v_SetColumnName, engine);
+            //}
+            //else
+            //{
+            //    int colIndex = DataTableControls.GetColumnIndex(myDT, v_SetColumnName, engine);
+            //    trgColumnName = myDT.Columns[colIndex].ColumnName;
+            //}
+            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+            string trgColumnName = myDT.Columns[colIndex].ColumnName;
 
             List<string> myList = v_SetListName.GetListVariable(engine);
 
-            string ifRowNotEnough = v_IfRowNotEnough.GetUISelectionValue("v_IfRowNotEnough", this, engine);
-
+            //string ifRowNotEnough = v_IfRowNotEnough.GetUISelectionValue("v_IfRowNotEnough", this, engine);
+            string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check
             if (myDT.Rows.Count < myList.Count)
             {
@@ -123,24 +134,11 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            string ifListNotEnough = v_IfListNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
-
+            //string ifListNotEnough = v_IfListNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
+            string ifListNotEnough = this.GetUISelectionValue(nameof(v_IfListNotEnough), "List Not Enough", engine);
             if ((myDT.Rows.Count > myList.Count) && (ifListNotEnough == "error"))
             {
                 throw new Exception("The number of List items is less than the rows");
-            }
-
-            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
-
-            string trgColumnName;
-            if (colType == "column name")
-            {
-                trgColumnName = DataTableControls.GetColumnName(myDT, v_SetColumnName, engine);
-            }
-            else
-            {
-                int colIndex = DataTableControls.GetColumnIndex(myDT, v_SetColumnName, engine);
-                trgColumnName = myDT.Columns[colIndex].ColumnName;
             }
 
             int maxRow = (myDT.Rows.Count > myList.Count) ? myList.Count : myDT.Rows.Count;
@@ -157,42 +155,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Column Name '" + v_SetColumnName + "' List '" + v_SetListName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SetListName))
-        //    {
-        //        this.validationResult += "List Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SetColumnName))
-        //    {
-        //        this.validationResult += "Column Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
