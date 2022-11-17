@@ -82,6 +82,22 @@ namespace taskt.Core
             return (table, index);
         }
 
+        /// <summary>
+        /// get DataTable variable Row Index, and Column Index from variable name property and row, column name properties. If row index is empty, return value is current position.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="tableName"></param>
+        /// <param name="rowName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static (DataTable table, int rowIndex, int columnIndex) GetDataTableVariableAndRowColumnIndeies(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Core.Automation.Engine.AutomationEngineInstance engine)
+        {
+            (var table, var rowIndex) = command.GetDataTableVariableAndRowIndex(tableName, rowName, engine);
+            (_, var columnIndex) = command.GetDataTableVariableAndColumnIndex(tableName, columnTypeName, columnName, engine);
+
+            return (table, rowIndex, columnIndex);
+        }
+
 
         public static void StoreInUserVariable(this DataTable value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
