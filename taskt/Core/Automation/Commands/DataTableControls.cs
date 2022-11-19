@@ -218,7 +218,12 @@ namespace taskt.Core
             throw new Exception("Strange Column Name " + columnName);
         }
 
-        public static DataTable CloneColumnName(DataTable table)
+        /// <summary>
+        /// return DataTable with the column names of argument table copied
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public static DataTable CloneDataTableOnlyColumnName(DataTable table)
         {
             DataTable ret = new DataTable();
             int cols = table.Columns.Count;

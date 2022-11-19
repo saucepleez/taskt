@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands
             var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_ColumnType), nameof(v_FilterAction), parameters, engine, this);
 
-            var res = DataTableControls.CloneColumnName(targetDT);
+            var res = DataTableControls.CloneDataTableOnlyColumnName(targetDT);
 
             int cols = targetDT.Columns.Count;
 
