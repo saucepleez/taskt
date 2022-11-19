@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Core;
-using System;
+﻿using System;
 using System.Reflection;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 

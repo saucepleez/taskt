@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Commands;
 
-namespace taskt.Core
+namespace taskt.Core.Automation.Commands
 {
     internal static class ExcelControls
     {
