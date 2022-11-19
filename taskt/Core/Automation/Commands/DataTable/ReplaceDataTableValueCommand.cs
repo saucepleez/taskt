@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Replace values.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Replace values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ReplaceDataTableValueCommand : ScriptCommand
     {
@@ -62,6 +63,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
@@ -158,24 +161,5 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
-        //    ReplaceActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_ReplaceAction", CommandControls.CommandControlType.Body)[0];
-        //    ReplaceParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_ReplaceActionParameterTable", CommandControls.CommandControlType.Body)[0];
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [ DataTable: '" + this.v_InputDataTable + "', Type: '" + this.v_NewValue + "', Action: '" + this.v_ReplaceAction + "', Replace: '" + this.v_NewValue + "']";
-        //}
     }
 }
