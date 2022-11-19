@@ -131,34 +131,7 @@ namespace taskt.Core
             return dataTable;
         }
 
-        //public static int GetRowIndex(string dataTableName, string rowIndexName, Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    var srcDT = dataTableName.GetDataTableVariable(engine);
-
-        //    int index;
-        //    if (String.IsNullOrEmpty(rowIndexName))
-        //    {
-        //        index = dataTableName.GetRawVariable(engine).CurrentPosition;
-        //    }
-        //    else
-        //    {
-        //        //index = int.Parse(rowIndex.ConvertToUserVariable(engine));
-        //        index = new PropertyConvertTag(rowIndexName, "Row Index").ConvertToUserVariableAsInteger(engine);
-        //        if (index < 0)
-        //        {
-        //            index = srcDT.Rows.Count + index;
-        //        }
-        //    }
-
-        //    if ((index < 0) || (index >= srcDT.Rows.Count))
-        //    {
-        //        throw new Exception("Strange Row Index " + rowIndexName + ", parsed " + index);
-        //    }
-
-        //    return index;
-        //}
-
-        public static bool IsColumnExists(DataTable table, string columnName)
+        private static bool IsColumnExists(DataTable table, string columnName)
         {
             for (int i = 0; i < table.Columns.Count; i++)
             {
@@ -169,7 +142,7 @@ namespace taskt.Core
             }
             return false;
         }
-        public static bool IsColumnExists(DataTable table, int columnIndex)
+        private static bool IsColumnExists(DataTable table, int columnIndex)
         {
             if (columnIndex >= 0)
             {
@@ -182,7 +155,7 @@ namespace taskt.Core
             }
         }
 
-        public static string GetColumnName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        private static string GetColumnName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
             string col = columnName.ConvertToUserVariable(engine);
             if (IsColumnExists(table, col))
@@ -195,7 +168,7 @@ namespace taskt.Core
             }
         }
 
-        public static int GetColumnIndex(DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
+        private static int GetColumnIndex(DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
         {
             int index = new PropertyConvertTag(columnIndex, "Column Index").ConvertToUserVariableAsInteger(engine);
             if (index < 0)
@@ -212,7 +185,7 @@ namespace taskt.Core
             }
         }
 
-        public static int GetColumnIndex(this ScriptCommand command, DataTable table, string columnTypeName, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        private static int GetColumnIndex(this ScriptCommand command, DataTable table, string columnTypeName, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
             string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
 
@@ -232,7 +205,7 @@ namespace taskt.Core
             return columnIndex;
         }
 
-        public static int GetColumnIndexFromName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        private static int GetColumnIndexFromName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
             string col = GetColumnName(table, columnName, engine);
             for (int i = table.Columns.Count - 1; i >= 0; i--)
