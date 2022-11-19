@@ -43,6 +43,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "New FileName")]
         public string v_NewName { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please select If File Name Same After the Change")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**Ignore** or **Error**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public string v_IfFileNameSame { get; set; }
+
         public RenameFileCommand()
         {
             this.CommandName = "RenameFileCommand";
@@ -53,8 +64,11 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //apply variable logic
             var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
+            var currentFileName = Path.GetFileName(sourceFile);
             var newFileName = v_NewName.ConvertToUserVariable(sender);
 
             //get source file name and info
@@ -62,6 +76,19 @@ namespace taskt.Core.Automation.Commands
 
             //create destination
             var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
+
+            var ifSame = this.GetUISelectionValue(nameof(v_IfFileNameSame), "File Name Same", engine);
+            if (currentFileName == newFileName)
+            {
+                switch (ifSame)
+                {
+                    case "ignore":
+                        return;
+
+                    case "error":
+                        throw new Exception("File Name before and after the changes is same. Name '" + newFileName + "'");
+                }
+            }
 
             //rename file
             File.Move(sourceFile, destinationPath);
