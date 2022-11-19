@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Up-to-date", "lnkUpToDate_Click")]
+        [PropertyCustomUIHelper("Up-to-date", nameof(lnkUpToDate_Click))]
         [PropertyIsWindowNamesList(true)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -65,136 +65,61 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            //string windowName = v_WindowName.ConvertToUserVariable(sender);
-            //bool targetIsCurrentWindow = ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
-
-            //if (targetIsCurrentWindow)
-            //{
-            //    return; // always exists
-            //}
-
-            //string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(searchMethod))
-            //{
-            //    searchMethod = "Contains";
-            //}
-
-            //var lengthToWait = v_LengthToWait.ConvertToUserVariable(sender);
-            //var waitUntil = int.Parse(lengthToWait);
-            //var endDateTime = DateTime.Now.AddSeconds(waitUntil);
-
-            //if (searchMethod == "Contains")
-            //{
-            //    IntPtr hWnd = IntPtr.Zero;
-            //    while (DateTime.Now < endDateTime)
-            //    {
-            //        hWnd = User32Functions.FindWindow(windowName);
-
-            //        if (hWnd != IntPtr.Zero) //If found
-            //            break;
-
-            //        System.Threading.Thread.Sleep(1000);
-            //    }
-            //    if (hWnd == IntPtr.Zero)
-            //    {
-            //        throw new Exception("Window was not found in the allowed time!");
-            //    }
-            //}
-            //else
-            //{
-            //    Func<string, bool> searchFunc;
-            //    switch (searchMethod)
-            //    {
-            //        case "Starts with":
-            //            searchFunc = (s) => s.StartsWith(windowName);
-            //            break;
-
-            //        case "Ends with":
-            //            searchFunc = (s) => s.EndsWith(windowName);
-            //            break;
-
-            //        case "Exact match":
-            //            searchFunc = (s) => (s == windowName);
-            //            break;
-
-            //        default:
-            //            throw new Exception("Search method " + searchMethod + " is not support.");
-            //            break;
-            //    }
-
-            //    bool isFind = false;
-            //    while (DateTime.Now < endDateTime)
-            //    {
-            //        List<IntPtr> hWnds = User32Functions.FindWindowsGreedy(windowName);
-            //        foreach(var hWnd in hWnds)
-            //        {
-            //            if (searchFunc(User32Functions.GetWindowTitle(hWnd)))
-            //            {
-            //                isFind = true;
-            //                break;
-            //            }
-            //        }
-
-            //        System.Threading.Thread.Sleep(1000);
-            //    }
-
-            //    if (!isFind)
-            //    {
-            //        throw new Exception("Window was not found in the allowed time!");
-            //    }
-            //}
-
             var engine = (Engine.AutomationEngineInstance)sender;
 
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            var waitUntil = v_LengthToWait.ConvertToUserVariableAsInteger("Length to Wait", engine);
-            var endDateTime = DateTime.Now.AddSeconds(waitUntil);
+            //var waitUntil = v_LengthToWait.ConvertToUserVariableAsInteger("Length to Wait", engine);
+            //var endDateTime = DateTime.Now.AddSeconds(waitUntil);
 
-            bool isFind = false;
-            while (DateTime.Now < endDateTime)
+            //bool isFind = false;
+            //while (DateTime.Now < endDateTime)
+            //{
+            //    try
+            //    {
+            //        IntPtr wHnd = WindowNameControls.FindWindow(windowName, searchMethod, engine);
+            //        isFind = true;
+            //        break;
+            //    }
+            //    catch
+            //    {
+
+            //    }
+            //    engine.ReportProgress("Window Not Yet Found... " + (int)((endDateTime - DateTime.Now).TotalSeconds) + "s remain");
+            //    System.Threading.Thread.Sleep(1000);
+            //}
+
+            //if (!isFind)
+            //{
+            //    throw new Exception("Window was not found in the allowed time!");
+            //}
+
+            Func<bool> windowWaitFunc = new Func<bool>(() =>
             {
                 try
                 {
                     IntPtr wHnd = WindowNameControls.FindWindow(windowName, searchMethod, engine);
-                    isFind = true;
-                    break;
+                    return true;
                 }
                 catch
                 {
-                    
+                    return false;
                 }
-                engine.ReportProgress("Window Not Yet Found... " + (int)((endDateTime - DateTime.Now).TotalSeconds) + "s remain");
-                System.Threading.Thread.Sleep(1000);
-            }
-
-            if (!isFind)
-            {
-                throw new Exception("Window was not found in the allowed time!");
-            }
+            });
+            this.WaitProcess(nameof(v_LengthToWait), "Window", windowWaitFunc, engine);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-
-            //create window name helper control
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            //WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
-            //RenderedControls.Add(WindowNameControl);
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-            ////create standard group controls
-            //var lengthToWaitControlSet = CommandControls.CreateDefaultInputGroupFor("v_LengthToWait", this, editor);
-            //RenderedControls.AddRange(lengthToWaitControlSet);
 
             RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
             return RenderedControls;
 
         }
+
         public override void Refresh(frmCommandEditor editor)
         {
             base.Refresh();
@@ -210,37 +135,6 @@ namespace taskt.Core.Automation.Commands
             ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
             WindowNameControls.UpdateWindowTitleCombobox(cmb);
         }
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_WindowName))
-        //    {
-        //        this.validationResult += "Window is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    if (String.IsNullOrEmpty(this.v_LengthToWait))
-        //    {
-        //        this.validationResult += "Wait time is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int wait;
-        //        if (int.TryParse(this.v_LengthToWait, out wait))
-        //        {
-        //            if (wait <= 0)
-        //            {
-        //                this.validationResult += "Specify a value of 1 or more for wait time.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
