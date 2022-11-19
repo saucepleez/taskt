@@ -226,7 +226,8 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(ctrls);
 
             UserInputGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_UserInputConfig")).FirstOrDefault();
-            UserInputGridViewHelper.CellClick += UserInputGridViewHelper_CellClick;
+            //UserInputGridViewHelper.CellClick += UserInputGridViewHelper_CellClick;
+            UserInputGridViewHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 
             return RenderedControls;
 

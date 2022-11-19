@@ -677,8 +677,10 @@ namespace taskt.Core.Automation.Commands
             //ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
             ActionParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIAActionParameters", false, false, false, 500, 140);
             ActionParametersGridViewHelper.MouseEnter += ActionParametersGridViewHelper_MouseEnter;
-            ActionParametersGridViewHelper.CellBeginEdit += ActionParametersGridViewHelper_CellBeginEdit;
-            ActionParametersGridViewHelper.CellClick += ActionParametersGridViewHelper_CellClick;
+            //ActionParametersGridViewHelper.CellBeginEdit += ActionParametersGridViewHelper_CellBeginEdit;
+            //ActionParametersGridViewHelper.CellClick += ActionParametersGridViewHelper_CellClick;
+            ActionParametersGridViewHelper.CellBeginEdit += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit;
+            ActionParametersGridViewHelper.CellClick += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick;
 
             propertyName = new DataGridViewTextBoxColumn();
             propertyName.HeaderText = "Parameter Name";
@@ -774,35 +776,35 @@ namespace taskt.Core.Automation.Commands
             }
         }
        
-        private void ActionParametersGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            if (e.ColumnIndex == 0)
-            {
-                e.Cancel = true;
-            }
-        }
-        private void ActionParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                if (e.ColumnIndex == 1)
-                {
-                    var targetCell = ActionParametersGridViewHelper.Rows[e.RowIndex].Cells[1];
-                    if (targetCell is DataGridViewTextBoxCell)
-                    {
-                        ActionParametersGridViewHelper.BeginEdit(false);
-                    }
-                    else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
-                    {
-                        SendKeys.Send("%{DOWN}");
-                    }
-                }
-            }
-            else
-            {
-                ActionParametersGridViewHelper.EndEdit();
-            }
-        }
+        //private void ActionParametersGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        //{
+        //    if (e.ColumnIndex == 0)
+        //    {
+        //        e.Cancel = true;
+        //    }
+        //}
+        //private void ActionParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        if (e.ColumnIndex == 1)
+        //        {
+        //            var targetCell = ActionParametersGridViewHelper.Rows[e.RowIndex].Cells[1];
+        //            if (targetCell is DataGridViewTextBoxCell)
+        //            {
+        //                ActionParametersGridViewHelper.BeginEdit(false);
+        //            }
+        //            else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
+        //            {
+        //                SendKeys.Send("%{DOWN}");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ActionParametersGridViewHelper.EndEdit();
+        //    }
+        //}
 
 
         public void ShowRecorder(object sender, EventArgs e)

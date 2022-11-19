@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
         [PropertyDataGridViewSetting(true, true, true)]
         //[PropertyControlIntoCommandField("ColumnNameDataGridViewHelper")]
-        [PropertyDataGridViewCellEditEvent(nameof(ColumnNameDataGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
         public DataTable v_ColumnNameDataTable { get; set; }
 

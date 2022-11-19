@@ -234,7 +234,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_MethodParameters", true, true, true, -1, 135);
-            ParametersGridViewHelper.CellClick += ParametersGridViewHelper_CellClick;
+            ParametersGridViewHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ClassName", this, editor));
@@ -254,17 +254,17 @@ namespace taskt.Core.Automation.Commands
         }
 
 
-        public void ParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                ParametersGridViewHelper.BeginEdit(false);
-            }
-            else
-            {
-                ParametersGridViewHelper.EndEdit();
-            }
-        }
+        //public void ParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        ParametersGridViewHelper.BeginEdit(false);
+        //    }
+        //    else
+        //    {
+        //        ParametersGridViewHelper.EndEdit();
+        //    }
+        //}
 
         public override string GetDisplayValue()
         {
