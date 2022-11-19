@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using taskt.Core.Automation.Commands;
 
-namespace taskt.Core
+namespace taskt.Core.Automation.Commands
 {
     internal static class DataTableControls
     {
