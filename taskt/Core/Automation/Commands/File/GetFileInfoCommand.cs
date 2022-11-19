@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
-using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -71,30 +66,31 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            //apply variable logic
-            var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
-            var infoType = v_InfoType.ConvertToUserVariable(sender);
 
-            string ret = "";
+            var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
+            //var infoType = v_InfoType.ConvertToUserVariable(sender);
+            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
+
+            string ret;
             var fileInfo = new System.IO.FileInfo(targetFile);
             switch (infoType)
             {
-                case "File size":
+                case "file size":
                     ret = fileInfo.Length.ToString();
                     break;
-                case "Readonly file":
+                case "readonly file":
                     ret = fileInfo.IsReadOnly ? "TRUE" : "FALSE";
                     break;
-                case "Hidden file":
+                case "hidden file":
                     ret = (((System.IO.FileAttributes)fileInfo.Attributes & System.IO.FileAttributes.Hidden) == System.IO.FileAttributes.Hidden) ? "TRUE": "FALSE";
                     break;
-                case "Creation time":
+                case "creation time":
                     ret = fileInfo.CreationTime.ToString();
                     break;
-                case "Last write time":
+                case "last write time":
                     ret = fileInfo.LastWriteTime.ToString();
                     break;
-                case "Last access time":
+                case "last access time":
                     ret = fileInfo.LastAccessTime.ToString();
                     break;
                 default:
@@ -103,43 +99,6 @@ namespace taskt.Core.Automation.Commands
 
             ret.StoreInUserVariable(sender, v_UserVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get File '" + v_InfoType + "' From: '" + v_TargetFileName + "', Store In: '" + v_UserVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_TargetFileName))
-        //    {
-        //        this.validationResult += "File is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_InfoType))
-        //    {
-        //        this.validationResult += "Information type is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         public override void addInstance(InstanceCounter counter)
         {

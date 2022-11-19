@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
-using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
     [Attributes.ClassAttributes.Description("This command returns a existence of file paths from a specified location")]
@@ -54,47 +48,10 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            //apply variable logic
+
             var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
 
-            //(System.IO.File.Exists(targetFile) ? "TRUE" : "FALSE").StoreInUserVariable(engine, v_UserVariableName);
             System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TargetFileName", this, editor));
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Check: '" + v_TargetFileName + "', Result In: '" + v_UserVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_TargetFileName))
-        //    {
-        //        this.validationResult += "Target file is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

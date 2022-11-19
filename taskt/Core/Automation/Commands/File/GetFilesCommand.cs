@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -104,23 +101,24 @@ namespace taskt.Core.Automation.Commands
 
             if (!String.IsNullOrEmpty(searchFile))
             {
-                var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(searchMethod))
-                {
-                    searchMethod = "Contains";
-                }
+                //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+                //if (String.IsNullOrEmpty(searchMethod))
+                //{
+                //    searchMethod = "Contains";
+                //}
+                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
                 switch (searchMethod)
                 {
-                    case "Contains":
+                    case "contains":
                         filesList = filesList.Where(t => System.IO.Path.GetFileNameWithoutExtension(t).Contains(searchFile)).ToList();
                         break;
-                    case "Starts with":
+                    case "starts with":
                         filesList = filesList.Where(t => System.IO.Path.GetFileNameWithoutExtension(t).StartsWith(searchFile)).ToList();
                         break;
-                    case "Ends with":
+                    case "ends with":
                         filesList = filesList.Where(t => System.IO.Path.GetFileNameWithoutExtension(t).EndsWith(searchFile)).ToList();
                         break;
-                    case "Extract match":
+                    case "exact match":
                         filesList = filesList.Where(t => System.IO.Path.GetFileNameWithoutExtension(t).Equals(searchFile)).ToList();
                         break;
                 }
@@ -132,61 +130,7 @@ namespace taskt.Core.Automation.Commands
                 filesList = filesList.Where(t => System.IO.Path.GetExtension(t).ToLower() == ext).ToList();
             }
 
-            //Script.ScriptVariable newFilesList = new Script.ScriptVariable
-            //{
-            //    VariableName = v_UserVariableName,
-            //    VariableValue = filesList
-            //};
-            ////Overwrites variable if it already exists
-            //if (engine.VariableList.Exists(x => x.VariableName == newFilesList.VariableName))
-            //{
-            //    Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newFilesList.VariableName).FirstOrDefault();
-            //    engine.VariableList.Remove(temp);
-            //}
-            //engine.VariableList.Add(newFilesList);
-
             filesList.StoreInUserVariable(engine, v_UserVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SearchFileName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SearchExtension", this, editor));
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [From: '" + v_SourceFolderPath + "', Store In: '" + v_UserVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_SourceFolderPath))
-        //    {
-        //        this.validationResult += "Source folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
     [Attributes.ClassAttributes.Description("This command deletes a file from a specified destination")]
@@ -41,38 +36,11 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            //apply variable logic
-            var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //delete file
+            var sourceFile = v_SourceFilePath.ConvertToUserVariable(engine);
+
             System.IO.File.Delete(sourceFile);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [delete " + v_SourceFilePath + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_SourceFilePath))
-        //    {
-        //        this.validationResult += "Source file is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

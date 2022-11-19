@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -34,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Please specify File Path Format.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Format Checker", "lnkFormatChecker_Click")]
+        [PropertyCustomUIHelper("Format Checker", nameof(lnkFormatChecker_Click))]
         [InputSpecification("")]
         [SampleUsage("**FileName** or **FileNameWithoutExtension** or **Folder** or **Extension** or **DriveName** etc")]
         [Remarks("")]
