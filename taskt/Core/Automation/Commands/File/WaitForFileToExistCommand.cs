@@ -55,34 +55,40 @@ namespace taskt.Core.Automation.Commands
             var fileName = v_FileName.ConvertToUserVariable(sender);
             //var pauseTime = int.Parse(v_WaitTime.ConvertToUserVariable(sender));
             //int pauseTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
-            int pauseTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), "Wait Time", engine);
+            //int pauseTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), "Wait Time", engine);
 
-            //determine when to stop waiting based on user config
-            var stopWaiting = DateTime.Now.AddSeconds(pauseTime);
+            ////determine when to stop waiting based on user config
+            //var stopWaiting = DateTime.Now.AddSeconds(pauseTime);
 
-            //initialize flag for file found
-            var fileFound = false;
+            ////initialize flag for file found
+            //var fileFound = false;
 
 
-            //while file has not been found
-            while (!fileFound)
+            ////while file has not been found
+            //while (!fileFound)
+            //{
+            //    //if file exists at the file path
+            //    if (System.IO.File.Exists(fileName))
+            //    {
+            //        fileFound = true;
+            //    }
+
+            //    //test if we should exit and throw exception
+            //    if (DateTime.Now > stopWaiting)
+            //    {
+            //        throw new Exception("File was not found in time!");
+            //    }
+
+            //    //put thread to sleep before iterating
+            //    engine.ReportProgress("File Not Yet Found... " + (int)((stopWaiting - DateTime.Now).TotalSeconds) + "s remain");
+            //    System.Threading.Thread.Sleep(1000);
+            //}
+
+            Func<bool> fileCheckFunc = new Func<bool>(() =>
             {
-                //if file exists at the file path
-                if (System.IO.File.Exists(fileName))
-                {
-                    fileFound = true;
-                }
-
-                //test if we should exit and throw exception
-                if (DateTime.Now > stopWaiting)
-                {
-                    throw new Exception("File was not found in time!");
-                }
-
-                //put thread to sleep before iterating
-                engine.ReportProgress("File Not Yet Found... " + (int)((stopWaiting - DateTime.Now).TotalSeconds) + "s remain");
-                System.Threading.Thread.Sleep(1000);
-            }
+                return System.IO.File.Exists(fileName);
+            });
+            this.WaitProcess(nameof(v_WaitTime), "File", fileCheckFunc, engine);
         }
     }
 }
