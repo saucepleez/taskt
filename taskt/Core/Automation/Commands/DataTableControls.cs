@@ -131,34 +131,34 @@ namespace taskt.Core
             return dataTable;
         }
 
-        public static int GetRowIndex(string dataTableName, string rowIndexName, Automation.Engine.AutomationEngineInstance engine)
-        {
-            var srcDT = dataTableName.GetDataTableVariable(engine);
+        //public static int GetRowIndex(string dataTableName, string rowIndexName, Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    var srcDT = dataTableName.GetDataTableVariable(engine);
 
-            int index;
-            if (String.IsNullOrEmpty(rowIndexName))
-            {
-                index = dataTableName.GetRawVariable(engine).CurrentPosition;
-            }
-            else
-            {
-                //index = int.Parse(rowIndex.ConvertToUserVariable(engine));
-                index = new PropertyConvertTag(rowIndexName, "Row Index").ConvertToUserVariableAsInteger(engine);
-                if (index < 0)
-                {
-                    index = srcDT.Rows.Count + index;
-                }
-            }
+        //    int index;
+        //    if (String.IsNullOrEmpty(rowIndexName))
+        //    {
+        //        index = dataTableName.GetRawVariable(engine).CurrentPosition;
+        //    }
+        //    else
+        //    {
+        //        //index = int.Parse(rowIndex.ConvertToUserVariable(engine));
+        //        index = new PropertyConvertTag(rowIndexName, "Row Index").ConvertToUserVariableAsInteger(engine);
+        //        if (index < 0)
+        //        {
+        //            index = srcDT.Rows.Count + index;
+        //        }
+        //    }
 
-            if ((index < 0) || (index >= srcDT.Rows.Count))
-            {
-                throw new Exception("Strange Row Index " + rowIndexName + ", parsed " + index);
-            }
+        //    if ((index < 0) || (index >= srcDT.Rows.Count))
+        //    {
+        //        throw new Exception("Strange Row Index " + rowIndexName + ", parsed " + index);
+        //    }
 
-            return index;
-        }
+        //    return index;
+        //}
 
-        public static bool isColumnExists(DataTable table, string columnName)
+        public static bool IsColumnExists(DataTable table, string columnName)
         {
             for (int i = 0; i < table.Columns.Count; i++)
             {
@@ -169,7 +169,7 @@ namespace taskt.Core
             }
             return false;
         }
-        public static bool isColumnExists(DataTable table, int columnIndex)
+        public static bool IsColumnExists(DataTable table, int columnIndex)
         {
             if (columnIndex >= 0)
             {
@@ -185,7 +185,7 @@ namespace taskt.Core
         public static string GetColumnName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
             string col = columnName.ConvertToUserVariable(engine);
-            if (isColumnExists(table, col))
+            if (IsColumnExists(table, col))
             {
                 return col;
             }
@@ -197,32 +197,12 @@ namespace taskt.Core
 
         public static int GetColumnIndex(DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
         {
-            //int index;
-            //if (int.TryParse(columnIndex.ConvertToUserVariable(engine), out index))
-            //{
-            //    if (index < 0)
-            //    {
-            //        index = table.Columns.Count + index;
-            //    }
-            //    if (isColumnExists(table, index))
-            //    {
-            //        return index;
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
-            //    }
-            //}
-            //else
-            //{
-            //    throw new Exception("Strange Column Index " + columnIndex + ", parse " + index);
-            //}
             int index = new PropertyConvertTag(columnIndex, "Column Index").ConvertToUserVariableAsInteger(engine);
             if (index < 0)
             {
                 index = table.Columns.Count + index;
             }
-            if (isColumnExists(table, index))
+            if (IsColumnExists(table, index))
             {
                 return index;
             }
@@ -252,7 +232,6 @@ namespace taskt.Core
             return columnIndex;
         }
 
-
         public static int GetColumnIndexFromName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
         {
             string col = GetColumnName(table, columnName, engine);
@@ -280,7 +259,7 @@ namespace taskt.Core
 
         public static string GetFieldValue(DataTable dt, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
-            if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
+            if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
             {
                 throw new Exception("Parameter Column or Value Column does not exists");
             }
@@ -289,7 +268,8 @@ namespace taskt.Core
             {
                 if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
                 {
-                    return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+                    //return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+                    return dt.Rows[i][valueColumnName]?.ToString() ?? "";
                 }
             }
             return "";
@@ -297,7 +277,7 @@ namespace taskt.Core
 
         public static string GetFieldValue(DataTable dt, int rowIndex, string columnName = "ParameterValue")
         {
-            if (!isColumnExists(dt, columnName))
+            if (!IsColumnExists(dt, columnName))
             {
                 throw new Exception("Column Name does not exists");
             }
@@ -310,12 +290,13 @@ namespace taskt.Core
                 throw new Exception("Strange Row Index " + rowIndex);
             }
 
-            return dt.Rows[rowIndex][columnName] == null ? "" : dt.Rows[rowIndex][columnName].ToString();
+            //return dt.Rows[rowIndex][columnName] == null ? "" : dt.Rows[rowIndex][columnName].ToString();
+            return dt.Rows[rowIndex][columnName]?.ToString() ?? "";
         }
 
         public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
         {
-            if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
+            if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
             {
                 throw new Exception("Parameter Column or Value Column does not exists");
             }
@@ -325,7 +306,8 @@ namespace taskt.Core
             {
                 if (dt.Rows[i][parameterColumnName] != null)
                 {
-                    string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+                    //string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+                    string value = dt.Rows[i][valueColumnName]?.ToString() ?? "";
                     dic.Add(dt.Rows[i][parameterColumnName].ToString(), value);
                 }
             }
@@ -344,7 +326,7 @@ namespace taskt.Core
 
         public static bool SetParameterValue(DataTable dt, string newValue, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
-            if ((!isColumnExists(dt, parameterColumnName)) || (!isColumnExists(dt, valueColumnName)))
+            if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
             {
                 return false;
             }
@@ -361,7 +343,7 @@ namespace taskt.Core
 
         public static bool IsParameterNamesExists(DataTable dt, List<string> parameterNames, string parameterNameColumn = "ParameterName")
         {
-            if (!isColumnExists(dt, parameterNameColumn))
+            if (!IsColumnExists(dt, parameterNameColumn))
             {
                 return false;
             }
