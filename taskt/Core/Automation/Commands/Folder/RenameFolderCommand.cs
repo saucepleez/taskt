@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
-using taskt.UI.CustomControls;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -93,37 +89,5 @@ namespace taskt.Core.Automation.Commands
             //rename folder
             Directory.Move(sourceFolder, destinationPath);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_NewName", this, editor));
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [rename " + v_SourceFolderPath + " to '" + v_NewName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_SourceFolderPath))
-        //    {
-        //        this.validationResult += "Soruce folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_NewName))
-        //    {
-        //        this.validationResult += "Folder Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

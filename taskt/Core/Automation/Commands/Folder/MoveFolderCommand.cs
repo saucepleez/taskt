@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -88,18 +84,21 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //apply variable logic
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
             var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(sender);
 
             if (!Directory.Exists(destinationFolder))
             {
-                var vCreateDirectory = v_CreateDirectory.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(vCreateDirectory))
-                {
-                    vCreateDirectory = "No";
-                }
-                if (vCreateDirectory.ToLower() == "yes")
+                //var vCreateDirectory = v_CreateDirectory.ConvertToUserVariable(sender);
+                //if (String.IsNullOrEmpty(vCreateDirectory))
+                //{
+                //    vCreateDirectory = "No";
+                //}
+                var vCreateDirectory = this.GetUISelectionValue(nameof(v_CreateDirectory), "Create Directory", engine);
+                if (vCreateDirectory == "yes")
                 {
                     Directory.CreateDirectory(destinationFolder);
                 }
@@ -114,35 +113,38 @@ namespace taskt.Core.Automation.Commands
             //delete if it already exists per user
             if (Directory.Exists(finalPath))
             {
-                var vDeleteExisting = v_DeleteExisting.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(vDeleteExisting))
-                {
-                    vDeleteExisting = "No";
-                }
-                if (vDeleteExisting.ToLower() == "yes")
+                //var vDeleteExisting = v_DeleteExisting.ConvertToUserVariable(sender);
+                //if (String.IsNullOrEmpty(vDeleteExisting))
+                //{
+                //    vDeleteExisting = "No";
+                //}
+                var vDeleteExisting = this.GetUISelectionValue(nameof(v_DeleteExisting), "Delete Existing", engine);
+                if (vDeleteExisting == "yes")
                 {
                     Directory.Delete(finalPath, true);
                 }
             }
 
-            var vOperationType = v_OperationType.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(vOperationType))
-            {
-                vOperationType = "Move Folder";
-            }
-            if (vOperationType == "Move Folder")
+            //var vOperationType = v_OperationType.ConvertToUserVariable(sender);
+            //if (String.IsNullOrEmpty(vOperationType))
+            //{
+            //    vOperationType = "Move Folder";
+            //}
+            var vOperationType = this.GetUISelectionValue(nameof(v_OperationType), "Operation Type", engine);
+            if (vOperationType == "move folder")
             {
                 //move folder
                 Directory.Move(sourceFolder, finalPath);
             }
-            else if (vOperationType == "Copy Folder")
+            //else if (vOperationType == "Copy Folder")
+            else
             {
                 //copy folder
                 DirectoryCopy(sourceFolder, finalPath, true);   
             }
 
         }
-        private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
@@ -187,40 +189,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationDirectory", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteExisting", this, editor));
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [" + v_OperationType + " from '" + v_SourceFolderPath + "' to '" + v_DestinationDirectory + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_SourceFolderPath))
-        //    {
-        //        this.validationResult += "Source folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_DestinationDirectory))
-        //    {
-        //        this.validationResult += "Move/copy folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
