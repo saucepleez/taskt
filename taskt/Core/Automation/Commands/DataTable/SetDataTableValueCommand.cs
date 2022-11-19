@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -88,78 +82,28 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
-            string columnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+            //string columnType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
-            int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+            //int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
+
+            //if (columnType == "column name")
+            //{
+            //    string columnName = DataTableControls.GetColumnName(myDT, v_ColumnIndex, engine);
+            //    myDT.Rows[rowIndex][columnName] = newValue;
+            //}
+            //else
+            //{
+            //    int colIndex = DataTableControls.GetColumnIndex(myDT, v_ColumnIndex, engine);
+            //    myDT.Rows[rowIndex][colIndex] = newValue;
+            //}
+
+            (var myDT, var rowIndex, var columnIndex) = this.GetDataTableVariableAndRowColumnIndeies(nameof(v_DataTableName), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
 
             string newValue = v_NewValue.ConvertToUserVariable(engine);
-            
-            if (columnType == "column name")
-            {
-                string columnName = DataTableControls.GetColumnName(myDT, v_ColumnIndex, engine);
-                myDT.Rows[rowIndex][columnName] = newValue;
-            }
-            else
-            {
-                int colIndex = DataTableControls.GetColumnIndex(myDT, v_ColumnIndex, engine);
-                myDT.Rows[rowIndex][colIndex] = newValue;
-            }
+
+            myDT.Rows[rowIndex][columnIndex] = newValue;
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [DataTable '" + v_DataTableName + "' Column '" + v_ColumnIndex+ "' Row '" + v_RowIndex + "', Set '" + v_NewValue + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_ColumnIndex))
-        //    {
-        //        this.validationResult += "Column Name or Index is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_RowIndex))
-        //    {
-        //        this.validationResult += "Row Index is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int index;
-        //        if (int.TryParse(v_RowIndex, out index))
-        //        {
-        //            if (index < 0)
-        //            {
-        //                this.validationResult += "Row Index is less than 0.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_NewValue))
-        //    {
-        //        this.validationResult += "Value to set is emtpy.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

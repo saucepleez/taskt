@@ -5,10 +5,11 @@ using System.Runtime.CompilerServices;
 using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Commands;
 
-namespace taskt.Core
+namespace taskt.Core.Automation.Commands
 {
     internal static class ExcelControls
     {
+        #region instance, worksheet methods
         public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
             string ins = instanceName.ConvertToUserVariable(engine);
@@ -202,7 +203,9 @@ namespace taskt.Core
                 return null;
             }
         }
+        #endregion
 
+        #region Func methods
         public static Func<Range, bool> CheckCellValueFunctionFromRange(string valueType)
         {
             Func<Range, bool> func = null;
@@ -393,6 +396,7 @@ namespace taskt.Core
 
             return setFunc;
         }
+        #endregion
 
         public static int GetColumnIndex(Worksheet sheet, string columnName)
         {
@@ -660,7 +664,7 @@ namespace taskt.Core
         }
 
         #region convert methods
-        public static string ConvertToExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        public static string GetoExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
             var location = value.ConvertToUserVariable(engine);
             if (CheckCorrectRange(location, excelInstance))
@@ -673,7 +677,7 @@ namespace taskt.Core
             }
         }
 
-        public static (int row, int column) ConvertToExcelRCLocation(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        public static (int row, int column) GetExcelRCLocation(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
             int row = command.ConvertToUserVariableAsInteger(rowPropertyName, "Row", engine);
             int column = command.ConvertToUserVariableAsInteger(columnPropertyName, "Column", engine);
@@ -687,15 +691,15 @@ namespace taskt.Core
             }
         }
 
-        public static Range ConvertToExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        public static Range GetExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
         {
-            string pos = location.ConvertToExcelRangeLocation(engine, excelInstance);
+            string pos = location.GetoExcelRangeLocation(engine, excelInstance);
             return excelSheet.Range[pos];
         }
 
-        public static Range ConvertToExcelRange(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet)
+        public static Range GetExcelRange(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet)
         {
-            var rc = command.ConvertToExcelRCLocation(rowPropertyName, columnPropertyName, engine, excelInstance);
+            var rc = command.GetExcelRCLocation(rowPropertyName, columnPropertyName, engine, excelInstance);
             return excelSheet.Cells[rc.row, rc.column];
         }
         #endregion

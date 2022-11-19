@@ -6,6 +6,15 @@ namespace taskt.Core.Automation.Commands
 {
     internal static class SelectionControls
     {
+        /// <summary>
+        /// private GetUISelectionValue method. This method supports check selection value, first value, case sensitive.
+        /// </summary>
+        /// <param name="propInfo"></param>
+        /// <param name="propertyValue"></param>
+        /// <param name="propertyDescription"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static string GetUISelectionValue(PropertyInfo propInfo, string propertyValue, string propertyDescription, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             var attrIsOpt = propInfo.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional>();
@@ -54,6 +63,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// Get selected item value from property name.  This method supports check selection value, first value, case sensitive.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyDescription"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static string GetUISelectionValue(this ScriptCommand command, string propertyName, string propertyDescription, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exists");
@@ -63,108 +81,28 @@ namespace taskt.Core.Automation.Commands
             return GetUISelectionValue(propInfo, propertyValue, propertyDescription, engine);
         }
 
+        /// <summary>
+        /// Get selected item value from PropertyConvertTag that specified property name, etc.  This method supports check selection value, first value, case sensitive.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         public static string GetUISelectionValue(this PropertyConvertTag p, Core.Automation.Commands.ScriptCommand command, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            //var propInfo = command.GetType().GetProperty(p.Name);
-            //var propIsOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)propInfo.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
-
-            //string convText = (propIsOpt == null) ? "" : propIsOpt.setBlankToValue;
-            //if (!string.IsNullOrEmpty(p.Value))
-            //{
-            //    convText = p.Value.ConvertToUserVariable(engine);
-            //}
-
-            //var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])propInfo.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
-            //if (options.Length > 0)
-            //{
-            //    var propCaseSensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive)propInfo.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive));
-            //    bool isCaseSensitive = (propCaseSensitive == null) ? false : propCaseSensitive.caseSensitive;
-
-            //    if (isCaseSensitive)
-            //    {
-            //        foreach (var opt in options)
-            //        {
-            //            if (convText == opt.uiOption)
-            //            {
-            //                return convText;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        convText = convText.ToLower();
-            //        foreach (var opt in options)
-            //        {
-            //            if (convText == opt.uiOption.ToLower())
-            //            {
-            //                return convText;
-            //            }
-            //        }
-            //    }
-
-            //    // not found, throw error
-            //    string description = p.Description;
-            //    if (string.IsNullOrEmpty(description))
-            //    {
-            //        var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propInfo.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
-            //        description = desc.propertyDescription;
-            //    }
-            //    throw new Exception("Parameter '" + description + "' has strange value '" + p.Value + "'");
-            //}
-            //else
-            //{
-            //    return convText;
-            //}
-
             return GetUISelectionValue(command, p.Name, p.Description, engine);
         }
 
+        /// <summary>
+        /// Get or Convert to selected item value by specified target value, target property name.  This method supports check selection value, first value, case sensitive.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         public static string GetUISelectionValue(this string text, string propertyName, Core.Automation.Commands.ScriptCommand command, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            //var prop = command.GetType().GetProperty(propertyName);
-            //var propIsOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
-
-            //string convText = (propIsOpt == null) ? "" : propIsOpt.setBlankToValue;
-            //if (!String.IsNullOrEmpty(text))
-            //{
-            //    convText = text.ConvertToUserVariable(engine);
-            //}
-
-            //var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
-            //if (options.Length > 0)
-            //{
-            //    var propCaseSensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive));
-            //    bool isCaseSensitive = (propCaseSensitive == null) ? false : propCaseSensitive.caseSensitive;
-
-            //    if (isCaseSensitive)
-            //    {
-            //        foreach (var opt in options)
-            //        {
-            //            if (convText == opt.uiOption)
-            //            {
-            //                return convText;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        convText = convText.ToLower();
-            //        foreach(var opt in options)
-            //        {
-            //            if (convText == opt.uiOption.ToLower())
-            //            {
-            //                return convText;
-            //            }
-            //        }
-            //    }
-
-            //    var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription));
-            //    throw new Exception("Parameter '" + desc.propertyDescription + "' has strange value '" + text + "'");
-            //}
-            //else
-            //{
-            //    return convText;
-            //}
             return new PropertyConvertTag(text, propertyName, "").GetUISelectionValue(command, engine);
         }
     }

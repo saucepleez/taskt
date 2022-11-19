@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -56,7 +51,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Month", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Month", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(1, 12)]
         [PropertyDisplayText(true, "Month")]
         public string v_Month { get; set; }
 
@@ -69,7 +65,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Day", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Day", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(1, 31)]
         [PropertyDisplayText(true, "Day")]
         public string v_Day { get; set; }
 
@@ -82,7 +79,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Hour", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Hour", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 23)]
         [PropertyDisplayText(true, "Hour")]
         public string v_Hour { get; set; }
 
@@ -95,7 +93,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Minute", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Minute", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 59)]
         [PropertyDisplayText(true, "Minute")]
         public string v_Minute { get; set; }
 
@@ -108,7 +107,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Second", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Second", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 59)]
         [PropertyDisplayText(true, "Second")]
         public string v_Second { get; set; }
 
@@ -125,84 +125,74 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            if (String.IsNullOrEmpty(v_Year))
-            {
-                v_Year = "1";
-            }
-            int year = v_Year.ConvertToUserVariableAsInteger("Year", engine);
-            if (year < 1) 
-            {
-                throw new Exception("Year is less than 1");
-            }
+            //if (String.IsNullOrEmpty(v_Year))
+            //{
+            //    v_Year = "1";
+            //}
+            //int year = v_Year.ConvertToUserVariableAsInteger("Year", engine);
+            //if (year < 1) 
+            //{
+            //    throw new Exception("Year is less than 1");
+            //}
+            int year = this.ConvertToUserVariableAsInteger(nameof(v_Year), "Year", engine);
 
-            if (String.IsNullOrEmpty(v_Month))
-            {
-                v_Month = "1";
-            }
-            int month = v_Month.ConvertToUserVariableAsInteger("Month", engine);
-            if ((month < 1) || (month > 12))
-            {
-                throw new Exception("Month is out of range");
-            }
+            //if (String.IsNullOrEmpty(v_Month))
+            //{
+            //    v_Month = "1";
+            //}
+            //int month = v_Month.ConvertToUserVariableAsInteger("Month", engine);
+            //if ((month < 1) || (month > 12))
+            //{
+            //    throw new Exception("Month is out of range");
+            //}
+            int month = this.ConvertToUserVariableAsInteger(nameof(v_Month), "Month", engine);
 
-            if (String.IsNullOrEmpty(v_Day))
-            {
-                v_Day = "1";
-            }
-            int day = v_Day.ConvertToUserVariableAsInteger("Day", engine);
-            if ((day < 1) || (day > 31))
-            {
-                throw new Exception("Day is out of range");
-            }
+            //if (String.IsNullOrEmpty(v_Day))
+            //{
+            //    v_Day = "1";
+            //}
+            //int day = v_Day.ConvertToUserVariableAsInteger("Day", engine);
+            //if ((day < 1) || (day > 31))
+            //{
+            //    throw new Exception("Day is out of range");
+            //}
+            int day = this.ConvertToUserVariableAsInteger(nameof(v_Day), "Day", engine);
 
-            if (String.IsNullOrEmpty(v_Hour))
-            {
-                v_Hour = "0";
-            }
-            int hour = v_Hour.ConvertToUserVariableAsInteger("Hour", engine);
-            if ((hour < 0) || (hour > 24))
-            {
-                throw new Exception("Hour is out of range");
-            }
+            //if (String.IsNullOrEmpty(v_Hour))
+            //{
+            //    v_Hour = "0";
+            //}
+            //int hour = v_Hour.ConvertToUserVariableAsInteger("Hour", engine);
+            //if ((hour < 0) || (hour > 24))
+            //{
+            //    throw new Exception("Hour is out of range");
+            //}
+            int hour = this.ConvertToUserVariableAsInteger(nameof(v_Hour), "Hour", engine);
 
-            if (String.IsNullOrEmpty(v_Minute))
-            {
-                v_Minute = "0";
-            }
-            int minute = v_Minute.ConvertToUserVariableAsInteger("Hour", engine);
-            if ((minute < 0) || (minute > 24))
-            {
-                throw new Exception("Minite is out of range");
-            }
+            //if (String.IsNullOrEmpty(v_Minute))
+            //{
+            //    v_Minute = "0";
+            //}
+            //int minute = v_Minute.ConvertToUserVariableAsInteger("Hour", engine);
+            //if ((minute < 0) || (minute > 24))
+            //{
+            //    throw new Exception("Minite is out of range");
+            //}
+            int minute = this.ConvertToUserVariableAsInteger(nameof(v_Minute), "Minute", engine);
 
-            if (String.IsNullOrEmpty(v_Second))
-            {
-                v_Second = "0";
-            }
-            int second = v_Second.ConvertToUserVariableAsInteger("Second", engine);
-            if ((second < 0) || (second > 24))
-            {
-                throw new Exception("Second is out of range");
-            }
+            //if (String.IsNullOrEmpty(v_Second))
+            //{
+            //    v_Second = "0";
+            //}
+            //int second = v_Second.ConvertToUserVariableAsInteger("Second", engine);
+            //if ((second < 0) || (second > 24))
+            //{
+            //    throw new Exception("Second is out of range");
+            //}
+            int second = this.ConvertToUserVariableAsInteger(nameof(v_Second), "Second", engine);
 
             DateTime myDT = new DateTime(year, month, day, hour, minute, second);
             myDT.StoreInUserVariable(engine, v_DateTime);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Name: '" + v_DateTime + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
     }
 }

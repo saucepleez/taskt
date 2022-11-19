@@ -43,6 +43,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "New Folder")]
         public string v_NewName { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please select If Folder Name Same After the Change")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("**Ignore** or **Error**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public string v_IfFolderNameSame { get; set; }
 
         public RenameFolderCommand()
         {
@@ -54,8 +64,11 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //apply variable logic
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
+            var currentFolderName = Path.GetFileName(sourceFolder);
             var newFolderName = v_NewName.ConvertToUserVariable(sender);
 
             //get source folder name and info
@@ -63,6 +76,19 @@ namespace taskt.Core.Automation.Commands
 
             //create destination
             var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
+
+            var ifSame = this.GetUISelectionValue(nameof(v_IfFolderNameSame), "Folder Name Same", engine);
+            if (currentFolderName == newFolderName)
+            {
+                switch (ifSame)
+                {
+                    case "ignore":
+                        return; 
+
+                    case "error":
+                        throw new Exception("Folder Name before and after the changes is same. Name '" + newFolderName + "'");
+                }
+            }
 
             //rename folder
             Directory.Move(sourceFolder, destinationPath);

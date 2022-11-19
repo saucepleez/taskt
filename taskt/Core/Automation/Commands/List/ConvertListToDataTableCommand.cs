@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -32,6 +29,23 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("List to Convert", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List to Convert")]
         public string v_InputList { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Please Select DataTable Columns Type")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Column Prefix")]
+        [PropertyUISelectionOption("List")]
+        [PropertyUISelectionOption("Comma Separated")]
+        [PropertyUISelectionOption("Space Separated")]
+        [PropertyUISelectionOption("Tab Separated")]
+        [PropertyUISelectionOption("NewLine Separated")]
+        [PropertyUISelectionOption("Column Prefix")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDisplayText(true, "DataTable Columns Type")]
+        public string v_ColumnType { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Supply the DataTable Columns Name List")]
@@ -99,22 +113,14 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_InputList.GetListVariable(engine);
 
-            DataTable myDT = new DataTable();
-            if (String.IsNullOrEmpty(v_Columns))
-            {
-                myDT.Rows.Add();
-                for (int i = 0; i < targetList.Count; i++)
-                {
-                    myDT.Columns.Add("column" + i.ToString());
-                    myDT.Rows[0][i] = targetList[i];
-                }
-            }
-            else
-            {
-                List<string> targetColumns = v_Columns.GetListVariable(engine);
+            var keyType = this.GetUISelectionValue(nameof(v_Columns), "Columns Type", engine);
 
-                string columnsNotEnough = v_ColumnsNotEnough.GetUISelectionValue("v_ColumnsNotEnough", this, engine);
-                string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
+            DataTable myDT = new DataTable();
+
+            Action<List<string>> dtUseColumns = new Action<List<string>>((targetColumns) =>
+            {
+                string columnsNotEnough = this.GetUISelectionValue(nameof(v_ColumnsNotEnough), "Columns Not Enough", engine);
+                string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
 
                 if ((columnsNotEnough == "error") && (targetList.Count > targetColumns.Count))
                 {
@@ -190,40 +196,148 @@ namespace taskt.Core.Automation.Commands
                             break;
                     }
                 }
+            });
+
+            List<string> columnsList;
+
+            string columnsType = this.GetUISelectionValue(nameof(v_ColumnType), "Columns Type", engine);
+            switch (columnsType)
+            {
+                case "list":
+                    columnsList = v_Columns.GetListVariable(engine);
+                    dtUseColumns(columnsList);
+                    break;
+                case "comma separated":
+                    columnsList = v_Columns.ConvertToUserVariable(engine).Split(',').ToList();
+                    dtUseColumns(columnsList);
+                    break;
+                case "space separated":
+                    columnsList = v_Columns.ConvertToUserVariable(engine).Split(' ').ToList();
+                    dtUseColumns(columnsList);
+                    break;
+                case "tab separated":
+                    columnsList = v_Columns.ConvertToUserVariable(engine).Split('\t').ToList();
+                    dtUseColumns(columnsList);
+                    break;
+                case "newline separated":
+                    columnsList = v_Columns.ConvertToUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
+                    dtUseColumns(columnsList);
+                    break;
+                case "column prefix":
+                    string columnPrefix;
+                    if (String.IsNullOrEmpty(v_Columns))
+                    {
+                        columnPrefix = "column";
+                    }
+                    else
+                    {
+                        columnPrefix = v_Columns.ConvertToUserVariable(engine);
+                    }
+
+                    myDT.Rows.Add();
+                    for (int i = 0; i < targetList.Count; i++)
+                    {
+                        myDT.Columns.Add(columnPrefix + i.ToString());
+                        myDT.Rows[0][i] = targetList[i];
+                    }
+                    break;
             }
             myDT.StoreInUserVariable(engine, v_applyToVariableName);
+
+            //if (String.IsNullOrEmpty(v_Columns))
+            //{
+            //    myDT.Rows.Add();
+            //    for (int i = 0; i < targetList.Count; i++)
+            //    {
+            //        myDT.Columns.Add("column" + i.ToString());
+            //        myDT.Rows[0][i] = targetList[i];
+            //    }
+            //}
+            //else
+            //{
+            //    List<string> targetColumns = v_Columns.GetListVariable(engine);
+
+            //    //string columnsNotEnough = v_ColumnsNotEnough.GetUISelectionValue("v_ColumnsNotEnough", this, engine);
+            //    string columnsNotEnough = this.GetUISelectionValue(nameof(v_ColumnsNotEnough), "Columns Not Enough", engine);
+            //    //string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
+            //    string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
+
+            //    if ((columnsNotEnough == "error") && (targetList.Count > targetColumns.Count))
+            //    {
+            //        throw new Exception("The number of keys in " + v_Columns + " is not enough");
+            //    }
+            //    if ((listItemNotEnough == "error") && (targetColumns.Count > targetList.Count))
+            //    {
+            //        throw new Exception("The number of List items in " + v_InputList + " is not enough");
+            //    }
+
+            //    if (targetList.Count == targetColumns.Count)
+            //    {
+            //        myDT.Rows.Add();
+            //        for (int i = 0; i < targetList.Count; i++)
+            //        {
+            //            myDT.Columns.Add(targetColumns[i]);
+            //            myDT.Rows[0][i] = targetList[i];
+            //        }
+            //    }
+            //    else if (targetList.Count > targetColumns.Count)
+            //    {
+            //        switch (columnsNotEnough)
+            //        {
+            //            case "ignore":
+            //                myDT.Rows.Add();
+            //                for (int i = 0; i < targetList.Count; i++)
+            //                {
+            //                    myDT.Columns.Add(targetColumns[i]);
+            //                    myDT.Rows[0][i] = targetList[i];
+            //                }
+            //                break;
+
+            //            case "try create columns":
+            //                myDT.Rows.Add();
+            //                for (int i = 0; i < targetColumns.Count; i++)
+            //                {
+            //                    myDT.Columns.Add(targetColumns[i]);
+            //                    myDT.Rows[0][i] = targetList[i];
+            //                }
+            //                for (int i = targetColumns.Count; i < targetList.Count; i++)
+            //                {
+            //                    myDT.Columns.Add("column" + i.ToString());
+            //                    myDT.Rows[0][i] = targetList[i];
+            //                }
+            //                break;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        switch (listItemNotEnough)
+            //        {
+            //            case "ignore":
+            //                myDT.Rows.Add();
+            //                for (int i = 0; i < targetList.Count; i++)
+            //                {
+            //                    myDT.Columns.Add(targetColumns[i]);
+            //                    myDT.Rows[0][i] = targetList[i];
+            //                }
+            //                break;
+
+            //            case "insert empty value":
+            //                myDT.Rows.Add();
+            //                for (int i = 0; i < targetList.Count; i++)
+            //                {
+            //                    myDT.Columns.Add(targetColumns[i]);
+            //                    myDT.Rows[0][i] = targetList[i];
+            //                }
+            //                for (int i = targetList.Count; i < targetColumns.Count; i++)
+            //                {
+            //                    myDT.Columns.Add(targetColumns[i]);
+            //                    myDT.Rows[0][i] = "";
+            //                }
+            //                break;
+            //        }
+            //    }
+            //}
+            //myDT.StoreInUserVariable(engine, v_applyToVariableName);
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Convert List '" + this.v_InputList + "' To DataTable '" + this.v_applyToVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InputList))
-        //    {
-        //        this.validationResult += "List is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
-        //    {
-        //        this.validationResult += "Variable to recieve the DataTable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

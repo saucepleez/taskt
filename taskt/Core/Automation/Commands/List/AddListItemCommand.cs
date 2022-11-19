@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Drawing;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -42,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
         public string v_Input { get; set; }
+
         public AddListItemCommand()
         {
             this.CommandName = "AddListItemCommand";
@@ -60,42 +55,5 @@ namespace taskt.Core.Automation.Commands
             var variableInput = v_Input.ConvertToUserVariable(sender);
             lst.Add(variableInput);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Add List Item List: '" + v_Input + "', Item: '" + v_ListName + "']";
-        //}
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    //create control for variable name
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    //RenderedControls.Add(VariableNameControl);
-
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_ListName))
-        //    {
-        //        this.validationResult += "List variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

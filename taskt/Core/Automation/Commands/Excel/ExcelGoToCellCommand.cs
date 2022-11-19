@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
+        [PropertyFirstValue("%kwd_default_excel_instance%")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -52,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            var rg = v_CellLocation.ConvertToExcelRange(engine, excelInstance, excelSheet, this);
+            var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             rg.Select();
         }

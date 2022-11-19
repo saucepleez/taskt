@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -96,7 +90,9 @@ namespace taskt.Core.Automation.Commands
 
             var myDT1 = v_DateTime1.GetDateTimeVariable(engine);
             var myDT2 = v_DateTime2.GetDateTimeVariable(engine);
-            string format = v_Format.GetUISelectionValue("v_Format", this, engine);
+
+            //string format = v_Format.GetUISelectionValue("v_Format", this, engine);
+            string format = this.GetUISelectionValue(nameof(v_Format), "Format", engine);
 
             TimeSpan diff = myDT2 - myDT1;
 
@@ -144,22 +140,6 @@ namespace taskt.Core.Automation.Commands
             }
             result.StoreInUserVariable(engine, v_Result);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [DateTime1: '" + v_DateTime1 + "', DateTime2: '" + v_DateTime2 + "', Format: '" + v_Format + "', Store: '" + v_Result + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
 
         public override void addInstance(InstanceCounter counter)
         {

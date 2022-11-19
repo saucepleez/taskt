@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -59,6 +53,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Result")]
         public string v_OutputVariable { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Key does not Exists")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Set Empty")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_IfKeyDoesNotExists { get; set; }
+
         public GetDictionaryValueCommand()
         {
             this.CommandName = "GetDictionaryValueCommand";
@@ -69,30 +75,30 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            //Retrieve Dictionary by name
             var engine = (Engine.AutomationEngineInstance)sender;
-            
-            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
 
-            string vKey = "";
-            if (String.IsNullOrEmpty(v_Key))
-            {
-                var variable = v_InputData.GetRawVariable(engine);
-                int pos = variable.CurrentPosition;
-                string[] keys = dic.Keys.ToArray();
-                if ((pos >= 0) && (pos < keys.Length))
-                {
-                    vKey = keys[pos];
-                }
-                else
-                {
-                    throw new Exception("Strange Current Position value in Dictionary " + pos);
-                }
-            }
-            else
-            {
-                vKey = v_Key.ConvertToUserVariable(sender);
-            }
+            //Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+
+            //string vKey;
+            //if (String.IsNullOrEmpty(v_Key))
+            //{
+            //    var variable = v_InputData.GetRawVariable(engine);
+            //    int pos = variable.CurrentPosition;
+            //    string[] keys = dic.Keys.ToArray();
+            //    if ((pos >= 0) && (pos < keys.Length))
+            //    {
+            //        vKey = keys[pos];
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Strange Current Position value in Dictionary " + pos);
+            //    }
+            //}
+            //else
+            //{
+            //    vKey = v_Key.ConvertToUserVariable(sender);
+            //}
+            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
             if (dic.ContainsKey(vKey))
             {
@@ -100,46 +106,17 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                switch (ifNotExists)
+                {
+                    case "error":
+                        throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+
+                    case "set empty":
+                        "".StoreInUserVariable(engine, v_OutputVariable);
+                        break;
+                }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [From: {v_InputData}, Get: {v_Key}, Store In: {v_OutputVariable}]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_OutputVariable))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Variable is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_InputData))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_Key))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Key is empty.\n";
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

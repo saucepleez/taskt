@@ -2,10 +2,7 @@
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -72,7 +69,8 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> myDic = v_RowName.GetDictionaryVariable(engine);
 
-            string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
+            //string notExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
+            string notExistsKey = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Does Not Exists", engine);
 
             // get columns list
             List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
@@ -91,37 +89,5 @@ namespace taskt.Core.Automation.Commands
             }
             myDT.Rows.Add(row);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Add DataTable '" + v_DataTableName + "' Row By Dictionary '" + v_RowName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_RowName))
-        //    {
-        //        this.validationResult += "Dictionary Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

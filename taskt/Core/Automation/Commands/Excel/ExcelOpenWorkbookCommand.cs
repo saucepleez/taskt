@@ -26,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
+        [PropertyFirstValue("%kwd_default_excel_instance%")]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -78,6 +79,11 @@ namespace taskt.Core.Automation.Commands
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls", "csv", "ods" }, true);
+            // check file exists
+            if (!System.IO.File.Exists(vFilePath))
+            {
+                throw new Exception("File '" + v_FilePath+ "' does not exists, parsed '" + vFilePath + "'");
+            }
 
             var pass = v_Password.ConvertToUserVariable(sender);
 

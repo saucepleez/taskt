@@ -292,6 +292,7 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
+    <Compile Include="Core\Automation\Commands\ColorControls.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\FormatColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormHexCommand.cs" />
@@ -330,6 +331,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DictionaryControls.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\FilterDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ReplaceDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\FormatFilePathCommand.cs" />
@@ -343,7 +345,7 @@
     <Compile Include="Core\Automation\Commands\List\GetMinFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetSumFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetVarianceFromListCommand.cs" />
-    <Compile Include="Core\Automation\Commands\MathListControls.cs" />
+    <Compile Include="Core\Automation\Commands\ListControls.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PlaySystemSoundCommand.cs" />
     <Compile Include="Core\Automation\Commands\NumberControls.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
@@ -662,6 +664,7 @@
     <Compile Include="Core\Automation\Commands\Word\WordSaveCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\WriteDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\WriteTextFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTimeControls.cs" />
     <Compile Include="Core\CommandsTreeControls.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />

@@ -65,9 +65,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //decimal value = v_Number.ConvertToUserVariableAsDecimal("Number", engine);
-            //decimal value = (v_Number, "Number").ConvertToUserVariableAsDecimal(engine);
-            decimal value = new PropertyConvertTag(v_Number, "Number").ConvertToUserVariableAsDecimal(engine);
+            //decimal value = new PropertyConvertTag(v_Number, "Number").ConvertToUserVariableAsDecimal(engine);
+            var value = this.ConvertToUserVariableAsDecimal(nameof(v_Number), "Number", engine);
 
             string format = v_Format.ConvertToUserVariable(engine);
 

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -42,9 +36,21 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Key", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyIsOptional(true, "Current Position")]
         [PropertyDisplayText(true, "Key")]
         public string v_Key { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Key does not Exists")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_IfKeyDoesNotExists { get; set; }
 
         public RemoveDictionaryItemCommand()
         {
@@ -57,47 +63,21 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vKey = v_Key.ConvertToUserVariable(sender);
+            //var vKey = v_Key.ConvertToUserVariable(sender);
 
-            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
-            
+            //Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+
+            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
+
             if (!dic.Remove(vKey))
             {
-                throw new Exception("Dictionary does not has key name " + vKey);
+                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                switch (ifNotExists)
+                {
+                    case "error":
+                        throw new Exception("Dictionary does not has key name " + vKey);
+                }
             }
         }
-        
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [From: {v_InputData}, Key: {v_Key}]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_InputData))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_Key))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Key is empty.\n";
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -16,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to Filter Columns by reference to Row values.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Filter Columns by reference to Row values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class FilterDataTableColumnByRowValueCommand : ScriptCommand
     {
@@ -52,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        [PropertySelectionChangeEvent("cmbTargetType_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
@@ -63,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertySelectionChangeEvent("cmbFilterAction_SelectionChangeCommited")]
+        [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
@@ -94,17 +91,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "New DataTable")]
         public string v_OutputDataTable { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox TargetTypeComboboxHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private ComboBox TargetTypeComboboxHelper;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox FilterActionComboboxHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private ComboBox FilterActionComboboxHelper;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView FilterParametersGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView FilterParametersGridViewHelper;
 
         public FilterDataTableColumnByRowValueCommand()
         {
@@ -120,22 +117,50 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetDT = v_InputDataTable.GetDataTableVariable(engine);
+            //var targetDT = v_InputDataTable.GetDataTableVariable(engine);
+            //int rowIndex = DataTableControls.GetRowIndex(v_InputDataTable, v_TargetRowIndex, engine);
+            (var targetDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_InputDataTable), nameof(v_TargetRowIndex), engine);
 
-            int rowIndex = DataTableControls.GetRowIndex(v_InputDataTable, v_TargetRowIndex, engine);
+            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
+            //string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
 
-            string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
+            var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
+            var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);
 
             var res = new DataTable();
 
             int cols = targetDT.Columns.Count;
             int rows = targetDT.Rows.Count;
 
+            //for (int i = 0; i < cols; i++)
+            //{
+            //    string value = (targetDT.Rows[rowIndex][i] == null) ? "" : targetDT.Rows[rowIndex][i].ToString();
+            //    if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_FilterActionParameterTable, engine))
+            //    {
+            //        if (res.Rows.Count == 0)
+            //        {
+            //            // first add column
+            //            res.Columns.Add(targetDT.Columns[i].ColumnName);
+            //            for (int j = 0; j < rows; j++)
+            //            {
+            //                res.Rows.Add(targetDT.Rows[j][i]);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            int c = res.Columns.Count;
+            //            res.Columns.Add(targetDT.Columns[i].ColumnName);
+            //            for (int j = 0; j < rows; j++)
+            //            {
+            //                res.Rows[j][c] = targetDT.Rows[j][i];
+            //            }
+            //        }
+            //    }
+            //}
             for (int i = 0; i < cols; i++)
             {
-                string value = (targetDT.Rows[rowIndex][i] == null) ? "" : targetDT.Rows[rowIndex][i].ToString();
-                if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_FilterActionParameterTable, engine))
+                string value = targetDT.Rows[rowIndex][i]?.ToString() ?? "";
+                if (checkFunc(value, parameters))
                 {
                     if (res.Rows.Count == 0)
                     {
@@ -163,37 +188,39 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)
         {
+            var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
+            var FilterActionComboboxHelper = (ComboBox)ControlsList[nameof(v_FilterAction)];
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
         }
 
         private void cmbFilterAction_SelectionChangeCommited(object sender, EventArgs e)
         {
+            var FilterParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_FilterActionParameterTable)];
+            var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
+            var FilterActionComboboxHelper = (ComboBox)ControlsList[nameof(v_FilterAction)];
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
-            FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
-            FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
-
-            return RenderedControls;
-        }
-
         public override void AfterShown()
         {
+            var FilterParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_FilterActionParameterTable)];
+            var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
+            var FilterActionComboboxHelper = (ComboBox)ControlsList[nameof(v_FilterAction)];
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, FilterActionComboboxHelper);
             ConditionControls.RenderFilter(v_FilterActionParameterTable, FilterParametersGridViewHelper, FilterActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        //public override string GetDisplayValue()
+        //public override List<Control> Render(frmCommandEditor editor)
         //{
-        //    return base.GetDisplayValue() + " [ DataTable: '" + this.v_InputDataTable + "', Row: " + this.v_TargetRowIndex + ", Type: '" + this.v_OutputDataTable + "', Action: '" + this.v_FilterAction + "', Result: '" + this.v_OutputDataTable + "']";
+        //    base.Render(editor);
+
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
+
+        //    TargetTypeComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_TargetType", CommandControls.CommandControlType.Body)[0];
+        //    FilterActionComboboxHelper = (ComboBox)CommandControls.GetControlsByName(ctrls, "v_FilterAction", CommandControls.CommandControlType.Body)[0];
+        //    FilterParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_FilterActionParameterTable", CommandControls.CommandControlType.Body)[0];
+
+        //    return RenderedControls;
         //}
     }
 }

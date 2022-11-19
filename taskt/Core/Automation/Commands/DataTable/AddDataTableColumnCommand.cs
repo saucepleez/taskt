@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -45,6 +40,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Column")]
         public string v_AddColumnName { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Column Exists")]
+        [InputSpecification("")]
+        [SampleUsage("**Error** or **Ignore** or **Replace**")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Replace")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfColumnExists { get; set; }
+
         public AddDataTableColumnCommand()
         {
             this.CommandName = "AddDataTableColumnCommand";
@@ -56,52 +63,33 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+
             DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
 
             string newColName = v_AddColumnName.ConvertToUserVariable(engine);
+
+            string ifColumnExists = this.GetUISelectionValue(nameof(v_IfColumnExists), "If Column Exists", engine);
 
             for (int i = 0; i < myDT.Columns.Count; i++)
             {
                 if (newColName == myDT.Columns[i].ColumnName)
                 {
-                    throw new Exception("Column Name " + v_AddColumnName + " is already exists");
+                    switch (ifColumnExists)
+                    {
+                        case "error":
+                            throw new Exception("Column Name " + v_AddColumnName + " is already exists");
+
+                        case "ignore":
+                            return;
+
+                        case "replace":
+                            myDT.Columns.Remove(newColName);
+                            break;
+                    }
                 }
             }
 
             myDT.Columns.Add(newColName);
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Add DataTable '" + v_DataTableName + "' Column '" + v_AddColumnName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_AddColumnName))
-        //    {
-        //        this.validationResult += "Column Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

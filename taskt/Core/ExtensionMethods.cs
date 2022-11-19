@@ -1000,30 +1000,7 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", sender, false);
         }
 
-        public static void StoreInUserVariable<Type>(this List<Type> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
-        public static void StoreInUserVariable(this Dictionary<string, string> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
-        public static void StoreInUserVariable(this DataTable value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
         public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-        public static void StoreInUserVariable(this DateTime value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-        public static void StoreInUserVariable(this System.Drawing.Color value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
             StoreInUserVariable(targetVariable, value, sender, false);
         }
@@ -1055,7 +1032,7 @@ namespace taskt.Core
             return engine.engineSettings.wrapVariableMarker(str);
         }
 
-        private static void StoreInUserVariable(string userVariable, object variableValue, Core.Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
+        public static void StoreInUserVariable(string userVariable, object variableValue, Core.Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
         {
             userVariable = parseVariableName(userVariable, engine);
 
@@ -1098,70 +1075,6 @@ namespace taskt.Core
             else
             {
                 return searchedVaiable;
-            }
-        }
-
-        public static List<string> GetListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is List<string>)
-            {
-                return (List<string>)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not supported List");
-            }
-        }
-
-        public static Dictionary<string, string> GetDictionaryVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is Dictionary<string, string>)
-            {
-                return (Dictionary<string, string>)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not Dictionary");
-            }
-        }
-
-        public static DataTable GetDataTableVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is DataTable)
-            {
-                return (DataTable)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not DataTable");
-            }
-        }
-        public static DateTime GetDateTimeVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is DateTime)
-            {
-                return (DateTime)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not DateTime");
-            }
-        }
-
-        public static System.Drawing.Color GetColorVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is System.Drawing.Color)
-            {
-                return (System.Drawing.Color)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not Color");
             }
         }
 

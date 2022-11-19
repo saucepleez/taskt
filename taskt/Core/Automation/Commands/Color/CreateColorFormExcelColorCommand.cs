@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -60,7 +55,9 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            int color = v_ExcelColor.ConvertToUserVariableAsInteger("Excel Color", engine);
+            //int color = v_ExcelColor.ConvertToUserVariableAsInteger("Excel Color", engine);
+            int color = this.ConvertToUserVariableAsInteger(nameof(v_ExcelColor), "Excel Color", engine);
+
             color &= 0xFFFFFF;
             int r = color & 0xFF;
             color >>= 8;
@@ -71,21 +68,5 @@ namespace taskt.Core.Automation.Commands
             Color co = Color.FromArgb(255, r, g, b);
             co.StoreInUserVariable(engine, v_Color);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Name: '" + v_Color + "', From: '" + v_ExcelColor + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
     }
 }

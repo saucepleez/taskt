@@ -447,7 +447,20 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             GreaterThanZero = 4,
             EqualsZero = 8,
             NotEqualsZero = 16,
-            NotSelectionOption = 32
+            NotSelectionOption = 32,
+            Between = 64,
+            NotBetween = 128,
+        }
+    }
+    [System.AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyValueRange : System.Attribute
+    {
+        public double min;
+        public double max;
+        public PropertyValueRange(double min, double max)
+        {
+            this.min = min;
+            this.max = max;
         }
     }
     [System.AttributeUsage(AttributeTargets.Property)]

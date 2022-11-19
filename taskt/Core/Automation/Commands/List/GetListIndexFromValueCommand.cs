@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -83,7 +78,8 @@ namespace taskt.Core.Automation.Commands
 
             var searchedValue = v_SearchItem.ConvertToUserVariable(sender);
 
-            string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
+            //string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
+            string searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
 
             switch (searchMethod)
             {
@@ -95,42 +91,5 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [Search Value in '{v_ListName}', Value: '{v_SearchItem}', Result: '{v_Result}']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_ListName))
-        //    {
-        //        this.validationResult += "List Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SearchItem))
-        //    {
-        //        this.validationResult += "Search Value is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_Result))
-        //    {
-        //        this.validationResult += "Result Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

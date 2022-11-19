@@ -3,10 +3,6 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -46,14 +42,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Keys", "Keys", false)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
         [PropertyDataGridViewSetting(true, true, true)]
-        [PropertyControlIntoCommandField("ColumnNameDataGridViewHelper")]
-        [PropertyDataGridViewCellEditEvent("ColumnNameDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //[PropertyControlIntoCommandField("ColumnNameDataGridViewHelper")]
+        [PropertyDataGridViewCellEditEvent(nameof(ColumnNameDataGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
         public DataTable v_ColumnNameDataTable { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ColumnNameDataGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView ColumnNameDataGridViewHelper;
 
         public CreateDictionaryCommand()
         {
@@ -79,6 +75,7 @@ namespace taskt.Core.Automation.Commands
 
         private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            DataGridView ColumnNameDataGridViewHelper = (DataGridView)sender;
             if (e.ColumnIndex >= 0)
             {
                 ColumnNameDataGridViewHelper.BeginEdit(false);
@@ -92,6 +89,7 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
+            DataGridView ColumnNameDataGridViewHelper = (DataGridView)ControlsList[nameof(v_ColumnNameDataTable)];
             if (ColumnNameDataGridViewHelper.IsCurrentCellDirty || ColumnNameDataGridViewHelper.IsCurrentRowDirty)
             {
                 ColumnNameDataGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
@@ -106,34 +104,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    ColumnNameDataGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ColumnNameDataTable")[0];
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_DictionaryName))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name is empty.\n";
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

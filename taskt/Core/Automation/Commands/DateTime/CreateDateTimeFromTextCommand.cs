@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -61,8 +56,7 @@ namespace taskt.Core.Automation.Commands
 
             string value = v_Text.ConvertToUserVariable(engine);
 
-            DateTime tryDT;
-            if (DateTime.TryParse(value, out tryDT))
+            if (DateTime.TryParse(value, out DateTime tryDT))
             {
                 tryDT.StoreInUserVariable(engine, v_DateTime);
             }
@@ -71,21 +65,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Text '" + v_Text + "' is not DateTime");
             }
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Name: '" + v_DateTime + "' From '" + v_Text + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
     }
 }

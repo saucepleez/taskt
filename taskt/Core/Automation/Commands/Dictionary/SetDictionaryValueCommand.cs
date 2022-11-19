@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -57,6 +51,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Value")]
         public string v_Value { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please Select If Key does not Exists")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Add")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_IfKeyDoesNotExists { get; set; }
+
         public SetDictionaryValueCommand()
         {
             this.CommandName = "SetDictionaryValueCommand";
@@ -69,69 +76,49 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+            //Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
 
-            string vKey = "";
-            if (String.IsNullOrEmpty(v_Key))
-            {
-                var variable = v_InputData.GetRawVariable(engine);
-                int pos = variable.CurrentPosition;
-                string[] keys = dic.Keys.ToArray();
-                if ((pos >= 0) && (pos < keys.Length))
-                {
-                    vKey = keys[pos];
-                }
-                else
-                {
-                    throw new Exception("Strange Current Position in Dictionary " + pos);
-                }
-            }
-            else
-            {
-                vKey = v_Key.ConvertToUserVariable(engine);
-            }
+            //string vKey;
+            //if (String.IsNullOrEmpty(v_Key))
+            //{
+            //    var variable = v_InputData.GetRawVariable(engine);
+            //    int pos = variable.CurrentPosition;
+            //    string[] keys = dic.Keys.ToArray();
+            //    if ((pos >= 0) && (pos < keys.Length))
+            //    {
+            //        vKey = keys[pos];
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Strange Current Position in Dictionary " + pos);
+            //    }
+            //}
+            //else
+            //{
+            //    vKey = v_Key.ConvertToUserVariable(engine);
+            //}
+            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
+            string valueToSet = v_Value.ConvertToUserVariable(engine);
             if (dic.ContainsKey(vKey))
             {
-                dic[vKey] = v_Value.ConvertToUserVariable(sender);
+                dic[vKey] = valueToSet;
             }
             else
             {
-                throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+                string ifNotExits = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                switch (ifNotExits)
+                {
+                    case "error":
+                        throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
+
+                    case "ignore":
+                        break;
+                    case "add":
+                        dic.Add(vKey, valueToSet);
+                        break;
+                }
             }
         }
-        
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [From: {v_InputData}, Set: {v_Key}, Value: {v_Value}]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_InputData))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_Key))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Key is empty.\n";
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

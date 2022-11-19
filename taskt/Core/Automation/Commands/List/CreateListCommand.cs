@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -43,14 +40,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
-        [PropertyControlIntoCommandField("ListValuesGridViewHelper")]
+        //[PropertyControlIntoCommandField("ListValuesGridViewHelper")]
         [PropertyDataGridViewCellEditEvent("ListValuesDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
         public DataTable v_ListValues { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ListValuesGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView ListValuesGridViewHelper;
 
         public CreateListCommand()
         {
@@ -78,13 +75,16 @@ namespace taskt.Core.Automation.Commands
         {
             if (e.ColumnIndex >= 0)
             {
-                ListValuesGridViewHelper.BeginEdit(false);
+                //ListValuesGridViewHelper.BeginEdit(false);
+                ((DataGridView)sender).BeginEdit(false);
             }
         }
 
         public override void BeforeValidate()
         {
             base.BeforeValidate();
+            var ListValuesGridViewHelper = (DataGridView)this.ControlsList[nameof(v_ListValues)];
+
             if (ListValuesGridViewHelper.IsCurrentCellDirty || ListValuesGridViewHelper.IsCurrentRowDirty)
             {
                 ListValuesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
@@ -99,35 +99,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    ListValuesGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_ListValues")[0];
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [Create List '{v_ListName}']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_ListName))
-        //    {
-        //        this.validationResult += "List Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

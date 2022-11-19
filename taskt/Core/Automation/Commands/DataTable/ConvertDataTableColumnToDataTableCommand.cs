@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -83,72 +78,44 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
+            //DataTable srcDT = v_DataTableName.GetDataTableVariable(engine);
 
-            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+            //string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
 
+            //DataTable myDT = new DataTable();
+            //switch (colType)
+            //{
+            //    case "column name":
+            //        string colName = DataTableControls.GetColumnName(srcDT, v_DataColumnIndex, engine);
+            //        myDT.Columns.Add(colName);
+            //        for (int i = 0; i < srcDT.Rows.Count; i++)
+            //        {
+            //            myDT.Rows.Add();
+            //            myDT.Rows[i][0] = (srcDT.Rows[i][colName] != null) ? srcDT.Rows[i][colName] : "";
+            //        }
+            //        break;
+
+            //    case "index":
+            //        int colIndex = DataTableControls.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
+            //        myDT.Columns.Add(srcDT.Columns[colIndex].ColumnName);
+            //        for (int i = 0; i < srcDT.Rows.Count; i++)
+            //        {
+            //            myDT.Rows.Add();
+            //            myDT.Rows[i][0] = (srcDT.Rows[i][colIndex] != null) ? srcDT.Rows[i][colIndex] : "";
+            //        }
+            //        break;
+            //}
+
+            (var srcDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
             DataTable myDT = new DataTable();
-            switch (colType)
+            myDT.Columns.Add(srcDT.Columns[colIndex].ColumnName);
+            for (int i = 0; i < srcDT.Rows.Count; i++)
             {
-                case "column name":
-                    string colName = DataTableControls.GetColumnName(srcDT, v_DataColumnIndex, engine);
-                    myDT.Columns.Add(colName);
-                    for (int i = 0; i < srcDT.Rows.Count; i++)
-                    {
-                        myDT.Rows.Add();
-                        myDT.Rows[i][0] = (srcDT.Rows[i][colName] != null) ? srcDT.Rows[i][colName] : "";
-                    }
-                    break;
-
-                case "index":
-                    int colIndex = DataTableControls.GetColumnIndex(srcDT, v_DataColumnIndex, engine);
-                    myDT.Columns.Add(srcDT.Columns[colIndex].ColumnName);
-                    for (int i = 0; i < srcDT.Rows.Count; i++)
-                    {
-                        myDT.Rows.Add();
-                        myDT.Rows[i][0] = (srcDT.Rows[i][colIndex] != null) ? srcDT.Rows[i][colIndex] : "";
-                    }
-                    break;
+                myDT.Rows.Add();
+                myDT.Rows[i][0] = srcDT.Rows[i][colIndex] ?? "";
             }
 
             myDT.StoreInUserVariable(engine, v_OutputVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-        
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Convert DataTable '" + v_DataTableName + "' Column '" + v_DataColumnIndex + "' to DataTable '" + v_OutputVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_DataColumnIndex))
-        //    {
-        //        this.validationResult += "Column Name or Index is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_OutputVariableName))
-        //    {
-        //        this.validationResult += "Result DataTable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

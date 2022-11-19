@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Data;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -44,14 +39,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
-        [PropertyDataGridViewCellEditEvent("ColumnNamesGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [PropertyControlIntoCommandField("ColumnNamesGridViewHelper")]
+        [PropertyDataGridViewCellEditEvent(nameof(ColumnNamesGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //[PropertyControlIntoCommandField("ColumnNamesGridViewHelper")]
         [PropertyDisplayText(true, "Columns")]
         public DataTable v_ColumnNameDataTable { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ColumnNamesGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView ColumnNamesGridViewHelper;
 
         public CreateDataTableCommand()
         {
@@ -84,23 +79,10 @@ namespace taskt.Core.Automation.Commands
             newDT.StoreInUserVariable(engine, v_DataTableName);
         }
 
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [Name: '{v_DataTableName}' with {v_ColumnNameDataTable.Rows.Count} Columns]";
-        //}
 
         private void ColumnNamesGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            var ColumnNamesGridViewHelper = (DataGridView)sender;
             if (e.ColumnIndex >= 0)
             {
                 ColumnNamesGridViewHelper.BeginEdit(false);
@@ -114,6 +96,9 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
+
+            var ColumnNamesGridViewHelper = (DataGridView)ControlsList[nameof(v_ColumnNameDataTable)];
+
             if (ColumnNamesGridViewHelper.IsCurrentCellDirty || ColumnNamesGridViewHelper.IsCurrentRowDirty)
             {
                 ColumnNamesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
@@ -128,18 +113,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is emtpy.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -90,13 +85,14 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> dicB = v_InputDataB.GetDictionaryVariable(engine);
 
-            Dictionary<string, string> myDic = new Dictionary<string, string>();
-            foreach(var v in dicA)
-            {
-                myDic.Add(v.Key, v.Value);
-            }
+            Dictionary<string, string> myDic = new Dictionary<string, string>(dicA);
+            //foreach(var v in dicA)
+            //{
+            //    myDic.Add(v.Key, v.Value);
+            //}
 
-            string keyExists = v_KeyExists.GetUISelectionValue("v_KeyExists", this, engine);
+            //string keyExists = v_KeyExists.GetUISelectionValue("v_KeyExists", this, engine);
+            string keyExists = this.GetUISelectionValue(nameof(v_KeyExists), "If Key Exists", engine);
 
             switch (keyExists)
             {
@@ -138,43 +134,5 @@ namespace taskt.Core.Automation.Commands
             }
             myDic.StoreInUserVariable(engine, v_OutputName);
         }
-        
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Dictionary1: '" + v_InputDataA + "', Dictionary2: '" + v_InputDataB + "', Result: '" + v_OutputName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_InputDataA))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name 1 is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_InputDataB))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Dictionary Variable Name 2 is empty.\n";
-        //    }
-        //    if (String.IsNullOrEmpty(v_OutputName))
-        //    {
-        //        this.IsValid = false;
-        //        this.validationResult += "Result Dictionary is empty.\n";
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

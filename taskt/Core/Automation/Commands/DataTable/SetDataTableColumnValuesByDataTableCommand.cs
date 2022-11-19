@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -104,12 +99,35 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+
+            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            //string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
+
+            //// column name check
+            //string trgColName;
+            //if (colType == "column name")
+            //{
+            //    trgColName = DataTableControls.GetColumnName(setDT, v_SetColumnName, engine);
+            //}
+            //else
+            //{
+            //    int colIndex = DataTableControls.GetColumnIndex(setDT, v_SetColumnName, engine);
+            //    trgColName = setDT.Columns[colIndex].ColumnName;
+            //}
+
+            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+
+            //if (!DataTableControls.isColumnExists(myDT, trgColName))
+            //{
+            //    throw new Exception("Column " + v_SetColumnName + " does not exists in DataTable to setted");
+            //}
+            string trgColName = myDT.Columns[colIndex].ColumnName;
+
 
             DataTable setDT = v_SetDataTableName.GetDataTableVariable(engine);
 
-            string ifRowNotEnough = v_IfRowNotEnough.GetUISelectionValue("v_IfRowNotEnough", this, engine);
-
+            //string ifRowNotEnough = v_IfRowNotEnough.GetUISelectionValue("v_IfRowNotEnough", this, engine);
+            string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check
             if (myDT.Rows.Count < setDT.Rows.Count)
             {
@@ -124,30 +142,11 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            string ifListNotEnough = v_IfSetDataTableNotEnough.GetUISelectionValue("v_IfSetDataTableNotEnough", this, engine);
-
-            if ((myDT.Rows.Count > setDT.Rows.Count) && (ifListNotEnough == "error"))
+            //string ifListNotEnough = v_IfSetDataTableNotEnough.GetUISelectionValue("v_IfSetDataTableNotEnough", this, engine);
+            string ifDataTableNotEnough = this.GetUISelectionValue(nameof(v_IfSetDataTableNotEnough), "DataTable Not Enough", engine);
+            if ((myDT.Rows.Count > setDT.Rows.Count) && (ifDataTableNotEnough == "error"))
             {
                 throw new Exception("The number of DataTable items is less than the rows to settedd");
-            }
-
-            string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
-
-            // column name check
-            string trgColName;
-            if (colType == "column name")
-            {
-                trgColName = DataTableControls.GetColumnName(setDT, v_SetColumnName, engine);
-            }
-            else
-            {
-                int colIndex = DataTableControls.GetColumnIndex(setDT, v_SetColumnName, engine);
-                trgColName = setDT.Columns[colIndex].ColumnName;
-            }
-
-            if (!DataTableControls.isColumnExists(myDT, trgColName))
-            {
-                throw new Exception("Column " + v_SetColumnName + " does not exists in DataTable to setted");
             }
 
             int maxRow = (myDT.Rows.Count > setDT.Rows.Count) ? setDT.Rows.Count : myDT.Rows.Count;
@@ -164,42 +163,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set DataTable '" + v_DataTableName + "' Column Name '" + v_SetColumnName + "' DataTable '" + v_SetDataTableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name to setted is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SetDataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name to set is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_SetColumnName))
-        //    {
-        //        this.validationResult += "Column Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

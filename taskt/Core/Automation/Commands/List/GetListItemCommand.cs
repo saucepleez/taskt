@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -75,9 +70,9 @@ namespace taskt.Core.Automation.Commands
 
             dynamic listToIndex;
             var varType = listVariable.VariableValue.GetType();
-            if (listVariable.VariableValue is List<string>)
+            if (listVariable.VariableValue is List<string> list_string)
             {
-                listToIndex = (List<string>)listVariable.VariableValue;
+                listToIndex = list_string;
             }
             else if (varType.IsGenericType && (varType.GetGenericTypeDefinition() == typeof(List<>)))
             {
@@ -105,15 +100,13 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            int index = 0;
+            int index;
             if (String.IsNullOrEmpty(v_ItemIndex))
             {
                 index = listVariable.CurrentPosition;
             }
             else
             {
-                //var itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
-                //index = int.Parse(itemIndex);
                 index = v_ItemIndex.ConvertToUserVariableAsInteger("Index", engine);
             }
             
@@ -141,54 +134,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Strange index " + v_ItemIndex + ", parsed " + index);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [From '{v_ListName}', Index: '{v_ItemIndex}', Store In: '{v_UserVariableName}']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_ListName))
-        //    {
-        //        this.validationResult += "List Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_ItemIndex))
-        //    {
-        //        this.validationResult += "Index of List item is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    //else
-        //    //{
-        //    //    int vIndex;
-        //    //    if (int.TryParse(this.v_ItemIndex, out vIndex))
-        //    //    {
-        //    //        if (vIndex < 0)
-        //    //        {
-        //    //            this.validationResult += "Specify a value of 0 or more for index of List item.\n";
-        //    //            this.IsValid = false;
-        //    //        }
-        //    //    }
-        //    //}
-        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

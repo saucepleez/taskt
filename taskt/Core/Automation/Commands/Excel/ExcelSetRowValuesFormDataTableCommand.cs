@@ -83,9 +83,9 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Select or provide a variable from the variable list")]
         [SampleUsage("**vSomeVariable**")]
         [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Store")]
         public string v_DataTableVariable { get; set; }
@@ -182,7 +182,8 @@ namespace taskt.Core.Automation.Commands
 
             for (int i = 0; i < max; i++)
             {
-                string setValue = (myDT.Rows[dtRowIndex][i] == null) ? "" : myDT.Rows[dtRowIndex][i].ToString();
+                //string setValue = (myDT.Rows[dtRowIndex][i] == null) ? "" : myDT.Rows[dtRowIndex][i].ToString();
+                string setValue = myDT.Rows[dtRowIndex][i]?.ToString() ?? "";
                 setFunc(setValue, excelSheet, columnStartIndex + i, excelRowIndex);
             }
         }
