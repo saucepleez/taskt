@@ -623,11 +623,27 @@ namespace taskt.UI.CustomControls
             var changeEvent = (Core.Automation.Attributes.PropertyAttributes.PropertySelectionChangeEvent)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySelectionChangeEvent));
             if (changeEvent != null)
             {
-                var trgMethod = parent.GetType().GetMethod(changeEvent.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                bool useOuterClassEvent = changeEvent.methodName.Contains("+");
+                MethodInfo trgMethod;
+                if (useOuterClassEvent)
+                {
+                    int idx = changeEvent.methodName.IndexOf("+");
+                    string className = changeEvent.methodName.Substring(0, idx);
+                    string methodName = changeEvent.methodName.Substring(idx + 1);
+                    var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                    trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
+                }
+                else
+                {
+                    trgMethod = parent.GetType().GetMethod(changeEvent.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                }
 
-                EventHandler dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
+                //EventHandler dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
 
-                inputBox.SelectionChangeCommitted += dMethod;
+                //inputBox.SelectionChangeCommitted += dMethod;
+                inputBox.SelectionChangeCommitted += useOuterClassEvent ? 
+                    (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler)) :
+                    (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
             }
 
             return inputBox;
@@ -959,16 +975,36 @@ namespace taskt.UI.CustomControls
                 Type parentType = command.GetType();
                 foreach (var ev in cellEvents)
                 {
-                    var trgMethod = parentType.GetMethod(ev.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    MethodInfo trgMethod;
+                    if (ev.methodName.Contains("+"))
+                    {
+                        int idx = ev.methodName.IndexOf("+");
+                        string className = ev.methodName.Substring(0, idx);
+                        string methodName = ev.methodName.Substring(idx + 1);
+                        var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                        trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
+                    }
+                    else
+                    {
+                        trgMethod = parentType.GetMethod(ev.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    }
 
                     switch (ev.eventRaise)
                     {
                         case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick:
-                            DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
+                            //DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
+                            //DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler));
+                            DataGridViewCellEventHandler clickMethod = (ev.methodName.Contains("+")) ?
+                                (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler)) :
+                                (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
                             createdDGV.CellClick += clickMethod;
                             break;
                         case Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit:
-                            DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
+                            //DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
+                            //DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler));
+                            DataGridViewCellCancelEventHandler beginEditMethod = (ev.methodName.Contains("+")) ?
+                                (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler)) :
+                                (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
                             createdDGV.CellBeginEdit += beginEditMethod;
                             break;
                     }

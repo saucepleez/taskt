@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using taskt.Core.Automation.Commands;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -348,6 +348,24 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
                 return true;
+            }
+        }
+
+        public static void AllEditableDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var myDGV = (DataGridView)sender;
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            if (e.ColumnIndex >= 0)
+            {
+                myDGV.BeginEdit(false);
+            }
+            else
+            {
+                myDGV.EndEdit();
             }
         }
     }
