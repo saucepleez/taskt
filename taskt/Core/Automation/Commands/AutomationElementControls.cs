@@ -8,10 +8,11 @@ using System.Windows.Automation;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Security;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-    internal class AutomationElementControls
+    internal static class AutomationElementControls
     {
         public static AutomationElement GetFromWindowName(string windowName, Automation.Engine.AutomationEngineInstance engine)
         {
@@ -1194,6 +1195,42 @@ namespace taskt.Core.Automation.Commands
                     string result = fm.InspectResult;
                     parseInspectToolResult(result, searchParams);
                 }
+            }
+        }
+        public static void UIAutomationDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var myDGV = (DataGridView)sender;
+
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex != 1)
+                {
+                    var targetCell = myDGV.Rows[e.RowIndex].Cells[1];
+                    if (targetCell is DataGridViewTextBoxCell)
+                    {
+                        myDGV.BeginEdit(false);
+                    }
+                    else if (targetCell is DataGridViewComboBoxCell)
+                    {
+                        SendKeys.Send("{F4}");
+                    }
+                }
+            }
+            else
+            {
+                myDGV.EndEdit();
+            }
+        }
+        public static void UIAutomationDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                e.Cancel = true;
             }
         }
     }
