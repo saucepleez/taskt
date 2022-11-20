@@ -4,7 +4,6 @@ using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -39,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**$.id**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyCustomUIHelper("JSONPath Helper", "lnkJsonPathHelper_Click")]
+        [PropertyCustomUIHelper("JSONPath Helper", nameof(lnkJsonPathHelper_Click)]
         [PropertyValidationRule("JSON extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Extractor")]
         public string v_JsonExtractor { get; set; }
@@ -139,42 +138,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Selector: " + v_JsonExtractor + ", Apply Result(s) To Variable: " + v_applyToVariableName + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InputValue))
-        //    {
-        //        this.validationResult += "JSON text is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_JsonExtractor))
-        //    {
-        //        this.validationResult += "JSON extractor is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
