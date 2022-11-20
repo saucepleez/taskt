@@ -2,13 +2,10 @@
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using taskt.Core.Automation.User32;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Text;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -594,8 +591,10 @@ namespace taskt.Core.Automation.Commands
             //LoopGridViewHelper.AllowUserToDeleteRows = false;
             LoopGridViewHelper = CommandControls.CreateDataGridView(this, "v_LoopActionParameterTable", false, false);
             LoopGridViewHelper.MouseEnter += (sender, e) => LoopGridViewHelper_MouseEnter(sender, e, editor);
-            LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
-            LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;
+            //LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
+            //LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;
+            LoopGridViewHelper.CellBeginEdit += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit;
+            LoopGridViewHelper.CellClick += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick;
 
             //var helperTheme = editor.Theme.UIHelper;
             //RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
@@ -1188,35 +1187,35 @@ namespace taskt.Core.Automation.Commands
             return ConditionControls.GetDisplayValue("Loop While", v_LoopActionType, v_LoopActionParameterTable);
         }
 
-        private void LoopGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            if (e.ColumnIndex == 0)
-            {
-                e.Cancel = true;
-            }
-        }
-        private void LoopGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                if (e.ColumnIndex == 1)
-                {
-                    var targetCell = LoopGridViewHelper.Rows[e.RowIndex].Cells[0];
-                    if (targetCell is DataGridViewTextBoxCell)
-                    {
-                        LoopGridViewHelper.BeginEdit(false);
-                    }
-                    else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
-                    {
-                        SendKeys.Send("%{DOWN}");
-                    }
-                }
-            }
-            else
-            {
-                LoopGridViewHelper.EndEdit();
-            }
-        }
+        //private void LoopGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        //{
+        //    if (e.ColumnIndex == 0)
+        //    {
+        //        e.Cancel = true;
+        //    }
+        //}
+        //private void LoopGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        if (e.ColumnIndex == 1)
+        //        {
+        //            var targetCell = LoopGridViewHelper.Rows[e.RowIndex].Cells[0];
+        //            if (targetCell is DataGridViewTextBoxCell)
+        //            {
+        //                LoopGridViewHelper.BeginEdit(false);
+        //            }
+        //            else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
+        //            {
+        //                SendKeys.Send("%{DOWN}");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        LoopGridViewHelper.EndEdit();
+        //    }
+        //}
 
         public override bool IsValidate(frmCommandEditor editor)
         {
