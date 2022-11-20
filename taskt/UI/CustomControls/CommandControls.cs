@@ -888,9 +888,24 @@ namespace taskt.UI.CustomControls
                     link.Name = parameterName + "_customhelper_" + ((attr.nameKey == "") ? counter.ToString() : attr.nameKey);
                     link.Tag = targetControls.FirstOrDefault();
 
-                    var trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    
-                    EventHandler dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
+                    bool useOuterMethod = attr.methodName.Contains("+");
+
+                    MethodInfo trgMethod;
+                    EventHandler dMethod;
+                    if (useOuterMethod)
+                    {
+                        int idx = attr.methodName.IndexOf("+");
+                        string className = attr.methodName.Substring(0, idx);
+                        string methodName = attr.methodName.Substring(idx + 1);
+                        var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                        trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
+                        dMethod = (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
+                    }
+                    else
+                    {
+                        trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
+                    }
 
                     link.Click += dMethod;
 
