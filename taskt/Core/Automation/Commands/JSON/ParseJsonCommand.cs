@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
 using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -38,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**$.id**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyCustomUIHelper("JSONPath Helper", nameof(lnkJsonPathHelper_Click)]
+        [PropertyCustomUIHelper("JSONPath Helper", nameof(lnkJsonPathHelper_Click))]
         [PropertyValidationRule("JSON extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Extractor")]
         public string v_JsonExtractor { get; set; }
@@ -68,7 +67,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-
             var forbiddenMarkers = new List<string> { "[", "]" };
 
             if (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableStartMarker) || (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableEndMarker)))
@@ -77,56 +75,91 @@ namespace taskt.Core.Automation.Commands
             }
 
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(sender);
+            var jsonText = v_InputValue.ConvertToUserVariable(sender).Trim();
 
             //get variablized token
             var jsonSearchToken = v_JsonExtractor.ConvertToUserVariable(sender);
 
-            //create objects
-            Newtonsoft.Json.Linq.JObject o;
-            IEnumerable<Newtonsoft.Json.Linq.JToken> searchResults;
-            List<string> resultList = new List<string>();
+            ////create objects
+            //Newtonsoft.Json.Linq.JObject o;
+            //IEnumerable<Newtonsoft.Json.Linq.JToken> searchResults;
+            //List<string> resultList = new List<string>();
 
-            //parse json
-            try
+            ////parse json
+            //try
+            //{
+            //     o = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Error Occured Parsing Tokens: " + ex.ToString());
+            //}
+
+            IEnumerable<Newtonsoft.Json.Linq.JToken> searchResults;
+            if (jsonText.StartsWith("{") && jsonText.EndsWith("}"))
             {
-                 o = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
+                try
+                {
+                    var o = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
+                    searchResults = o.SelectTokens(jsonSearchToken);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Fail Parse JSON Object: " + ex.ToString());
+                }
             }
-            catch (Exception ex)
+            else if(jsonText.StartsWith("[") && jsonText.EndsWith("]"))
             {
-                throw new Exception("Error Occured Parsing Tokens: " + ex.ToString());
+                try
+                {
+                    var a = Newtonsoft.Json.Linq.JArray.Parse(jsonText);
+                    searchResults = a.SelectTokens(jsonSearchToken);
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception("Fail Parse JSON Array: " + ex.ToString());
+                }
             }
- 
-            //select results
-            try
+            else
             {
-                searchResults = o.SelectTokens(jsonSearchToken);
+                throw new Exception("Strange Json. First 10 chars '" + jsonText.Substring(0, 10) + "'");
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
-            }
+
+            ////select results
+            //try
+            //{
+            //    searchResults = o.SelectTokens(jsonSearchToken);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Error Occured Selecting Tokens: " + ex.ToString());
+            //}
+
+            //List<Newtonsoft.Json.Linq.JToken> sr = searchResults.ToList();
 
             //add results to result list since list<string> is supported
-            foreach (var result in searchResults)
+            List<string> resultList = new List<string>();
+            foreach (Newtonsoft.Json.Linq.JToken result in searchResults)
             {
                 resultList.Add(result.ToString());
             }
 
-            //get variable
-            var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
+            ////get variable
+            //var requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
 
-            //create if var does not exist
-            if (requiredComplexVariable == null)
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_applyToVariableName, CurrentPosition = 0 });
-                requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
-            }
+            ////create if var does not exist
+            //if (requiredComplexVariable == null)
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_applyToVariableName, CurrentPosition = 0 });
+            //    requiredComplexVariable = engine.VariableList.Where(x => x.VariableName == v_applyToVariableName).FirstOrDefault();
+            //}
 
-            //assign value to variable
-            requiredComplexVariable.VariableValue = resultList;
+            ////assign value to variable
+            //requiredComplexVariable.VariableValue = resultList;
 
+            resultList.StoreInUserVariable(engine, v_applyToVariableName);
         }
+
         public void lnkJsonPathHelper_Click(object sender, EventArgs e)
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
