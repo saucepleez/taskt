@@ -239,6 +239,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ConvertJSONToDataTableCommand))]
     [XmlInclude(typeof(ConvertJSONToDictionaryCommand))]
     [XmlInclude(typeof(ConvertJSONToListCommand))]
+    [XmlInclude(typeof(CreateJSONVariableCommand))]
     [XmlInclude(typeof(ParseJSONArrayCommand))]
     [XmlInclude(typeof(ParseJsonCommand))]
     [XmlInclude(typeof(ParseJsonModelCommand))]

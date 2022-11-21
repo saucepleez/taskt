@@ -338,6 +338,7 @@
     <Compile Include="Core\Automation\Commands\Folder\FormatFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\RemoveJSONPropertyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\CreateJSONVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\SetJSONValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ReplaceListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />

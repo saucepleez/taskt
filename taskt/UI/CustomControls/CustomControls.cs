@@ -654,6 +654,7 @@ namespace taskt.UI
             {nameof(ConvertJSONToDataTableCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToDictionaryCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToListCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(CreateJSONVariableCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJSONArrayCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonModelCommand), "taskt.Properties.Resources.command_parse"},
