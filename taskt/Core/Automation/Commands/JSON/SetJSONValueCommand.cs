@@ -48,6 +48,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [SampleUsage("**Hello** or **{{{vNewValue}}}**")]
         [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
         public string v_ValueToSet { get; set; }
