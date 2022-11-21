@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        [PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
+        //[PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyControlIntoCommandField("ReplaceActionComboboxHelper")]
+        //[PropertyControlIntoCommandField("ReplaceActionComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
         [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
@@ -66,7 +66,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        [PropertyControlIntoCommandField("ReplaceParametersGridViewHelper")]
+        //[PropertyControlIntoCommandField("ReplaceParametersGridViewHelper")]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
@@ -78,17 +80,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Replace Value")]
         public string v_ReplaceValue { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox TargetTypeComboboxHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private ComboBox TargetTypeComboboxHelper;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox ReplaceActionComboboxHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private ComboBox ReplaceActionComboboxHelper;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ReplaceParametersGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView ReplaceParametersGridViewHelper;
 
         public ReplaceDictionaryCommand()
         {
@@ -134,16 +136,24 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)
         {
+            var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
+            var ReplaceActionComboboxHelper = (ComboBox)ControlsList[nameof(v_ReplaceAction)];
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
         }
 
         private void cmbReplaceAction_SelectionChangeCommited(object sender, EventArgs e)
         {
+            var ReplaceParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_ReplaceActionParameterTable)];
+            var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
+            var ReplaceActionComboboxHelper = (ComboBox)ControlsList[nameof(v_ReplaceAction)];
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
         public override void AfterShown()
         {
+            var ReplaceParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_ReplaceActionParameterTable)];
+            var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];
+            var ReplaceActionComboboxHelper = (ComboBox)ControlsList[nameof(v_ReplaceAction)];
             ConditionControls.AddFilterActionItems(TargetTypeComboboxHelper, ReplaceActionComboboxHelper);
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
         }

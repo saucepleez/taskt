@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
-using taskt.UI.CustomControls;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -93,37 +89,5 @@ namespace taskt.Core.Automation.Commands
             //rename file
             File.Move(sourceFile, destinationPath);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_NewName", this, editor));
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [rename " + v_SourceFilePath + " to '" + v_NewName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_SourceFilePath))
-        //    {
-        //        this.validationResult += "Source file is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_NewName))
-        //    {
-        //        this.validationResult += "New file name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

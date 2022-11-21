@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -85,6 +81,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //apply variable logic
             var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
@@ -92,12 +89,13 @@ namespace taskt.Core.Automation.Commands
 
             if (!Directory.Exists(destinationFolder))
             {
-                var vCreateDirectroy = v_CreateDirectory.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(vCreateDirectroy))
-                {
-                    vCreateDirectroy = "No";
-                }
-                if (vCreateDirectroy.ToLower() == "yes")
+                //var vCreateDirectroy = v_CreateDirectory.ConvertToUserVariable(sender);
+                //if (String.IsNullOrEmpty(vCreateDirectroy))
+                //{
+                //    vCreateDirectroy = "No";
+                //}
+                var vCreateDirectory = this.GetUISelectionValue(nameof(v_CreateDirectory), "Create Directory", engine);
+                if (vCreateDirectory == "yes")
                 {
                     Directory.CreateDirectory(destinationFolder);
                 }
@@ -114,18 +112,20 @@ namespace taskt.Core.Automation.Commands
             var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
 
             //delete if it already exists per user
-            var vDeleteExistsint = v_DeleteExisting.ConvertToUserVariable(sender);
-            if (vDeleteExistsint.ToLower() == "yes")
+            //var vDeleteExistsint = v_DeleteExisting.ConvertToUserVariable(sender);
+            var vDeleteExisting = this.GetUISelectionValue(nameof(v_DeleteExisting), "Delete Existing", engine);
+            if (vDeleteExisting == "yes")
             {
                 File.Delete(destinationPath);
             }
 
-            var vOperationType = v_OperationType.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(vOperationType))
-            {
-                vOperationType = "Move File";
-            }
-            if (vOperationType == "Move File")
+            //var vOperationType = v_OperationType.ConvertToUserVariable(sender);
+            //if (String.IsNullOrEmpty(vOperationType))
+            //{
+            //    vOperationType = "Move File";
+            //}
+            var vOperationType = this.GetUISelectionValue(nameof(v_OperationType), "Operation Type", engine);
+            if (vOperationType == "move file")
             {
                 //move file
                 File.Move(sourceFile, destinationPath);
@@ -136,39 +136,5 @@ namespace taskt.Core.Automation.Commands
                 File.Copy(sourceFile, destinationPath);
             }
         }
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationDirectory", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteExisting", this, editor));
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [" + v_OperationType + " from '" + v_SourceFilePath + "' to '" + v_DestinationDirectory + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_SourceFilePath))
-        //    {
-        //        this.validationResult += "Source file is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(v_SourceFilePath))
-        //    {
-        //        this.validationResult += "Move/copy directory is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -61,6 +57,8 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //apply variable logic
             var destinationDirectory = v_DestinationDirectory.ConvertToUserVariable(sender);
             var newFolder = v_NewFolderName.ConvertToUserVariable(sender);
@@ -68,12 +66,13 @@ namespace taskt.Core.Automation.Commands
             var finalPath = System.IO.Path.Combine(destinationDirectory, newFolder);
             if (System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
             {
-                var deleteFolder = v_DeleteExisting.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(deleteFolder))
-                {
-                    deleteFolder = "No";
-                }
-                if (deleteFolder.ToLower() == "yes")
+                //var deleteFolder = v_DeleteExisting.ConvertToUserVariable(sender);
+                //if (String.IsNullOrEmpty(deleteFolder))
+                //{
+                //    deleteFolder = "No";
+                //}
+                var deleteFolder = this.GetUISelectionValue(nameof(v_DeleteExisting), "Delete Existing", engine);
+                if (deleteFolder == "yes")
                 {
                     System.IO.Directory.Delete(finalPath, true);
                 }
@@ -85,39 +84,5 @@ namespace taskt.Core.Automation.Commands
                 System.IO.Directory.CreateDirectory(finalPath);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationDirectory", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_NewFolderName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteExisting", this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + "[create " + v_DestinationDirectory + "\\" + v_NewFolderName +"']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DestinationDirectory))
-        //    {
-        //        this.validationResult += "Directory of new folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_NewFolderName))
-        //    {
-        //        this.validationResult += "Name of new folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

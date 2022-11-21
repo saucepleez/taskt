@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
         //[PropertyControlIntoCommandField("ListValuesGridViewHelper")]
-        [PropertyDataGridViewCellEditEvent("ListValuesDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
         public DataTable v_ListValues { get; set; }
 
@@ -71,14 +71,14 @@ namespace taskt.Core.Automation.Commands
             newList.StoreInUserVariable(engine, v_ListName);
         }
         
-        private void ListValuesDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                //ListValuesGridViewHelper.BeginEdit(false);
-                ((DataGridView)sender).BeginEdit(false);
-            }
-        }
+        //private void ListValuesDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        //ListValuesGridViewHelper.BeginEdit(false);
+        //        ((DataGridView)sender).BeginEdit(false);
+        //    }
+        //}
 
         public override void BeforeValidate()
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using taskt.Core.Automation.Commands;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -348,6 +348,70 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
                 return true;
+            }
+        }
+
+        public static void AllEditableDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var myDGV = (DataGridView)sender;
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            if (e.ColumnIndex >= 0)
+            {
+                var targetCell = myDGV.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (targetCell is DataGridViewTextBoxCell)
+                {
+                    myDGV.BeginEdit(false);
+                }
+                else if (targetCell is DataGridViewComboBoxCell)
+                {
+                    SendKeys.Send("{F4}");
+                }
+            }
+            else
+            {
+                myDGV.EndEdit();
+            }
+        }
+
+        public static void FirstColumnReadonlySubsequentEditableDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var myDGV = (DataGridView)sender;
+
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            if (e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex >= 1)
+                {
+                    var targetCell = myDGV.Rows[e.RowIndex].Cells[1];
+                    if (targetCell is DataGridViewTextBoxCell)
+                    {
+                        myDGV.BeginEdit(false);
+                    }
+                    //else if (targetCell is DataGridViewComboBoxCell && targetCell.Value.ToString() == "")
+                    else if (targetCell is DataGridViewComboBoxCell)
+                    {
+                        SendKeys.Send("{F4}");
+                    }
+                }
+            }
+            else
+            {
+                myDGV.EndEdit();
+            }
+        }
+        public static void FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                e.Cancel = true;
             }
         }
     }

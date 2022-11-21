@@ -36,9 +36,9 @@ namespace taskt.Core.Automation.Commands
 
         [XmlElement]
         [PropertyDescription("Set Search Parameters")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", "lnkGUIInspectTool_Click")]
-        [PropertyCustomUIHelper("Inspect Tool Parser", "lnkInspectToolParser_Click")]
-        [PropertyCustomUIHelper("Add Empty Parameters", "lnkAddEmptyParameter_Click")]
+        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(lnkGUIInspectTool_Click))]
+        [PropertyCustomUIHelper("Inspect Tool Parser", nameof(lnkInspectToolParser_Click))]
+        [PropertyCustomUIHelper("Add Empty Parameters", nameof(lnkAddEmptyParameter_Click))]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("")]
@@ -49,7 +49,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyControlIntoCommandField("SearchParametersGridViewHelper")]
+        //[PropertyControlIntoCommandField("SearchParametersGridViewHelper")]
+        [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
@@ -77,9 +79,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Store")]
         public string v_AutomationElementVariable { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView SearchParametersGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView SearchParametersGridViewHelper;
 
         public UIAutomationGetChildElementCommand()
         {

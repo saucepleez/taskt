@@ -183,7 +183,8 @@ namespace taskt.Core.Automation.Commands
             //KeystrokeGridHelper.Width = 500;
             //KeystrokeGridHelper.Height = 140;
             KeystrokeGridHelper = CommandControls.CreateDataGridView(this, "v_KeyActions", true, true, false, 500, 140, false);
-            KeystrokeGridHelper.CellClick += KeystrokeGridHelper_CellClick;
+            //KeystrokeGridHelper.CellClick += KeystrokeGridHelper_CellClick;
+            KeystrokeGridHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 
             DataGridViewComboBoxColumn propertyName = new DataGridViewComboBoxColumn();
             propertyName.DataSource = Core.Common.GetAvailableKeys();
@@ -213,16 +214,16 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Send To Window '" + v_WindowName + "']";
         }
-        private void KeystrokeGridHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                if (KeystrokeGridHelper.CurrentCell.Value.ToString() == "")
-                {
-                    SendKeys.Send("%{DOWN}");
-                }
-            }
-        }
+        //private void KeystrokeGridHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        if (KeystrokeGridHelper.CurrentCell.Value.ToString() == "")
+        //        {
+        //            SendKeys.Send("%{DOWN}");
+        //        }
+        //    }
+        //}
 
         public override void BeforeValidate()
         {

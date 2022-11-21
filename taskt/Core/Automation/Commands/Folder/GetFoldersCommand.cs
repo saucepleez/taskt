@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -87,81 +83,30 @@ namespace taskt.Core.Automation.Commands
             var searchFolder = v_SearchFolderName.ConvertToUserVariable(sender);
             if (!String.IsNullOrEmpty(searchFolder))
             {
-                var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(searchMethod))
-                {
-                    searchMethod = "Contains";
-                }
+                //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+                //if (String.IsNullOrEmpty(searchMethod))
+                //{
+                //    searchMethod = "Contains";
+                //}
+                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
                 switch (searchMethod)
                 {
-                    case "Contains":
+                    case "contains":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).Contains(searchFolder)).ToList();
                         break;
-                    case "Starts with":
+                    case "starts with":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).StartsWith(searchFolder)).ToList();
                         break;
-                    case "Ends with":
+                    case "ends with":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).EndsWith(searchFolder)).ToList();
                         break;
-                    case "Extra match":
+                    case "exact match":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).Equals(searchFolder)).ToList();
                         break;
                 }
             }
 
-            //Script.ScriptVariable newDirectoriesList = new Script.ScriptVariable
-            //{
-            //    VariableName = v_UserVariableName,
-            //    VariableValue = directoriesList
-            //};
-            ////Overwrites variable if it already exists
-            //if (engine.VariableList.Exists(x => x.VariableName == newDirectoriesList.VariableName))
-            //{
-            //    Script.ScriptVariable temp = engine.VariableList.Where(x => x.VariableName == newDirectoriesList.VariableName).FirstOrDefault();
-            //    engine.VariableList.Remove(temp);
-            //}
-            //engine.VariableList.Add(newDirectoriesList);
-
             directoriesList.StoreInUserVariable(engine, v_UserVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFolderPath", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SearchFolderName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [From: '" + v_SourceFolderPath + "', Store In: '"+ v_UserVariableName +"']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_SourceFolderPath))
-        //    {
-        //        this.validationResult += "Srouce folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_UserVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

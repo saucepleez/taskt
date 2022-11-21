@@ -848,8 +848,10 @@ namespace taskt.Core.Automation.Commands
             //IfGridViewHelper.AllowUserToDeleteRows = false;
             IfGridViewHelper = CommandControls.CreateDataGridView(this, "v_IfActionParameterTable", false, false, false, 400, 200);
             IfGridViewHelper.MouseEnter += (sender, e) => IfGridViewHelper_MouseEnter(sender,e, editor);
-            IfGridViewHelper.CellClick += IfGridViewHelper_CellClick;
-            IfGridViewHelper.CellBeginEdit += IfGridViewHelper_CellBeginEdit;
+            //IfGridViewHelper.CellClick += IfGridViewHelper_CellClick;
+            //IfGridViewHelper.CellBeginEdit += IfGridViewHelper_CellBeginEdit;
+            IfGridViewHelper.CellClick += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick;
+            IfGridViewHelper.CellBeginEdit += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit;
 
             //var helperTheme = editor.Theme.UIHelper;
             //RecorderControl = new taskt.UI.CustomControls.CommandItemControl();
@@ -1483,35 +1485,35 @@ namespace taskt.Core.Automation.Commands
             return ConditionControls.GetDisplayValue("If", v_IfActionType, v_IfActionParameterTable);
         }
 
-        private void IfGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            if (e.ColumnIndex == 0) 
-            {
-                e.Cancel = true;
-            }
-        }
-        private void IfGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                if (e.ColumnIndex == 1)
-                {
-                    var targetCell = IfGridViewHelper.Rows[e.RowIndex].Cells[1];
-                    if (targetCell is DataGridViewTextBoxCell)
-                    {
-                        IfGridViewHelper.BeginEdit(false);
-                    }
-                    else if (targetCell is DataGridViewComboBoxCell && targetCell.Value.ToString() == "")
-                    {
-                        SendKeys.Send("{F4}");
-                    }
-                }
-            }
-            else
-            {
-                IfGridViewHelper.EndEdit();
-            }
-        }
+        //private void IfGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        //{
+        //    if (e.ColumnIndex == 0) 
+        //    {
+        //        e.Cancel = true;
+        //    }
+        //}
+        //private void IfGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        if (e.ColumnIndex == 1)
+        //        {
+        //            var targetCell = IfGridViewHelper.Rows[e.RowIndex].Cells[1];
+        //            if (targetCell is DataGridViewTextBoxCell)
+        //            {
+        //                IfGridViewHelper.BeginEdit(false);
+        //            }
+        //            else if (targetCell is DataGridViewComboBoxCell && targetCell.Value.ToString() == "")
+        //            {
+        //                SendKeys.Send("{F4}");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        IfGridViewHelper.EndEdit();
+        //    }
+        //}
 
         public override bool IsValidate(frmCommandEditor editor)
         {

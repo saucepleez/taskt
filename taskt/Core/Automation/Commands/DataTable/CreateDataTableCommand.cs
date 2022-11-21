@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
-        [PropertyDataGridViewCellEditEvent(nameof(ColumnNamesGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         //[PropertyControlIntoCommandField("ColumnNamesGridViewHelper")]
         [PropertyDisplayText(true, "Columns")]
         public DataTable v_ColumnNameDataTable { get; set; }
@@ -80,18 +80,18 @@ namespace taskt.Core.Automation.Commands
         }
 
 
-        private void ColumnNamesGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            var ColumnNamesGridViewHelper = (DataGridView)sender;
-            if (e.ColumnIndex >= 0)
-            {
-                ColumnNamesGridViewHelper.BeginEdit(false);
-            }
-            else
-            {
-                ColumnNamesGridViewHelper.EndEdit();
-            }
-        }
+        //private void ColumnNamesGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    var ColumnNamesGridViewHelper = (DataGridView)sender;
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        ColumnNamesGridViewHelper.BeginEdit(false);
+        //    }
+        //    else
+        //    {
+        //        ColumnNamesGridViewHelper.EndEdit();
+        //    }
+        //}
 
         public override void BeforeValidate()
         {

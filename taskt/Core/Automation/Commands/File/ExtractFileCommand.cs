@@ -2,13 +2,9 @@
 using SharpCompress.Readers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.IO;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -22,7 +18,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExtractFileCommand : ScriptCommand
     {
-
         [XmlAttribute]
         [PropertyDescription("Please enter the file path or location")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -197,50 +192,5 @@ namespace taskt.Core.Automation.Commands
                 throw; 
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePathOrigin", this, editor));
-            
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_PathDestination", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
-            
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Password", this, editor));
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + $" [Source File: '{v_FilePathOrigin}', Destination Folder: '{v_PathDestination}'";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_FilePathOrigin))
-        //    {
-        //        this.validationResult += "File path is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_PathDestination))
-        //    {
-        //        this.validationResult += "Extraction folder is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
