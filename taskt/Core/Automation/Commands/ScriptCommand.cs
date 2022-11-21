@@ -243,6 +243,8 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(ParseJsonCommand))]
     [XmlInclude(typeof(ParseJsonModelCommand))]
     [XmlInclude(typeof(ReadJSONFileCommand))]
+    [XmlInclude(typeof(RemoveJSONPropertyCommand))]
+    [XmlInclude(typeof(SetJSONValueCommand))]
 
     // List
     [XmlInclude(typeof(AddListItemCommand))]
