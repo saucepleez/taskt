@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 
 namespace taskt.Core.Automation.Commands
@@ -117,6 +118,73 @@ namespace taskt.Core.Automation.Commands
                     ary.ToString().StoreInUserVariable(engine, jsonVariableName);
                     break;
             }
+        }
+
+        /// <summary>
+        /// get JSON value to add, insert, etc.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="jsonValueName"></param>
+        /// <param name="valueTypeName"></param>
+        /// <param name="purpose"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static object GetJSONValue(this ScriptCommand command, string jsonValueName, string valueTypeName, string purpose, Engine.AutomationEngineInstance engine)
+        {
+            string jsonValue = command.ConvertToUserVariable(jsonValueName, "Value to " + purpose, engine);
+            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+            if (valueType == "auto")
+            {
+                valueType = GetJSONType(jsonValue).ToLower();
+            }
+
+            object ret = null;
+            switch (valueType)
+            {
+                case "text":
+                    ret = jsonValue;
+                    break;
+
+                case "number":
+                    ret =  new PropertyConvertTag(jsonValue, "Value to " + purpose).ConvertToUserVariableAsDecimal(engine);
+                    break;
+
+                case "bool":
+                    switch (jsonValue.ToLower())
+                    {
+                        case "true":
+                        case "false":
+                            ret = bool.Parse(jsonValue);
+                            break;
+                        default:
+                            throw new Exception("Value To Set is NOT bool. Value '" + jsonValue + "'");
+                    }
+                    break;
+
+                case "object":
+                    try
+                    {
+                        ret = JObject.Parse(jsonValue);
+                    }
+                    catch
+                    {
+                        throw new Exception("Value To Set is NOT Object. Value '" + jsonValue + "'");
+                    }
+                    break;
+
+                case "array":
+                    try
+                    {
+                        ret= JArray.Parse(jsonValue);
+                    }
+                    catch
+                    {
+                        throw new Exception("Value To Set is NOT Array. Value '" + jsonValue + "'");
+                    }
+                    break;
+            }
+            return ret;
         }
     }
 }

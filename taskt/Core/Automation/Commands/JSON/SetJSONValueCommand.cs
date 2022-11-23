@@ -171,55 +171,57 @@ namespace taskt.Core.Automation.Commands
 
             Action<JToken> setValueFunc = new Action<JToken>((searchResult) =>
             {
-                var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
-                var valueToSet = v_ValueToSet.ConvertToUserVariable(engine);
-                if (valueType == "auto")
-                {
-                    valueType = JSONControls.GetJSONType(valueToSet).ToLower();
-                }
-                switch (valueType)
-                {
-                    case "text":
-                        searchResult.Replace(JToken.FromObject(valueToSet));
-                        break;
-                    case "number":
-                        var newValueNum = this.ConvertToUserVariableAsDecimal(nameof(v_ValueToSet), "Value", engine);
-                        searchResult.Replace(JToken.FromObject(newValueNum));
-                        break;
-                    case "bool":
-                        switch (valueToSet.ToLower())
-                        {
-                            case "true":
-                            case "false":
-                                searchResult.Replace(JToken.FromObject(bool.Parse(valueToSet)));
-                                break;
-                            default:
-                                throw new Exception("Value To Set is NOT bool. Value '" + valueToSet + "'");
-                        }
-                        break;
-                    case "object":
-                        try
-                        {
-                            var o = JObject.Parse(valueToSet);
-                            searchResult.Replace(JToken.FromObject(o));
-                        }
-                        catch
-                        {
-                            throw new Exception("Value To Set is NOT Object. Value '" + valueToSet + "'");
-                        }
-                        break;
-                    case "array":
-                        try
-                        {
-                            var a = JArray.Parse(valueToSet);
-                            searchResult.Replace(JToken.FromObject(a));
-                        }
-                        catch
-                        {
-                            throw new Exception("Value To Set is NOT Array. Value '" + valueToSet + "'");
-                        }
-                        break;
-                }
+                //var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+                //var valueToSet = v_ValueToSet.ConvertToUserVariable(engine);
+                //if (valueType == "auto")
+                //{
+                //    valueType = JSONControls.GetJSONType(valueToSet).ToLower();
+                //}
+                //switch (valueType)
+                //{
+                //    case "text":
+                //        searchResult.Replace(JToken.FromObject(valueToSet));
+                //        break;
+                //    case "number":
+                //        var newValueNum = this.ConvertToUserVariableAsDecimal(nameof(v_ValueToSet), "Value", engine);
+                //        searchResult.Replace(JToken.FromObject(newValueNum));
+                //        break;
+                //    case "bool":
+                //        switch (valueToSet.ToLower())
+                //        {
+                //            case "true":
+                //            case "false":
+                //                searchResult.Replace(JToken.FromObject(bool.Parse(valueToSet)));
+                //                break;
+                //            default:
+                //                throw new Exception("Value To Set is NOT bool. Value '" + valueToSet + "'");
+                //        }
+                //        break;
+                //    case "object":
+                //        try
+                //        {
+                //            var o = JObject.Parse(valueToSet);
+                //            searchResult.Replace(JToken.FromObject(o));
+                //        }
+                //        catch
+                //        {
+                //            throw new Exception("Value To Set is NOT Object. Value '" + valueToSet + "'");
+                //        }
+                //        break;
+                //    case "array":
+                //        try
+                //        {
+                //            var a = JArray.Parse(valueToSet);
+                //            searchResult.Replace(JToken.FromObject(a));
+                //        }
+                //        catch
+                //        {
+                //            throw new Exception("Value To Set is NOT Array. Value '" + valueToSet + "'");
+                //        }
+                //        break;
+                //}
+                var valueToSet = this.GetJSONValue(nameof(v_ValueToSet), nameof(v_ValueType), "Set", engine);
+                searchResult.Replace(JToken.FromObject(valueToSet));
             });
             this.JSONModifyByJSONPath(nameof(v_InputValue), nameof(v_JsonExtractor), setValueFunc, setValueFunc, engine);
         }

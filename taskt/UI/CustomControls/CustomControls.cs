@@ -651,10 +651,14 @@ namespace taskt.UI
             {nameof(UIAutomationCommand), "taskt.Properties.Resources.command_input"},
             
             // JSON
+            {nameof(AddJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(AddJSONObjectPropertyCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToDataTableCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToDictionaryCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToListCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(CreateJSONVariableCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(InsertJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(InsertJSONObjectPropertyCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJSONArrayCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonModelCommand), "taskt.Properties.Resources.command_parse"},
