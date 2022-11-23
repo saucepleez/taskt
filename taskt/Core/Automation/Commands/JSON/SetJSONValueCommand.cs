@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("bool")]
         [PropertyUISelectionOption("Object")]
         [PropertyUISelectionOption("Array")]
-        [PropertyIsOptional(true, "String")]
+        [PropertyIsOptional(true, "Text")]
         [PropertyDisplayText(true, "Value Type")]
         public string v_ValueType { get; set; }
 
