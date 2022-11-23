@@ -49,6 +49,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "No")]
         public string v_InsertNewLine { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Please select Concatenate Position")]
+        [InputSpecification("")]
+        [SampleUsage("**Before Variable Value** or **After Variable Value**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Before Variable Value")]
+        [PropertyUISelectionOption("After Variable Value")]
+        [PropertyIsOptional(true, "After Variable Value")]
+        public string v_ConcatenatePosition { get; set; }
+
         public ConcatenateTextVariableCommand()
         {
             this.CommandName = "ConcatenateTextVariableCommand";
@@ -62,22 +73,49 @@ namespace taskt.Core.Automation.Commands
             //get engine
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetVariable = v_TargetVariable;
-            var text = v_TargetVariable.ConvertToUserVariable(engine);
+            string targetVariable;
+            if (engine.engineSettings.isWrappedVariableMarker(v_TargetVariable))
+            {
+                targetVariable = v_TargetVariable;
+            }
+            else
+            {
+                targetVariable = engine.engineSettings.wrapVariableMarker(v_TargetVariable);
+            }
+            var text = targetVariable.ConvertToUserVariable(engine);
             var con = v_ConcatText.ConvertToUserVariable(engine);
 
-            var insertNewLine = v_InsertNewLine.GetUISelectionValue("v_InsertNewLine", this, engine);
+            //var insertNewLine = v_InsertNewLine.GetUISelectionValue("v_InsertNewLine", this, engine);
+            var insertNewLine = this.GetUISelectionValue(nameof(v_InsertNewLine), "Insert New Line", engine);
+            var concatPosition = this.GetUISelectionValue(nameof(v_ConcatenatePosition), "Concatenate Position", engine);
 
             switch (insertNewLine)
             {
                 case "yes":
-                    (text + "\n" + con).StoreInUserVariable(engine, targetVariable);
+                    switch (concatPosition)
+                    {
+                        case "before variable value":
+                            (con + "\n" + text).StoreInUserVariable(engine, targetVariable);
+                            break;
+                        case "after variable value":
+                            (text + "\n" + con).StoreInUserVariable(engine, targetVariable);
+                            break;
+                    }
                     break;
                 case "no":
-                    (text + con).StoreInUserVariable(engine, targetVariable);
+                    switch (concatPosition)
+                    {
+                        case "before variable value":
+                            (con + text).StoreInUserVariable(engine, targetVariable);
+                            break;
+                        case "after variable value":
+                            (text + con).StoreInUserVariable(engine, targetVariable);
+                            break;
+                    }
                     break;
             }
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
