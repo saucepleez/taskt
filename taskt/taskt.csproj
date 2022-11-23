@@ -440,6 +440,7 @@
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumControls.cs" />
+    <Compile Include="Core\Automation\Commands\Text\CreateTextVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckElementExistByXPathCommand.cs" />

@@ -760,6 +760,7 @@ namespace taskt.UI
             // Text
             {nameof(CheckTextCommand), "taskt.Properties.Resources.command_function"},
             {nameof(ConcatenateTextVariableCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(CreateTextVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(ExtractionTextCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetWordLengthCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetWordCountCommand), "taskt.Properties.Resources.command_function"},
