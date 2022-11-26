@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using Newtonsoft.Json.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -53,42 +54,63 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
-            if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
+            //var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
+            //if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
+            //{
+            //    DataTable resultDT = new DataTable();
+            //    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
+
+            //    resultDT.Rows.Add();
+            //    int i = 0;
+            //    foreach(var result in obj)
+            //    {
+            //        resultDT.Columns.Add(result.Key);
+            //        resultDT.Rows[0][i] = result.Value.ToString();
+            //        i++;
+            //    }
+            //    resultDT.StoreInUserVariable(engine, v_applyToVariableName);
+            //}
+            //else if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
+            //{
+            //    DataTable resultDT = new DataTable();
+            //    Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
+
+            //    parseJSONArrayAsDataTable(arr, resultDT).StoreInUserVariable(engine, v_applyToVariableName);
+            //}
+            //else
+            //{
+            //    throw new Exception("Strange JSON");
+            //}
+
+            Action<JObject> objFunc = new Action<JObject>((obj) =>
             {
                 DataTable resultDT = new DataTable();
-                Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
 
                 resultDT.Rows.Add();
                 int i = 0;
-                foreach(var result in obj)
+                foreach (var result in obj)
                 {
                     resultDT.Columns.Add(result.Key);
                     resultDT.Rows[0][i] = result.Value.ToString();
                     i++;
                 }
                 resultDT.StoreInUserVariable(engine, v_applyToVariableName);
-            }
-            else if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
+            });
+            Action<JArray> aryFunc = new Action<JArray>((ary) =>
             {
                 DataTable resultDT = new DataTable();
-                Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
-
-                parseJSONArrayAsDataTable(arr, resultDT).StoreInUserVariable(engine, v_applyToVariableName);
-            }
-            else
-            {
-                throw new Exception("Strange JSON");
-            }
+                parseJSONArrayAsDataTable(ary, resultDT).StoreInUserVariable(engine, v_applyToVariableName);
+            });
+            this.JSONProcess(nameof(v_InputValue), objFunc, aryFunc, engine);
         }
 
-        private static DataTable parseJSONArrayAsDataTable(Newtonsoft.Json.Linq.JArray arr, DataTable DT)
+        private static DataTable parseJSONArrayAsDataTable(JArray arr, DataTable DT)
         {
             var arr0 = arr[0].ToString();
             if (arr0.StartsWith("{") && arr0.EndsWith("}"))
             {
                 // Object
-                Newtonsoft.Json.Linq.JObject col = Newtonsoft.Json.Linq.JObject.Parse(arr[0].ToString());
+                JObject col = JObject.Parse(arr[0].ToString());
                 int colSize = col.Count;
                 DT.Rows.Add();
                 foreach (var co in col)
@@ -100,7 +122,7 @@ namespace taskt.Core.Automation.Commands
                 for (int i = 1; i < arr.Count; i++)
                 {
                     DT.Rows.Add();
-                    Newtonsoft.Json.Linq.JObject row = Newtonsoft.Json.Linq.JObject.Parse(arr[i].ToString());
+                    JObject row = JObject.Parse(arr[i].ToString());
                     foreach(var co in row)
                     {
                         DT.Rows[i][co.Key] = co.Value.ToString();
@@ -110,7 +132,7 @@ namespace taskt.Core.Automation.Commands
             else if (arr0.StartsWith("[") && arr0.EndsWith("]"))
             {
                 // 2Array
-                Newtonsoft.Json.Linq.JArray col = Newtonsoft.Json.Linq.JArray.Parse(arr[0].ToString());
+                JArray col = JArray.Parse(arr[0].ToString());
                 int colSize = col.Count;
                 DT.Rows.Add();
                 for (int i = 0; i < colSize; i++)
@@ -122,7 +144,7 @@ namespace taskt.Core.Automation.Commands
                 for (int i = 1; i < arr.Count; i++)
                 {
                     DT.Rows.Add();
-                    Newtonsoft.Json.Linq.JArray row = Newtonsoft.Json.Linq.JArray.Parse(arr[i].ToString());
+                    JArray row = JArray.Parse(arr[i].ToString());
                     int count = (row.Count < colSize) ? row.Count : colSize;
                     for (int j = 0; j < count; j++)
                     {

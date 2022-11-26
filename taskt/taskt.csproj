@@ -337,7 +337,14 @@
     <Compile Include="Core\Automation\Commands\File\FormatFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\FormatFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSONControls.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\RemoveJSONArrayItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\InsertJSONArrayItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\AddJSONArrayItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\InsertJSONObjectPropertyCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\RemoveJSONPropertyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\CreateJSONVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\AddJSONObjectPropertyCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\SetJSONValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ReplaceListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />
@@ -438,6 +445,7 @@
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumControls.cs" />
+    <Compile Include="Core\Automation\Commands\Text\CreateTextVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckElementExistByXPathCommand.cs" />

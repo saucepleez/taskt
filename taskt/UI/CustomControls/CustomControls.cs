@@ -651,13 +651,19 @@ namespace taskt.UI
             {nameof(UIAutomationCommand), "taskt.Properties.Resources.command_input"},
             
             // JSON
+            {nameof(AddJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(AddJSONObjectPropertyCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToDataTableCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToDictionaryCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ConvertJSONToListCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(CreateJSONVariableCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(InsertJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(InsertJSONObjectPropertyCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJSONArrayCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonModelCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ReadJSONFileCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(RemoveJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(RemoveJSONPropertyCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(SetJSONValueCommand), "taskt.Properties.Resources.command_parse"},
 
@@ -759,6 +765,7 @@ namespace taskt.UI
             // Text
             {nameof(CheckTextCommand), "taskt.Properties.Resources.command_function"},
             {nameof(ConcatenateTextVariableCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(CreateTextVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(ExtractionTextCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetWordLengthCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetWordCountCommand), "taskt.Properties.Resources.command_function"},

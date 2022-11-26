@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using Newtonsoft.Json.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
+    [Attributes.ClassAttributes.Description("This command allows you to remove a property in JSON")]
+    [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
@@ -54,31 +53,81 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var forbiddenMarkers = new List<string> { "[", "]" };
+            //var forbiddenMarkers = new List<string> { "[", "]" };
 
-            if (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableStartMarker) || (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableEndMarker)))
+            //if (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableStartMarker) || (forbiddenMarkers.Any(f => f == engine.engineSettings.VariableEndMarker)))
+            //{
+            //    throw new Exception("Cannot use Parse JSON command with square bracket variable markers [ ]");
+            //}
+
+            //var jsonText = v_InputValue.ConvertToUserVariable(sender).Trim();
+
+            //var jsonSearchToken = v_JsonExtractor.ConvertToUserVariable(sender);
+
+            //Newtonsoft.Json.Linq.JToken searchResult = null;
+            //Action removeFunc = new Action(() =>
+            //{
+            //    if (searchResult == null)
+            //    {
+            //        throw new Exception("No Property found JSONPath '" + v_JsonExtractor + "', parsed '" + jsonSearchToken + "'");
+            //    }
+
+            //    var p = searchResult.Parent;
+            //    if (p is Newtonsoft.Json.Linq.JProperty prop)
+            //    {
+            //        prop.Remove();
+            //    }
+            //    else if (p is Newtonsoft.Json.Linq.JArray ary)
+            //    {
+            //        ary.Remove(searchResult);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Strange Search Result. Fail Remove. Value: '" + searchResult.ToString() + "'");
+            //    }
+            //});
+
+            //if (jsonText.StartsWith("{") && jsonText.EndsWith("}"))
+            //{
+            //    try
+            //    {
+            //        var o = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
+            //        searchResult = o.SelectToken(jsonSearchToken);
+            //        removeFunc();
+            //        o.ToString().StoreInUserVariable(engine, v_InputValue);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new Exception("Fail Parse JSON Object: " + ex.ToString());
+            //    }
+            //}
+            //else if(jsonText.StartsWith("[") && jsonText.EndsWith("]"))
+            //{
+            //    try
+            //    {
+            //        var a = Newtonsoft.Json.Linq.JArray.Parse(jsonText);
+            //        searchResult = a.SelectToken(jsonSearchToken);
+            //        removeFunc();
+            //        a.ToString().StoreInUserVariable(engine, v_InputValue);
+            //    }
+            //    catch(Exception ex)
+            //    {
+            //        throw new Exception("Fail Parse JSON Array: " + ex.ToString());
+            //    }
+            //}
+            //else
+            //{
+            //    throw new Exception("Strange JSON. First 10 chars '" + jsonText.Substring(0, 10) + "'");
+            //}
+
+            Action<JToken> removeFunc = new Action<JToken>((searchResult) =>
             {
-                throw new Exception("Cannot use Parse JSON command with square bracket variable markers [ ]");
-            }
-
-            var jsonText = v_InputValue.ConvertToUserVariable(sender).Trim();
-
-            var jsonSearchToken = v_JsonExtractor.ConvertToUserVariable(sender);
-
-            Newtonsoft.Json.Linq.JToken searchResult = null;
-            Action removeFunc = new Action(() =>
-            {
-                if (searchResult == null)
-                {
-                    throw new Exception("No Property found JSONPath '" + v_JsonExtractor + "', parsed '" + jsonSearchToken + "'");
-                }
-
                 var p = searchResult.Parent;
-                if (p is Newtonsoft.Json.Linq.JProperty prop)
+                if (p is JProperty prop)
                 {
                     prop.Remove();
                 }
-                else if (p is Newtonsoft.Json.Linq.JArray ary)
+                else if (p is JArray ary)
                 {
                     ary.Remove(searchResult);
                 }
@@ -87,39 +136,7 @@ namespace taskt.Core.Automation.Commands
                     throw new Exception("Strange Search Result. Fail Remove. Value: '" + searchResult.ToString() + "'");
                 }
             });
-
-            if (jsonText.StartsWith("{") && jsonText.EndsWith("}"))
-            {
-                try
-                {
-                    var o = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
-                    searchResult = o.SelectToken(jsonSearchToken);
-                    removeFunc();
-                    o.ToString().StoreInUserVariable(engine, v_InputValue);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Fail Parse JSON Object: " + ex.ToString());
-                }
-            }
-            else if(jsonText.StartsWith("[") && jsonText.EndsWith("]"))
-            {
-                try
-                {
-                    var a = Newtonsoft.Json.Linq.JArray.Parse(jsonText);
-                    searchResult = a.SelectToken(jsonSearchToken);
-                    removeFunc();
-                    a.ToString().StoreInUserVariable(engine, v_InputValue);
-                }
-                catch(Exception ex)
-                {
-                    throw new Exception("Fail Parse JSON Array: " + ex.ToString());
-                }
-            }
-            else
-            {
-                throw new Exception("Strange JSON. First 10 chars '" + jsonText.Substring(0, 10) + "'");
-            }
+            this.JSONModifyByJSONPath(nameof(v_InputValue), nameof(v_JsonExtractor), removeFunc, removeFunc, engine);
         }
 
         public void lnkJsonPathHelper_Click(object sender, EventArgs e)
