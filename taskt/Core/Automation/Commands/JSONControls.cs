@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// edit JSON by methods passed as arguments, specify a target by JSONPath
+        /// edit JSON by methods passed as arguments, specify a target by JSONPath. JSON specified by Variable Name.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="jsonName"></param>
@@ -121,19 +121,22 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// do something to JSON (object, array)
+        /// do something to JSON (object, array) by methods passed as arguments. by default, JSON is text.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="jsonName"></param>
         /// <param name="objectAction"></param>
         /// <param name="arrayAction"></param>
         /// <param name="engine"></param>
-        public static void JSONProcess(this ScriptCommand command, string jsonName, Action<JObject> objectAction, Action<JArray> arrayAction, Engine.AutomationEngineInstance engine)
+        public static void JSONProcess(this ScriptCommand command, string jsonName, Action<JObject> objectAction, Action<JArray> arrayAction, Engine.AutomationEngineInstance engine, bool forceJSONVariable = false)
         {
             string jsonVariableName = command.ConvertToUserVariable(jsonName, "JSON", engine);
-            if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+            if (forceJSONVariable)
             {
-                jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+                {
+                    jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                }
             }
             (var jsonText, var rootType) = jsonVariableName.ConvertToUserVariableAsJSON(engine);
             switch (rootType)
