@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Newtonsoft.Json.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -53,39 +54,58 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
-            if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
+            //var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
+            //if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
+            //{
+            //    // JSON Array
+            //    List<string> resultList = new List<string>();
+
+            //    Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
+
+            //    foreach(var result in arr)
+            //    {
+            //        resultList.Add(result.ToString());
+            //    }
+
+            //    resultList.StoreInUserVariable(engine, v_applyToVariableName);
+            //}
+            //else if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
+            //{
+            //    // Object
+            //    List<string> resultList = new List<string>();
+
+            //    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
+
+            //    foreach(var result in obj)
+            //    {
+            //        resultList.Add(result.Value.ToString());
+            //    }
+
+            //    resultList.StoreInUserVariable(engine, v_applyToVariableName);
+            //}
+            //else
+            //{
+            //    throw new Exception("Strange JSON, can not convert List");
+            //}
+            Action<JObject> objFunc = new Action<JObject>((obj) =>
             {
-                // JSON Array
                 List<string> resultList = new List<string>();
-
-                Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
-
-                foreach(var result in arr)
-                {
-                    resultList.Add(result.ToString());
-                }
-
-                resultList.StoreInUserVariable(engine, v_applyToVariableName);
-            }
-            else if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
-            {
-                // Object
-                List<string> resultList = new List<string>();
-
-                Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
-
-                foreach(var result in obj)
+                foreach (var result in obj)
                 {
                     resultList.Add(result.Value.ToString());
                 }
-
                 resultList.StoreInUserVariable(engine, v_applyToVariableName);
-            }
-            else
+            });
+            Action<JArray> aryFunc = new Action<JArray>((ary) =>
             {
-                throw new Exception("Strange JSON, can not convert List");
-            }
+                List<string> resultList = new List<string>();
+                foreach (var result in ary)
+                {
+                    resultList.Add(result.ToString());
+                }
+                resultList.StoreInUserVariable(engine, v_applyToVariableName);
+            });
+            this.JSONProcess(nameof(v_InputValue), objFunc, aryFunc, engine);
         }
     }
 }

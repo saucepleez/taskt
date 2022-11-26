@@ -121,6 +121,33 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// do something to JSON (object, array)
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="jsonName"></param>
+        /// <param name="objectAction"></param>
+        /// <param name="arrayAction"></param>
+        /// <param name="engine"></param>
+        public static void JSONProcess(this ScriptCommand command, string jsonName, Action<JObject> objectAction, Action<JArray> arrayAction, Engine.AutomationEngineInstance engine)
+        {
+            string jsonVariableName = command.ConvertToUserVariable(jsonName, "JSON", engine);
+            if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+            {
+                jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+            }
+            (var jsonText, var rootType) = jsonVariableName.ConvertToUserVariableAsJSON(engine);
+            switch (rootType)
+            {
+                case "object":
+                    objectAction(JObject.Parse(jsonText));
+                    break;
+                case "array":
+                    arrayAction(JArray.Parse(jsonText));
+                    break;
+            }
+        }
+
+        /// <summary>
         /// get JSON value to add, insert, etc.
         /// </summary>
         /// <param name="command"></param>
