@@ -663,6 +663,7 @@ namespace taskt.UI
             {nameof(ParseJsonCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonModelCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ReadJSONFileCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(RemoveJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(RemoveJSONPropertyCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(SetJSONValueCommand), "taskt.Properties.Resources.command_parse"},
 
