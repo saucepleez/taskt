@@ -34,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyDisplayText(true, "Get")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true, 400, 250)]
         [PropertyDataGridViewColumnSettings("Json Selector", "Json Selector", false)]
         [PropertyDataGridViewColumnSettings("Output Variable", "Output Variable", false)]
@@ -175,19 +176,7 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (ParseObjectsGridViewHelper.IsCurrentCellDirty || ParseObjectsGridViewHelper.IsCurrentRowDirty)
-            {
-                ParseObjectsGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_ParseObjects.NewRow();
-                v_ParseObjects.Rows.Add(newRow);
-                for (var i = v_ParseObjects.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_ParseObjects.Rows[i][0].ToString() == "" && v_ParseObjects.Rows[i][1].ToString() == "")
-                    {
-                        v_ParseObjects.Rows[i].Delete();
-                    }
-                }
-            }
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_ParseObjects)], v_ParseObjects);
         }
     }
 }
