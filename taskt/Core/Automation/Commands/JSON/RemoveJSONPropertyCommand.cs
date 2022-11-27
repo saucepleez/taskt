@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
+    [Attributes.ClassAttributes.SubGruop("Action")]
     [Attributes.ClassAttributes.Description("This command allows you to remove a property in JSON")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

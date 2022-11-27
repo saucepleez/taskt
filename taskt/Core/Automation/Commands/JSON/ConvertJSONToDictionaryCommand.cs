@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
+    [Attributes.ClassAttributes.SubGruop("Convert")]
     [Attributes.ClassAttributes.Description("This command allows you to convert JSON to Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert JSON to Dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

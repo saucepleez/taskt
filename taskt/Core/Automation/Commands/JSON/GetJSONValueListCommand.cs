@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
+    [Attributes.ClassAttributes.SubGruop("Get/Set")]
     [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
