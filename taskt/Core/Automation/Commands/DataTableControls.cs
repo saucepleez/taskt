@@ -414,5 +414,32 @@ namespace taskt.Core.Automation.Commands
                 e.Cancel = true;
             }
         }
+
+        public static void BeforeValidate(DataGridView dgv, DataTable table)
+        {
+            if (dgv.IsCurrentCellDirty || dgv.IsCurrentRowDirty)
+            {
+                dgv.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = table.NewRow();
+                table.Rows.Add(newRow);
+                int cols = table.Columns.Count;
+                for (int i = table.Rows.Count - 1; i >= 0; i--)
+                {
+                    bool allEmpty = true;
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if ((table.Rows[i][j]?.ToString() ?? "") != "")
+                        {
+                            allEmpty = false;
+                            break;
+                        }
+                    }
+                    if (allEmpty)
+                    {
+                        table.Rows[i].Delete();
+                    }
+                }
+            }
+        }
     }
 }
