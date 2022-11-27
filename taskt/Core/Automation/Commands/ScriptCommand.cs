@@ -245,7 +245,7 @@ namespace taskt.Core.Automation.Commands
     [XmlInclude(typeof(InsertJSONArrayItemCommand))]
     [XmlInclude(typeof(InsertJSONObjectPropertyCommand))]
     [XmlInclude(typeof(ParseJSONArrayCommand))]
-    [XmlInclude(typeof(ParseJsonCommand))]
+    [XmlInclude(typeof(GetJSONValueListCommand))]
     [XmlInclude(typeof(ParseJsonModelCommand))]
     [XmlInclude(typeof(ReadJSONFileCommand))]
     [XmlInclude(typeof(RemoveJSONArrayItemCommand))]

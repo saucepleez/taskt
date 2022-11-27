@@ -660,7 +660,7 @@ namespace taskt.UI
             {nameof(InsertJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(InsertJSONObjectPropertyCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJSONArrayCommand), "taskt.Properties.Resources.command_parse"},
-            {nameof(ParseJsonCommand), "taskt.Properties.Resources.command_parse"},
+            {nameof(GetJSONValueListCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ParseJsonModelCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(ReadJSONFileCommand), "taskt.Properties.Resources.command_parse"},
             {nameof(RemoveJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},

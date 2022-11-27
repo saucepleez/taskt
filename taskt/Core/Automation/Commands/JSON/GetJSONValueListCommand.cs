@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ParseJsonCommand : ScriptCommand
+    public class GetJSONValueListCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Supply the JSON text or variable requiring extraction")]
@@ -55,10 +55,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Result")]
         public string v_applyToVariableName { get; set; }
 
-        public ParseJsonCommand()
+        public GetJSONValueListCommand()
         {
-            this.CommandName = "ParseJsonCommand";
-            this.SelectionName = "Parse JSON Item";
+            this.CommandName = "GetJSONValueListCommand";
+            this.SelectionName = "Get JSON Value List";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
