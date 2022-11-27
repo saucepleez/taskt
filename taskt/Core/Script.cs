@@ -824,6 +824,43 @@ namespace taskt.Core.Script
             }
             return doc;
         }
+
+        // not work yet
+        private static XDocument ChangeCommandName(XDocument doc, List<string> targetNames, string newName, string newSelectioName)
+        {
+            var paramXElem = Expression.Parameter(typeof(XElement), "el");
+
+            var attrMethod = typeof(XElement).GetMethod("Attribute");
+
+            var paramProp = Expression.Call(paramXElem, attrMethod, Expression.Constant("CommandName"));
+
+            BinaryExpression bodies = null;
+            int index = 0;
+            foreach(var targetName in targetNames)
+            {
+                var body = Expression.Equal(paramProp, Expression.Constant(targetNames));
+                if (index == 0)
+                {
+                    bodies = body;
+                }
+                else
+                {
+                    bodies = Expression.Or(bodies, body);
+                }
+                index++;
+            }
+            var whereFunc = Expression.Lambda<Func<XElement, bool>>(bodies, paramXElem).Compile();
+
+            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+               .Where(whereFunc);
+
+            foreach(var command in commandList)
+            {
+
+            }
+
+            return doc;
+        }
     }
 
     public class ScriptAction
