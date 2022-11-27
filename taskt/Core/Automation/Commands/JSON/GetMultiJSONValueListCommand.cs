@@ -22,6 +22,8 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**{ \"id\": 123, \"name\": \"john\" }** or **{{{vJSONVariable}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
         public string v_InputValue { get; set; }
