@@ -97,21 +97,22 @@ namespace taskt.Core.Automation.Commands
         {
             base.BeforeValidate();
 
-            var ColumnNamesGridViewHelper = (DataGridView)ControlsList[nameof(v_ColumnNameDataTable)];
+            //var ColumnNamesGridViewHelper = (DataGridView)ControlsList[nameof(v_ColumnNameDataTable)];
 
-            if (ColumnNamesGridViewHelper.IsCurrentCellDirty || ColumnNamesGridViewHelper.IsCurrentRowDirty)
-            {
-                ColumnNamesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_ColumnNameDataTable.NewRow();
-                v_ColumnNameDataTable.Rows.Add(newRow);
-                for (var i = v_ColumnNameDataTable.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_ColumnNameDataTable.Rows[i][0].ToString() == "")
-                    {
-                        v_ColumnNameDataTable.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (ColumnNamesGridViewHelper.IsCurrentCellDirty || ColumnNamesGridViewHelper.IsCurrentRowDirty)
+            //{
+            //    ColumnNamesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_ColumnNameDataTable.NewRow();
+            //    v_ColumnNameDataTable.Rows.Add(newRow);
+            //    for (var i = v_ColumnNameDataTable.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_ColumnNameDataTable.Rows[i][0].ToString() == "")
+            //        {
+            //            v_ColumnNameDataTable.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_ColumnNameDataTable)], v_ColumnNameDataTable);
         }
     }
 }

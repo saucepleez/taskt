@@ -583,19 +583,20 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (SearchGridViewHelper.IsCurrentCellDirty || SearchGridViewHelper.IsCurrentRowDirty)
-            {
-                SearchGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_WebSearchParameter.NewRow();
-                v_WebSearchParameter.Rows.Add(newRow);
-                for (var i = v_WebSearchParameter.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_WebSearchParameter.Rows[i][1].ToString() == "" && v_WebSearchParameter.Rows[i][2].ToString() == "")
-                    {
-                        v_WebSearchParameter.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (SearchGridViewHelper.IsCurrentCellDirty || SearchGridViewHelper.IsCurrentRowDirty)
+            //{
+            //    SearchGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_WebSearchParameter.NewRow();
+            //    v_WebSearchParameter.Rows.Add(newRow);
+            //    for (var i = v_WebSearchParameter.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_WebSearchParameter.Rows[i][1].ToString() == "" && v_WebSearchParameter.Rows[i][2].ToString() == "")
+            //        {
+            //            v_WebSearchParameter.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_WebSearchParameter)], v_WebSearchParameter);
         }
 
     }

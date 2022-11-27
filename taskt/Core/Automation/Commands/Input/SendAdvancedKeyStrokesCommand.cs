@@ -228,19 +228,20 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (KeystrokeGridHelper.IsCurrentCellDirty || KeystrokeGridHelper.IsCurrentRowDirty)
-            {
-                KeystrokeGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_KeyActions.NewRow();
-                v_KeyActions.Rows.Add(newRow);
-                for (var i = v_KeyActions.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_KeyActions.Rows[i][0].ToString() == "" && v_KeyActions.Rows[i][1].ToString() == "")
-                    {
-                        v_KeyActions.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (KeystrokeGridHelper.IsCurrentCellDirty || KeystrokeGridHelper.IsCurrentRowDirty)
+            //{
+            //    KeystrokeGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_KeyActions.NewRow();
+            //    v_KeyActions.Rows.Add(newRow);
+            //    for (var i = v_KeyActions.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_KeyActions.Rows[i][0].ToString() == "" && v_KeyActions.Rows[i][1].ToString() == "")
+            //        {
+            //            v_KeyActions.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_KeyActions)], v_KeyActions);
         }
 
         public override bool IsValidate(frmCommandEditor editor)

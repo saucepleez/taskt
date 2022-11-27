@@ -139,19 +139,20 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (AddDataGridViewHelper.IsCurrentCellDirty || AddDataGridViewHelper.IsCurrentRowDirty)
-            {
-                AddDataGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_AddDataDataTable.NewRow();
-                v_AddDataDataTable.Rows.Add(newRow);
-                for (var i = v_AddDataDataTable.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_AddDataDataTable.Rows[i][0].ToString() == "" && v_AddDataDataTable.Rows[i][1].ToString() == "")
-                    {
-                        v_AddDataDataTable.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (AddDataGridViewHelper.IsCurrentCellDirty || AddDataGridViewHelper.IsCurrentRowDirty)
+            //{
+            //    AddDataGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_AddDataDataTable.NewRow();
+            //    v_AddDataDataTable.Rows.Add(newRow);
+            //    for (var i = v_AddDataDataTable.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_AddDataDataTable.Rows[i][0].ToString() == "" && v_AddDataDataTable.Rows[i][1].ToString() == "")
+            //        {
+            //            v_AddDataDataTable.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AddDataDataTable)], v_AddDataDataTable);
         }
     }
 }
