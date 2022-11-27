@@ -42,9 +42,9 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_ParseObjects { get; set; }
 
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ParseObjectsGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView ParseObjectsGridViewHelper;
 
         public GetMultiJSONValueListCommand()
         {
