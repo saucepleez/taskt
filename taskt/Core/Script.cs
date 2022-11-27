@@ -266,6 +266,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_78(doc);
             fixUIAutomationGroupEnableParameterValue(doc);
             convertTo3_5_0_83(doc);
+            convertTo3_5_1_16(doc);
 
             return doc;
         }
@@ -813,7 +814,11 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_16(XDocument doc)
         {
-
+            // Parse Json -> Get JSON Value List
+            ChangeCommandName(doc, "ParseJsonCommand", "GetJSONValueListCommand", "Get JSON Value List");
+            // Parse Json Model -> Get Multi JSON Value List
+            ChangeCommandName(doc, "ParseJsonModelCommand", "GetMultiJSONValueListCommand", "Get Multi JSON Value List");
+            return doc;
         }
 
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
