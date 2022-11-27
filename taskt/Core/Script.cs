@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Data;
+using System.Linq.Expressions;
 
 namespace taskt.Core.Script
 {
@@ -216,7 +217,7 @@ namespace taskt.Core.Script
                     return deserializedData;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
@@ -251,18 +252,6 @@ namespace taskt.Core.Script
 
         private static XDocument convertOldScript(XDocument doc)
         {
-            //IEnumerable<XElement> cmds = from el in doc.Descendants("ScriptCommand")
-            //                             where (string)el.Attribute("CommandName") == "ActivateWindowCommand"
-            //                             select el;
-
-            //foreach (var cmd in cmds)
-            //{
-            //    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
-            //    {
-            //        cmd.Attribute("v_SearchMethod").SetValue("Starts with");
-            //    }
-            //}
-
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
             convertTo3_5_0_47(doc);
@@ -317,15 +306,16 @@ namespace taskt.Core.Script
             }
 
             // ExcelCreateDataset -> LoadDataTable
-            IEnumerable<XElement> cmdExcels = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "ExcelCreateDatasetCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in cmdExcels)
-            {
-                cmd.SetAttributeValue("CommandName", "LoadDataTableCommand");
-                cmd.SetAttributeValue(ns + "type", "LoadDataTableCommand");
-                cmd.SetAttributeValue("SelectionName", "Load DataTable");
-            }
+            //IEnumerable<XElement> cmdExcels = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "ExcelCreateDatasetCommand"));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in cmdExcels)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "LoadDataTableCommand");
+            //    cmd.SetAttributeValue(ns + "type", "LoadDataTableCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Load DataTable");
+            //}
+            ChangeCommandName(doc, "ExcelCreateDatasetCommand", "LoadDataTableCommand", "Load DataTable");
 
             return doc;
         }
@@ -333,25 +323,27 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_46(XDocument doc)
         {
             // AddToVariable -> AddListItem
-            IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "AddToVariableCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in cmdAddList)
-            {
-                cmd.SetAttributeValue("CommandName", "AddListItemCommand");
-                cmd.SetAttributeValue(ns + "type", "AddListItemCommand");
-                cmd.SetAttributeValue("SelectionName", "Add List Item");
-            }
+            //IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "AddToVariableCommand"));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in cmdAddList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "AddListItemCommand");
+            //    cmd.SetAttributeValue(ns + "type", "AddListItemCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Add List Item");
+            //}
+            ChangeCommandName(doc, "AddToVariableCommand", "AddListItemCommand", "Add List Item");
 
             // SetVariableIndex -> SetListIndex
-            IEnumerable<XElement> cmdListIndex = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "SetVariableIndexCommand"));
-            foreach (var cmd in cmdListIndex)
-            {
-                cmd.SetAttributeValue("CommandName", "SetListIndexCommand");
-                cmd.SetAttributeValue(ns + "type", "SetListIndexCommand");
-                cmd.SetAttributeValue("SelectionName", "Set List Index");
-            }
+            //IEnumerable<XElement> cmdListIndex = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "SetVariableIndexCommand"));
+            //foreach (var cmd in cmdListIndex)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "SetListIndexCommand");
+            //    cmd.SetAttributeValue(ns + "type", "SetListIndexCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Set List Index");
+            //}
+            ChangeCommandName(doc, "SetVariableIndexCommand", "SetListIndexCommand", "Set List Index");
 
             return doc;
         }
@@ -379,40 +371,42 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_50(XDocument doc)
         {
             // ParseJSONArray -> ConvertJSONToList
-            IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "ParseJSONArrayCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in cmdAddList)
-            {
-                cmd.SetAttributeValue("CommandName", "ConvertJSONToListCommand");
-                cmd.SetAttributeValue(ns + "type", "ConvertJSONToListCommand");
-                cmd.SetAttributeValue("SelectionName", "Convert JSON To List");
-            }
-
+            //IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "ParseJSONArrayCommand"));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in cmdAddList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "ConvertJSONToListCommand");
+            //    cmd.SetAttributeValue(ns + "type", "ConvertJSONToListCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Convert JSON To List");
+            //}
+            ChangeCommandName(doc, "ParseJSONArrayCommand", "ConvertJSONToListCommand", "Convert JSON To List");
             return doc;
         }
         private static XDocument convertTo3_5_0_51(XDocument doc)
         {
             // GetDataCountRowCommand -> GetDataTableRowCountCommand
-            IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "GetDataRowCountCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in cmdAddList)
-            {
-                cmd.SetAttributeValue("CommandName", "GetDataTableRowCountCommand");
-                cmd.SetAttributeValue(ns + "type", "GetDataTableRowCountCommand");
-                cmd.SetAttributeValue("SelectionName", "Get DataTable Row Count");
-            }
+            //IEnumerable<XElement> cmdAddList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "GetDataRowCountCommand"));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in cmdAddList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "GetDataTableRowCountCommand");
+            //    cmd.SetAttributeValue(ns + "type", "GetDataTableRowCountCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Get DataTable Row Count");
+            //}
+            ChangeCommandName(doc, "GetDataRowCountCommand", "GetDataTableRowCountCommand", "Get DataTable Row Count");
 
-            // AddDataRow -> AddDataTableRow
-            IEnumerable<XElement> cmdAddDataRow = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "AddDataRowCommand"));
-            foreach (var cmd in cmdAddDataRow)
-            {
-                cmd.SetAttributeValue("CommandName", "AddDataTableRowCommand");
-                cmd.SetAttributeValue(ns + "type", "AddDataTableRowCommand");
-                cmd.SetAttributeValue("SelectionName", "Add DataTable Row");
-            }
+            //// AddDataRow -> AddDataTableRow
+            //IEnumerable<XElement> cmdAddDataRow = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "AddDataRowCommand"));
+            //foreach (var cmd in cmdAddDataRow)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "AddDataTableRowCommand");
+            //    cmd.SetAttributeValue(ns + "type", "AddDataTableRowCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Add DataTable Row");
+            //}
+            ChangeCommandName(doc, "AddDataRowCommand", "AddDataTableRowCommand", "Add DataTable Row");
 
             return doc;
         }
@@ -444,15 +438,16 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_57(XDocument doc)
         {
             // StringCheckTextCommand -> CheckTextCommand
-            IEnumerable<XElement> chkTextList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "CheckStringCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in chkTextList)
-            {
-                cmd.SetAttributeValue("CommandName", "CheckTextCommand");
-                cmd.SetAttributeValue(ns + "type", "CheckTextCommand");
-                cmd.SetAttributeValue("SelectionName", "Check Text");
-            }
+            //IEnumerable<XElement> chkTextList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "CheckStringCommand"));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in chkTextList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "CheckTextCommand");
+            //    cmd.SetAttributeValue(ns + "type", "CheckTextCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Check Text");
+            //}
+            ChangeCommandName(doc, "CheckStringCommand", "CheckTextCommand", "Check Text");
 
             // ModifyVariableCommand -> ModifyTextCommand
             IEnumerable<XElement> modifyTextList = doc.Descendants("ScriptCommand")
@@ -460,6 +455,7 @@ namespace taskt.Core.Script
                     ((string)el.Attribute("CommandName") == "ModifyVariableCommand") ||
                     ((string)el.Attribute("CommandName") == "StringCaseCommand"))
                 );
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
             foreach (var cmd in modifyTextList)
             {
                 cmd.SetAttributeValue("CommandName", "ModifyTextCommand");
@@ -468,54 +464,59 @@ namespace taskt.Core.Script
             }
 
             // RegExExtractorCommand -> RegExExtractionText
-            IEnumerable<XElement> regExList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "RegExExtractorCommand"));
-            foreach (var cmd in regExList)
-            {
-                cmd.SetAttributeValue("CommandName", "RegExExtractionTextCommand");
-                cmd.SetAttributeValue(ns + "type", "RegExExtractionTextCommand");
-                cmd.SetAttributeValue("SelectionName", "RegEx Extraction Text");
-            }
+            //IEnumerable<XElement> regExList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "RegExExtractorCommand"));
+            //foreach (var cmd in regExList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "RegExExtractionTextCommand");
+            //    cmd.SetAttributeValue(ns + "type", "RegExExtractionTextCommand");
+            //    cmd.SetAttributeValue("SelectionName", "RegEx Extraction Text");
+            //}
+            ChangeCommandName(doc, "RegExExtractorCommand", "RegExExtractionTextCommand", "RegEx Extraction Text");
 
             // StringReplaceCommand -> ReplaceTextCommand
-            IEnumerable<XElement> replaceList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "StringReplaceCommand"));
-            foreach (var cmd in replaceList)
-            {
-                cmd.SetAttributeValue("CommandName", "ReplaceTextCommand");
-                cmd.SetAttributeValue(ns + "type", "ReplaceTextCommand");
-                cmd.SetAttributeValue("SelectionName", "Replace Text");
-            }
+            //IEnumerable<XElement> replaceList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "StringReplaceCommand"));
+            //foreach (var cmd in replaceList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "ReplaceTextCommand");
+            //    cmd.SetAttributeValue(ns + "type", "ReplaceTextCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Replace Text");
+            //}
+            ChangeCommandName(doc, "StringReplaceCommand", "ReplaceTextCommand", "Replace Text");
 
             // StringSplitCommand -> SplitTextCommand
-            IEnumerable<XElement> splitList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "StringSplitCommand"));
-            foreach (var cmd in splitList)
-            {
-                cmd.SetAttributeValue("CommandName", "SplitTextCommand");
-                cmd.SetAttributeValue(ns + "type", "SplitTextCommand");
-                cmd.SetAttributeValue("SelectionName", "Split Text");
-            }
+            //IEnumerable<XElement> splitList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "StringSplitCommand"));
+            //foreach (var cmd in splitList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "SplitTextCommand");
+            //    cmd.SetAttributeValue(ns + "type", "SplitTextCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Split Text");
+            //}
+            ChangeCommandName(doc, "StringSplitCommand", "SplitTextCommand", "Split Text");
 
             // StringSubstringCommand -> SubstringTextCommand
-            IEnumerable<XElement> substrList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "StringSubstringCommand"));
-            foreach (var cmd in substrList)
-            {
-                cmd.SetAttributeValue("CommandName", "SubstringTextCommand");
-                cmd.SetAttributeValue(ns + "type", "SubstringTextCommand");
-                cmd.SetAttributeValue("SelectionName", "Substring Text");
-            }
+            //IEnumerable<XElement> substrList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "StringSubstringCommand"));
+            //foreach (var cmd in substrList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "SubstringTextCommand");
+            //    cmd.SetAttributeValue(ns + "type", "SubstringTextCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Substring Text");
+            //}
+            ChangeCommandName(doc, "StringSubstringCommand", "SubstringTextCommand", "Substring Text");
 
             // TextExtractorCommand -> ExtractionTextCommand
-            IEnumerable<XElement> extList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "TextExtractorCommand"));
-            foreach (var cmd in extList)
-            {
-                cmd.SetAttributeValue("CommandName", "ExtractionTextCommand");
-                cmd.SetAttributeValue(ns + "type", "ExtractionTextCommand");
-                cmd.SetAttributeValue("SelectionName", "Extraction Text");
-            }
+            //IEnumerable<XElement> extList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "TextExtractorCommand"));
+            //foreach (var cmd in extList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "ExtractionTextCommand");
+            //    cmd.SetAttributeValue(ns + "type", "ExtractionTextCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Extraction Text");
+            //}
+            ChangeCommandName(doc, "TextExtractorCommand", "ExtractionTextCommand", "Extraction Text");
 
             return doc;
         }
@@ -523,33 +524,36 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_67(XDocument doc)
         {
             // GetAElement -> GetAnElement
-            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsListCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in getList)
-            {
-                cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsListCommand");
-                cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsListCommand");
-                cmd.SetAttributeValue("SelectionName", "Get An Element Values As List");
-            }
+            //IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsListCommand"));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in getList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsListCommand");
+            //    cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsListCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Get An Element Values As List");
+            //}
+            ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsListCommand", "SeleniumBrowserGetAnElementValuesAsListCommand", "Get An Element Values As List");
 
-            IEnumerable<XElement> getDic = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsDictionaryCommand"));
-            foreach (var cmd in getDic)
-            {
-                cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand");
-                cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand");
-                cmd.SetAttributeValue("SelectionName", "Get An Element Values As Dictionary");
-            }
+            //IEnumerable<XElement> getDic = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsDictionaryCommand"));
+            //foreach (var cmd in getDic)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand");
+            //    cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Get An Element Values As Dictionary");
+            //}
+            ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDictionaryCommand", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand", "Get An Element Values As Dictionary");
 
-            IEnumerable<XElement> getDT = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsDataTableCommand"));
-            foreach (var cmd in getDT)
-            {
-                cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsDataTableCommand");
-                cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsDataTableCommand");
-                cmd.SetAttributeValue("SelectionName", "Get An Element Values As DataTable");
-            }
+            //IEnumerable<XElement> getDT = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "SeleniumBrowserGetAElementValuesAsDataTableCommand"));
+            //foreach (var cmd in getDT)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "SeleniumBrowserGetAnElementValuesAsDataTableCommand");
+            //    cmd.SetAttributeValue(ns + "type", "SeleniumBrowserGetAnElementValuesAsDataTableCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Get An Element Values As DataTable");
+            //}
+            ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDataTableCommand", "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "Get An Element Values As DataTable");
 
             return doc;
         }
@@ -793,16 +797,31 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_83(XDocument doc)
         {
             // SMTPSendEmail -> MailKitSendEmail
-            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "SMTPCommand"));
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in getList)
-            {
-                cmd.SetAttributeValue("CommandName", "MailKitSendEmailCommand");
-                cmd.SetAttributeValue(ns + "type", "MailKitSendEmailCommand");
-                cmd.SetAttributeValue("SelectionName", "Send Email");
-            }
+            //IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "SMTPCommand"));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in getList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "MailKitSendEmailCommand");
+            //    cmd.SetAttributeValue(ns + "type", "MailKitSendEmailCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Send Email");
+            //}
+            ChangeCommandName(doc, "SMTPCommand", "MailKitSendEmailCommand", "Send Email");
 
+            return doc;
+        }
+
+        private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
+        {
+            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == targetName));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach(var cmd in commandList)
+            {
+                cmd.SetAttributeValue("CommandName", newName);
+                cmd.SetAttributeValue(ns + "type", newName);
+                cmd.SetAttributeValue("SelectionName", newSelectioName);
+            }
             return doc;
         }
     }
