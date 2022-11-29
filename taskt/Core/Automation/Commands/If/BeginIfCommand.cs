@@ -866,7 +866,7 @@ namespace taskt.Core.Automation.Commands
             //RecorderControl.Click += ShowIfElementRecorder;
             //RecorderControl.Hide();
 
-            ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_IfActionType", this);
+            ActionDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_IfActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionType", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfActionType", this, new Control[] { ActionDropdown }, editor));
             ActionDropdown.SelectionChangeCommitted += (sender, e) => ifAction_SelectionChangeCommitted(sender, e, editor);

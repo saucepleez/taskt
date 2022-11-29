@@ -609,7 +609,7 @@ namespace taskt.Core.Automation.Commands
             //RecorderControl.Click += ShowLoopElementRecorder;
             //RecorderControl.Hide();
 
-            ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_LoopActionType", this);
+            ActionDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_LoopActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionType", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_LoopActionType", this, new Control[] { ActionDropdown }, editor));
             ActionDropdown.SelectionChangeCommitted += (sender, e) => loopAction_SelectionChangeCommitted(sender, e, editor);

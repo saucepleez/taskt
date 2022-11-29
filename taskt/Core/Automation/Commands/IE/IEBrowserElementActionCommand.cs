@@ -419,7 +419,7 @@ namespace taskt.Core.Automation.Commands
             SearchParameterControls.Add(SearchGridViewHelper);
             RenderedControls.AddRange(SearchParameterControls);
 
-            ElementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_WebAction", this);
+            ElementActionDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_WebAction", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WebAction", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebAction", this, new Control[] { ElementActionDropdown }, editor));
             ElementActionDropdown.SelectionChangeCommitted += ElementActionDropdown_SelectionChangeCommitted;

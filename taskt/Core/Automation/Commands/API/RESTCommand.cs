@@ -275,7 +275,7 @@ namespace taskt.Core.Automation.Commands
       
 
             var apiMethodLabel = CommandControls.CreateDefaultLabelFor("v_APIMethodType", this);
-            var apiMethodDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_APIMethodType", this);
+            var apiMethodDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_APIMethodType", this);
      
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_RequestFormat", this, editor));
 

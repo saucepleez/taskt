@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(instanceCtrls);
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
-            IEBrowerNameDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_IEBrowserName", this);
+            IEBrowerNameDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_IEBrowserName", this);
             var shellWindows = new ShellWindows();
             foreach (IWebBrowser2 shellWindow in shellWindows)
             {

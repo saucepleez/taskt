@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             var ActionNameComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_ActionName", this);
-            ActionNameComboBox = (ComboBox)CommandControls.CreateDropdownFor("v_ActionName", this);
+            ActionNameComboBox = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_ActionName", this);
             ActionNameComboBox.DataSource = new List<string> { "Shutdown", "Restart", "Lock Screen", "Logoff" };
             RenderedControls.Add(ActionNameComboBoxLabel);
             RenderedControls.Add(ActionNameComboBox);
