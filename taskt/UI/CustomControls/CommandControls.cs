@@ -436,7 +436,7 @@ namespace taskt.UI.CustomControls
         }
 
         /// <summary>
-        /// create ComboBox and binding property, some events, this method use PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
+        /// create ComboBox and binding property, some events, selection items. this method use PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
@@ -455,6 +455,14 @@ namespace taskt.UI.CustomControls
             return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "");
         }
 
+        /// <summary>
+        /// create ComboBox and binding property, some events, selection items. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="uiOptions"></param>
+        /// <param name="selectionChangeEventName"></param>
+        /// <returns></returns>
         public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, List<string> uiOptions, string selectionChangeEventName = "")
         {
             var inputBox = CreateStandardComboboxFor(propertyName, command);
