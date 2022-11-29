@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.Click += (sender, e) => Button_Click(sender, e);
 
 
-            ConnectionString = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionString", this);
+            ConnectionString = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionString", this, null);
 
             var connectionLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionString", this);
             var connectionHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionString", this, new[] { ConnectionString }, editor);
@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(testConnectionControl);
             RenderedControls.Add(ConnectionString);
 
-            ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this);
+            ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this, null);
 
             var connectionPassLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionStringPassword", this);
             var connectionPassHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionStringPassword", this, new[] { ConnectionStringPassword }, editor);

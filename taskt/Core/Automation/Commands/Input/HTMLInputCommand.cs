@@ -113,7 +113,7 @@ namespace taskt.Core.Automation.Commands
             helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
 
 
-            HtmlInput = (TextBox)CommandControls.CreateDefaultInputFor("v_InputHTML", this);
+            HtmlInput = (TextBox)CommandControls.CreateDefaultInputFor("v_InputHTML", this, null);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_InputHTML", this));
             RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_InputHTML", this, new Control[] { HtmlInput }, editor));

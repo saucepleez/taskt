@@ -313,14 +313,15 @@ namespace taskt.UI.CustomControls
             //}
             if (propInfo == null)
             {
-                propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exsits. Command: " + command.CommandName);
+                //propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exsits. Command: " + command.CommandName);
+                propInfo = command.GetProperty(propertyName);
             }
 
-            //var attrDescription = propInfo.GetCustomAttributes(typeof(PropertyDescription), true);
-            var attrDescription = propInfo.GetCustomAttribute<PropertyDescription>() ?? new PropertyDescription(propertyName);
+            ////var attrDescription = propInfo.GetCustomAttributes(typeof(PropertyDescription), true);
+            //var attrDescription = propInfo.GetCustomAttribute<PropertyDescription>() ?? new PropertyDescription(propertyName);
 
-            // var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
-            var settings = CurrentEditor.appSettings.EngineSettings;
+            //// var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
+            //var settings = CurrentEditor.appSettings.EngineSettings;
 
             Label inputLabel = CreateSimpleLabel();
             //if (attrDescription.Length > 0)
@@ -366,40 +367,40 @@ namespace taskt.UI.CustomControls
             //    inputLabel.Text = propertyName;
             //}
 
-            var labelText = attrDescription.propertyDescription.replaceApplicationKeyword();
+            //var labelText = attrDescription.propertyDescription.replaceApplicationKeyword();
 
-            if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
-            {
-                var showSample = (PropertyShowSampleUsageInDescription)propInfo.GetCustomAttribute(typeof(PropertyShowSampleUsageInDescription));
-                if (showSample != null && showSample.showSampleUsage)
-                {
-                    if (!labelText.Contains("(ex."))
-                    {
-                        var sampleAttr = (SampleUsage)propInfo.GetCustomAttribute(typeof(SampleUsage));
-                        var sampleText = (sampleAttr == null) ? "" : sampleAttr.sampleUsage.getTextMDFormat().replaceApplicationKeyword().Replace(" or ", ", ");
-                        if (sampleText.Length > 0)
-                        {
-                            labelText += " (ex. " + sampleText + ")";
-                        }
-                    }
-                }
-            }
+            //if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+            //{
+            //    var showSample = (PropertyShowSampleUsageInDescription)propInfo.GetCustomAttribute(typeof(PropertyShowSampleUsageInDescription));
+            //    if (showSample != null && showSample.showSampleUsage)
+            //    {
+            //        if (!labelText.Contains("(ex."))
+            //        {
+            //            var sampleAttr = (SampleUsage)propInfo.GetCustomAttribute(typeof(SampleUsage));
+            //            var sampleText = (sampleAttr == null) ? "" : sampleAttr.sampleUsage.getTextMDFormat().replaceApplicationKeyword().Replace(" or ", ", ");
+            //            if (sampleText.Length > 0)
+            //            {
+            //                labelText += " (ex. " + sampleText + ")";
+            //            }
+            //        }
+            //    }
+            //}
 
-            var attrIsOpt = (PropertyIsOptional)propInfo.GetCustomAttribute(typeof(PropertyIsOptional));
-            if (attrIsOpt != null && attrIsOpt.isOptional)
-            {
-                if (!labelText.Contains("Optional"))
-                {
-                    labelText = "Optional - " + labelText;
-                }
+            //var attrIsOpt = (PropertyIsOptional)propInfo.GetCustomAttribute(typeof(PropertyIsOptional));
+            //if (attrIsOpt != null && attrIsOpt.isOptional)
+            //{
+            //    if (!labelText.Contains("Optional"))
+            //    {
+            //        labelText = "Optional - " + labelText;
+            //    }
 
-                if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is")))
-                {
-                    labelText += " (Default is " + attrIsOpt.setBlankToValue + ")";
-                }
-            }
+            //    if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is")))
+            //    {
+            //        labelText += " (Default is " + attrIsOpt.setBlankToValue + ")";
+            //    }
+            //}
 
-            inputLabel.Text = labelText;
+            inputLabel.Text = GetLabelText(propertyName, propInfo, CurrentEditor.appSettings);
 
             inputLabel.Name = "lbl_" + propertyName;
 
@@ -432,19 +433,19 @@ namespace taskt.UI.CustomControls
             return inputLabel;
         }
 
-        /// <summary>
-        /// create TextBox from attribute PropertyTextBoxSetting, PropertyRecommendedUIControl
-        /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command)
-        {
-            return CreateDefaultInputFor(propertyName, command, null);
-        }
+        ///// <summary>
+        ///// create TextBox from attribute PropertyTextBoxSetting, PropertyRecommendedUIControl
+        ///// </summary>
+        ///// <param name="propertyName"></param>
+        ///// <param name="command"></param>
+        ///// <returns></returns>
+        //public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command)
+        //{
+        //    return CreateDefaultInputFor(propertyName, command, null);
+        //}
 
         /// <summary>
-        /// create TextBox from attribute PropertyTextBoxSetting, PropertyRecommendedUIControl
+        /// create TextBox from PropertyTextBoxSetting, PropertyRecommendedUIControl attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
@@ -455,7 +456,7 @@ namespace taskt.UI.CustomControls
         {
             if (propInfo == null)
             {
-                propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exists. Command: " + command.CommandName);
+                propInfo = command.GetProperty(propertyName);
             }
 
             var textBoxSetting = propInfo.GetCustomAttribute<PropertyTextBoxSetting>() ?? new PropertyTextBoxSetting(1, true);
@@ -484,13 +485,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true)
         {
-            var inputBox = new TextBox();
-
-            var theme = CurrentEditor.Theme.Input;
-            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            inputBox.ForeColor = theme.FontColor;
-            inputBox.BackColor = theme.BackColor;
-            inputBox.DataBindings.Add("Text", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+            var inputBox = CreateStandardTextBoxFor(propertyName, command);
 
             // new line setting
             if (!allowNewLine)
@@ -507,7 +502,6 @@ namespace taskt.UI.CustomControls
             inputBox.Height = height;
             inputBox.Width = width;
 
-            inputBox.Name = propertyName;
             return inputBox;
         }
 
@@ -522,21 +516,13 @@ namespace taskt.UI.CustomControls
         {
             if (propInfo == null)
             {
-                propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exists. Command: " + command.CommandName);
+                propInfo = command.GetProperty(propertyName);
             }
 
-            var checkBox = new CheckBox();
-
-            var theme = CurrentEditor.Theme.Checkbox;
-            checkBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            checkBox.ForeColor = theme.FontColor;
-            checkBox.BackColor = theme.BackColor;
-            checkBox.DataBindings.Add("Checked", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+            var checkBox = CreateStandardCheckboxFor(propertyName, command);
 
             var desc = propInfo.GetCustomAttribute<PropertyDescription>();
             checkBox.Text = desc?.propertyDescription ?? "";
-
-            checkBox.Name = propertyName;
             return checkBox;
         }
 
@@ -551,7 +537,7 @@ namespace taskt.UI.CustomControls
         {
             if (propInfo == null)
             {
-                propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exists. Command: " + command.CommandName);
+                propInfo = command.GetProperty(propertyName);
             }
 
             var inputBox = CreateStandardComboboxFor(propertyName, command);
@@ -574,6 +560,24 @@ namespace taskt.UI.CustomControls
                     (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
             }
 
+            return inputBox;
+        }
+
+        /// <summary>
+        /// create ComboBox and binding property. This methods does not use attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static TextBox CreateStandardTextBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command)
+        {
+            var inputBox = new TextBox();
+            var theme = CurrentEditor.Theme.Input;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
+            inputBox.DataBindings.Add("Text", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+            inputBox.Name = propertyName;
             return inputBox;
         }
 
@@ -603,6 +607,26 @@ namespace taskt.UI.CustomControls
         }
 
         /// <summary>
+        /// create CheckBox and binding property. This method does not use attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static CheckBox CreateStandardCheckboxFor(string propertyName, Core.Automation.Commands.ScriptCommand command)
+        {
+            var checkBox = new CheckBox();
+
+            var theme = CurrentEditor.Theme.Checkbox;
+            checkBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            checkBox.ForeColor = theme.FontColor;
+            checkBox.BackColor = theme.BackColor;
+            checkBox.DataBindings.Add("Checked", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+            checkBox.Name = propertyName;
+
+            return checkBox;
+        }
+
+        /// <summary>
         /// create Label, this method does not use attributes.
         /// </summary>
         /// <returns></returns>
@@ -617,11 +641,18 @@ namespace taskt.UI.CustomControls
             return newLabel;
         }
 
+        /// <summary>
+        /// get text for Label. This method use PropertyDescription, PropertyShowSampleUsageInDescription, PropertyIsOptional attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="setting"></param>
+        /// <returns></returns>
         public static string GetLabelText(string propertyName, PropertyInfo propInfo, ApplicationSettings setting)
         {
             var attrDescription = propInfo.GetCustomAttribute<PropertyDescription>() ?? new PropertyDescription(propertyName);
 
-            string labelText = setting.ClientSettings.replaceClientKeyword(attrDescription.propertyDescription);
+            string labelText = setting.replaceApplicationKeyword(attrDescription.propertyDescription);
 
             // show sample usage
             if (setting.ClientSettings.ShowSampleUsageInDescription)
@@ -632,7 +663,7 @@ namespace taskt.UI.CustomControls
                     if (!labelText.Contains("(ex."))
                     {
                         var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
-                        var sampleText = setting.ClientSettings.replaceClientKeyword(getTextMDFormat(attrSample?.sampleUsage ?? ""));
+                        var sampleText = setting.replaceApplicationKeyword(getTextMDFormat(attrSample?.sampleUsage ?? "")).Replace(" or ", ", ");
                         if (sampleText.Length > 0)
                         {
                             labelText += " (ex. " + sampleText + ")";
