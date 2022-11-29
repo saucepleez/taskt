@@ -1485,5 +1485,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get PropertyInfo specified property name as argument
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public PropertyInfo GetProperty(string propertyName)
+        {
+            return this.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exists. Command: " + this.CommandName);
+        }
     }
 }
