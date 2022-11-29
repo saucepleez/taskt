@@ -11,6 +11,7 @@ using taskt.Core;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Engine;
+using taskt.UI.Forms;
 
 namespace taskt.UI.CustomControls
 {
@@ -429,9 +430,9 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static Control CreateDefaultCheckBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command, string description)
         {
-            var chk = CreateStandardCheckboxFor(propertyName, command);
-            chk.Text = description;
-            return chk;
+            var iputBox = CreateStandardCheckboxFor(propertyName, command);
+            iputBox.Text = description;
+            return iputBox;
         }
 
         /// <summary>
@@ -448,22 +449,22 @@ namespace taskt.UI.CustomControls
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var inputBox = CreateStandardComboboxFor(propertyName, command);
-
-            // add Items
-            var attrUIOptions = propInfo.GetCustomAttributes<PropertyUISelectionOption>(true);
-            foreach (PropertyUISelectionOption option in attrUIOptions)
-            {
-                inputBox.Items.Add(option.uiOption);
-            }
-
-            // set selection change event
+            var uiOptions = propInfo.GetCustomAttributes<PropertyUISelectionOption>(true).Select(item => item.uiOption).ToList();
             var changeEvent = propInfo.GetCustomAttribute<PropertySelectionChangeEvent>();
-            if (changeEvent != null)
-            {
-                (var trgMethod, var useOuterClassEvent) = GetMethodInfo(changeEvent.methodName, command);
 
-                inputBox.SelectionChangeCommitted += useOuterClassEvent ? 
+            return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "");
+        }
+
+        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, List<string> uiOptions, string selectionChangeEventName = "")
+        {
+            var inputBox = CreateStandardComboboxFor(propertyName, command);
+            inputBox.Items.AddRange(uiOptions.ToArray());
+
+            if (selectionChangeEventName != "")
+            {
+                (var trgMethod, var useOuterClassEvent) = GetMethodInfo(selectionChangeEventName, command);
+
+                inputBox.SelectionChangeCommitted += useOuterClassEvent ?
                     (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler)) :
                     (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
             }
