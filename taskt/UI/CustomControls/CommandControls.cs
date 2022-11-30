@@ -1596,6 +1596,46 @@ namespace taskt.UI.CustomControls
             return commandList;
 
         }
+
+        /// <summary>
+        /// get Window Names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        public static List<string> GetWindowNames(Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            var lst = new List<string>();
+
+            if (addCurrentWindow)
+            {
+                lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
+            }
+
+            if (addAllWindows)
+            {
+                lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
+            }
+            if (addDesktop)
+            {
+                lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
+            }
+            lst.AddRange(WindowNameControls.GetAllWindowTitles());
+
+            return lst;
+        }
+
+        /// <summary>
+        /// add windows names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
         public static ComboBox AddWindowNames(this ComboBox cbo, Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             if (cbo == null)
@@ -1605,78 +1645,116 @@ namespace taskt.UI.CustomControls
 
             cbo.Items.Clear();
 
-            if (addCurrentWindow)
-            {
-                if (editor != null)
-                {
-                    cbo.Items.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
-                }
-                else
-                {
-                    cbo.Items.Add("Current Window");
-                }
-            }
+            //if (addCurrentWindow)
+            //{
+            //    if (editor != null)
+            //    {
+            //        cbo.Items.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+            //    }
+            //    else
+            //    {
+            //        cbo.Items.Add("Current Window");
+            //    }
+            //}
 
-            if (addAllWindows)
-            {
-                if (editor != null)
-                {
-                    cbo.Items.Add(editor.appSettings.EngineSettings.AllWindowsKeyword);
-                }
-                else
-                {
-                    cbo.Items.Add("All Windows");
-                }
-            }
-            if (addDesktop)
-            {
-                if (editor != null)
-                {
-                    cbo.Items.Add(editor.appSettings.EngineSettings.DesktopKeyword);
-                }
-                else
-                {
-                    cbo.Items.Add("Desktop");
-                }
-            }
-            cbo.Items.AddRange(Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
+            //if (addAllWindows)
+            //{
+            //    if (editor != null)
+            //    {
+            //        cbo.Items.Add(editor.appSettings.EngineSettings.AllWindowsKeyword);
+            //    }
+            //    else
+            //    {
+            //        cbo.Items.Add("All Windows");
+            //    }
+            //}
+            //if (addDesktop)
+            //{
+            //    if (editor != null)
+            //    {
+            //        cbo.Items.Add(editor.appSettings.EngineSettings.DesktopKeyword);
+            //    }
+            //    else
+            //    {
+            //        cbo.Items.Add("Desktop");
+            //    }
+            //}
+            //cbo.Items.AddRange(Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
+
+            cbo.Items.AddRange(GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop).ToArray());
 
             cbo.EndUpdate();
 
             return cbo;
         }
+
+        /// <summary>
+        /// get variable names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<string> GetVariableNames(Forms.frmCommandEditor editor)
+        {
+            //var lst = new List<string>();
+
+            //if (editor != null)
+            //{
+            //    lst.AddRange(editor.scriptVariables.Select(v => v.VariableName).ToArray());
+            //}
+
+            //return lst;
+
+            return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
+        }
+
+        /// <summary>
+        /// add variable names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
         public static ComboBox AddVariableNames(this ComboBox cbo, Forms.frmCommandEditor editor)
         {
             if (cbo == null)
                 return null;
 
-            if (editor != null)
-            {
-                cbo.BeginUpdate();
+            //if (editor != null)
+            //{
+            //    cbo.BeginUpdate();
 
-                cbo.Items.Clear();
+            //    cbo.Items.Clear();
 
-                foreach (var variable in editor.scriptVariables)
-                {
-                    cbo.Items.Add(variable.VariableName);
-                }
+            //    foreach (var variable in editor.scriptVariables)
+            //    {
+            //        cbo.Items.Add(variable.VariableName);
+            //    }
 
-                cbo.EndUpdate();
-
-            }
-
-            return cbo;
-        }
-        public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
-        {
-            if ((cbo == null) || (editor == null))
-            {
-                return null;
-            }
+            //    cbo.EndUpdate();
+            //}
 
             cbo.BeginUpdate();
 
             cbo.Items.Clear();
+
+            cbo.Items.AddRange(GetVariableNames(editor).ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+
+        /// <summary>
+        /// get instance names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static List<string> GetInstanceNames(Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        {
+            if (editor == null)
+            {
+                return new List<string>();
+            }
 
             string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
 
@@ -1728,13 +1806,86 @@ namespace taskt.UI.CustomControls
                     break;
             }
 
-            foreach(var item in sortedInstance)
+            return sortedInstance;
+        }
+
+        /// <summary>
+        /// add Instace names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        {
+            if ((cbo == null) || (editor == null))
             {
-                if ((!String.IsNullOrEmpty(item)) && (!cbo.Items.Contains(item)))
-                {
-                    cbo.Items.Add(item);
-                }
+                return null;
             }
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            //string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
+
+            //Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp, (sortOrder == "frequency of use"));
+
+            //string defInstanceName = "";
+            //switch (tp)
+            //{
+            //    case PropertyInstanceType.InstanceType.DataBase:
+            //        defInstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
+            //        break;
+            //    case PropertyInstanceType.InstanceType.Excel:
+            //        defInstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+            //        break;
+            //    case PropertyInstanceType.InstanceType.IE:
+            //        defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            //        break;
+            //    case PropertyInstanceType.InstanceType.NLG:
+            //        defInstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
+            //        break;
+            //    case PropertyInstanceType.InstanceType.WebBrowser:
+            //        defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+            //        break;
+            //    case PropertyInstanceType.InstanceType.StopWatch:
+            //        defInstanceName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
+            //        break;
+            //    case PropertyInstanceType.InstanceType.Word:
+            //        defInstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
+            //        break;
+            //}
+            //if ((defInstanceName != "") && !instanceList.ContainsKey(defInstanceName))
+            //{
+            //    instanceList.Add(defInstanceName, 0);
+            //}
+
+            //List<string> sortedInstance;
+            //switch (editor.appSettings.ClientSettings.InstanceNameOrder.ToLower())
+            //{
+            //    case "no sorting":
+            //        sortedInstance = instanceList.Keys.ToList();
+            //        break;
+            //    case "by name":
+            //        sortedInstance = instanceList.OrderBy(t => t.Key).Select(v => v.Key).ToList();
+            //        break;
+            //    case "creation frequently":
+            //    case "frequency of use":
+            //    default:
+            //        sortedInstance = instanceList.OrderByDescending(t => t.Value).Select(v => v.Key).ToList();
+            //        break;
+            //}
+
+            //foreach(var item in sortedInstance)
+            //{
+            //    if ((!String.IsNullOrEmpty(item)) && (!cbo.Items.Contains(item)))
+            //    {
+            //        cbo.Items.Add(item);
+            //    }
+            //}
+
+            cbo.Items.AddRange(GetInstanceNames(editor, tp).ToArray());
 
             cbo.EndUpdate();
 
