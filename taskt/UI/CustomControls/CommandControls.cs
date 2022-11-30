@@ -357,7 +357,7 @@ namespace taskt.UI.CustomControls
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var textBoxSetting = propInfo.GetCustomAttribute<PropertyTextBoxSetting>() ?? new PropertyTextBoxSetting(1, true);
+            var textBoxSetting = propInfo.GetCustomAttribute<PropertyTextBoxSetting>() ?? new PropertyTextBoxSetting();
             var recommendedControl = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>() ?? new PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox);
 
             TextBox newTextBox;
@@ -441,8 +441,9 @@ namespace taskt.UI.CustomControls
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="propInfo"></param>
+        /// <param name="editor">if editor is null, does not support variable, window, instance selection items</param>
         /// <returns></returns>
-        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null)
+        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null, frmCommandEditor editor = null, bool variableList = false, bool windowList = false, PropertyInstanceType.InstanceType instanceType = PropertyInstanceType.InstanceType.none)
         {
             if (propInfo == null)
             {
@@ -1638,17 +1639,6 @@ namespace taskt.UI.CustomControls
                     cbo.Items.Add("Desktop");
                 }
             }
-
-            //Process[] processlist = Process.GetProcesses();
-            ////pull the main window title for each
-            //foreach (Process process in processlist)
-            //{
-            //    if (!String.IsNullOrEmpty(process.MainWindowTitle))
-            //    {
-            //        //add to the control list of available windows
-            //        cbo.Items.Add(process.MainWindowTitle);
-            //    }
-            //}
             cbo.Items.AddRange(Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
 
             cbo.EndUpdate();
@@ -1687,42 +1677,6 @@ namespace taskt.UI.CustomControls
             cbo.BeginUpdate();
 
             cbo.Items.Clear();
-            //switch (tp)
-            //{
-            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase:
-            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultDBInstanceName);
-            //        break;
-            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel:
-            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultExcelInstanceName);
-            //        break;
-            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE:
-            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
-            //        break;
-            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG:
-            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultNLGInstanceName);
-            //        break;
-            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
-            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultStopWatchInstanceName);
-            //        break;
-            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser:
-            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultBrowserInstanceName);
-            //        break;
-            //    case Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word:
-            //        cbo.Items.Add(editor.appSettings.ClientSettings.DefaultWordInstanceName);
-            //        break;
-            //    default:
-            //        break;
-            //}
-
-            ////pull the main window title for each
-            //string[] instances = editor.instanceList.getInstances(tp);
-            //foreach (string ins in instances)
-            //{
-            //    if ((!String.IsNullOrEmpty(ins)) && (!cbo.Items.Contains(ins)))
-            //    {
-            //        cbo.Items.Add(ins);
-            //    }
-            //}
 
             string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
 
@@ -1786,29 +1740,6 @@ namespace taskt.UI.CustomControls
 
             return cbo;
         }
-
-        //public static string GetAddtionalParameterInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
-        //{
-        //    if (rowInfo == null)
-        //    {
-        //        return "";
-        //    }
-
-        //    string ret = rowInfo.description.replaceEngineKeyword();
-        //    if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
-        //    {
-        //        if (!ret.Contains("(ex."))
-        //        {
-        //            string smp = rowInfo.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
-        //            if (smp.Length > 0)
-        //            {
-        //                ret += " (ex. " + smp + ")";
-        //            }
-        //        }
-        //    }
-
-        //    return ret;
-        //}
 
         public static string replaceApplicationKeyword(this string targetString)
         {
