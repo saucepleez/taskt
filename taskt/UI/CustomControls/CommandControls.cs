@@ -1,11 +1,9 @@
-﻿using OpenQA.Selenium.DevTools.V102.Runtime;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -291,7 +289,10 @@ namespace taskt.UI.CustomControls
 
         public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
-            return CreateDefaultControlGroupFor(CreateDefaultDropdownFor, parameterName, parent, editor, additionalLinks);
+            //return CreateDefaultControlGroupFor(CreateDefaultDropdownFor, parameterName, parent, editor, additionalLinks);
+            return CreateDefaultControlGroupFor(parameterName, parent, new Func<Control>(() => {
+                return CreateDefaultDropdownFor(parameterName, parent, null, editor);
+            }), null, editor);
         }
 
         public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
@@ -301,47 +302,162 @@ namespace taskt.UI.CustomControls
             return ctrls;
         }
 
-        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null)
+        public static List<Control> CreateDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Func<Control> createFunc, PropertyInfo propInfo, Forms.frmCommandEditor editor)
+        {
+            var controlList = new List<Control>();
+
+            // label
+            var label = CreateDefaultLabelFor(propertyName, command, propInfo);
+            controlList.Add(label);
+
+            // 2nd label
+            var attr2ndLabel = propInfo.GetCustomAttribute<PropertySecondaryLabel>();
+            if (attr2ndLabel?.useSecondaryLabel ?? false)
+            {
+                var label2 = CreateSimpleLabel();
+                label2.Name = "lbl2_" + propertyName;
+                controlList.Add(label2);
+            }
+
+            var createdInput = createFunc();
+
+            // ui helper
+            controlList.AddRange(CreateUIHelpersFor(propertyName, command, new Control[] { createdInput }, editor, propInfo));
+
+            // custom ui helper
+            controlList.AddRange(CreateCustomUIHelperFor(propertyName, command, new Control[] { createdInput }, editor, propInfo));
+
+            // body
+            controlList.Add(createdInput);
+
+            return controlList;
+        }
+
+
+        #region create default controls
+
+        #region label
+        /// <summary>
+        /// create Label from seveal attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null, frmCommandEditor editor = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var inputLabel = CreateSimpleLabel();
-            inputLabel.Text = GetLabelText(propertyName, propInfo, CurrentEditor.appSettings);
+            //var inputLabel = CreateSimpleLabel();
+            //inputLabel.Text = GetLabelText(propertyName, propInfo, editor?.appSettings);
 
+            //inputLabel.Name = "lbl_" + propertyName;
+
+            //Func<string, string> convFunc;
+            //if (editor == null)
+            //{
+            //    convFunc = new Func<string, string>((str) =>
+            //    {
+            //        return str;
+            //    });
+            //}
+            //else
+            //{
+            //    convFunc = new Func<string, string>((str) =>
+            //    {
+            //        return GetSampleUsageTextForLabel(str, editor.appSettings);
+            //    });
+            //}
+
+            //// set addtional parameter info
+            //var additionaoParams = (PropertyAddtionalParameterInfo[])propInfo.GetCustomAttributes(typeof(PropertyAddtionalParameterInfo));
+            //if (additionaoParams.Length > 0)
+            //{
+            //    Dictionary<string, string> addParams = new Dictionary<string, string>();
+            //    foreach(var p in additionaoParams)
+            //    {
+            //        //if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
+            //        //{
+            //        //    if (p.sampleUsage != "")
+            //        //    {
+            //        //        addParams.Add(p.searchKey, p.description + " (ex." + GetSampleUsageTextForLabel() + ")");
+            //        //    }
+            //        //    else
+            //        //    {
+            //        //        addParams.Add(p.searchKey, p.description);
+            //        //    }
+            //        //}
+            //        //else
+            //        //{
+            //        //    addParams.Add(p.searchKey, p.description);
+            //        //}
+            //        addParams.Add(p.searchKey, convFunc(p.description));
+            //    }
+            //    inputLabel.Tag = addParams;
+            //}
+
+            var labelText = GetLabelText(propertyName, propInfo, editor?.appSettings);
+
+            // get addtional parameter info
+            var attrAdditionalParams = (PropertyAddtionalParameterInfo[])propInfo.GetCustomAttributes(typeof(PropertyAddtionalParameterInfo));
+            Dictionary<string, string> addParams = null;
+            if (attrAdditionalParams.Length > 0)
+            {
+                Func<string, string> convFunc;
+                if (editor == null)
+                {
+                    convFunc = new Func<string, string>((str) =>
+                    {
+                        return str;
+                    });
+                }
+                else
+                {
+                    convFunc = new Func<string, string>((str) =>
+                    {
+                        return GetSampleUsageTextForLabel(str, editor.appSettings);
+                    });
+                }
+
+                addParams = new Dictionary<string, string>();
+                foreach (var p in attrAdditionalParams)
+                {
+                    addParams.Add(p.searchKey, convFunc(p.description));
+                }
+            }
+
+            return CreateDefaultLabelFor(propertyName, command, labelText, addParams);
+        }
+
+        /// <summary>
+        /// create Label. This method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="labelText"></param>
+        /// <param name="additionalParams"></param>
+        /// <returns></returns>
+        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, string labelText, Dictionary<string, string> additionalParams = null)
+        {
+            var inputLabel = CreateSimpleLabel();
+
+            inputLabel.Text = labelText;
             inputLabel.Name = "lbl_" + propertyName;
 
-            // set addtional parameter info
-            var additionaoParams = (PropertyAddtionalParameterInfo[])propInfo.GetCustomAttributes(typeof(PropertyAddtionalParameterInfo));
-            if (additionaoParams.Length > 0)
+            if (additionalParams != null)
             {
-                Dictionary<string, string> addParams = new Dictionary<string, string>();
-                foreach(var p in additionaoParams)
-                {
-                    if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
-                    {
-                        if (p.sampleUsage != "")
-                        {
-                            addParams.Add(p.searchKey, p.description + " (ex." + p.sampleUsage.getTextMDFormat().replaceApplicationKeyword().Replace(" or ", ", ") + ")");
-                        }
-                        else
-                        {
-                            addParams.Add(p.searchKey, p.description);
-                        }
-                    }
-                    else
-                    {
-                        addParams.Add(p.searchKey, p.description);
-                    }
-                }
-                inputLabel.Tag = addParams;
+                inputLabel.Tag = additionalParams;
             }
 
             return inputLabel;
         }
+        #endregion
 
+        #region textbox
         /// <summary>
         /// create TextBox from PropertyTextBoxSetting, PropertyRecommendedUIControl attributes.
         /// </summary>
@@ -402,7 +518,9 @@ namespace taskt.UI.CustomControls
 
             return inputBox;
         }
+        #endregion
 
+        #region checkbox
         /// <summary>
         /// create CheckBox and binding property, this method try to use PropertyDescription attribute.
         /// </summary>
@@ -434,23 +552,54 @@ namespace taskt.UI.CustomControls
             iputBox.Text = description;
             return iputBox;
         }
+        #endregion
 
+        #region combobox
         /// <summary>
-        /// create ComboBox and binding property, some events, selection items. this method use PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
+        /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="propInfo"></param>
         /// <param name="editor">if editor is null, does not support variable, window, instance selection items</param>
         /// <returns></returns>
-        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null, frmCommandEditor editor = null, bool variableList = false, bool windowList = false, PropertyInstanceType.InstanceType instanceType = PropertyInstanceType.InstanceType.none)
+        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null, frmCommandEditor editor = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var uiOptions = propInfo.GetCustomAttributes<PropertyUISelectionOption>(true).Select(item => item.uiOption).ToList();
+            var uiOptions = new List<string>();
+
+            // window names list
+            var attrIsWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
+            if (attrIsWin?.isWindowNamesList ?? false)
+            {
+                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowCurrentWindow, attrIsWin.allowDesktop));
+            }
+
+            // variable names list
+            var attrIsVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
+            if (attrIsVar?.isVariablesList ?? false)
+            {
+                uiOptions.AddRange(GetVariableNames(editor));
+            }
+
+            // instance name list
+            var attrIsInstance = propInfo.GetCustomAttribute<PropertyInstanceType>();
+            if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
+            {
+                uiOptions.AddRange(GetInstanceNames(editor, attrIsInstance.instanceType));
+            }
+
+            // ui options
+            var opts = propInfo.GetCustomAttributes<PropertyUISelectionOption>(true);
+            if (opts.Count() > 0)
+            {
+                uiOptions.AddRange(opts.Select(opt => opt.uiOption).ToList());
+            }
+
             var changeEvent = propInfo.GetCustomAttribute<PropertySelectionChangeEvent>();
 
             return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "");
@@ -480,7 +629,10 @@ namespace taskt.UI.CustomControls
 
             return inputBox;
         }
+        #endregion
+        #endregion
 
+        #region create standard controls
 
         /// <summary>
         /// create ComboBox and binding property. This methods does not use attributes.
@@ -559,6 +711,7 @@ namespace taskt.UI.CustomControls
             newLabel.BackColor = theme.BackColor;
             return newLabel;
         }
+        #endregion
 
         /// <summary>
         /// get text for Label. This method use PropertyDescription, PropertyShowSampleUsageInDescription, PropertyIsOptional attributes.
