@@ -185,7 +185,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [System.AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertySelectionChangeEvent : System.Attribute
     {
-        public string methodName;
+        public string methodName = "";
+        public PropertySelectionChangeEvent()
+        {
+
+        }
         public PropertySelectionChangeEvent(string methodName)
         {
             this.methodName = methodName;
@@ -197,6 +201,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     {
         public bool isOptional = false;
         public string setBlankToValue = "";
+
+        public PropertyIsOptional()
+        {
+
+        }
         public PropertyIsOptional(bool opt, string setBlankToValue = "")
         {
             this.isOptional = opt;
@@ -211,6 +220,10 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public bool allowAllWindows = false;
         public bool allowDesktop = false;
 
+        public PropertyIsWindowNamesList()
+        {
+
+        }
         public PropertyIsWindowNamesList(bool isWindowNameList = false, bool allowCurrent = true, bool allowAll = false, bool allowDesktop = false)
         {
             this.isWindowNamesList = isWindowNameList;
@@ -223,6 +236,10 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyIsVariablesList : System.Attribute
     {
         public bool isVariablesList = false;
+        public PropertyIsVariablesList()
+        {
+
+        }
         public PropertyIsVariablesList(bool opt)
         {
             this.isVariablesList = opt;
@@ -252,6 +269,10 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyShowSampleUsageInDescription : System.Attribute
     {
         public bool showSampleUsage = false;
+        public PropertyShowSampleUsageInDescription()
+        {
+
+        }
         public PropertyShowSampleUsageInDescription(bool opt)
         {
             this.showSampleUsage = opt;
@@ -262,6 +283,10 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     {
         public int height = 1;
         public bool allowNewLine = true;
+        public PropertyTextBoxSetting()
+        {
+
+        }
         public PropertyTextBoxSetting(int height = 1, bool allowNewLine = true)
         {
             if (height < 0)
@@ -368,6 +393,10 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public InstanceType instanceType = InstanceType.none;
         public bool autoWrapVariableMarker = false;
 
+        public PropertyInstanceType()
+        {
+
+        }
         public PropertyInstanceType(InstanceType type, bool autoWrapVariableMarker = false)
         {
             this.instanceType = type;
@@ -400,6 +429,10 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyParameterDirection : System.Attribute
     {
         public ParameterDirection porpose = ParameterDirection.Unknown;
+        public PropertyParameterDirection()
+        {
+
+        }
         public PropertyParameterDirection(ParameterDirection porpose)
         {
             this.porpose = porpose;
@@ -467,6 +500,10 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertyFirstValue : System.Attribute
     {
         public string firstValue = "";
+        public PropertyFirstValue()
+        {
+
+        }
         public PropertyFirstValue(string firstValue)
         {
             this.firstValue = firstValue;
