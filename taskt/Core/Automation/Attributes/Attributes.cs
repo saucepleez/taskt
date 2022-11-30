@@ -367,6 +367,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public sealed class PropertySecondaryLabel : System.Attribute
     {
         public bool useSecondaryLabel = false;
+
+        public PropertySecondaryLabel()
+        {
+
+        }
         public PropertySecondaryLabel(bool opt)
         {
             this.useSecondaryLabel = opt;
