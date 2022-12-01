@@ -243,11 +243,11 @@ namespace taskt.UI.CustomControls
             return ctrls;
         }
 
-        public static List<Control> CreateDefaultControlGroupFor(Func<string, Core.Automation.Commands.ScriptCommand, PropertyInfo, Control> createInput, string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
-        {
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            return CreateDefaultControlGroupFor(createInput(parameterName, parent, variableProperties), parameterName, parent, editor, variableProperties, additionalLinks);
-        }
+        //public static List<Control> CreateDefaultControlGroupFor(Func<string, Core.Automation.Commands.ScriptCommand, PropertyInfo, Control> createInput, string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        //{
+        //    var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+        //    return CreateDefaultControlGroupFor(createInput(parameterName, parent, variableProperties), parameterName, parent, editor, variableProperties, additionalLinks);
+        //}
 
         public static List<Control> CreateDefaultControlGroupFor(Control createdInput, string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, PropertyInfo variableProperties, List<Control> additionalLinks = null)
         {
@@ -282,17 +282,29 @@ namespace taskt.UI.CustomControls
             return controlList;
         }
 
-        public static List<Control> CreateDefaultInputGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        public static List<Control> CreateDefaultInputGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
-            return CreateDefaultControlGroupFor(CreateDefaultInputFor, parameterName, parent, editor, additionalLinks);
+            var propInfo = command.GetProperty(parameterName);
+            return CreateDefaultControlGroupFor(parameterName, command, new Func<Control>(() =>
+            {
+                return CreateDefaultInputFor(parameterName, command, propInfo);
+            }), propInfo, editor);
         }
 
-        public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        public static List<Control> CreateDefaultDropdownGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
-            //return CreateDefaultControlGroupFor(CreateDefaultDropdownFor, parameterName, parent, editor, additionalLinks);
-            return CreateDefaultControlGroupFor(parameterName, parent, new Func<Control>(() => {
-                return CreateDefaultDropdownFor(parameterName, parent, null, editor);
-            }), null, editor);
+            var propInfo = command.GetProperty(propertyName);
+            return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
+                return CreateDefaultDropdownFor(propertyName, command, propInfo, editor);
+            }), propInfo, editor);
+        }
+
+        public static List<Control> CreateDefaultCheckBoxGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
+        {
+            var propInfo = command.GetProperty(propertyName);
+            return CreateDefaultCheckBoxFor(propertyName, command, new Func<Control>(() => {
+                return CreateDefaultDropdownFor(propertyName, command, propInfo, editor);
+            }), propInfo, editor);
         }
 
         public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
