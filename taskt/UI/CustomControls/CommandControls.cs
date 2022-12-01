@@ -735,7 +735,7 @@ namespace taskt.UI.CustomControls
             return createdDGV;
         }
 
-        public static DataGridView CreateDataGridView(string propertyName, Core.Automation.Commands.ScriptCommand command, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
+        public static DataGridView CreateDataGridView(string propertyName, Core.Automation.Commands.ScriptCommand command, bool allowAddRows = true, bool allowDeleteRows = true, bool allowResizeRows = false, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1, bool allowSort = false)
         {
             if (width < 100)
             {
@@ -748,14 +748,14 @@ namespace taskt.UI.CustomControls
 
             var dgv = CreateStandardDataGridViewFor(propertyName, command);
 
-            dgv.AllowUserToAddRows = AllowAddRows;
-            dgv.AllowUserToDeleteRows = AllowDeleteRows;
-            dgv.AutoGenerateColumns = AutoGenerateColumns;
+            dgv.AllowUserToAddRows = allowAddRows;
+            dgv.AllowUserToDeleteRows = allowDeleteRows;
+            dgv.AutoGenerateColumns = autoGenerateColumns;
             dgv.Size = new Size(width, height);
 
             if (headerRowHeight > 1)
             {
-                dgv.ColumnHeadersHeight = ((Convert.ToInt32(CurrentEditor.Theme.FontSize) + 15) * headerRowHeight);
+                dgv.ColumnHeadersHeight = ((Convert.ToInt32(CurrentEditor.Theme.Datagridview.FontSize) + 15) * headerRowHeight);
             }
 
             return dgv;
