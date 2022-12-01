@@ -737,6 +737,12 @@ namespace taskt.UI.CustomControls
 
         public static DataGridView CreateDataGridView(string propertyName, Core.Automation.Commands.ScriptCommand command, bool allowAddRows = true, bool allowDeleteRows = true, bool allowResizeRows = false, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1, bool allowSort = false)
         {
+            var dgv = CreateStandardDataGridViewFor(propertyName, command);
+
+            dgv.AllowUserToAddRows = allowAddRows;
+            dgv.AllowUserToDeleteRows = allowDeleteRows;
+            dgv.AutoGenerateColumns = autoGenerateColumns;
+
             if (width < 100)
             {
                 width = 400;
@@ -746,11 +752,6 @@ namespace taskt.UI.CustomControls
                 height = 250;
             }
 
-            var dgv = CreateStandardDataGridViewFor(propertyName, command);
-
-            dgv.AllowUserToAddRows = allowAddRows;
-            dgv.AllowUserToDeleteRows = allowDeleteRows;
-            dgv.AutoGenerateColumns = autoGenerateColumns;
             dgv.Size = new Size(width, height);
 
             if (headerRowHeight > 1)
