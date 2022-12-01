@@ -302,8 +302,8 @@ namespace taskt.UI.CustomControls
         public static List<Control> CreateDefaultCheckBoxGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
             var propInfo = command.GetProperty(propertyName);
-            return CreateDefaultCheckBoxFor(propertyName, command, new Func<Control>(() => {
-                return CreateDefaultDropdownFor(propertyName, command, propInfo, editor);
+            return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
+                return CreateDefaultCheckBoxFor(propertyName, command, propInfo);
             }), propInfo, editor);
         }
 
