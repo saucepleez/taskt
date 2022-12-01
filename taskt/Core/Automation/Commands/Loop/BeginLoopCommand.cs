@@ -589,7 +589,7 @@ namespace taskt.Core.Automation.Commands
             //LoopGridViewHelper.DataBindings.Add("DataSource", this, "v_LoopActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             //LoopGridViewHelper.AllowUserToAddRows = false;
             //LoopGridViewHelper.AllowUserToDeleteRows = false;
-            LoopGridViewHelper = CommandControls.CreateDataGridView(this, "v_LoopActionParameterTable", false, false);
+            LoopGridViewHelper = CommandControls.CreateDataGridView("v_LoopActionParameterTable", this, false, false);
             LoopGridViewHelper.MouseEnter += (sender, e) => LoopGridViewHelper_MouseEnter(sender, e, editor);
             //LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
             //LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;

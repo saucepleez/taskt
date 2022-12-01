@@ -297,7 +297,7 @@ namespace taskt.Core.Automation.Commands
             //RESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             //RESTParametersGridViewHelper.AutoGenerateColumns = false;
 
-            RESTParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_RESTParameters", true, true, false, -1, 140, false );
+            RESTParametersGridViewHelper = CommandControls.CreateDataGridView("v_RESTParameters", this, true, true, false, -1, 140, false );
             RESTParametersGridViewHelper.CellClick += RESTParametersGridViewHelper_CellClick;
 
             var selectColumn = new DataGridViewComboBoxColumn();
@@ -328,7 +328,7 @@ namespace taskt.Core.Automation.Commands
 
             //AdvancedRESTParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             //AdvancedRESTParametersGridViewHelper.AutoGenerateColumns = false;
-            AdvancedRESTParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_AdvancedParameters", true, true, false, -1, 140, false);
+            AdvancedRESTParametersGridViewHelper = CommandControls.CreateDataGridView("v_AdvancedParameters", this, true, true, false, -1, 140, false);
             AdvancedRESTParametersGridViewHelper.CellClick += AdvancedRESTParametersGridViewHelper_CellClick;
 
             var advParamNameColumn = new DataGridViewTextBoxColumn();

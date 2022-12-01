@@ -233,7 +233,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_MethodParameters", true, true, true, -1, 135);
+            ParametersGridViewHelper = CommandControls.CreateDataGridView("v_MethodParameters", this, true, true, true, -1, 135);
             ParametersGridViewHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));

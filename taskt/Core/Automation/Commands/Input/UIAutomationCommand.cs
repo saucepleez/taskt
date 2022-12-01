@@ -647,7 +647,7 @@ namespace taskt.Core.Automation.Commands
             //SearchParametersGridViewHelper.Width = 500;
             //SearchParametersGridViewHelper.Height = 140;
             //SearchParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIASearchParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-            SearchParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIASearchParameters", false, false, false, 500, 240);
+            SearchParametersGridViewHelper = CommandControls.CreateDataGridView("v_UIASearchParameters", this, false, false, false, 500, 240);
             SearchParametersGridViewHelper.CellBeginEdit += SearchParametersGridViewHelper_CellBeginEdit;
             SearchParametersGridViewHelper.CellClick += SearchParametersGridViewHelper_CellClick;
 
@@ -675,7 +675,7 @@ namespace taskt.Core.Automation.Commands
             //ActionParametersGridViewHelper.Width = 500;
             //ActionParametersGridViewHelper.Height = 140;
             //ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-            ActionParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIAActionParameters", false, false, false, 500, 140);
+            ActionParametersGridViewHelper = CommandControls.CreateDataGridView("v_UIAActionParameters", this, false, false, false, 500, 140);
             ActionParametersGridViewHelper.MouseEnter += ActionParametersGridViewHelper_MouseEnter;
             //ActionParametersGridViewHelper.CellBeginEdit += ActionParametersGridViewHelper_CellBeginEdit;
             //ActionParametersGridViewHelper.CellClick += ActionParametersGridViewHelper_CellClick;

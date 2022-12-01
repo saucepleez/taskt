@@ -182,7 +182,7 @@ namespace taskt.Core.Automation.Commands
             //KeystrokeGridHelper.AutoGenerateColumns = false;
             //KeystrokeGridHelper.Width = 500;
             //KeystrokeGridHelper.Height = 140;
-            KeystrokeGridHelper = CommandControls.CreateDataGridView(this, "v_KeyActions", true, true, false, 500, 140, false);
+            KeystrokeGridHelper = CommandControls.CreateDataGridView("v_KeyActions", this, true, true, false, 500, 140, false);
             //KeystrokeGridHelper.CellClick += KeystrokeGridHelper_CellClick;
             KeystrokeGridHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 

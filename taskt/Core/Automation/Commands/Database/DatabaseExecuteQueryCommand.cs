@@ -221,7 +221,7 @@ namespace taskt.Core.Automation.Commands
             //QueryParametersGridView.Size = new Size(400, 250);
             //QueryParametersGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //QueryParametersGridView.AutoGenerateColumns = false;
-            QueryParametersGridView = CommandControls.CreateDataGridView(this, "v_QueryParameters", true, true , true, 400, 250, false);
+            QueryParametersGridView = CommandControls.CreateDataGridView("v_QueryParameters", this, true, true, true, 400, 250, true);
             QueryParametersGridView.CellClick += QueryParametersGridView_CellClick;
         
             var selectColumn = new DataGridViewComboBoxColumn();

@@ -638,11 +638,11 @@ namespace taskt.UI.CustomControls
             DataGridView createdDGV;
             if (dgvProp == null)
             {
-                createdDGV = CreateDataGridView(sourceCommand, dataSourceName);
+                createdDGV = CreateDataGridView(dataSourceName, sourceCommand);
             }
             else
             {
-                createdDGV = CreateDataGridView(sourceCommand, dataSourceName, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
+                createdDGV = CreateDataGridView(dataSourceName, sourceCommand, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
             }
 
             var columnProp = (PropertyDataGridViewColumnSettings[])prop.GetCustomAttributes(typeof(PropertyDataGridViewColumnSettings));
