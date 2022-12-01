@@ -584,6 +584,30 @@ namespace taskt.UI.CustomControls
         }
 
         /// <summary>
+        ///  create DataGridView and binding property. This method does not use attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static DataGridView CreateStandardDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command)
+        {
+            var dgv = new DataGridView();
+
+            var theme = CurrentEditor.Theme.Datagridview;
+            dgv.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            dgv.ForeColor = theme.FontColor;
+            dgv.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
+            dgv.RowTemplate.Height = Convert.ToInt32(theme.FontSize) + 20;
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.DataBindings.Add("DataSource", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+
+            dgv.Name = propertyName;
+
+            return dgv;
+        }
+
+        /// <summary>
         /// create Label, this method does not use attributes.
         /// </summary>
         /// <returns></returns>
@@ -711,7 +735,7 @@ namespace taskt.UI.CustomControls
             return createdDGV;
         }
 
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
+        public static DataGridView CreateDataGridView(string propertyName, Core.Automation.Commands.ScriptCommand command, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
         {
             if (width < 100)
             {
@@ -722,29 +746,28 @@ namespace taskt.UI.CustomControls
                 height = 250;
             }
 
-            var gridView = new DataGridView();
-            gridView.Name = dataSourceName;
-            gridView.AllowUserToAddRows = AllowAddRows;
-            gridView.AllowUserToDeleteRows = AllowDeleteRows;
-            gridView.AutoGenerateColumns = AutoGenerateColumns;
-            gridView.Size = new Size(width, height);
-            gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridView.DataBindings.Add("DataSource", sourceCommand, dataSourceName, false, DataSourceUpdateMode.OnPropertyChanged);
-            gridView.AllowUserToResizeRows = AllowResizeRows;
+            var dgv = CreateStandardDataGridViewFor(propertyName, command);
 
-            var theme = CurrentEditor.Theme.Datagridview;
-            gridView.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            gridView.ForeColor = theme.FontColor;
-            gridView.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
-            gridView.RowTemplate.Height = Convert.ToInt32(theme.FontSize) + 20;
+            dgv.AllowUserToAddRows = AllowAddRows;
+            dgv.AllowUserToDeleteRows = AllowDeleteRows;
+            dgv.AutoGenerateColumns = AutoGenerateColumns;
+            dgv.Size = new Size(width, height);
 
             if (headerRowHeight > 1)
             {
-                gridView.ColumnHeadersHeight = ((Convert.ToInt32(theme.FontSize) + 15) * headerRowHeight);
+                dgv.ColumnHeadersHeight = ((Convert.ToInt32(CurrentEditor.Theme.FontSize) + 15) * headerRowHeight);
             }
 
-            return gridView;
+            return dgv;
         }
+
+        // #################### ababa!
+        // #################### ababa!
+        // #################### ababa!
+        // #################### ababa!
+        // #################### ababa!
+        // #################### ababa!
+        // #################### ababa!
 
 
         /// <summary>
