@@ -545,8 +545,8 @@ namespace taskt.UI.CustomControls
             // create DataTable
             if ((columns?.Count ?? 0) > 0)
             {
-                var tbl = (DataTable)propInfo.GetValue(command);
-                CreateDataTable(propertyName, command, tbl, dgv, columns);
+                var table = CreateDataTable(propertyName, command, dgv, columns);
+                propInfo.SetValue(command, table);
             }
 
             // behavior
@@ -717,17 +717,20 @@ namespace taskt.UI.CustomControls
         }
         #endregion
 
+        #region create Control support methods
+
+        #region DataGridView methods
         /// <summary>
         /// create/init DataTable and DataGridView columns to specified arguments
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
-        /// <param name="table"></param>
         /// <param name="dgv"></param>
         /// <param name="columns"></param>
-        private static void CreateDataTable(string propertyName, Core.Automation.Commands.ScriptCommand command, DataTable table, DataGridView dgv, List<PropertyDataGridViewColumnSettings> columns = null)
+        /// <returns></returns>
+        private static DataTable CreateDataTable(string propertyName, Core.Automation.Commands.ScriptCommand command, DataGridView dgv, List<PropertyDataGridViewColumnSettings> columns = null)
         {
-            table = new DataTable
+            var table = new DataTable
             {
                 TableName = propertyName.Replace("v_", "") + DateTime.Now.ToString("MMddyy.hhmmss")
             };
@@ -763,17 +766,12 @@ namespace taskt.UI.CustomControls
                 newDGVColumn.ReadOnly = colSetting.readOnly;
                 dgv.Columns.Add(newDGVColumn);
             }
+
+            return table;
         }
+        #endregion
 
-        // #################### ababa!
-        // #################### ababa!
-        // #################### ababa!
-        // #################### ababa!
-        // #################### ababa!
-        // #################### ababa!
-        // #################### ababa!
-
-
+        #region Label methods
         /// <summary>
         /// get text for Label. This method use PropertyDescription, PropertyShowSampleUsageInDescription, PropertyIsOptional attributes.
         /// </summary>
@@ -823,6 +821,8 @@ namespace taskt.UI.CustomControls
             return labelText;
         }
 
+        #region keyword md format
+
         /// <summary>
         /// get SampleUsage text for Label (Description)
         /// </summary>
@@ -831,8 +831,235 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
         {
-            return setting.replaceApplicationKeyword(getTextMDFormat(sample)).Replace(" or ", ", ");
+            return setting.replaceApplicationKeyword(GetTextMDFormat(sample)).Replace(" or ", ", ");
         }
+
+        private static string GetTextMDFormat(this string targetString)
+        {
+            int idxAster, idxTable;
+            string ret = "";
+            while (targetString.Length > 0)
+            {
+                idxAster = targetString.IndexOf("\\*");
+                idxTable = targetString.IndexOf("\\|");
+                if (idxAster >= 0 || idxTable >= 0)
+                {
+                    if ((idxAster >= 0) && (idxTable < 0))
+                    {
+                        ret += targetString.Substring(0, idxAster).RemoveMDFormat() + "*";
+                        targetString = targetString.Substring(idxAster + 1);
+                    }
+                    else if ((idxTable >= 0) && (idxAster < 0))
+                    {
+                        ret += targetString.Substring(0, idxTable).RemoveMDFormat() + "|";
+                        targetString = targetString.Substring(idxTable + 1);
+                    }
+                    else if (idxAster < idxTable)
+                    {
+                        ret += targetString.Substring(0, idxAster).RemoveMDFormat() + "*";
+                        targetString = targetString.Substring(idxAster + 1);
+                    }
+                    else if (idxTable < idxAster)
+                    {
+                        ret += targetString.Substring(0, idxTable).RemoveMDFormat() + "|";
+                        targetString = targetString.Substring(idxTable + 1);
+                    }
+                }
+                else
+                {
+                    ret += targetString.RemoveMDFormat();
+                    targetString = "";
+                }
+            }
+            return ret;
+        }
+
+        private static string RemoveMDFormat(this string targetString)
+        {
+            return targetString.Replace("*", "").Replace("**", "").Replace("|", "");
+        }
+        #endregion
+        #endregion
+
+        #region ComboBox methods
+        /// <summary>
+        /// get Window Names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        public static List<string> GetWindowNames(Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            var lst = new List<string>();
+
+            if (addCurrentWindow)
+            {
+                lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
+            }
+
+            if (addAllWindows)
+            {
+                lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
+            }
+            if (addDesktop)
+            {
+                lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
+            }
+            lst.AddRange(WindowNameControls.GetAllWindowTitles());
+
+            return lst;
+        }
+
+        /// <summary>
+        /// add windows names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        public static ComboBox AddWindowNames(this ComboBox cbo, Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            if (cbo == null)
+                return null;
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            cbo.Items.AddRange(GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop).ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+
+        /// <summary>
+        /// get variable names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<string> GetVariableNames(Forms.frmCommandEditor editor)
+        {
+            return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
+        }
+
+        /// <summary>
+        /// add variable names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static ComboBox AddVariableNames(this ComboBox cbo, Forms.frmCommandEditor editor)
+        {
+            if (cbo == null)
+                return null;
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            cbo.Items.AddRange(GetVariableNames(editor).ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+
+        /// <summary>
+        /// get instance names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static List<string> GetInstanceNames(Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        {
+            if (editor == null)
+            {
+                return new List<string>();
+            }
+
+            string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
+
+            Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp, (sortOrder == "frequency of use"));
+
+            string defInstanceName = "";
+            switch (tp)
+            {
+                case PropertyInstanceType.InstanceType.DataBase:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.Excel:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.IE:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.NLG:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.WebBrowser:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.StopWatch:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.Word:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
+                    break;
+            }
+            if ((defInstanceName != "") && !instanceList.ContainsKey(defInstanceName))
+            {
+                instanceList.Add(defInstanceName, 0);
+            }
+
+            List<string> sortedInstance;
+            switch (editor.appSettings.ClientSettings.InstanceNameOrder.ToLower())
+            {
+                case "no sorting":
+                    sortedInstance = instanceList.Keys.ToList();
+                    break;
+                case "by name":
+                    sortedInstance = instanceList.OrderBy(t => t.Key).Select(v => v.Key).ToList();
+                    break;
+                case "creation frequently":
+                case "frequency of use":
+                default:
+                    sortedInstance = instanceList.OrderByDescending(t => t.Value).Select(v => v.Key).ToList();
+                    break;
+            }
+
+            return sortedInstance;
+        }
+
+        /// <summary>
+        /// add Instace names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        {
+            if ((cbo == null) || (editor == null))
+            {
+                return null;
+            }
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            cbo.Items.AddRange(GetInstanceNames(editor, tp).ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+        #endregion
 
         /// <summary>
         /// get MethodInfo from name. If methodName contains "+", it means use outer class method.
@@ -864,6 +1091,7 @@ namespace taskt.UI.CustomControls
 
             return (trgMethod, useOuterClassEvent);
         }
+        #endregion
 
         public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
         {
@@ -1664,354 +1892,6 @@ namespace taskt.UI.CustomControls
 
             return commandList;
 
-        }
-
-        /// <summary>
-        /// get Window Names list
-        /// </summary>
-        /// <param name="editor"></param>
-        /// <param name="addCurrentWindow"></param>
-        /// <param name="addAllWindows"></param>
-        /// <param name="addDesktop"></param>
-        /// <returns></returns>
-        public static List<string> GetWindowNames(Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        {
-            var lst = new List<string>();
-
-            if (addCurrentWindow)
-            {
-                lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
-            }
-
-            if (addAllWindows)
-            {
-                lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
-            }
-            if (addDesktop)
-            {
-                lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
-            }
-            lst.AddRange(WindowNameControls.GetAllWindowTitles());
-
-            return lst;
-        }
-
-        /// <summary>
-        /// add windows names to specified ComboBox
-        /// </summary>
-        /// <param name="cbo"></param>
-        /// <param name="editor"></param>
-        /// <param name="addCurrentWindow"></param>
-        /// <param name="addAllWindows"></param>
-        /// <param name="addDesktop"></param>
-        /// <returns></returns>
-        public static ComboBox AddWindowNames(this ComboBox cbo, Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        {
-            if (cbo == null)
-                return null;
-
-            cbo.BeginUpdate();
-
-            cbo.Items.Clear();
-
-            //if (addCurrentWindow)
-            //{
-            //    if (editor != null)
-            //    {
-            //        cbo.Items.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
-            //    }
-            //    else
-            //    {
-            //        cbo.Items.Add("Current Window");
-            //    }
-            //}
-
-            //if (addAllWindows)
-            //{
-            //    if (editor != null)
-            //    {
-            //        cbo.Items.Add(editor.appSettings.EngineSettings.AllWindowsKeyword);
-            //    }
-            //    else
-            //    {
-            //        cbo.Items.Add("All Windows");
-            //    }
-            //}
-            //if (addDesktop)
-            //{
-            //    if (editor != null)
-            //    {
-            //        cbo.Items.Add(editor.appSettings.EngineSettings.DesktopKeyword);
-            //    }
-            //    else
-            //    {
-            //        cbo.Items.Add("Desktop");
-            //    }
-            //}
-            //cbo.Items.AddRange(Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
-
-            cbo.Items.AddRange(GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop).ToArray());
-
-            cbo.EndUpdate();
-
-            return cbo;
-        }
-
-        /// <summary>
-        /// get variable names list
-        /// </summary>
-        /// <param name="editor"></param>
-        /// <returns></returns>
-        public static List<string> GetVariableNames(Forms.frmCommandEditor editor)
-        {
-            //var lst = new List<string>();
-
-            //if (editor != null)
-            //{
-            //    lst.AddRange(editor.scriptVariables.Select(v => v.VariableName).ToArray());
-            //}
-
-            //return lst;
-
-            return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
-        }
-
-        /// <summary>
-        /// add variable names to specified ComboBox
-        /// </summary>
-        /// <param name="cbo"></param>
-        /// <param name="editor"></param>
-        /// <returns></returns>
-        public static ComboBox AddVariableNames(this ComboBox cbo, Forms.frmCommandEditor editor)
-        {
-            if (cbo == null)
-                return null;
-
-            //if (editor != null)
-            //{
-            //    cbo.BeginUpdate();
-
-            //    cbo.Items.Clear();
-
-            //    foreach (var variable in editor.scriptVariables)
-            //    {
-            //        cbo.Items.Add(variable.VariableName);
-            //    }
-
-            //    cbo.EndUpdate();
-            //}
-
-            cbo.BeginUpdate();
-
-            cbo.Items.Clear();
-
-            cbo.Items.AddRange(GetVariableNames(editor).ToArray());
-
-            cbo.EndUpdate();
-
-            return cbo;
-        }
-
-        /// <summary>
-        /// get instance names list
-        /// </summary>
-        /// <param name="editor"></param>
-        /// <param name="tp"></param>
-        /// <returns></returns>
-        public static List<string> GetInstanceNames(Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
-        {
-            if (editor == null)
-            {
-                return new List<string>();
-            }
-
-            string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
-
-            Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp, (sortOrder == "frequency of use"));
-
-            string defInstanceName = "";
-            switch (tp)
-            {
-                case PropertyInstanceType.InstanceType.DataBase:
-                    defInstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
-                    break;
-                case PropertyInstanceType.InstanceType.Excel:
-                    defInstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-                    break;
-                case PropertyInstanceType.InstanceType.IE:
-                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-                    break;
-                case PropertyInstanceType.InstanceType.NLG:
-                    defInstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
-                    break;
-                case PropertyInstanceType.InstanceType.WebBrowser:
-                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-                    break;
-                case PropertyInstanceType.InstanceType.StopWatch:
-                    defInstanceName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
-                    break;
-                case PropertyInstanceType.InstanceType.Word:
-                    defInstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
-                    break;
-            }
-            if ((defInstanceName != "") && !instanceList.ContainsKey(defInstanceName))
-            {
-                instanceList.Add(defInstanceName, 0);
-            }
-
-            List<string> sortedInstance;
-            switch (editor.appSettings.ClientSettings.InstanceNameOrder.ToLower())
-            {
-                case "no sorting":
-                    sortedInstance = instanceList.Keys.ToList();
-                    break;
-                case "by name":
-                    sortedInstance = instanceList.OrderBy(t => t.Key).Select(v => v.Key).ToList();
-                    break;
-                case "creation frequently":
-                case "frequency of use":
-                default:
-                    sortedInstance = instanceList.OrderByDescending(t => t.Value).Select(v => v.Key).ToList();
-                    break;
-            }
-
-            return sortedInstance;
-        }
-
-        /// <summary>
-        /// add Instace names to specified ComboBox
-        /// </summary>
-        /// <param name="cbo"></param>
-        /// <param name="editor"></param>
-        /// <param name="tp"></param>
-        /// <returns></returns>
-        public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
-        {
-            if ((cbo == null) || (editor == null))
-            {
-                return null;
-            }
-
-            cbo.BeginUpdate();
-
-            cbo.Items.Clear();
-
-            //string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
-
-            //Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp, (sortOrder == "frequency of use"));
-
-            //string defInstanceName = "";
-            //switch (tp)
-            //{
-            //    case PropertyInstanceType.InstanceType.DataBase:
-            //        defInstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
-            //        break;
-            //    case PropertyInstanceType.InstanceType.Excel:
-            //        defInstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-            //        break;
-            //    case PropertyInstanceType.InstanceType.IE:
-            //        defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-            //        break;
-            //    case PropertyInstanceType.InstanceType.NLG:
-            //        defInstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
-            //        break;
-            //    case PropertyInstanceType.InstanceType.WebBrowser:
-            //        defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-            //        break;
-            //    case PropertyInstanceType.InstanceType.StopWatch:
-            //        defInstanceName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
-            //        break;
-            //    case PropertyInstanceType.InstanceType.Word:
-            //        defInstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
-            //        break;
-            //}
-            //if ((defInstanceName != "") && !instanceList.ContainsKey(defInstanceName))
-            //{
-            //    instanceList.Add(defInstanceName, 0);
-            //}
-
-            //List<string> sortedInstance;
-            //switch (editor.appSettings.ClientSettings.InstanceNameOrder.ToLower())
-            //{
-            //    case "no sorting":
-            //        sortedInstance = instanceList.Keys.ToList();
-            //        break;
-            //    case "by name":
-            //        sortedInstance = instanceList.OrderBy(t => t.Key).Select(v => v.Key).ToList();
-            //        break;
-            //    case "creation frequently":
-            //    case "frequency of use":
-            //    default:
-            //        sortedInstance = instanceList.OrderByDescending(t => t.Value).Select(v => v.Key).ToList();
-            //        break;
-            //}
-
-            //foreach(var item in sortedInstance)
-            //{
-            //    if ((!String.IsNullOrEmpty(item)) && (!cbo.Items.Contains(item)))
-            //    {
-            //        cbo.Items.Add(item);
-            //    }
-            //}
-
-            cbo.Items.AddRange(GetInstanceNames(editor, tp).ToArray());
-
-            cbo.EndUpdate();
-
-            return cbo;
-        }
-
-        public static string replaceApplicationKeyword(this string targetString)
-        {
-            //var settings = CurrentEditor.appSettings.EngineSettings;
-            //return settings.replaceEngineKeyword(targetString);
-            var settings = CurrentEditor.appSettings;
-            return settings.replaceApplicationKeyword(targetString);
-        }
-
-        private static string getTextMDFormat(this string targetString)
-        {
-            int idxAster, idxTable;
-            string ret = "";
-            while (targetString.Length > 0)
-            {
-                idxAster = targetString.IndexOf("\\*");
-                idxTable = targetString.IndexOf("\\|");
-                if (idxAster >= 0 || idxTable >= 0)
-                {
-                    if ((idxAster >= 0) && (idxTable < 0))
-                    {
-                        ret += targetString.Substring(0, idxAster).removeMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if ((idxTable >= 0) && (idxAster < 0))
-                    {
-                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                    else if (idxAster < idxTable)
-                    {
-                        ret += targetString.Substring(0, idxAster).removeMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if (idxTable < idxAster)
-                    {
-                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                }
-                else
-                {
-                    ret += targetString.removeMDFormat();
-                    targetString = "";
-                }
-            }
-            return ret;
-        }
-
-        private static string removeMDFormat(this string targetString)
-        {
-            return targetString.Replace("*", "").Replace("**", "").Replace("|", "");
         }
 
         public static Control GetPropertyControl(this Dictionary<string, Control> controls, string propertyName)
