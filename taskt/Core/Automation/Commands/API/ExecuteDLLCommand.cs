@@ -243,11 +243,11 @@ namespace taskt.Core.Automation.Commands
             //create control for variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl , editor));
             RenderedControls.Add(VariableNameControl);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_MethodParameters", this, new Control[] { ParametersGridViewHelper }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
             RenderedControls.Add(ParametersGridViewHelper);
 
             return RenderedControls;

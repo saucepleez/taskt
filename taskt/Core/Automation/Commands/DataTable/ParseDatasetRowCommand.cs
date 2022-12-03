@@ -132,7 +132,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
             RenderedControls.Add(VariableNameControl);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SpecifiedRow", this, editor));

@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             //apply to variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var applyToVariableControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { applyToVariableControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, applyToVariableControl, editor));
             RenderedControls.Add(applyToVariableControl);
 
             return RenderedControls;

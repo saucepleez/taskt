@@ -868,7 +868,7 @@ namespace taskt.Core.Automation.Commands
 
             ActionDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_IfActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionType", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfActionType", this, new Control[] { ActionDropdown }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_IfActionType", this, ActionDropdown, editor));
             ActionDropdown.SelectionChangeCommitted += (sender, e) => ifAction_SelectionChangeCommitted(sender, e, editor);
 
             RenderedControls.Add(ActionDropdown);
@@ -877,7 +877,7 @@ namespace taskt.Core.Automation.Commands
             ParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_IfActionParameterTable", this));
             //ParameterControls.Add(RecorderControl);
 
-            var helpers = CommandControls.CreateUIHelpersFor("v_IfActionParameterTable", this, new Control[] { IfGridViewHelper }, editor);
+            var helpers = CommandControls.CreateDefaultUIHelpersFor("v_IfActionParameterTable", this, IfGridViewHelper, editor);
 
             lnkBrowserInstanceSelector = CommandControls.CreateSimpleUIHelper();
             lnkBrowserInstanceSelector.Name = "v_IfActionParameterTable_helper_WebBrowser";

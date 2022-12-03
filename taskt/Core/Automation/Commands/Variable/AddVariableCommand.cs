@@ -103,7 +103,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfExists", this));
             var dropdown = CommandControls.CreateDefaultDropdownFor("v_IfExists", this);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IfExists", this, new Control[] { dropdown }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_IfExists", this, dropdown, editor));
             RenderedControls.Add(dropdown);
 
             return RenderedControls;

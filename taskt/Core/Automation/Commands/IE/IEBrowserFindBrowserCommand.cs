@@ -92,7 +92,7 @@ namespace taskt.Core.Automation.Commands
                     IEBrowerNameDropdown.Items.Add(shellWindow.Document.Title);
             }
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IEBrowserName", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_IEBrowserName", this, new Control[] { IEBrowerNameDropdown }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_IEBrowserName", this, IEBrowerNameDropdown, editor));
             //IEBrowerNameDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
             RenderedControls.Add(IEBrowerNameDropdown);
 

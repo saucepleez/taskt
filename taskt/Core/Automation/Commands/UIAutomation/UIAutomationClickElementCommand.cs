@@ -133,7 +133,7 @@ namespace taskt.Core.Automation.Commands
 
             var actLbl = CommandControls.CreateDefaultLabelFor("v_ActionParameters", this);
             var actParam = CommandControls.CreateDefaultDataGridViewFor("v_ActionParameters", this, false, false, true);
-            var actLinks = CommandControls.CreateUIHelpersFor("v_ActionParameters", this, new Control[] { actParam }, editor);
+            var actLinks = CommandControls.CreateDefaultUIHelpersFor("v_ActionParameters", this, actParam, editor);
 
             RenderedControls.Add(actLbl);
             RenderedControls.AddRange(actLinks);

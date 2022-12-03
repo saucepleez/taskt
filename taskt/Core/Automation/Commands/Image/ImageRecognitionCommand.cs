@@ -314,7 +314,7 @@ namespace taskt.Core.Automation.Commands
             imageCapture.DataBindings.Add("EncodedImage", this, "v_ImageCapture", false, DataSourceUpdateMode.OnPropertyChanged);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ImageCapture", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_ImageCapture", this, new Control[] { imageCapture }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_ImageCapture", this, imageCapture, editor));
             RenderedControls.Add(imageCapture);
 
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_xOffsetAdjustment", this, editor));

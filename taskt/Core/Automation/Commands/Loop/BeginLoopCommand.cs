@@ -611,7 +611,7 @@ namespace taskt.Core.Automation.Commands
 
             ActionDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_LoopActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionType", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_LoopActionType", this, new Control[] { ActionDropdown }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_LoopActionType", this, ActionDropdown, editor));
             ActionDropdown.SelectionChangeCommitted += (sender, e) => loopAction_SelectionChangeCommitted(sender, e, editor);
 
             RenderedControls.Add(ActionDropdown);
@@ -620,7 +620,7 @@ namespace taskt.Core.Automation.Commands
             ParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionParameterTable", this));
             //ParameterControls.Add(RecorderControl);
 
-            var helpers = CommandControls.CreateUIHelpersFor("v_LoopActionParameterTable", this, new Control[] { LoopGridViewHelper }, editor);
+            var helpers = CommandControls.CreateDefaultUIHelpersFor("v_LoopActionParameterTable", this, LoopGridViewHelper, editor);
 
             lnkBrowserInstanceSelector = CommandControls.CreateSimpleUIHelper();
             lnkBrowserInstanceSelector.Name = "v_LoopActionParameterTable_helper_WebBrowser";

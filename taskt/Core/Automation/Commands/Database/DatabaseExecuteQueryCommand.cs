@@ -245,7 +245,7 @@ namespace taskt.Core.Automation.Commands
             QueryParametersControls = new List<Control>();
 
             QueryParametersControls.Add(CommandControls.CreateDefaultLabelFor("v_QueryParameters", this));
-            QueryParametersControls.AddRange(CommandControls.CreateUIHelpersFor("v_QueryParameters", this, new Control[] { QueryParametersGridView }, editor));
+            QueryParametersControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_QueryParameters", this, QueryParametersGridView, editor));
 
             CommandItemControl helperControl = new CommandItemControl();
             var helperTheme = editor.Theme.UIHelper;

@@ -719,7 +719,7 @@ namespace taskt.Core.Automation.Commands
             //window name
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
             WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
             RenderedControls.Add(WindowNameControl);
 
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
@@ -739,7 +739,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(helperControl);
             RenderedControls.Add(emptyParameterLink);
             RenderedControls.Add(inspectParserLink);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIASearchParameters", this, new Control[] { SearchParametersGridViewHelper }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_UIASearchParameters", this, SearchParametersGridViewHelper, editor));
             RenderedControls.Add(SearchParametersGridViewHelper);
 
             
@@ -747,7 +747,7 @@ namespace taskt.Core.Automation.Commands
 
             //create action parameters
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIAActionParameters", this, new Control[] { ActionParametersGridViewHelper }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_UIAActionParameters", this, ActionParametersGridViewHelper, editor));
             RenderedControls.Add(ActionParametersGridViewHelper);
 
             return RenderedControls;

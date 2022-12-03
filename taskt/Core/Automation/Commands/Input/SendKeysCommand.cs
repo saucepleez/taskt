@@ -171,7 +171,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
             var WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
             RenderedControls.Add(WindowNameControl);
 
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
