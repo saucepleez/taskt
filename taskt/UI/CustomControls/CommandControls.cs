@@ -882,6 +882,80 @@ namespace taskt.UI.CustomControls
         #endregion
 
         #region ComboBox methods
+        
+        /// <summary>
+        /// add windows names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        public static ComboBox AddWindowNames(this ComboBox cbo, Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            if (cbo == null)
+                return null;
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            cbo.Items.AddRange(GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop).ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+
+        /// <summary>
+        /// add variable names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static ComboBox AddVariableNames(this ComboBox cbo, Forms.frmCommandEditor editor)
+        {
+            if (cbo == null)
+                return null;
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            cbo.Items.AddRange(GetVariableNames(editor).ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+
+        
+        /// <summary>
+        /// add Instace names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        {
+            if ((cbo == null) || (editor == null))
+            {
+                return null;
+            }
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            cbo.Items.AddRange(GetInstanceNames(editor, tp).ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+
         /// <summary>
         /// get Window Names list
         /// </summary>
@@ -912,31 +986,7 @@ namespace taskt.UI.CustomControls
             return lst;
         }
 
-        /// <summary>
-        /// add windows names to specified ComboBox
-        /// </summary>
-        /// <param name="cbo"></param>
-        /// <param name="editor"></param>
-        /// <param name="addCurrentWindow"></param>
-        /// <param name="addAllWindows"></param>
-        /// <param name="addDesktop"></param>
-        /// <returns></returns>
-        public static ComboBox AddWindowNames(this ComboBox cbo, Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        {
-            if (cbo == null)
-                return null;
-
-            cbo.BeginUpdate();
-
-            cbo.Items.Clear();
-
-            cbo.Items.AddRange(GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop).ToArray());
-
-            cbo.EndUpdate();
-
-            return cbo;
-        }
-
+        #region create ComboBox items list
         /// <summary>
         /// get variable names list
         /// </summary>
@@ -945,28 +995,6 @@ namespace taskt.UI.CustomControls
         public static List<string> GetVariableNames(Forms.frmCommandEditor editor)
         {
             return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
-        }
-
-        /// <summary>
-        /// add variable names to specified ComboBox
-        /// </summary>
-        /// <param name="cbo"></param>
-        /// <param name="editor"></param>
-        /// <returns></returns>
-        public static ComboBox AddVariableNames(this ComboBox cbo, Forms.frmCommandEditor editor)
-        {
-            if (cbo == null)
-                return null;
-
-            cbo.BeginUpdate();
-
-            cbo.Items.Clear();
-
-            cbo.Items.AddRange(GetVariableNames(editor).ToArray());
-
-            cbo.EndUpdate();
-
-            return cbo;
         }
 
         /// <summary>
@@ -1035,30 +1063,6 @@ namespace taskt.UI.CustomControls
             return sortedInstance;
         }
 
-        /// <summary>
-        /// add Instace names to specified ComboBox
-        /// </summary>
-        /// <param name="cbo"></param>
-        /// <param name="editor"></param>
-        /// <param name="tp"></param>
-        /// <returns></returns>
-        public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
-        {
-            if ((cbo == null) || (editor == null))
-            {
-                return null;
-            }
-
-            cbo.BeginUpdate();
-
-            cbo.Items.Clear();
-
-            cbo.Items.AddRange(GetInstanceNames(editor, tp).ToArray());
-
-            cbo.EndUpdate();
-
-            return cbo;
-        }
         #endregion
 
         /// <summary>
@@ -1091,6 +1095,46 @@ namespace taskt.UI.CustomControls
 
             return (trgMethod, useOuterClassEvent);
         }
+        #endregion
+
+        #region Control event handlers
+
+        /// <summary>
+        /// deny create new line when type Enter in TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void TextBoxKeyDown_DenyEnterNewLine(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// remember cursor position in ComboBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ComboBoxKeyUp_SaveCursorPosition(object sender, KeyEventArgs e)
+        {
+            ComboBox trg = (ComboBox)sender;
+            trg.Tag = trg.SelectionStart;
+        }
+        /// <summary>
+        /// remember cursor position in ComboBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ComboBoxClick_SaveCursorPosition(object sender, EventArgs e)
+        {
+            ComboBox trg = (ComboBox)sender;
+            trg.Tag = trg.SelectionStart;
+        }
+        #endregion
+
         #endregion
 
         public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
@@ -1697,9 +1741,6 @@ namespace taskt.UI.CustomControls
             {
                 MessageBox.Show("There was an error generating the parameters: " + ex.ToString());
             }
-
-
-
         }
         private static void ShowDLLExplorer(object sender, EventArgs e)
         {
@@ -1744,70 +1785,6 @@ namespace taskt.UI.CustomControls
                 }
             }
         }
-
-        /// <summary>
-        /// deny create new line when type Enter in TextBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TextBoxKeyDown_DenyEnterNewLine(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// remember cursor position in ComboBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void ComboBoxKeyUp_SaveCursorPosition(object sender, KeyEventArgs e)
-        {
-            ComboBox trg = (ComboBox)sender;
-            trg.Tag = trg.SelectionStart;
-        }
-        /// <summary>
-        /// remember cursor position in ComboBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void ComboBoxClick_SaveCursorPosition(object sender, EventArgs e)
-        {
-            ComboBox trg = (ComboBox)sender;
-            trg.Tag = trg.SelectionStart;
-        }
-
-        //private static void CreateDataGridViewContextMenuStrip(List<Control> ctrls, string parameterName, PropertyInfo pInfo)
-        //{
-        //    ContextMenuStrip cont = new ContextMenuStrip();
-        //    cont.Name = "contextmenu_" + parameterName;
-        //    cont.Items.Add("&Add New");
-        //    cont.Items.Add("&Delete");
-        //    ctrls.Add(cont);
-
-        //    DataGridView dgv = (DataGridView)ctrls.Where(t => (t is DataGridView)).FirstOrDefault();
-        //    dgv.ContextMenuStrip = cont;
-        //    dgv.RowHeaderMouseClick += (sender, e) => DataGridViewRowHeaderClick(sender, e);
-        //}
-
-        //private static void DataGridViewRowHeaderClick(object sender, DataGridViewCellMouseEventArgs e)
-        //{
-        //    ((DataGridView)sender).ContextMenuStrip.Show();
-        //}
-
-        private static void AddInputParameter(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-
-            DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
-            var inputTable = (DataTable)inputControl.DataSource;
-            var newRow = inputTable.NewRow();
-            newRow["Size"] = "500,100";
-            inputTable.Rows.Add(newRow);
-
-        }
         private static void ShowHTMLBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             using (var htmlForm = new Forms.Supplemental.frmHTMLBuilder())
@@ -1822,6 +1799,18 @@ namespace taskt.UI.CustomControls
             }
         }
 
+
+        private static void AddInputParameter(object sender, EventArgs e, Forms.frmCommandEditor editor)
+        {
+
+            DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
+            var inputTable = (DataTable)inputControl.DataSource;
+            var newRow = inputTable.NewRow();
+            newRow["Size"] = "500,100";
+            inputTable.Rows.Add(newRow);
+
+        }
+     
         public static void ShowAllForms()
         {
             foreach (Form frm in Application.OpenForms)
