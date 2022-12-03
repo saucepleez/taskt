@@ -703,7 +703,7 @@ namespace taskt.Core.Automation.Commands
             //helperControl.ForeColor = Color.AliceBlue;
             //helperControl.Font = new Font("Segoe UI Semilight", 10);         
             //helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-            CommandItemControl helperControl = CommandControls.CreateUIHelper();
+            CommandItemControl helperControl = CommandControls.CreateSimpleUIHelper();
             helperControl.CommandDisplay = "Element Recorder";
             helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
             helperControl.Click += ShowRecorder;
@@ -724,12 +724,12 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
-            var emptyParameterLink = CommandControls.CreateUIHelper();
+            var emptyParameterLink = CommandControls.CreateSimpleUIHelper();
             emptyParameterLink.CommandDisplay = "Add empty parameters";
             emptyParameterLink.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
             emptyParameterLink.Click += (sender, e) => EmptySearchParameterClicked(sender, e);
 
-            var inspectParserLink = CommandControls.CreateUIHelper();
+            var inspectParserLink = CommandControls.CreateSimpleUIHelper();
             inspectParserLink.CommandDisplay = "Inspect Tool Parser";
             inspectParserLink.DrawIcon = taskt.Properties.Resources.command_window;
             inspectParserLink.Click += (sender, e) => InspectToolParserClicked(sender, e);

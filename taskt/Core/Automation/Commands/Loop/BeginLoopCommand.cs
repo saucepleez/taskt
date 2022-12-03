@@ -622,19 +622,19 @@ namespace taskt.Core.Automation.Commands
 
             var helpers = CommandControls.CreateUIHelpersFor("v_LoopActionParameterTable", this, new Control[] { LoopGridViewHelper }, editor);
 
-            lnkBrowserInstanceSelector = CommandControls.CreateUIHelper();
+            lnkBrowserInstanceSelector = CommandControls.CreateSimpleUIHelper();
             lnkBrowserInstanceSelector.Name = "v_LoopActionParameterTable_helper_WebBrowser";
             lnkBrowserInstanceSelector.CommandDisplay = "Select WebBrowser Instance";
             lnkBrowserInstanceSelector.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
             helpers.Add(lnkBrowserInstanceSelector);
 
-            lnkWindowNameSelector = CommandControls.CreateUIHelper();
+            lnkWindowNameSelector = CommandControls.CreateSimpleUIHelper();
             lnkWindowNameSelector.Name = "v_LoopActionParameterTable_helper_WindowName";
             lnkWindowNameSelector.CommandDisplay = "Select Window Name";
             lnkWindowNameSelector.Click += (sender, e) => linkWindowNameSelector_Click(sender, e, editor);
             helpers.Add(lnkWindowNameSelector);
 
-            lnkBooleanSelector = CommandControls.CreateUIHelper();
+            lnkBooleanSelector = CommandControls.CreateSimpleUIHelper();
             lnkBooleanSelector.Name = "v_LoopActionParameterTable_helper_Boolean";
             lnkBooleanSelector.CommandDisplay = "Select Boolean Instance";
             lnkBooleanSelector.Click += (sender, e) => linkBooleanInstanceSelector_Click(sender, e, editor);
