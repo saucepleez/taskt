@@ -213,16 +213,21 @@ namespace taskt.UI.CustomControls
         /// <summary>
         /// create datagridview control group. this method use several attributes.
         /// </summary>
-        /// <param name="parameterName"></param>
-        /// <param name="parent"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
         /// <param name="editor"></param>
-        /// <param name="additionalLinks"></param>
+        /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        public static List<Control> CreateDataGridViewGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
         {
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            var ctrls = CreateDefaultControlGroupFor(CreateDefaultDataGridViewFor(parameterName, parent, variableProperties), parameterName, parent, editor, variableProperties, additionalLinks);
-            return ctrls;
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
+                return CreateDefaultDataGridViewFor(propertyName, command, propInfo);
+            }), propInfo, editor);
         }
 
         /// <summary>
