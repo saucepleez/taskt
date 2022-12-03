@@ -394,7 +394,7 @@ namespace taskt.Core.Automation.Commands
             //SearchGridViewHelper.Size = new Size(400, 250);
             //SearchGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //SearchGridViewHelper.DataBindings.Add("DataSource", this, "v_WebSearchParameter", false, DataSourceUpdateMode.OnPropertyChanged);
-            SearchGridViewHelper = CommandControls.CreateDataGridView("v_WebSearchParameter", this, false, false, false, 400, 250);
+            SearchGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_WebSearchParameter", this, false, false, false, 400, 250);
             SearchGridViewHelper.CellClick += SearchGridViewHelper_CellClick;
 
             //ElementsGridViewHelper = new DataGridView();
@@ -403,7 +403,7 @@ namespace taskt.Core.Automation.Commands
             //ElementsGridViewHelper.Size = new Size(400, 250);
             //ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            ElementsGridViewHelper = CommandControls.CreateDataGridView("v_WebActionParameterTable", this, false, false, false, 400, 150);
+            ElementsGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_WebActionParameterTable", this, false, false, false, 400, 150);
             ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
             ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
 

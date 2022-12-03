@@ -846,7 +846,7 @@ namespace taskt.Core.Automation.Commands
             //IfGridViewHelper.DataBindings.Add("DataSource", this, "v_IfActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             //IfGridViewHelper.AllowUserToAddRows = false;
             //IfGridViewHelper.AllowUserToDeleteRows = false;
-            IfGridViewHelper = CommandControls.CreateDataGridView("v_IfActionParameterTable", this, false, false, false, 400, 200);
+            IfGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_IfActionParameterTable", this, false, false, false, 400, 200);
             IfGridViewHelper.MouseEnter += (sender, e) => IfGridViewHelper_MouseEnter(sender,e, editor);
             //IfGridViewHelper.CellClick += IfGridViewHelper_CellClick;
             //IfGridViewHelper.CellBeginEdit += IfGridViewHelper_CellBeginEdit;
