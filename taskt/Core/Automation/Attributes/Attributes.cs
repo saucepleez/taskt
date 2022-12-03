@@ -310,6 +310,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public int height = 250;
         public bool autoGenerateColumns = true;
         public int headerRowHeight = 1;
+
+        public PropertyDataGridViewSetting()
+        {
+
+        }
         public PropertyDataGridViewSetting(bool allowAddRow = true, bool allowDeleteRow =true, bool allowResizeRow =true, int width =400, int height=250, bool autoGenerateColumns=true, int headerRowHeight=1)
         {
             this.allowAddRow = allowAddRow;
