@@ -221,7 +221,7 @@ namespace taskt.UI.CustomControls
         public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
         {
             var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            var ctrls = CreateDefaultControlGroupFor(CreateDataGridView(parameterName, parent, variableProperties), parameterName, parent, editor, variableProperties, additionalLinks);
+            var ctrls = CreateDefaultControlGroupFor(CreateDefaultDataGridViewFor(parameterName, parent, variableProperties), parameterName, parent, editor, variableProperties, additionalLinks);
             return ctrls;
         }
 
@@ -516,6 +516,126 @@ namespace taskt.UI.CustomControls
             return inputBox;
         }
         #endregion
+
+        #region DataGridView
+        /// <summary>
+        /// create DataGridView and binding property, this method use PropertyDataGridViewSetting, PropertyDataGridViewColumnSettings, PropertyDataGridViewCellEditEvent attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null)
+        {
+            //return CreateDataGridView(sourceCommand, dataSourceName, prop);
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            // DataGridView setting
+            var dgvSetting = propInfo.GetCustomAttribute<PropertyDataGridViewSetting>() ?? new PropertyDataGridViewSetting();
+            // columns setting
+            var columnSetting = propInfo.GetCustomAttributes<PropertyDataGridViewColumnSettings>()?.ToList() ?? null;
+            // events
+            var events = propInfo.GetCustomAttributes<PropertyDataGridViewCellEditEvent>()?.ToList() ?? null;
+
+            return CreateDefaultDataGridViewFor(propertyName, command, dgvSetting.allowAddRow, dgvSetting.allowDeleteRow, dgvSetting.allowResizeRow,
+                    dgvSetting.width, dgvSetting.height,
+                    dgvSetting.autoGenerateColumns, dgvSetting.headerRowHeight,
+                    false, columnSetting, events);
+        }
+
+
+        /// <summary>
+        /// create DataGridView and binding property, some events, selection items. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="allowAddRows"></param>
+        /// <param name="allowDeleteRows"></param>
+        /// <param name="allowResizeRows"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="autoGenerateColumns"></param>
+        /// <param name="headerRowHeight"></param>
+        /// <param name="allowSort"></param>
+        /// <param name="columns"></param>
+        /// <param name="events"></param>
+        /// <returns></returns>
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command, bool allowAddRows = true, bool allowDeleteRows = true, bool allowResizeRows = false, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1, bool allowSort = false, List<PropertyDataGridViewColumnSettings> columns = null, List<PropertyDataGridViewCellEditEvent> events = null)
+        {
+            var propInfo = command.GetProperty(propertyName);
+
+            var dgv = CreateStandardDataGridViewFor(propertyName, command);
+
+            // create DataTable
+            if ((columns?.Count ?? 0) > 0)
+            {
+                var tbl = (DataTable)propInfo.GetValue(command);
+                CreateDataTable(propertyName, command, tbl, dgv, columns);
+            }
+
+            // behavior
+            dgv.AllowUserToAddRows = allowAddRows;
+            dgv.AllowUserToDeleteRows = allowDeleteRows;
+            dgv.AllowUserToResizeRows = allowResizeRows;
+            dgv.AutoGenerateColumns = autoGenerateColumns;
+
+            if (width < 100)
+            {
+                width = 400;
+            }
+            if (height < 100)
+            {
+                height = 250;
+            }
+
+            dgv.Size = new Size(width, height);
+
+            if (headerRowHeight > 1)
+            {
+                dgv.ColumnHeadersHeight = ((Convert.ToInt32(CurrentEditor.Theme.Datagridview.FontSize) + 15) * headerRowHeight);
+            }
+
+            // sort mode
+            if ((dgv.Columns.Count > 0) && !allowSort)
+            {
+                foreach (DataGridViewColumn column in dgv.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+            }
+
+            // set events
+            if (events != null)
+            {
+                foreach (var ev in events)
+                {
+                    (var trgMethod, var useOuterClass) = GetMethodInfo(ev.methodName, command);
+
+                    switch (ev.eventRaise)
+                    {
+                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick:
+                            DataGridViewCellEventHandler clickMethod = (useOuterClass) ?
+                                (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler)) :
+                                (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
+                            dgv.CellClick += clickMethod;
+                            break;
+                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit:
+                            DataGridViewCellCancelEventHandler beginEditMethod = (useOuterClass) ?
+                                (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler)) :
+                                (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
+                            dgv.CellBeginEdit += beginEditMethod;
+                            break;
+                    }
+                }
+            }
+
+            return dgv;
+        }
+        #endregion
+
         #endregion
 
         #region create standard controls
@@ -624,188 +744,111 @@ namespace taskt.UI.CustomControls
         #endregion
 
 
-        /// <summary>
-        /// This method call & wrap CreateDataGridView(object, string, PropertyInfo)
-        /// </summary>
-        /// <returns>DataGridView</returns>
-        public static DataGridView CreateDataGridView(string dataSourceName, object sourceCommand, PropertyInfo prop)
-        {
-            return CreateDataGridView(sourceCommand, dataSourceName, prop);
-        }
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, PropertyInfo prop)
-        {
-            var dgvProp = (PropertyDataGridViewSetting)prop.GetCustomAttribute(typeof(PropertyDataGridViewSetting));
-            DataGridView createdDGV;
-            if (dgvProp == null)
-            {
-                createdDGV = CreateDataGridView(dataSourceName, sourceCommand);
-            }
-            else
-            {
-                createdDGV = CreateDataGridView(dataSourceName, sourceCommand, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
-            }
+       
+        //public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, PropertyInfo prop)
+        //{
+        //    var dgvProp = (PropertyDataGridViewSetting)prop.GetCustomAttribute(typeof(PropertyDataGridViewSetting));
+        //    DataGridView createdDGV;
+        //    if (dgvProp == null)
+        //    {
+        //        createdDGV = CreateDataGridView(dataSourceName, sourceCommand);
+        //    }
+        //    else
+        //    {
+        //        createdDGV = CreateDataGridView(dataSourceName, sourceCommand, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
+        //    }
 
-            var columnProp = (PropertyDataGridViewColumnSettings[])prop.GetCustomAttributes(typeof(PropertyDataGridViewColumnSettings));
-            if (columnProp.Length > 0)
-            {
-                var command = (Core.Automation.Commands.ScriptCommand)sourceCommand;
-                DataTable targetDT = new DataTable
-                {
-                    TableName = dataSourceName.Replace("v_", "") + DateTime.Now.ToString("MMddyy.hhmmss")
-                };
-                prop.SetValue(command, targetDT);
-                foreach (var colSetting in columnProp)
-                {
-                    targetDT.Columns.Add(colSetting.columnName);
-                    targetDT.Columns[targetDT.Columns.Count - 1].DefaultValue = colSetting.defaultValue;
+        //    var columnProp = (PropertyDataGridViewColumnSettings[])prop.GetCustomAttributes(typeof(PropertyDataGridViewColumnSettings));
+        //    if (columnProp.Length > 0)
+        //    {
+        //        var command = (Core.Automation.Commands.ScriptCommand)sourceCommand;
+        //        DataTable targetDT = new DataTable
+        //        {
+        //            TableName = dataSourceName.Replace("v_", "") + DateTime.Now.ToString("MMddyy.hhmmss")
+        //        };
+        //        prop.SetValue(command, targetDT);
+        //        foreach (var colSetting in columnProp)
+        //        {
+        //            targetDT.Columns.Add(colSetting.columnName);
+        //            targetDT.Columns[targetDT.Columns.Count - 1].DefaultValue = colSetting.defaultValue;
 
-                    DataGridViewColumn newDGVColumn = null;
-                    switch (colSetting.type)
-                    {
-                        case PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox:
-                            newDGVColumn = new DataGridViewTextBoxColumn();
-                            break;
-                        case PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox:
-                            newDGVColumn = new DataGridViewComboBoxColumn();
-                            var so = colSetting.comboBoxItems.Split('\n');
-                            ((DataGridViewComboBoxColumn)newDGVColumn).Items.AddRange(so);
-                            break;
-                        case PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox:
-                            newDGVColumn = new DataGridViewCheckBoxColumn();
-                            break;
-                        default:
-                            newDGVColumn = new DataGridViewTextBoxColumn();
-                            break;
-                    }
-                    newDGVColumn.HeaderText = colSetting.headerText;
-                    newDGVColumn.DataPropertyName = colSetting.columnName;
-                    newDGVColumn.ReadOnly = colSetting.readOnly;
-                    createdDGV.Columns.Add(newDGVColumn);
-                }
+        //            DataGridViewColumn newDGVColumn = null;
+        //            switch (colSetting.type)
+        //            {
+        //                case PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox:
+        //                    newDGVColumn = new DataGridViewTextBoxColumn();
+        //                    break;
+        //                case PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox:
+        //                    newDGVColumn = new DataGridViewComboBoxColumn();
+        //                    var so = colSetting.comboBoxItems.Split('\n');
+        //                    ((DataGridViewComboBoxColumn)newDGVColumn).Items.AddRange(so);
+        //                    break;
+        //                case PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox:
+        //                    newDGVColumn = new DataGridViewCheckBoxColumn();
+        //                    break;
+        //                default:
+        //                    newDGVColumn = new DataGridViewTextBoxColumn();
+        //                    break;
+        //            }
+        //            newDGVColumn.HeaderText = colSetting.headerText;
+        //            newDGVColumn.DataPropertyName = colSetting.columnName;
+        //            newDGVColumn.ReadOnly = colSetting.readOnly;
+        //            createdDGV.Columns.Add(newDGVColumn);
+        //        }
 
-                if (createdDGV.AllowUserToAddRows)
-                {
-                    var newRow = targetDT.NewRow();
-                    createdDGV.Rows.Add(newRow);
-                }
-            }
+        //        if (createdDGV.AllowUserToAddRows)
+        //        {
+        //            var newRow = targetDT.NewRow();
+        //            createdDGV.Rows.Add(newRow);
+        //        }
+        //    }
 
-            var cellEvents = (PropertyDataGridViewCellEditEvent[])prop.GetCustomAttributes(typeof(PropertyDataGridViewCellEditEvent));
-            if (cellEvents.Length > 0)
-            {
-                var command = (Core.Automation.Commands.ScriptCommand)sourceCommand;
-                Type parentType = command.GetType();
-                foreach (var ev in cellEvents)
-                {
-                    MethodInfo trgMethod;
-                    if (ev.methodName.Contains("+"))
-                    {
-                        int idx = ev.methodName.IndexOf("+");
-                        string className = ev.methodName.Substring(0, idx);
-                        string methodName = ev.methodName.Substring(idx + 1);
-                        var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
-                        trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
-                    }
-                    else
-                    {
-                        trgMethod = parentType.GetMethod(ev.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    }
+        //    var cellEvents = (PropertyDataGridViewCellEditEvent[])prop.GetCustomAttributes(typeof(PropertyDataGridViewCellEditEvent));
+        //    if (cellEvents.Length > 0)
+        //    {
+        //        var command = (Core.Automation.Commands.ScriptCommand)sourceCommand;
+        //        Type parentType = command.GetType();
+        //        foreach (var ev in cellEvents)
+        //        {
+        //            MethodInfo trgMethod;
+        //            if (ev.methodName.Contains("+"))
+        //            {
+        //                int idx = ev.methodName.IndexOf("+");
+        //                string className = ev.methodName.Substring(0, idx);
+        //                string methodName = ev.methodName.Substring(idx + 1);
+        //                var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+        //                trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
+        //            }
+        //            else
+        //            {
+        //                trgMethod = parentType.GetMethod(ev.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        //            }
 
-                    switch (ev.eventRaise)
-                    {
-                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick:
-                            //DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
-                            //DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler));
-                            DataGridViewCellEventHandler clickMethod = (ev.methodName.Contains("+")) ?
-                                (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler)) :
-                                (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
-                            createdDGV.CellClick += clickMethod;
-                            break;
-                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit:
-                            //DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
-                            //DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler));
-                            DataGridViewCellCancelEventHandler beginEditMethod = (ev.methodName.Contains("+")) ?
-                                (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler)) :
-                                (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
-                            createdDGV.CellBeginEdit += beginEditMethod;
-                            break;
-                    }
-                }
-            }
-            return createdDGV;
-        }
+        //            switch (ev.eventRaise)
+        //            {
+        //                case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick:
+        //                    //DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
+        //                    //DataGridViewCellEventHandler clickMethod = (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler));
+        //                    DataGridViewCellEventHandler clickMethod = (ev.methodName.Contains("+")) ?
+        //                        (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler)) :
+        //                        (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
+        //                    createdDGV.CellClick += clickMethod;
+        //                    break;
+        //                case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit:
+        //                    //DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
+        //                    //DataGridViewCellCancelEventHandler beginEditMethod = (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler));
+        //                    DataGridViewCellCancelEventHandler beginEditMethod = (ev.methodName.Contains("+")) ?
+        //                        (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler)) :
+        //                        (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
+        //                    createdDGV.CellBeginEdit += beginEditMethod;
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //    return createdDGV;
+        //}
 
-        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command, bool allowAddRows = true, bool allowDeleteRows = true, bool allowResizeRows = false, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1, bool allowSort = false, List<PropertyDataGridViewColumnSettings> columns = null, List<PropertyDataGridViewCellEditEvent> events = null)
-        {
-            var propInfo = command.GetProperty(propertyName);
-
-            var dgv = CreateStandardDataGridViewFor(propertyName, command);
-
-            // create DataTable
-            if ((columns?.Count ?? 0) > 0)
-            {
-                var tbl = (DataTable)propInfo.GetValue(command);
-                CreateDataTable(propertyName, command, tbl, dgv, columns);
-            }
-
-            // behavior
-            dgv.AllowUserToAddRows = allowAddRows;
-            dgv.AllowUserToDeleteRows = allowDeleteRows;
-            dgv.AllowUserToResizeRows = allowResizeRows;
-            dgv.AutoGenerateColumns = autoGenerateColumns;
-
-            if (width < 100)
-            {
-                width = 400;
-            }
-            if (height < 100)
-            {
-                height = 250;
-            }
-
-            dgv.Size = new Size(width, height);
-
-            if (headerRowHeight > 1)
-            {
-                dgv.ColumnHeadersHeight = ((Convert.ToInt32(CurrentEditor.Theme.Datagridview.FontSize) + 15) * headerRowHeight);
-            }
-
-            // sort mode
-            if ((dgv.Columns.Count > 0) && !allowSort)
-            {
-                foreach(DataGridViewColumn column in dgv.Columns)
-                {
-                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                }
-            }
-
-            // set events
-            if (events != null)
-            {
-                foreach (var ev in events)
-                {
-                    (var trgMethod, var useOuterClass) = GetMethodInfo(ev.methodName, command);
-
-                    switch (ev.eventRaise)
-                    {
-                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick:
-                            DataGridViewCellEventHandler clickMethod = (useOuterClass) ? 
-                                (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler)) :
-                                (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
-                            dgv.CellClick += clickMethod;
-                            break;
-                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit:
-                            DataGridViewCellCancelEventHandler beginEditMethod = (useOuterClass) ?
-                                (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler)) :
-                                (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
-                            dgv.CellBeginEdit += beginEditMethod;
-                            break;
-                    }
-                }
-            }
-
-            return dgv;
-        }
+        
 
         /// <summary>
         /// create/init DataTable and DataGridView columns to specified arguments
