@@ -1137,51 +1137,7 @@ namespace taskt.UI.CustomControls
 
         #endregion
 
-        public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
-        {
-            List<Control> ret = new List<Control>();
-
-            switch (t)
-            {
-                case CommandControlType.Body:
-                    ret.Add(ctrls.Where(c => (c.Name == parameterName)).FirstOrDefault());
-                    break;
-
-                case CommandControlType.Label:
-                    ret.Add(ctrls.Where(c => (c.Name == "lbl_" + parameterName)).FirstOrDefault());
-                    break;
-
-                case CommandControlType.SecondLabel:
-                    ret.Add(ctrls.Where(c => (c.Name == "lbl2_" + parameterName)).FirstOrDefault());
-                    break;
-
-                case CommandControlType.Helpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_helper_"))).ToArray());
-                    break;
-
-                case CommandControlType.CunstomHelpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_customhelper_"))).ToArray());
-                    break;
-            }
-
-            return ret;
-        }
-
-        public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
-        {
-            List<Control> ret = new List<Control>();
-
-            int index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
-            int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
-
-            for (int i = index; i < last; i++)
-            {
-                ret.Add(ctrls[i]);
-            }
-
-            return ret;
-        }
-
+        
         public static CommandItemControl CreateUIHelper()
         {
             CommandItemControl helperControl = new CommandItemControl();
@@ -1883,6 +1839,52 @@ namespace taskt.UI.CustomControls
 
         }
 
+        #region search control methods
+        public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
+        {
+            List<Control> ret = new List<Control>();
+
+            switch (t)
+            {
+                case CommandControlType.Body:
+                    ret.Add(ctrls.Where(c => (c.Name == parameterName)).FirstOrDefault());
+                    break;
+
+                case CommandControlType.Label:
+                    ret.Add(ctrls.Where(c => (c.Name == "lbl_" + parameterName)).FirstOrDefault());
+                    break;
+
+                case CommandControlType.SecondLabel:
+                    ret.Add(ctrls.Where(c => (c.Name == "lbl2_" + parameterName)).FirstOrDefault());
+                    break;
+
+                case CommandControlType.Helpers:
+                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_helper_"))).ToArray());
+                    break;
+
+                case CommandControlType.CunstomHelpers:
+                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_customhelper_"))).ToArray());
+                    break;
+            }
+
+            return ret;
+        }
+
+        public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
+        {
+            List<Control> ret = new List<Control>();
+
+            int index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
+            int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
+
+            for (int i = index; i < last; i++)
+            {
+                ret.Add(ctrls[i]);
+            }
+
+            return ret;
+        }
+
         public static Control GetPropertyControl(this Dictionary<string, Control> controls, string propertyName)
         {
             if (controls.ContainsKey(propertyName))
@@ -1954,6 +1956,7 @@ namespace taskt.UI.CustomControls
             }
             return (body, label, label2nd);
         }
+        #endregion
     }
 
 
