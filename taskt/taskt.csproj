@@ -291,6 +291,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
     <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
     <Compile Include="Core\Automation\Commands\ColorControls.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
@@ -528,7 +529,7 @@
     <Compile Include="Core\Automation\Commands\Loop\BeginListLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginNumberOfTimesLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowCommand.cs" />
-    <Compile Include="Core\Automation\Attributes\Attributes.cs" />
+    <Compile Include="Core\Automation\Attributes\ClassAttributes.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardSetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CreateDataTableCommand.cs" />

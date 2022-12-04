@@ -1,90 +1,4 @@
-﻿//Copyright (c) 2019 Jason Bayldon
-//
-//Licensed under the Apache License, Version 2.0 (the "License");
-//you may not use this file except in compliance with the License.
-//You may obtain a copy of the License at
-//
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-//Unless required by applicable law or agreed to in writing, software
-//distributed under the License is distributed on an "AS IS" BASIS,
-//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//See the License for the specific language governing permissions and
-//limitations under the License.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace taskt.Core.Automation.Attributes.ClassAttributes
-{
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class Group : System.Attribute
-    {
-        public string groupName;
-        public Group(string name)
-        {
-            this.groupName = name;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class Description : System.Attribute
-    {
-        public string commandFunctionalDescription;
-        public Description(string desc)
-        {
-            this.commandFunctionalDescription = desc;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class ImplementationDescription : System.Attribute
-    {
-        public string commandImplementationDescription;
-        public ImplementationDescription(string desc)
-        {
-            this.commandImplementationDescription = desc;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class UsesDescription : System.Attribute
-    {
-        public string usesDescription;
-        public UsesDescription(string desc)
-        {
-            this.usesDescription = desc;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class SubGruop : System.Attribute
-    {
-        public string subGruopName = "";
-        public SubGruop(string group)
-        {
-            this.subGruopName = group;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class EnableAutomateDisplayText : System.Attribute
-    {
-        public bool enableAutomateDisplayText = false;
-        public EnableAutomateDisplayText(bool enableAutomateDisplayText)
-        {
-            this.enableAutomateDisplayText = enableAutomateDisplayText;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class)]
-    public class EnableAutomateRender : System.Attribute
-    {
-        public bool enableAutomateRender = false;
-        public EnableAutomateRender(bool enableAutomateRender)
-        {
-            this.enableAutomateRender = enableAutomateRender;
-        }
-    }
-}
-
-namespace taskt.Core.Automation.Attributes.PropertyAttributes
+﻿namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class InputSpecification : System.Attribute
@@ -122,7 +36,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.propertyDescription = description;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyUIHelper : System.Attribute
     {
         public UIAdditionalHelperType additionalHelper;
@@ -147,7 +61,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             ShowLoopBuilder
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyCustomUIHelper : System.Attribute
     {
         public string labelText;
@@ -160,7 +74,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.nameKey = nameKey;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyUISelectionOption : System.Attribute
     {
         public string uiOption;
@@ -170,7 +84,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyValueSensitive : System.Attribute
     {
         public bool caseSensitive = false;
@@ -182,7 +96,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertySelectionChangeEvent : System.Attribute
     {
         public string methodName = "";
@@ -196,7 +110,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyIsOptional : System.Attribute
     {
         public bool isOptional = false;
@@ -212,7 +126,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.setBlankToValue = setBlankToValue;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyIsWindowNamesList : System.Attribute
     {
         public bool isWindowNamesList = false;
@@ -232,7 +146,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.allowDesktop = allowDesktop;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyIsVariablesList : System.Attribute
     {
         public bool isVariablesList = false;
@@ -245,7 +159,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.isVariablesList = opt;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyRecommendedUIControl : System.Attribute
     {
         public RecommendeUIControlType recommendedControl = RecommendeUIControlType.TextBox;
@@ -265,7 +179,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             Label
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyShowSampleUsageInDescription : System.Attribute
     {
         public bool showSampleUsage = false;
@@ -278,7 +192,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.showSampleUsage = opt;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyTextBoxSetting : System.Attribute
     {
         public int height = 1;
@@ -300,7 +214,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.allowNewLine = allowNewLine;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyDataGridViewSetting : System.Attribute
     {
         public bool allowAddRow = true;
@@ -315,7 +229,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         {
 
         }
-        public PropertyDataGridViewSetting(bool allowAddRow = true, bool allowDeleteRow =true, bool allowResizeRow =true, int width =400, int height=250, bool autoGenerateColumns=true, int headerRowHeight=1)
+        public PropertyDataGridViewSetting(bool allowAddRow = true, bool allowDeleteRow = true, bool allowResizeRow = true, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1)
         {
             this.allowAddRow = allowAddRow;
             this.allowDeleteRow = allowDeleteRow;
@@ -326,7 +240,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.headerRowHeight = headerRowHeight;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyDataGridViewColumnSettings : System.Attribute
     {
         public string columnName = "";
@@ -352,7 +266,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             All
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyDataGridViewCellEditEvent : System.Attribute
     {
         public string methodName;
@@ -368,7 +282,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             CellBeginEdit
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertySecondaryLabel : System.Attribute
     {
         public bool useSecondaryLabel = false;
@@ -382,7 +296,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.useSecondaryLabel = opt;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyAddtionalParameterInfo : System.Attribute
     {
         public string searchKey = "";
@@ -397,7 +311,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.remarks = remarks;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyInstanceType : System.Attribute
     {
         public InstanceType instanceType = InstanceType.none;
@@ -435,7 +349,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             MailKitEMailList
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyParameterDirection : System.Attribute
     {
         public ParameterDirection porpose = ParameterDirection.Unknown;
@@ -455,7 +369,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyControlIntoCommandField : System.Attribute
     {
         public string labelName = "";
@@ -468,7 +382,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.secondLabelName = secondLabelName;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyValidationRule : System.Attribute
     {
         public string parameterName = "";
@@ -477,11 +391,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public PropertyValidationRule(string parameterName, ValidationRuleFlags errorRule = 0, ValidationRuleFlags warningRule = 0)
         {
             this.parameterName = parameterName;
-            this.errorRule= errorRule;
+            this.errorRule = errorRule;
             this.warningRule = warningRule;
         }
 
-        [Flags]
+        [System.Flags]
         public enum ValidationRuleFlags
         {
             None = 0,
@@ -495,7 +409,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             NotBetween = 128,
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyValueRange : System.Attribute
     {
         public double min;
@@ -506,7 +420,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.max = max;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyFirstValue : System.Attribute
     {
         public string firstValue = "";
@@ -519,8 +433,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.firstValue = firstValue;
         }
     }
-    [System.AttributeUsage(AttributeTargets.Property)]
-    public  sealed class PropertyDisplayText : System.Attribute
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public sealed class PropertyDisplayText : System.Attribute
     {
         public bool parameterDisplay = false;
         public string parameterName = "";
