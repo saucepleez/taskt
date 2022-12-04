@@ -230,7 +230,7 @@ namespace taskt.UI.CustomControls
             controlList.AddRange(CreateDefaultUIHelpersFor(propertyName, command, createdInput, editor, propInfo));
 
             // custom ui helper
-            controlList.AddRange(CreateCustomUIHelperFor(propertyName, command, new Control[] { createdInput }, editor, propInfo));
+            controlList.AddRange(CreateCustomUIHelperFor(propertyName, command, createdInput, editor, propInfo));
 
             // body
             controlList.Add(createdInput);
@@ -685,9 +685,8 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static DataGridView CreateStandardDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command)
         {
-            var dgv = new DataGridView();
-
             var theme = CurrentEditor.Theme.Datagridview;
+            var dgv = new DataGridView();
             dgv.Font = new Font(theme.Font, theme.FontSize, theme.Style);
             dgv.ForeColor = theme.FontColor;
             dgv.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
@@ -707,12 +706,14 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static Label CreateSimpleLabel()
         {
-            Label newLabel = new Label();
             var theme = CurrentEditor.Theme.Label;
-            newLabel.AutoSize = true;
-            newLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            newLabel.ForeColor = theme.FontColor;
-            newLabel.BackColor = theme.BackColor;
+            Label newLabel = new Label
+            {
+                AutoSize = true,
+                Font = new Font(theme.Font, theme.FontSize, theme.Style),
+                ForeColor = theme.FontColor,
+                BackColor = theme.BackColor
+            };
             return newLabel;
         }
         #endregion
@@ -1415,49 +1416,70 @@ namespace taskt.UI.CustomControls
             return controlList;
         }
 
-        public static List<Control> CreateCustomUIHelperFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, Forms.frmCommandEditor editor, PropertyInfo pInfo)
+        public static CommandItemControl CreateDefaultCostomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
+        {
+            var uiHelper = CreateSimpleUIHelper(propertyName + "_customhelper_" + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            uiHelper.CommandDisplay = setting.labelText;
+            (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
+
+            if (isOuterClass)
+            {
+                uiHelper.Click += (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
+            }
+            else
+            {
+                uiHelper.Click += (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
+            }
+
+            return uiHelper;
+        }
+
+        public static List<Control> CreateCustomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo)
         {
             List<Control> ctrls = new List<Control>();
 
-            var attrs = (PropertyCustomUIHelper[])pInfo.GetCustomAttributes(typeof(PropertyCustomUIHelper));
+            //var attrs = (PropertyCustomUIHelper[])propInfo.GetCustomAttributes(typeof(PropertyCustomUIHelper));
+            var uiHelpers = propInfo.GetCustomAttributes<PropertyCustomUIHelper>().ToList();
 
-            if (attrs.Length > 0)
+            if (uiHelpers.Count == 0)
             {
-                int counter = 0;
-                Type parentType = parent.GetType();
-                foreach (var attr in attrs)
-                {
-                    var link = CreateSimpleUIHelper();
-                    link.CommandDisplay = attr.labelText;
-                    link.Name = parameterName + "_customhelper_" + ((attr.nameKey == "") ? counter.ToString() : attr.nameKey);
-                    link.Tag = targetControls.FirstOrDefault();
-
-                    bool useOuterMethod = attr.methodName.Contains("+");
-
-                    MethodInfo trgMethod;
-                    EventHandler dMethod;
-                    if (useOuterMethod)
-                    {
-                        int idx = attr.methodName.IndexOf("+");
-                        string className = attr.methodName.Substring(0, idx);
-                        string methodName = attr.methodName.Substring(idx + 1);
-                        var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
-                        trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
-                        dMethod = (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
-                    }
-                    else
-                    {
-                        trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                        dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), parent, trgMethod);
-                    }
-
-                    link.Click += dMethod;
-
-                    ctrls.Add(link);
-
-                    counter++;
-                }
+                return ctrls;
             }
+
+            int counter = 0;
+            foreach (var uiHelper in uiHelpers)
+            {
+                //var link = CreateSimpleUIHelper();
+                //link.CommandDisplay = attr.labelText;
+                //link.Name = propertyName + "_customhelper_" + ((attr.nameKey == "") ? counter.ToString() : attr.nameKey);
+                //link.Tag = targetControl;
+
+                //bool useOuterMethod = attr.methodName.Contains("+");
+
+                //MethodInfo trgMethod;
+                //EventHandler dMethod;
+                //if (useOuterMethod)
+                //{
+                //    int idx = attr.methodName.IndexOf("+");
+                //    string className = attr.methodName.Substring(0, idx);
+                //    string methodName = attr.methodName.Substring(idx + 1);
+                //    var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                //    trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
+                //    dMethod = (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
+                //}
+                //else
+                //{
+                //    trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                //    dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
+                //}
+
+                //link.Click += dMethod;
+
+                ctrls.Add(CreateDefaultCostomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
+
+                counter++;
+            }
+
             return ctrls;
         }
 
