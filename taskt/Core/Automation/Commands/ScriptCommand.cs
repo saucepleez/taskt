@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using taskt.UI.CustomControls;
 using OpenQA.Selenium.DevTools.V102.Inspector;
+using taskt.Core.Automation.Attributes.ClassAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -643,21 +644,21 @@ namespace taskt.Core.Automation.Commands
         {
             RenderedControls = new List<Control>();
 
-            Attributes.ClassAttributes.EnableAutomateRender render = (Attributes.ClassAttributes.EnableAutomateRender)this.GetType().GetCustomAttribute(typeof(Attributes.ClassAttributes.EnableAutomateRender));
-            if ((render == null) || (!render.enableAutomateRender))
-            {
-                return RenderedControls;
-            }
-            else
+            var attrAutoRender = this.GetType().GetCustomAttribute<EnableAutomateRender>();
+            if (attrAutoRender?.enableAutomateRender ?? false)
             {
                 RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
                 ControlsList = new Dictionary<string, Control>();
-                foreach(Control control in RenderedControls)
+                foreach (Control control in RenderedControls)
                 {
                     ControlsList.Add(control.Name, control);
                 }
 
+                return RenderedControls;
+            }
+            else
+            {
                 return RenderedControls;
             }
         }
