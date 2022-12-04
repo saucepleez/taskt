@@ -116,7 +116,7 @@
             ShowFileSelectionHelper,
             ShowFolderSelectionHelper,
             ShowImageRecogitionHelper,
-            ShowCodeBuilder,
+            //ShowCodeBuilder,
             ShowMouseCaptureHelper,
             ShowElementRecorder,
             GenerateDLLParameters,

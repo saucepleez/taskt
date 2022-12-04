@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -12,30 +13,32 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to run C# code from the input")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run custom C# code commands.  The code in this command is compiled and run at runtime when this command is invoked.  This command only supports the standard framework classes.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     public class RunCustomCodeCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Paste the C# code to execute")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the code to be executed or use the builder to create your custom C# code.  The builder contains a Hello World template that you can use to build from.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Paste the C# code to execute")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
+        [PropertyCustomUIHelper("Show Code Builder", nameof(CodeBuilderControls) + "+" + nameof(CodeBuilderControls.ShowCodeBuilderLink_Clicked))]
+        [InputSpecification("Enter the code to be executed or use the builder to create your custom C# code.  The builder contains a Hello World template that you can use to build from.")]
+        [SampleUsage("n/a")]
+        [Remarks("")]
         public string v_Code { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Supply Arguments")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter arguments that the custom code will receive during execution")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Optional - Supply Arguments")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter arguments that the custom code will receive during execution")]
+        [SampleUsage("n/a")]
+        [Remarks("")]
         public string v_Args { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Select the variable to receive the output")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyDescription("Optional - Select the variable to receive the output")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
         public RunCustomCodeCommand()
@@ -49,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //create compiler service
-            var compilerSvc = new Core.CompilerServices();
+            var compilerSvc = new CompilerServices();
             var customCode = v_Code.ConvertToUserVariable(sender);
 
             //compile custom code
@@ -95,21 +98,21 @@ namespace taskt.Core.Automation.Commands
 
 
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Code", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Code", this, editor));
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Args", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Args", this, editor));
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl, editor));
-            RenderedControls.Add(VariableNameControl);
+        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
+        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl, editor));
+        //    RenderedControls.Add(VariableNameControl);
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue();
@@ -127,7 +130,7 @@ namespace taskt.Core.Automation.Commands
 
             return this.IsValid;
         }
-        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_Code", "convertToIntermediateVariableParser");

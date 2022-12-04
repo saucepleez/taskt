@@ -790,12 +790,12 @@ namespace taskt.UI.CustomControls
                     uiHelper.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
                     break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
-                    //show code builder
-                    uiHelper.CommandImage = Images.GetUIImage("RunScriptCommand");
-                    uiHelper.CommandDisplay = "Code Builder";
-                    uiHelper.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
+                //    //show code builder
+                //    uiHelper.CommandImage = Images.GetUIImage("RunScriptCommand");
+                //    uiHelper.CommandDisplay = "Code Builder";
+                //    uiHelper.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
+                //    break;
 
                 case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
                     // show mouse position
@@ -1433,21 +1433,21 @@ namespace taskt.UI.CustomControls
         #endregion
 
 
-        private static void ShowCodeBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            //get textbox text
-            CommandItemControl commandItem = (CommandItemControl)sender;
-            TextBox targetTextbox = (TextBox)commandItem.Tag;
+        //private static void ShowCodeBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
+        //{
+        //    //get textbox text
+        //    CommandItemControl commandItem = (CommandItemControl)sender;
+        //    TextBox targetTextbox = (TextBox)commandItem.Tag;
 
-            using (Forms.Supplemental.frmCodeBuilder codeBuilder = new Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
-            {
-                if (codeBuilder.ShowDialog() == DialogResult.OK)
-                {
+        //    using (Forms.Supplemental.frmCodeBuilder codeBuilder = new Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
+        //    {
+        //        if (codeBuilder.ShowDialog() == DialogResult.OK)
+        //        {
 
-                    targetTextbox.Text = codeBuilder.rtbCode.Text;
-                }
-            }
-        }
+        //            targetTextbox.Text = codeBuilder.rtbCode.Text;
+        //        }
+        //    }
+        //}
         private static void ShowMouseCaptureForm(object sender, EventArgs e)
         {
             using (Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new Forms.Supplemental.frmShowCursorPosition())
