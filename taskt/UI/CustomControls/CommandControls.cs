@@ -134,8 +134,8 @@ namespace taskt.UI.CustomControls
             
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() =>
             {
-                return CreateDefaultInputFor(propertyName, command, propInfo);
-            }), propInfo, editor);
+                return CreateDefaultInputFor(propertyName, command, editor, propInfo);
+            }), editor, propInfo);
         }
 
         /// <summary>
@@ -154,8 +154,8 @@ namespace taskt.UI.CustomControls
             }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
-                return CreateDefaultDropdownFor(propertyName, command, propInfo, editor);
-            }), propInfo, editor);
+                return CreateDefaultDropdownFor(propertyName, command, editor, propInfo);
+            }), editor, propInfo);
         }
 
         /// <summary>
@@ -174,8 +174,8 @@ namespace taskt.UI.CustomControls
             }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
-                return CreateDefaultCheckBoxFor(propertyName, command, propInfo);
-            }), propInfo, editor);
+                return CreateDefaultCheckBoxFor(propertyName, command, editor, propInfo);
+            }), editor, propInfo);
         }
 
         /// <summary>
@@ -194,8 +194,8 @@ namespace taskt.UI.CustomControls
             }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
-                return CreateDefaultDataGridViewFor(propertyName, command, propInfo);
-            }), propInfo, editor);
+                return CreateDefaultDataGridViewFor(propertyName, command, editor, propInfo);
+            }), editor, propInfo);
         }
 
         /// <summary>
@@ -204,15 +204,15 @@ namespace taskt.UI.CustomControls
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="createFunc"></param>
-        /// <param name="propInfo"></param>
         /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
         /// <returns></returns>
-        private static List<Control> CreateDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Func<Control> createFunc, PropertyInfo propInfo, Forms.frmCommandEditor editor)
+        private static List<Control> CreateDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Func<Control> createFunc, Forms.frmCommandEditor editor, PropertyInfo propInfo)
         {
             var controlList = new List<Control>();
 
             // label
-            var label = CreateDefaultLabelFor(propertyName, command, propInfo);
+            var label = CreateDefaultLabelFor(propertyName, command, editor, propInfo);
             controlList.Add(label);
 
             // 2nd label
@@ -242,15 +242,16 @@ namespace taskt.UI.CustomControls
         #region create default controls
 
         #region label
+
         /// <summary>
         /// create Label from seveal attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
-        /// <param name="propInfo"></param>
         /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null, frmCommandEditor editor = null)
+        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             if (propInfo == null)
             {
@@ -318,14 +319,14 @@ namespace taskt.UI.CustomControls
 
         #region textbox
         /// <summary>
-        /// create TextBox from PropertyTextBoxSetting, PropertyRecommendedUIControl attributes.
+        /// create TextBox from PropertyTextBoxSetting, PropertyRecommendedUIControl, PropertyFirstValue attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
+        /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null)
+        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             if (propInfo == null)
             {
@@ -334,6 +335,7 @@ namespace taskt.UI.CustomControls
 
             var textBoxSetting = propInfo.GetCustomAttribute<PropertyTextBoxSetting>() ?? new PropertyTextBoxSetting();
             var recommendedControl = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>() ?? new PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox);
+            var firstValue = propInfo.GetCustomAttribute<PropertyFirstValue>();
 
             TextBox newTextBox;
             
@@ -342,7 +344,7 @@ namespace taskt.UI.CustomControls
             {
                 height = (height < 2) ? 3 : height; // multi line fix
             }
-            newTextBox = (TextBox)CreateDefaultInputFor(propertyName, command, height * 30, 300, textBoxSetting.allowNewLine);
+            newTextBox = (TextBox)CreateDefaultInputFor(propertyName, command, height * 30, 300, textBoxSetting.allowNewLine, (firstValue?.firstValue ?? ""), editor);
 
             return newTextBox;
         }
@@ -355,8 +357,10 @@ namespace taskt.UI.CustomControls
         /// <param name="height"></param>
         /// <param name="width"></param>
         /// <param name="allowNewLine"></param>
+        /// <param name="firstValue"></param>
+        /// <param name="editor"></param>
         /// <returns></returns>
-        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true)
+        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true, string firstValue = "", Forms.frmCommandEditor editor = null)
         {
             var inputBox = CreateStandardTextBoxFor(propertyName, command);
 
@@ -375,6 +379,12 @@ namespace taskt.UI.CustomControls
             inputBox.Height = height;
             inputBox.Width = width;
 
+            // first value
+            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            {
+                inputBox.Text = firstValue;
+            }
+
             return inputBox;
         }
         #endregion
@@ -385,9 +395,10 @@ namespace taskt.UI.CustomControls
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
+        /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultCheckBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null)
+        public static Control CreateDefaultCheckBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             if (propInfo == null)
             {
@@ -419,10 +430,10 @@ namespace taskt.UI.CustomControls
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
-        /// <param name="propInfo"></param>
         /// <param name="editor">if editor is null, does not support variable, window, instance selection items</param>
+        /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null, frmCommandEditor editor = null)
+        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             if (propInfo == null)
             {
@@ -496,9 +507,10 @@ namespace taskt.UI.CustomControls
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
+        /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyInfo propInfo = null)
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             //return CreateDataGridView(sourceCommand, dataSourceName, prop);
             if (propInfo == null)
