@@ -610,6 +610,378 @@ namespace taskt.UI.CustomControls
         }
         #endregion
 
+        #region  CustomItemControl(UIHelper)
+
+        /// <summary>
+        /// create UIHelpers(CommandItemControl) and binding a event. this method use PropertyUIHelper attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
+        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        {
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            var propertyUIHelpers = propInfo.GetCustomAttributes<PropertyUIHelper>().ToList();
+
+            var controlList = new List<Control>();
+            if (propertyUIHelpers.Count() == 0)
+            {
+                return controlList;
+            }
+
+            int count = 0;
+            foreach (PropertyUIHelper uiHelper in propertyUIHelpers)
+            {
+                //CommandItemControl helperControl = new CommandItemControl();
+                //helperControl.Padding = new Padding(10, 0, 0, 0);
+                ////helperControl.ForeColor = Color.AliceBlue;
+                ////helperControl.Font = new Font("Segoe UI Semilight", 10);
+                //var theme = CurrentEditor.Theme.UIHelper;
+                //helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+                //helperControl.ForeColor = theme.FontColor;
+                //helperControl.BackColor = theme.BackColor;
+                //helperControl.Name = propertyName + "_helper_" + count.ToString();
+                //helperControl.Tag = targetControls.FirstOrDefault();
+                //helperControl.HelperType = attrib.additionalHelper;
+
+                //switch (attrib.additionalHelper)
+                //{
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
+                //        helperControl.CommandDisplay = "Insert Variable";
+                //        helperControl.DrawIcon = Properties.Resources.taskt_variable_helper;
+                //        helperControl.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
+                //        break;
+
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
+                //        //show file selector
+                //        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                //        helperControl.CommandDisplay = "Select a File";
+                //        helperControl.DrawIcon = Properties.Resources.taskt_file_helper;
+                //        helperControl.Click += (sender, e) => ShowFileSelector(sender, e, editor);
+                //        break;
+
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
+                //        //show file selector
+                //        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                //        helperControl.CommandDisplay = "Select a Folder";
+                //        helperControl.DrawIcon = Properties.Resources.taskt_folder_helper;
+                //        helperControl.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
+                //        break;
+
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
+                //        //show file selector
+                //        helperControl.CommandImage = Images.GetUIImage("OCRCommand");
+                //        helperControl.CommandDisplay = "Capture Reference Image";
+                //        helperControl.DrawIcon = Properties.Resources.taskt_element_helper;
+                //        helperControl.Click += (sender, e) => ShowImageCapture(sender, e, editor);
+
+                //        CommandItemControl testRun = new CommandItemControl();
+                //        testRun.Padding = new Padding(10, 0, 0, 0);
+                //        testRun.ForeColor = Color.AliceBlue;
+
+                //        testRun.CommandImage = Images.GetUIImage("OCRCommand");
+                //        testRun.CommandDisplay = "Run Image Recognition Test";
+                //        testRun.ForeColor = Color.AliceBlue;
+                //        testRun.Tag = targetControls.FirstOrDefault();
+                //        testRun.Click += (sender, e) => RunImageCapture(sender, e);
+                //        controlList.Add(testRun);
+                //        break;
+
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("RunScriptCommand");
+                //        helperControl.CommandDisplay = "Code Builder";
+                //        helperControl.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
+                //        break;
+
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
+                //        helperControl.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
+                //        helperControl.CommandDisplay = "Capture Mouse Position";
+                //        //helperControl.ForeColor = Color.AliceBlue;
+                //        helperControl.DrawIcon = Properties.Resources.taskt_element_helper;
+                //        helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
+                //        break;
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                //        helperControl.CommandDisplay = "Element Recorder";
+                //        helperControl.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
+                //        break;
+                //    case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //        helperControl.CommandDisplay = "Generate Parameters";
+                //        helperControl.Click += (sender, e) => GenerateDLLParameters(sender, e);
+                //        break;
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //        helperControl.CommandDisplay = "Launch DLL Explorer";
+                //        helperControl.Click += (sender, e) => ShowDLLExplorer(sender, e);
+                //        break;
+                //    case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //        helperControl.CommandDisplay = "Add Input Parameter";
+                //        helperControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
+                //        break;
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
+                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //        helperControl.CommandDisplay = "Launch HTML Builder";
+                //        helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
+                //        break;
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
+                //        helperControl.CommandDisplay = "Add New If Statement";
+                //        break;
+                //    case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
+                //        //show variable selector
+                //        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
+                //        helperControl.CommandDisplay = "Add New Loop Statement";
+                //        break;
+
+                //        //default:
+                //        //    MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
+                //        //    break;
+                //}
+
+
+                switch (uiHelper.additionalHelper)
+                {
+                    case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
+                        //show file selector
+                        CommandItemControl captureHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
+                        captureHelper.CommandImage = Images.GetUIImage("OCRCommand");
+                        captureHelper.CommandDisplay = "Capture Reference Image";
+                        captureHelper.DrawIcon = Properties.Resources.taskt_element_helper;
+                        captureHelper.Click += (sender, e) => ShowImageCapture(sender, e, editor);
+
+                        count++;
+                        CommandItemControl testHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
+                        testHelper.CommandImage = Images.GetUIImage("OCRCommand");
+                        testHelper.CommandDisplay = "Run Image Recognition Test";
+                        testHelper.ForeColor = Color.AliceBlue;
+                        testHelper.Click += (sender, e) => RunImageCapture(sender, e);
+
+                        controlList.Add(captureHelper);
+                        controlList.Add(testHelper);
+                        break;
+
+                    default:
+                        controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
+                        break;
+                }
+
+                count++;
+            }
+
+            return controlList;
+        }
+
+        /// <summary>
+        /// create CustomUIHelpers(CommandItemControl) and binding a event. this method use PropertyCustomUIHelper attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
+        public static List<Control> CreateCustomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        {
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            List<Control> ctrls = new List<Control>();
+
+            //var attrs = (PropertyCustomUIHelper[])propInfo.GetCustomAttributes(typeof(PropertyCustomUIHelper));
+            var uiHelpers = propInfo.GetCustomAttributes<PropertyCustomUIHelper>().ToList();
+
+            if (uiHelpers.Count == 0)
+            {
+                return ctrls;
+            }
+
+            int counter = 0;
+            foreach (var uiHelper in uiHelpers)
+            {
+                //var link = CreateSimpleUIHelper();
+                //link.CommandDisplay = attr.labelText;
+                //link.Name = propertyName + "_customhelper_" + ((attr.nameKey == "") ? counter.ToString() : attr.nameKey);
+                //link.Tag = targetControl;
+
+                //bool useOuterMethod = attr.methodName.Contains("+");
+
+                //MethodInfo trgMethod;
+                //EventHandler dMethod;
+                //if (useOuterMethod)
+                //{
+                //    int idx = attr.methodName.IndexOf("+");
+                //    string className = attr.methodName.Substring(0, idx);
+                //    string methodName = attr.methodName.Substring(idx + 1);
+                //    var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                //    trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
+                //    dMethod = (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
+                //}
+                //else
+                //{
+                //    trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                //    dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
+                //}
+
+                //link.Click += dMethod;
+
+                ctrls.Add(CreateDefaultCostomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
+
+                counter++;
+            }
+
+            return ctrls;
+        }
+
+        /// <summary>
+        /// create UIHelper(CommandItemControl) and binding a event. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="setting"></param>
+        /// <param name="num"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
+        {
+            var uiHelper = CreateSimpleUIHelper(propertyName + "_helper_" + num, targetControl);
+            uiHelper.HelperType = setting.additionalHelper;
+            switch (setting.additionalHelper)
+            {
+                case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
+                    //show variable selector
+                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
+                    uiHelper.CommandDisplay = "Insert Variable";
+                    uiHelper.DrawIcon = Properties.Resources.taskt_variable_helper;
+                    uiHelper.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
+                    //show file selector
+                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                    uiHelper.CommandDisplay = "Select a File";
+                    uiHelper.DrawIcon = Properties.Resources.taskt_file_helper;
+                    uiHelper.Click += (sender, e) => ShowFileSelector(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
+                    //show folder selector
+                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                    uiHelper.CommandDisplay = "Select a Folder";
+                    uiHelper.DrawIcon = Properties.Resources.taskt_folder_helper;
+                    uiHelper.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
+                    //show code builder
+                    uiHelper.CommandImage = Images.GetUIImage("RunScriptCommand");
+                    uiHelper.CommandDisplay = "Code Builder";
+                    uiHelper.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
+                    // show mouse position
+                    uiHelper.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
+                    uiHelper.CommandDisplay = "Capture Mouse Position";
+                    uiHelper.DrawIcon = Properties.Resources.taskt_element_helper;
+                    uiHelper.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
+                    // show ui element recorder
+                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                    uiHelper.CommandDisplay = "Element Recorder";
+                    uiHelper.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
+                    // show dll parameters
+                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                    uiHelper.CommandDisplay = "Generate Parameters";
+                    uiHelper.Click += (sender, e) => GenerateDLLParameters(sender, e);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
+                    // show dll explorer
+                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                    uiHelper.CommandDisplay = "Launch DLL Explorer";
+                    uiHelper.Click += (sender, e) => ShowDLLExplorer(sender, e);
+                    break;
+                case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
+                    // show input parameter
+                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                    uiHelper.CommandDisplay = "Add Input Parameter";
+                    uiHelper.Click += (sender, e) => AddInputParameter(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
+                    // show html builder
+                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                    uiHelper.CommandDisplay = "Launch HTML Builder";
+                    uiHelper.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
+                    // show if builder
+                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
+                    uiHelper.CommandDisplay = "Add New If Statement";
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
+                    // show loop builder
+                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
+                    uiHelper.CommandDisplay = "Add New Loop Statement";
+                    break;
+            }
+            return uiHelper;
+        }
+
+        /// <summary>
+        /// create CustomUIHelper(CommandItemControl) and binding a event. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="setting"></param>
+        /// <param name="num"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static CommandItemControl CreateDefaultCostomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
+        {
+            var uiHelper = CreateSimpleUIHelper(propertyName + "_customhelper_" + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            uiHelper.CommandDisplay = setting.labelText;
+            (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
+
+            if (isOuterClass)
+            {
+                uiHelper.Click += (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
+            }
+            else
+            {
+                uiHelper.Click += (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
+            }
+
+            return uiHelper;
+        }
+        #endregion
+
         #endregion
 
         #region create standard controls
@@ -698,6 +1070,28 @@ namespace taskt.UI.CustomControls
             dgv.Name = propertyName;
 
             return dgv;
+        }
+
+        /// <summary>
+        /// create CommandItemControl. This method does not use attributes.
+        /// </summary>
+        /// <param name="controlName"></param>
+        /// <param name="targetControl"></param>
+        /// <returns></returns>
+        public static CommandItemControl CreateSimpleUIHelper(string controlName, Control targetControl)
+        {
+            var theme = CurrentEditor.Theme.UIHelper;
+            CommandItemControl helperControl = new CommandItemControl
+            {
+                Padding = new Padding(10, 0, 0, 0),
+                Font = new Font(theme.Font, theme.FontSize, theme.Style),
+                ForeColor = theme.FontColor,
+                BackColor = theme.BackColor,
+                Name = controlName,
+                Tag = targetControl
+            };
+
+            return helperControl;
         }
 
         /// <summary>
@@ -1138,350 +1532,6 @@ namespace taskt.UI.CustomControls
 
         #endregion
 
-        
-        public static CommandItemControl CreateSimpleUIHelper(string controlName, Control targetControl)
-        {
-            var theme = CurrentEditor.Theme.UIHelper;
-            CommandItemControl helperControl = new CommandItemControl
-            {
-                Padding = new Padding(10, 0, 0, 0),
-                Font = new Font(theme.Font, theme.FontSize, theme.Style),
-                ForeColor = theme.FontColor,
-                BackColor = theme.BackColor,
-                Name = controlName,
-                Tag = targetControl
-            };
-
-            return helperControl;
-        }
-
-        public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
-        {
-            var uiHelper = CreateSimpleUIHelper(propertyName + "_helper_" + num, targetControl);
-            uiHelper.HelperType = setting.additionalHelper;
-            switch (setting.additionalHelper)
-            {
-                case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
-                    //show variable selector
-                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                    uiHelper.CommandDisplay = "Insert Variable";
-                    uiHelper.DrawIcon = Properties.Resources.taskt_variable_helper;
-                    uiHelper.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
-                    //show file selector
-                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                    uiHelper.CommandDisplay = "Select a File";
-                    uiHelper.DrawIcon = Properties.Resources.taskt_file_helper;
-                    uiHelper.Click += (sender, e) => ShowFileSelector(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
-                    //show folder selector
-                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                    uiHelper.CommandDisplay = "Select a Folder";
-                    uiHelper.DrawIcon = Properties.Resources.taskt_folder_helper;
-                    uiHelper.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
-                    //show code builder
-                    uiHelper.CommandImage = Images.GetUIImage("RunScriptCommand");
-                    uiHelper.CommandDisplay = "Code Builder";
-                    uiHelper.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
-                    // show mouse position
-                    uiHelper.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
-                    uiHelper.CommandDisplay = "Capture Mouse Position";
-                    uiHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                    uiHelper.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
-                    // show ui element recorder
-                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                    uiHelper.CommandDisplay = "Element Recorder";
-                    uiHelper.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
-                    // show dll parameters
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Generate Parameters";
-                    uiHelper.Click += (sender, e) => GenerateDLLParameters(sender, e);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
-                    // show dll explorer
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Launch DLL Explorer";
-                    uiHelper.Click += (sender, e) => ShowDLLExplorer(sender, e);
-                    break;
-                case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
-                    // show input parameter
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Add Input Parameter";
-                    uiHelper.Click += (sender, e) => AddInputParameter(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
-                    // show html builder
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Launch HTML Builder";
-                    uiHelper.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
-                    // show if builder
-                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                    uiHelper.CommandDisplay = "Add New If Statement";
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
-                    // show loop builder
-                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                    uiHelper.CommandDisplay = "Add New Loop Statement";
-                    break;
-            }
-            return uiHelper;
-        }
-
-        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
-        {
-            if (propInfo == null)
-            {
-                propInfo = command.GetProperty(propertyName);
-            }
-
-            var propertyUIHelpers = propInfo.GetCustomAttributes<PropertyUIHelper>().ToList();
-            
-            var controlList = new List<Control>();
-            if (propertyUIHelpers.Count() == 0)
-            {
-                return controlList;
-            }
-
-            int count = 0;
-            foreach (PropertyUIHelper uiHelper in propertyUIHelpers)
-            {
-                //CommandItemControl helperControl = new CommandItemControl();
-                //helperControl.Padding = new Padding(10, 0, 0, 0);
-                ////helperControl.ForeColor = Color.AliceBlue;
-                ////helperControl.Font = new Font("Segoe UI Semilight", 10);
-                //var theme = CurrentEditor.Theme.UIHelper;
-                //helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-                //helperControl.ForeColor = theme.FontColor;
-                //helperControl.BackColor = theme.BackColor;
-                //helperControl.Name = propertyName + "_helper_" + count.ToString();
-                //helperControl.Tag = targetControls.FirstOrDefault();
-                //helperControl.HelperType = attrib.additionalHelper;
-
-                //switch (attrib.additionalHelper)
-                //{
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
-                //        helperControl.CommandDisplay = "Insert Variable";
-                //        helperControl.DrawIcon = Properties.Resources.taskt_variable_helper;
-                //        helperControl.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
-                //        break;
-
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
-                //        //show file selector
-                //        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                //        helperControl.CommandDisplay = "Select a File";
-                //        helperControl.DrawIcon = Properties.Resources.taskt_file_helper;
-                //        helperControl.Click += (sender, e) => ShowFileSelector(sender, e, editor);
-                //        break;
-
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
-                //        //show file selector
-                //        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                //        helperControl.CommandDisplay = "Select a Folder";
-                //        helperControl.DrawIcon = Properties.Resources.taskt_folder_helper;
-                //        helperControl.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
-                //        break;
-
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
-                //        //show file selector
-                //        helperControl.CommandImage = Images.GetUIImage("OCRCommand");
-                //        helperControl.CommandDisplay = "Capture Reference Image";
-                //        helperControl.DrawIcon = Properties.Resources.taskt_element_helper;
-                //        helperControl.Click += (sender, e) => ShowImageCapture(sender, e, editor);
-
-                //        CommandItemControl testRun = new CommandItemControl();
-                //        testRun.Padding = new Padding(10, 0, 0, 0);
-                //        testRun.ForeColor = Color.AliceBlue;
-
-                //        testRun.CommandImage = Images.GetUIImage("OCRCommand");
-                //        testRun.CommandDisplay = "Run Image Recognition Test";
-                //        testRun.ForeColor = Color.AliceBlue;
-                //        testRun.Tag = targetControls.FirstOrDefault();
-                //        testRun.Click += (sender, e) => RunImageCapture(sender, e);
-                //        controlList.Add(testRun);
-                //        break;
-
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("RunScriptCommand");
-                //        helperControl.CommandDisplay = "Code Builder";
-                //        helperControl.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
-                //        break;
-
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
-                //        helperControl.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
-                //        helperControl.CommandDisplay = "Capture Mouse Position";
-                //        //helperControl.ForeColor = Color.AliceBlue;
-                //        helperControl.DrawIcon = Properties.Resources.taskt_element_helper;
-                //        helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
-                //        break;
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                //        helperControl.CommandDisplay = "Element Recorder";
-                //        helperControl.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
-                //        break;
-                //    case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //        helperControl.CommandDisplay = "Generate Parameters";
-                //        helperControl.Click += (sender, e) => GenerateDLLParameters(sender, e);
-                //        break;
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //        helperControl.CommandDisplay = "Launch DLL Explorer";
-                //        helperControl.Click += (sender, e) => ShowDLLExplorer(sender, e);
-                //        break;
-                //    case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //        helperControl.CommandDisplay = "Add Input Parameter";
-                //        helperControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
-                //        break;
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
-                //        helperControl.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //        helperControl.CommandDisplay = "Launch HTML Builder";
-                //        helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
-                //        break;
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
-                //        helperControl.CommandDisplay = "Add New If Statement";
-                //        break;
-                //    case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
-                //        //show variable selector
-                //        helperControl.CommandImage = Images.GetUIImage("VariableCommand");
-                //        helperControl.CommandDisplay = "Add New Loop Statement";
-                //        break;
-
-                //        //default:
-                //        //    MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
-                //        //    break;
-                //}
-
-                
-                switch (uiHelper.additionalHelper)
-                {
-                    case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
-                        //show file selector
-                        CommandItemControl captureHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                        captureHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                        captureHelper.CommandDisplay = "Capture Reference Image";
-                        captureHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                        captureHelper.Click += (sender, e) => ShowImageCapture(sender, e, editor);
-
-                        count++;
-                        CommandItemControl testHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                        testHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                        testHelper.CommandDisplay = "Run Image Recognition Test";
-                        testHelper.ForeColor = Color.AliceBlue;
-                        testHelper.Click += (sender, e) => RunImageCapture(sender, e);
-
-                        controlList.Add(captureHelper);
-                        controlList.Add(testHelper);
-                        break;
-
-                    default:
-                        controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
-                        break;
-                }
-
-                count++;
-            }
-
-            return controlList;
-        }
-
-        public static CommandItemControl CreateDefaultCostomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
-        {
-            var uiHelper = CreateSimpleUIHelper(propertyName + "_customhelper_" + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
-            uiHelper.CommandDisplay = setting.labelText;
-            (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
-
-            if (isOuterClass)
-            {
-                uiHelper.Click += (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
-            }
-            else
-            {
-                uiHelper.Click += (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
-            }
-
-            return uiHelper;
-        }
-
-        public static List<Control> CreateCustomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo)
-        {
-            List<Control> ctrls = new List<Control>();
-
-            //var attrs = (PropertyCustomUIHelper[])propInfo.GetCustomAttributes(typeof(PropertyCustomUIHelper));
-            var uiHelpers = propInfo.GetCustomAttributes<PropertyCustomUIHelper>().ToList();
-
-            if (uiHelpers.Count == 0)
-            {
-                return ctrls;
-            }
-
-            int counter = 0;
-            foreach (var uiHelper in uiHelpers)
-            {
-                //var link = CreateSimpleUIHelper();
-                //link.CommandDisplay = attr.labelText;
-                //link.Name = propertyName + "_customhelper_" + ((attr.nameKey == "") ? counter.ToString() : attr.nameKey);
-                //link.Tag = targetControl;
-
-                //bool useOuterMethod = attr.methodName.Contains("+");
-
-                //MethodInfo trgMethod;
-                //EventHandler dMethod;
-                //if (useOuterMethod)
-                //{
-                //    int idx = attr.methodName.IndexOf("+");
-                //    string className = attr.methodName.Substring(0, idx);
-                //    string methodName = attr.methodName.Substring(idx + 1);
-                //    var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
-                //    trgMethod = tp.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static);
-                //    dMethod = (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
-                //}
-                //else
-                //{
-                //    trgMethod = parentType.GetMethod(attr.methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                //    dMethod = (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
-                //}
-
-                //link.Click += dMethod;
-
-                ctrls.Add(CreateDefaultCostomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
-
-                counter++;
-            }
-
-            return ctrls;
-        }
 
         private static void ShowCodeBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
