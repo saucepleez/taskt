@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Paste the C# code to execute")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         //[Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder)]
-        [PropertyCustomUIHelper("Show Code Builder", nameof(CodeBuilderControls) + "+" + nameof(CodeBuilderControls.ShowCodeBuilderLink_Clicked))]
+        [PropertyCustomUIHelper("Show Code Builder", nameof(ShowCodeBuilderLink_Clicked))]
         [InputSpecification("Enter the code to be executed or use the builder to create your custom C# code.  The builder contains a Hello World template that you can use to build from.")]
         [SampleUsage("n/a")]
         [Remarks("")]
@@ -98,6 +98,19 @@ namespace taskt.Core.Automation.Commands
 
 
         }
+
+        private void ShowCodeBuilderLink_Clicked(object sender, EventArgs e)
+        {
+            var targetTextbox = (TextBox)((CommandItemControl)sender).Tag;
+            using (UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new UI.Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
+            {
+                if (codeBuilder.ShowDialog() == DialogResult.OK)
+                {
+                    targetTextbox.Text = codeBuilder.rtbCode.Text;
+                }
+            }
+        }
+
         //public override List<Control> Render(frmCommandEditor editor)
         //{
         //    base.Render(editor);

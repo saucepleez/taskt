@@ -292,7 +292,6 @@
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
-    <Compile Include="Core\Automation\Commands\CodeBuilderControls.cs" />
     <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
     <Compile Include="Core\Automation\Commands\ColorControls.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
