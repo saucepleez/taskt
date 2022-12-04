@@ -344,7 +344,7 @@ namespace taskt.UI.CustomControls
             {
                 height = (height < 2) ? 3 : height; // multi line fix
             }
-            newTextBox = (TextBox)CreateDefaultInputFor(propertyName, command, height * 30, 300, textBoxSetting.allowNewLine, (firstValue?.firstValue ?? ""), editor);
+            newTextBox = (TextBox)CreateDefaultInputFor(propertyName, command, height * 30, 300, textBoxSetting.allowNewLine, (firstValue?.firstValue ?? ""), editor, propInfo);
 
             return newTextBox;
         }
@@ -357,10 +357,11 @@ namespace taskt.UI.CustomControls
         /// <param name="height"></param>
         /// <param name="width"></param>
         /// <param name="allowNewLine"></param>
-        /// <param name="firstValue"></param>
+        /// <param name="firstValue">if editor and propInfo is null, firtValue not work.</param>
         /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true, string firstValue = "", Forms.frmCommandEditor editor = null)
+        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true, string firstValue = "", Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             var inputBox = CreateStandardTextBoxFor(propertyName, command);
 
@@ -382,7 +383,7 @@ namespace taskt.UI.CustomControls
             // first value
             if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
             {
-                inputBox.Text = firstValue;
+                propInfo?.SetValue(command, editor.appSettings.replaceApplicationKeyword(firstValue));
             }
 
             return inputBox;
@@ -406,7 +407,8 @@ namespace taskt.UI.CustomControls
             }
 
             var desc = propInfo.GetCustomAttribute<PropertyDescription>();
-            return CreateDefaultCheckBoxFor(propertyName, command, desc?.propertyDescription ?? "");
+            var firstValue = propInfo.GetCustomAttribute<PropertyFirstValue>();
+            return CreateDefaultCheckBoxFor(propertyName, command, desc?.propertyDescription ?? "", firstValue?.firstValue ?? "", editor, propInfo);
         }
 
         /// <summary>
@@ -415,12 +417,25 @@ namespace taskt.UI.CustomControls
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="description"></param>
+        /// <param name="firstValue">if editor and propInfo is null, firtValue not work.</param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultCheckBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command, string description)
+        public static Control CreateDefaultCheckBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command, string description, string firstValue = "", Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
-            var iputBox = CreateStandardCheckboxFor(propertyName, command);
-            iputBox.Text = description;
-            return iputBox;
+            var inputBox = CreateStandardCheckboxFor(propertyName, command);
+            inputBox.Text = description;
+
+            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            {
+                string convValue = editor.appSettings.replaceApplicationKeyword(firstValue);
+                if ((convValue != "") && (bool.TryParse(convValue, out bool b)))
+                {
+                    propInfo?.SetValue(command, b);
+                }
+            }
+
+            return inputBox;
         }
         #endregion
 
@@ -471,8 +486,18 @@ namespace taskt.UI.CustomControls
             }
 
             var changeEvent = propInfo.GetCustomAttribute<PropertySelectionChangeEvent>();
+            var firstValue = propInfo.GetCustomAttribute<PropertyFirstValue>();
 
-            return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "");
+            // instance first value
+            if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
+            {
+                if ((uiOptions.Count > 1) && (editor.appSettings.ClientSettings.DontShowDefaultInstanceWhenMultipleItemsExists))
+                {
+                    firstValue = null;
+                }
+            }
+
+            return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "", firstValue?.firstValue ?? "", editor, propInfo);
         }
 
         /// <summary>
@@ -482,8 +507,11 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="uiOptions"></param>
         /// <param name="selectionChangeEventName"></param>
+        /// <param name="firstValue">if editor and propInfo is null, firtValue not work.</param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, List<string> uiOptions, string selectionChangeEventName = "")
+        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, List<string> uiOptions, string selectionChangeEventName = "", string firstValue = "", Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
             var inputBox = CreateStandardComboboxFor(propertyName, command);
             inputBox.Items.AddRange(uiOptions.ToArray());
@@ -495,6 +523,11 @@ namespace taskt.UI.CustomControls
                 inputBox.SelectionChangeCommitted += useOuterClassEvent ?
                     (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler)) :
                     (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
+            }
+
+            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            {
+                propInfo?.SetValue(command, editor.appSettings.replaceApplicationKeyword(firstValue));
             }
 
             return inputBox;
