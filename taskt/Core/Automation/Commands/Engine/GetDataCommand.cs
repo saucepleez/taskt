@@ -106,14 +106,14 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_KeyName", this, editor));
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_DataOption", this));
-            var dropdown = CommandControls.CreateDropdownFor("v_DataOption", this);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_DataOption", this, new Control[] { dropdown }, editor));
+            var dropdown = CommandControls.CreateDefaultDropdownFor("v_DataOption", this);
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_DataOption", this, dropdown, editor));
             RenderedControls.Add(dropdown);
 
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl, editor));
             RenderedControls.Add(VariableNameControl);
 
             return RenderedControls;

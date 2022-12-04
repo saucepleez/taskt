@@ -202,19 +202,20 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (AttributesNameGridHelper.IsCurrentCellDirty || AttributesNameGridHelper.IsCurrentRowDirty)
-            {
-                AttributesNameGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_AttributesName.NewRow();
-                v_AttributesName.Rows.Add(newRow);
-                for (var i = v_AttributesName.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_AttributesName.Rows[i][0].ToString() == "")
-                    {
-                        v_AttributesName.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (AttributesNameGridHelper.IsCurrentCellDirty || AttributesNameGridHelper.IsCurrentRowDirty)
+            //{
+            //    AttributesNameGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_AttributesName.NewRow();
+            //    v_AttributesName.Rows.Add(newRow);
+            //    for (var i = v_AttributesName.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_AttributesName.Rows[i][0].ToString() == "")
+            //        {
+            //            v_AttributesName.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AttributesName)], v_AttributesName);
         }
 
         public override List<Control> Render(frmCommandEditor editor)

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
+    [Attributes.ClassAttributes.SubGruop("Get/Set")]
     [Attributes.ClassAttributes.Description("This command allows you to set value in JSON.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

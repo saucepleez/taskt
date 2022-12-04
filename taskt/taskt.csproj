@@ -291,6 +291,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
     <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
     <Compile Include="Core\Automation\Commands\ColorControls.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
@@ -528,7 +529,7 @@
     <Compile Include="Core\Automation\Commands\Loop\BeginListLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginNumberOfTimesLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowCommand.cs" />
-    <Compile Include="Core\Automation\Attributes\Attributes.cs" />
+    <Compile Include="Core\Automation\Attributes\ClassAttributes.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClipboardSetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CreateDataTableCommand.cs" />
@@ -549,7 +550,7 @@
     <Compile Include="Core\Automation\Commands\Outlook\OutlookGetEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookMoveEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookReplyToEmailsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\JSON\ParseJsonModelCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\GetMultiJSONValueListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableCommand.cs" />
@@ -637,7 +638,7 @@
     <Compile Include="Core\Automation\Commands\Text\GetWordCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\GetWordLengthCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\LogDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\JSON\ParseJsonCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\GetJSONValueListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\PDFTextExtractionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ReplaceTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\SplitTextCommand.cs" />

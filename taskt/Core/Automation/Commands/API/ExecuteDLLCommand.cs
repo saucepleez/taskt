@@ -233,7 +233,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_MethodParameters", true, true, true, -1, 135);
+            ParametersGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_MethodParameters", this, true, true, true, -1, 135);
             ParametersGridViewHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
@@ -243,11 +243,11 @@ namespace taskt.Core.Automation.Commands
             //create control for variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl , editor));
             RenderedControls.Add(VariableNameControl);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_MethodParameters", this, new Control[] { ParametersGridViewHelper }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
             RenderedControls.Add(ParametersGridViewHelper);
 
             return RenderedControls;
@@ -274,19 +274,20 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (ParametersGridViewHelper.IsCurrentCellDirty || ParametersGridViewHelper.IsCurrentRowDirty)
-            {
-                ParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_MethodParameters.NewRow();
-                v_MethodParameters.Rows.Add(newRow);
-                for (var i = v_MethodParameters.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_MethodParameters.Rows[i][0].ToString() == "" && v_MethodParameters.Rows[i][1].ToString() == "")
-                    {
-                        v_MethodParameters.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (ParametersGridViewHelper.IsCurrentCellDirty || ParametersGridViewHelper.IsCurrentRowDirty)
+            //{
+            //    ParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_MethodParameters.NewRow();
+            //    v_MethodParameters.Rows.Add(newRow);
+            //    for (var i = v_MethodParameters.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_MethodParameters.Rows[i][0].ToString() == "" && v_MethodParameters.Rows[i][1].ToString() == "")
+            //        {
+            //            v_MethodParameters.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_MethodParameters)], v_MethodParameters);
         }
 
     }

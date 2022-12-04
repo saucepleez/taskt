@@ -128,10 +128,10 @@ namespace taskt.Core.Automation.Commands
             helperControl.Click += (sender, e) => Button_Click(sender, e);
 
 
-            ConnectionString = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionString", this);
+            ConnectionString = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionString", this, null);
 
             var connectionLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionString", this);
-            var connectionHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionString", this, new[] { ConnectionString }, editor);
+            var connectionHelpers = CommandControls.CreateDefaultUIHelpersFor("v_ConnectionString", this, ConnectionString , editor);
             CommandItemControl testConnectionControl = new CommandItemControl();
             testConnectionControl.Padding = new Padding(10, 0, 0, 0);
             testConnectionControl.ForeColor = Color.AliceBlue;
@@ -148,10 +148,10 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(testConnectionControl);
             RenderedControls.Add(ConnectionString);
 
-            ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this);
+            ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this, null);
 
             var connectionPassLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionStringPassword", this);
-            var connectionPassHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionStringPassword", this, new[] { ConnectionStringPassword }, editor);
+            var connectionPassHelpers = CommandControls.CreateDefaultUIHelpersFor("v_ConnectionStringPassword", this, ConnectionStringPassword, editor);
 
             RenderedControls.Add(connectionPassLabel);
             RenderedControls.AddRange(connectionPassHelpers);

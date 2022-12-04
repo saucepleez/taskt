@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
+    [Attributes.ClassAttributes.SubGruop("Action")]
     [Attributes.ClassAttributes.Description("This command allows you to add property to JSON Object.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

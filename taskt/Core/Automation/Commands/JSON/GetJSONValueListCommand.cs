@@ -10,12 +10,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
+    [Attributes.ClassAttributes.SubGruop("Get/Set")]
     [Attributes.ClassAttributes.Description("This command allows you to parse a JSON object into a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a JSON object")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ParseJsonCommand : ScriptCommand
+    public class GetJSONValueListCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Supply the JSON text or variable requiring extraction")]
@@ -55,10 +56,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Result")]
         public string v_applyToVariableName { get; set; }
 
-        public ParseJsonCommand()
+        public GetJSONValueListCommand()
         {
-            this.CommandName = "ParseJsonCommand";
-            this.SelectionName = "Parse JSON Item";
+            this.CommandName = "GetJSONValueListCommand";
+            this.SelectionName = "Get JSON Value List";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

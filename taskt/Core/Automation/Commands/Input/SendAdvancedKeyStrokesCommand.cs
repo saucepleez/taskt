@@ -171,7 +171,7 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
             var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
             RenderedControls.Add(WindowNameControl);
 
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
@@ -182,7 +182,7 @@ namespace taskt.Core.Automation.Commands
             //KeystrokeGridHelper.AutoGenerateColumns = false;
             //KeystrokeGridHelper.Width = 500;
             //KeystrokeGridHelper.Height = 140;
-            KeystrokeGridHelper = CommandControls.CreateDataGridView(this, "v_KeyActions", true, true, false, 500, 140, false);
+            KeystrokeGridHelper = CommandControls.CreateDefaultDataGridViewFor("v_KeyActions", this, true, true, false, 500, 140, false);
             //KeystrokeGridHelper.CellClick += KeystrokeGridHelper_CellClick;
             KeystrokeGridHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 
@@ -228,19 +228,20 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (KeystrokeGridHelper.IsCurrentCellDirty || KeystrokeGridHelper.IsCurrentRowDirty)
-            {
-                KeystrokeGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_KeyActions.NewRow();
-                v_KeyActions.Rows.Add(newRow);
-                for (var i = v_KeyActions.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_KeyActions.Rows[i][0].ToString() == "" && v_KeyActions.Rows[i][1].ToString() == "")
-                    {
-                        v_KeyActions.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (KeystrokeGridHelper.IsCurrentCellDirty || KeystrokeGridHelper.IsCurrentRowDirty)
+            //{
+            //    KeystrokeGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_KeyActions.NewRow();
+            //    v_KeyActions.Rows.Add(newRow);
+            //    for (var i = v_KeyActions.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_KeyActions.Rows[i][0].ToString() == "" && v_KeyActions.Rows[i][1].ToString() == "")
+            //        {
+            //            v_KeyActions.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_KeyActions)], v_KeyActions);
         }
 
         public override bool IsValidate(frmCommandEditor editor)

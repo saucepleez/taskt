@@ -41,8 +41,8 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ErrorHandlingAction", this));
-            var dropdown = CommandControls.CreateDropdownFor("v_ErrorHandlingAction", this);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_ErrorHandlingAction", this, new Control[] { dropdown }, editor));
+            var dropdown = CommandControls.CreateDefaultDropdownFor("v_ErrorHandlingAction", this);
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_ErrorHandlingAction", this, dropdown, editor));
             RenderedControls.Add(dropdown);
 
             return RenderedControls;

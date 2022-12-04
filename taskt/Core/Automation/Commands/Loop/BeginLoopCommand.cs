@@ -589,7 +589,7 @@ namespace taskt.Core.Automation.Commands
             //LoopGridViewHelper.DataBindings.Add("DataSource", this, "v_LoopActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
             //LoopGridViewHelper.AllowUserToAddRows = false;
             //LoopGridViewHelper.AllowUserToDeleteRows = false;
-            LoopGridViewHelper = CommandControls.CreateDataGridView(this, "v_LoopActionParameterTable", false, false);
+            LoopGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_LoopActionParameterTable", this, false, false);
             LoopGridViewHelper.MouseEnter += (sender, e) => LoopGridViewHelper_MouseEnter(sender, e, editor);
             //LoopGridViewHelper.CellBeginEdit += LoopGridViewHelper_CellBeginEdit;
             //LoopGridViewHelper.CellClick += LoopGridViewHelper_CellClick;
@@ -609,9 +609,9 @@ namespace taskt.Core.Automation.Commands
             //RecorderControl.Click += ShowLoopElementRecorder;
             //RecorderControl.Hide();
 
-            ActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_LoopActionType", this);
+            ActionDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_LoopActionType", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionType", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_LoopActionType", this, new Control[] { ActionDropdown }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_LoopActionType", this, ActionDropdown, editor));
             ActionDropdown.SelectionChangeCommitted += (sender, e) => loopAction_SelectionChangeCommitted(sender, e, editor);
 
             RenderedControls.Add(ActionDropdown);
@@ -620,21 +620,21 @@ namespace taskt.Core.Automation.Commands
             ParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_LoopActionParameterTable", this));
             //ParameterControls.Add(RecorderControl);
 
-            var helpers = CommandControls.CreateUIHelpersFor("v_LoopActionParameterTable", this, new Control[] { LoopGridViewHelper }, editor);
+            var helpers = CommandControls.CreateDefaultUIHelpersFor("v_LoopActionParameterTable", this, LoopGridViewHelper, editor);
 
-            lnkBrowserInstanceSelector = CommandControls.CreateUIHelper();
+            lnkBrowserInstanceSelector = CommandControls.CreateSimpleUIHelper(nameof(v_LoopActionParameterTable) + "_customhelper_0", LoopGridViewHelper);
             lnkBrowserInstanceSelector.Name = "v_LoopActionParameterTable_helper_WebBrowser";
             lnkBrowserInstanceSelector.CommandDisplay = "Select WebBrowser Instance";
             lnkBrowserInstanceSelector.Click += (sender, e) => linkWebBrowserInstanceSelector_Click(sender, e, editor);
             helpers.Add(lnkBrowserInstanceSelector);
 
-            lnkWindowNameSelector = CommandControls.CreateUIHelper();
+            lnkWindowNameSelector = CommandControls.CreateSimpleUIHelper(nameof(v_LoopActionParameterTable) + "_customhelper_1", LoopGridViewHelper);
             lnkWindowNameSelector.Name = "v_LoopActionParameterTable_helper_WindowName";
             lnkWindowNameSelector.CommandDisplay = "Select Window Name";
             lnkWindowNameSelector.Click += (sender, e) => linkWindowNameSelector_Click(sender, e, editor);
             helpers.Add(lnkWindowNameSelector);
 
-            lnkBooleanSelector = CommandControls.CreateUIHelper();
+            lnkBooleanSelector = CommandControls.CreateSimpleUIHelper(nameof(v_LoopActionParameterTable) + "_customhelper_2", LoopGridViewHelper);
             lnkBooleanSelector.Name = "v_LoopActionParameterTable_helper_Boolean";
             lnkBooleanSelector.CommandDisplay = "Select Boolean Instance";
             lnkBooleanSelector.Click += (sender, e) => linkBooleanInstanceSelector_Click(sender, e, editor);

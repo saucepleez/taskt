@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
             //create window name helper control
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
             RenderedControls.Add(VariableNameControl);
 
             return RenderedControls;

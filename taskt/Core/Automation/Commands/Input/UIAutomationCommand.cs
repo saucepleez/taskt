@@ -647,7 +647,7 @@ namespace taskt.Core.Automation.Commands
             //SearchParametersGridViewHelper.Width = 500;
             //SearchParametersGridViewHelper.Height = 140;
             //SearchParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIASearchParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-            SearchParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIASearchParameters", false, false, false, 500, 240);
+            SearchParametersGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_UIASearchParameters", this, false, false, false, 500, 240);
             SearchParametersGridViewHelper.CellBeginEdit += SearchParametersGridViewHelper_CellBeginEdit;
             SearchParametersGridViewHelper.CellClick += SearchParametersGridViewHelper_CellClick;
 
@@ -675,7 +675,7 @@ namespace taskt.Core.Automation.Commands
             //ActionParametersGridViewHelper.Width = 500;
             //ActionParametersGridViewHelper.Height = 140;
             //ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-            ActionParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_UIAActionParameters", false, false, false, 500, 140);
+            ActionParametersGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_UIAActionParameters", this, false, false, false, 500, 140);
             ActionParametersGridViewHelper.MouseEnter += ActionParametersGridViewHelper_MouseEnter;
             //ActionParametersGridViewHelper.CellBeginEdit += ActionParametersGridViewHelper_CellBeginEdit;
             //ActionParametersGridViewHelper.CellClick += ActionParametersGridViewHelper_CellClick;
@@ -703,7 +703,7 @@ namespace taskt.Core.Automation.Commands
             //helperControl.ForeColor = Color.AliceBlue;
             //helperControl.Font = new Font("Segoe UI Semilight", 10);         
             //helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-            CommandItemControl helperControl = CommandControls.CreateUIHelper();
+            CommandItemControl helperControl = CommandControls.CreateSimpleUIHelper(nameof(v_UIASearchParameters) + "_helper", SearchParametersGridViewHelper);
             helperControl.CommandDisplay = "Element Recorder";
             helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
             helperControl.Click += ShowRecorder;
@@ -719,17 +719,17 @@ namespace taskt.Core.Automation.Commands
             //window name
             RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
             WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
             RenderedControls.Add(WindowNameControl);
 
             RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
-            var emptyParameterLink = CommandControls.CreateUIHelper();
+            var emptyParameterLink = CommandControls.CreateSimpleUIHelper(nameof(v_UIASearchParameters) + "_customhelper_0", SearchParametersGridViewHelper);
             emptyParameterLink.CommandDisplay = "Add empty parameters";
             emptyParameterLink.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
             emptyParameterLink.Click += (sender, e) => EmptySearchParameterClicked(sender, e);
 
-            var inspectParserLink = CommandControls.CreateUIHelper();
+            var inspectParserLink = CommandControls.CreateSimpleUIHelper(nameof(v_UIASearchParameters) + "_customhelper_1", SearchParametersGridViewHelper);
             inspectParserLink.CommandDisplay = "Inspect Tool Parser";
             inspectParserLink.DrawIcon = taskt.Properties.Resources.command_window;
             inspectParserLink.Click += (sender, e) => InspectToolParserClicked(sender, e);
@@ -739,7 +739,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(helperControl);
             RenderedControls.Add(emptyParameterLink);
             RenderedControls.Add(inspectParserLink);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIASearchParameters", this, new Control[] { SearchParametersGridViewHelper }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_UIASearchParameters", this, SearchParametersGridViewHelper, editor));
             RenderedControls.Add(SearchParametersGridViewHelper);
 
             
@@ -747,7 +747,7 @@ namespace taskt.Core.Automation.Commands
 
             //create action parameters
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UIAActionParameters", this, new Control[] { ActionParametersGridViewHelper }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_UIAActionParameters", this, ActionParametersGridViewHelper, editor));
             RenderedControls.Add(ActionParametersGridViewHelper);
 
             return RenderedControls;

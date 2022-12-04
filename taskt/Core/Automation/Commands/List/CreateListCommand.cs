@@ -83,21 +83,22 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            var ListValuesGridViewHelper = (DataGridView)this.ControlsList[nameof(v_ListValues)];
+            //var ListValuesGridViewHelper = (DataGridView)this.ControlsList[nameof(v_ListValues)];
 
-            if (ListValuesGridViewHelper.IsCurrentCellDirty || ListValuesGridViewHelper.IsCurrentRowDirty)
-            {
-                ListValuesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_ListValues.NewRow();
-                v_ListValues.Rows.Add(newRow);
-                for (var i = v_ListValues.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_ListValues.Rows[i][0].ToString() == "")
-                    {
-                        v_ListValues.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (ListValuesGridViewHelper.IsCurrentCellDirty || ListValuesGridViewHelper.IsCurrentRowDirty)
+            //{
+            //    ListValuesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_ListValues.NewRow();
+            //    v_ListValues.Rows.Add(newRow);
+            //    for (var i = v_ListValues.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_ListValues.Rows[i][0].ToString() == "")
+            //        {
+            //            v_ListValues.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_ListValues)], v_ListValues);
         }
     }
 }
