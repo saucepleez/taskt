@@ -797,13 +797,13 @@ namespace taskt.UI.CustomControls
                 //    uiHelper.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
                 //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
-                    // show mouse position
-                    uiHelper.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
-                    uiHelper.CommandDisplay = "Capture Mouse Position";
-                    uiHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                    uiHelper.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
+                //    // show mouse position
+                //    uiHelper.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
+                //    uiHelper.CommandDisplay = "Capture Mouse Position";
+                //    uiHelper.DrawIcon = Properties.Resources.taskt_element_helper;
+                //    uiHelper.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
+                //    break;
 
                 case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
                     // show ui element recorder
@@ -1448,26 +1448,26 @@ namespace taskt.UI.CustomControls
         //        }
         //    }
         //}
-        private static void ShowMouseCaptureForm(object sender, EventArgs e)
-        {
-            using (Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new Forms.Supplemental.frmShowCursorPosition())
-            {
-                //if user made a successful selection
-                if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
-                {
-                    //Todo - ideally one function to add to textbox which adds to class
+        //private static void ShowMouseCaptureForm(object sender, EventArgs e)
+        //{
+        //    using (Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new Forms.Supplemental.frmShowCursorPosition())
+        //    {
+        //        //if user made a successful selection
+        //        if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
+        //        {
+        //            //Todo - ideally one function to add to textbox which adds to class
 
-                    //add selected variables to associated control text
-                    CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
-                    CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
+        //            //add selected variables to associated control text
+        //            CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
+        //            CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
 
-                    //find current command and add to underlying class
-                    Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
-                    cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
-                    cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
-                }
-            }
-        }
+        //            //find current command and add to underlying class
+        //            Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
+        //            cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
+        //            cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
+        //        }
+        //    }
+        //}
         public static void ShowVariableSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             //get copy of user variables and append system variables, then load to combobox
