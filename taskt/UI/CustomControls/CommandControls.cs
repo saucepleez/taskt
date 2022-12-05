@@ -833,12 +833,12 @@ namespace taskt.UI.CustomControls
                 //    uiHelper.Click += (sender, e) => AddInputParameter(sender, e, editor);
                 //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
-                    // show html builder
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Launch HTML Builder";
-                    uiHelper.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
+                //    // show html builder
+                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //    uiHelper.CommandDisplay = "Launch HTML Builder";
+                //    uiHelper.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
+                //    break;
 
                 case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
                     // show if builder
@@ -1728,30 +1728,28 @@ namespace taskt.UI.CustomControls
         //    editor.BringToFront();
         //}
         
-        private static void ShowHTMLBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            using (var htmlForm = new Forms.Supplemental.frmHTMLBuilder())
-            {
-                RichTextBox inputControl = (RichTextBox)editor.flw_InputVariables.Controls["v_InputHTML"];
-                htmlForm.rtbHTML.Text = inputControl.Text;
+        //private static void ShowHTMLBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
+        //{
+        //    using (var htmlForm = new Forms.Supplemental.frmHTMLBuilder())
+        //    {
+        //        RichTextBox inputControl = (RichTextBox)editor.flw_InputVariables.Controls["v_InputHTML"];
+        //        htmlForm.rtbHTML.Text = inputControl.Text;
 
-                if (htmlForm.ShowDialog() == DialogResult.OK)
-                {
-                    inputControl.Text = htmlForm.rtbHTML.Text;
-                }
-            }
-        }
+        //        if (htmlForm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            inputControl.Text = htmlForm.rtbHTML.Text;
+        //        }
+        //    }
+        //}
 
 
         //private static void AddInputParameter(object sender, EventArgs e, Forms.frmCommandEditor editor)
         //{
-
         //    DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
         //    var inputTable = (DataTable)inputControl.DataSource;
         //    var newRow = inputTable.NewRow();
         //    newRow["Size"] = "500,100";
         //    inputTable.Rows.Add(newRow);
-
         //}
      
         public static void ShowAllForms()
