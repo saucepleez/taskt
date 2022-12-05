@@ -230,7 +230,7 @@ namespace taskt.UI.CustomControls
             controlList.AddRange(CreateDefaultUIHelpersFor(propertyName, command, createdInput, editor, propInfo));
 
             // custom ui helper
-            controlList.AddRange(CreateCustomUIHelperFor(propertyName, command, createdInput, editor, propInfo));
+            controlList.AddRange(CreateCustomUIHelpersFor(propertyName, command, createdInput, editor, propInfo));
 
             // body
             controlList.Add(createdInput);
@@ -725,7 +725,7 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateCustomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateCustomUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
         {
             if (propInfo == null)
             {
@@ -743,7 +743,7 @@ namespace taskt.UI.CustomControls
             int counter = 0;
             foreach (var uiHelper in uiHelpers)
             {
-                ctrls.Add(CreateDefaultCostomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
+                ctrls.Add(CreateDefaultCustomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
 
                 counter++;
             }
@@ -812,19 +812,20 @@ namespace taskt.UI.CustomControls
                 //    uiHelper.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
                 //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
-                    // show dll parameters
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Generate Parameters";
-                    uiHelper.Click += (sender, e) => GenerateDLLParameters(sender, e);
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
+                //    // show dll parameters
+                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //    uiHelper.CommandDisplay = "Generate Parameters";
+                //    uiHelper.Click += (sender, e) => GenerateDLLParameters(sender, e);
+                //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
-                    // show dll explorer
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Launch DLL Explorer";
-                    uiHelper.Click += (sender, e) => ShowDLLExplorer(sender, e);
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
+                //    // show dll explorer
+                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //    uiHelper.CommandDisplay = "Launch DLL Explorer";
+                //    uiHelper.Click += (sender, e) => ShowDLLExplorer(sender, e);
+                //    break;
+
                 case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
                     // show input parameter
                     uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
@@ -863,7 +864,7 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static CommandItemControl CreateDefaultCostomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
+        public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
         {
             var uiHelper = CreateSimpleUIHelper(propertyName + "_customhelper_" + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
             uiHelper.CommandDisplay = setting.labelText;
@@ -1726,111 +1727,7 @@ namespace taskt.UI.CustomControls
         //    editor.WindowState = FormWindowState.Normal;
         //    editor.BringToFront();
         //}
-        private static void GenerateDLLParameters(object sender, EventArgs e)
-        {
-
-
-            Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
-
-            var filePath = CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text;
-            var className = CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text;
-            var methodName = CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text;
-            DataGridView parameterBox = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_MethodParameters"];
-
-            //clear all rows
-            cmd.v_MethodParameters.Rows.Clear();
-
-            //Load Assembly
-            try
-            {
-                Assembly requiredAssembly = Assembly.LoadFrom(filePath);
-
-                //get type
-                Type t = requiredAssembly.GetType(className);
-
-                //verify type was found
-                if (t == null)
-                {
-                    MessageBox.Show("The class '" + className + "' was not found in assembly loaded at '" + filePath + "'", "Class Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                //get method
-                MethodInfo m = t.GetMethod(methodName);
-
-                //verify method found
-                if (m == null)
-                {
-                    MessageBox.Show("The method '" + methodName + "' was not found in assembly loaded at '" + filePath + "'", "Method Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                //get parameters
-                var reqdParams = m.GetParameters();
-
-                if (reqdParams.Length > 0)
-                {
-                    cmd.v_MethodParameters.Rows.Clear();
-                    foreach (var param in reqdParams)
-                    {
-                        cmd.v_MethodParameters.Rows.Add(param.Name, "");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("There was an error generating the parameters: " + ex.ToString());
-            }
-        }
-        private static void ShowDLLExplorer(object sender, EventArgs e)
-        {
-            //create form
-            using (Forms.Supplemental.frmDLLExplorer dllExplorer = new Forms.Supplemental.frmDLLExplorer())
-            {
-                //show dialog
-                if (dllExplorer.ShowDialog() == DialogResult.OK)
-                {
-                    //user accepted the selections
-                    //declare command
-                    Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
-
-                    //add file name
-                    if (!string.IsNullOrEmpty(dllExplorer.FileName))
-                    {
-                        CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
-                    }
-
-                    //add class name
-                    if (dllExplorer.lstClasses.SelectedItem != null)
-                    {
-                        CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
-                    }
-
-                    //add method name
-                    if (dllExplorer.lstMethods.SelectedItem != null)
-                    {
-                        CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
-                    }
-
-                    cmd.v_MethodParameters.Rows.Clear();
-
-                    //add parameters
-                    if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
-                    {
-                        foreach (var param in dllExplorer.SelectedParameters)
-                        {
-                            cmd.v_MethodParameters.Rows.Add(param, "");
-                        }
-                    }
-                }
-            }
-        }
+        
         private static void ShowHTMLBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             using (var htmlForm = new Forms.Supplemental.frmHTMLBuilder())
