@@ -118,7 +118,7 @@
             ShowImageRecogitionHelper,
             //ShowCodeBuilder,
             //ShowMouseCaptureHelper,
-            ShowElementRecorder,
+            //ShowElementRecorder,
             GenerateDLLParameters,
             ShowDLLExplorer,
             AddInputParameter,

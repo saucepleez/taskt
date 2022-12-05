@@ -805,12 +805,12 @@ namespace taskt.UI.CustomControls
                 //    uiHelper.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
                 //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
-                    // show ui element recorder
-                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                    uiHelper.CommandDisplay = "Element Recorder";
-                    uiHelper.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
+                //    // show ui element recorder
+                //    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                //    uiHelper.CommandDisplay = "Element Recorder";
+                //    uiHelper.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
+                //    break;
 
                 case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
                     // show dll parameters
@@ -1708,24 +1708,24 @@ namespace taskt.UI.CustomControls
 
 
         }
-        private static void ShowElementRecorder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            //get command reference
-            Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)editor.selectedCommand;
+        //private static void ShowElementRecorder(object sender, EventArgs e, Forms.frmCommandEditor editor)
+        //{
+        //    //get command reference
+        //    Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)editor.selectedCommand;
 
-            //create recorder
-            Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
+        //    //create recorder
+        //    Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Forms.Supplemental.frmThickAppElementRecorder();
+        //    newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
 
-            //show form
-            newElementRecorder.ShowDialog();
+        //    //show form
+        //    newElementRecorder.ShowDialog();
 
-            ComboBox txtWindowName = (ComboBox)editor.flw_InputVariables.Controls["v_WindowName"];
-            txtWindowName.Text = newElementRecorder.cboWindowTitle.Text;
+        //    ComboBox txtWindowName = (ComboBox)editor.flw_InputVariables.Controls["v_WindowName"];
+        //    txtWindowName.Text = newElementRecorder.cboWindowTitle.Text;
 
-            editor.WindowState = FormWindowState.Normal;
-            editor.BringToFront();
-        }
+        //    editor.WindowState = FormWindowState.Normal;
+        //    editor.BringToFront();
+        //}
         private static void GenerateDLLParameters(object sender, EventArgs e)
         {
 
