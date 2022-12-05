@@ -121,7 +121,7 @@
             //ShowElementRecorder,
             //GenerateDLLParameters,
             //ShowDLLExplorer,
-            AddInputParameter,
+            //AddInputParameter,
             ShowHTMLBuilder,
             ShowIfBuilder,
             ShowLoopBuilder

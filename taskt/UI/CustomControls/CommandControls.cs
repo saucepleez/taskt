@@ -826,12 +826,12 @@ namespace taskt.UI.CustomControls
                 //    uiHelper.Click += (sender, e) => ShowDLLExplorer(sender, e);
                 //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
-                    // show input parameter
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Add Input Parameter";
-                    uiHelper.Click += (sender, e) => AddInputParameter(sender, e, editor);
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
+                //    // show input parameter
+                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
+                //    uiHelper.CommandDisplay = "Add Input Parameter";
+                //    uiHelper.Click += (sender, e) => AddInputParameter(sender, e, editor);
+                //    break;
 
                 case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
                     // show html builder
@@ -1743,16 +1743,16 @@ namespace taskt.UI.CustomControls
         }
 
 
-        private static void AddInputParameter(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
+        //private static void AddInputParameter(object sender, EventArgs e, Forms.frmCommandEditor editor)
+        //{
 
-            DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
-            var inputTable = (DataTable)inputControl.DataSource;
-            var newRow = inputTable.NewRow();
-            newRow["Size"] = "500,100";
-            inputTable.Rows.Add(newRow);
+        //    DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
+        //    var inputTable = (DataTable)inputControl.DataSource;
+        //    var newRow = inputTable.NewRow();
+        //    newRow["Size"] = "500,100";
+        //    inputTable.Rows.Add(newRow);
 
-        }
+        //}
      
         public static void ShowAllForms()
         {
