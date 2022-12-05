@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using System.Drawing;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -21,40 +22,42 @@ namespace taskt.Core.Automation.Commands
     public class ExecuteDLLCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the DLL file")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the DLL File")]
-        [Attributes.PropertyAttributes.SampleUsage("C:\\temp\\myfile.dll or {vDLLFilePath}")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer)]
+        [PropertyDescription("Please indicate the path to the DLL file")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter or Select the path to the DLL File")]
+        [SampleUsage("C:\\temp\\myfile.dll or {vDLLFilePath}")]
+        [Remarks("")]
+        //[Attributes.PropertyAttributes.PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer)]
+        [PropertyCustomUIHelper("Launch DLL Explorer", nameof(lnkShowDLLExplorer_Clicked))]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the name of the class that contains the method to be invoked")]
-        [Attributes.PropertyAttributes.InputSpecification("Provide the parent class name in the DLL.")]
-        [Attributes.PropertyAttributes.SampleUsage("Namespace should be included, myNamespace.myClass*")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please select the name of the class that contains the method to be invoked")]
+        [InputSpecification("Provide the parent class name in the DLL.")]
+        [SampleUsage("Namespace should be included, myNamespace.myClass*")]
+        [Remarks("")]
         public string v_ClassName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the name of the method in the class to invoke")]
-        [Attributes.PropertyAttributes.InputSpecification("Provide the method name in the DLL to be invoked.")]
-        [Attributes.PropertyAttributes.SampleUsage("**GetSomething**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please select the name of the method in the class to invoke")]
+        [InputSpecification("Provide the method name in the DLL to be invoked.")]
+        [SampleUsage("**GetSomething**")]
+        [Remarks("")]
         public string v_MethodName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the result")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyDescription("Please select the variable to receive the result")]
+        [InputSpecification("Select or provide a variable from the variable list")]
+        [SampleUsage("**vSomeVariable**")]
+        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         public string v_applyToVariableName { get; set; }
 
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the parameters (if required)")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the 'Generate Parameters' button once you have indicated a file, class, and method.")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the parameters (if required)")]
+        [InputSpecification("Select the 'Generate Parameters' button once you have indicated a file, class, and method.")]
+        [SampleUsage("")]
+        [Remarks("")]
+        //[Attributes.PropertyAttributes.PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters)]
+        [PropertyCustomUIHelper("Generate DLL Parameter", nameof(lnkGenerateDLLParameters_Clicked))]
         public DataTable v_MethodParameters { get; set; }
 
         [XmlIgnore]
@@ -221,7 +224,7 @@ namespace taskt.Core.Automation.Commands
                 settings.Formatting = Formatting.Indented;
 
                 //convert to json
-                result = Newtonsoft.Json.JsonConvert.SerializeObject(result, settings);
+                result = JsonConvert.SerializeObject(result, settings);
             }
     
             //store result in variable
@@ -247,6 +250,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(VariableNameControl);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
+            RenderedControls.AddRange(CommandControls.CreateCustomUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
             RenderedControls.Add(ParametersGridViewHelper);
 
@@ -288,6 +292,120 @@ namespace taskt.Core.Automation.Commands
             //    }
             //}
             DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_MethodParameters)], v_MethodParameters);
+        }
+
+        private void lnkGenerateDLLParameters_Clicked(object sender, EventArgs e)
+        {
+            //Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
+
+            //var filePath = CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text;
+            //var className = CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text;
+            //var methodName = CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text;
+            var filePath = v_FilePath;
+            var className = v_ClassName;
+            var methodName = v_MethodName;
+
+            //DataGridView parameterBox = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_MethodParameters"];
+
+            //clear all rows
+            //cmd.v_MethodParameters.Rows.Clear();
+            v_MethodParameters.Rows.Clear();
+
+            //Load Assembly
+            try
+            {
+                Assembly requiredAssembly = Assembly.LoadFrom(filePath);
+
+                //get type
+                Type t = requiredAssembly.GetType(className);
+
+                //verify type was found
+                if (t == null)
+                {
+                    MessageBox.Show("The class '" + className + "' was not found in assembly loaded at '" + filePath + "'", "Class Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                //get method
+                MethodInfo m = t.GetMethod(methodName);
+
+                //verify method found
+                if (m == null)
+                {
+                    MessageBox.Show("The method '" + methodName + "' was not found in assembly loaded at '" + filePath + "'", "Method Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                //get parameters
+                var reqdParams = m.GetParameters();
+                if (reqdParams.Length > 0)
+                {
+                    //cmd.v_MethodParameters.Rows.Clear();
+                    v_MethodParameters.Rows.Clear();
+                    foreach (var param in reqdParams)
+                    {
+                        //cmd.v_MethodParameters.Rows.Add(param.Name, "");
+                        v_MethodParameters.Rows.Add(param.Name, "");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("There was an error generating the parameters: " + ex.ToString());
+            }
+        }
+
+        private void lnkShowDLLExplorer_Clicked(object sender, EventArgs e)
+        {
+            //create form
+            using (UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer())
+            {
+                //show dialog
+                if (dllExplorer.ShowDialog() == DialogResult.OK)
+                {
+                    //user accepted the selections
+                    //declare command
+                    //Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
+
+                    //add file name
+                    if (!string.IsNullOrEmpty(dllExplorer.FileName))
+                    {
+                        //CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
+                        v_FilePath = dllExplorer.FileName;
+                    }
+
+                    //add class name
+                    if (dllExplorer.lstClasses.SelectedItem != null)
+                    {
+                        //CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
+                        v_ClassName = dllExplorer.lstClasses.SelectedItem.ToString();
+                    }
+
+                    //add method name
+                    if (dllExplorer.lstMethods.SelectedItem != null)
+                    {
+                        //CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
+                        v_MethodName = dllExplorer.lstMethods.SelectedItem.ToString();
+                    }
+
+                    //cmd.v_MethodParameters.Rows.Clear();
+                    v_MethodParameters.Rows.Clear();
+
+                    //add parameters
+                    if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
+                    {
+                        foreach (var param in dllExplorer.SelectedParameters)
+                        {
+                            //cmd.v_MethodParameters.Rows.Add(param, "");
+                            v_MethodParameters.Rows.Add(param, "");
+                        }
+                    }
+                }
+            }
         }
 
     }
