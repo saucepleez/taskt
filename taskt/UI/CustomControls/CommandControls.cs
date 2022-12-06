@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -99,7 +100,7 @@ namespace taskt.UI.CustomControls
             else
             {
                 // check combobox
-                var attrUIOpt = propInfo.GetCustomAttribute<PropertyUISelectionOption>();
+                var attrUIOpt = propInfo.GetCustomAttributes<PropertyUISelectionOption>().FirstOrDefault();
                 var attrIsWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
                 var attrIsVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
                 var attrInstance = propInfo.GetCustomAttribute<PropertyInstanceType>();
@@ -479,7 +480,7 @@ namespace taskt.UI.CustomControls
             }
 
             // ui options
-            var opts = propInfo.GetCustomAttributes<PropertyUISelectionOption>(true);
+            var opts = propInfo.GetCustomAttributes<PropertyUISelectionOption>();
             if (opts.Count() > 0)
             {
                 uiOptions.AddRange(opts.Select(opt => opt.uiOption).ToList());
@@ -1347,139 +1348,134 @@ namespace taskt.UI.CustomControls
 
         #endregion
 
+        #region UIHelper events
+
+        /// <summary>
+        /// show Variable Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
         public static void ShowVariableSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
 
-            //create variable selector form
-            Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList);
-
-            ////get copy of user variables and append system variables, then load to combobox
-            //var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            //variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
-            //newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
-
-            //if user pressed "OK"
-            if (newVariableSelector.ShowDialog() == DialogResult.OK)
+            using (Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList))
             {
-                //ensure that a variable was actually selected
-                //if (newVariableSelector.lstVariables.SelectedItem == null)
-                if (newVariableSelector.selectedItem == null)
+                if (newVariableSelector.ShowDialog() == DialogResult.OK)
                 {
-                    //return out as nothing was selected
-                    MessageBox.Show("There were no variables selected!");
-                    return;
-                }
-
-                //grab the referenced input assigned to the 'insert variable' button instance
-                CommandItemControl inputBox = (CommandItemControl)sender;
-                //currently variable insertion is only available for simply textboxes
-
-                //load settings
-                //var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                var settings = CurrentEditor.appSettings.EngineSettings;
-
-                if (inputBox.Tag is TextBox)
-                {
-                    TextBox targetTextbox = (TextBox)inputBox.Tag;
-                    //concat variable name with brackets [vVariable] as engine searches for the same
-                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                    //ensure that a variable was actually selected
+                    if (newVariableSelector.selectedItem == null)
                     {
-                        string str = targetTextbox.Text;
-                        int cursorPos = targetTextbox.SelectionStart;
-                        //string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                        targetTextbox.Focus();
-                        targetTextbox.SelectionStart = cursorPos + ins.Length;
-                        targetTextbox.SelectionLength = 0;
-                    }
-                    else
-                    {
-                        //targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Focus();
-                        targetTextbox.SelectionStart = targetTextbox.Text.Length;
-                        targetTextbox.SelectionLength = 0;
-                    }
-                }
-                else if (inputBox.Tag is ComboBox)
-                {
-                    ComboBox targetCombobox = (ComboBox)inputBox.Tag;
-                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
-                    {
-                        string str = targetCombobox.Text;
-                        int cursorPos;
-                        if (targetCombobox.Tag == null)
-                        {
-                            targetCombobox.Tag = 0;
-                        }
-                        if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
-                        {
-                            cursorPos = str.Length;
-                        }
-                        //string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                        targetCombobox.Focus();
-                        targetCombobox.SelectionStart = cursorPos + ins.Length;
-                        targetCombobox.SelectionLength = 0;
-                    }
-                    else
-                    {
-                        //concat variable name with brackets [vVariable] as engine searches for the same
-                        //targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Focus();
-                        targetCombobox.SelectionStart = targetCombobox.Text.Length;
-                        targetCombobox.SelectionLength = 0;
-                    }
-                }
-                else if (inputBox.Tag is DataGridView)
-                {
-                    DataGridView targetDGV = (DataGridView)inputBox.Tag;
-
-                    if (targetDGV.SelectedCells.Count == 0)
-                    {
-                        MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        //return out as nothing was selected
+                        MessageBox.Show("There were no variables selected!");
                         return;
                     }
 
-                    if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
-                    {
-                        MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    //grab the referenced input assigned to the 'insert variable' button instance
+                    CommandItemControl inputBox = (CommandItemControl)sender;
 
-                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    //load settings
+                    var settings = CurrentEditor.appSettings.EngineSettings;
+
+                    if (inputBox.Tag is TextBox targetTextbox)
                     {
-                        if (targetDGV.Tag == null)
+                        if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                        {
+                            string str = targetTextbox.Text;
+                            int cursorPos = targetTextbox.SelectionStart;
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                            targetTextbox.Focus();
+                            targetTextbox.SelectionStart = cursorPos + ins.Length;
+                            targetTextbox.SelectionLength = 0;
+                        }
+                        else
+                        {
+                            targetTextbox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Focus();
+                            targetTextbox.SelectionStart = targetTextbox.Text.Length;
+                            targetTextbox.SelectionLength = 0;
+                        }
+                    }
+                    else if (inputBox.Tag is ComboBox targetCombobox)
+                    {
+                        if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                        {
+                            string str = targetCombobox.Text;
+                            int cursorPos;
+                            if (targetCombobox.Tag == null)
+                            {
+                                targetCombobox.Tag = 0;
+                            }
+                            if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
+                            {
+                                cursorPos = str.Length;
+                            }
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                            targetCombobox.Focus();
+                            targetCombobox.SelectionStart = cursorPos + ins.Length;
+                            targetCombobox.SelectionLength = 0;
+                        }
+                        else
+                        {
+                            targetCombobox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Focus();
+                            targetCombobox.SelectionStart = targetCombobox.Text.Length;
+                            targetCombobox.SelectionLength = 0;
+                        }
+                    }
+                    else if (inputBox.Tag is DataGridView targetDGV)
+                    {
+                        if (targetDGV.SelectedCells.Count == 0)
+                        {
+                            MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
                         {
                             MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
-                        else if (targetDGV.Tag.ToString() != "column-a-editable")
-                        {
-                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
 
-                    var source = (DataTable)targetDGV.DataSource;
-                    var rowIndex = targetDGV.SelectedCells[0].RowIndex;
-                    var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
-                    if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
-                    {
-                        source.Rows.Add(source.NewRow());
+                        if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                        {
+                            if (targetDGV.Tag == null)
+                            {
+                                MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            else if (targetDGV.Tag.ToString() != "column-a-editable")
+                            {
+                                MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
+
+                        var source = (DataTable)targetDGV.DataSource;
+                        var rowIndex = targetDGV.SelectedCells[0].RowIndex;
+                        var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
+                        if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
+                        {
+                            source.Rows.Add(source.NewRow());
+                        }
+                        var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
+                        targetCell.Value += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                     }
-                    var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
-                    //targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                    targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                 }
             }
         }
+
+        /// <summary>
+        /// show File Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
         private static void ShowFileSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
@@ -1487,26 +1483,69 @@ namespace taskt.UI.CustomControls
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     CommandItemControl inputBox = (CommandItemControl)sender;
-                    //currently variable insertion is only available for simply textboxes
-                    TextBox targetTextbox = (TextBox)inputBox.Tag;
-                    //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = ofd.FileName;
+
+                    //if (inputBox.Tag is TextBox targetTextbox)
+                    //{
+                    //    targetTextbox.Text = ofd.FileName;
+                    //}
+                    //else if (inputBox.Tag is ComboBox targetCombobox)
+                    //{
+                    //    targetCombobox.Text = ofd.FileName;
+                    //}
+                    //// DataGridView not supported now
+
+                    SetControlValue((Control)inputBox.Tag, ofd.FileName);
                 }
             }
         }
+
+        /// <summary>
+        /// show Folder Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
         private static void ShowFolderSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             using (FolderBrowserDialog fbd = new FolderBrowserDialog())
             {
                 if (fbd.ShowDialog() == DialogResult.OK)
                 {
-                    CommandItemControl inputBox = (CommandItemControl)sender;
-                    TextBox targetTextBox = (TextBox)inputBox.Tag;
-                    targetTextBox.Text = fbd.SelectedPath;
+                    //CommandItemControl inputBox = (CommandItemControl)sender;
+
+                    //if (inputBox.Tag is TextBox targetTextbox)
+                    //{
+                    //    targetTextbox.Text = fbd.SelectedPath;
+                    //}
+                    //else if (inputBox.Tag is ComboBox targetCombobox)
+                    //{
+                    //    targetCombobox.Text = fbd.SelectedPath;
+                    //}
+                    //// DataGridView not supported now
+                    
+                    SetControlValue((Control)((CommandItemControl)sender).Tag, fbd.SelectedPath);
                 }
             }
         }
-        
+
+        private static void SetControlValue(Control targetControl, string newValue)
+        {
+            if (targetControl is TextBox targetText)
+            {
+                targetText.Text = newValue;
+            }
+            else if (targetControl is ComboBox targetCombo)
+            {
+                targetCombo.Text = newValue;
+            }
+            else if (targetControl is DataGridView targetDGV)
+            {
+                targetDGV.CurrentCell.Value = newValue;
+            }
+        }
+
+        #endregion
+
         public static List<AutomationCommand> GenerateCommandsandControls()
         {
             var commandList = new List<AutomationCommand>();
