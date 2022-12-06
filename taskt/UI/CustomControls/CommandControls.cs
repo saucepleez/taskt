@@ -1482,19 +1482,7 @@ namespace taskt.UI.CustomControls
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    CommandItemControl inputBox = (CommandItemControl)sender;
-
-                    //if (inputBox.Tag is TextBox targetTextbox)
-                    //{
-                    //    targetTextbox.Text = ofd.FileName;
-                    //}
-                    //else if (inputBox.Tag is ComboBox targetCombobox)
-                    //{
-                    //    targetCombobox.Text = ofd.FileName;
-                    //}
-                    //// DataGridView not supported now
-
-                    SetControlValue((Control)inputBox.Tag, ofd.FileName);
+                    SetControlValue((Control)((CommandItemControl)sender).Tag, ofd.FileName);
                 }
             }
         }
@@ -1511,18 +1499,6 @@ namespace taskt.UI.CustomControls
             {
                 if (fbd.ShowDialog() == DialogResult.OK)
                 {
-                    //CommandItemControl inputBox = (CommandItemControl)sender;
-
-                    //if (inputBox.Tag is TextBox targetTextbox)
-                    //{
-                    //    targetTextbox.Text = fbd.SelectedPath;
-                    //}
-                    //else if (inputBox.Tag is ComboBox targetCombobox)
-                    //{
-                    //    targetCombobox.Text = fbd.SelectedPath;
-                    //}
-                    //// DataGridView not supported now
-                    
                     SetControlValue((Control)((CommandItemControl)sender).Tag, fbd.SelectedPath);
                 }
             }
