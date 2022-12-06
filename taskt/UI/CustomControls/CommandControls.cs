@@ -840,17 +840,17 @@ namespace taskt.UI.CustomControls
                 //    uiHelper.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
                 //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
-                    // show if builder
-                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                    uiHelper.CommandDisplay = "Add New If Statement";
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
+                //    // show if builder
+                //    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
+                //    uiHelper.CommandDisplay = "Add New If Statement";
+                //    break;
 
-                case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
-                    // show loop builder
-                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                    uiHelper.CommandDisplay = "Add New Loop Statement";
-                    break;
+                //case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
+                //    // show loop builder
+                //    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
+                //    uiHelper.CommandDisplay = "Add New Loop Statement";
+                //    break;
             }
             return uiHelper;
         }

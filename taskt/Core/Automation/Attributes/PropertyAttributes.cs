@@ -123,8 +123,8 @@
             //ShowDLLExplorer,
             //AddInputParameter,
             //ShowHTMLBuilder,
-            ShowIfBuilder,
-            ShowLoopBuilder
+            //ShowIfBuilder,
+            //ShowLoopBuilder
         }
     }
     [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
