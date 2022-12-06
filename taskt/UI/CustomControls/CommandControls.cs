@@ -686,24 +686,24 @@ namespace taskt.UI.CustomControls
             {
                 switch (uiHelper.additionalHelper)
                 {
-                    case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
-                        //show file selector
-                        CommandItemControl captureHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                        captureHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                        captureHelper.CommandDisplay = "Capture Reference Image";
-                        captureHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                        captureHelper.Click += (sender, e) => ShowImageCapture(sender, e, editor);
+                    //case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
+                    //    //show file selector
+                    //    CommandItemControl captureHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
+                    //    captureHelper.CommandImage = Images.GetUIImage("OCRCommand");
+                    //    captureHelper.CommandDisplay = "Capture Reference Image";
+                    //    captureHelper.DrawIcon = Properties.Resources.taskt_element_helper;
+                    //    captureHelper.Click += (sender, e) => ShowImageCapture(sender, e, editor);
 
-                        count++;
-                        CommandItemControl testHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                        testHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                        testHelper.CommandDisplay = "Run Image Recognition Test";
-                        testHelper.ForeColor = Color.AliceBlue;
-                        testHelper.Click += (sender, e) => RunImageCapture(sender, e);
+                    //    count++;
+                    //    CommandItemControl testHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
+                    //    testHelper.CommandImage = Images.GetUIImage("OCRCommand");
+                    //    testHelper.CommandDisplay = "Run Image Recognition Test";
+                    //    testHelper.ForeColor = Color.AliceBlue;
+                    //    testHelper.Click += (sender, e) => RunImageCapture(sender, e);
 
-                        controlList.Add(captureHelper);
-                        controlList.Add(testHelper);
-                        break;
+                    //    controlList.Add(captureHelper);
+                    //    controlList.Add(testHelper);
+                    //    break;
 
                     default:
                         controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
@@ -1628,87 +1628,87 @@ namespace taskt.UI.CustomControls
                 }
             }
         }
-        private static void ShowImageCapture(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            //ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-            var settings = editor.appSettings;
-            var minimizePreference = settings.ClientSettings.MinimizeToTray;
+        //private static void ShowImageCapture(object sender, EventArgs e, Forms.frmCommandEditor editor)
+        //{
+        //    //ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+        //    var settings = editor.appSettings;
+        //    var minimizePreference = settings.ClientSettings.MinimizeToTray;
 
-            if (minimizePreference)
-            {
-                settings.ClientSettings.MinimizeToTray = false;
-                settings.Save(settings);
-            }
+        //    if (minimizePreference)
+        //    {
+        //        settings.ClientSettings.MinimizeToTray = false;
+        //        settings.Save(settings);
+        //    }
 
-            HideAllForms();
+        //    HideAllForms();
 
-            var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
+        //    var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
 
-            if (userAcceptance == DialogResult.Yes)
-            {
+        //    if (userAcceptance == DialogResult.Yes)
+        //    {
 
-                using (Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture())
-                {
-                    if (imageCaptureForm.ShowDialog() == DialogResult.OK)
-                    {
-                        CommandItemControl inputBox = (CommandItemControl)sender;
-                        UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-                        targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                        var convertedImage = Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
-                        var convertedLength = convertedImage.Length;
-                        targetPictureBox.EncodedImage = convertedImage;
+        //        using (Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture())
+        //        {
+        //            if (imageCaptureForm.ShowDialog() == DialogResult.OK)
+        //            {
+        //                CommandItemControl inputBox = (CommandItemControl)sender;
+        //                UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
+        //                targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
+        //                var convertedImage = Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+        //                var convertedLength = convertedImage.Length;
+        //                targetPictureBox.EncodedImage = convertedImage;
 
-                        // force set property value
-                        if (editor.selectedCommand.CommandName == "ImageRecognitionCommand")
-                        {
-                            ((Core.Automation.Commands.ImageRecognitionCommand)editor.selectedCommand).v_ImageCapture = convertedImage;
-                        }
-                        //imageCaptureForm.Show();
-                    }
-                }
-            }
+        //                // force set property value
+        //                if (editor.selectedCommand.CommandName == "ImageRecognitionCommand")
+        //                {
+        //                    ((Core.Automation.Commands.ImageRecognitionCommand)editor.selectedCommand).v_ImageCapture = convertedImage;
+        //                }
+        //                //imageCaptureForm.Show();
+        //            }
+        //        }
+        //    }
 
-            ShowAllForms();
+        //    ShowAllForms();
 
-            if (minimizePreference)
-            {
-                settings.ClientSettings.MinimizeToTray = true;
-                settings.Save(settings);
-            }
-        }
-        private static void RunImageCapture(object sender, EventArgs e)
-        {
-            //get input control
-            CommandItemControl inputBox = (CommandItemControl)sender;
-            UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-            string imageSource = targetPictureBox.EncodedImage;
+        //    if (minimizePreference)
+        //    {
+        //        settings.ClientSettings.MinimizeToTray = true;
+        //        settings.Save(settings);
+        //    }
+        //}
+        //private static void RunImageCapture(object sender, EventArgs e)
+        //{
+        //    //get input control
+        //    CommandItemControl inputBox = (CommandItemControl)sender;
+        //    UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
+        //    string imageSource = targetPictureBox.EncodedImage;
 
-            if (string.IsNullOrEmpty(imageSource))
-            {
-                MessageBox.Show("Please capture an image before attempting to test!");
-                return;
-            }
+        //    if (string.IsNullOrEmpty(imageSource))
+        //    {
+        //        MessageBox.Show("Please capture an image before attempting to test!");
+        //        return;
+        //    }
 
-            //hide all
-            HideAllForms();
+        //    //hide all
+        //    HideAllForms();
 
-            try
-            {
-                //run image recognition
-                Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
-                imageRecognitionCommand.v_ImageCapture = imageSource;
-                imageRecognitionCommand.TestMode = true;
-                imageRecognitionCommand.RunCommand(new Core.Automation.Engine.AutomationEngineInstance());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.ToString());
-            }
-            //show all forms
-            ShowAllForms();
+        //    try
+        //    {
+        //        //run image recognition
+        //        Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
+        //        imageRecognitionCommand.v_ImageCapture = imageSource;
+        //        imageRecognitionCommand.TestMode = true;
+        //        imageRecognitionCommand.RunCommand(new Core.Automation.Engine.AutomationEngineInstance());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error: " + ex.ToString());
+        //    }
+        //    //show all forms
+        //    ShowAllForms();
 
 
-        }
+        //}
         //private static void ShowElementRecorder(object sender, EventArgs e, Forms.frmCommandEditor editor)
         //{
         //    //get command reference
@@ -1752,20 +1752,20 @@ namespace taskt.UI.CustomControls
         //    inputTable.Rows.Add(newRow);
         //}
      
-        public static void ShowAllForms()
-        {
-            foreach (Form frm in Application.OpenForms)
-            {
-                frm.WindowState = FormWindowState.Normal;
-            }
-        }
-        public static void HideAllForms()
-        {
-            foreach (Form frm in Application.OpenForms)
-            {
-                frm.WindowState = FormWindowState.Minimized;
-            }
-        }
+        //public static void ShowAllForms()
+        //{
+        //    foreach (Form frm in Application.OpenForms)
+        //    {
+        //        frm.WindowState = FormWindowState.Normal;
+        //    }
+        //}
+        //public static void HideAllForms()
+        //{
+        //    foreach (Form frm in Application.OpenForms)
+        //    {
+        //        frm.WindowState = FormWindowState.Minimized;
+        //    }
+        //}
 
 
         public static List<AutomationCommand> GenerateCommandsandControls()

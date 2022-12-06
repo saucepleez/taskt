@@ -115,7 +115,7 @@
             ShowVariableHelper,
             ShowFileSelectionHelper,
             ShowFolderSelectionHelper,
-            ShowImageRecogitionHelper,
+            //ShowImageRecogitionHelper,
             //ShowCodeBuilder,
             //ShowMouseCaptureHelper,
             //ShowElementRecorder,

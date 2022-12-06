@@ -19,10 +19,12 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Capture the search image")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper)]
+        //[Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Use the tool to capture an image")]
         [Attributes.PropertyAttributes.SampleUsage("")]
         [Attributes.PropertyAttributes.Remarks("The image will be used as the image to be found on screen.")]
+        [Attributes.PropertyAttributes.PropertyCustomUIHelper("Capture Reference Image", nameof(ShowImageCapture))]
+        [Attributes.PropertyAttributes.PropertyCustomUIHelper("Run Image Recognition Test", nameof(RunImageCapture))]
         public string v_ImageCapture { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Offset X Coordinate (Default is 0)")]
@@ -303,6 +305,106 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Specified image was not found in window!");
             }
         }
+
+        private void ShowImageCapture(object sender, EventArgs e)
+        {
+            //ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            //var settings = editor.appSettings;
+            //var minimizePreference = settings.ClientSettings.MinimizeToTray;
+
+            //if (minimizePreference)
+            //{
+            //    settings.ClientSettings.MinimizeToTray = false;
+            //    settings.Save(settings);
+            //}
+
+            HideAllForms();
+
+            var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
+
+            if (userAcceptance == DialogResult.Yes)
+            {
+
+                using (UI.Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new UI.Forms.Supplement_Forms.frmImageCapture())
+                {
+                    if (imageCaptureForm.ShowDialog() == DialogResult.OK)
+                    {
+                        CommandItemControl inputBox = (CommandItemControl)sender;
+                        UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
+                        targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
+                        var convertedImage = Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                        var convertedLength = convertedImage.Length;
+                        targetPictureBox.EncodedImage = convertedImage;
+
+                        // force set property value
+                        //if (editor.selectedCommand.CommandName == "ImageRecognitionCommand")
+                        //{
+                        //    ((Core.Automation.Commands.ImageRecognitionCommand)editor.selectedCommand).v_ImageCapture = convertedImage;
+                        //}
+
+                        v_ImageCapture = convertedImage;
+
+                        //imageCaptureForm.Show();
+                    }
+                }
+            }
+
+            ShowAllForms();
+
+            //if (minimizePreference)
+            //{
+            //    settings.ClientSettings.MinimizeToTray = true;
+            //    settings.Save(settings);
+            //}
+        }
+
+        private void RunImageCapture(object sender, EventArgs e)
+        {
+            //get input control
+            CommandItemControl inputBox = (CommandItemControl)sender;
+            UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
+            string imageSource = targetPictureBox.EncodedImage;
+
+            if (string.IsNullOrEmpty(imageSource))
+            {
+                MessageBox.Show("Please capture an image before attempting to test!");
+                return;
+            }
+
+            //hide all
+            HideAllForms();
+
+            try
+            {
+                //run image recognition
+                Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
+                imageRecognitionCommand.v_ImageCapture = imageSource;
+                imageRecognitionCommand.TestMode = true;
+                imageRecognitionCommand.RunCommand(new Core.Automation.Engine.AutomationEngineInstance());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.ToString());
+            }
+            //show all forms
+            ShowAllForms();
+        }
+
+        private static void ShowAllForms()
+        {
+            foreach (Form frm in Application.OpenForms)
+            {
+                frm.WindowState = FormWindowState.Normal;
+            }
+        }
+        private static void HideAllForms()
+        {
+            foreach (Form frm in Application.OpenForms)
+            {
+                frm.WindowState = FormWindowState.Minimized;
+            }
+        }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -314,7 +416,8 @@ namespace taskt.Core.Automation.Commands
             imageCapture.DataBindings.Add("EncodedImage", this, "v_ImageCapture", false, DataSourceUpdateMode.OnPropertyChanged);
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ImageCapture", this));
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_ImageCapture", this, imageCapture, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_ImageCapture", this, imageCapture, editor));
+            RenderedControls.AddRange(CommandControls.CreateCustomUIHelpersFor(nameof(v_ImageCapture), this, imageCapture, editor));
             RenderedControls.Add(imageCapture);
 
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_xOffsetAdjustment", this, editor));
