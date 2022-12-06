@@ -684,31 +684,7 @@ namespace taskt.UI.CustomControls
             int count = 0;
             foreach (PropertyUIHelper uiHelper in propertyUIHelpers)
             {
-                switch (uiHelper.additionalHelper)
-                {
-                    //case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
-                    //    //show file selector
-                    //    CommandItemControl captureHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                    //    captureHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                    //    captureHelper.CommandDisplay = "Capture Reference Image";
-                    //    captureHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                    //    captureHelper.Click += (sender, e) => ShowImageCapture(sender, e, editor);
-
-                    //    count++;
-                    //    CommandItemControl testHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                    //    testHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                    //    testHelper.CommandDisplay = "Run Image Recognition Test";
-                    //    testHelper.ForeColor = Color.AliceBlue;
-                    //    testHelper.Click += (sender, e) => RunImageCapture(sender, e);
-
-                    //    controlList.Add(captureHelper);
-                    //    controlList.Add(testHelper);
-                    //    break;
-
-                    default:
-                        controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
-                        break;
-                }
+                controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
 
                 count++;
             }
@@ -789,68 +765,6 @@ namespace taskt.UI.CustomControls
                     uiHelper.DrawIcon = Properties.Resources.taskt_folder_helper;
                     uiHelper.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
                     break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
-                //    //show code builder
-                //    uiHelper.CommandImage = Images.GetUIImage("RunScriptCommand");
-                //    uiHelper.CommandDisplay = "Code Builder";
-                //    uiHelper.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
-                //    // show mouse position
-                //    uiHelper.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
-                //    uiHelper.CommandDisplay = "Capture Mouse Position";
-                //    uiHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                //    uiHelper.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
-                //    // show ui element recorder
-                //    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                //    uiHelper.CommandDisplay = "Element Recorder";
-                //    uiHelper.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
-                //    // show dll parameters
-                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //    uiHelper.CommandDisplay = "Generate Parameters";
-                //    uiHelper.Click += (sender, e) => GenerateDLLParameters(sender, e);
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
-                //    // show dll explorer
-                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //    uiHelper.CommandDisplay = "Launch DLL Explorer";
-                //    uiHelper.Click += (sender, e) => ShowDLLExplorer(sender, e);
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
-                //    // show input parameter
-                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //    uiHelper.CommandDisplay = "Add Input Parameter";
-                //    uiHelper.Click += (sender, e) => AddInputParameter(sender, e, editor);
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
-                //    // show html builder
-                //    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                //    uiHelper.CommandDisplay = "Launch HTML Builder";
-                //    uiHelper.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
-                //    // show if builder
-                //    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                //    uiHelper.CommandDisplay = "Add New If Statement";
-                //    break;
-
-                //case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
-                //    // show loop builder
-                //    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                //    uiHelper.CommandDisplay = "Add New Loop Statement";
-                //    break;
             }
             return uiHelper;
         }
@@ -1433,42 +1347,6 @@ namespace taskt.UI.CustomControls
 
         #endregion
 
-
-        //private static void ShowCodeBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        //{
-        //    //get textbox text
-        //    CommandItemControl commandItem = (CommandItemControl)sender;
-        //    TextBox targetTextbox = (TextBox)commandItem.Tag;
-
-        //    using (Forms.Supplemental.frmCodeBuilder codeBuilder = new Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
-        //    {
-        //        if (codeBuilder.ShowDialog() == DialogResult.OK)
-        //        {
-
-        //            targetTextbox.Text = codeBuilder.rtbCode.Text;
-        //        }
-        //    }
-        //}
-        //private static void ShowMouseCaptureForm(object sender, EventArgs e)
-        //{
-        //    using (Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new Forms.Supplemental.frmShowCursorPosition())
-        //    {
-        //        //if user made a successful selection
-        //        if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
-        //        {
-        //            //Todo - ideally one function to add to textbox which adds to class
-
-        //            //add selected variables to associated control text
-        //            CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
-        //            CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
-
-        //            //find current command and add to underlying class
-        //            Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
-        //            cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
-        //            cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
-        //        }
-        //    }
-        //}
         public static void ShowVariableSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             //get copy of user variables and append system variables, then load to combobox
@@ -1628,146 +1506,7 @@ namespace taskt.UI.CustomControls
                 }
             }
         }
-        //private static void ShowImageCapture(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        //{
-        //    //ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-        //    var settings = editor.appSettings;
-        //    var minimizePreference = settings.ClientSettings.MinimizeToTray;
-
-        //    if (minimizePreference)
-        //    {
-        //        settings.ClientSettings.MinimizeToTray = false;
-        //        settings.Save(settings);
-        //    }
-
-        //    HideAllForms();
-
-        //    var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
-
-        //    if (userAcceptance == DialogResult.Yes)
-        //    {
-
-        //        using (Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture())
-        //        {
-        //            if (imageCaptureForm.ShowDialog() == DialogResult.OK)
-        //            {
-        //                CommandItemControl inputBox = (CommandItemControl)sender;
-        //                UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-        //                targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-        //                var convertedImage = Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
-        //                var convertedLength = convertedImage.Length;
-        //                targetPictureBox.EncodedImage = convertedImage;
-
-        //                // force set property value
-        //                if (editor.selectedCommand.CommandName == "ImageRecognitionCommand")
-        //                {
-        //                    ((Core.Automation.Commands.ImageRecognitionCommand)editor.selectedCommand).v_ImageCapture = convertedImage;
-        //                }
-        //                //imageCaptureForm.Show();
-        //            }
-        //        }
-        //    }
-
-        //    ShowAllForms();
-
-        //    if (minimizePreference)
-        //    {
-        //        settings.ClientSettings.MinimizeToTray = true;
-        //        settings.Save(settings);
-        //    }
-        //}
-        //private static void RunImageCapture(object sender, EventArgs e)
-        //{
-        //    //get input control
-        //    CommandItemControl inputBox = (CommandItemControl)sender;
-        //    UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-        //    string imageSource = targetPictureBox.EncodedImage;
-
-        //    if (string.IsNullOrEmpty(imageSource))
-        //    {
-        //        MessageBox.Show("Please capture an image before attempting to test!");
-        //        return;
-        //    }
-
-        //    //hide all
-        //    HideAllForms();
-
-        //    try
-        //    {
-        //        //run image recognition
-        //        Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
-        //        imageRecognitionCommand.v_ImageCapture = imageSource;
-        //        imageRecognitionCommand.TestMode = true;
-        //        imageRecognitionCommand.RunCommand(new Core.Automation.Engine.AutomationEngineInstance());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error: " + ex.ToString());
-        //    }
-        //    //show all forms
-        //    ShowAllForms();
-
-
-        //}
-        //private static void ShowElementRecorder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        //{
-        //    //get command reference
-        //    Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)editor.selectedCommand;
-
-        //    //create recorder
-        //    Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Forms.Supplemental.frmThickAppElementRecorder();
-        //    newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
-
-        //    //show form
-        //    newElementRecorder.ShowDialog();
-
-        //    ComboBox txtWindowName = (ComboBox)editor.flw_InputVariables.Controls["v_WindowName"];
-        //    txtWindowName.Text = newElementRecorder.cboWindowTitle.Text;
-
-        //    editor.WindowState = FormWindowState.Normal;
-        //    editor.BringToFront();
-        //}
         
-        //private static void ShowHTMLBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        //{
-        //    using (var htmlForm = new Forms.Supplemental.frmHTMLBuilder())
-        //    {
-        //        RichTextBox inputControl = (RichTextBox)editor.flw_InputVariables.Controls["v_InputHTML"];
-        //        htmlForm.rtbHTML.Text = inputControl.Text;
-
-        //        if (htmlForm.ShowDialog() == DialogResult.OK)
-        //        {
-        //            inputControl.Text = htmlForm.rtbHTML.Text;
-        //        }
-        //    }
-        //}
-
-
-        //private static void AddInputParameter(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        //{
-        //    DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
-        //    var inputTable = (DataTable)inputControl.DataSource;
-        //    var newRow = inputTable.NewRow();
-        //    newRow["Size"] = "500,100";
-        //    inputTable.Rows.Add(newRow);
-        //}
-     
-        //public static void ShowAllForms()
-        //{
-        //    foreach (Form frm in Application.OpenForms)
-        //    {
-        //        frm.WindowState = FormWindowState.Normal;
-        //    }
-        //}
-        //public static void HideAllForms()
-        //{
-        //    foreach (Form frm in Application.OpenForms)
-        //    {
-        //        frm.WindowState = FormWindowState.Minimized;
-        //    }
-        //}
-
-
         public static List<AutomationCommand> GenerateCommandsandControls()
         {
             var commandList = new List<AutomationCommand>();
