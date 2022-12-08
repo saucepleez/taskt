@@ -1,20 +1,17 @@
-﻿using ADODB;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using taskt.Core.Automation.Attributes;
 using taskt.Core.Automation.Commands;
 
 namespace taskt.Core
 {
-     /// <summary>
-     /// This class generates markdown files for use in the official taskt wiki
-     /// </summary>
-     public static class DocumentationGeneration
+    /// <summary>
+    /// This class generates markdown files for use in the official taskt wiki
+    /// </summary>
+    public static class DocumentationGeneration
      {
         private class CommandMetaData
         {
@@ -47,21 +44,19 @@ namespace taskt.Core
                         .Where(t => t.BaseType.Name == "ScriptCommand")
                         .ToList();
 
-
-            var highLevelCommandInfo = new List<CommandMetaData>();
-            StringBuilder sb;
-            string fullFileName;
-
+            // load settings
             var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
             settings.ClientSettings.ShowSampleUsageInDescription = false;   // output trick
 
-            //loop each command
+            // loop each command
+            var highLevelCommandInfo = new List<CommandMetaData>();
             foreach (var commandClass in commandClasses)
             {
                 highLevelCommandInfo.Add(GenerateMarkdownCommandFile(commandClass, settings, docsFolderName, en));
             }
 
-            sb = new StringBuilder();
+            // output index
+            var sb = new StringBuilder();
             sb.AppendLine("<!--TITLE: Automation Commands -->");
             sb.AppendLine("<!-- SUBTITLE: an overview of available commands in taskt. -->");
             sb.AppendLine("## Automation Commands");
@@ -95,7 +90,7 @@ namespace taskt.Core
             sb.AppendLine("- [Ask a question on Gitter](" + MyURLs.GitterURL + ")");
 
             //write file
-            fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
+            string fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
             // release
@@ -124,6 +119,15 @@ namespace taskt.Core
             sb.AppendLine("<!-- SUBTITLE: a command in the " + groupName + " group. -->");
 
             sb.AppendLine("[Go To Automation Commands Overview](/automation-commands.md)");
+
+            if (subGroupName != "")
+            {
+                sb.AppendLine(groupName + " &gt; " + subGroupName + " &gt; " + commandName);
+            }
+            else
+            {
+                sb.AppendLine(groupName + " &gt; " + commandName);
+            }
 
             sb.AppendLine(Environment.NewLine);
             sb.AppendLine("# " + commandName + " Command");
@@ -154,10 +158,10 @@ namespace taskt.Core
             {
                 var commandLabel = UI.CustomControls.CommandControls.GetLabelText(prop.Name, prop, settings);
 
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.InputSpecification)));
-                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage)));
+                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.InputSpecification>()?.inputSpecification ?? "");
+                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.SampleUsage>()?.sampleUsage ?? "");
 
-                var remarks = settings.EngineSettings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.Remarks)));
+                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.Remarks>()?.remarks ?? "");
                 remarks = remarks.Replace("\n", "<br>");
 
                 //append to parameter table
@@ -169,15 +173,18 @@ namespace taskt.Core
             // add additional parameter info
             foreach (var prop in propInfos)
             {
-                var commandLabel = settings.EngineSettings.replaceEngineKeyword(GetPropertyValue(prop, typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription)));
-                var paramInfos = prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true);
-                if (paramInfos.Length > 0)
+                //var commandLabel = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.PropertyDescription>()?.propertyDescription ?? "");
+                var commandLabel = UI.CustomControls.CommandControls.GetLabelText(prop.Name, prop, settings);
+
+                //var paramInfos = prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true);
+                var paramInfos = prop.GetCustomAttributes<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
+                if (paramInfos.Count > 0)
                 {
                     sb.AppendLine("### Addtional Info about &quot;" + commandLabel + "&quot;");
                     sb.AppendLine("| Parameter Value(s) | Description   | Sample Data 	| Remarks  	|");
                     sb.AppendLine("| ---             | ---           | ---          | ---       |");
 
-                    foreach (Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo pInfo in paramInfos)
+                    foreach (var pInfo in paramInfos)
                     {
                         var searchKey = pInfo.searchKey.Replace("\t", " &amp; ");
                         var desc = pInfo.description;
@@ -222,77 +229,6 @@ namespace taskt.Core
             var serverPath = "/" + kebobDestination + "/" + kebobFileName;
            
             return new CommandMetaData() { Group = groupName, Description = classDescription, Name = commandName, Location = serverPath };
-        }
-
-        public static string GetPropertyValue(PropertyInfo prop, Type attributeType)
-        {
-            var attribute = prop.GetCustomAttributes(attributeType, true);
-
-            if (attribute.Length == 0)
-            {
-                return "Data not specified";
-            }
-            else
-            {
-                var attributeFound = attribute[0];
-
-                if (attributeFound is Core.Automation.Attributes.PropertyAttributes.PropertyDescription)
-                {
-                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)attributeFound;
-                    return processedAttribute.propertyDescription;
-                }
-                else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.InputSpecification)
-                {
-                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.InputSpecification)attributeFound;
-                    return processedAttribute.inputSpecification;
-                }
-                else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.SampleUsage)
-                {
-                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.SampleUsage)attributeFound;
-                    return processedAttribute.sampleUsage;
-                }
-                else if (attributeFound is Core.Automation.Attributes.PropertyAttributes.Remarks)
-                {
-                    var processedAttribute = (Core.Automation.Attributes.PropertyAttributes.Remarks)attributeFound;
-                    return processedAttribute.remarks;
-                }
-                else
-                {
-                    return "Attribute not supported";
-                }
-            }
-
-        }
-        public static string GetClassValue(Type commandClass, Type attributeType)
-        {
-            var attribute = commandClass.GetCustomAttributes(attributeType, true);
-
-            if (attribute.Length == 0)
-            {
-                return "Data not specified";
-            }
-            else
-            {
-                var attributeFound = attribute[0];
-
-
-                if (attributeFound is Core.Automation.Attributes.ClassAttributes.Group)
-                {
-                    var processedAttribute = (Core.Automation.Attributes.ClassAttributes.Group)attributeFound;
-                    return processedAttribute.groupName;
-                }
-                else if (attributeFound is Core.Automation.Attributes.ClassAttributes.Description)
-                {
-                    var processedAttribute = (Core.Automation.Attributes.ClassAttributes.Description)attributeFound;
-                    return processedAttribute.commandFunctionalDescription;
-                }
-                else if (attributeFound is Core.Automation.Attributes.ClassAttributes.UsesDescription)
-                {
-                    var processedAttribute = (Core.Automation.Attributes.ClassAttributes.UsesDescription)attributeFound;
-                    return processedAttribute.usesDescription;
-                }
-            }
-            return "OK";
         }
      }
 }
