@@ -1023,7 +1023,7 @@ namespace taskt.UI.CustomControls
                     labelText = "Optional - " + labelText;
                 }
 
-                if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is")))
+                if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is") && (setting.ClientSettings.ShowDefaultValueInDescription)))
                 {
                     labelText += " (Default is " + attrIsOpt.setBlankToValue + ")";
                 }

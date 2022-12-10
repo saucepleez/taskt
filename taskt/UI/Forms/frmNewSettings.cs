@@ -573,6 +573,8 @@ namespace taskt.UI.Forms
             createLabel("lblTitle", "Command Editor", FontSize.Large, true);
 
             createCheckBox("chkRememberCommandEditorSizeAndPosition", "Remember Command Editor Size and Position", newAppSettings.ClientSettings, "RememberCommandEditorSizeAndPosition", true);
+            createCheckBox("chkShowSampleUsegeInDescription", "Show Sample Usage In Description", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowSampleUsageInDescription), true);
+            createCheckBox("chkShowDefaultValueInDescription", "Show Default Value In Description If Optional", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.ShowDefaultValueInDescription), true);
         }
         #endregion
 
