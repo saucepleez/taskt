@@ -126,8 +126,12 @@ namespace taskt.Core
             sb.AppendLine("<!--TITLE: " + commandName + " Command -->");
             sb.AppendLine("<!-- SUBTITLE: a command in the " + groupName + " group. -->");
 
+            // title
             sb.AppendLine("[Go To Automation Commands Overview](/automation-commands.md)");
 
+            sb.AppendLine(Environment.NewLine);
+
+            // bread crumb
             if (subGroupName != "")
             {
                 sb.AppendLine(groupName + " &gt; " + subGroupName + " &gt; " + commandName);
@@ -179,9 +183,9 @@ namespace taskt.Core
                 sb.AppendLine("<a id=\"param_" + count + "\"></a>");
                 sb.AppendLine("### " + commandLabel);
 
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "(nothing)");
-                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "(nothing)");
-                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "(nothing)");
+                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "");
+                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "");
+                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "");
 
                 var isOpt = prop.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
                 if (isOpt.isOptional)
@@ -193,7 +197,10 @@ namespace taskt.Core
                     }
                 }
 
-
+                if (helpfulExplanation == "")
+                {
+                    helpfulExplanation = "(nothing)";
+                }
                 if (sampleUsage == "")
                 {
                     sampleUsage = "(nothing)";
