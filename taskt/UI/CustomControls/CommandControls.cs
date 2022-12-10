@@ -1045,7 +1045,7 @@ namespace taskt.UI.CustomControls
             return setting.replaceApplicationKeyword(GetTextMDFormat(sample)).Replace(" or ", ", ");
         }
 
-        private static string GetTextMDFormat(this string targetString)
+        public static string GetTextMDFormat(this string targetString)
         {
             int idxAster, idxTable;
             string ret = "";

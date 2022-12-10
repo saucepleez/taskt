@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core
 {
@@ -30,7 +32,7 @@ namespace taskt.Core
         /// <returns></returns>
         public static string GenerateMarkdownFiles()
         {
-            var en = new System.Globalization.CultureInfo("en-US");
+            var en = new CultureInfo("en-US");
 
             //create directory if required
             var docsFolderName = "docs";
@@ -48,8 +50,9 @@ namespace taskt.Core
                         .ToList();
 
             // load settings
-            var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+            var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
             settings.ClientSettings.ShowSampleUsageInDescription = false;   // output trick
+            settings.ClientSettings.ShowDefaultValueInDescription = false;
 
             // loop each command
             var highLevelCommandInfo = new List<CommandMetaData>();
@@ -114,8 +117,8 @@ namespace taskt.Core
             ScriptCommand command = (ScriptCommand)Activator.CreateInstance(commandClass);
             var commandName = command.SelectionName;
             var cmdType = command.GetType();
-            var groupName = cmdType.GetCustomAttribute<taskt.Core.Automation.Attributes.ClassAttributes.Group>()?.groupName ?? "";
-            var subGroupName = cmdType.GetCustomAttribute<taskt.Core.Automation.Attributes.ClassAttributes.SubGruop>()?.subGruopName ?? "";
+            var groupName = cmdType.GetCustomAttribute<Automation.Attributes.ClassAttributes.Group>()?.groupName ?? "";
+            var subGroupName = cmdType.GetCustomAttribute<Automation.Attributes.ClassAttributes.SubGruop>()?.subGruopName ?? "";
 
             var sb = new StringBuilder();
 
@@ -139,13 +142,13 @@ namespace taskt.Core
             sb.AppendLine(Environment.NewLine);
 
             //append more
-            var classDescription = cmdType.GetCustomAttribute<taskt.Core.Automation.Attributes.ClassAttributes.Description>()?.commandFunctionalDescription ?? "";
+            var classDescription = cmdType.GetCustomAttribute<Automation.Attributes.ClassAttributes.Description>()?.commandFunctionalDescription ?? "";
             sb.AppendLine("## What does this command do?");
             sb.AppendLine(classDescription);
             sb.AppendLine(Environment.NewLine);
 
             //more
-            var usesDescription = cmdType.GetCustomAttribute<taskt.Core.Automation.Attributes.ClassAttributes.UsesDescription>()?.usesDescription ?? "";
+            var usesDescription = cmdType.GetCustomAttribute<Automation.Attributes.ClassAttributes.UsesDescription>()?.usesDescription ?? "";
             sb.AppendLine("## When would I want to use this command?");
             sb.AppendLine(usesDescription);
             sb.AppendLine(Environment.NewLine);
@@ -160,7 +163,7 @@ namespace taskt.Core
             int count = 0;
             foreach(var prop in propInfos)
             {
-                var commandLabel = UI.CustomControls.CommandControls.GetLabelText(prop.Name, prop, settings);
+                var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings);
                 sb.AppendLine("- [" + commandLabel + "](#param_" + count +  ")");
                 count++;
             }
@@ -171,14 +174,25 @@ namespace taskt.Core
             count = 0;
             foreach (var prop in propInfos)
             {
-                var commandLabel = UI.CustomControls.CommandControls.GetLabelText(prop.Name, prop, settings);
+                var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings);
 
                 sb.AppendLine("<a id=\"param_" + count + "\"></a>");
                 sb.AppendLine("### " + commandLabel);
 
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.InputSpecification>()?.inputSpecification ?? "(nothing)");
-                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.SampleUsage>()?.sampleUsage ?? "(nothing)");
-                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.Remarks>()?.remarks ?? "(nothing)");
+                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "(nothing)");
+                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "(nothing)");
+                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "(nothing)");
+
+                var isOpt = prop.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
+                if (isOpt.isOptional)
+                {
+                    remarks += "<b>Optional</b><br>";
+                    if (isOpt.setBlankToValue != "")
+                    {
+                        remarks += "Default Value is " + isOpt.setBlankToValue;
+                    }
+                }
+
 
                 if (sampleUsage == "")
                 {
@@ -192,14 +206,14 @@ namespace taskt.Core
                 sb.AppendLine(Environment.NewLine);
 
                 sb.AppendLine("<dl>");
-                sb.AppendLine("<dt>What to input</dt><dd>" + helpfulExplanation + "</dd>");
-                sb.AppendLine("<dt>Sample Data</dt><dd>" + sampleUsage + "</dd>");
-                sb.AppendLine("<dt>Remarks</dt><dd>" + remarks + "</dd>");
+                sb.AppendLine("<dt>What to input</dt><dd>" + CommandControls.GetTextMDFormat(helpfulExplanation) + "</dd>");
+                sb.AppendLine("<dt>Sample Data</dt><dd>" + CommandControls.GetTextMDFormat(sampleUsage) + "</dd>");
+                sb.AppendLine("<dt>Remarks</dt><dd>" + CommandControls.GetTextMDFormat(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
 
                 sb.AppendLine(Environment.NewLine);
 
-                var paramInfos = prop.GetCustomAttributes<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
+                var paramInfos = prop.GetCustomAttributes<PropertyAddtionalParameterInfo>().ToList();
                 if (paramInfos.Count > 0)
                 {
                     sb.AppendLine("### Addtional Info about &quot;" + commandLabel + "&quot;");
