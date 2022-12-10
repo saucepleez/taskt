@@ -16,6 +16,9 @@ namespace taskt.Core
         private class CommandMetaData
         {
             public string Group { get; set; }
+
+            public string SubGroup { get; set; }
+
             public string Name { get; set; }
             public string Description { get; set; }
             public string Location { get; set; }
@@ -63,6 +66,7 @@ namespace taskt.Core
 
             var sortHighLevelCommandInfo = highLevelCommandInfo
                                             .OrderBy(t => t.Group)
+                                            .ThenBy(t => t.SubGroup)
                                             .ThenBy(t => t.Name)
                                             .ToList();
 
@@ -73,21 +77,22 @@ namespace taskt.Core
                 if (oldGroup != cmd.Group)
                 {
                     sb.AppendLine("### " + cmd.Group);
-                    sb.AppendLine("| Command Group   	| Command Name 	|  Command Description	|");
+                    sb.AppendLine("| Sub Group   	| Command Name 	|  Command Description	|");
                     sb.AppendLine("| ---                | ---           | ---                   |");
                     oldGroup = cmd.Group;
                 }
-                sb.AppendLine("|" + cmd.Group + "|[" + cmd.Name + "](" + cmd.Location + ")|" + cmd.Description + "|");
+                sb.AppendLine("|" + cmd.SubGroup + "|[" + cmd.Name + "](" + cmd.Location + ")|" + cmd.Description + "|");
             }
 
-            sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt", en));
-
             sb.AppendLine(Environment.NewLine);
-
 
             sb.AppendLine("## Help");
             sb.AppendLine("- [Open/Report an issue on GitHub](" + MyURLs.GitIssueURL + ")");
             sb.AppendLine("- [Ask a question on Gitter](" + MyURLs.GitterURL + ")");
+
+            sb.AppendLine(Environment.NewLine);
+
+            sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt", en));
 
             //write file
             string fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
@@ -147,36 +152,53 @@ namespace taskt.Core
 
             //build parameter table based on required user inputs
             sb.AppendLine("## Command Parameters");
-            sb.AppendLine("| Parameter Question   	| What to input  	|  Sample Data 	| Remarks  	|");
-            sb.AppendLine("| ---                    | ---               | ---           | ---       |");
 
             // get propertyLists
             List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
 
-            //loop each property
-            foreach (var prop in propInfos)
+            // create Parameters List
+            int count = 0;
+            foreach(var prop in propInfos)
             {
                 var commandLabel = UI.CustomControls.CommandControls.GetLabelText(prop.Name, prop, settings);
-
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.InputSpecification>()?.inputSpecification ?? "");
-                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.SampleUsage>()?.sampleUsage ?? "");
-
-                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.Remarks>()?.remarks ?? "");
-                remarks = remarks.Replace("\n", "<br>");
-
-                //append to parameter table
-                sb.AppendLine("|" + commandLabel + "|" + helpfulExplanation + "|" + sampleUsage + "|" + remarks + "|");
+                sb.AppendLine("- [" + commandLabel + "](#param_" + count +  ")");
+                count++;
             }
 
             sb.AppendLine(Environment.NewLine);
 
             // add additional parameter info
+            count = 0;
             foreach (var prop in propInfos)
             {
-                //var commandLabel = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.PropertyDescription>()?.propertyDescription ?? "");
                 var commandLabel = UI.CustomControls.CommandControls.GetLabelText(prop.Name, prop, settings);
 
-                //var paramInfos = prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo), true);
+                sb.AppendLine("<a id=\"param_" + count + "\"></a>");
+                sb.AppendLine("### " + commandLabel);
+
+                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.InputSpecification>()?.inputSpecification ?? "(nothing)");
+                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.SampleUsage>()?.sampleUsage ?? "(nothing)");
+                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.Remarks>()?.remarks ?? "(nothing)");
+
+                if (sampleUsage == "")
+                {
+                    sampleUsage = "(nothing)";
+                }
+                if (remarks == "")
+                {
+                    remarks = "(nothing)";
+                }
+
+                sb.AppendLine(Environment.NewLine);
+
+                sb.AppendLine("<dl>");
+                sb.AppendLine("<dt>What to input</dt><dd>" + helpfulExplanation + "</dd>");
+                sb.AppendLine("<dt>Sample Data</dt><dd>" + sampleUsage + "</dd>");
+                sb.AppendLine("<dt>Remarks</dt><dd>" + remarks + "</dd>");
+                sb.AppendLine("</dl>");
+
+                sb.AppendLine(Environment.NewLine);
+
                 var paramInfos = prop.GetCustomAttributes<Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo>().ToList();
                 if (paramInfos.Count > 0)
                 {
@@ -189,12 +211,13 @@ namespace taskt.Core
                         var searchKey = pInfo.searchKey.Replace("\t", " &amp; ");
                         var desc = pInfo.description;
                         var sample = settings.EngineSettings.replaceEngineKeyword(pInfo.sampleUsage);
-                        var remarks = settings.EngineSettings.replaceEngineKeyword(pInfo.remarks);
-                        sb.AppendLine("|" + searchKey + "|" + desc + "|" + sample + "|" + remarks + "|");
+                        var rmk = settings.EngineSettings.replaceEngineKeyword(pInfo.remarks);
+                        sb.AppendLine("|" + searchKey + "|" + desc + "|" + sample + "|" + rmk + "|");
                     }
                 }
 
                 sb.AppendLine(Environment.NewLine);
+                count++;
             }
 
             sb.AppendLine("## Developer/Additional Reference");
@@ -225,10 +248,9 @@ namespace taskt.Core
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
             //add to high level
-            //var serverPath = "/automation-commands/" + kebobDestination + "/" + kebobFileName.Replace(".md", "");
             var serverPath = "/" + kebobDestination + "/" + kebobFileName;
            
-            return new CommandMetaData() { Group = groupName, Description = classDescription, Name = commandName, Location = serverPath };
+            return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
         }
      }
 }
