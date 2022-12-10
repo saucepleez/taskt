@@ -26,7 +26,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Multiple If Conditions - All Must Be True")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder)]
+        //[Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder)]
+        [Attributes.PropertyAttributes.PropertyCustomUIHelper("Add New If Statement", nameof(CreateIfCondition))]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -136,8 +137,8 @@ namespace taskt.Core.Automation.Commands
             IfConditionHelper = controls[2] as DataGridView;
 
             //handle helper click
-            var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
-            helper.Click += (sender, e) => CreateIfCondition(sender, e);
+            //var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
+            //helper.Click += (sender, e) => CreateIfCondition(sender, e);
 
             //add for rendering
             RenderedControls.AddRange(controls);

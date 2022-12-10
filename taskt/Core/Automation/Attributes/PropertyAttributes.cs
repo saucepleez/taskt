@@ -115,16 +115,6 @@
             ShowVariableHelper,
             ShowFileSelectionHelper,
             ShowFolderSelectionHelper,
-            ShowImageRecogitionHelper,
-            ShowCodeBuilder,
-            ShowMouseCaptureHelper,
-            ShowElementRecorder,
-            GenerateDLLParameters,
-            ShowDLLExplorer,
-            AddInputParameter,
-            ShowHTMLBuilder,
-            ShowIfBuilder,
-            ShowLoopBuilder
         }
     }
     [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]

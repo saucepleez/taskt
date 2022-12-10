@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -441,6 +442,7 @@ namespace taskt.Core
         public bool GroupingBySubgroup { get; set; }
         public bool DontShowValidationMessage { get; set; }
         public bool ShowSampleUsageInDescription { get; set; }
+        public bool ShowDefaultValueInDescription { get; set; }
         public bool ShowIndentLine { get; set; }
         public bool ShowScriptMiniMap { get; set; }
         private int _IndentWidth = 16;
@@ -528,6 +530,7 @@ namespace taskt.Core
             GroupingBySubgroup = true;
             DontShowValidationMessage = false;
             ShowSampleUsageInDescription = true;
+            ShowDefaultValueInDescription = true;
             ShowIndentLine = true;
             ShowScriptMiniMap = false;
             DefaultBrowserInstanceName = "RPABrowser";

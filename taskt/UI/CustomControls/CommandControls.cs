@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -99,7 +100,7 @@ namespace taskt.UI.CustomControls
             else
             {
                 // check combobox
-                var attrUIOpt = propInfo.GetCustomAttribute<PropertyUISelectionOption>();
+                var attrUIOpt = propInfo.GetCustomAttributes<PropertyUISelectionOption>().FirstOrDefault();
                 var attrIsWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
                 var attrIsVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
                 var attrInstance = propInfo.GetCustomAttribute<PropertyInstanceType>();
@@ -230,7 +231,7 @@ namespace taskt.UI.CustomControls
             controlList.AddRange(CreateDefaultUIHelpersFor(propertyName, command, createdInput, editor, propInfo));
 
             // custom ui helper
-            controlList.AddRange(CreateCustomUIHelperFor(propertyName, command, createdInput, editor, propInfo));
+            controlList.AddRange(CreateCustomUIHelpersFor(propertyName, command, createdInput, editor, propInfo));
 
             // body
             controlList.Add(createdInput);
@@ -479,7 +480,7 @@ namespace taskt.UI.CustomControls
             }
 
             // ui options
-            var opts = propInfo.GetCustomAttributes<PropertyUISelectionOption>(true);
+            var opts = propInfo.GetCustomAttributes<PropertyUISelectionOption>();
             if (opts.Count() > 0)
             {
                 uiOptions.AddRange(opts.Select(opt => opt.uiOption).ToList());
@@ -684,31 +685,7 @@ namespace taskt.UI.CustomControls
             int count = 0;
             foreach (PropertyUIHelper uiHelper in propertyUIHelpers)
             {
-                switch (uiHelper.additionalHelper)
-                {
-                    case PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
-                        //show file selector
-                        CommandItemControl captureHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                        captureHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                        captureHelper.CommandDisplay = "Capture Reference Image";
-                        captureHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                        captureHelper.Click += (sender, e) => ShowImageCapture(sender, e, editor);
-
-                        count++;
-                        CommandItemControl testHelper = CreateSimpleUIHelper(propertyName + "_helper_" + count, targetControl);
-                        testHelper.CommandImage = Images.GetUIImage("OCRCommand");
-                        testHelper.CommandDisplay = "Run Image Recognition Test";
-                        testHelper.ForeColor = Color.AliceBlue;
-                        testHelper.Click += (sender, e) => RunImageCapture(sender, e);
-
-                        controlList.Add(captureHelper);
-                        controlList.Add(testHelper);
-                        break;
-
-                    default:
-                        controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
-                        break;
-                }
+                controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
 
                 count++;
             }
@@ -725,7 +702,7 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateCustomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateCustomUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
         {
             if (propInfo == null)
             {
@@ -743,7 +720,7 @@ namespace taskt.UI.CustomControls
             int counter = 0;
             foreach (var uiHelper in uiHelpers)
             {
-                ctrls.Add(CreateDefaultCostomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
+                ctrls.Add(CreateDefaultCustomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
 
                 counter++;
             }
@@ -789,67 +766,6 @@ namespace taskt.UI.CustomControls
                     uiHelper.DrawIcon = Properties.Resources.taskt_folder_helper;
                     uiHelper.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
                     break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
-                    //show code builder
-                    uiHelper.CommandImage = Images.GetUIImage("RunScriptCommand");
-                    uiHelper.CommandDisplay = "Code Builder";
-                    uiHelper.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
-                    // show mouse position
-                    uiHelper.CommandImage = Images.GetUIImage("SendMouseMoveCommand");
-                    uiHelper.CommandDisplay = "Capture Mouse Position";
-                    uiHelper.DrawIcon = Properties.Resources.taskt_element_helper;
-                    uiHelper.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
-                    // show ui element recorder
-                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
-                    uiHelper.CommandDisplay = "Element Recorder";
-                    uiHelper.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
-                    // show dll parameters
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Generate Parameters";
-                    uiHelper.Click += (sender, e) => GenerateDLLParameters(sender, e);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
-                    // show dll explorer
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Launch DLL Explorer";
-                    uiHelper.Click += (sender, e) => ShowDLLExplorer(sender, e);
-                    break;
-                case PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
-                    // show input parameter
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Add Input Parameter";
-                    uiHelper.Click += (sender, e) => AddInputParameter(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
-                    // show html builder
-                    uiHelper.CommandImage = Images.GetUIImage("ExecuteDLLCommand");
-                    uiHelper.CommandDisplay = "Launch HTML Builder";
-                    uiHelper.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
-                    // show if builder
-                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                    uiHelper.CommandDisplay = "Add New If Statement";
-                    break;
-
-                case PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
-                    // show loop builder
-                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
-                    uiHelper.CommandDisplay = "Add New Loop Statement";
-                    break;
             }
             return uiHelper;
         }
@@ -863,7 +779,7 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <returns></returns>
-        public static CommandItemControl CreateDefaultCostomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
+        public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, Core.Automation.Commands.ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.frmCommandEditor editor)
         {
             var uiHelper = CreateSimpleUIHelper(propertyName + "_customhelper_" + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
             uiHelper.CommandDisplay = setting.labelText;
@@ -1107,7 +1023,7 @@ namespace taskt.UI.CustomControls
                     labelText = "Optional - " + labelText;
                 }
 
-                if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is")))
+                if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is") && (setting.ClientSettings.ShowDefaultValueInDescription)))
                 {
                     labelText += " (Default is " + attrIsOpt.setBlankToValue + ")";
                 }
@@ -1129,7 +1045,7 @@ namespace taskt.UI.CustomControls
             return setting.replaceApplicationKeyword(GetTextMDFormat(sample)).Replace(" or ", ", ");
         }
 
-        private static string GetTextMDFormat(this string targetString)
+        public static string GetTextMDFormat(this string targetString)
         {
             int idxAster, idxTable;
             string ret = "";
@@ -1432,446 +1348,179 @@ namespace taskt.UI.CustomControls
 
         #endregion
 
+        #region UIHelper events
 
-        private static void ShowCodeBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            //get textbox text
-            CommandItemControl commandItem = (CommandItemControl)sender;
-            TextBox targetTextbox = (TextBox)commandItem.Tag;
-
-            using (Forms.Supplemental.frmCodeBuilder codeBuilder = new Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
-            {
-                if (codeBuilder.ShowDialog() == DialogResult.OK)
-                {
-
-                    targetTextbox.Text = codeBuilder.rtbCode.Text;
-                }
-            }
-        }
-        private static void ShowMouseCaptureForm(object sender, EventArgs e)
-        {
-            using (Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new Forms.Supplemental.frmShowCursorPosition())
-            {
-                //if user made a successful selection
-                if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
-                {
-                    //Todo - ideally one function to add to textbox which adds to class
-
-                    //add selected variables to associated control text
-                    CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
-                    CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
-
-                    //find current command and add to underlying class
-                    Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
-                    cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
-                    cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
-                }
-            }
-        }
+        /// <summary>
+        /// show Variable Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
         public static void ShowVariableSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
 
-            //create variable selector form
-            Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList);
-
-            ////get copy of user variables and append system variables, then load to combobox
-            //var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            //variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
-            //newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
-
-            //if user pressed "OK"
-            if (newVariableSelector.ShowDialog() == DialogResult.OK)
+            using (Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList))
             {
-                //ensure that a variable was actually selected
-                //if (newVariableSelector.lstVariables.SelectedItem == null)
-                if (newVariableSelector.selectedItem == null)
+                if (newVariableSelector.ShowDialog() == DialogResult.OK)
                 {
-                    //return out as nothing was selected
-                    MessageBox.Show("There were no variables selected!");
-                    return;
-                }
-
-                //grab the referenced input assigned to the 'insert variable' button instance
-                CommandItemControl inputBox = (CommandItemControl)sender;
-                //currently variable insertion is only available for simply textboxes
-
-                //load settings
-                //var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                var settings = CurrentEditor.appSettings.EngineSettings;
-
-                if (inputBox.Tag is TextBox)
-                {
-                    TextBox targetTextbox = (TextBox)inputBox.Tag;
-                    //concat variable name with brackets [vVariable] as engine searches for the same
-                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                    //ensure that a variable was actually selected
+                    if (newVariableSelector.selectedItem == null)
                     {
-                        string str = targetTextbox.Text;
-                        int cursorPos = targetTextbox.SelectionStart;
-                        //string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                        targetTextbox.Focus();
-                        targetTextbox.SelectionStart = cursorPos + ins.Length;
-                        targetTextbox.SelectionLength = 0;
-                    }
-                    else
-                    {
-                        //targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Focus();
-                        targetTextbox.SelectionStart = targetTextbox.Text.Length;
-                        targetTextbox.SelectionLength = 0;
-                    }
-                }
-                else if (inputBox.Tag is ComboBox)
-                {
-                    ComboBox targetCombobox = (ComboBox)inputBox.Tag;
-                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
-                    {
-                        string str = targetCombobox.Text;
-                        int cursorPos;
-                        if (targetCombobox.Tag == null)
-                        {
-                            targetCombobox.Tag = 0;
-                        }
-                        if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
-                        {
-                            cursorPos = str.Length;
-                        }
-                        //string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                        targetCombobox.Focus();
-                        targetCombobox.SelectionStart = cursorPos + ins.Length;
-                        targetCombobox.SelectionLength = 0;
-                    }
-                    else
-                    {
-                        //concat variable name with brackets [vVariable] as engine searches for the same
-                        //targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Focus();
-                        targetCombobox.SelectionStart = targetCombobox.Text.Length;
-                        targetCombobox.SelectionLength = 0;
-                    }
-                }
-                else if (inputBox.Tag is DataGridView)
-                {
-                    DataGridView targetDGV = (DataGridView)inputBox.Tag;
-
-                    if (targetDGV.SelectedCells.Count == 0)
-                    {
-                        MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        //return out as nothing was selected
+                        MessageBox.Show("There were no variables selected!");
                         return;
                     }
 
-                    if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
-                    {
-                        MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    //grab the referenced input assigned to the 'insert variable' button instance
+                    CommandItemControl inputBox = (CommandItemControl)sender;
 
-                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                    //load settings
+                    var settings = CurrentEditor.appSettings.EngineSettings;
+
+                    if (inputBox.Tag is TextBox targetTextbox)
                     {
-                        if (targetDGV.Tag == null)
+                        if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                        {
+                            string str = targetTextbox.Text;
+                            int cursorPos = targetTextbox.SelectionStart;
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                            targetTextbox.Focus();
+                            targetTextbox.SelectionStart = cursorPos + ins.Length;
+                            targetTextbox.SelectionLength = 0;
+                        }
+                        else
+                        {
+                            targetTextbox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Focus();
+                            targetTextbox.SelectionStart = targetTextbox.Text.Length;
+                            targetTextbox.SelectionLength = 0;
+                        }
+                    }
+                    else if (inputBox.Tag is ComboBox targetCombobox)
+                    {
+                        if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                        {
+                            string str = targetCombobox.Text;
+                            int cursorPos;
+                            if (targetCombobox.Tag == null)
+                            {
+                                targetCombobox.Tag = 0;
+                            }
+                            if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
+                            {
+                                cursorPos = str.Length;
+                            }
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                            targetCombobox.Focus();
+                            targetCombobox.SelectionStart = cursorPos + ins.Length;
+                            targetCombobox.SelectionLength = 0;
+                        }
+                        else
+                        {
+                            targetCombobox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Focus();
+                            targetCombobox.SelectionStart = targetCombobox.Text.Length;
+                            targetCombobox.SelectionLength = 0;
+                        }
+                    }
+                    else if (inputBox.Tag is DataGridView targetDGV)
+                    {
+                        if (targetDGV.SelectedCells.Count == 0)
+                        {
+                            MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
                         {
                             MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
-                        else if (targetDGV.Tag.ToString() != "column-a-editable")
-                        {
-                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
 
-                    var source = (DataTable)targetDGV.DataSource;
-                    var rowIndex = targetDGV.SelectedCells[0].RowIndex;
-                    var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
-                    if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
-                    {
-                        source.Rows.Add(source.NewRow());
+                        if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                        {
+                            if (targetDGV.Tag == null)
+                            {
+                                MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            else if (targetDGV.Tag.ToString() != "column-a-editable")
+                            {
+                                MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
+
+                        var source = (DataTable)targetDGV.DataSource;
+                        var rowIndex = targetDGV.SelectedCells[0].RowIndex;
+                        var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
+                        if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
+                        {
+                            source.Rows.Add(source.NewRow());
+                        }
+                        var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
+                        targetCell.Value += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                     }
-                    var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
-                    //targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                    targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
                 }
             }
         }
+
+        /// <summary>
+        /// show File Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
         private static void ShowFileSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    CommandItemControl inputBox = (CommandItemControl)sender;
-                    //currently variable insertion is only available for simply textboxes
-                    TextBox targetTextbox = (TextBox)inputBox.Tag;
-                    //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = ofd.FileName;
+                    SetControlValue((Control)((CommandItemControl)sender).Tag, ofd.FileName);
                 }
             }
         }
+
+        /// <summary>
+        /// show Folder Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
         private static void ShowFolderSelector(object sender, EventArgs e, Forms.frmCommandEditor editor)
         {
             using (FolderBrowserDialog fbd = new FolderBrowserDialog())
             {
                 if (fbd.ShowDialog() == DialogResult.OK)
                 {
-                    CommandItemControl inputBox = (CommandItemControl)sender;
-                    TextBox targetTextBox = (TextBox)inputBox.Tag;
-                    targetTextBox.Text = fbd.SelectedPath;
-                }
-            }
-        }
-        private static void ShowImageCapture(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            //ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-            var settings = editor.appSettings;
-            var minimizePreference = settings.ClientSettings.MinimizeToTray;
-
-            if (minimizePreference)
-            {
-                settings.ClientSettings.MinimizeToTray = false;
-                settings.Save(settings);
-            }
-
-            HideAllForms();
-
-            var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
-
-            if (userAcceptance == DialogResult.Yes)
-            {
-
-                using (Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture())
-                {
-                    if (imageCaptureForm.ShowDialog() == DialogResult.OK)
-                    {
-                        CommandItemControl inputBox = (CommandItemControl)sender;
-                        UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-                        targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                        var convertedImage = Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
-                        var convertedLength = convertedImage.Length;
-                        targetPictureBox.EncodedImage = convertedImage;
-
-                        // force set property value
-                        if (editor.selectedCommand.CommandName == "ImageRecognitionCommand")
-                        {
-                            ((Core.Automation.Commands.ImageRecognitionCommand)editor.selectedCommand).v_ImageCapture = convertedImage;
-                        }
-                        //imageCaptureForm.Show();
-                    }
-                }
-            }
-
-            ShowAllForms();
-
-            if (minimizePreference)
-            {
-                settings.ClientSettings.MinimizeToTray = true;
-                settings.Save(settings);
-            }
-        }
-        private static void RunImageCapture(object sender, EventArgs e)
-        {
-            //get input control
-            CommandItemControl inputBox = (CommandItemControl)sender;
-            UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-            string imageSource = targetPictureBox.EncodedImage;
-
-            if (string.IsNullOrEmpty(imageSource))
-            {
-                MessageBox.Show("Please capture an image before attempting to test!");
-                return;
-            }
-
-            //hide all
-            HideAllForms();
-
-            try
-            {
-                //run image recognition
-                Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
-                imageRecognitionCommand.v_ImageCapture = imageSource;
-                imageRecognitionCommand.TestMode = true;
-                imageRecognitionCommand.RunCommand(new Core.Automation.Engine.AutomationEngineInstance());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.ToString());
-            }
-            //show all forms
-            ShowAllForms();
-
-
-        }
-        private static void ShowElementRecorder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            //get command reference
-            Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)editor.selectedCommand;
-
-            //create recorder
-            Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
-
-            //show form
-            newElementRecorder.ShowDialog();
-
-            ComboBox txtWindowName = (ComboBox)editor.flw_InputVariables.Controls["v_WindowName"];
-            txtWindowName.Text = newElementRecorder.cboWindowTitle.Text;
-
-            editor.WindowState = FormWindowState.Normal;
-            editor.BringToFront();
-        }
-        private static void GenerateDLLParameters(object sender, EventArgs e)
-        {
-
-
-            Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
-
-            var filePath = CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text;
-            var className = CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text;
-            var methodName = CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text;
-            DataGridView parameterBox = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_MethodParameters"];
-
-            //clear all rows
-            cmd.v_MethodParameters.Rows.Clear();
-
-            //Load Assembly
-            try
-            {
-                Assembly requiredAssembly = Assembly.LoadFrom(filePath);
-
-                //get type
-                Type t = requiredAssembly.GetType(className);
-
-                //verify type was found
-                if (t == null)
-                {
-                    MessageBox.Show("The class '" + className + "' was not found in assembly loaded at '" + filePath + "'", "Class Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                //get method
-                MethodInfo m = t.GetMethod(methodName);
-
-                //verify method found
-                if (m == null)
-                {
-                    MessageBox.Show("The method '" + methodName + "' was not found in assembly loaded at '" + filePath + "'", "Method Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                //get parameters
-                var reqdParams = m.GetParameters();
-
-                if (reqdParams.Length > 0)
-                {
-                    cmd.v_MethodParameters.Rows.Clear();
-                    foreach (var param in reqdParams)
-                    {
-                        cmd.v_MethodParameters.Rows.Add(param.Name, "");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("There was an error generating the parameters: " + ex.ToString());
-            }
-        }
-        private static void ShowDLLExplorer(object sender, EventArgs e)
-        {
-            //create form
-            using (Forms.Supplemental.frmDLLExplorer dllExplorer = new Forms.Supplemental.frmDLLExplorer())
-            {
-                //show dialog
-                if (dllExplorer.ShowDialog() == DialogResult.OK)
-                {
-                    //user accepted the selections
-                    //declare command
-                    Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
-
-                    //add file name
-                    if (!string.IsNullOrEmpty(dllExplorer.FileName))
-                    {
-                        CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
-                    }
-
-                    //add class name
-                    if (dllExplorer.lstClasses.SelectedItem != null)
-                    {
-                        CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
-                    }
-
-                    //add method name
-                    if (dllExplorer.lstMethods.SelectedItem != null)
-                    {
-                        CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
-                    }
-
-                    cmd.v_MethodParameters.Rows.Clear();
-
-                    //add parameters
-                    if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
-                    {
-                        foreach (var param in dllExplorer.SelectedParameters)
-                        {
-                            cmd.v_MethodParameters.Rows.Add(param, "");
-                        }
-                    }
-                }
-            }
-        }
-        private static void ShowHTMLBuilder(object sender, EventArgs e, Forms.frmCommandEditor editor)
-        {
-            using (var htmlForm = new Forms.Supplemental.frmHTMLBuilder())
-            {
-                RichTextBox inputControl = (RichTextBox)editor.flw_InputVariables.Controls["v_InputHTML"];
-                htmlForm.rtbHTML.Text = inputControl.Text;
-
-                if (htmlForm.ShowDialog() == DialogResult.OK)
-                {
-                    inputControl.Text = htmlForm.rtbHTML.Text;
+                    SetControlValue((Control)((CommandItemControl)sender).Tag, fbd.SelectedPath);
                 }
             }
         }
 
-
-        private static void AddInputParameter(object sender, EventArgs e, Forms.frmCommandEditor editor)
+        private static void SetControlValue(Control targetControl, string newValue)
         {
-
-            DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
-            var inputTable = (DataTable)inputControl.DataSource;
-            var newRow = inputTable.NewRow();
-            newRow["Size"] = "500,100";
-            inputTable.Rows.Add(newRow);
-
-        }
-     
-        public static void ShowAllForms()
-        {
-            foreach (Form frm in Application.OpenForms)
+            if (targetControl is TextBox targetText)
             {
-                frm.WindowState = FormWindowState.Normal;
+                targetText.Text = newValue;
             }
-        }
-        public static void HideAllForms()
-        {
-            foreach (Form frm in Application.OpenForms)
+            else if (targetControl is ComboBox targetCombo)
             {
-                frm.WindowState = FormWindowState.Minimized;
+                targetCombo.Text = newValue;
+            }
+            else if (targetControl is DataGridView targetDGV)
+            {
+                targetDGV.CurrentCell.Value = newValue;
             }
         }
 
+        #endregion
 
         public static List<AutomationCommand> GenerateCommandsandControls()
         {

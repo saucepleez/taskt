@@ -26,7 +26,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Multiple Loop Conditions - All Must Be True")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder)]
+        //[Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder)]
+        [Attributes.PropertyAttributes.PropertyCustomUIHelper("Add New Loop Statement", nameof(CreateLoopCondition))]
         [Attributes.PropertyAttributes.InputSpecification("")]
         [Attributes.PropertyAttributes.SampleUsage("n/a")]
         [Attributes.PropertyAttributes.Remarks("")]
@@ -124,8 +125,8 @@ namespace taskt.Core.Automation.Commands
             LoopConditionHelper = controls[2] as DataGridView;
 
             //handle helper click
-            var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
-            helper.Click += (sender, e) => CreateLoopCondition(sender, e);
+            //var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
+            //helper.Click += (sender, e) => CreateLoopCondition(sender, e);
 
             //add for rendering
             RenderedControls.AddRange(controls);

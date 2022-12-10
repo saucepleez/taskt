@@ -419,8 +419,9 @@ namespace taskt.UI.Forms
 
         private void btnGenerateWikiDocs_Click(object sender, EventArgs e)
         {
-            Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
-            var docsRoot = docGeneration.GenerateMarkdownFiles();
+            //Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
+            //var docsRoot = docGeneration.GenerateMarkdownFiles();
+            var docsRoot = Core.DocumentationGeneration.GenerateMarkdownFiles();
             System.Diagnostics.Process.Start(docsRoot);
         }
 
