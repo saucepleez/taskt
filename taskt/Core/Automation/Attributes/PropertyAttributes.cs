@@ -226,6 +226,11 @@
             this.warningRule = warningRule;
         }
 
+        public bool IsErrorFlag(ValidationRuleFlags err)
+        {
+            return ((this.errorRule & err) == err);
+        }
+
         [System.Flags]
         public enum ValidationRuleFlags
         {

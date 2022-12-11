@@ -313,41 +313,100 @@ namespace taskt.Core
 
         private static string CorrectionRemarks(string rm, PropertyInfo propInfo)
         {
-            if (rm == "")
+            // is optional
+            var isOpt = propInfo.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
+            if (isOpt.isOptional)
             {
-                var isOpt = propInfo.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
-                if (isOpt.isOptional)
+                if (rm != "")
                 {
-                    rm += "**Optional**<br>";
-                    if (isOpt.setBlankToValue != "")
-                    {
-                        rm += "Default Value is **" + isOpt.setBlankToValue + "**";
-                    }
-                    return rm;
+                    rm += "<br><br>\n";
                 }
-                else
+                rm += "**Optional**<br>";
+                if (isOpt.setBlankToValue != "")
                 {
-                    return "(nothing)";
+                    rm += "Default Value is **" + isOpt.setBlankToValue + "**";
                 }
-            }
-            else
-            {
                 return rm;
             }
+
+            // validation
+            var valid = propInfo.GetCustomAttribute<PropertyValidationRule>() ?? new PropertyValidationRule();
+            var bet = propInfo.GetCustomAttribute<PropertyValueRange>();
+            if (valid.parameterName != "")
+            {
+                if (valid.errorRule != 0)
+                {
+                    if (rm != "")
+                    {
+                        rm += "<br><br>\n";
+                    }
+                    rm += "**Error when value is...**\n";
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Empty))
+                    {
+                        rm += "- Empty\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.LessThanZero))
+                    {
+                        rm += "- Less than Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.GreaterThanZero))
+                    {
+                        rm += "- Greater than Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.EqualsZero))
+                    {
+                        rm += "- Equals Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotEqualsZero))
+                    {
+                        rm += "- **Not** Equals Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotSelectionOption))
+                    {
+                        rm += "- **Not** Selection Values\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Between))
+                    {
+                        if (bet != null)
+                        {
+                            rm += "- Between " + bet.min + " to " + bet.max + "\n";
+                        }
+                        else
+                        {
+                            rm += "- Between *range defined*\n";
+                        }
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotBetween))
+                    {
+                        if (bet != null)
+                        {
+                            rm += "- **Not** Between " + bet.min + " to " + bet.max + "\n";
+                        }
+                        else
+                        {
+                            rm += "- **Not** Between *range defined*\n";
+                        }
+                    }
+                }
+            }
+
+            return (rm != "") ? rm : "(nothing)";
         }
 
         private static string ConvertMDToHTML(string md)
         {
-            var html = Markdig.Markdown.ToHtml(md);
-            if (html.StartsWith("<p>"))
-            {
-                html = html.Trim();
-                return html.Substring(3, html.Length - 7);
-            }
-            else
-            {
-                return html;
-            }
+            var html = Markdig.Markdown.ToHtml(md).Trim();
+            //if (html.StartsWith("<p>"))
+            //{
+            //    html = html.Trim();
+            //    html = html.Substring(3, html.Length - 7);
+            //    return html.Substring(3, html.Length - 7);
+            //}
+            //else
+            //{
+            //    return html;
+            //}
+            return html.Replace("<p>", "").Replace("</p>", "");
         }
      }
 }
