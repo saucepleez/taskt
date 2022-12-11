@@ -418,16 +418,6 @@ namespace taskt.Core
         private static string ConvertMDToHTML(string md)
         {
             var html = Markdig.Markdown.ToHtml(md).Trim();
-            //if (html.StartsWith("<p>"))
-            //{
-            //    html = html.Trim();
-            //    html = html.Substring(3, html.Length - 7);
-            //    return html.Substring(3, html.Length - 7);
-            //}
-            //else
-            //{
-            //    return html;
-            //}
             return html.Replace("<p>", "").Replace("</p>", "");
         }
      }
