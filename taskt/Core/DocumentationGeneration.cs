@@ -192,16 +192,18 @@ namespace taskt.Core
                 sb.AppendLine("<a id=\"param_" + count + "\"></a>");
                 sb.AppendLine("### " + commandLabel);
 
+                
+                //var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "");
+                
                 var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "");
-                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "");
-                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "");
-
                 if (helpfulExplanation == "")
                 {
                     helpfulExplanation = "(nothing)";
                 }
-                sampleUsage = CorrectionSampleUsage(sampleUsage, prop);
-                remarks = CorrectionRemarks(remarks, prop);
+
+                //sampleUsage = CorrectionSampleUsage(sampleUsage, prop);
+                //var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "");
+                //remarks = CorrectionRemarks(remarks, prop);
 
                 sb.AppendLine(Environment.NewLine);
 
@@ -228,16 +230,20 @@ namespace taskt.Core
                     sb.Append("<dt>Error When Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
                 }
 
-                sb.AppendLine("<dt>Sample Data</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
+                var sampleUsage = GetSampleUsageText(prop, settings);
+                sb.AppendLine("<dt>Sample Usage</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
+
+                var remarks = GetRemarksText(prop, settings);
                 sb.AppendLine("<dt>Remarks</dt><dd>" + ConvertMDToHTML(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
 
                 sb.AppendLine(Environment.NewLine);
 
+                // Additional Parameter Info
                 var paramInfos = prop.GetCustomAttributes<PropertyAddtionalParameterInfo>().ToList();
                 if (paramInfos.Count > 0)
                 {
-                    sb.AppendLine("### Addtional Info about &quot;" + commandLabel + "&quot;");
+                    sb.AppendLine("#### Addtional Info about &quot;" + commandLabel + "&quot;");
                     sb.AppendLine("| Parameter Value(s) | Description   | Sample Data 	| Remarks  	|");
                     sb.AppendLine("| ---             | ---           | ---          | ---       |");
 
@@ -251,6 +257,21 @@ namespace taskt.Core
                     }
                 }
 
+                // Detail Sample Usage
+                var sampleUsages = prop.GetCustomAttributes<PropertyDetailSampleUsage>().ToList();
+                if (sampleUsages.Count > 0)
+                {
+                    sb.AppendLine(Environment.NewLine);
+                    sb.AppendLine("#### Sample Usage");
+                    sb.AppendLine("| Value | Means |");
+                    sb.AppendLine("|---|---|");
+                    
+                    foreach(var s in sampleUsages)
+                    {
+                        sb.AppendLine("|" + settings.replaceApplicationKeyword(s.sampleUsage) + "|" + s.means + "|");
+                    }
+                }
+
                 sb.AppendLine(Environment.NewLine);
                 count++;
             }
@@ -259,7 +280,6 @@ namespace taskt.Core
             sb.AppendLine("Automation Class Name: " + commandClass.Name);
             sb.AppendLine("Parent Namespace: " + commandClass.Namespace);
             sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt", cultureInfo));
-
 
             sb.AppendLine(Environment.NewLine);
 
@@ -316,8 +336,10 @@ namespace taskt.Core
             return ("", "");
         }
 
-        private static string CorrectionSampleUsage(string smp, PropertyInfo propInfo)
+        private static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings settings)
         {
+            var smp = CommandControls.GetSampleUsageText(propInfo, settings);
+
             if (smp == "")
             {
                 var uiSels = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
@@ -403,8 +425,10 @@ namespace taskt.Core
             return validate;
         }
 
-        private static string CorrectionRemarks(string rm, PropertyInfo propInfo)
+        private static string GetRemarksText(PropertyInfo propInfo, ApplicationSettings settings)
         {
+            string rm = settings.ClientSettings.replaceClientKeyword(propInfo.GetCustomAttribute<Remarks>()?.remarks ?? "");
+
             // is optional
             var isOpt = propInfo.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
             if (isOpt.isOptional)
