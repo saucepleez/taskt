@@ -38,22 +38,6 @@
         }
     }
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyIsOptional : System.Attribute
-    {
-        public bool isOptional = false;
-        public string setBlankToValue = "";
-
-        public PropertyIsOptional()
-        {
-
-        }
-        public PropertyIsOptional(bool opt, string setBlankToValue = "")
-        {
-            this.isOptional = opt;
-            this.setBlankToValue = setBlankToValue;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyShowSampleUsageInDescription : System.Attribute
     {
         public bool showSampleUsage = false;
@@ -230,6 +214,11 @@
         public string parameterName = "";
         public ValidationRuleFlags errorRule = 0;
         public ValidationRuleFlags warningRule = 0;
+
+        public PropertyValidationRule()
+        {
+
+        }
         public PropertyValidationRule(string parameterName, ValidationRuleFlags errorRule = 0, ValidationRuleFlags warningRule = 0)
         {
             this.parameterName = parameterName;
@@ -273,6 +262,22 @@
             this.parameterDisplay = show;
             this.parameterName = name;
             this.afterText = afterText;
+        }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public sealed class PropertyIsOptional : System.Attribute
+    {
+        public bool isOptional = false;
+        public string setBlankToValue = "";
+
+        public PropertyIsOptional()
+        {
+
+        }
+        public PropertyIsOptional(bool opt, string setBlankToValue = "")
+        {
+            this.isOptional = opt;
+            this.setBlankToValue = setBlankToValue;
         }
     }
     #endregion
