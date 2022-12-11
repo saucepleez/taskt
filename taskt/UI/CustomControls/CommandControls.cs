@@ -1052,6 +1052,12 @@ namespace taskt.UI.CustomControls
             return labelText;
         }
 
+        /// <summary>
+        /// get sample usage text to Label. This method use PropertyShowSampleUsageInDescription, PropertyDetailSampleUsage, SampleUsage attributes.
+        /// </summary>
+        /// <param name="propInfo"></param>
+        /// <param name="setting"></param>
+        /// <returns></returns>
         public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting)
         {
             var sampleText = "";
