@@ -113,6 +113,14 @@ namespace taskt.Core
             return docsFolderName;
         }
 
+        /// <summary>
+        /// create and save Command Document file
+        /// </summary>
+        /// <param name="commandClass"></param>
+        /// <param name="settings"></param>
+        /// <param name="docsFolderName"></param>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
         private static CommandMetaData GenerateMarkdownCommandFile(Type commandClass, ApplicationSettings settings, string docsFolderName, CultureInfo cultureInfo)
         {
             ScriptCommand command = (ScriptCommand)Activator.CreateInstance(commandClass);
