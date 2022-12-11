@@ -347,7 +347,6 @@
         
         public PropertySelectionValueSensitive()
         {
-
         }
         public PropertySelectionValueSensitive(bool caseSensitive, bool whiteSpaceSensitive = true)
         {
