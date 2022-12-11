@@ -190,7 +190,7 @@ namespace taskt.Core
                 var isOpt = prop.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
                 if (isOpt.isOptional)
                 {
-                    remarks += "<b>Optional</b><br>";
+                    remarks += "<strong>Optional</strong><br>";
                     if (isOpt.setBlankToValue != "")
                     {
                         remarks += "Default Value is " + isOpt.setBlankToValue;
@@ -213,9 +213,9 @@ namespace taskt.Core
                 sb.AppendLine(Environment.NewLine);
 
                 sb.AppendLine("<dl>");
-                sb.AppendLine("<dt>What to input</dt><dd>" + CommandControls.GetTextMDFormat(helpfulExplanation) + "</dd>");
-                sb.AppendLine("<dt>Sample Data</dt><dd>" + CommandControls.GetTextMDFormat(sampleUsage) + "</dd>");
-                sb.AppendLine("<dt>Remarks</dt><dd>" + CommandControls.GetTextMDFormat(remarks) + "</dd>");
+                sb.AppendLine("<dt>What to input</dt><dd>" + Markdig.Markdown.ToHtml(helpfulExplanation) + "</dd>");
+                sb.AppendLine("<dt>Sample Data</dt><dd>" + Markdig.Markdown.ToHtml(sampleUsage) + "</dd>");
+                sb.AppendLine("<dt>Remarks</dt><dd>" + Markdig.Markdown.ToHtml(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
 
                 sb.AppendLine(Environment.NewLine);
