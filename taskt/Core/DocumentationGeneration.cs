@@ -7,9 +7,6 @@ using System.Text;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
-using Microsoft.Office.Core;
-using System.Runtime.Versioning;
-using MailKit.Security;
 
 namespace taskt.Core
 {
