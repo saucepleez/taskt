@@ -994,6 +994,35 @@ namespace taskt.UI.CustomControls
 
             string labelText = setting.replaceApplicationKeyword(attrDescription.propertyDescription);
 
+            // polite text
+            if (setting.ClientSettings.ShowPoliteTextInDescription)
+            {
+                var lowText = labelText.ToLower();
+                if (!lowText.StartsWith("please select") && !lowText.StartsWith("please specify") &&
+                        !lowText.StartsWith("please enter") && !lowText.StartsWith("please indicate"))
+                {
+                    // check "Select" or not
+                    var controlType = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>()?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
+                    bool isSelect = ((controlType == PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox) ||
+                                        (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox) ||
+                                        (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.RadioButton));
+                    if (!isSelect)
+                    {
+                        var uiOpts = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+                        var isWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
+                        var isVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
+                        var ins = propInfo.GetCustomAttribute<PropertyInstanceType>();
+
+                        isSelect = (uiOpts.Count > 0) ||
+                                    (isWin?.isWindowNamesList ?? false) ||
+                                    (isVar?.isVariablesList ?? false) ||
+                                    ((ins?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none);
+                    }
+
+                    labelText = "Please " + (isSelect ? "Select" : "Specify") + " " + labelText;
+                }
+            }
+
             // show sample usage
             if (setting.ClientSettings.ShowSampleUsageInDescription)
             {
