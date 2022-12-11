@@ -441,6 +441,7 @@ namespace taskt.Core
         public bool InsertCommentIfLoopAbove { get; set; }
         public bool GroupingBySubgroup { get; set; }
         public bool DontShowValidationMessage { get; set; }
+        public bool ShowPoliteTextInDescription { get; set; }
         public bool ShowSampleUsageInDescription { get; set; }
         public bool ShowDefaultValueInDescription { get; set; }
         public bool ShowIndentLine { get; set; }
@@ -529,6 +530,7 @@ namespace taskt.Core
             InsertCommentIfLoopAbove = false;
             GroupingBySubgroup = true;
             DontShowValidationMessage = false;
+            ShowPoliteTextInDescription = true;
             ShowSampleUsageInDescription = true;
             ShowDefaultValueInDescription = true;
             ShowIndentLine = true;
