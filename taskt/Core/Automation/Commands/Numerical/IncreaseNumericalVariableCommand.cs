@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     public class IncreaseNumericalVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify Numerical Variable")]
+        [PropertyDescription("Numerical Variable")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [Remarks("")]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         public string v_VariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify value to increase")]
+        [PropertyDescription("Value to Increase")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [SampleUsage("**100** or **{{{vValue}}}**")]
