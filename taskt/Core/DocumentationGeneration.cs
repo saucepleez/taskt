@@ -7,6 +7,9 @@ using System.Text;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
+using Microsoft.Office.Core;
+using System.Runtime.Versioning;
+using MailKit.Security;
 
 namespace taskt.Core
 {
@@ -15,12 +18,13 @@ namespace taskt.Core
     /// </summary>
     public static class DocumentationGeneration
      {
+        /// <summary>
+        /// to sort commands
+        /// </summary>
         private class CommandMetaData
         {
             public string Group { get; set; }
-
             public string SubGroup { get; set; }
-
             public string Name { get; set; }
             public string Description { get; set; }
             public string Location { get; set; }
@@ -187,28 +191,39 @@ namespace taskt.Core
                 var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "");
                 var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "");
 
-                var isOpt = prop.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
-                if (isOpt.isOptional)
-                {
-                    remarks += "<strong>Optional</strong><br>";
-                    if (isOpt.setBlankToValue != "")
-                    {
-                        remarks += "Default Value is " + isOpt.setBlankToValue;
-                    }
-                }
 
                 if (helpfulExplanation == "")
                 {
                     helpfulExplanation = "(nothing)";
                 }
-                if (sampleUsage == "")
-                {
-                    sampleUsage = "(nothing)";
-                }
-                if (remarks == "")
-                {
-                    remarks = "(nothing)";
-                }
+                //if (sampleUsage == "")
+                //{
+                //    var uiSels = prop.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+                //    if (uiSels.Count > 0)
+                //    {
+
+                //    }
+                //    else
+                //    {
+                //        sampleUsage = "(nothing)";
+                //    }
+                //}
+                sampleUsage = CorrectionSampleUsage(sampleUsage, prop);
+
+                //var isOpt = prop.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
+                //if (isOpt.isOptional)
+                //{
+                //    remarks += "<strong>Optional</strong><br>";
+                //    if (isOpt.setBlankToValue != "")
+                //    {
+                //        remarks += "Default Value is " + isOpt.setBlankToValue;
+                //    }
+                //}
+                //if (remarks == "")
+                //{
+                //    remarks = "(nothing)";
+                //}
+                remarks = CorrectionRemarks(remarks, prop);
 
                 sb.AppendLine(Environment.NewLine);
 
@@ -272,6 +287,56 @@ namespace taskt.Core
             var serverPath = "/" + kebobDestination + "/" + kebobFileName;
            
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
+        }
+
+        private static string CorrectionSampleUsage(string smp, PropertyInfo propInfo)
+        {
+            if (smp == "")
+            {
+                var uiSels = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+                if (uiSels.Count > 0)
+                {
+                    foreach(var sel in uiSels)
+                    {
+                        smp += " **" + sel.uiOption + "** or ";
+                    }
+                    smp = smp.Trim();
+                    return smp.Substring(0, smp.Length - 2);
+                }
+                else
+                {
+                    return "(nothing)";
+                }
+            }
+            else
+            {
+                return smp;
+            }
+        }
+
+        private static string CorrectionRemarks(string rm, PropertyInfo propInfo)
+        {
+            if (rm == "")
+            {
+                var isOpt = propInfo.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
+                if (isOpt.isOptional)
+                {
+                    rm += "**Optional**<br>";
+                    if (isOpt.setBlankToValue != "")
+                    {
+                        rm += "Default Value is **" + isOpt.setBlankToValue + "**";
+                    }
+                    return rm;
+                }
+                else
+                {
+                    return "(nothing)";
+                }
+            }
+            else
+            {
+                return rm;
+            }
         }
 
         private static string ConvertMDToHTML(string md)
