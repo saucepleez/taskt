@@ -4,12 +4,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
-using taskt.Core.Automation.Engine;
 using taskt.UI.Forms;
 
 namespace taskt.UI.CustomControls
