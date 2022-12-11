@@ -19,6 +19,20 @@
             this.sampleUsage = desc;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
+    public class PropertyDetailSampleUsage : System.Attribute
+    {
+        public string sampleUsage = "";
+        public string means = "";
+        public bool showInDescription = true;
+
+        public PropertyDetailSampleUsage(string sampleUsage, string means, bool showDescription = true)
+        {
+            this.sampleUsage = sampleUsage;
+            this.means = means;
+            this.showInDescription = showDescription;
+        }
+    }
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class Remarks : System.Attribute
     {
