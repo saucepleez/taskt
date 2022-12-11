@@ -226,6 +226,20 @@ namespace taskt.Core
 
                 sb.AppendLine("<dl>");
                 sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
+
+                // value instance type
+                (var valueName, var valueDescription) = GetValueInstanceType(prop);
+                if (valueName != null)
+                {
+                    sb.AppendLine("<dt>" + valueName + "</dt><dd>" + valueDescription + "</dd>");
+                }
+                // direction
+                var direction = prop.GetCustomAttribute<PropertyParameterDirection>();
+                if (direction != null)
+                {
+                    sb.Append("<dt>Parameter Direction</dt><dd>" + direction.porpose.ToString() + "</dd>");
+                }
+
                 sb.AppendLine("<dt>Sample Data</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
                 sb.AppendLine("<dt>Remarks</dt><dd>" + ConvertMDToHTML(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
@@ -284,6 +298,34 @@ namespace taskt.Core
             var serverPath = "/" + kebobDestination + "/" + kebobFileName;
            
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
+        }
+
+        private static (string dtName, string ddValue) GetValueInstanceType(PropertyInfo propInfo)
+        {
+            var uiSels = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+            if (uiSels.Count > 0)
+            {
+                var sensitive = propInfo.GetCustomAttribute<PropertySelectionValueSensitive>() ?? new PropertySelectionValueSensitive();
+
+                return ("Value", "Selection Values (Case Sensitive: " + (sensitive.caseSensitive ? "Yes" : "No") + ", Whilte-Space Sensitive: " + (sensitive.whiteSpaceSensitive ? "Yes" : "No") + ")");
+            }
+            var isWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
+            if (isWin != null)
+            {
+                return ("Value", "Window Names");
+            }
+            var isVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
+            if (isVar != null)
+            {
+                return ("Value", "Variables");
+            }
+            var ins = propInfo.GetCustomAttribute<PropertyInstanceType>();
+            if (ins != null)
+            {
+                return ("Instance Type", ins.instanceType.ToString());
+            }
+
+            return ("", "");
         }
 
         private static string CorrectionSampleUsage(string smp, PropertyInfo propInfo)
