@@ -1002,9 +1002,27 @@ namespace taskt.UI.CustomControls
                 {
                     if (!labelText.Contains("(ex."))
                     {
-                        var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
-                        var sampleText = GetSampleUsageTextForLabel(attrSample?.sampleUsage ?? "", setting);
-                        if (sampleText.Length > 0)
+                        var sampleText = "";
+                        var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
+                                                    .Where(v => (v.showInDescription))
+                                                    .ToList();
+                        if (attrDetailSamples.Count > 0)
+                        {
+                            foreach(var d in attrDetailSamples)
+                            {
+                                sampleText += d.sampleUsage + " or ";
+                            }
+                            sampleText = sampleText.Trim();
+                            sampleText = GetSampleUsageTextForLabel(sampleText.Substring(0, sampleText.Length - 2), setting);
+                        }
+
+                        if (sampleText == "")
+                        {
+                            var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
+                            sampleText = GetSampleUsageTextForLabel(attrSample?.sampleUsage ?? "", setting);
+                        }
+                        
+                        if (sampleText != "")
                         {
                             labelText += " (ex. " + sampleText + ")";
                         }
