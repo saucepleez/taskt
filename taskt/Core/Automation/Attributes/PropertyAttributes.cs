@@ -340,11 +340,16 @@
     }
 
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyValueSensitive : System.Attribute
+    public sealed class PropertySelectionValueSensitive : System.Attribute
     {
         public bool caseSensitive = false;
         public bool whiteSpaceSensitive = true;
-        public PropertyValueSensitive(bool caseSensitive, bool whiteSpaceSensitive = true)
+        
+        public PropertySelectionValueSensitive()
+        {
+
+        }
+        public PropertySelectionValueSensitive(bool caseSensitive, bool whiteSpaceSensitive = true)
         {
             this.caseSensitive = caseSensitive;
             this.whiteSpaceSensitive = whiteSpaceSensitive;
