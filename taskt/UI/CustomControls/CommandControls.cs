@@ -1042,10 +1042,10 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
         {
-            return setting.replaceApplicationKeyword(GetTextMDFormat(sample)).Replace(" or ", ", ");
+            return setting.replaceApplicationKeyword(GetPlaneTextFromMD(sample)).Replace(" or ", ", ");
         }
 
-        public static string GetTextMDFormat(this string targetString)
+        private static string GetPlaneTextFromMD(this string targetString)
         {
             int idxAster, idxTable;
             string ret = "";
