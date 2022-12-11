@@ -1042,52 +1042,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
         {
-            return setting.replaceApplicationKeyword(GetPlaneTextFromMD(sample)).Replace(" or ", ", ");
-        }
-
-        private static string GetPlaneTextFromMD(this string targetString)
-        {
-            int idxAster, idxTable;
-            string ret = "";
-            while (targetString.Length > 0)
-            {
-                idxAster = targetString.IndexOf("\\*");
-                idxTable = targetString.IndexOf("\\|");
-                if (idxAster >= 0 || idxTable >= 0)
-                {
-                    if ((idxAster >= 0) && (idxTable < 0))
-                    {
-                        ret += targetString.Substring(0, idxAster).RemoveMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if ((idxTable >= 0) && (idxAster < 0))
-                    {
-                        ret += targetString.Substring(0, idxTable).RemoveMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                    else if (idxAster < idxTable)
-                    {
-                        ret += targetString.Substring(0, idxAster).RemoveMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if (idxTable < idxAster)
-                    {
-                        ret += targetString.Substring(0, idxTable).RemoveMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                }
-                else
-                {
-                    ret += targetString.RemoveMDFormat();
-                    targetString = "";
-                }
-            }
-            return ret;
-        }
-
-        private static string RemoveMDFormat(this string targetString)
-        {
-            return targetString.Replace("*", "").Replace("**", "").Replace("|", "");
+            return setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim()).Replace(" or ", ", ");
         }
         #endregion
         #endregion
