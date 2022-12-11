@@ -191,23 +191,17 @@ namespace taskt.Core
 
                 sb.AppendLine("<a id=\"param_" + count + "\"></a>");
                 sb.AppendLine("### " + commandLabel);
+                
+                sb.AppendLine(Environment.NewLine);
 
-                
-                //var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "");
-                
+                // Input Specification, sample usage, remarks, etc.
+                sb.AppendLine("<dl>");
+
                 var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "");
                 if (helpfulExplanation == "")
                 {
                     helpfulExplanation = "(nothing)";
                 }
-
-                //sampleUsage = CorrectionSampleUsage(sampleUsage, prop);
-                //var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "");
-                //remarks = CorrectionRemarks(remarks, prop);
-
-                sb.AppendLine(Environment.NewLine);
-
-                sb.AppendLine("<dl>");
                 sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
 
                 // value instance type
