@@ -213,9 +213,9 @@ namespace taskt.Core
                 sb.AppendLine(Environment.NewLine);
 
                 sb.AppendLine("<dl>");
-                sb.AppendLine("<dt>What to input</dt><dd>" + Markdig.Markdown.ToHtml(helpfulExplanation) + "</dd>");
-                sb.AppendLine("<dt>Sample Data</dt><dd>" + Markdig.Markdown.ToHtml(sampleUsage) + "</dd>");
-                sb.AppendLine("<dt>Remarks</dt><dd>" + Markdig.Markdown.ToHtml(remarks) + "</dd>");
+                sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
+                sb.AppendLine("<dt>Sample Data</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
+                sb.AppendLine("<dt>Remarks</dt><dd>" + ConvertMDToHTML(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
 
                 sb.AppendLine(Environment.NewLine);
@@ -272,6 +272,20 @@ namespace taskt.Core
             var serverPath = "/" + kebobDestination + "/" + kebobFileName;
            
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
+        }
+
+        private static string ConvertMDToHTML(string md)
+        {
+            var html = Markdig.Markdown.ToHtml(md);
+            if (html.StartsWith("<p>"))
+            {
+                html = html.Trim();
+                return html.Substring(3, html.Length - 7);
+            }
+            else
+            {
+                return html;
+            }
         }
      }
 }
