@@ -210,7 +210,7 @@ namespace taskt.Core
 
                 // value instance type
                 (var valueName, var valueDescription) = GetValueInstanceType(prop);
-                if (valueName != null)
+                if (valueName != "")
                 {
                     sb.AppendLine("<dt>" + valueName + "</dt><dd>" + valueDescription + "</dd>");
                 }
