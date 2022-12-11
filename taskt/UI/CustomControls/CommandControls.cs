@@ -1002,26 +1002,30 @@ namespace taskt.UI.CustomControls
                 {
                     if (!labelText.Contains("(ex."))
                     {
-                        var sampleText = "";
-                        var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
-                                                    .Where(v => (v.showInDescription))
-                                                    .ToList();
-                        if (attrDetailSamples.Count > 0)
-                        {
-                            foreach(var d in attrDetailSamples)
-                            {
-                                sampleText += d.sampleUsage + " or ";
-                            }
-                            sampleText = sampleText.Trim();
-                            sampleText = GetSampleUsageTextForLabel(sampleText.Substring(0, sampleText.Length - 2), setting);
-                        }
+                        //var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
+                        //                            .Where(v => (v.showInDescription))
+                        //                            .ToList();
+                        //if (attrDetailSamples.Count > 0)
+                        //{
+                        //    foreach(var d in attrDetailSamples)
+                        //    {
+                        //        sampleText += d.sampleUsage + " or ";
+                        //    }
+                        //    sampleText = sampleText.Trim();
+                        //    sampleText = GetSampleUsageTextForLabel(sampleText.Substring(0, sampleText.Length - 2), setting);
+                        //}
 
-                        if (sampleText == "")
-                        {
-                            var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
-                            sampleText = GetSampleUsageTextForLabel(attrSample?.sampleUsage ?? "", setting);
-                        }
-                        
+                        //if (sampleText == "")
+                        //{
+                        //    var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
+                        //    sampleText = GetSampleUsageTextForLabel(attrSample?.sampleUsage ?? "", setting);
+                        //}
+
+                        //if (sampleText != "")
+                        //{
+                        //    labelText += " (ex. " + sampleText + ")";
+                        //}
+                        var sampleText = GetSampleUsageText(propInfo, setting);
                         if (sampleText != "")
                         {
                             labelText += " (ex. " + sampleText + ")";
@@ -1046,6 +1050,34 @@ namespace taskt.UI.CustomControls
             }
 
             return labelText;
+        }
+
+        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting)
+        {
+            var sampleText = "";
+            var attrShowSample = propInfo.GetCustomAttribute<PropertyShowSampleUsageInDescription>();
+            if (attrShowSample?.showSampleUsage ?? false)
+            {
+                var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
+                                            .Where(v => (v.showInDescription))
+                                            .ToList();
+                if (attrDetailSamples.Count > 0)
+                {
+                    foreach (var d in attrDetailSamples)
+                    {
+                        sampleText += d.sampleUsage + " or ";
+                    }
+                    sampleText = sampleText.Trim();
+                    sampleText = GetSampleUsageTextForLabel(sampleText.Substring(0, sampleText.Length - 2), setting);
+                }
+
+                if (sampleText == "")
+                {
+                    var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
+                    sampleText = GetSampleUsageTextForLabel(attrSample?.sampleUsage ?? "", setting);
+                }
+            }
+            return sampleText;
         }
 
         #region keyword md format
