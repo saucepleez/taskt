@@ -188,38 +188,11 @@ namespace taskt.Core
                 var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "");
                 var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "");
 
-
                 if (helpfulExplanation == "")
                 {
                     helpfulExplanation = "(nothing)";
                 }
-                //if (sampleUsage == "")
-                //{
-                //    var uiSels = prop.GetCustomAttributes<PropertyUISelectionOption>().ToList();
-                //    if (uiSels.Count > 0)
-                //    {
-
-                //    }
-                //    else
-                //    {
-                //        sampleUsage = "(nothing)";
-                //    }
-                //}
                 sampleUsage = CorrectionSampleUsage(sampleUsage, prop);
-
-                //var isOpt = prop.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
-                //if (isOpt.isOptional)
-                //{
-                //    remarks += "<strong>Optional</strong><br>";
-                //    if (isOpt.setBlankToValue != "")
-                //    {
-                //        remarks += "Default Value is " + isOpt.setBlankToValue;
-                //    }
-                //}
-                //if (remarks == "")
-                //{
-                //    remarks = "(nothing)";
-                //}
                 remarks = CorrectionRemarks(remarks, prop);
 
                 sb.AppendLine(Environment.NewLine);
@@ -238,6 +211,13 @@ namespace taskt.Core
                 if (direction != null)
                 {
                     sb.Append("<dt>Parameter Direction</dt><dd>" + direction.porpose.ToString() + "</dd>");
+                }
+
+                // error validation
+                var validationRules = GetErrorValidation(prop);
+                if (validationRules != "")
+                {
+                    sb.Append("<dt>Error When Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
                 }
 
                 sb.AppendLine("<dt>Sample Data</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
@@ -353,6 +333,68 @@ namespace taskt.Core
             }
         }
 
+        private static string GetErrorValidation(PropertyInfo propInfo)
+        {
+            string validate = "";
+
+            // validation
+            var valid = propInfo.GetCustomAttribute<PropertyValidationRule>() ?? new PropertyValidationRule();
+            var bet = propInfo.GetCustomAttribute<PropertyValueRange>();
+            if (valid.parameterName != "")
+            {
+                if (valid.errorRule != 0)
+                {
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Empty))
+                    {
+                        validate += "- Empty\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.LessThanZero))
+                    {
+                        validate += "- Less than Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.GreaterThanZero))
+                    {
+                        validate += "- Greater than Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.EqualsZero))
+                    {
+                        validate += "- Equals Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotEqualsZero))
+                    {
+                        validate += "- **Not** Equals Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotSelectionOption))
+                    {
+                        validate += "- **Not** Selection Values\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Between))
+                    {
+                        if (bet != null)
+                        {
+                            validate += "- Between " + bet.min + " to " + bet.max + "\n";
+                        }
+                        else
+                        {
+                            validate += "- Between *range defined*\n";
+                        }
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotBetween))
+                    {
+                        if (bet != null)
+                        {
+                            validate += "- **Not** Between " + bet.min + " to " + bet.max + "\n";
+                        }
+                        else
+                        {
+                            validate += "- **Not** Between *range defined*\n";
+                        }
+                    }
+                }
+            }
+            return validate;
+        }
+
         private static string CorrectionRemarks(string rm, PropertyInfo propInfo)
         {
             // is optional
@@ -370,68 +412,6 @@ namespace taskt.Core
                 }
                 return rm;
             }
-
-            // validation
-            var valid = propInfo.GetCustomAttribute<PropertyValidationRule>() ?? new PropertyValidationRule();
-            var bet = propInfo.GetCustomAttribute<PropertyValueRange>();
-            if (valid.parameterName != "")
-            {
-                if (valid.errorRule != 0)
-                {
-                    if (rm != "")
-                    {
-                        rm += "<br><br>\n";
-                    }
-                    rm += "**Error when value is...**\n";
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Empty))
-                    {
-                        rm += "- Empty\n";
-                    }
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.LessThanZero))
-                    {
-                        rm += "- Less than Zero\n";
-                    }
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.GreaterThanZero))
-                    {
-                        rm += "- Greater than Zero\n";
-                    }
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.EqualsZero))
-                    {
-                        rm += "- Equals Zero\n";
-                    }
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotEqualsZero))
-                    {
-                        rm += "- **Not** Equals Zero\n";
-                    }
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotSelectionOption))
-                    {
-                        rm += "- **Not** Selection Values\n";
-                    }
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Between))
-                    {
-                        if (bet != null)
-                        {
-                            rm += "- Between " + bet.min + " to " + bet.max + "\n";
-                        }
-                        else
-                        {
-                            rm += "- Between *range defined*\n";
-                        }
-                    }
-                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotBetween))
-                    {
-                        if (bet != null)
-                        {
-                            rm += "- **Not** Between " + bet.min + " to " + bet.max + "\n";
-                        }
-                        else
-                        {
-                            rm += "- **Not** Between *range defined*\n";
-                        }
-                    }
-                }
-            }
-
             return (rm != "") ? rm : "(nothing)";
         }
 
