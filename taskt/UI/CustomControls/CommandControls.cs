@@ -130,11 +130,12 @@ namespace taskt.UI.CustomControls
             {
                 propInfo = command.GetProperty(propertyName);
             }
+            var virtualPropInfo = GetViratulProperty(propInfo);
             
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() =>
             {
                 return CreateDefaultInputFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
@@ -151,10 +152,11 @@ namespace taskt.UI.CustomControls
             {
                 propInfo = command.GetProperty(propertyName);
             }
+            var virtualPropInfo = GetViratulProperty(propInfo);
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
                 return CreateDefaultDropdownFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
@@ -171,10 +173,11 @@ namespace taskt.UI.CustomControls
             {
                 propInfo = command.GetProperty(propertyName);
             }
+            var virtualPropInfo = GetViratulProperty(propInfo);
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
                 return CreateDefaultCheckBoxFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
@@ -191,10 +194,11 @@ namespace taskt.UI.CustomControls
             {
                 propInfo = command.GetProperty(propertyName);
             }
+            var virtualPropInfo = GetViratulProperty(propInfo);
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
                 return CreateDefaultDataGridViewFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
@@ -206,7 +210,7 @@ namespace taskt.UI.CustomControls
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
         /// <returns></returns>
-        private static List<Control> CreateDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Func<Control> createFunc, Forms.frmCommandEditor editor, PropertyInfo propInfo)
+        private static List<Control> CreateDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Func<Control> createFunc, Forms.frmCommandEditor editor, PropertyInfo propInfo, PropertyInfo virtualPropInfo)
         {
             var controlList = new List<Control>();
 
@@ -1329,6 +1333,37 @@ namespace taskt.UI.CustomControls
             }
 
             return (trgMethod, useOuterClassEvent);
+        }
+
+        private static PropertyInfo GetViratulProperty(PropertyInfo propInfo)
+        {
+            var attrVP = propInfo.GetCustomAttribute<PropertyVirtualProperty>();
+            if (attrVP == null)
+            {
+                return null;
+            }
+            var tp = Type.GetType("taskt.Core.Automation.Commands." + attrVP.className);
+            return tp.GetProperty(attrVP.propertyName, BindingFlags.Public);
+        }
+
+        private static T GeCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+            where T : System.Attribute
+        {
+            return propInfo.GetCustomAttribute<T>() ?? virtualPropInfo.GetCustomAttribute<T>();
+        }
+
+        private static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+            where T : System.Attribute
+        {
+            var a = propInfo.GetCustomAttributes<T>().ToList();
+            if (a.Count == 0)
+            {
+                return virtualPropInfo.GetCustomAttributes<T>().ToList();
+            }
+            else
+            {
+                return a;
+            }
         }
         #endregion
 
