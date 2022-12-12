@@ -341,6 +341,7 @@
             this.ClientSize = new System.Drawing.Size(743, 450);
             this.Controls.Add(this.tableLayoutBase);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimizeBox = false;
             this.Name = "frmNewSettings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.frmNewSettings_Load);
