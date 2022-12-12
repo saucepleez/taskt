@@ -102,13 +102,13 @@ namespace taskt.Core
             string fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
-            // release
-            commandClasses.Clear();
-            commandClasses = null;
-            highLevelCommandInfo.Clear();
-            highLevelCommandInfo = null;
-            sortHighLevelCommandInfo.Clear();
-            sortHighLevelCommandInfo = null;
+            //// release
+            //commandClasses.Clear();
+            //commandClasses = null;
+            //highLevelCommandInfo.Clear();
+            //highLevelCommandInfo = null;
+            //sortHighLevelCommandInfo.Clear();
+            //sortHighLevelCommandInfo = null;
 
             return docsFolderName;
         }
