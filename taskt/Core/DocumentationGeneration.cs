@@ -221,7 +221,7 @@ namespace taskt.Core
                 var validationRules = GetErrorValidation(prop);
                 if (validationRules != "")
                 {
-                    sb.Append("<dt>Error When Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
+                    sb.Append("<dt>Error Occurs When the Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
                 }
 
                 var sampleUsage = GetSampleUsageText(prop, settings);
@@ -332,7 +332,7 @@ namespace taskt.Core
 
         private static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings settings)
         {
-            var smp = CommandControls.GetSampleUsageText(propInfo, settings);
+            var smp = CommandControls.GetSampleUsageText(propInfo, settings, false);
 
             if (smp == "")
             {

@@ -998,8 +998,8 @@ namespace taskt.UI.CustomControls
             if (setting.ClientSettings.ShowPoliteTextInDescription)
             {
                 var lowText = labelText.ToLower();
-                if (!lowText.StartsWith("please select") && !lowText.StartsWith("please specify") &&
-                        !lowText.StartsWith("please enter") && !lowText.StartsWith("please indicate"))
+                if (!lowText.StartsWith("please select the") && !lowText.StartsWith("please specify the") &&
+                        !lowText.StartsWith("please enter the") && !lowText.StartsWith("please indicate the"))
                 {
                     // check "Select" or not
                     var controlType = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>()?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
@@ -1019,7 +1019,7 @@ namespace taskt.UI.CustomControls
                                     ((ins?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none);
                     }
 
-                    labelText = "Please " + (isSelect ? "Select" : "Specify") + " " + labelText;
+                    labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
                 }
             }
 
@@ -1063,8 +1063,9 @@ namespace taskt.UI.CustomControls
         /// </summary>
         /// <param name="propInfo"></param>
         /// <param name="setting"></param>
+        /// <param name="planeText">if sample usege text written in MarkDown, return value is plane text.</param>
         /// <returns></returns>
-        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting)
+        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting, bool planeText = true)
         {
             var sampleText = "";
             var attrShowSample = propInfo.GetCustomAttribute<PropertyShowSampleUsageInDescription>();
@@ -1080,16 +1081,24 @@ namespace taskt.UI.CustomControls
                         sampleText += d.sampleUsage + " or ";
                     }
                     sampleText = sampleText.Trim();
-                    sampleText = GetSampleUsageTextForLabel(sampleText.Substring(0, sampleText.Length - 2), setting);
+                    sampleText = sampleText.Substring(0, sampleText.Length - 2);
                 }
 
                 if (sampleText == "")
                 {
                     var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
-                    sampleText = GetSampleUsageTextForLabel(attrSample?.sampleUsage ?? "", setting);
+                    sampleText = attrSample?.sampleUsage ?? "";
                 }
             }
-            return sampleText;
+
+            if (planeText)
+            {
+                return GetSampleUsageTextForLabel(sampleText, setting);
+            }
+            else
+            {
+                return setting.replaceApplicationKeyword(sampleText);
+            }
         }
 
         #region keyword md format
