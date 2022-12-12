@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.IsisMtt.X509;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -215,7 +216,7 @@ namespace taskt.UI.CustomControls
             var controlList = new List<Control>();
 
             // label
-            var label = CreateDefaultLabelFor(propertyName, command, editor, propInfo);
+            var label = CreateDefaultLabelFor(propertyName, command, editor, propInfo, virtualPropInfo);
             controlList.Add(label);
 
             // 2nd label
@@ -254,8 +255,9 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use viratul property</param>
         /// <returns></returns>
-        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -267,8 +269,8 @@ namespace taskt.UI.CustomControls
             var labelText = GetLabelText(propertyName, propInfo, setting);
 
             // get addtional parameter info
-            //var attrAdditionalParams = (PropertyAddtionalParameterInfo[])propInfo.GetCustomAttributes(typeof(PropertyAddtionalParameterInfo));
-            var attrAdditionalParams = propInfo.GetCustomAttributes<PropertyAddtionalParameterInfo>().ToList();
+            //var attrAdditionalParams = propInfo.GetCustomAttributes<PropertyAddtionalParameterInfo>().ToList();
+            var attrAdditionalParams = GetCustomAttributesWithVirtual<PropertyAddtionalParameterInfo>(propInfo, virtualPropInfo);
             Dictionary<string, string> addParams = null;
             if (attrAdditionalParams.Count > 0)
             {
@@ -670,15 +672,17 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property</param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var propertyUIHelpers = propInfo.GetCustomAttributes<PropertyUIHelper>().ToList();
+            //var propertyUIHelpers = propInfo.GetCustomAttributes<PropertyUIHelper>().ToList();
+            var propertyUIHelpers = GetCustomAttributesWithVirtual<PropertyUIHelper>(propInfo, virtualPropInfo);
 
             var controlList = new List<Control>();
             if (propertyUIHelpers.Count() == 0)
@@ -705,8 +709,9 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static List<Control> CreateCustomUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateCustomUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
         {
             if (propInfo == null)
             {
@@ -714,7 +719,8 @@ namespace taskt.UI.CustomControls
             }
             List<Control> ctrls = new List<Control>();
 
-            var uiHelpers = propInfo.GetCustomAttributes<PropertyCustomUIHelper>().ToList();
+            //var uiHelpers = propInfo.GetCustomAttributes<PropertyCustomUIHelper>().ToList();
+            var uiHelpers = GetCustomAttributesWithVirtual<PropertyCustomUIHelper>(propInfo, virtualPropertyInfo);
 
             if (uiHelpers.Count == 0)
             {
@@ -993,8 +999,9 @@ namespace taskt.UI.CustomControls
         /// <param name="propertyName"></param>
         /// <param name="propInfo"></param>
         /// <param name="setting"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static string GetLabelText(string propertyName, PropertyInfo propInfo, ApplicationSettings setting)
+        public static string GetLabelText(string propertyName, PropertyInfo propInfo, ApplicationSettings setting, PropertyInfo virtualPropertyInfo)
         {
             var attrDescription = propInfo.GetCustomAttribute<PropertyDescription>() ?? new PropertyDescription(propertyName);
 
