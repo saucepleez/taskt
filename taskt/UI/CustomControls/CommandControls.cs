@@ -219,7 +219,8 @@ namespace taskt.UI.CustomControls
             controlList.Add(label);
 
             // 2nd label
-            var attr2ndLabel = propInfo.GetCustomAttribute<PropertySecondaryLabel>();
+            //var attr2ndLabel = propInfo.GetCustomAttribute<PropertySecondaryLabel>();
+            var attr2ndLabel = GetCustomAttributeWithVirtual<PropertySecondaryLabel>(propInfo, virtualPropInfo);
             if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
@@ -266,9 +267,10 @@ namespace taskt.UI.CustomControls
             var labelText = GetLabelText(propertyName, propInfo, setting);
 
             // get addtional parameter info
-            var attrAdditionalParams = (PropertyAddtionalParameterInfo[])propInfo.GetCustomAttributes(typeof(PropertyAddtionalParameterInfo));
+            //var attrAdditionalParams = (PropertyAddtionalParameterInfo[])propInfo.GetCustomAttributes(typeof(PropertyAddtionalParameterInfo));
+            var attrAdditionalParams = propInfo.GetCustomAttributes<PropertyAddtionalParameterInfo>().ToList();
             Dictionary<string, string> addParams = null;
-            if (attrAdditionalParams.Length > 0)
+            if (attrAdditionalParams.Count > 0)
             {
                 Func<string, string> convFunc;
                 if (editor == null)
@@ -1346,7 +1348,7 @@ namespace taskt.UI.CustomControls
             return tp.GetProperty(attrVP.propertyName, BindingFlags.Public);
         }
 
-        private static T GeCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        private static T GetCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
             where T : System.Attribute
         {
             return propInfo.GetCustomAttribute<T>() ?? virtualPropInfo.GetCustomAttribute<T>();
