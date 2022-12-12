@@ -15,12 +15,13 @@ namespace taskt.Core
     /// </summary>
     public static class DocumentationGeneration
      {
+        /// <summary>
+        /// to sort commands
+        /// </summary>
         private class CommandMetaData
         {
             public string Group { get; set; }
-
             public string SubGroup { get; set; }
-
             public string Name { get; set; }
             public string Description { get; set; }
             public string Location { get; set; }
@@ -101,17 +102,25 @@ namespace taskt.Core
             string fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
-            // release
-            commandClasses.Clear();
-            commandClasses = null;
-            highLevelCommandInfo.Clear();
-            highLevelCommandInfo = null;
-            sortHighLevelCommandInfo.Clear();
-            sortHighLevelCommandInfo = null;
+            //// release
+            //commandClasses.Clear();
+            //commandClasses = null;
+            //highLevelCommandInfo.Clear();
+            //highLevelCommandInfo = null;
+            //sortHighLevelCommandInfo.Clear();
+            //sortHighLevelCommandInfo = null;
 
             return docsFolderName;
         }
 
+        /// <summary>
+        /// create and save Command Document file
+        /// </summary>
+        /// <param name="commandClass"></param>
+        /// <param name="settings"></param>
+        /// <param name="docsFolderName"></param>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
         private static CommandMetaData GenerateMarkdownCommandFile(Type commandClass, ApplicationSettings settings, string docsFolderName, CultureInfo cultureInfo)
         {
             ScriptCommand command = (ScriptCommand)Activator.CreateInstance(commandClass);
@@ -126,8 +135,12 @@ namespace taskt.Core
             sb.AppendLine("<!--TITLE: " + commandName + " Command -->");
             sb.AppendLine("<!-- SUBTITLE: a command in the " + groupName + " group. -->");
 
+            // title
             sb.AppendLine("[Go To Automation Commands Overview](/automation-commands.md)");
 
+            sb.AppendLine(Environment.NewLine);
+
+            // bread crumb
             if (subGroupName != "")
             {
                 sb.AppendLine(groupName + " &gt; " + subGroupName + " &gt; " + commandName);
@@ -178,45 +191,53 @@ namespace taskt.Core
 
                 sb.AppendLine("<a id=\"param_" + count + "\"></a>");
                 sb.AppendLine("### " + commandLabel);
-
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "(nothing)");
-                var sampleUsage = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<SampleUsage>()?.sampleUsage ?? "(nothing)");
-                var remarks = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<Remarks>()?.remarks ?? "(nothing)");
-
-                var isOpt = prop.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
-                if (isOpt.isOptional)
-                {
-                    remarks += "<b>Optional</b><br>";
-                    if (isOpt.setBlankToValue != "")
-                    {
-                        remarks += "Default Value is " + isOpt.setBlankToValue;
-                    }
-                }
-
-
-                if (sampleUsage == "")
-                {
-                    sampleUsage = "(nothing)";
-                }
-                if (remarks == "")
-                {
-                    remarks = "(nothing)";
-                }
-
+                
                 sb.AppendLine(Environment.NewLine);
 
+                // Input Specification, sample usage, remarks, etc.
                 sb.AppendLine("<dl>");
-                sb.AppendLine("<dt>What to input</dt><dd>" + CommandControls.GetTextMDFormat(helpfulExplanation) + "</dd>");
-                sb.AppendLine("<dt>Sample Data</dt><dd>" + CommandControls.GetTextMDFormat(sampleUsage) + "</dd>");
-                sb.AppendLine("<dt>Remarks</dt><dd>" + CommandControls.GetTextMDFormat(remarks) + "</dd>");
+
+                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "");
+                if (helpfulExplanation == "")
+                {
+                    helpfulExplanation = "(nothing)";
+                }
+                sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
+
+                // value instance type
+                (var valueName, var valueDescription) = GetValueInstanceType(prop);
+                if (valueName != "")
+                {
+                    sb.AppendLine("<dt>" + valueName + "</dt><dd>" + valueDescription + "</dd>");
+                }
+                // direction
+                var direction = prop.GetCustomAttribute<PropertyParameterDirection>();
+                if (direction != null)
+                {
+                    sb.Append("<dt>Parameter Direction</dt><dd>" + direction.porpose.ToString() + "</dd>");
+                }
+
+                // error validation
+                var validationRules = GetErrorValidation(prop);
+                if (validationRules != "")
+                {
+                    sb.Append("<dt>Error Occurs When the Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
+                }
+
+                var sampleUsage = GetSampleUsageText(prop, settings);
+                sb.AppendLine("<dt>Sample Usage</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
+
+                var remarks = GetRemarksText(prop, settings);
+                sb.AppendLine("<dt>Remarks</dt><dd>" + ConvertMDToHTML(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
 
                 sb.AppendLine(Environment.NewLine);
 
+                // Additional Parameter Info
                 var paramInfos = prop.GetCustomAttributes<PropertyAddtionalParameterInfo>().ToList();
                 if (paramInfos.Count > 0)
                 {
-                    sb.AppendLine("### Addtional Info about &quot;" + commandLabel + "&quot;");
+                    sb.AppendLine("#### Addtional Info about &quot;" + commandLabel + "&quot;");
                     sb.AppendLine("| Parameter Value(s) | Description   | Sample Data 	| Remarks  	|");
                     sb.AppendLine("| ---             | ---           | ---          | ---       |");
 
@@ -230,6 +251,21 @@ namespace taskt.Core
                     }
                 }
 
+                // Detail Sample Usage
+                var sampleUsages = prop.GetCustomAttributes<PropertyDetailSampleUsage>().ToList();
+                if (sampleUsages.Count > 0)
+                {
+                    sb.AppendLine(Environment.NewLine);
+                    sb.AppendLine("#### Sample Usage");
+                    sb.AppendLine("| Value | Means |");
+                    sb.AppendLine("|---|---|");
+                    
+                    foreach(var s in sampleUsages)
+                    {
+                        sb.AppendLine("|" + settings.replaceApplicationKeyword(s.sampleUsage) + "|" + s.means + "|");
+                    }
+                }
+
                 sb.AppendLine(Environment.NewLine);
                 count++;
             }
@@ -238,7 +274,6 @@ namespace taskt.Core
             sb.AppendLine("Automation Class Name: " + commandClass.Name);
             sb.AppendLine("Parent Namespace: " + commandClass.Namespace);
             sb.AppendLine("This page was generated on " + DateTime.Now.ToString("MM/dd/yy hh:mm tt", cultureInfo));
-
 
             sb.AppendLine(Environment.NewLine);
 
@@ -265,6 +300,151 @@ namespace taskt.Core
             var serverPath = "/" + kebobDestination + "/" + kebobFileName;
            
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
+        }
+
+        private static (string dtName, string ddValue) GetValueInstanceType(PropertyInfo propInfo)
+        {
+            var uiSels = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+            if (uiSels.Count > 0)
+            {
+                var sensitive = propInfo.GetCustomAttribute<PropertySelectionValueSensitive>() ?? new PropertySelectionValueSensitive();
+
+                return ("Value", "Selection Values (Case Sensitive: " + (sensitive.caseSensitive ? "Yes" : "No") + ", Whilte-Space Sensitive: " + (sensitive.whiteSpaceSensitive ? "Yes" : "No") + ")");
+            }
+            var isWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
+            if (isWin != null)
+            {
+                return ("Value", "Window Names");
+            }
+            var isVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
+            if (isVar != null)
+            {
+                return ("Value", "Variables");
+            }
+            var ins = propInfo.GetCustomAttribute<PropertyInstanceType>();
+            if (ins != null)
+            {
+                return ("Instance Type", ins.instanceType.ToString());
+            }
+
+            return ("", "");
+        }
+
+        private static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings settings)
+        {
+            var smp = CommandControls.GetSampleUsageText(propInfo, settings, false);
+
+            if (smp == "")
+            {
+                var uiSels = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+                if (uiSels.Count > 0)
+                {
+                    foreach(var sel in uiSels)
+                    {
+                        smp += " **" + sel.uiOption + "** or ";
+                    }
+                    smp = smp.Trim();
+                    return smp.Substring(0, smp.Length - 2);
+                }
+                else
+                {
+                    return "(nothing)";
+                }
+            }
+            else
+            {
+                return smp;
+            }
+        }
+
+        private static string GetErrorValidation(PropertyInfo propInfo)
+        {
+            string validate = "";
+
+            // validation
+            var valid = propInfo.GetCustomAttribute<PropertyValidationRule>() ?? new PropertyValidationRule();
+            var bet = propInfo.GetCustomAttribute<PropertyValueRange>();
+            if (valid.parameterName != "")
+            {
+                if (valid.errorRule != 0)
+                {
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Empty))
+                    {
+                        validate += "- Empty\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.LessThanZero))
+                    {
+                        validate += "- Less than Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.GreaterThanZero))
+                    {
+                        validate += "- Greater than Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.EqualsZero))
+                    {
+                        validate += "- Equals Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotEqualsZero))
+                    {
+                        validate += "- **Not** Equals Zero\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotSelectionOption))
+                    {
+                        validate += "- **Not** Selection Values\n";
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Between))
+                    {
+                        if (bet != null)
+                        {
+                            validate += "- Between " + bet.min + " to " + bet.max + "\n";
+                        }
+                        else
+                        {
+                            validate += "- Between *range defined*\n";
+                        }
+                    }
+                    if (valid.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotBetween))
+                    {
+                        if (bet != null)
+                        {
+                            validate += "- **Not** Between " + bet.min + " to " + bet.max + "\n";
+                        }
+                        else
+                        {
+                            validate += "- **Not** Between *range defined*\n";
+                        }
+                    }
+                }
+            }
+            return validate;
+        }
+
+        private static string GetRemarksText(PropertyInfo propInfo, ApplicationSettings settings)
+        {
+            string rm = settings.ClientSettings.replaceClientKeyword(propInfo.GetCustomAttribute<Remarks>()?.remarks ?? "");
+
+            // is optional
+            var isOpt = propInfo.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
+            if (isOpt.isOptional)
+            {
+                if (rm != "")
+                {
+                    rm += "<br><br>\n";
+                }
+                rm += "**Optional**<br>";
+                if (isOpt.setBlankToValue != "")
+                {
+                    rm += "Default Value is **" + isOpt.setBlankToValue + "**";
+                }
+                return rm;
+            }
+            return (rm != "") ? rm : "(nothing)";
+        }
+
+        private static string ConvertMDToHTML(string md)
+        {
+            var html = Markdig.Markdown.ToHtml(md).Trim();
+            return html.Replace("<p>", "").Replace("</p>", "");
         }
      }
 }

@@ -19,6 +19,20 @@
             this.sampleUsage = desc;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
+    public class PropertyDetailSampleUsage : System.Attribute
+    {
+        public string sampleUsage = "";
+        public string means = "";
+        public bool showInDescription = true;
+
+        public PropertyDetailSampleUsage(string sampleUsage, string means, bool showDescription = true)
+        {
+            this.sampleUsage = sampleUsage;
+            this.means = means;
+            this.showInDescription = showDescription;
+        }
+    }
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class Remarks : System.Attribute
     {
@@ -35,22 +49,6 @@
         public PropertyDescription(string description)
         {
             this.propertyDescription = description;
-        }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyIsOptional : System.Attribute
-    {
-        public bool isOptional = false;
-        public string setBlankToValue = "";
-
-        public PropertyIsOptional()
-        {
-
-        }
-        public PropertyIsOptional(bool opt, string setBlankToValue = "")
-        {
-            this.isOptional = opt;
-            this.setBlankToValue = setBlankToValue;
         }
     }
     [System.AttributeUsage(System.AttributeTargets.Property)]
@@ -230,11 +228,21 @@
         public string parameterName = "";
         public ValidationRuleFlags errorRule = 0;
         public ValidationRuleFlags warningRule = 0;
+
+        public PropertyValidationRule()
+        {
+
+        }
         public PropertyValidationRule(string parameterName, ValidationRuleFlags errorRule = 0, ValidationRuleFlags warningRule = 0)
         {
             this.parameterName = parameterName;
             this.errorRule = errorRule;
             this.warningRule = warningRule;
+        }
+
+        public bool IsErrorFlag(ValidationRuleFlags err)
+        {
+            return ((this.errorRule & err) == err);
         }
 
         [System.Flags]
@@ -273,6 +281,22 @@
             this.parameterDisplay = show;
             this.parameterName = name;
             this.afterText = afterText;
+        }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public sealed class PropertyIsOptional : System.Attribute
+    {
+        public bool isOptional = false;
+        public string setBlankToValue = "";
+
+        public PropertyIsOptional()
+        {
+
+        }
+        public PropertyIsOptional(bool opt, string setBlankToValue = "")
+        {
+            this.isOptional = opt;
+            this.setBlankToValue = setBlankToValue;
         }
     }
     #endregion
@@ -330,11 +354,15 @@
     }
 
     [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyValueSensitive : System.Attribute
+    public sealed class PropertySelectionValueSensitive : System.Attribute
     {
         public bool caseSensitive = false;
         public bool whiteSpaceSensitive = true;
-        public PropertyValueSensitive(bool caseSensitive, bool whiteSpaceSensitive = true)
+        
+        public PropertySelectionValueSensitive()
+        {
+        }
+        public PropertySelectionValueSensitive(bool caseSensitive, bool whiteSpaceSensitive = true)
         {
             this.caseSensitive = caseSensitive;
             this.whiteSpaceSensitive = whiteSpaceSensitive;

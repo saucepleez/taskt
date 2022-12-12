@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
             var options = propInfo.GetCustomAttributes<Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption>();
             if (options.Count() > 0)
             {
-                var attrIsSensitive = propInfo.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive>();
+                var attrIsSensitive = propInfo.GetCustomAttribute<Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive>();
                 bool isSensitive = attrIsSensitive?.caseSensitive ?? false;
 
                 Func<string, string, bool> chkFunc;

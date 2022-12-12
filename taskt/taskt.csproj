@@ -103,6 +103,9 @@
     <Reference Include="MailKit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.3.3.0\lib\net48\MailKit.dll</HintPath>
     </Reference>
+    <Reference Include="Markdig, Version=0.30.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.0.30.4\lib\net452\Markdig.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>

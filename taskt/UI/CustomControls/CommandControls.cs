@@ -4,12 +4,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 using taskt.Core;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
-using taskt.Core.Automation.Engine;
 using taskt.UI.Forms;
 
 namespace taskt.UI.CustomControls
@@ -996,6 +994,35 @@ namespace taskt.UI.CustomControls
 
             string labelText = setting.replaceApplicationKeyword(attrDescription.propertyDescription);
 
+            // polite text
+            if (setting.ClientSettings.ShowPoliteTextInDescription)
+            {
+                var lowText = labelText.ToLower();
+                if (!lowText.StartsWith("please select the") && !lowText.StartsWith("please specify the") &&
+                        !lowText.StartsWith("please enter the") && !lowText.StartsWith("please indicate the"))
+                {
+                    // check "Select" or not
+                    var controlType = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>()?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
+                    bool isSelect = ((controlType == PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox) ||
+                                        (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox) ||
+                                        (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.RadioButton));
+                    if (!isSelect)
+                    {
+                        var uiOpts = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+                        var isWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
+                        var isVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
+                        var ins = propInfo.GetCustomAttribute<PropertyInstanceType>();
+
+                        isSelect = (uiOpts.Count > 0) ||
+                                    (isWin?.isWindowNamesList ?? false) ||
+                                    (isVar?.isVariablesList ?? false) ||
+                                    ((ins?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none);
+                    }
+
+                    labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
+                }
+            }
+
             // show sample usage
             if (setting.ClientSettings.ShowSampleUsageInDescription)
             {
@@ -1004,9 +1031,8 @@ namespace taskt.UI.CustomControls
                 {
                     if (!labelText.Contains("(ex."))
                     {
-                        var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
-                        var sampleText = GetSampleUsageTextForLabel(attrSample?.sampleUsage ?? "", setting);
-                        if (sampleText.Length > 0)
+                        var sampleText = GetSampleUsageText(propInfo, setting);
+                        if (sampleText != "")
                         {
                             labelText += " (ex. " + sampleText + ")";
                         }
@@ -1032,6 +1058,49 @@ namespace taskt.UI.CustomControls
             return labelText;
         }
 
+        /// <summary>
+        /// get sample usage text to Label. This method use PropertyShowSampleUsageInDescription, PropertyDetailSampleUsage, SampleUsage attributes.
+        /// </summary>
+        /// <param name="propInfo"></param>
+        /// <param name="setting"></param>
+        /// <param name="planeText">if sample usege text written in MarkDown, return value is plane text.</param>
+        /// <returns></returns>
+        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting, bool planeText = true)
+        {
+            var sampleText = "";
+            var attrShowSample = propInfo.GetCustomAttribute<PropertyShowSampleUsageInDescription>();
+            if (attrShowSample?.showSampleUsage ?? false)
+            {
+                var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
+                                            .Where(v => (v.showInDescription))
+                                            .ToList();
+                if (attrDetailSamples.Count > 0)
+                {
+                    foreach (var d in attrDetailSamples)
+                    {
+                        sampleText += d.sampleUsage + " or ";
+                    }
+                    sampleText = sampleText.Trim();
+                    sampleText = sampleText.Substring(0, sampleText.Length - 2);
+                }
+
+                if (sampleText == "")
+                {
+                    var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
+                    sampleText = attrSample?.sampleUsage ?? "";
+                }
+            }
+
+            if (planeText)
+            {
+                return GetSampleUsageTextForLabel(sampleText, setting);
+            }
+            else
+            {
+                return setting.replaceApplicationKeyword(sampleText);
+            }
+        }
+
         #region keyword md format
 
         /// <summary>
@@ -1042,52 +1111,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
         {
-            return setting.replaceApplicationKeyword(GetTextMDFormat(sample)).Replace(" or ", ", ");
-        }
-
-        public static string GetTextMDFormat(this string targetString)
-        {
-            int idxAster, idxTable;
-            string ret = "";
-            while (targetString.Length > 0)
-            {
-                idxAster = targetString.IndexOf("\\*");
-                idxTable = targetString.IndexOf("\\|");
-                if (idxAster >= 0 || idxTable >= 0)
-                {
-                    if ((idxAster >= 0) && (idxTable < 0))
-                    {
-                        ret += targetString.Substring(0, idxAster).RemoveMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if ((idxTable >= 0) && (idxAster < 0))
-                    {
-                        ret += targetString.Substring(0, idxTable).RemoveMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                    else if (idxAster < idxTable)
-                    {
-                        ret += targetString.Substring(0, idxAster).RemoveMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if (idxTable < idxAster)
-                    {
-                        ret += targetString.Substring(0, idxTable).RemoveMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                }
-                else
-                {
-                    ret += targetString.RemoveMDFormat();
-                    targetString = "";
-                }
-            }
-            return ret;
-        }
-
-        private static string RemoveMDFormat(this string targetString)
-        {
-            return targetString.Replace("*", "").Replace("**", "").Replace("|", "");
+            return setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim()).Replace(" or ", ", ");
         }
         #endregion
         #endregion

@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
         [PropertySelectionChangeEvent("SearchMethodComboBox_SelectionChangeCommitted")]
         [PropertyControlIntoCommandField("SearchMethodComboBox")]
         [PropertyValidationRule("Search Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyValueSensitive(false)]
+        [PropertySelectionValueSensitive(false)]
         public string v_SeleniumSearchType { get; set; }
 
         [XmlAttribute]
@@ -111,7 +111,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Column Name")]
         [PropertyUISelectionOption("Ignore")]
         [PropertyIsOptional(true, "First Row")]
-        [PropertyValueSensitive(false)]
+        [PropertySelectionValueSensitive(false)]
         public string v_FirstRowMethod { get; set; }
 
         [XmlIgnore]

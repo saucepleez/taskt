@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Range")]
         [PropertyUISelectionOption("RC")]
-        [PropertyValueSensitive(false)]
+        [PropertySelectionValueSensitive(false)]
         [PropertyDisplayText(true, "Column Type")]
         public string v_ColumnType { get; set; }
 
@@ -102,7 +102,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Back Color")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Cell")]
-        [PropertyValueSensitive(false)]
+        [PropertySelectionValueSensitive(false)]
         [PropertyDisplayText(true, "Value Type")]
         public string v_ValueType { get; set; }
 
@@ -115,7 +115,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Error")]
-        [PropertyValueSensitive(false)]
+        [PropertySelectionValueSensitive(false)]
         public string v_IfDictionaryNotEnough { get; set; }
 
         public ExcelSetColumnValuesFromDictionaryCommand()

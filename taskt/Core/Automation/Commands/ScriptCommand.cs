@@ -835,7 +835,7 @@ namespace taskt.Core.Automation.Commands
                 return true;
             }
 
-            var sensitive = (Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValueSensitive));
+            var sensitive = (Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive));
 
             Func<string, string> cnvFunc;
             if (sensitive.caseSensitive && sensitive.whiteSpaceSensitive)
