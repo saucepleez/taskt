@@ -1,5 +1,20 @@
-﻿namespace taskt.Core.Automation.Attributes.PropertyAttributes
+﻿using System.Runtime.CompilerServices;
+
+namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
+    #region Virtual Property
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class PropertyVirtualProperty : System.Attribute
+    {
+        public string className;
+        public string propertyName;
+        public PropertyVirtualProperty(string className, string propertyName)
+        {
+            this.className = className;
+            this.propertyName = propertyName;
+        }
+    }
+    #endregion
     #region to Label, Document
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class InputSpecification : System.Attribute
