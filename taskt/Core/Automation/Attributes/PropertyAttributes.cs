@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace taskt.Core.Automation.Attributes.PropertyAttributes
+﻿namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
     #region Virtual Property
     [System.AttributeUsage(System.AttributeTargets.Property)]
