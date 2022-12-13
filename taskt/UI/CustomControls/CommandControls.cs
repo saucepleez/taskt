@@ -1358,7 +1358,7 @@ namespace taskt.UI.CustomControls
         private static T GetCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
             where T : System.Attribute
         {
-            return propInfo.GetCustomAttribute<T>() ?? virtualPropInfo.GetCustomAttribute<T>();
+            return propInfo.GetCustomAttribute<T>() ?? virtualPropInfo?.GetCustomAttribute<T>() ?? null;
         }
 
         private static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
@@ -1367,7 +1367,7 @@ namespace taskt.UI.CustomControls
             var a = propInfo.GetCustomAttributes<T>().ToList();
             if (a.Count == 0)
             {
-                return virtualPropInfo.GetCustomAttributes<T>().ToList();
+                return virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
             }
             else
             {
