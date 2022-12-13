@@ -1379,7 +1379,7 @@ namespace taskt.UI.CustomControls
                 return null;
             }
             var tp = Type.GetType("taskt.Core.Automation.Commands." + attrVP.className);
-            return tp.GetProperty(attrVP.propertyName, BindingFlags.Public);
+            return tp.GetProperty(attrVP.propertyName, BindingFlags.Public | BindingFlags.Static);
         }
 
         private static T GetCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
