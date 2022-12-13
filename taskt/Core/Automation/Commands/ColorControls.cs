@@ -1,9 +1,27 @@
 ﻿using System;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     internal static class ColorControls
     {
+        /// <summary>
+        /// color variable name virtual property
+        /// </summary>
+        [PropertyDescription("Color Variable Name")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**vColor**", "Specify Variable **vColor**")]
+        [PropertyDetailSampleUsage("**{{{vColor}}}**", "Specify Variable **vColor**")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
+        public static string v_ColorVariableName { get; }
+
         /// <summary>
         /// Get Color variable from Variable name. This type is System.Drawing.Color.
         /// </summary>
