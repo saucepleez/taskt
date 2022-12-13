@@ -535,6 +535,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandID = id.ToString();
         }
 
+        #region RunCommand
         public virtual void RunCommand(object sender)
         {
             System.Threading.Thread.Sleep(DefaultPause);
@@ -543,7 +544,9 @@ namespace taskt.Core.Automation.Commands
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
+        #endregion
 
+        #region GetDisplayValue
         public virtual string GetDisplayValue()
         {
             string displayValue;
@@ -581,6 +584,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+        #endregion
 
         private static string getPropertyDisplayValue(PropertyInfo prop, ScriptCommand command)
         {
@@ -633,7 +637,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-
+        #region Render
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
         {
             RenderedControls = new List<Control>();
@@ -668,6 +672,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls = new List<Control>();
             return RenderedControls;
         }
+        #endregion
 
         public virtual void AfterShown()
         {
