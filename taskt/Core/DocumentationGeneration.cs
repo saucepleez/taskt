@@ -102,14 +102,6 @@ namespace taskt.Core
             string fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
-            //// release
-            //commandClasses.Clear();
-            //commandClasses = null;
-            //highLevelCommandInfo.Clear();
-            //highLevelCommandInfo = null;
-            //sortHighLevelCommandInfo.Clear();
-            //sortHighLevelCommandInfo = null;
-
             return docsFolderName;
         }
 
@@ -332,7 +324,7 @@ namespace taskt.Core
 
         private static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings settings)
         {
-            var smp = CommandControls.GetSampleUsageText(propInfo, settings, false);
+            var smp = CommandControls.GetSampleUsageText(propInfo, settings, null, false);
 
             if (smp == "")
             {
