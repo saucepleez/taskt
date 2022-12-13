@@ -1012,7 +1012,9 @@ namespace taskt.UI.CustomControls
             {
                 var lowText = labelText.ToLower();
                 if (!lowText.StartsWith("please select the") && !lowText.StartsWith("please specify the") &&
-                        !lowText.StartsWith("please enter the") && !lowText.StartsWith("please indicate the"))
+                        !lowText.StartsWith("please enter the") && !lowText.StartsWith("please indicate the") &&
+                        !lowText.StartsWith("please select a") && !lowText.StartsWith("please specify a") &&
+                        !lowText.StartsWith("please enter a") && !lowText.StartsWith("please indicate a"))
                 {
                     // check "Select" or not
                     var controlType = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>()?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
