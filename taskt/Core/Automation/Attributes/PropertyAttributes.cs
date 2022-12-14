@@ -289,6 +289,10 @@
         public bool parameterDisplay = false;
         public string parameterName = "";
         public string afterText = "";
+
+        public PropertyDisplayText()
+        {
+        }
         public PropertyDisplayText(bool show, string name, string afterText = "")
         {
             this.parameterDisplay = show;
