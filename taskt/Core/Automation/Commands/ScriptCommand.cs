@@ -6,8 +6,8 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
 using taskt.UI.CustomControls;
-using OpenQA.Selenium.DevTools.V102.Inspector;
 using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -540,7 +540,7 @@ namespace taskt.Core.Automation.Commands
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
-        public virtual void RunCommand(object sender, Core.Script.ScriptAction command)
+        public virtual void RunCommand(object sender, Script.ScriptAction command)
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
@@ -558,84 +558,121 @@ namespace taskt.Core.Automation.Commands
             {
                 displayValue = SelectionName + " [" + v_Comment + "]";
             }
-            Attributes.ClassAttributes.EnableAutomateDisplayText autoDisp = (Attributes.ClassAttributes.EnableAutomateDisplayText)this.GetType().GetCustomAttribute(typeof(Attributes.ClassAttributes.EnableAutomateDisplayText));
 
-            if ((autoDisp == null) || (!autoDisp.enableAutomateDisplayText))
-            {
-                return displayValue;
-            }
-            else
-            {
-                string t = "";
-                var props = this.GetType().GetProperties();
-                foreach (var prop in props)
-                {
-                    t += getPropertyDisplayValue(prop, this);
-                }
+            //EnableAutomateDisplayText autoDisp = (EnableAutomateDisplayText)this.GetType().GetCustomAttribute(typeof(EnableAutomateDisplayText));
 
-                if (t == "")
+            var autoDisp = this.GetType().GetCustomAttribute<EnableAutomateDisplayText>();
+            if (autoDisp?.enableAutomateDisplayText ?? false)
+            {
+                //string t = "";
+                ////var props = this.GetType().GetProperties();
+                //var props = GetParameterProperties(this);
+                //foreach (var prop in props)
+                //{
+                //    t += GetPropertyDisplayValue(prop, this);
+                //}
+
+                //if (t == "")
+                //{
+                //    return displayValue;
+                //}
+                //else
+                //{
+                //    t = t.Trim();
+                //    return displayValue + " [ " + t.Substring(0, t.Length - 1) + " ]";
+                //}
+
+                var paramsText = DisplayTextControls.GetParametersDisplayText(this);
+                if (paramsText == "")
                 {
                     return displayValue;
                 }
                 else
                 {
-                    t = t.Trim();
-                    return displayValue + " [ " + t.Substring(0, t.Length - 1) + " ]";
-                }
-            }
-        }
-        #endregion
-
-        private static string getPropertyDisplayValue(PropertyInfo prop, ScriptCommand command)
-        {
-            if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-            {
-                object value = prop.GetValue(command);
-                //if (value is System.Data.DataTable)
-                //{
-                //    return "";
-                //}
-
-                Attributes.PropertyAttributes.PropertyDisplayText dispProp = (Attributes.PropertyAttributes.PropertyDisplayText)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyDisplayText));
-                if ((dispProp == null) || (!dispProp.parameterDisplay))
-                {
-                    return "";
-                }
-                else
-                {
-                    string dispValue;
-                    if (value == null)
-                    {
-                        dispValue = "''";
-                    }
-                    else if (value is System.Data.DataTable)
-                    {
-                        dispValue = ((System.Data.DataTable)value).Rows.Count + " items";
-                    }
-                    else if (!(value is string))
-                    {
-                        dispValue = "'" + value.ToString() + "'";
-                    }
-                    else
-                    {
-                        dispValue = "'" + value + "'";
-                    }
-
-                    if (dispProp.afterText != "")
-                    {
-                        return dispProp.parameterName + ": " + dispValue + " " + dispProp.afterText + ", ";
-                    }
-                    else
-                    {
-                        return dispProp.parameterName + ": " + dispValue + ", ";
-                    }
+                    return displayValue + " [ "+ paramsText + " ]";
                 }
             }
             else
             {
-                return "";
+                return displayValue;
             }
+
+            //if ((autoDisp == null) || (!autoDisp.enableAutomateDisplayText))
+            //{
+                
+            //}
+            //else
+            //{
+            //    string t = "";
+            //    var props = this.GetType().GetProperties();
+            //    foreach (var prop in props)
+            //    {
+            //        t += getPropertyDisplayValue(prop, this);
+            //    }
+
+            //    if (t == "")
+            //    {
+            //        return displayValue;
+            //    }
+            //    else
+            //    {
+            //        t = t.Trim();
+            //        return displayValue + " [ " + t.Substring(0, t.Length - 1) + " ]";
+            //    }
+            //}
         }
+        #endregion
+
+        //private static string GetPropertyDisplayValue(PropertyInfo prop, ScriptCommand command)
+        //{
+        //    if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+        //    {
+        //        object value = prop.GetValue(command);
+        //        //if (value is System.Data.DataTable)
+        //        //{
+        //        //    return "";
+        //        //}
+
+        //        Attributes.PropertyAttributes.PropertyDisplayText dispProp = (Attributes.PropertyAttributes.PropertyDisplayText)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyDisplayText));
+        //        if ((dispProp == null) || (!dispProp.parameterDisplay))
+        //        {
+        //            return "";
+        //        }
+        //        else
+        //        {
+        //            string dispValue;
+        //            if (value == null)
+        //            {
+        //                dispValue = "''";
+        //            }
+        //            else if (value is System.Data.DataTable)
+        //            {
+        //                dispValue = ((System.Data.DataTable)value).Rows.Count + " items";
+        //            }
+        //            else if (!(value is string))
+        //            {
+        //                dispValue = "'" + value.ToString() + "'";
+        //            }
+        //            else
+        //            {
+        //                dispValue = "'" + value + "'";
+        //            }
+
+        //            if (dispProp.afterText != "")
+        //            {
+        //                return dispProp.parameterName + ": " + dispValue + " " + dispProp.afterText + ", ";
+        //            }
+        //            else
+        //            {
+        //                return dispProp.parameterName + ": " + dispValue + ", ";
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return "";
+        //    }
+        //}
 
         #region Render
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
@@ -702,7 +739,7 @@ namespace taskt.Core.Automation.Commands
             {
                 if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
                 {
-                    Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule vr = (Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule));
+                    Attributes.PropertyAttributes.PropertyValidationRule vr = (Attributes.PropertyAttributes.PropertyValidationRule)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyValidationRule));
                     if (vr != null)
                     {
                         object va = prop.GetValue(this);
@@ -719,7 +756,25 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        private bool checkValidateByFlags(string paramShortName, string value, Core.Automation.Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags flags, string propertyName, PropertyInfo prop)
+        /// <summary>
+        /// get prameters property info
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static List<PropertyInfo> GetParameterProperties(ScriptCommand command, bool containsComment = false)
+        {
+            var props = command.GetType().GetProperties();
+            if (containsComment)
+            {
+                return props.Where(p => (p.Name.StartsWith("v_"))).ToList();
+            }
+            else
+            {
+                return props.Where(p => (p.Name.StartsWith("v_") && (p.Name != "v_Comment"))).ToList();
+            }
+        }
+
+        private bool checkValidateByFlags(string paramShortName, string value, Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags flags, string propertyName, PropertyInfo prop)
         {
             if (flags == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.None)
             {
@@ -834,13 +889,13 @@ namespace taskt.Core.Automation.Commands
 
         public bool IsUISelectionValue(string propertyName, string value, PropertyInfo prop)
         {
-            var options = (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption));
+            var options = (Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Attributes.PropertyAttributes.PropertyUISelectionOption));
             if (options.Length == 0)
             {
                 return true;
             }
 
-            var sensitive = (Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySelectionValueSensitive));
+            var sensitive = (Attributes.PropertyAttributes.PropertySelectionValueSensitive)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertySelectionValueSensitive));
 
             Func<string, string> cnvFunc;
             if (sensitive.caseSensitive && sensitive.whiteSpaceSensitive)
@@ -883,7 +938,7 @@ namespace taskt.Core.Automation.Commands
             return false;
         }
 
-        public virtual void convertToIntermediate(Core.EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        public virtual void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var myPropaties = this.GetType().GetProperties();
             foreach (var prop in myPropaties)
@@ -923,7 +978,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public void convertToIntermediate(Core.EngineSettings settings, Dictionary<string, string> convertMethods, List<Core.Script.ScriptVariable> variables)
+        public void convertToIntermediate(EngineSettings settings, Dictionary<string, string> convertMethods, List<Script.ScriptVariable> variables)
         {
             Type settingsType = settings.GetType();
             var myPropaties = this.GetType().GetProperties();
@@ -934,7 +989,7 @@ namespace taskt.Core.Automation.Commands
                     var targetValue = prop.GetValue(this);
                     if (targetValue != null)
                     {
-                        System.Reflection.MethodInfo methodOfConverting = null;
+                        MethodInfo methodOfConverting = null;
                         foreach(var meth in convertMethods)
                         {
                             if (meth.Key == prop.Name)
@@ -942,7 +997,7 @@ namespace taskt.Core.Automation.Commands
                                 switch (meth.Value)
                                 {
                                     case "convertToIntermediateVariableParser":
-                                        methodOfConverting = settingsType.GetMethod(meth.Value, new Type[] { typeof(string), typeof(List<Core.Script.ScriptVariable>) });
+                                        methodOfConverting = settingsType.GetMethod(meth.Value, new Type[] { typeof(string), typeof(List<Script.ScriptVariable>) });
                                         break;
                                     default:
                                         methodOfConverting = settingsType.GetMethod(meth.Value, new Type[] { typeof(string) });
@@ -1005,7 +1060,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public virtual void convertToRaw(Core.EngineSettings settings)
+        public virtual void convertToRaw(EngineSettings settings)
         {
             var myPropaties = this.GetType().GetProperties();
             foreach (var prop in myPropaties)
@@ -1044,7 +1099,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public void convertToRaw(Core.EngineSettings settings, Dictionary<string, string> convertMethods)
+        public void convertToRaw(EngineSettings settings, Dictionary<string, string> convertMethods)
         {
             Type settingsType = settings.GetType();
             var myPropaties = this.GetType().GetProperties();
@@ -1055,7 +1110,7 @@ namespace taskt.Core.Automation.Commands
                     var targetValue = prop.GetValue(this);
                     if (targetValue != null)
                     {
-                        System.Reflection.MethodInfo methodOfConverting = null;
+                        MethodInfo methodOfConverting = null;
                         foreach (var meth in convertMethods)
                         {
                             if (meth.Key == prop.Name)
@@ -1238,7 +1293,7 @@ namespace taskt.Core.Automation.Commands
 
         public bool checkInstanceMatched(string keyword, string instanceType, bool caseSensitive)
         {
-            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
+            Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
             Func<string, string> convFunc;
             if (caseSensitive)
@@ -1256,11 +1311,11 @@ namespace taskt.Core.Automation.Commands
                     return trg.ToLower();
                 };
             }
-          
-            System.Reflection.PropertyInfo[] myPropaties = this.GetType().GetProperties();
-            foreach(System.Reflection.PropertyInfo prop in myPropaties)
+
+            PropertyInfo[] myPropaties = this.GetType().GetProperties();
+            foreach(PropertyInfo prop in myPropaties)
             {
-                var ins = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
+                var ins = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
                 if ((ins != null) && (ins.instanceType == comparedType))
                 {
                     var targetValue = prop.GetValue(this);
@@ -1342,7 +1397,7 @@ namespace taskt.Core.Automation.Commands
 
         public bool ReplaceInstance(string keyword, string replacedText, string instanceType, bool caseSensitive)
         {
-            Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
+            Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
             Func<string, string> convFunc;
             if (caseSensitive)
@@ -1366,7 +1421,7 @@ namespace taskt.Core.Automation.Commands
             var myPropaties = this.GetType().GetProperties();
             foreach(var prop in myPropaties)
             {
-                var attr = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
+                var attr = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
                 if (attr == null)
                 {
                     continue;
@@ -1439,8 +1494,8 @@ namespace taskt.Core.Automation.Commands
                     if (prop.GetValue(this) != null)
                     {
                         string insValue = prop.GetValue(this).ToString();
-                        var insType = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
-                        var direction = (Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection));
+                        var insType = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
+                        var direction = (Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyParameterDirection));
                         if ((insType != null) && (direction != null) &&
                                 (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {
@@ -1470,8 +1525,8 @@ namespace taskt.Core.Automation.Commands
                     if (prop.GetValue(this) != null)
                     {
                         string insValue = prop.GetValue(this).ToString();
-                        var insType = (Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyInstanceType));
-                        var direction = (Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyParameterDirection));
+                        var insType = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
+                        var direction = (Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyParameterDirection));
                         if ((insType != null) && (direction != null) &&
                                 (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
                         {

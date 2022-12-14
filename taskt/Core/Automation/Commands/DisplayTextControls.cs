@@ -1,33 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// this class supports display text in editor
+    /// </summary>
     internal static class DisplayTextControls
     {
-        public static string GetPropertyDisplayValue(PropertyInfo prop, ScriptCommand command)
+        /// <summary>
+        /// get paramters display text for editor from command
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static string GetParametersDisplayText(ScriptCommand command)
         {
-            object value = prop.GetValue(command);
-
-            Attributes.PropertyAttributes.PropertyDisplayText dispProp = (Attributes.PropertyAttributes.PropertyDisplayText)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyDisplayText));
-            if ((dispProp == null) || (!dispProp.parameterDisplay))
+            string t = "";
+            var props = ScriptCommand.GetParameterProperties(command);
+            foreach (var prop in props)
             {
-                return "";
+                t += GetParameterDisplayValue(prop, command);
             }
-            else
+
+            if (t != "")
             {
+                t = t.Trim();
+                t = t.Substring(0, t.Length - 1);
+            }
+            return t;
+        }
+
+        /// <summary>
+        /// get parameter display value for editor
+        /// </summary>
+        /// <param name="propInfo"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        private static string GetParameterDisplayValue(PropertyInfo propInfo, ScriptCommand command)
+        {
+            var virtualPropInfo = propInfo.GetVirtualProperty();
+            
+            var attrDisp = VirtualPropertyControls.GetCustomAttributeWithVirtual<PropertyDisplayText>(propInfo, virtualPropInfo);
+
+            if (attrDisp?.parameterDisplay ?? false)
+            {
+                object value = propInfo.GetValue(command);
                 string dispValue;
                 if (value == null)
                 {
                     dispValue = "''";
                 }
-                else if (value is System.Data.DataTable)
+                else if (value is System.Data.DataTable table)
                 {
-                    dispValue = ((System.Data.DataTable)value).Rows.Count + " items";
+                    dispValue = table.Rows.Count + " items";
                 }
                 else if (!(value is string))
                 {
@@ -38,14 +63,18 @@ namespace taskt.Core.Automation.Commands
                     dispValue = "'" + value + "'";
                 }
 
-                if (dispProp.afterText != "")
+                if (attrDisp.afterText != "")
                 {
-                    return dispProp.parameterName + ": " + dispValue + " " + dispProp.afterText + ", ";
+                    return attrDisp.parameterName + ": " + dispValue + " " + attrDisp.afterText + ", ";
                 }
                 else
                 {
-                    return dispProp.parameterName + ": " + dispValue + ", ";
+                    return attrDisp.parameterName + ": " + dispValue + ", ";
                 }
+            }
+            else
+            {
+                return "";
             }
         }
     }
