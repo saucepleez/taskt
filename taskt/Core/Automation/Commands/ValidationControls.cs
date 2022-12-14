@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// parameter value validation methods to ScriptCommand
+    /// </summary>
     internal static class ValidationControls
     {
         private enum ValidationTarget
@@ -16,7 +16,16 @@ namespace taskt.Core.Automation.Commands
             Warning = 1,
         };
 
-        private static bool CheckValidateByFlags(string propertyValue, PropertyInfo propInfo, PropertyValidationRule rule, ValidationTarget target)
+        /// <summary>
+        /// check validation. this method use PropertyValidationRule, PropertyValueRange attributes.
+        /// </summary>
+        /// <param name="propertyValue"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
+        /// <param name="rule"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        private static bool CheckValidateByFlags(string propertyValue, PropertyInfo propInfo, PropertyInfo virtualPropInfo, PropertyValidationRule rule, ValidationTarget target)
         {
             // decide check target/method
             Func<PropertyValidationRule.ValidationRuleFlags, bool> checkFunc;
@@ -98,7 +107,7 @@ namespace taskt.Core.Automation.Commands
             }
             if (checkFunc(PropertyValidationRule.ValidationRuleFlags.NotSelectionOption))
             {
-                if (!IsUISelectionValue(propertyValue, propertyValue, propInfo))
+                if (!IsUISelectionValue(propertyValue, propInfo, virtualPropInfo))
                 {
                     validationResult += paramShortName + " is strange value '" + propertyValue + "'.\n";
                     result = false;
@@ -106,7 +115,7 @@ namespace taskt.Core.Automation.Commands
             }
             if (checkFunc(PropertyValidationRule.ValidationRuleFlags.Between))
             {
-                var rangeAttr = propInfo.GetCustomAttribute<Attributes.PropertyAttributes.PropertyValueRange>();
+                var rangeAttr = GetCustomAttributeWithVirtual<PropertyValueRange>(propInfo, virtualPropInfo);
                 if (rangeAttr != null)
                 {
                     if (decimal.TryParse(propertyValue, out decimal v))
@@ -126,7 +135,7 @@ namespace taskt.Core.Automation.Commands
             }
             if (checkFunc(PropertyValidationRule.ValidationRuleFlags.NotBetween))
             {
-                var rangeAttr = propInfo.GetCustomAttribute<Attributes.PropertyAttributes.PropertyValueRange>();
+                var rangeAttr = GetCustomAttributeWithVirtual<PropertyValueRange>(propInfo, virtualPropInfo);
                 if (rangeAttr != null)
                 {
                     if (decimal.TryParse(propertyValue, out decimal v))
@@ -148,15 +157,23 @@ namespace taskt.Core.Automation.Commands
             return result;
         }
 
-        private static bool IsUISelectionValue(string propertyName, string value, PropertyInfo prop)
+        /// <summary>
+        /// check ui selection value. this method use PropertyUISelectionOption, PropertySelectionValueSensitive attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
+        /// <returns></returns>
+        private static bool IsUISelectionValue(string value, PropertyInfo propInfo, PropertyInfo virtualPropInfo)
         {
-            var options = (Attributes.PropertyAttributes.PropertyUISelectionOption[])prop.GetCustomAttributes(typeof(Attributes.PropertyAttributes.PropertyUISelectionOption));
-            if (options.Length == 0)
+            var options = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
+            if (options.Count == 0)
             {
                 return true;
             }
 
-            var sensitive = (Attributes.PropertyAttributes.PropertySelectionValueSensitive)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertySelectionValueSensitive));
+            var sensitive = GetCustomAttributeWithVirtual<PropertySelectionValueSensitive>(propInfo, virtualPropInfo) ?? new PropertySelectionValueSensitive();
 
             Func<string, string> cnvFunc;
             if (sensitive.caseSensitive && sensitive.whiteSpaceSensitive)
