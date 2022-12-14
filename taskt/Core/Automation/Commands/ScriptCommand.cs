@@ -661,24 +661,6 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        /// <summary>
-        /// get parameters property info
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        public static List<PropertyInfo> GetParameterProperties(ScriptCommand command, bool containsComment = false)
-        {
-            var props = command.GetType().GetProperties();
-            if (containsComment)
-            {
-                return props.Where(p => (p.Name.StartsWith("v_"))).ToList();
-            }
-            else
-            {
-                return props.Where(p => (p.Name.StartsWith("v_") && (p.Name != "v_Comment"))).ToList();
-            }
-        }
-
         private bool checkValidateByFlags(string paramShortName, string value, Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags flags, string propertyName, PropertyInfo prop)
         {
             if (flags == Attributes.PropertyAttributes.PropertyValidationRule.ValidationRuleFlags.None)

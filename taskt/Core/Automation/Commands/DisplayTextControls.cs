@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using static taskt.Core.Automation.Commands.VirtualPropertyControls;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
         public static string GetParametersDisplayText(ScriptCommand command)
         {
             string t = "";
-            var props = ScriptCommand.GetParameterProperties(command);
+            var props = command.GetParameterProperties();
             foreach (var prop in props)
             {
                 t += GetParameterDisplayValue(prop, command);

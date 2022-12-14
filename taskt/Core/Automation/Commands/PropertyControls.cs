@@ -6,8 +6,26 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-    internal static class VirtualPropertyControls
+    internal static class PropertyControls
     {
+        /// <summary>
+        /// get parameters property info
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static List<PropertyInfo> GetParameterProperties(this ScriptCommand command, bool containsComment = false)
+        {
+            var props = command.GetType().GetProperties();
+            if (containsComment)
+            {
+                return props.Where(p => (p.Name.StartsWith("v_"))).ToList();
+            }
+            else
+            {
+                return props.Where(p => (p.Name.StartsWith("v_") && (p.Name != "v_Comment"))).ToList();
+            }
+        }
+
         /// <summary>
         /// get PropertyInfo from VirtualProperty
         /// </summary>
