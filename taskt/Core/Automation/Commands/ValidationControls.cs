@@ -27,6 +27,8 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         private static bool CheckValidateByFlags(string propertyValue, PropertyInfo propInfo, PropertyInfo virtualPropInfo, PropertyValidationRule rule, ValidationTarget target)
         {
+            // Todo: use numbercontrols, selectioncontrols
+
             // decide check target/method
             Func<PropertyValidationRule.ValidationRuleFlags, bool> checkFunc;
             switch (target)
