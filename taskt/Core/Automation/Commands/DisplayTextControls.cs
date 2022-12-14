@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using static taskt.Core.Automation.Commands.VirtualPropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -9,7 +10,7 @@ namespace taskt.Core.Automation.Commands
     internal static class DisplayTextControls
     {
         /// <summary>
-        /// get paramters display text for editor from command
+        /// get paramters display text for editor from command, this method use PropertyDisplayText, PropertyVirtualProperty attributes.
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -31,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get parameter display value for editor
+        /// get parameter display value for editor, this method use PropertyDisplayText, PropertyVirtualProperty attributes.
         /// </summary>
         /// <param name="propInfo"></param>
         /// <param name="command"></param>
@@ -40,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         {
             var virtualPropInfo = propInfo.GetVirtualProperty();
             
-            var attrDisp = VirtualPropertyControls.GetCustomAttributeWithVirtual<PropertyDisplayText>(propInfo, virtualPropInfo);
+            var attrDisp = GetCustomAttributeWithVirtual<PropertyDisplayText>(propInfo, virtualPropInfo);
 
             if (attrDisp?.parameterDisplay ?? false)
             {
