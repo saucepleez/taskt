@@ -559,29 +559,9 @@ namespace taskt.Core.Automation.Commands
                 displayValue = SelectionName + " [" + v_Comment + "]";
             }
 
-            //EnableAutomateDisplayText autoDisp = (EnableAutomateDisplayText)this.GetType().GetCustomAttribute(typeof(EnableAutomateDisplayText));
-
             var autoDisp = this.GetType().GetCustomAttribute<EnableAutomateDisplayText>();
             if (autoDisp?.enableAutomateDisplayText ?? false)
             {
-                //string t = "";
-                ////var props = this.GetType().GetProperties();
-                //var props = GetParameterProperties(this);
-                //foreach (var prop in props)
-                //{
-                //    t += GetPropertyDisplayValue(prop, this);
-                //}
-
-                //if (t == "")
-                //{
-                //    return displayValue;
-                //}
-                //else
-                //{
-                //    t = t.Trim();
-                //    return displayValue + " [ " + t.Substring(0, t.Length - 1) + " ]";
-                //}
-
                 var paramsText = DisplayTextControls.GetParametersDisplayText(this);
                 if (paramsText == "")
                 {
@@ -596,83 +576,8 @@ namespace taskt.Core.Automation.Commands
             {
                 return displayValue;
             }
-
-            //if ((autoDisp == null) || (!autoDisp.enableAutomateDisplayText))
-            //{
-                
-            //}
-            //else
-            //{
-            //    string t = "";
-            //    var props = this.GetType().GetProperties();
-            //    foreach (var prop in props)
-            //    {
-            //        t += getPropertyDisplayValue(prop, this);
-            //    }
-
-            //    if (t == "")
-            //    {
-            //        return displayValue;
-            //    }
-            //    else
-            //    {
-            //        t = t.Trim();
-            //        return displayValue + " [ " + t.Substring(0, t.Length - 1) + " ]";
-            //    }
-            //}
         }
         #endregion
-
-        //private static string GetPropertyDisplayValue(PropertyInfo prop, ScriptCommand command)
-        //{
-        //    if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-        //    {
-        //        object value = prop.GetValue(command);
-        //        //if (value is System.Data.DataTable)
-        //        //{
-        //        //    return "";
-        //        //}
-
-        //        Attributes.PropertyAttributes.PropertyDisplayText dispProp = (Attributes.PropertyAttributes.PropertyDisplayText)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyDisplayText));
-        //        if ((dispProp == null) || (!dispProp.parameterDisplay))
-        //        {
-        //            return "";
-        //        }
-        //        else
-        //        {
-        //            string dispValue;
-        //            if (value == null)
-        //            {
-        //                dispValue = "''";
-        //            }
-        //            else if (value is System.Data.DataTable)
-        //            {
-        //                dispValue = ((System.Data.DataTable)value).Rows.Count + " items";
-        //            }
-        //            else if (!(value is string))
-        //            {
-        //                dispValue = "'" + value.ToString() + "'";
-        //            }
-        //            else
-        //            {
-        //                dispValue = "'" + value + "'";
-        //            }
-
-        //            if (dispProp.afterText != "")
-        //            {
-        //                return dispProp.parameterName + ": " + dispValue + " " + dispProp.afterText + ", ";
-        //            }
-        //            else
-        //            {
-        //                return dispProp.parameterName + ": " + dispValue + ", ";
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return "";
-        //    }
-        //}
 
         #region Render
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
@@ -757,7 +662,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get prameters property info
+        /// get parameters property info
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
