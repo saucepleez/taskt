@@ -338,6 +338,7 @@
     <Compile Include="Core\Automation\Commands\DictionaryControls.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\FilterDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ReplaceDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DisplayTextControls.cs" />
     <Compile Include="Core\Automation\Commands\File\FormatFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\FormatFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
@@ -475,6 +476,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\VirtualPropertyControls.cs" />
     <Compile Include="Core\Automation\Commands\WaitControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValuesAsDataTableCommand.cs" />
