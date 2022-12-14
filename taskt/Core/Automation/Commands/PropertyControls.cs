@@ -6,6 +6,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// PropertyInfo methods to ScriptCommand
+    /// </summary>
     internal static class PropertyControls
     {
         /// <summary>
