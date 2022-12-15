@@ -7,9 +7,15 @@ namespace taskt.Core.Automation.Commands
 {
     internal static class IntermediateControls
     {
+        /// <summary>
+        /// proprety value convert to intermediate. this method use default convert method.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="settings"></param>
+        /// <param name="variables"></param>
         public static void ConvertToIntermediate(ScriptCommand command, EngineSettings settings, List<Script.ScriptVariable> variables)
         {
-            var props = PropertyControls.GetParameterProperties(command);
+            var props = command.GetParameterProperties(true);
             foreach (var prop in props)
             {
                 var targetValue = prop.GetValue(command);
@@ -20,10 +26,10 @@ namespace taskt.Core.Automation.Commands
                         targetValue = settings.convertToIntermediate(targetValue.ToString());
                         prop.SetValue(command, targetValue);
                     }
-                    else if (targetValue is System.Data.DataTable)
+                    else if (targetValue is System.Data.DataTable table)
                     {
-                        ((System.Data.DataTable)targetValue).AcceptChanges();
-                        var trgDT = ((System.Data.DataTable)targetValue).Copy();
+                        table.AcceptChanges();
+                        var trgDT = table.Copy();
                         var rows = trgDT.Rows.Count;
                         var cols = trgDT.Columns.Count;
                         for (int i = 0; i < cols; i++)
@@ -44,83 +50,89 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void convertToIntermediate(EngineSettings settings, Dictionary<string, string> convertMethods, List<Script.ScriptVariable> variables)
+        public static void ConvertToIntermediate(ScriptCommand command, EngineSettings settings, Dictionary<string, string> convertMethods, List<Script.ScriptVariable> variables)
         {
             Type settingsType = settings.GetType();
-            var myPropaties = this.GetType().GetProperties();
-            foreach (var prop in myPropaties)
+            var props = command.GetParameterProperties(true);
+            foreach (var prop in props)
             {
-                if (prop.Name.StartsWith("v_"))
+                var targetValue = prop.GetValue(command);
+                if (targetValue != null)
                 {
-                    var targetValue = prop.GetValue(this);
-                    if (targetValue != null)
+                    // set method
+                    Func<string, object> convertMethod;
+                    MethodInfo convertMethodInfo = null;
+                    if (convertMethods.ContainsKey(prop.Name))
                     {
-                        MethodInfo methodOfConverting = null;
-                        foreach (var meth in convertMethods)
+                        switch (convertMethodInfo.Name)
                         {
-                            if (meth.Key == prop.Name)
-                            {
-                                switch (meth.Value)
+                            case nameof(settings.convertToIntermediateVariableParser):
+                                convertMethodInfo = settingsType.GetMethod(convertMethods[prop.Name], new Type[] { typeof(string), typeof(List<Script.ScriptVariable>) });
+                                convertMethod = new Func<string, object>((str) =>
                                 {
-                                    case "convertToIntermediateVariableParser":
-                                        methodOfConverting = settingsType.GetMethod(meth.Value, new Type[] { typeof(string), typeof(List<Script.ScriptVariable>) });
-                                        break;
-                                    default:
-                                        methodOfConverting = settingsType.GetMethod(meth.Value, new Type[] { typeof(string) });
-                                        break;
-                                }
+                                    return convertMethodInfo.Invoke(settings, new object[] { str, variables });
+                                });
                                 break;
-                            }
+                            default:
+                                convertMethodInfo = settingsType.GetMethod(convertMethods[prop.Name], new Type[] { typeof(string) });
+                                convertMethod = new Func<string, object>((str) =>
+                                {
+                                    return convertMethodInfo.Invoke(settings, new object[] { str });
+                                });
+                                break;
                         }
-                        if (methodOfConverting == null)
+                    }
+                    else
+                    {
+                        convertMethodInfo = settingsType.GetMethod(nameof(settings.convertToIntermediate), new Type[] { typeof(string) });
+                        convertMethod = new Func<string, object>((str) =>
                         {
-                            methodOfConverting = settingsType.GetMethod("convertToIntermediate", new Type[] { typeof(string) });
-                        }
+                            return convertMethodInfo.Invoke(settings, new object[] { str });
+                        });
+                    }
 
-                        if (targetValue is string)
+                    // converting
+                    if (targetValue is string targetStr)
+                    {
+                        //switch (methodOfConverting.Name)
+                        //{
+                        //    case nameof(settings.convertToIntermediateVariableParser):
+                        //        targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString(), variables });
+                        //        break;
+                        //    default:
+                        //        targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                        //        break;
+                        //}
+                        prop.SetValue(command, convertMethod(targetStr));
+                    }
+                    else if (targetValue is System.Data.DataTable table)
+                    {
+                        table.AcceptChanges();
+                        var trgDT = table.Copy();
+                        var rows = trgDT.Rows.Count;
+                        var cols = trgDT.Columns.Count;
+                        for (int i = 0; i < cols; i++)
                         {
-                            switch (methodOfConverting.Name)
+                            if (trgDT.Columns[i].ReadOnly)
                             {
-                                case "convertToIntermediateVariableParser":
-                                    targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString(), variables });
-                                    break;
-                                default:
-                                    targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
-                                    break;
+                                continue;
                             }
-                            prop.SetValue(this, targetValue);
-                        }
-                        else if (targetValue is System.Data.DataTable)
-                        {
-                            ((System.Data.DataTable)targetValue).AcceptChanges();
-                            var trgDT = ((System.Data.DataTable)targetValue).Copy();
-                            var rows = trgDT.Rows.Count;
-                            var cols = trgDT.Columns.Count;
-                            for (int i = 0; i < cols; i++)
+                            for (int j = 0; j < rows; j++)
                             {
-                                if (trgDT.Columns[i].ReadOnly)
-                                {
-                                    continue;
-                                }
-                                for (int j = 0; j < rows; j++)
-                                {
-                                    //var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
-                                    //string v = settings.convertToIntermediate(trgDT.Rows[j][i].ToString());
-                                    object newCellValue;
-                                    switch (methodOfConverting.Name)
-                                    {
-                                        case "convertToIntermediateVariableParser":
-                                            newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
-                                            break;
-                                        default:
-                                            newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
-                                            break;
-                                    }
-                                    trgDT.Rows[j][i] = newCellValue;
-                                }
+                                //object newCellValue;
+                                //switch (methodOfConverting.Name)
+                                //{
+                                //    case nameof(settings.convertToIntermediateVariableParser):
+                                //        newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
+                                //        break;
+                                //    default:
+                                //        newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
+                                //        break;
+                                //}
+                                trgDT.Rows[j][i] = convertMethod(trgDT.Rows[j][i]?.ToString() ?? "");
                             }
-                            prop.SetValue(this, trgDT);
                         }
+                        prop.SetValue(command, trgDT);
                     }
                 }
             }
