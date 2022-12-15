@@ -9,6 +9,7 @@ using taskt.Core;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.Core.Automation.Commands;
 using taskt.UI.Forms;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.UI.CustomControls
 {
@@ -72,7 +73,8 @@ namespace taskt.UI.CustomControls
         public static List<Control> CreateInferenceDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
             var propInfo = command.GetProperty(propertyName);
-            var virtualPropInfo = GetViratulProperty(propInfo);
+            //var virtualPropInfo = GetViratulProperty(propInfo);
+            var virtualPropInfo = propInfo.GetVirtualProperty();
 
             var attrRecommended = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropInfo);
             if (attrRecommended != null)
@@ -134,7 +136,7 @@ namespace taskt.UI.CustomControls
             }
             if (virtualPropInfo== null)
             {
-                virtualPropInfo = GetViratulProperty(propInfo);
+                virtualPropInfo = propInfo.GetVirtualProperty();
             }
             
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() =>
@@ -160,7 +162,7 @@ namespace taskt.UI.CustomControls
             }
             if (virtualPropInfo == null)
             {
-                virtualPropInfo = GetViratulProperty(propInfo);
+                virtualPropInfo = propInfo.GetVirtualProperty();
             }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
@@ -185,7 +187,7 @@ namespace taskt.UI.CustomControls
             }
             if (virtualPropInfo == null)
             {
-                virtualPropInfo = GetViratulProperty(propInfo);
+                virtualPropInfo = propInfo.GetVirtualProperty();
             }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
@@ -210,7 +212,7 @@ namespace taskt.UI.CustomControls
             }
             if (virtualPropInfo == null)
             {
-                virtualPropInfo = GetViratulProperty(propInfo);
+                virtualPropInfo = propInfo.GetVirtualProperty();
             }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
@@ -1371,36 +1373,36 @@ namespace taskt.UI.CustomControls
             return (trgMethod, useOuterClassEvent);
         }
 
-        private static PropertyInfo GetViratulProperty(PropertyInfo propInfo)
-        {
-            var attrVP = propInfo.GetCustomAttribute<PropertyVirtualProperty>();
-            if (attrVP == null)
-            {
-                return null;
-            }
-            var tp = Type.GetType("taskt.Core.Automation.Commands." + attrVP.className);
-            return tp.GetProperty(attrVP.propertyName, BindingFlags.Public | BindingFlags.Static);
-        }
+        //private static PropertyInfo GetViratulProperty(PropertyInfo propInfo)
+        //{
+        //    var attrVP = propInfo.GetCustomAttribute<PropertyVirtualProperty>();
+        //    if (attrVP == null)
+        //    {
+        //        return null;
+        //    }
+        //    var tp = Type.GetType("taskt.Core.Automation.Commands." + attrVP.className);
+        //    return tp.GetProperty(attrVP.propertyName, BindingFlags.Public | BindingFlags.Static);
+        //}
 
-        private static T GetCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
-            where T : System.Attribute
-        {
-            return propInfo.GetCustomAttribute<T>() ?? virtualPropInfo?.GetCustomAttribute<T>() ?? null;
-        }
+        //private static T GetCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        //    where T : System.Attribute
+        //{
+        //    return propInfo.GetCustomAttribute<T>() ?? virtualPropInfo?.GetCustomAttribute<T>() ?? null;
+        //}
 
-        private static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
-            where T : System.Attribute
-        {
-            var a = propInfo.GetCustomAttributes<T>().ToList();
-            if (a.Count == 0)
-            {
-                return virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
-            }
-            else
-            {
-                return a;
-            }
-        }
+        //private static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        //    where T : System.Attribute
+        //{
+        //    var a = propInfo.GetCustomAttributes<T>().ToList();
+        //    if (a.Count == 0)
+        //    {
+        //        return virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
+        //    }
+        //    else
+        //    {
+        //        return a;
+        //    }
+        //}
         #endregion
 
         #region Control event handlers
