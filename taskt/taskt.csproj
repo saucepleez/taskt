@@ -342,6 +342,7 @@
     <Compile Include="Core\Automation\Commands\File\FormatFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\FormatFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\IntermediateControls.cs" />
     <Compile Include="Core\Automation\Commands\JSONControls.cs" />
     <Compile Include="Core\Automation\Commands\JSON\RemoveJSONArrayItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\InsertJSONArrayItemCommand.cs" />
