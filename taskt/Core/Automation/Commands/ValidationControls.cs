@@ -17,6 +17,45 @@ namespace taskt.Core.Automation.Commands
         };
 
         /// <summary>
+        /// check validation in parameters value in command. this method use PropertyValidationRule, PropertyVirtualProperty attributes.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static (bool isValid, bool isWarning, string validationMessage) CheckValidation(ScriptCommand command)
+        {
+            bool isValid = true;
+            bool isWarn = true;
+            string message = "";
+
+            var props = command.GetParameterProperties();
+
+            foreach(var propInfo in props)
+            {
+                var virtualPropInfo = propInfo.GetVirtualProperty();
+                var attrValidate = GetCustomAttributeWithVirtual<PropertyValidationRule>(propInfo, virtualPropInfo);
+                if (attrValidate != null)
+                {
+                    object propValue = propInfo.GetValue(command);
+                    if (propValue is System.Data.DataTable)
+                    {
+                        continue;   // DataTable is not checked
+                    }
+                    else
+                    {
+                        string value = propValue?.ToString() ?? "";
+                        (var v, var mes) = CheckValidateByFlags(value, propInfo, virtualPropInfo, attrValidate, ValidationTarget.Error);
+                        isValid &= v;
+                        message += mes;
+
+                        (var w, _) = CheckValidateByFlags(value, propInfo, virtualPropInfo, attrValidate, ValidationTarget.Warning);
+                        isWarn &= w;
+                    }
+                }
+            }
+            return (isValid, isWarn, message);
+        }
+
+        /// <summary>
         /// check validation. this method use PropertyValidationRule, PropertyValueRange attributes.
         /// </summary>
         /// <param name="propertyValue"></param>
@@ -25,7 +64,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="rule"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        private static bool CheckValidateByFlags(string propertyValue, PropertyInfo propInfo, PropertyInfo virtualPropInfo, PropertyValidationRule rule, ValidationTarget target)
+        private static (bool result, string messasge) CheckValidateByFlags(string propertyValue, PropertyInfo propInfo, PropertyInfo virtualPropInfo, PropertyValidationRule rule, ValidationTarget target)
         {
             // Todo: use numbercontrols, selectioncontrols
 
@@ -35,22 +74,24 @@ namespace taskt.Core.Automation.Commands
             {
                 case ValidationTarget.Error:
                     checkFunc = rule.IsErrorFlag;
+                    if (rule.errorRule == 0)
+                    {
+                        return (true, "");
+                    }
                     break;
                 case ValidationTarget.Warning:
                     checkFunc = rule.IsWarningFlag;
+                    if (rule.warningRule==0)
+                    {
+                        return (true, "");
+                    }
                     break;
                 default:
-                    return true;
+                    return (true, "");
             }
 
             var paramShortName = rule.parameterName;
             string validationResult = "";
-
-            // none
-            if (checkFunc(PropertyValidationRule.ValidationRuleFlags.None))
-            {
-                return true;
-            }
 
             bool result = true;
 
@@ -156,7 +197,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            return result;
+            return (result, validationResult);
         }
 
         /// <summary>

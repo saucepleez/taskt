@@ -634,29 +634,31 @@ namespace taskt.Core.Automation.Commands
         {
             //this.IsValid = true;
             //this.IsWarning = false;
-            this.validationResult = "";
+            //this.validationResult = "";
 
-            var props = this.GetType().GetProperties();
+            //var props = this.GetType().GetProperties();
 
-            bool v = true;
-            bool w = true;
-            foreach(var prop in props)
-            {
-                if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-                {
-                    Attributes.PropertyAttributes.PropertyValidationRule vr = (Attributes.PropertyAttributes.PropertyValidationRule)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyValidationRule));
-                    if (vr != null)
-                    {
-                        object va = prop.GetValue(this);
-                        string propertyValue = (va == null) ? "" : va.ToString();
-                        v &= checkValidateByFlags(vr.parameterName, propertyValue, vr.errorRule, prop.Name, prop);
-                        w &= !checkValidateByFlags(vr.parameterName, propertyValue, vr.warningRule, prop.Name, prop);
-                    }
-                }
-            }
+            //bool v = true;
+            //bool w = true;
+            //foreach(var prop in props)
+            //{
+            //    if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+            //    {
+            //        Attributes.PropertyAttributes.PropertyValidationRule vr = (Attributes.PropertyAttributes.PropertyValidationRule)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyValidationRule));
+            //        if (vr != null)
+            //        {
+            //            object va = prop.GetValue(this);
+            //            string propertyValue = (va == null) ? "" : va.ToString();
+            //            v &= checkValidateByFlags(vr.parameterName, propertyValue, vr.errorRule, prop.Name, prop);
+            //            w &= !checkValidateByFlags(vr.parameterName, propertyValue, vr.warningRule, prop.Name, prop);
+            //        }
+            //    }
+            //}
 
-            this.IsValid = v;
-            this.IsWarning = w;
+            //this.IsValid = v;
+            //this.IsWarning = w;
+
+            (this.IsValid, this.IsWarning, this.validationResult) = ValidationControls.CheckValidation(this);
 
             return this.IsValid;
         }
