@@ -579,7 +579,7 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
-        #region Render
+        #region Render, Refresh, etc
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
         {
             RenderedControls = new List<Control>();
@@ -614,8 +614,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls = new List<Control>();
             return RenderedControls;
         }
-        #endregion
-
         public virtual void AfterShown()
         {
 
@@ -625,7 +623,9 @@ namespace taskt.Core.Automation.Commands
         {
 
         }
+        #endregion
 
+        #region Validate
         public virtual void BeforeValidate()
         {
         }
@@ -636,6 +636,7 @@ namespace taskt.Core.Automation.Commands
 
             return this.IsValid;
         }
+        #endregion
 
         public virtual void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
