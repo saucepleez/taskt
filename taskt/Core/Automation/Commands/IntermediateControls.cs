@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
                             }
                             for (int j = 0; j < rows; j++)
                             {
-                                var v = settings.convertToIntermediate(trgDT.Rows[j][i].ToString());
+                                var v = settings.convertToIntermediate(trgDT.Rows[j][i]?.ToString() ?? "");
                                 trgDT.Rows[j][i] = v;
                             }
                         }
@@ -138,95 +138,99 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void convertToRaw(EngineSettings settings)
+        public static void ConvertToRaw(ScriptCommand command, EngineSettings settings)
         {
-            var myPropaties = this.GetType().GetProperties();
+            var myPropaties = command.GetParameterProperties(true);
             foreach (var prop in myPropaties)
             {
-                if (prop.Name.StartsWith("v_"))
+                var targetValue = prop.GetValue(command);
+                if (targetValue != null)
                 {
-                    var targetValue = prop.GetValue(this);
-                    if (targetValue != null)
+                    if (targetValue is string)
                     {
-                        if (targetValue is string)
+                        targetValue = settings.convertToRaw(targetValue.ToString());
+                        prop.SetValue(command, targetValue);
+                    }
+                    else if (targetValue is System.Data.DataTable table)
+                    {
+                        var rows = table.Rows.Count;
+                        var cols = table.Columns.Count;
+                        for (int i = 0; i < cols; i++)
                         {
-                            targetValue = settings.convertToRaw(targetValue.ToString());
-                            prop.SetValue(this, targetValue);
-                        }
-                        else if (targetValue is System.Data.DataTable)
-                        {
-                            var trgDT = (System.Data.DataTable)targetValue;
-                            var rows = trgDT.Rows.Count;
-                            var cols = trgDT.Columns.Count;
-                            for (int i = 0; i < cols; i++)
+                            if (table.Columns[i].ReadOnly)
                             {
-                                if (trgDT.Columns[i].ReadOnly)
-                                {
-                                    continue;
-                                }
-                                for (int j = 0; j < rows; j++)
-                                {
-                                    var v = settings.convertToRaw(trgDT.Rows[j][i].ToString());
-                                    trgDT.Rows[j][i] = v;
-                                }
+                                continue;
                             }
-                            prop.SetValue(this, trgDT);
+                            for (int j = 0; j < rows; j++)
+                            {
+                                var v = settings.convertToRaw(table.Rows[j][i]?.ToString() ?? "");
+                                table.Rows[j][i] = v;
+                            }
                         }
+                        prop.SetValue(command, table);
                     }
                 }
             }
         }
 
-        public static void convertToRaw(EngineSettings settings, Dictionary<string, string> convertMethods)
+        public static void ConvertToRaw(ScriptCommand command, EngineSettings settings, Dictionary<string, string> convertMethods)
         {
             Type settingsType = settings.GetType();
-            var myPropaties = this.GetType().GetProperties();
+            var myPropaties = command.GetParameterProperties(true);
             foreach (var prop in myPropaties)
             {
-                if (prop.Name.StartsWith("v_"))
+                var targetValue = prop.GetValue(command);
+                if (targetValue != null)
                 {
-                    var targetValue = prop.GetValue(this);
-                    if (targetValue != null)
+                    MethodInfo methodOfConverting = null;
+                    //foreach (var meth in convertMethods)
+                    //{
+                    //    if (meth.Key == prop.Name)
+                    //    {
+                    //        methodOfConverting = settingsType.GetMethod(meth.Value);
+                    //        break;
+                    //    }
+                    //}
+                    Func<string, string> convertMethod = null;
+                    if (convertMethods.ContainsKey(prop.Name))
                     {
-                        MethodInfo methodOfConverting = null;
-                        foreach (var meth in convertMethods)
-                        {
-                            if (meth.Key == prop.Name)
-                            {
-                                methodOfConverting = settingsType.GetMethod(meth.Value);
-                                break;
-                            }
-                        }
-                        if (methodOfConverting == null)
-                        {
-                            methodOfConverting = settingsType.GetMethod("convertToRaw");
-                        }
+                        methodOfConverting = settingsType.GetMethod(convertMethods[prop.Name]);
+                    }
+                    else
+                    {
+                        methodOfConverting = settingsType.GetMethod(nameof(settings.convertToRaw));
+                    }
+                    convertMethod = new Func<string, string>((str) =>
+                    {
+                        return methodOfConverting.Invoke(settings, new object[] { str }).ToString();
+                    });
 
-                        if (targetValue is string)
+                    if (targetValue is string)
+                    {
+                        //targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
+                        //prop.SetValue(command, targetValue);
+                        prop.SetValue(command, convertMethod(targetValue.ToString()));
+                    }
+                    else if (targetValue is System.Data.DataTable table)
+                    {
+                        table.AcceptChanges();
+                        var trgDT = table.Copy();
+                        var rows = trgDT.Rows.Count;
+                        var cols = trgDT.Columns.Count;
+                        for (int i = 0; i < cols; i++)
                         {
-                            targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
-                            prop.SetValue(this, targetValue);
-                        }
-                        else if (targetValue is System.Data.DataTable)
-                        {
-                            ((System.Data.DataTable)targetValue).AcceptChanges();
-                            var trgDT = ((System.Data.DataTable)targetValue).Copy();
-                            var rows = trgDT.Rows.Count;
-                            var cols = trgDT.Columns.Count;
-                            for (int i = 0; i < cols; i++)
+                            if (trgDT.Columns[i].ReadOnly)
                             {
-                                if (trgDT.Columns[i].ReadOnly)
-                                {
-                                    continue;
-                                }
-                                for (int j = 0; j < rows; j++)
-                                {
-                                    var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
-                                    trgDT.Rows[j][i] = v;
-                                }
+                                continue;
                             }
-                            prop.SetValue(this, trgDT);
+                            for (int j = 0; j < rows; j++)
+                            {
+                                //var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
+                                //trgDT.Rows[j][i] = v;
+                                trgDT.Rows[j][i] = convertMethod(trgDT.Rows[j][i]?.ToString() ?? "");
+                            }
                         }
+                        prop.SetValue(command, trgDT);
                     }
                 }
             }

@@ -121,18 +121,18 @@ namespace taskt.Core.Automation.Commands
             sheetNames.StoreInUserVariable(engine, v_applyToVariable);
         }
 
-        public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
+        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_SheetName", "convertToIntermediateExcelSheet");
-            convertToIntermediate(settings, cnv, variables);
+            ConvertToIntermediate(settings, cnv, variables);
         }
 
-        public override void convertToRaw(EngineSettings settings)
+        public override void ConvertToRaw(EngineSettings settings)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_SheetName", "convertToRawExcelSheet");
-            convertToRaw(settings, cnv);
+            ConvertToRaw(settings, cnv);
         }
     }
 }

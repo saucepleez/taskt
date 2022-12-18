@@ -638,7 +638,7 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
-        public virtual void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
+        public virtual void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var myPropaties = this.GetType().GetProperties();
             foreach (var prop in myPropaties)
@@ -678,7 +678,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public void convertToIntermediate(EngineSettings settings, Dictionary<string, string> convertMethods, List<Script.ScriptVariable> variables)
+        public void ConvertToIntermediate(EngineSettings settings, Dictionary<string, string> convertMethods, List<Script.ScriptVariable> variables)
         {
             Type settingsType = settings.GetType();
             var myPropaties = this.GetType().GetProperties();
@@ -760,7 +760,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public virtual void convertToRaw(EngineSettings settings)
+        public virtual void ConvertToRaw(EngineSettings settings)
         {
             var myPropaties = this.GetType().GetProperties();
             foreach (var prop in myPropaties)
@@ -799,7 +799,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public void convertToRaw(EngineSettings settings, Dictionary<string, string> convertMethods)
+        public void ConvertToRaw(EngineSettings settings, Dictionary<string, string> convertMethods)
         {
             Type settingsType = settings.GetType();
             var myPropaties = this.GetType().GetProperties();

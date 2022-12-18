@@ -158,7 +158,7 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        public override void convertToIntermediate(EngineSettings settings, List<ScriptVariable> variables)
+        public override void ConvertToIntermediate(EngineSettings settings, List<ScriptVariable> variables)
         {
             switch (v_PreferenceType)
             {
@@ -180,7 +180,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void convertToRaw(EngineSettings settings)
+        public override void ConvertToRaw(EngineSettings settings)
         {
             switch (v_PreferenceType)
             {
