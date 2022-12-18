@@ -5,6 +5,9 @@ using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// convert raw script to intermediate or convert intermediate script to raw
+    /// </summary>
     internal static class IntermediateControls
     {
         /// <summary>
@@ -50,6 +53,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// proprety value convert to intermediate. this method use specified method by argument or default convert method.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="settings"></param>
+        /// <param name="convertMethods"></param>
+        /// <param name="variables"></param>
         public static void ConvertToIntermediate(ScriptCommand command, EngineSettings settings, Dictionary<string, string> convertMethods, List<Script.ScriptVariable> variables)
         {
             Type settingsType = settings.GetType();
@@ -94,15 +104,6 @@ namespace taskt.Core.Automation.Commands
                     // converting
                     if (targetValue is string targetStr)
                     {
-                        //switch (methodOfConverting.Name)
-                        //{
-                        //    case nameof(settings.convertToIntermediateVariableParser):
-                        //        targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString(), variables });
-                        //        break;
-                        //    default:
-                        //        targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
-                        //        break;
-                        //}
                         prop.SetValue(command, convertMethod(targetStr));
                     }
                     else if (targetValue is System.Data.DataTable table)
@@ -119,16 +120,6 @@ namespace taskt.Core.Automation.Commands
                             }
                             for (int j = 0; j < rows; j++)
                             {
-                                //object newCellValue;
-                                //switch (methodOfConverting.Name)
-                                //{
-                                //    case nameof(settings.convertToIntermediateVariableParser):
-                                //        newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString(), variables });
-                                //        break;
-                                //    default:
-                                //        newCellValue = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
-                                //        break;
-                                //}
                                 trgDT.Rows[j][i] = convertMethod(trgDT.Rows[j][i]?.ToString() ?? "");
                             }
                         }
@@ -138,6 +129,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// proprety value convert to raw value. this method use default convert method.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="settings"></param>
         public static void ConvertToRaw(ScriptCommand command, EngineSettings settings)
         {
             var myPropaties = command.GetParameterProperties(true);
@@ -173,6 +169,12 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// proprety value convert to raw value. this method use specified methods by argument or default convert method.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="settings"></param>
+        /// <param name="convertMethods"></param>
         public static void ConvertToRaw(ScriptCommand command, EngineSettings settings, Dictionary<string, string> convertMethods)
         {
             Type settingsType = settings.GetType();
@@ -183,14 +185,6 @@ namespace taskt.Core.Automation.Commands
                 if (targetValue != null)
                 {
                     MethodInfo methodOfConverting = null;
-                    //foreach (var meth in convertMethods)
-                    //{
-                    //    if (meth.Key == prop.Name)
-                    //    {
-                    //        methodOfConverting = settingsType.GetMethod(meth.Value);
-                    //        break;
-                    //    }
-                    //}
                     Func<string, string> convertMethod = null;
                     if (convertMethods.ContainsKey(prop.Name))
                     {
@@ -207,8 +201,6 @@ namespace taskt.Core.Automation.Commands
 
                     if (targetValue is string)
                     {
-                        //targetValue = methodOfConverting.Invoke(settings, new object[] { targetValue.ToString() });
-                        //prop.SetValue(command, targetValue);
                         prop.SetValue(command, convertMethod(targetValue.ToString()));
                     }
                     else if (targetValue is System.Data.DataTable table)
@@ -225,8 +217,6 @@ namespace taskt.Core.Automation.Commands
                             }
                             for (int j = 0; j < rows; j++)
                             {
-                                //var v = methodOfConverting.Invoke(settings, new object[] { trgDT.Rows[j][i].ToString() });
-                                //trgDT.Rows[j][i] = v;
                                 trgDT.Rows[j][i] = convertMethod(trgDT.Rows[j][i]?.ToString() ?? "");
                             }
                         }
