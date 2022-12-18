@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
                     MethodInfo convertMethodInfo = null;
                     if (convertMethods.ContainsKey(prop.Name))
                     {
-                        switch (convertMethodInfo.Name)
+                        switch (prop.Name)
                         {
                             case nameof(settings.convertToIntermediateVariableParser):
                                 convertMethodInfo = settingsType.GetMethod(convertMethods[prop.Name], new Type[] { typeof(string), typeof(List<Script.ScriptVariable>) });
