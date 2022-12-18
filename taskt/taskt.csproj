@@ -369,6 +369,7 @@
     <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\IncreaseNumericalVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SearchReplaceControls.cs" />
     <Compile Include="Core\Automation\Commands\SelectionControls.cs" />
     <Compile Include="Core\Automation\Commands\Text\CheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ConcatenateTextVariableCommand.cs" />
