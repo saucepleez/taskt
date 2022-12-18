@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using static taskt.Core.Automation.Commands.PropertyControls;
 
