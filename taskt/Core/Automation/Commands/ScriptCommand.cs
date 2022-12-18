@@ -638,6 +638,7 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
+        #region intermediate
         public virtual void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             //var myPropaties = this.GetType().GetProperties();
@@ -857,6 +858,7 @@ namespace taskt.Core.Automation.Commands
             //}
             IntermediateControls.ConvertToRaw(this, settings, convertMethods);
         }
+        #endregion
 
         public ScriptCommand Clone()
         {
