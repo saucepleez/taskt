@@ -29,6 +29,30 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+
+        /// <summary>
+        /// get PropertyInfo specified property name as argument
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static PropertyInfo GetProperty(this ScriptCommand command, string propertyName)
+        {
+            return command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' does not exists. Command: " + command.CommandName);
+        }
+
+        /// <summary>
+        /// get PropertyInfo and VirtualPropertyInfo specified property name as argument
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public static (PropertyInfo propInfo, PropertyInfo virtualPropertyInfo) GetPropertyAndVirturalProperty(this ScriptCommand command, string propertyName)
+        {
+            var propInfo = command.GetProperty(propertyName);
+            return (propInfo, GetVirtualProperty(propInfo));
+        }
+
         /// <summary>
         /// get PropertyInfo from VirtualProperty
         /// </summary>
