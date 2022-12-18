@@ -639,21 +639,41 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region intermediate
+        /// <summary>
+        /// convert to Intermediate script. this method use default convert method.
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="variables"></param>
         public virtual void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             IntermediateControls.ConvertToIntermediate(this, settings, variables);
         }
 
+        /// <summary>
+        /// convert to intermediate script. this method enable to specify convert methods.
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="convertMethods"></param>
+        /// <param name="variables"></param>
         public void ConvertToIntermediate(EngineSettings settings, Dictionary<string, string> convertMethods, List<Script.ScriptVariable> variables)
         {
             IntermediateControls.ConvertToIntermediate(this, settings, convertMethods, variables);
         }
 
+        /// <summary>
+        /// convert to raw script. this method use default convert method.
+        /// </summary>
+        /// <param name="settings"></param>
         public virtual void ConvertToRaw(EngineSettings settings)
         {
             IntermediateControls.ConvertToRaw(this, settings);
         }
 
+        /// <summary>
+        /// convert to raw script. this method enable to specify convert methods.
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="convertMethods"></param>
         public void ConvertToRaw(EngineSettings settings, Dictionary<string, string> convertMethods)
         {
             IntermediateControls.ConvertToRaw(this, settings, convertMethods);
