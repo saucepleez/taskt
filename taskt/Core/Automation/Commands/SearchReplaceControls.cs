@@ -7,8 +7,15 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// search or replace ScriptCommand parameters value
     /// </summary>
-    internal static class SearchReplaceControls
+    public static class SearchReplaceControls
     {
+        public enum ReplaceTarget
+        {
+            Parameters,
+            Instance, 
+            Comment
+        }
+
         /// <summary>
         /// check parameters matched
         /// </summary>
@@ -132,14 +139,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// check instance name matched
+        /// check instance name matched. this method use PropertyInstanceType attribute.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="keyword"></param>
         /// <param name="instanceType"></param>
         /// <param name="caseSensitive"></param>
         /// <returns></returns>
-        public static bool CheckInstanceMatched(this ScriptCommand command, string keyword, string instanceType, bool caseSensitive)
+        private static bool CheckInstanceMatched(this ScriptCommand command, string keyword, string instanceType, bool caseSensitive)
         {
             PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
@@ -164,6 +171,34 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// replace command values
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="trg"></param>
+        /// <param name="keyword"></param>
+        /// <param name="replacedText"></param>
+        /// <param name="caseSensitive"></param>
+        /// <param name="instanceType"></param>
+        /// <returns></returns>
+        public static bool Replace(this ScriptCommand command, ReplaceTarget trg, string keyword, string replacedText, bool caseSensitive, string instanceType = "")
+        {
+            switch (trg)
+            {
+                case ReplaceTarget.Parameters:
+                    return ReplaceAllParameters(command, keyword, replacedText, caseSensitive);
+                    
+                case ReplaceTarget.Instance:
+                    return ReplaceInstance(command, keyword, replacedText, instanceType, caseSensitive);
+                    
+                case ReplaceTarget.Comment:
+                    return ReplaceComment(command, keyword, replacedText, caseSensitive);
+
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// replace all parameters value
         /// </summary>
         /// <param name="command"></param>
@@ -171,7 +206,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="replacedText"></param>
         /// <param name="caseSensitive"></param>
         /// <returns></returns>
-        public static bool ReplaceAllParameters(this ScriptCommand command, string keyword, string replacedText, bool caseSensitive)
+        private static bool ReplaceAllParameters(this ScriptCommand command, string keyword, string replacedText, bool caseSensitive)
         {
             var caseFunc = GetCaseFunc(caseSensitive);
             keyword = caseFunc(keyword);
@@ -219,7 +254,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// replace instance parameters value
+        /// replace instance parameters value. this method use PropertyInstanceType attribute.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="keyword"></param>
@@ -227,7 +262,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="instanceType"></param>
         /// <param name="caseSensitive"></param>
         /// <returns></returns>
-        public static bool ReplaceInstance(this ScriptCommand command, string keyword, string replacedText, string instanceType, bool caseSensitive)
+        private static bool ReplaceInstance(this ScriptCommand command, string keyword, string replacedText, string instanceType, bool caseSensitive)
         {
             PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
@@ -269,7 +304,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="replacedText"></param>
         /// <param name="caseSensitive"></param>
         /// <returns></returns>
-        public static bool ReplaceComment(this ScriptCommand command, string keyword, string replacedText, bool caseSensitive)
+        private static bool ReplaceComment(this ScriptCommand command, string keyword, string replacedText, bool caseSensitive)
         {
             var caseFunc = GetCaseFunc(caseSensitive);
             keyword = caseFunc(keyword);

@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms
 {
@@ -915,7 +916,7 @@ namespace taskt.UI.Forms
             foreach(ListViewItem itm in lstScriptActions.Items)
             {
                 Core.Automation.Commands.ScriptCommand cmd = (Core.Automation.Commands.ScriptCommand)itm.Tag;
-                if (cmd.checkMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText, checkInstanceType, instanceType))
+                if (cmd.CheckMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText, checkInstanceType, instanceType))
                 {
                     matchedCount++;
                     //matchingSearchIndex.Add(itm.Index);
@@ -1096,8 +1097,6 @@ namespace taskt.UI.Forms
         }
         public int ReplaceSearchInItemCommands(string keyword, bool caseSensitive, string instanceType, bool allProperties, bool instanceName, bool comment)
         {
-            //matchingSearchIndex.Clear();
-            //matchingSearchIndex = new List<int>();
             int matchedCount = 0;
 
             this.currentIndexInMatchItems = -1;
@@ -1109,10 +1108,10 @@ namespace taskt.UI.Forms
             {
                 foreach(ListViewItem itm in lstScriptActions.Items)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, true, false, false, false, false, ""))
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                    if (targetCommand.CheckMatched(keyword, caseSensitive, true, false, false, false, false, ""))
                     {
                         matchedCount++;
-                        //matchingSearchIndex.Add(itm.Index);
                     }
                 }
             }
@@ -1120,10 +1119,10 @@ namespace taskt.UI.Forms
             {
                 foreach (ListViewItem itm in lstScriptActions.Items)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, caseSensitive, false, false, false, false, true, instanceType))
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                    if (targetCommand.CheckMatched(keyword, caseSensitive, false, false, false, false, true, instanceType))
                     {
                         matchedCount++;
-                        //matchingSearchIndex.Add(itm.Index);
                     }
                 }
             }
@@ -1131,10 +1130,10 @@ namespace taskt.UI.Forms
             {
                 foreach (ListViewItem itm in lstScriptActions.Items)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)itm.Tag).checkMatched(keyword, false, false, false, true, false, false, ""))
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                    if (targetCommand.CheckMatched(keyword, false, false, false, true, false, false, ""))
                     {
                         matchedCount++;
-                        //matchingSearchIndex.Add(itm.Index);
                     }
                 }
             }
@@ -1161,7 +1160,8 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < loopTimes; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag).ReplaceAllParameters(keyword, replacedText, caseSensitive))
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Parameters, keyword, replacedText, caseSensitive))
                     {
                         newIndex = trgIdx;
                         break;
@@ -1173,7 +1173,8 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < loopTimes; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag).ReplaceInstance(keyword, replacedText, instanceType, caseSensitive))
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Instance, keyword, replacedText, caseSensitive, instanceType))
                     {
                         newIndex = trgIdx;
                         break;
@@ -1185,7 +1186,8 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < loopTimes; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag).ReplaceComment(keyword, replacedText, caseSensitive))
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Comment, keyword, replacedText, caseSensitive))
                     {
                         newIndex = trgIdx;
                         break;
@@ -1222,7 +1224,9 @@ namespace taskt.UI.Forms
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[(i + currentIndex) % rows].Tag).ReplaceAllParameters(keyword, replacedText, caseSensitive))
+                    int trgIdx = (i + currentIndex) % rows;
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Parameters, keyword, replacedText, caseSensitive))
                     {
                         replaceCount++;
                     }
@@ -1232,7 +1236,9 @@ namespace taskt.UI.Forms
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[(i + currentIndex) % rows].Tag).ReplaceInstance(keyword, replacedText, instanceType, caseSensitive))
+                    int trgIdx = (i + currentIndex) % rows;
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Instance, keyword, replacedText, caseSensitive, instanceType))
                     {
                         replaceCount++;
                     }
@@ -1242,7 +1248,9 @@ namespace taskt.UI.Forms
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[(i + currentIndex) % rows].Tag).ReplaceComment(keyword, replacedText, caseSensitive))
+                    int trgIdx = (i + currentIndex) % rows;
+                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Comment, keyword, replacedText, caseSensitive))
                     {
                         replaceCount++;
                     }

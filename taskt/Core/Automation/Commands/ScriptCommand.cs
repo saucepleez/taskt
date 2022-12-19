@@ -685,241 +685,252 @@ namespace taskt.Core.Automation.Commands
             return (ScriptCommand)MemberwiseClone();
         }
 
-        public bool checkMatched(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
+        public bool CheckMatched(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
         {
-            if (!caseSensitive)
-            {
-                keyword = keyword.ToLower();
-            }
-
-            // command name
-            if (checkCommandName)
-            {
-                string name = this.SelectionName;
-                if (!caseSensitive)
-                {
-                    name = name.ToLower();
-                }
-                if (name.Contains(keyword))
-                {
-                    this.IsMatched = true;
-                    return true;
-                }
-            }
-            
-            // display text
-            if (checkDisplayText)
-            {
-                string disp = this.GetDisplayValue();
-                if (!caseSensitive)
-                {
-                    disp = disp.ToLower();
-                }
-                if (disp.Contains(keyword))
-                {
-                    this.IsMatched = true;
-                    return true;
-                }
-            }
-
-            // comment
-            if (checkComment)
-            {
-                var cmt = this.v_Comment;
-                if (cmt != null)
-                {
-                    if (!caseSensitive)
-                    {
-                        cmt = cmt.ToLower();
-                    }
-                    if (cmt.Contains(keyword))
-                    {
-                        this.IsMatched = true;
-                        return true;
-                    }
-                }
-            }
-
-            // parameters
-            if (checkParameters)
-            {
-                
-                // case sensitive function
-                Func<string, string> CaseFunc;
-                if (caseSensitive)
-                {
-                    CaseFunc = (str) =>
-                    {
-                        return str;
-                    };
-                }
-                else
-                {
-                    CaseFunc = (str) =>
-                    {
-                        return str.ToLower();
-                    };
-                }
-                var myPropaties = this.GetType().GetProperties();
-                foreach (var prop in myPropaties)
-                {
-                    if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-                    {
-                        var propValue = prop.GetValue(this);
-                        if (propValue == null)
-                        {
-                            continue;   // next
-                        }
-                        if (propValue is string)
-                        {
-                            if (CaseFunc((string)propValue).Contains(keyword))
-                            {
-                                this.IsMatched = true;
-                                return true;
-                            }
-                        }
-                        else if (propValue is System.Data.DataTable)
-                        {
-                            ((System.Data.DataTable)propValue).AcceptChanges();
-                            var trgDT = ((System.Data.DataTable)propValue);
-                            var rows = trgDT.Rows.Count;
-                            var cols = trgDT.Columns.Count;
-                            for (var i = 0; i < cols; i++)
-                            {
-                                if (trgDT.Columns[i].ReadOnly)
-                                {
-                                    continue;
-                                }
-                                for (var j = 0; j < rows; j++)
-                                {
-                                    if (CaseFunc(trgDT.Rows[j][i].ToString()).Contains(keyword))
-                                    {
-                                        this.IsMatched = true;
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (checkInstanceType)
-            {
-                if (checkInstanceMatched(keyword, instanceType, caseSensitive))
-                {
-                    this.IsMatched = true;
-                    return true;
-                }
-            }
-
-            this.IsMatched = false;
-            return false;
+            this.IsMatched = SearchReplaceControls.CheckMatched(this, keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText, checkInstanceType, instanceType);
+            return this.IsMatched;
         }
 
-        public bool checkInstanceMatched(string keyword, string instanceType, bool caseSensitive)
+        public bool Replace(SearchReplaceControls.ReplaceTarget trg, string keyword, string replacedText, bool caseSensitive, string instanceType = "")
         {
-            Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
-
-            Func<string, string> convFunc;
-            if (caseSensitive)
-            {
-                convFunc = (trg) =>
-                {
-                    return trg;
-                };
-            }
-            else
-            {
-                keyword = keyword.ToLower();
-                convFunc = (trg) =>
-                {
-                    return trg.ToLower();
-                };
-            }
-
-            PropertyInfo[] myPropaties = this.GetType().GetProperties();
-            foreach(PropertyInfo prop in myPropaties)
-            {
-                var ins = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
-                if ((ins != null) && (ins.instanceType == comparedType))
-                {
-                    var targetValue = prop.GetValue(this);
-                    if ((targetValue != null) && convFunc(targetValue.ToString()).Contains(keyword))
-                    {
-                        this.IsMatched = true;
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return SearchReplaceControls.Replace(this, trg, keyword, replacedText, caseSensitive, instanceType);
         }
 
-        public bool ReplaceAllParameters(string keyword, string replacedText, bool caseSensitive)
-        {
-            Func<string, string> convFunc;
-            if (caseSensitive)
-            {
-                convFunc = (trg) =>
-                {
-                    return trg;
-                };
-            }
-            else
-            {
-                keyword = keyword.ToLower();
-                convFunc = (trg) =>
-                {
-                    return trg.ToLower();
-                };
-            }
+        //public bool checkMatched(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
+        //{
+        //    if (!caseSensitive)
+        //    {
+        //        keyword = keyword.ToLower();
+        //    }
 
-            bool isReplaced = false;
-            var targetProperties = this.GetType().GetProperties().Where(f => (f.Name.StartsWith("v_") && (f.Name != "v_Comment")));
-            foreach(var prop in targetProperties)
-            {
-                var targetValue = prop.GetValue(this);
-                if (targetValue == null)
-                {
-                    continue;
-                }
-                else if (targetValue is string)
-                {
-                    var currentValue = convFunc(targetValue.ToString());
-                    var newValue = currentValue.Replace(keyword, replacedText);
-                    if (currentValue != newValue)
-                    {
-                        prop.SetValue(this, newValue);
-                        isReplaced = true;
-                    }
-                }
-                else if (targetValue is System.Data.DataTable)
-                {
-                    var targetDT = (System.Data.DataTable)targetValue;
-                    var rows = targetDT.Rows.Count;
-                    var cols = targetDT.Columns.Count;
-                    for (int i = 0; i < cols; i++)
-                    {
-                        if (targetDT.Columns[i].ReadOnly)
-                        {
-                            continue;
-                        }
-                        for (int j = 0; j < rows; j++)
-                        {
-                            var currentValue = convFunc(targetDT.Rows[j][i].ToString());
-                            var newValue = currentValue.Replace(keyword, replacedText);
-                            if (currentValue != newValue)
-                            {
-                                //prop.SetValue(this, newValue);
-                                targetDT.Rows[j][i] = newValue;
-                                isReplaced = true;
-                            }
-                        }
-                    }
-                }
-            }
-            return isReplaced;
-        }
+        //    // command name
+        //    if (checkCommandName)
+        //    {
+        //        string name = this.SelectionName;
+        //        if (!caseSensitive)
+        //        {
+        //            name = name.ToLower();
+        //        }
+        //        if (name.Contains(keyword))
+        //        {
+        //            this.IsMatched = true;
+        //            return true;
+        //        }
+        //    }
+
+        //    // display text
+        //    if (checkDisplayText)
+        //    {
+        //        string disp = this.GetDisplayValue();
+        //        if (!caseSensitive)
+        //        {
+        //            disp = disp.ToLower();
+        //        }
+        //        if (disp.Contains(keyword))
+        //        {
+        //            this.IsMatched = true;
+        //            return true;
+        //        }
+        //    }
+
+        //    // comment
+        //    if (checkComment)
+        //    {
+        //        var cmt = this.v_Comment;
+        //        if (cmt != null)
+        //        {
+        //            if (!caseSensitive)
+        //            {
+        //                cmt = cmt.ToLower();
+        //            }
+        //            if (cmt.Contains(keyword))
+        //            {
+        //                this.IsMatched = true;
+        //                return true;
+        //            }
+        //        }
+        //    }
+
+        //    // parameters
+        //    if (checkParameters)
+        //    {
+
+        //        // case sensitive function
+        //        Func<string, string> CaseFunc;
+        //        if (caseSensitive)
+        //        {
+        //            CaseFunc = (str) =>
+        //            {
+        //                return str;
+        //            };
+        //        }
+        //        else
+        //        {
+        //            CaseFunc = (str) =>
+        //            {
+        //                return str.ToLower();
+        //            };
+        //        }
+        //        var myPropaties = this.GetType().GetProperties();
+        //        foreach (var prop in myPropaties)
+        //        {
+        //            if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+        //            {
+        //                var propValue = prop.GetValue(this);
+        //                if (propValue == null)
+        //                {
+        //                    continue;   // next
+        //                }
+        //                if (propValue is string)
+        //                {
+        //                    if (CaseFunc((string)propValue).Contains(keyword))
+        //                    {
+        //                        this.IsMatched = true;
+        //                        return true;
+        //                    }
+        //                }
+        //                else if (propValue is System.Data.DataTable)
+        //                {
+        //                    ((System.Data.DataTable)propValue).AcceptChanges();
+        //                    var trgDT = ((System.Data.DataTable)propValue);
+        //                    var rows = trgDT.Rows.Count;
+        //                    var cols = trgDT.Columns.Count;
+        //                    for (var i = 0; i < cols; i++)
+        //                    {
+        //                        if (trgDT.Columns[i].ReadOnly)
+        //                        {
+        //                            continue;
+        //                        }
+        //                        for (var j = 0; j < rows; j++)
+        //                        {
+        //                            if (CaseFunc(trgDT.Rows[j][i].ToString()).Contains(keyword))
+        //                            {
+        //                                this.IsMatched = true;
+        //                                return true;
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    if (checkInstanceType)
+        //    {
+        //        if (checkInstanceMatched(keyword, instanceType, caseSensitive))
+        //        {
+        //            this.IsMatched = true;
+        //            return true;
+        //        }
+        //    }
+
+        //    this.IsMatched = false;
+        //    return false;
+        //}
+
+        //public bool checkInstanceMatched(string keyword, string instanceType, bool caseSensitive)
+        //{
+        //    Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
+
+        //    Func<string, string> convFunc;
+        //    if (caseSensitive)
+        //    {
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg;
+        //        };
+        //    }
+        //    else
+        //    {
+        //        keyword = keyword.ToLower();
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg.ToLower();
+        //        };
+        //    }
+
+        //    PropertyInfo[] myPropaties = this.GetType().GetProperties();
+        //    foreach(PropertyInfo prop in myPropaties)
+        //    {
+        //        var ins = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
+        //        if ((ins != null) && (ins.instanceType == comparedType))
+        //        {
+        //            var targetValue = prop.GetValue(this);
+        //            if ((targetValue != null) && convFunc(targetValue.ToString()).Contains(keyword))
+        //            {
+        //                this.IsMatched = true;
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        //public bool ReplaceAllParameters(string keyword, string replacedText, bool caseSensitive)
+        //{
+        //    Func<string, string> convFunc;
+        //    if (caseSensitive)
+        //    {
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg;
+        //        };
+        //    }
+        //    else
+        //    {
+        //        keyword = keyword.ToLower();
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg.ToLower();
+        //        };
+        //    }
+
+        //    bool isReplaced = false;
+        //    var targetProperties = this.GetType().GetProperties().Where(f => (f.Name.StartsWith("v_") && (f.Name != "v_Comment")));
+        //    foreach(var prop in targetProperties)
+        //    {
+        //        var targetValue = prop.GetValue(this);
+        //        if (targetValue == null)
+        //        {
+        //            continue;
+        //        }
+        //        else if (targetValue is string)
+        //        {
+        //            var currentValue = convFunc(targetValue.ToString());
+        //            var newValue = currentValue.Replace(keyword, replacedText);
+        //            if (currentValue != newValue)
+        //            {
+        //                prop.SetValue(this, newValue);
+        //                isReplaced = true;
+        //            }
+        //        }
+        //        else if (targetValue is System.Data.DataTable)
+        //        {
+        //            var targetDT = (System.Data.DataTable)targetValue;
+        //            var rows = targetDT.Rows.Count;
+        //            var cols = targetDT.Columns.Count;
+        //            for (int i = 0; i < cols; i++)
+        //            {
+        //                if (targetDT.Columns[i].ReadOnly)
+        //                {
+        //                    continue;
+        //                }
+        //                for (int j = 0; j < rows; j++)
+        //                {
+        //                    var currentValue = convFunc(targetDT.Rows[j][i].ToString());
+        //                    var newValue = currentValue.Replace(keyword, replacedText);
+        //                    if (currentValue != newValue)
+        //                    {
+        //                        //prop.SetValue(this, newValue);
+        //                        targetDT.Rows[j][i] = newValue;
+        //                        isReplaced = true;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return isReplaced;
+        //}
 
         public bool ReplaceInstance(string keyword, string replacedText, string instanceType, bool caseSensitive)
         {
