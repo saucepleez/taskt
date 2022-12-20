@@ -685,16 +685,39 @@ namespace taskt.Core.Automation.Commands
             return (ScriptCommand)MemberwiseClone();
         }
 
+        #region Math Replace
+        /// <summary>
+        /// check parameters value matches
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="caseSensitive"></param>
+        /// <param name="checkParameters"></param>
+        /// <param name="checkCommandName"></param>
+        /// <param name="checkComment"></param>
+        /// <param name="checkDisplayText"></param>
+        /// <param name="checkInstanceType"></param>
+        /// <param name="instanceType"></param>
+        /// <returns></returns>
         public bool CheckMatched(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
         {
             this.IsMatched = SearchReplaceControls.CheckMatched(this, keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText, checkInstanceType, instanceType);
             return this.IsMatched;
         }
 
+        /// <summary>
+        /// replace parameters value
+        /// </summary>
+        /// <param name="trg"></param>
+        /// <param name="keyword"></param>
+        /// <param name="replacedText"></param>
+        /// <param name="caseSensitive"></param>
+        /// <param name="instanceType"></param>
+        /// <returns></returns>
         public bool Replace(SearchReplaceControls.ReplaceTarget trg, string keyword, string replacedText, bool caseSensitive, string instanceType = "")
         {
             return SearchReplaceControls.Replace(this, trg, keyword, replacedText, caseSensitive, instanceType);
         }
+        #endregion
 
         public virtual void addInstance(InstanceCounter counter)
         {
