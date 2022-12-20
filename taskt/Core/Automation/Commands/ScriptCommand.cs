@@ -719,69 +719,26 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
+        #region instance counter
+
+        /// <summary>
+        /// general method to Add Instance
+        /// </summary>
+        /// <param name="counter"></param>
         public virtual void AddInstance(InstanceCounter counter)
         {
-            ////Type cmdType = command.GetType();
-            //var props = this.GetType().GetProperties();
-            //foreach (var prop in props)
-            //{
-            //    if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-            //    {
-            //        if (prop.GetValue(this) != null)
-            //        {
-            //            string insValue = prop.GetValue(this).ToString();
-            //            var insType = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
-            //            var direction = (Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyParameterDirection));
-            //            if ((insType != null) && (direction != null) &&
-            //                    (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
-            //            {
-            //                if (direction.porpose == Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)
-            //                {
-            //                    counter.addInstance(insValue, insType, false);
-            //                }
-            //                //counter.addInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
-            //                counter.addInstance(insValue, insType, true);
-            //            }
-            //            else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
-            //            {
-            //                counter.addInstance(insValue, insType, true);
-            //            }
-            //        }
-            //    }
-            //}
             InstanceCounterControls.AddInstance(this, counter);
         }
 
+        /// <summary>
+        /// general method to Remove Instance
+        /// </summary>
+        /// <param name="counter"></param>
         public virtual void RemoveInstance(InstanceCounter counter)
         {
-            //var props = this.GetType().GetProperties();
-            //foreach (var prop in props)
-            //{
-            //    if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-            //    {
-            //        if (prop.GetValue(this) != null)
-            //        {
-            //            string insValue = prop.GetValue(this).ToString();
-            //            var insType = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
-            //            var direction = (Attributes.PropertyAttributes.PropertyParameterDirection)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyParameterDirection));
-            //            if ((insType != null) && (direction != null) &&
-            //                    (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
-            //            {
-            //                //counter.removeInstance(insValue, insType, (direction.porpose != Automation.Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output));
-            //                if (direction.porpose == Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)
-            //                {
-            //                    counter.removeInstance(insValue, insType, false);
-            //                }
-            //                counter.removeInstance(insValue, insType, true);
-            //            }
-            //            else if ((insType != null) && (insType.instanceType != Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.none))
-            //            {
-            //                counter.removeInstance(insValue, insType, true);
-            //            }
-            //        }
-            //    }
-            //}
+
             InstanceCounterControls.RemoveInstance(this, counter);
         }
+        #endregion
     }
 }
