@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using taskt.Core.Automation.Attributes.ClassAttributes;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using static taskt.Core.Automation.Commands.PropertyControls;
 
@@ -10,11 +12,47 @@ namespace taskt.Core.Automation.Commands
     internal static class DisplayTextControls
     {
         /// <summary>
+        /// general method to get display text. this method use EnableAutomateDisplayText attribute.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static string GetDisplayText(ScriptCommand command)
+        {
+            string displayValue;
+            if (String.IsNullOrEmpty(command.v_Comment))
+            {
+                displayValue = command.SelectionName;
+            }
+            else
+            {
+                displayValue = command.SelectionName + " [" + command.v_Comment + "]";
+            }
+
+            var autoDisp = command.GetType().GetCustomAttribute<EnableAutomateDisplayText>();
+            if (autoDisp?.enableAutomateDisplayText ?? false)
+            {
+                var paramsText = GetParametersDisplayText(command);
+                if (paramsText == "")
+                {
+                    return displayValue;
+                }
+                else
+                {
+                    return displayValue + " [ " + paramsText + " ]";
+                }
+            }
+            else
+            {
+                return displayValue;
+            }
+        }
+
+        /// <summary>
         /// get paramters display text for editor from command, this method use PropertyDisplayText, PropertyVirtualProperty attributes.
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public static string GetParametersDisplayText(ScriptCommand command)
+        private static string GetParametersDisplayText(ScriptCommand command)
         {
             string t = "";
             var props = command.GetParameterProperties();

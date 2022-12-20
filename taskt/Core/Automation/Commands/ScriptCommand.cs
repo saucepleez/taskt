@@ -3,11 +3,9 @@ using System.Xml.Serialization;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Linq;
 using System.Reflection;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.ClassAttributes;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -549,33 +547,7 @@ namespace taskt.Core.Automation.Commands
         #region GetDisplayValue
         public virtual string GetDisplayValue()
         {
-            string displayValue;
-            if (String.IsNullOrEmpty(v_Comment))
-            {
-                displayValue = SelectionName;
-            }
-            else
-            {
-                displayValue = SelectionName + " [" + v_Comment + "]";
-            }
-
-            var autoDisp = this.GetType().GetCustomAttribute<EnableAutomateDisplayText>();
-            if (autoDisp?.enableAutomateDisplayText ?? false)
-            {
-                var paramsText = DisplayTextControls.GetParametersDisplayText(this);
-                if (paramsText == "")
-                {
-                    return displayValue;
-                }
-                else
-                {
-                    return displayValue + " [ "+ paramsText + " ]";
-                }
-            }
-            else
-            {
-                return displayValue;
-            }
+            return DisplayTextControls.GetDisplayText(this);
         }
         #endregion
 
