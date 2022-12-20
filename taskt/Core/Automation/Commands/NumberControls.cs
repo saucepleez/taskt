@@ -144,6 +144,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// check value validate by PropertyValidationRule
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="validateAttr"></param>
+        /// <param name="parameterDescription"></param>
+        /// <param name="rangeAttr"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static bool CheckValidate(decimal value, PropertyValidationRule validateAttr, string parameterDescription, PropertyValueRange rangeAttr)
         {
             if (validateAttr.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.EqualsZero))
