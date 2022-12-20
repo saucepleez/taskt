@@ -932,93 +932,93 @@ namespace taskt.Core.Automation.Commands
         //    return isReplaced;
         //}
 
-        public bool ReplaceInstance(string keyword, string replacedText, string instanceType, bool caseSensitive)
-        {
-            Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
+        //public bool ReplaceInstance(string keyword, string replacedText, string instanceType, bool caseSensitive)
+        //{
+        //    Attributes.PropertyAttributes.PropertyInstanceType.InstanceType comparedType = InstanceCounter.GetInstanceType(instanceType);
 
-            Func<string, string> convFunc;
-            if (caseSensitive)
-            {
-                convFunc = (trg) =>
-                {
-                    return trg;
-                };
-            }
-            else
-            {
-                keyword = keyword.ToLower();
-                convFunc = (trg) =>
-                {
-                    return trg.ToLower();
-                };
-            }
+        //    Func<string, string> convFunc;
+        //    if (caseSensitive)
+        //    {
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg;
+        //        };
+        //    }
+        //    else
+        //    {
+        //        keyword = keyword.ToLower();
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg.ToLower();
+        //        };
+        //    }
 
-            bool isReplaced = false;
+        //    bool isReplaced = false;
 
-            var myPropaties = this.GetType().GetProperties();
-            foreach(var prop in myPropaties)
-            {
-                var attr = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
-                if (attr == null)
-                {
-                    continue;
-                }
-                else if (attr.instanceType == comparedType)
-                {
-                    var currentValue = convFunc(prop.GetValue(this).ToString());
-                    var newValue = currentValue.Replace(keyword, replacedText);
-                    if (currentValue != newValue)
-                    {
-                        prop.SetValue(this, newValue);
-                        isReplaced = true;
-                    }
-                }
-            }
+        //    var myPropaties = this.GetType().GetProperties();
+        //    foreach(var prop in myPropaties)
+        //    {
+        //        var attr = (Attributes.PropertyAttributes.PropertyInstanceType)prop.GetCustomAttribute(typeof(Attributes.PropertyAttributes.PropertyInstanceType));
+        //        if (attr == null)
+        //        {
+        //            continue;
+        //        }
+        //        else if (attr.instanceType == comparedType)
+        //        {
+        //            var currentValue = convFunc(prop.GetValue(this).ToString());
+        //            var newValue = currentValue.Replace(keyword, replacedText);
+        //            if (currentValue != newValue)
+        //            {
+        //                prop.SetValue(this, newValue);
+        //                isReplaced = true;
+        //            }
+        //        }
+        //    }
 
-            return isReplaced;
-        }
+        //    return isReplaced;
+        //}
 
-        public bool ReplaceComment(string keyword, string replacedText, bool caseSensitive)
-        {
-            Func<string, string> convFunc;
-            if (caseSensitive)
-            {
-                convFunc = (trg) =>
-                {
-                    return trg;
-                };
-            }
-            else
-            {
-                keyword = keyword.ToLower();
-                convFunc = (trg) =>
-                {
-                    return trg.ToLower();
-                };
-            }
+        //public bool ReplaceComment(string keyword, string replacedText, bool caseSensitive)
+        //{
+        //    Func<string, string> convFunc;
+        //    if (caseSensitive)
+        //    {
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg;
+        //        };
+        //    }
+        //    else
+        //    {
+        //        keyword = keyword.ToLower();
+        //        convFunc = (trg) =>
+        //        {
+        //            return trg.ToLower();
+        //        };
+        //    }
 
-            //var commentProp = this.GetProperty("v_Comment");
-            var commentProp = this.GetType().GetProperty("v_Comment");
-            var commentValue = commentProp.GetValue(this);
-            if (commentValue != null)
-            {
-                var currentComment = convFunc(commentValue.ToString());
-                var newComment = currentComment.Replace(keyword, replacedText);
-                if (currentComment != newComment)
-                {
-                    commentProp.SetValue(this, newComment);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //    //var commentProp = this.GetProperty("v_Comment");
+        //    var commentProp = this.GetType().GetProperty("v_Comment");
+        //    var commentValue = commentProp.GetValue(this);
+        //    if (commentValue != null)
+        //    {
+        //        var currentComment = convFunc(commentValue.ToString());
+        //        var newComment = currentComment.Replace(keyword, replacedText);
+        //        if (currentComment != newComment)
+        //        {
+        //            commentProp.SetValue(this, newComment);
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public virtual void addInstance(InstanceCounter counter)
         {
