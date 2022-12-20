@@ -1353,7 +1353,7 @@ namespace taskt.UI.Forms
                 //Core.InstanceNameType nameType = instanceList.getInstanceNameType(currentCommand);
                 Core.Automation.Commands.ScriptCommand cloneCommand = currentCommand.Clone();
                 //instanceList.removeInstance(currentCommand);
-                currentCommand.removeInstance(instanceList);
+                currentCommand.RemoveInstance(instanceList);
 
                 //create new command editor form
                 using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
@@ -1396,7 +1396,7 @@ namespace taskt.UI.Forms
                         editCommand.selectedCommand.IsDontSavedCommand = true;
 
                         //instanceList.addInstance(editCommand.selectedCommand);
-                        editCommand.selectedCommand.addInstance(instanceList);
+                        editCommand.selectedCommand.AddInstance(instanceList);
                     }
                     else
                     {
@@ -1405,7 +1405,7 @@ namespace taskt.UI.Forms
                         //    instanceList.addInstance(nameType);
                         //}
                         //instanceList.addInstance(cloneCommand);
-                        cloneCommand.addInstance(instanceList);
+                        cloneCommand.AddInstance(instanceList);
                     }
                 }
             }
@@ -3546,7 +3546,7 @@ namespace taskt.UI.Forms
             foreach(Core.Automation.Commands.ScriptCommand command in items)
             {
                 //instanceList.addInstance(command);
-                command.addInstance(instanceList);
+                command.AddInstance(instanceList);
             }
         }
 
@@ -3555,7 +3555,7 @@ namespace taskt.UI.Forms
             foreach (Core.Automation.Commands.ScriptCommand command in items)
             {
                 //instanceList.removeInstance(command);
-                command.removeInstance(instanceList);
+                command.RemoveInstance(instanceList);
             }
         }
 

@@ -719,7 +719,7 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
-        public virtual void addInstance(InstanceCounter counter)
+        public virtual void AddInstance(InstanceCounter counter)
         {
             //Type cmdType = command.GetType();
             var props = this.GetType().GetProperties();
@@ -751,7 +751,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public virtual void removeInstance(InstanceCounter counter)
+        public virtual void RemoveInstance(InstanceCounter counter)
         {
             var props = this.GetType().GetProperties();
             foreach (var prop in props)

@@ -180,7 +180,7 @@ namespace taskt.Core.Automation.Commands
             res.StoreInUserVariable(engine, v_Result);
         }
 
-        public override void addInstance(InstanceCounter counter)
+        public override void AddInstance(InstanceCounter counter)
         {
             var co = (string.IsNullOrEmpty(v_Color)) ? "" : v_Color;
             counter.addInstance(co, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);
@@ -204,7 +204,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void removeInstance(InstanceCounter counter)
+        public override void RemoveInstance(InstanceCounter counter)
         {
             var co = (string.IsNullOrEmpty(v_Color)) ? "" : v_Color;
             counter.removeInstance(co, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);

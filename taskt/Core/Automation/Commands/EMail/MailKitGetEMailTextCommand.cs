@@ -146,7 +146,7 @@ namespace taskt.Core.Automation.Commands
         //    return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Type: '" + v_TextType + "', Store: '" + v_ResultVariable + "']";
         //}
 
-        public override void addInstance(InstanceCounter counter)
+        public override void AddInstance(InstanceCounter counter)
         {
             var mail = (string.IsNullOrEmpty(v_MailName)) ? "" : v_MailName;
 
@@ -167,7 +167,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void removeInstance(InstanceCounter counter)
+        public override void RemoveInstance(InstanceCounter counter)
         {
             var mail = (string.IsNullOrEmpty(v_MailName)) ? "" : v_MailName;
 
