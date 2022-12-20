@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Reflection;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// convert text to number, store number to variable
+    /// </summary>
     internal static class NumberControls
     {
         /// <summary>
@@ -40,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static decimal ConvertToUserVariableAsDecimal(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
-            var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception("Property '" + propertyName + "' is not exists."); ;
+            var propInfo = command.GetProperty(propertyName);
             string valueStr = propInfo.GetValue(command)?.ToString() ?? "";
 
             return new PropertyConvertTag(valueStr, propertyName, propertyDescription).ConvertToUserVariableAsDecimal(propInfo, engine);
@@ -75,7 +79,6 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static int ConvertToUserVariableAsInteger(this string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
-            //return (propertyValue, propertyDescription).ConvertToUserVariableAsInteger(engine);
             return new PropertyConvertTag(propertyValue, propertyDescription).ConvertToUserVariableAsInteger(engine);
         }
 
@@ -109,20 +112,21 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static decimal ConvertToUserVariableAsDecimal(this PropertyConvertTag prop, PropertyInfo propInfo, Engine.AutomationEngineInstance engine)
         {
-            var optAttr = propInfo.GetCustomAttribute<PropertyIsOptional>();
+            var virtualPropInfo = propInfo.GetVirtualProperty();
+
+            var optAttr = GetCustomAttributeWithVirtual<PropertyIsOptional>(propInfo, virtualPropInfo);
             if (optAttr != null)
             {
                 if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(prop.Value)))
                 {
-                    //prop.Value = optAttr.setBlankToValue;
                     prop.SetNewValue(optAttr.setBlankToValue);
                 }
             }
 
             decimal v = prop.ConvertToUserVariableAsDecimal(engine);
 
-            var validateAttr = propInfo.GetCustomAttribute<PropertyValidationRule>();
-            var rangeAttr = propInfo.GetCustomAttribute<PropertyValueRange>();
+            var validateAttr = GetCustomAttributeWithVirtual<PropertyValidationRule>(propInfo, virtualPropInfo);
+            var rangeAttr = GetCustomAttributeWithVirtual<PropertyValueRange>(propInfo, virtualPropInfo);
             if (validateAttr != null)
             {
                 if (CheckValidate(v, validateAttr, prop.Description, rangeAttr))
@@ -142,36 +146,35 @@ namespace taskt.Core.Automation.Commands
 
         private static bool CheckValidate(decimal value, PropertyValidationRule validateAttr, string parameterDescription, PropertyValueRange rangeAttr)
         {
-            var rule = validateAttr.errorRule;
-            if ((rule & PropertyValidationRule.ValidationRuleFlags.EqualsZero) == PropertyValidationRule.ValidationRuleFlags.EqualsZero)
+            if (validateAttr.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.EqualsZero))
             {
                 if (value == 0)
                 {
                     throw new Exception(parameterDescription + " is Equals Zero.");
                 }
             }
-            if ((rule & PropertyValidationRule.ValidationRuleFlags.NotEqualsZero) == PropertyValidationRule.ValidationRuleFlags.NotEqualsZero)
+            if (validateAttr.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotEqualsZero))
             {
                 if (value != 0)
                 {
                     throw new Exception(parameterDescription + " is Not Equals Zero.");
                 }
             }
-            if ((rule & PropertyValidationRule.ValidationRuleFlags.LessThanZero) == PropertyValidationRule.ValidationRuleFlags.LessThanZero)
+            if (validateAttr.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.LessThanZero))
             {
                 if (value < 0)
                 {
                     throw new Exception(parameterDescription + " is Less Than Zero.");
                 }
             }
-            if ((rule & PropertyValidationRule.ValidationRuleFlags.GreaterThanZero) == PropertyValidationRule.ValidationRuleFlags.GreaterThanZero)
+            if (validateAttr.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.GreaterThanZero))
             {
                 if  (value > 0)
                 {
                     throw new Exception(parameterDescription + " is Greater Than Zero.");
                 }
             }
-            if ((rule & PropertyValidationRule.ValidationRuleFlags.Between) == PropertyValidationRule.ValidationRuleFlags.Between)
+            if (validateAttr.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.Between))
             {
                 if (rangeAttr == null)
                 {
@@ -185,7 +188,7 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
             }
-            if ((rule & PropertyValidationRule.ValidationRuleFlags.NotBetween) == PropertyValidationRule.ValidationRuleFlags.NotBetween)
+            if (validateAttr.IsErrorFlag(PropertyValidationRule.ValidationRuleFlags.NotBetween))
             {
                 if (rangeAttr == null)
                 {
