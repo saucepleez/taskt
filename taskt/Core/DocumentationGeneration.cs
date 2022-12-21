@@ -267,15 +267,23 @@ namespace taskt.Core
                 count++;
 
                 // nav
-                if (count < maxCount)
+                sb.AppendLine("<div style=\"font-size: 90%; text-align: center\">");
+                sb.AppendLine(Environment.NewLine);
+                if (count == 1)
                 {
-                    sb.AppendLine("<div style=\"font-size: 90%; text-align: center\">");
-                    sb.AppendLine(Environment.NewLine);
-                    sb.AppendLine("[prev](#param_" + (count - 1) + ") / [list](#param_list) / [next](#param_" + count + ")");
-                    sb.AppendLine(Environment.NewLine);
-                    sb.AppendLine("</div>");
-                    sb.AppendLine(Environment.NewLine);
+                    sb.AppendLine("prev / [list](#param_list) / [next](#param_" + count + ")");
                 }
+                else if (count < maxCount)
+                {
+                    sb.AppendLine("[prev](#param_" + (count - 1) + ") / [list](#param_list) / [next](#param_" + count + ")");
+                }
+                else
+                {
+                    sb.AppendLine("[prev](#param_" + (count - 1) + ") / [list](#param_list) / next");
+                }
+                sb.AppendLine(Environment.NewLine);
+                sb.AppendLine("</div>");
+                sb.AppendLine(Environment.NewLine);
             }
 
             sb.AppendLine("## Developer/Additional Reference");
