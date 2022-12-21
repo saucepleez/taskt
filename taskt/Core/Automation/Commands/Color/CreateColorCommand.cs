@@ -48,6 +48,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Alpha Value")]
         [PropertyDetailSampleUsage("**{{{vAlpha}}}**", "Specify variable **vAlpha**")]
         [PropertyIsOptional(true, "255")]
+        [PropertyValidationRule("Alpha", PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Alpha")]
         public string v_Alpha { get; set; }
 
