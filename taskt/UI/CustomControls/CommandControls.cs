@@ -1054,10 +1054,17 @@ namespace taskt.UI.CustomControls
 
                     if (Regex.IsMatch(lowText, "^(the|a|an) "))
                     {
+                        // ex.) the variable name
                         labelText = "Please " + (isSelect ? "Select" : "Specify") + " " + labelText;
+                    }
+                    else if (Regex.IsMatch(lowText, "^(select|specify|enter|indicate|input)"))
+                    {
+                        // ex.) select the variable name
+                        labelText = "Please " + labelText;
                     }
                     else
                     {
+                        // ex.) variable name
                         labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
                     }
                 }
