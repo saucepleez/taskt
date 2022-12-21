@@ -1,5 +1,18 @@
 ﻿namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
+    #region Virtual Property
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class PropertyVirtualProperty : System.Attribute
+    {
+        public string className;
+        public string propertyName;
+        public PropertyVirtualProperty(string className, string propertyName)
+        {
+            this.className = className;
+            this.propertyName = propertyName;
+        }
+    }
+    #endregion
     #region to Label, Document
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class InputSpecification : System.Attribute
@@ -245,6 +258,11 @@
             return ((this.errorRule & err) == err);
         }
 
+        public bool IsWarningFlag(ValidationRuleFlags warn)
+        {
+            return ((this.warningRule & warn) == warn);
+        }
+
         [System.Flags]
         public enum ValidationRuleFlags
         {
@@ -276,6 +294,10 @@
         public bool parameterDisplay = false;
         public string parameterName = "";
         public string afterText = "";
+
+        public PropertyDisplayText()
+        {
+        }
         public PropertyDisplayText(bool show, string name, string afterText = "")
         {
             this.parameterDisplay = show;

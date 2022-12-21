@@ -338,9 +338,12 @@
     <Compile Include="Core\Automation\Commands\DictionaryControls.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\FilterDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ReplaceDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DisplayTextControls.cs" />
     <Compile Include="Core\Automation\Commands\File\FormatFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\FormatFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\InstanceCounterControls.cs" />
+    <Compile Include="Core\Automation\Commands\IntermediateControls.cs" />
     <Compile Include="Core\Automation\Commands\JSONControls.cs" />
     <Compile Include="Core\Automation\Commands\JSON\RemoveJSONArrayItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\InsertJSONArrayItemCommand.cs" />
@@ -367,6 +370,7 @@
     <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\IncreaseNumericalVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SearchReplaceControls.cs" />
     <Compile Include="Core\Automation\Commands\SelectionControls.cs" />
     <Compile Include="Core\Automation\Commands\Text\CheckTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ConcatenateTextVariableCommand.cs" />
@@ -473,8 +477,10 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ValidationControls.cs" />
     <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\PropertyControls.cs" />
     <Compile Include="Core\Automation\Commands\WaitControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValuesAsDataTableCommand.cs" />

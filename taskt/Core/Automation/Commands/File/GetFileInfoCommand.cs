@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             ret.StoreInUserVariable(sender, v_UserVariableName);
         }
 
-        public override void addInstance(InstanceCounter counter)
+        public override void AddInstance(InstanceCounter counter)
         {
             string type = (String.IsNullOrEmpty(v_InfoType) ? "" : v_InfoType.ToLower());
 
@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void removeInstance(InstanceCounter counter)
+        public override void RemoveInstance(InstanceCounter counter)
         {
             string type = (String.IsNullOrEmpty(v_InfoType) ? "" : v_InfoType.ToLower());
 

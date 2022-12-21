@@ -7,6 +7,7 @@ using System.Text;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core
 {
@@ -102,14 +103,6 @@ namespace taskt.Core
             string fullFileName = System.IO.Path.Combine(docsFolderName, "automation-commands.md");
             System.IO.File.WriteAllText(fullFileName, sb.ToString());
 
-            //// release
-            //commandClasses.Clear();
-            //commandClasses = null;
-            //highLevelCommandInfo.Clear();
-            //highLevelCommandInfo = null;
-            //sortHighLevelCommandInfo.Clear();
-            //sortHighLevelCommandInfo = null;
-
             return docsFolderName;
         }
 
@@ -167,26 +160,28 @@ namespace taskt.Core
             sb.AppendLine(Environment.NewLine);
 
             //build parameter table based on required user inputs
+            sb.AppendLine("<a id=\"param_list\"></a>");
             sb.AppendLine("## Command Parameters");
 
             // get propertyLists
             List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
 
             // create Parameters List
-            int count = 0;
+            int maxCount = 0;
             foreach(var prop in propInfos)
             {
                 var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings);
-                sb.AppendLine("- [" + commandLabel + "](#param_" + count +  ")");
-                count++;
+                sb.AppendLine("- [" + commandLabel + "](#param_" + maxCount +  ")");
+                maxCount++;
             }
 
             sb.AppendLine(Environment.NewLine);
 
             // add additional parameter info
-            count = 0;
+            int count = 0;
             foreach (var prop in propInfos)
             {
+                var virtualProp = prop.GetVirtualProperty();
                 var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings);
 
                 sb.AppendLine("<a id=\"param_" + count + "\"></a>");
@@ -197,7 +192,8 @@ namespace taskt.Core
                 // Input Specification, sample usage, remarks, etc.
                 sb.AppendLine("<dl>");
 
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(prop.GetCustomAttribute<InputSpecification>()?.inputSpecification ?? "");
+                // what to input
+                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetCustomAttributeWithVirtual<InputSpecification>(prop, virtualProp)?.inputSpecification ?? "");
                 if (helpfulExplanation == "")
                 {
                     helpfulExplanation = "(nothing)";
@@ -205,36 +201,37 @@ namespace taskt.Core
                 sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
 
                 // value instance type
-                (var valueName, var valueDescription) = GetValueInstanceType(prop);
+                (var valueName, var valueDescription) = GetValueInstanceType(prop, virtualProp);
                 if (valueName != "")
                 {
                     sb.AppendLine("<dt>" + valueName + "</dt><dd>" + valueDescription + "</dd>");
                 }
+
                 // direction
-                var direction = prop.GetCustomAttribute<PropertyParameterDirection>();
+                var direction = GetCustomAttributeWithVirtual<PropertyParameterDirection>(prop, virtualProp);
                 if (direction != null)
                 {
-                    sb.Append("<dt>Parameter Direction</dt><dd>" + direction.porpose.ToString() + "</dd>");
+                    sb.AppendLine("<dt>Parameter Direction</dt><dd>" + direction.porpose.ToString() + "</dd>");
                 }
 
                 // error validation
-                var validationRules = GetErrorValidation(prop);
+                var validationRules = GetErrorValidation(prop, virtualProp);
                 if (validationRules != "")
                 {
-                    sb.Append("<dt>Error Occurs When the Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
+                    sb.AppendLine("<dt>Error Occurs When the Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
                 }
 
-                var sampleUsage = GetSampleUsageText(prop, settings);
+                var sampleUsage = GetSampleUsageText(prop, virtualProp, settings);
                 sb.AppendLine("<dt>Sample Usage</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
 
-                var remarks = GetRemarksText(prop, settings);
+                var remarks = GetRemarksText(prop, virtualProp, settings);
                 sb.AppendLine("<dt>Remarks</dt><dd>" + ConvertMDToHTML(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
 
                 sb.AppendLine(Environment.NewLine);
 
                 // Additional Parameter Info
-                var paramInfos = prop.GetCustomAttributes<PropertyAddtionalParameterInfo>().ToList();
+                var paramInfos = GetCustomAttributesWithVirtual<PropertyAddtionalParameterInfo>(prop, virtualProp);
                 if (paramInfos.Count > 0)
                 {
                     sb.AppendLine("#### Addtional Info about &quot;" + commandLabel + "&quot;");
@@ -252,7 +249,7 @@ namespace taskt.Core
                 }
 
                 // Detail Sample Usage
-                var sampleUsages = prop.GetCustomAttributes<PropertyDetailSampleUsage>().ToList();
+                var sampleUsages = GetCustomAttributesWithVirtual<PropertyDetailSampleUsage>(prop, virtualProp);
                 if (sampleUsages.Count > 0)
                 {
                     sb.AppendLine(Environment.NewLine);
@@ -268,6 +265,17 @@ namespace taskt.Core
 
                 sb.AppendLine(Environment.NewLine);
                 count++;
+
+                // nav
+                if (count < maxCount)
+                {
+                    sb.AppendLine("<div style=\"font-size: 90%; text-align: center\">");
+                    sb.AppendLine(Environment.NewLine);
+                    sb.AppendLine("[prev](#param_" + (count - 1) + ") / [list](#param_list) / [next](#param_" + count + ")");
+                    sb.AppendLine(Environment.NewLine);
+                    sb.AppendLine("</div>");
+                    sb.AppendLine(Environment.NewLine);
+                }
             }
 
             sb.AppendLine("## Developer/Additional Reference");
@@ -302,26 +310,26 @@ namespace taskt.Core
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
         }
 
-        private static (string dtName, string ddValue) GetValueInstanceType(PropertyInfo propInfo)
+        private static (string dtName, string ddValue) GetValueInstanceType(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
         {
-            var uiSels = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+            var uiSels = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
             if (uiSels.Count > 0)
             {
-                var sensitive = propInfo.GetCustomAttribute<PropertySelectionValueSensitive>() ?? new PropertySelectionValueSensitive();
+                var sensitive = GetCustomAttributeWithVirtual<PropertySelectionValueSensitive>(propInfo, virtualPropInfo) ?? new PropertySelectionValueSensitive();
 
                 return ("Value", "Selection Values (Case Sensitive: " + (sensitive.caseSensitive ? "Yes" : "No") + ", Whilte-Space Sensitive: " + (sensitive.whiteSpaceSensitive ? "Yes" : "No") + ")");
             }
-            var isWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
+            var isWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
             if (isWin != null)
             {
                 return ("Value", "Window Names");
             }
-            var isVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
+            var isVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
             if (isVar != null)
             {
                 return ("Value", "Variables");
             }
-            var ins = propInfo.GetCustomAttribute<PropertyInstanceType>();
+            var ins = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
             if (ins != null)
             {
                 return ("Instance Type", ins.instanceType.ToString());
@@ -330,13 +338,13 @@ namespace taskt.Core
             return ("", "");
         }
 
-        private static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings settings)
+        private static string GetSampleUsageText(PropertyInfo propInfo, PropertyInfo virtualPropInfo, ApplicationSettings settings)
         {
-            var smp = CommandControls.GetSampleUsageText(propInfo, settings, false);
+            var smp = CommandControls.GetSampleUsageText(propInfo, settings, null, false);
 
             if (smp == "")
             {
-                var uiSels = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
+                var uiSels = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
                 if (uiSels.Count > 0)
                 {
                     foreach(var sel in uiSels)
@@ -357,13 +365,13 @@ namespace taskt.Core
             }
         }
 
-        private static string GetErrorValidation(PropertyInfo propInfo)
+        private static string GetErrorValidation(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
         {
             string validate = "";
 
             // validation
-            var valid = propInfo.GetCustomAttribute<PropertyValidationRule>() ?? new PropertyValidationRule();
-            var bet = propInfo.GetCustomAttribute<PropertyValueRange>();
+            var valid = GetCustomAttributeWithVirtual<PropertyValidationRule>(propInfo, virtualPropInfo) ?? new PropertyValidationRule();
+            var bet = GetCustomAttributeWithVirtual<PropertyValueRange>(propInfo, virtualPropInfo);
             if (valid.parameterName != "")
             {
                 if (valid.errorRule != 0)
@@ -419,12 +427,12 @@ namespace taskt.Core
             return validate;
         }
 
-        private static string GetRemarksText(PropertyInfo propInfo, ApplicationSettings settings)
+        private static string GetRemarksText(PropertyInfo propInfo, PropertyInfo virtualPropInfo, ApplicationSettings settings)
         {
-            string rm = settings.ClientSettings.replaceClientKeyword(propInfo.GetCustomAttribute<Remarks>()?.remarks ?? "");
+            string rm = settings.ClientSettings.replaceClientKeyword(GetCustomAttributeWithVirtual<Remarks>(propInfo, virtualPropInfo)?.remarks ?? "");
 
             // is optional
-            var isOpt = propInfo.GetCustomAttribute<PropertyIsOptional>() ?? new PropertyIsOptional();
+            var isOpt = GetCustomAttributeWithVirtual<PropertyIsOptional>(propInfo, virtualPropInfo) ?? new PropertyIsOptional();
             if (isOpt.isOptional)
             {
                 if (rm != "")

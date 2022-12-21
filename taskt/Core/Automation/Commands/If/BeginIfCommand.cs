@@ -1786,31 +1786,31 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
-        public override void convertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        public override void ConvertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
         {
             if (this.v_IfActionType == "GUI Element Exists")
             {
                 var cnv = new Dictionary<string, string>();
                 cnv.Add("v_IfActionParameterTable", "convertToIntermediateWindowName");
-                convertToIntermediate(settings, cnv, variables);
+                ConvertToIntermediate(settings, cnv, variables);
             }
             else
             {
-                base.convertToIntermediate(settings, variables);
+                base.ConvertToIntermediate(settings, variables);
             }
         }
 
-        public override void convertToRaw(EngineSettings settings)
+        public override void ConvertToRaw(EngineSettings settings)
         {
             if (this.v_IfActionType == "GUI Element Exists")
             {
                 var cnv = new Dictionary<string, string>();
                 cnv.Add("v_IfActionParameterTable", "convertToRawWindowName");
-                convertToRaw(settings, cnv);
+                ConvertToRaw(settings, cnv);
             }
             else
             {
-                base.convertToRaw(settings);
+                base.ConvertToRaw(settings);
             }
         }
     }

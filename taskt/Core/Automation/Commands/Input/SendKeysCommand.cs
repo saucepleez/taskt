@@ -243,19 +243,19 @@ namespace taskt.Core.Automation.Commands
             return this.IsValid;
         }
 
-        public override void convertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
+        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToIntermediateWindowName");
             cnv.Add("v_TextToSend", "convertToIntermediateVariableParser");
-            convertToIntermediate(settings, cnv, variables);
+            ConvertToIntermediate(settings, cnv, variables);
         }
 
-        public override void convertToRaw(EngineSettings settings)
+        public override void ConvertToRaw(EngineSettings settings)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToRawWindowName");
-            convertToRaw(settings, cnv);
+            ConvertToRaw(settings, cnv);
         }
     }
 }

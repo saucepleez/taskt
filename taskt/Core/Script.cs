@@ -902,7 +902,7 @@ namespace taskt.Core.Script
 
         public void ConvertToIntermediate(Core.EngineSettings settings, List<ScriptVariable> variables)
         {
-            ScriptCommand.convertToIntermediate(settings, variables);
+            ScriptCommand.ConvertToIntermediate(settings, variables);
             if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
             {
                 foreach (var cmd in AdditionalScriptCommands)
@@ -914,7 +914,7 @@ namespace taskt.Core.Script
 
         public void ConvertToRaw(Core.EngineSettings settings)
         {
-            ScriptCommand.convertToRaw(settings);
+            ScriptCommand.ConvertToRaw(settings);
             if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
             {
                 foreach (var cmd in AdditionalScriptCommands)

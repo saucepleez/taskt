@@ -141,7 +141,7 @@ namespace taskt.Core.Automation.Commands
             result.StoreInUserVariable(engine, v_Result);
         }
 
-        public override void addInstance(InstanceCounter counter)
+        public override void AddInstance(InstanceCounter counter)
         {
             string format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
 
@@ -162,7 +162,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void removeInstance(InstanceCounter counter)
+        public override void RemoveInstance(InstanceCounter counter)
         {
             string format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
 

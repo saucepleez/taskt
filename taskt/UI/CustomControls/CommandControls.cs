@@ -5,10 +5,12 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using taskt.Core;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Automation.Commands;
+using System.Text.RegularExpressions;
 using taskt.UI.Forms;
+using taskt.Core;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.UI.CustomControls
 {
@@ -34,9 +36,10 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
-            var controlList = command.GetType().GetProperties().Where(
-                    prop => (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-                ).Select(prop => prop.Name).ToList();
+            //var controlList = command.GetType().GetProperties().Where(
+            //        prop => (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+            //    ).Select(prop => prop.Name).ToList();
+            var controlList = command.GetParameterProperties().Select(prop => prop.Name).ToList();
 
             return MultiCreateInferenceDefaultControlGroupFor(controlList, command, editor);
         }
@@ -72,43 +75,45 @@ namespace taskt.UI.CustomControls
         public static List<Control> CreateInferenceDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
             var propInfo = command.GetProperty(propertyName);
+            //var virtualPropInfo = GetViratulProperty(propInfo);
+            var virtualPropInfo = propInfo.GetVirtualProperty();
 
-            var attrRecommended = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>();
+            var attrRecommended = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropInfo);
             if (attrRecommended != null)
             {
                 switch (attrRecommended.recommendedControl)
                 {
                     case PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
                     case PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
-                        return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo);
+                        return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                         
                     case PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
-                        return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo);
+                        return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
 
                     case PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox:
-                        return CreateDefaultCheckBoxGroupFor(propertyName, command, editor, propInfo);
+                        return CreateDefaultCheckBoxGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
 
                     case PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
-                        return CreateDataGridViewGroupFor(propertyName, command, editor, propInfo);
+                        return CreateDataGridViewGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
 
                     default:
-                        return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo);
+                        return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                 }
             }
             else
             {
                 // check combobox
-                var attrUIOpt = propInfo.GetCustomAttributes<PropertyUISelectionOption>().FirstOrDefault();
-                var attrIsWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
-                var attrIsVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
-                var attrInstance = propInfo.GetCustomAttribute<PropertyInstanceType>();
-                if ((attrUIOpt != null) || (attrIsWin != null) || (attrIsVar != null) || (attrInstance != null))
+                var attrUIOpt = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
+                var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
+                var attrIsVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
+                var attrInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
+                if ((attrUIOpt.Count > 0) || (attrIsWin != null) || (attrIsVar != null) || (attrInstance != null))
                 {
-                    return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo);
+                    return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                 }
                 else
                 {
-                    return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo);
+                    return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                 }
             }
         }
@@ -117,84 +122,104 @@ namespace taskt.UI.CustomControls
         #region create default control group for
 
         /// <summary>
-        /// create input control group. this method use several attributes.
+        /// create input control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultInputGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateDefaultInputGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
+            }
+            if (virtualPropInfo== null)
+            {
+                virtualPropInfo = propInfo.GetVirtualProperty();
             }
             
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() =>
             {
-                return CreateDefaultInputFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+                return CreateDefaultInputFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
-        /// create combobox control group. this method use several attributes.
+        /// create combobox control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultDropdownGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateDefaultDropdownGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
+            if (virtualPropInfo == null)
+            {
+                virtualPropInfo = propInfo.GetVirtualProperty();
+            }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
-                return CreateDefaultDropdownFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+                return CreateDefaultDropdownFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
-        /// create checkbox control group. this method use several attributes.
+        /// create checkbox control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultCheckBoxGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateDefaultCheckBoxGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
+            if (virtualPropInfo == null)
+            {
+                virtualPropInfo = propInfo.GetVirtualProperty();
+            }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
-                return CreateDefaultCheckBoxFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+                return CreateDefaultCheckBoxFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
-        /// create datagridview control group. this method use several attributes.
+        /// create datagridview control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
         /// <returns></returns>
-        public static List<Control> CreateDataGridViewGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateDataGridViewGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
+            if (virtualPropInfo == null)
+            {
+                virtualPropInfo = propInfo.GetVirtualProperty();
+            }
 
             return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
-                return CreateDefaultDataGridViewFor(propertyName, command, editor, propInfo);
-            }), editor, propInfo);
+                return CreateDefaultDataGridViewFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
         /// <summary>
@@ -205,17 +230,18 @@ namespace taskt.UI.CustomControls
         /// <param name="createFunc"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property</param>
         /// <returns></returns>
-        private static List<Control> CreateDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Func<Control> createFunc, Forms.frmCommandEditor editor, PropertyInfo propInfo)
+        private static List<Control> CreateDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Func<Control> createFunc, Forms.frmCommandEditor editor, PropertyInfo propInfo, PropertyInfo virtualPropInfo)
         {
             var controlList = new List<Control>();
 
             // label
-            var label = CreateDefaultLabelFor(propertyName, command, editor, propInfo);
+            var label = CreateDefaultLabelFor(propertyName, command, editor, propInfo, virtualPropInfo);
             controlList.Add(label);
 
             // 2nd label
-            var attr2ndLabel = propInfo.GetCustomAttribute<PropertySecondaryLabel>();
+            var attr2ndLabel = GetCustomAttributeWithVirtual<PropertySecondaryLabel>(propInfo, virtualPropInfo);
             if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
@@ -226,10 +252,10 @@ namespace taskt.UI.CustomControls
             var createdInput = createFunc();
 
             // ui helper
-            controlList.AddRange(CreateDefaultUIHelpersFor(propertyName, command, createdInput, editor, propInfo));
+            controlList.AddRange(CreateDefaultUIHelpersFor(propertyName, command, createdInput, editor, propInfo, virtualPropInfo));
 
             // custom ui helper
-            controlList.AddRange(CreateCustomUIHelpersFor(propertyName, command, createdInput, editor, propInfo));
+            controlList.AddRange(CreateCustomUIHelpersFor(propertyName, command, createdInput, editor, propInfo, virtualPropInfo));
 
             // body
             controlList.Add(createdInput);
@@ -249,8 +275,9 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use viratul property</param>
         /// <returns></returns>
-        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultLabelFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -259,12 +286,12 @@ namespace taskt.UI.CustomControls
 
             var setting = editor?.appSettings ?? CurrentEditor.appSettings;
 
-            var labelText = GetLabelText(propertyName, propInfo, setting);
+            var labelText = GetLabelText(propertyName, propInfo, setting, virtualPropInfo);
 
             // get addtional parameter info
-            var attrAdditionalParams = (PropertyAddtionalParameterInfo[])propInfo.GetCustomAttributes(typeof(PropertyAddtionalParameterInfo));
+            var attrAdditionalParams = GetCustomAttributesWithVirtual<PropertyAddtionalParameterInfo>(propInfo, virtualPropInfo);
             Dictionary<string, string> addParams = null;
-            if (attrAdditionalParams.Length > 0)
+            if (attrAdditionalParams.Count > 0)
             {
                 Func<string, string> convFunc;
                 if (editor == null)
@@ -324,17 +351,18 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultInputFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var textBoxSetting = propInfo.GetCustomAttribute<PropertyTextBoxSetting>() ?? new PropertyTextBoxSetting();
-            var recommendedControl = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>() ?? new PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox);
-            var firstValue = propInfo.GetCustomAttribute<PropertyFirstValue>();
+            var textBoxSetting = GetCustomAttributeWithVirtual<PropertyTextBoxSetting>(propInfo, virtualPropInfo) ?? new PropertyTextBoxSetting();
+            var recommendedControl = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropInfo) ?? new PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextLink);
+            var firstValue = GetCustomAttributeWithVirtual<PropertyFirstValue>(propInfo, virtualPropInfo);
 
             TextBox newTextBox;
             
@@ -397,16 +425,17 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static Control CreateDefaultCheckBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultCheckBoxFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var desc = propInfo.GetCustomAttribute<PropertyDescription>();
-            var firstValue = propInfo.GetCustomAttribute<PropertyFirstValue>();
+            var desc = GetCustomAttributeWithVirtual<PropertyDescription>(propInfo, virtualPropInfo);
+            var firstValue = GetCustomAttributeWithVirtual<PropertyFirstValue>(propInfo, virtualPropInfo);
             return CreateDefaultCheckBoxFor(propertyName, command, desc?.propertyDescription ?? "", firstValue?.firstValue ?? "", editor, propInfo);
         }
 
@@ -446,8 +475,9 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor">if editor is null, does not support variable, window, instance selection items</param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static Control CreateDefaultDropdownFor(string propertyName, Core.Automation.Commands.ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
@@ -457,35 +487,35 @@ namespace taskt.UI.CustomControls
             var uiOptions = new List<string>();
 
             // window names list
-            var attrIsWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
+            var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
             if (attrIsWin?.isWindowNamesList ?? false)
             {
                 uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowCurrentWindow, attrIsWin.allowDesktop));
             }
 
             // variable names list
-            var attrIsVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
+            var attrIsVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
             if (attrIsVar?.isVariablesList ?? false)
             {
                 uiOptions.AddRange(GetVariableNames(editor));
             }
 
             // instance name list
-            var attrIsInstance = propInfo.GetCustomAttribute<PropertyInstanceType>();
+            var attrIsInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
             if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
             {
                 uiOptions.AddRange(GetInstanceNames(editor, attrIsInstance.instanceType));
             }
 
             // ui options
-            var opts = propInfo.GetCustomAttributes<PropertyUISelectionOption>();
-            if (opts.Count() > 0)
+            var opts = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
+            if (opts.Count > 0)
             {
                 uiOptions.AddRange(opts.Select(opt => opt.uiOption).ToList());
             }
 
-            var changeEvent = propInfo.GetCustomAttribute<PropertySelectionChangeEvent>();
-            var firstValue = propInfo.GetCustomAttribute<PropertyFirstValue>();
+            var changeEvent = GetCustomAttributeWithVirtual<PropertySelectionChangeEvent>(propInfo, virtualPropInfo);
+            var firstValue = GetCustomAttributeWithVirtual<PropertyFirstValue>(propInfo, virtualPropInfo);
 
             // instance first value
             if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
@@ -541,21 +571,21 @@ namespace taskt.UI.CustomControls
         /// <param name="command"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property</param>
         /// <returns></returns>
-        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
         {
-            //return CreateDataGridView(sourceCommand, dataSourceName, prop);
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
 
             // DataGridView setting
-            var dgvSetting = propInfo.GetCustomAttribute<PropertyDataGridViewSetting>() ?? new PropertyDataGridViewSetting();
+            var dgvSetting = GetCustomAttributeWithVirtual<PropertyDataGridViewSetting>(propInfo, virtualPropertyInfo) ?? new PropertyDataGridViewSetting();
             // columns setting
-            var columnSetting = propInfo.GetCustomAttributes<PropertyDataGridViewColumnSettings>()?.ToList() ?? null;
+            var columnSetting = GetCustomAttributesWithVirtual<PropertyDataGridViewColumnSettings>(propInfo, virtualPropertyInfo);
             // events
-            var events = propInfo.GetCustomAttributes<PropertyDataGridViewCellEditEvent>()?.ToList() ?? null;
+            var events = GetCustomAttributesWithVirtual<PropertyDataGridViewCellEditEvent>(propInfo, virtualPropertyInfo);
 
             return CreateDefaultDataGridViewFor(propertyName, command, dgvSetting.allowAddRow, dgvSetting.allowDeleteRow, dgvSetting.allowResizeRow,
                     dgvSetting.width, dgvSetting.height,
@@ -664,15 +694,16 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property</param>
         /// <returns></returns>
-        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
             if (propInfo == null)
             {
                 propInfo = command.GetProperty(propertyName);
             }
 
-            var propertyUIHelpers = propInfo.GetCustomAttributes<PropertyUIHelper>().ToList();
+            var propertyUIHelpers = GetCustomAttributesWithVirtual<PropertyUIHelper>(propInfo, virtualPropInfo);
 
             var controlList = new List<Control>();
             if (propertyUIHelpers.Count() == 0)
@@ -699,8 +730,9 @@ namespace taskt.UI.CustomControls
         /// <param name="targetControl"></param>
         /// <param name="editor"></param>
         /// <param name="propInfo"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static List<Control> CreateCustomUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null)
+        public static List<Control> CreateCustomUIHelpersFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Control targetControl, Forms.frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
         {
             if (propInfo == null)
             {
@@ -708,7 +740,7 @@ namespace taskt.UI.CustomControls
             }
             List<Control> ctrls = new List<Control>();
 
-            var uiHelpers = propInfo.GetCustomAttributes<PropertyCustomUIHelper>().ToList();
+            var uiHelpers = GetCustomAttributesWithVirtual<PropertyCustomUIHelper>(propInfo, virtualPropertyInfo);
 
             if (uiHelpers.Count == 0)
             {
@@ -987,10 +1019,11 @@ namespace taskt.UI.CustomControls
         /// <param name="propertyName"></param>
         /// <param name="propInfo"></param>
         /// <param name="setting"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
         /// <returns></returns>
-        public static string GetLabelText(string propertyName, PropertyInfo propInfo, ApplicationSettings setting)
+        public static string GetLabelText(string propertyName, PropertyInfo propInfo, ApplicationSettings setting, PropertyInfo virtualPropertyInfo = null)
         {
-            var attrDescription = propInfo.GetCustomAttribute<PropertyDescription>() ?? new PropertyDescription(propertyName);
+            var attrDescription = GetCustomAttributeWithVirtual<PropertyDescription>(propInfo, virtualPropertyInfo) ?? new PropertyDescription(propertyName);
 
             string labelText = setting.replaceApplicationKeyword(attrDescription.propertyDescription);
 
@@ -998,20 +1031,20 @@ namespace taskt.UI.CustomControls
             if (setting.ClientSettings.ShowPoliteTextInDescription)
             {
                 var lowText = labelText.ToLower();
-                if (!lowText.StartsWith("please select the") && !lowText.StartsWith("please specify the") &&
-                        !lowText.StartsWith("please enter the") && !lowText.StartsWith("please indicate the"))
+
+                if (!Regex.IsMatch(lowText, "^please (select|specify|enter|indicate|input)"))
                 {
                     // check "Select" or not
-                    var controlType = propInfo.GetCustomAttribute<PropertyRecommendedUIControl>()?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
+                    var controlType = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropertyInfo)?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
                     bool isSelect = ((controlType == PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox) ||
                                         (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox) ||
                                         (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.RadioButton));
                     if (!isSelect)
                     {
-                        var uiOpts = propInfo.GetCustomAttributes<PropertyUISelectionOption>().ToList();
-                        var isWin = propInfo.GetCustomAttribute<PropertyIsWindowNamesList>();
-                        var isVar = propInfo.GetCustomAttribute<PropertyIsVariablesList>();
-                        var ins = propInfo.GetCustomAttribute<PropertyInstanceType>();
+                        var uiOpts = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropertyInfo);
+                        var isWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropertyInfo);
+                        var isVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropertyInfo);
+                        var ins = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropertyInfo);
 
                         isSelect = (uiOpts.Count > 0) ||
                                     (isWin?.isWindowNamesList ?? false) ||
@@ -1019,19 +1052,26 @@ namespace taskt.UI.CustomControls
                                     ((ins?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none);
                     }
 
-                    labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
+                    if (Regex.IsMatch(lowText, "^(the|a|an) "))
+                    {
+                        labelText = "Please " + (isSelect ? "Select" : "Specify") + " " + labelText;
+                    }
+                    else
+                    {
+                        labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
+                    }
                 }
             }
 
             // show sample usage
             if (setting.ClientSettings.ShowSampleUsageInDescription)
             {
-                var attrShowSample = propInfo.GetCustomAttribute<PropertyShowSampleUsageInDescription>();
+                var attrShowSample = GetCustomAttributeWithVirtual<PropertyShowSampleUsageInDescription>(propInfo, virtualPropertyInfo);
                 if (attrShowSample?.showSampleUsage ?? false)
                 {
                     if (!labelText.Contains("(ex."))
                     {
-                        var sampleText = GetSampleUsageText(propInfo, setting);
+                        var sampleText = GetSampleUsageText(propInfo, setting, virtualPropertyInfo);
                         if (sampleText != "")
                         {
                             labelText += " (ex. " + sampleText + ")";
@@ -1041,7 +1081,7 @@ namespace taskt.UI.CustomControls
             }
 
             // show optional
-            var attrIsOpt = propInfo.GetCustomAttribute<PropertyIsOptional>();
+            var attrIsOpt = GetCustomAttributeWithVirtual<PropertyIsOptional>(propInfo, virtualPropertyInfo);
             if (attrIsOpt?.isOptional ?? false)
             {
                 if (!labelText.Contains("Optional"))
@@ -1063,17 +1103,26 @@ namespace taskt.UI.CustomControls
         /// </summary>
         /// <param name="propInfo"></param>
         /// <param name="setting"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
         /// <param name="planeText">if sample usege text written in MarkDown, return value is plane text.</param>
         /// <returns></returns>
-        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting, bool planeText = true)
+        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting, PropertyInfo virtualPropInfo = null, bool planeText = true)
         {
             var sampleText = "";
-            var attrShowSample = propInfo.GetCustomAttribute<PropertyShowSampleUsageInDescription>();
+            var attrShowSample = GetCustomAttributeWithVirtual<PropertyShowSampleUsageInDescription>(propInfo, virtualPropInfo);
             if (attrShowSample?.showSampleUsage ?? false)
             {
                 var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
                                             .Where(v => (v.showInDescription))
                                             .ToList();
+                // try virtual prop
+                if ((attrDetailSamples.Count == 0) && (virtualPropInfo != null))
+                {
+                    attrDetailSamples = virtualPropInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
+                                            .Where(v => (v.showInDescription))
+                                            .ToList();
+                }
+
                 if (attrDetailSamples.Count > 0)
                 {
                     foreach (var d in attrDetailSamples)
@@ -1086,7 +1135,7 @@ namespace taskt.UI.CustomControls
 
                 if (sampleText == "")
                 {
-                    var attrSample = propInfo.GetCustomAttribute<SampleUsage>();
+                    var attrSample = GetCustomAttributeWithVirtual<SampleUsage>(propInfo, virtualPropInfo);
                     sampleText = attrSample?.sampleUsage ?? "";
                 }
             }
@@ -1330,6 +1379,37 @@ namespace taskt.UI.CustomControls
 
             return (trgMethod, useOuterClassEvent);
         }
+
+        //private static PropertyInfo GetViratulProperty(PropertyInfo propInfo)
+        //{
+        //    var attrVP = propInfo.GetCustomAttribute<PropertyVirtualProperty>();
+        //    if (attrVP == null)
+        //    {
+        //        return null;
+        //    }
+        //    var tp = Type.GetType("taskt.Core.Automation.Commands." + attrVP.className);
+        //    return tp.GetProperty(attrVP.propertyName, BindingFlags.Public | BindingFlags.Static);
+        //}
+
+        //private static T GetCustomAttributeWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        //    where T : System.Attribute
+        //{
+        //    return propInfo.GetCustomAttribute<T>() ?? virtualPropInfo?.GetCustomAttribute<T>() ?? null;
+        //}
+
+        //private static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        //    where T : System.Attribute
+        //{
+        //    var a = propInfo.GetCustomAttributes<T>().ToList();
+        //    if (a.Count == 0)
+        //    {
+        //        return virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
+        //    }
+        //    else
+        //    {
+        //        return a;
+        //    }
+        //}
         #endregion
 
         #region Control event handlers
