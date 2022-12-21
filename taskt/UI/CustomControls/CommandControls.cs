@@ -5,10 +5,11 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using taskt.Core;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.Core.Automation.Commands;
+using System.Text.RegularExpressions;
 using taskt.UI.Forms;
+using taskt.Core;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.UI.CustomControls
@@ -1029,10 +1030,8 @@ namespace taskt.UI.CustomControls
             if (setting.ClientSettings.ShowPoliteTextInDescription)
             {
                 var lowText = labelText.ToLower();
-                if (!lowText.StartsWith("please select the") && !lowText.StartsWith("please specify the") &&
-                        !lowText.StartsWith("please enter the") && !lowText.StartsWith("please indicate the") &&
-                        !lowText.StartsWith("please select a") && !lowText.StartsWith("please specify a") &&
-                        !lowText.StartsWith("please enter a") && !lowText.StartsWith("please indicate a"))
+
+                if (!Regex.IsMatch(lowText, "^please (select|specify|enter|indicate|input)"))
                 {
                     // check "Select" or not
                     var controlType = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropertyInfo)?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
@@ -1052,7 +1051,14 @@ namespace taskt.UI.CustomControls
                                     ((ins?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none);
                     }
 
-                    labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
+                    if (Regex.IsMatch(lowText, "^(the|a|an) "))
+                    {
+                        labelText = "Please " + (isSelect ? "Select" : "Specify") + " " + labelText;
+                    }
+                    else
+                    {
+                        labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
+                    }
                 }
             }
 
