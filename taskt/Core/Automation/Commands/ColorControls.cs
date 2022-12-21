@@ -25,7 +25,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Color Value")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        //[SampleUsage("**0** or **255** or **{{{vValue}}}**")]
         [PropertyDetailSampleUsage("**0**", "0 is min value of range")]
         [PropertyDetailSampleUsage("**255**", "255 is max value of range")]
         [Remarks("Values range from 0 to 255")]
