@@ -1171,7 +1171,7 @@ namespace taskt.Core.Automation.Commands
 
         public static void AddFilterActionItems(System.Windows.Forms.ComboBox cmbType, System.Windows.Forms.ComboBox cmbAction)
         {
-            switch (cmbType.SelectedItem.ToString().ToLower())
+            switch (cmbType.SelectedItem?.ToString().ToLower() ?? "")
             {
                 case "text":
                     AddFilterActionItems_Text(cmbAction);
@@ -1218,7 +1218,7 @@ namespace taskt.Core.Automation.Commands
 
         public static void RenderFilter(DataTable actionParameters, DataGridView actionParametersBox, ComboBox actionType, ComboBox dataType)
         {
-            switch (dataType.SelectedItem.ToString().ToLower())
+            switch (dataType.SelectedItem?.ToString().ToLower() ?? "")
             {
                 case "text":
                     RenderFilter_Text(actionParameters, actionParametersBox, actionType);
@@ -1330,152 +1330,6 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region Filter Determin Statement
-
-        //public static bool FilterDeterminStatementTruth(string value, string targetType, string filterAction, DataTable filterParameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    var paramDic = DataTableControls.GetFieldValues(filterParameters, "ParameterName", "ParameterValue", engine);
-
-        //    value = value.ConvertToUserVariable(engine);
-        //    targetType = targetType.ConvertToUserVariable(engine);
-        //    filterAction = filterAction.ConvertToUserVariable(engine);
-
-        //    switch (targetType.ToLower())
-        //    {
-        //        case "text":
-        //            return FilterDeterminStatementTruth_Text(value, filterAction, paramDic, engine);
-
-        //        case "numeric":
-        //            return FilterDeterminStatementTruth_Numeric(value, filterAction, paramDic, engine);
-
-        //        default:
-        //            throw new Exception("Strange Filter Target Type '" + targetType + "'");
-        //    }
-        //}
-
-        //private static bool FilterDeterminStatementTruth_Text(string trgText, string filterAction, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    string value = "";
-
-        //    filterAction = filterAction.ToLower();
-        //    switch (filterAction)
-        //    {
-        //        case "is numeric":
-        //        case "is not numeric":
-        //            break;
-        //        default:
-        //            if (parameters["Case Sensitive"].ToLower() == "no")
-        //            {
-        //                trgText = trgText.ToLower();
-        //                value = parameters["Value"].ToLower();
-        //            }
-        //            else
-        //            {
-        //                value = parameters["Value"];
-        //            }
-        //            break;
-        //    }
-
-        //    switch (filterAction)
-        //    {
-        //        case "contains":
-        //            return trgText.Contains(value);
-        //        case "not contains":
-        //            return !trgText.Contains(value);
-        //        case "starts with":
-        //            return trgText.StartsWith(value);
-        //        case "not starts with":
-        //            return !trgText.StartsWith(value);
-        //        case "ends with":
-        //            return trgText.EndsWith(value);
-        //        case "not ends with":
-        //            return !trgText.EndsWith(value);
-        //        case "is equal to":
-        //            return (trgText == value);
-        //        case "is not equal to":
-        //            return (trgText != value);
-
-        //        case "is numeric":
-        //            return decimal.TryParse(trgText, out _);
-        //        case "is not numeric":
-        //            return !decimal.TryParse(trgText, out _);
-
-        //        default:
-        //            return false;
-        //    }
-        //}
-        //private static bool FilterDeterminStatementTruth_Numeric(string trgText, string filterAction, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    decimal trgValue, value1 = 0, value2 = 0;
-
-        //    try
-        //    {
-        //        //trgValue = trgText.ConvertToUserVariableAsDecimal("Value", engine);
-        //        trgValue = new PropertyConvertTag(trgText, "Value").ConvertToUserVariableAsDecimal(engine);
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        if (ex.Message.EndsWith(" is not a number."))
-        //        {
-        //            switch(parameters["If Not Numeric"].ToLower())
-        //            {
-        //                case "ignore":
-        //                    return false;
-        //                default:
-        //                    throw ex;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw ex;
-        //        }
-        //    }
-            
-        //    filterAction = filterAction.ToLower();
-        //    switch (filterAction)
-        //    {
-        //        case "between":
-        //        case "not between":
-        //            //value1 = parameters["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
-        //            //value2 = parameters["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
-        //            value1 = new PropertyConvertTag(parameters["Value1"], "Value1").ConvertToUserVariableAsDecimal(engine);
-        //            value2 = new PropertyConvertTag(parameters["Value2"], "Value2").ConvertToUserVariableAsDecimal(engine);
-        //            if (value1 > value2)
-        //            {
-        //                decimal t = value1;
-        //                value1 = value2;
-        //                value2 = t;
-        //            }
-        //            break;
-        //        default:
-        //            //value1 = parameters["Value"].ConvertToUserVariableAsDecimal("Value", engine);
-        //            value1 = new PropertyConvertTag(parameters["Value"], "Value").ConvertToUserVariableAsDecimal(engine);
-        //            break;
-        //    }
-
-        //    switch (filterAction)
-        //    {
-        //        case "is equal to":
-        //            return (trgValue == value1);
-        //        case "is not equal to":
-        //            return (trgValue != value1);
-        //        case "is greater than":
-        //            return (trgValue > value1);
-        //        case "is greater than or equal to":
-        //            return (trgValue >= value1);
-        //        case "is less than":
-        //            return (trgValue < value1);
-        //        case "is less than or equal to":
-        //            return (trgValue <= value1);
-
-        //        case "between":
-        //            return ((trgValue >= value1) && (trgValue <= value2));
-        //        case "not between":
-        //            return ((trgValue < value1) || (trgValue > value2));
-
-        //        default:
-        //            return false;
-        //    }
-        //}
 
         /// <summary>
         /// Get Check Methods to Filter/Replace for List/Dictionary/DataTable commands
