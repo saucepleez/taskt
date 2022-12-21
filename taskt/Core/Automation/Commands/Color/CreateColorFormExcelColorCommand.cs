@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class CreateColorFromExcelColorCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorVariableName))]
+        [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
         public string v_Color { get; set; }
 
         [XmlAttribute]
