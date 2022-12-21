@@ -16,26 +16,14 @@ namespace taskt.Core.Automation.Commands
     public class CreateColorFromExcelColorCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a Color Variable Name")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vColor** or **{{{vColor}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Variable")]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorVariableName))]
         public string v_Color { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Excel Color Value")]
+        [PropertyDescription("Excel Color Value")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**255** or **{{{vColor}}}**")]
+        [SampleUsage("**255** or **{{{vExcelColor}}}**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]

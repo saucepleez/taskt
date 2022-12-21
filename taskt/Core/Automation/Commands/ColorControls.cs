@@ -22,6 +22,20 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Variable")]
         public static string v_ColorVariableName { get; }
 
+        [PropertyDescription("Color Value")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        //[SampleUsage("**0** or **255** or **{{{vValue}}}**")]
+        [PropertyDetailSampleUsage("**0**", "0 is min value of range")]
+        [PropertyDetailSampleUsage("**255**", "255 is max value of range")]
+        [Remarks("Values range from 0 to 255")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 255)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_ColorValue { get; }
+
         /// <summary>
         /// Get Color variable from Variable name. This type is System.Drawing.Color.
         /// </summary>
