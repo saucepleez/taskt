@@ -36,9 +36,10 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
-            var controlList = command.GetType().GetProperties().Where(
-                    prop => (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-                ).Select(prop => prop.Name).ToList();
+            //var controlList = command.GetType().GetProperties().Where(
+            //        prop => (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+            //    ).Select(prop => prop.Name).ToList();
+            var controlList = command.GetParameterProperties().Select(prop => prop.Name).ToList();
 
             return MultiCreateInferenceDefaultControlGroupFor(controlList, command, editor);
         }
