@@ -1119,16 +1119,17 @@ namespace taskt.UI.CustomControls
             var attrShowSample = GetCustomAttributeWithVirtual<PropertyShowSampleUsageInDescription>(propInfo, virtualPropInfo);
             if (attrShowSample?.showSampleUsage ?? false)
             {
-                var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
-                                            .Where(v => (v.showInDescription))
-                                            .ToList();
-                // try virtual prop
-                if ((attrDetailSamples.Count == 0) && (virtualPropInfo != null))
-                {
-                    attrDetailSamples = virtualPropInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
-                                            .Where(v => (v.showInDescription))
-                                            .ToList();
-                }
+                //var attrDetailSamples = propInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
+                //                            .Where(v => (v.showInDescription))
+                //                            .ToList();
+                //// try virtual prop
+                //if ((attrDetailSamples.Count == 0) && (virtualPropInfo != null))
+                //{
+                //    attrDetailSamples = virtualPropInfo.GetCustomAttributes<PropertyDetailSampleUsage>()
+                //                            .Where(v => (v.showInDescription))
+                //                            .ToList();
+                //}
+                var attrDetailSamples = GetCustomAttributesWithVirtual<PropertyDetailSampleUsage>(propInfo, virtualPropInfo);
 
                 if (attrDetailSamples.Count > 0)
                 {

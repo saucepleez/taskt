@@ -88,18 +88,37 @@ namespace taskt.Core.Automation.Commands
         /// <typeparam name="T"></typeparam>
         /// <param name="propInfo"></param>
         /// <param name="virtualPropInfo"></param>
+        /// <param name="margeAttributes">when the value is true, return value is merged attribute get from two PropertyInfo. when the value is false, return value is propInfo attribute has priority.</param>
         /// <returns></returns>
-        public static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        public static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo, bool margeAttributes = true)
             where T : System.Attribute
         {
-            var a = propInfo.GetCustomAttributes<T>().ToList();
-            if (a.Count == 0)
+            if (margeAttributes)
             {
-                return virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
+                var a = new List<T>();
+                var attrV = virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
+                if (attrV.Count > 0)
+                {
+                    a.AddRange(attrV);
+                }
+                var attrP = propInfo.GetCustomAttributes<T>().ToList();
+                if (attrP.Count > 0)
+                {
+                    a.AddRange(attrP);
+                }
+                return a;
             }
             else
             {
-                return a;
+                var a = propInfo.GetCustomAttributes<T>().ToList();
+                if (a.Count == 0)
+                {
+                    return virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
+                }
+                else
+                {
+                    return a;
+                }
             }
         }
     }
