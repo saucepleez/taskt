@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -38,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertySecondaryLabel(true)]
         [PropertyUISelectionOption("Hex")]
         [PropertyUISelectionOption("CSS RGB")]
         [PropertyUISelectionOption("CSS RGBA")]
@@ -50,20 +52,28 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("CMYK")]
         [PropertyUISelectionOption("RGBA Dictionary")]
         [PropertyUISelectionOption("RGBA DataTable")]
+        [PropertyAddtionalParameterInfo("Hex", "Convert to Hex value, like **11FFAA**")]
+        [PropertyAddtionalParameterInfo("CSS RGB", "Convert to CSS RGB value, like **rgb(255, 64, 0)**")]
+        [PropertyAddtionalParameterInfo("CSS RGBA", "Convert to CSS RGB value, like **rgba(255, 64, 0, 0.6)**")]
+        [PropertyAddtionalParameterInfo("Excel Color", "Convert to Excel Color Value like **25312**")]
+        [PropertyAddtionalParameterInfo("RGBA Dictionary", "Convert to Dictionary. Key names are R, G, B, A.")]
+        [PropertyAddtionalParameterInfo("RGBA DataTable", "Convert to DataTable. Column names are R, G, B, A.")]
+        [PropertySelectionChangeEvent(nameof(cmbFormatSelectionChange))]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Format")]
         public string v_Format { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vResult** or **{{{vResult}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please specify Variable Name to Store Result")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**vResult** or **{{{vResult}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
         public FormatColorCommand()
@@ -178,6 +188,24 @@ namespace taskt.Core.Automation.Commands
                     return;
             }
             res.StoreInUserVariable(engine, v_Result);
+        }
+
+        private void cmbFormatSelectionChange(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)sender;
+            var labelDic = (Dictionary<string, string>)(ControlsList["lbl_" + nameof(v_Format)].Tag);
+
+            Label lbl = (Label)ControlsList["lbl2_" + nameof(v_Format)];
+
+            var searchKey = cmb.SelectedItem.ToString();
+            if (labelDic.ContainsKey(searchKey))
+            {
+                lbl.Text = labelDic[searchKey];
+            }
+            else
+            {
+                lbl.Text = "";
+            }
         }
 
         public override void AddInstance(InstanceCounter counter)
