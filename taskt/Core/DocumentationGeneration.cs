@@ -259,7 +259,7 @@ namespace taskt.Core
                     
                     foreach(var s in sampleUsages)
                     {
-                        sb.AppendLine("|" + settings.replaceApplicationKeyword(s.sampleUsage) + "|" + s.means + "|");
+                        sb.AppendLine("| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |");
                     }
                 }
 
@@ -371,6 +371,35 @@ namespace taskt.Core
             {
                 return smp;
             }
+        }
+
+        private static string GetSampleUsageMeansText(PropertyDetailSampleUsage smp, ApplicationSettings settings)
+        {
+            string ret = "";
+            switch (smp.valueType)
+            {
+                case PropertyDetailSampleUsage.ValueType.Manual:
+                    return smp.means;
+
+                case PropertyDetailSampleUsage.ValueType.Value:
+                    ret = "Specify " + smp.sampleUsage;
+                    break;
+
+                case PropertyDetailSampleUsage.ValueType.VariableValue:
+                    string vName = settings.replaceApplicationKeyword(smp.sampleUsage).Replace(settings.EngineSettings.VariableStartMarker, "").Replace(settings.EngineSettings.VariableEndMarker, "");
+                    ret = "Specify Value of Variable " + vName;
+                    break;
+
+                case PropertyDetailSampleUsage.ValueType.VariableName:
+                    string vName2 = settings.replaceApplicationKeyword(smp.sampleUsage).Replace(settings.EngineSettings.VariableStartMarker, "").Replace(settings.EngineSettings.VariableEndMarker, "");
+                    ret = "Specify Variable Name " + vName2;
+                    break;
+            }
+            if (smp.target != "")
+            {
+                ret += " for " + smp.target;
+            }
+            return ret;
         }
 
         private static string GetErrorValidation(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
