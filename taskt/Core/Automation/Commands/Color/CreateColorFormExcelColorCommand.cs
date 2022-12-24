@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**255**", "Specify value **255**")]
-        [PropertyDetailSampleUsage("**{{{vExcelColor}}}**", "Specify Variable Name **vExcelColor**")]
+        [PropertyDetailSampleUsage("**{{{vExcelColor}}}**", "Specify Variable **vExcelColor**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]

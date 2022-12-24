@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**#ff22bb**", "Specify Hex Value **ff22bb**")]
         [PropertyDetailSampleUsage("**ff22bb**", "Specify Hex Value **ff22bb**")]
-        [PropertyDetailSampleUsage("**{{{vHex}}}**", "Specify Variable Name **vHex**")]
+        [PropertyDetailSampleUsage("**{{{vHex}}}**", "Specify Variable **vHex**")]
         [Remarks("Please specify a 6-digit Hexadecimal number")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]

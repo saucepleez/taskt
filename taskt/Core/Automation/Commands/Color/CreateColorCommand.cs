@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorValue))]
         [PropertyDescription("Red Value")]
-        [PropertyDetailSampleUsage("**{{{vRed}}}**", "Specify variable **vRed**")]
+        [PropertyDetailSampleUsage("**{{{vRed}}}**", "Specify Variable **vRed**")]
         [PropertyValidationRule("Red", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Red")]
         public string v_Red { get; set; }
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorValue))]
         [PropertyDescription("Green Value")]
-        [PropertyDetailSampleUsage("**{{{vGreen}}}**", "Specify variable **vGreen**")]
+        [PropertyDetailSampleUsage("**{{{vGreen}}}**", "Specify Variable **vGreen**")]
         [PropertyValidationRule("Green", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Green")]
         public string v_Green { get; set; }
@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorValue))]
         [PropertyDescription("Blue Value")]
-        [PropertyDetailSampleUsage("**{{{vBlue}}}**", "Specify variable **vBlue**")]
+        [PropertyDetailSampleUsage("**{{{vBlue}}}**", "Specify Variable **vBlue**")]
         [PropertyValidationRule("Blue", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Blue")]
         public string v_Blue { get; set; }
@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorValue))]
         [PropertyDescription("Alpha Value")]
-        [PropertyDetailSampleUsage("**{{{vAlpha}}}**", "Specify variable **vAlpha**")]
+        [PropertyDetailSampleUsage("**{{{vAlpha}}}**", "Specify Variable **vAlpha**")]
         [PropertyIsOptional(true, "255")]
         [PropertyValidationRule("Alpha", PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Alpha")]
