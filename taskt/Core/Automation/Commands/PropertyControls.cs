@@ -90,10 +90,33 @@ namespace taskt.Core.Automation.Commands
         /// <param name="virtualPropInfo"></param>
         /// <param name="margeAttributes">when the value is true, return value is merged attribute get from two PropertyInfo. when the value is false, return value is propInfo attribute has priority.</param>
         /// <returns></returns>
-        public static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo, bool margeAttributes = true)
+        public static List<T> GetCustomAttributesWithVirtual<T>(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
             where T : System.Attribute
         {
-            if (margeAttributes)
+            // DBG
+            //Console.WriteLine("### wv : " + typeof(T).Name);
+
+            MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+            switch (typeof(T).Name)
+            {
+                case nameof(PropertyDetailSampleUsage):
+                    behavior = GetCustomAttributeWithVirtual<PropertyDetailSampleUsageBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    break;
+                case nameof(PropertyAddtionalParameterInfo):
+                    behavior = GetCustomAttributeWithVirtual<PropertyAddtionalParameterInfoBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    break;
+                case nameof(PropertyUIHelper):
+                    behavior = GetCustomAttributeWithVirtual<PropertyUIHelperBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    break;
+                case nameof(PropertyCustomUIHelper):
+                    behavior = GetCustomAttributeWithVirtual<PropertyCustomUIHelperBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    break;
+                case nameof(PropertyUISelectionOption):
+                    behavior = GetCustomAttributeWithVirtual<PropertyUISelectionOptionBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    break;
+            }
+
+            if (behavior == MutiAttributesBehavior.Merge)
             {
                 var a = new List<T>();
                 var attrV = virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();
