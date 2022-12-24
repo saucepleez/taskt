@@ -19,10 +19,12 @@ namespace taskt.Core.Automation.Commands
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Year to set")]
+        [PropertyDescription("Year to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**2000** or **{{{vYear}}}**")]
+        //[SampleUsage("**2000** or **{{{vYear}}}**")]
+        [PropertyDetailSampleUsage("**2000**", PropertyDetailSampleUsage.ValueType.Value, "Year")]
+        [PropertyDetailSampleUsage("**{{{vYear}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Year")]
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -32,10 +34,12 @@ namespace taskt.Core.Automation.Commands
         public string v_Year { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Month to set")]
+        [PropertyDescription("Month to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vMonth}}}**")]
+        //[SampleUsage("**1** or **{{{vMonth}}}**")]
+        [PropertyDetailSampleUsage("**1**", "Specify **1** for the Month")]
+        [PropertyDetailSampleUsage("**{{{vMonth}}}**", "Specify Value of Variable **vMonth** for the Month")]
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -46,10 +50,12 @@ namespace taskt.Core.Automation.Commands
         public string v_Month { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Day to set")]
+        [PropertyDescription("Day to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vDay}}}**")]
+        //[SampleUsage("**1** or **{{{vDay}}}**")]
+        [PropertyDetailSampleUsage("**1**", "Specify **1** for the Day")]
+        [PropertyDetailSampleUsage("**{{{vDay}}}**", "Specify Value of Variable **vDay** for the Day")]
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -60,10 +66,12 @@ namespace taskt.Core.Automation.Commands
         public string v_Day { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Hour to set")]
+        [PropertyDescription("Hour to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vHour}}}**")]
+        //[SampleUsage("**1** or **{{{vHour}}}**")]
+        [PropertyDetailSampleUsage("**1**", "Specify **1** for the Hour")]
+        [PropertyDetailSampleUsage("**{{{vHour}}}**", "Specify Value of Variable **vHour** for the Hour")]
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -74,10 +82,12 @@ namespace taskt.Core.Automation.Commands
         public string v_Hour { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Minute to set")]
+        [PropertyDescription("Minute to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vMinute}}}**")]
+        //[SampleUsage("**1** or **{{{vMinute}}}**")]
+        [PropertyDetailSampleUsage("**1**", "Specify **1** for the Minute")]
+        [PropertyDetailSampleUsage("**{{{vMinute}}}**", "Specify Value of Variable **vMinite** for the Minute")]
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -88,10 +98,12 @@ namespace taskt.Core.Automation.Commands
         public string v_Minute { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Second to set")]
+        [PropertyDescription("Second to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vSecond}}}**")]
+        //[SampleUsage("**1** or **{{{vSecond}}}**")]
+        [PropertyDetailSampleUsage("**1**", "Specify **1** for the Second")]
+        [PropertyDetailSampleUsage("**{{{vSecond}}}**", "Specify Value of Variable **vSecond** for the Second")]
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
