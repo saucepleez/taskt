@@ -25,6 +25,24 @@ namespace taskt.Core.Automation.Commands
         public static string v_InputDateTime { get; }
 
         /// <summary>
+        /// output DateTime Variable property
+        /// </summary>
+        [PropertyDescription("DateTime Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDateTime**", "Specify Variable Name **vDateTime**")]
+        [PropertyDetailSampleUsage("**{{{vDateTime}}}**", "Specify Variable Name **vDateTime**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("DateTime Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
+        public static string v_OutputDateTime { get; }
+
+        /// <summary>
         /// Get DateTime variable from Variable Name.
         /// </summary>
         /// <param name="variableName"></param>
