@@ -52,12 +52,29 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public string sampleUsage = "";
         public string means = "";
         public bool showInDescription = true;
+        public ValueType valueType = ValueType.Manual;
+        public string target = "";
 
         public PropertyDetailSampleUsage(string sampleUsage, string means, bool showDescription = true)
         {
             this.sampleUsage = sampleUsage;
             this.means = means;
             this.showInDescription = showDescription;
+        }
+        public PropertyDetailSampleUsage(string sampleUsage, ValueType type, string target = "", bool showDescription = true)
+        {
+            this.sampleUsage = sampleUsage;
+            this.valueType = type;
+            this.target = target;
+            this.showInDescription = showDescription;
+        }
+
+        public enum ValueType
+        {
+            Manual,
+            Value,
+            VariableValue,
+            VariableName
         }
     }
 
