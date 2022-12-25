@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("DateTime Variable Name")]
         [InputSpecification("")]
-        [PropertyDetailSampleUsage("**{{{vDateTime}}}**", "Specify Variable Name **vDateTime**")]
+        [PropertyDetailSampleUsage("**{{{vDateTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -29,8 +29,8 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("DateTime Variable Name")]
         [InputSpecification("")]
-        [PropertyDetailSampleUsage("**vDateTime**", "Specify Variable Name **vDateTime**")]
-        [PropertyDetailSampleUsage("**{{{vDateTime}}}**", "Specify Variable Name **vDateTime**")]
+        [PropertyDetailSampleUsage("**vDateTime**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDateTime}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]

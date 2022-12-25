@@ -19,9 +19,9 @@ namespace taskt.Core.Automation.Commands
     public class FormatColorCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a Color Variable Name")]
+        [PropertyDescription("Color Variable Name")]
         [InputSpecification("")]
-        [PropertyDetailSampleUsage("**{{{vColor}}}**", "Specify Variable Name **vColor**")]
+        [PropertyDetailSampleUsage("**{{{vColor}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Color { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Select Color Format")]
+        [PropertyDescription("Color Format")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
