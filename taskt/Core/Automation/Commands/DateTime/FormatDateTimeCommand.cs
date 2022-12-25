@@ -17,25 +17,17 @@ namespace taskt.Core.Automation.Commands
     public class FormatDateTimeCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a DateTime Variable Name")]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vDateTime}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyValidationRule("DateTime Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Variable")]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify DateTime Format")]
+        [PropertyDescription("DateTime Format")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Format Checker", "lnkFormatChecker_Click")]
+        [PropertyCustomUIHelper("Format Checker", nameof(lnkFormatChecker_Click))]
         [InputSpecification("")]
-        [SampleUsage("**MM/dd/yyyy** or **HH:mm:ss** or **{{{vFormat}}}**")]
+        [PropertyDetailSampleUsage("**MM/dd/yyyy**", "Specify Format Month/Day/Year")]
+        [PropertyDetailSampleUsage("**HH:mm:ss**", "Specify Format Hour/Minute/Second")]
+        [PropertyDetailSampleUsage("{{{vFormat}}}", PropertyDetailSampleUsage.ValueType.VariableValue, "Format")]
         [Remarks("Please refer to the Microsoft DateTime.ToString() page for format details")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
@@ -44,16 +36,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Format { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vResult** or **{{{vResult}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
         public FormatDateTimeCommand()

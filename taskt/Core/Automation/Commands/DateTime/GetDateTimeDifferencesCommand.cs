@@ -15,35 +15,21 @@ namespace taskt.Core.Automation.Commands
     public class GetDateTimeDifferencesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a DateTime1 Variable Name")]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vDateTime}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
+        [PropertyDescription("DateTime1 Variable Name")]
         [PropertyValidationRule("DateTime1", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DateTime1")]
         public string v_DateTime1 { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select a DateTime2 Variable Name")]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vDateTime}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
+        [PropertyDescription("DateTime2 Variable Name")]
         [PropertyValidationRule("DateTime2", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DateTime2")]
         public string v_DateTime2 { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Result Format")]
+        [PropertyDescription("Format")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
@@ -63,16 +49,8 @@ namespace taskt.Core.Automation.Commands
         public string v_Format { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vResult** or **{{{vResult}}}**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [Remarks("Result is DateTime2 - DateTime1")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
         public string v_Result { get; set; }
 
         public GetDateTimeDifferencesCommand()
@@ -91,7 +69,6 @@ namespace taskt.Core.Automation.Commands
             var myDT1 = v_DateTime1.GetDateTimeVariable(engine);
             var myDT2 = v_DateTime2.GetDateTimeVariable(engine);
 
-            //string format = v_Format.GetUISelectionValue("v_Format", this, engine);
             string format = this.GetUISelectionValue(nameof(v_Format), "Format", engine);
 
             TimeSpan diff = myDT2 - myDT1;

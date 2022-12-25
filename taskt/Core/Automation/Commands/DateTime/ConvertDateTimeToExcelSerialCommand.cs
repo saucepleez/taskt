@@ -22,8 +22,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Excel Serial Value")]
         [PropertyDetailSampleUsageBehavior(MutiAttributesBehavior.Overwrite)]
-        [PropertyDetailSampleUsage("**vSerial**", "Specify Variable Name **vSerial**")]
-        [PropertyDetailSampleUsage("**{{{vSerial}}}**", "Specify Variable Name **vSerial**")]
+        [PropertyDetailSampleUsage("**vSerial**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vSerial}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         public string v_Serial { get; set; }
 
         public ConvertDateTimeToExcelSerialCommand()
