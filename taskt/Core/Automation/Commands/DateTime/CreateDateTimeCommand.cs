@@ -22,7 +22,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Year to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        //[SampleUsage("**2000** or **{{{vYear}}}**")]
         [PropertyDetailSampleUsage("**2000**", PropertyDetailSampleUsage.ValueType.Value, "Year")]
         [PropertyDetailSampleUsage("**{{{vYear}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Year")]
         [Remarks("")]
