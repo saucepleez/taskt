@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -42,6 +43,50 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List Variable")]
         public static string v_OutputListName { get; }
+
+        [PropertyDescription("Columns Type")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "List")]
+        [PropertyUISelectionOption("List")]
+        [PropertyUISelectionOption("Comma Separated")]
+        [PropertyUISelectionOption("Space Separated")]
+        [PropertyUISelectionOption("Tab Separated")]
+        [PropertyUISelectionOption("NewLine Separated")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public static string v_ColumnType { get; set; }
+
+
+        /// <summary>
+        /// for convert parameter
+        /// </summary>
+        [PropertyDescription("When the number of items in the List is greater than the number of ???")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Ignore")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyDisplayText(false, "")]
+        public static string v_ANotEnough { get; }
+
+        /// <summary>
+        /// for convert parameter
+        /// </summary>
+        [PropertyDescription("When the number of ??? is greater than the number of items in the List")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Ignore")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Insert Empty Value")]
+        [PropertyDisplayText(false, "")]
+        public static string v_ListItemNotEnough { get; }
 
         /// <summary>
         /// get List&lt;string&gt; variable from variable name
