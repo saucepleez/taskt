@@ -18,16 +18,19 @@ namespace taskt.Core.Automation.Commands
     public class FilterListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name to Filter")]
-        [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyDescription("Please select a List Variable Name to Filter")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vList** or **{{{vList}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyDescription("List Variable Name to Filter")]
         [PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
@@ -38,7 +41,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        //[PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
@@ -50,7 +52,6 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyControlIntoCommandField("FilterActionComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
@@ -66,36 +67,27 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        //[PropertyControlIntoCommandField("FilterParametersGridViewHelper")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name of the Filtered List")]
-        [InputSpecification("")]
-        [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyDescription("Please select a List Variable Name of the Filtered List")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Result")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyDescription("List Variable Name to Filtered List")]
         [PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]
         public string v_OutputList { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox TargetTypeComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox FilterActionComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView FilterParametersGridViewHelper;
 
         public FilterListCommand()
         {
@@ -114,21 +106,11 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_InputList.GetListVariable(engine);
 
-            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            //string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
-
             var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);
 
             List<string> res = new List<string>();
 
-            //foreach(string item in targetList)
-            //{
-            //    if (ConditionControls.FilterDeterminStatementTruth(item, targetType, filterAction, v_FilterActionParameterTable, engine))
-            //    {
-            //        res.Add(item);
-            //    }
-            //}
             foreach(string item in targetList)
             {
                 if (checkFunc(item, parameters))
