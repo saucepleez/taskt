@@ -383,8 +383,16 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public double max;
         public PropertyValueRange(double min, double max)
         {
-            this.min = min;
-            this.max = max;
+            if (max > min)
+            {
+                this.min = min;
+                this.max = max;
+            }
+            else
+            {
+                this.min = max;
+                this.max = min;
+            }
         }
     }
 
