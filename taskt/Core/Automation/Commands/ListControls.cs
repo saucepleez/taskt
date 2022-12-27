@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Ignore")]
-        public static string v_IfValueIsNotNumeric { get; set; }
+        public static string v_WhenValueIsNotNumeric { get; }
 
         /// <summary>
         /// get List&lt;string&gt; variable from variable name

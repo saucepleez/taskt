@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyUISelectionOption("Error")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyIsOptional(true, "Ignore")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_IfValueIsNotNumeric))]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_WhenValueIsNotNumeric))]
         public string v_IfValueIsNotNumeric { get; set; }
 
         public GetMaxFromListCommand()
