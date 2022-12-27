@@ -89,6 +89,20 @@ namespace taskt.Core.Automation.Commands
         public static string v_ListItemNotEnough { get; }
 
         /// <summary>
+        /// when convert number
+        /// </summary>
+        [PropertyDescription("Action When List Value is Not Numeric")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("Ignore", "Ignore not numeric value")]
+        [PropertyDetailSampleUsage("Error", "Rise the Error")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Ignore")]
+        public static string v_IfValueIsNotNumeric { get; set; }
+
+        /// <summary>
         /// get List&lt;string&gt; variable from variable name
         /// </summary>
         /// <param name="variableName"></param>
