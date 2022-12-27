@@ -16,16 +16,18 @@ namespace taskt.Core.Automation.Commands
     public class ConvertListToJSONCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Supply the List to convert")]
-        [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List")]
+        //[PropertyDescription("Supply the List to convert")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vList** or **{{{vList}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyDescription("List Variable to convert")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
