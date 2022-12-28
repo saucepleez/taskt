@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select filter target value type")]
+        [PropertyDescription("Filter Target Value Type")]
         [InputSpecification("")]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select filter action")]
+        [PropertyDescription("Filter Action")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
