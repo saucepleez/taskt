@@ -473,12 +473,15 @@ namespace taskt.Core.Automation.Commands
         public bool PauseBeforeExeucution { get; set; }
         [XmlIgnore]
         public Color DisplayForeColor { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Comment Field (Optional)")]
+        [Attributes.PropertyAttributes.PropertyDescription("Comment Field")]
         [Attributes.PropertyAttributes.InputSpecification("Optional field to enter a custom comment which could potentially describe this command or the need for this command, if required")]
         [Attributes.PropertyAttributes.SampleUsage("I am using this command to ...")]
-        [Attributes.PropertyAttributes.Remarks("Optional")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_Comment { get; set; }
+        
         [XmlAttribute]
         public bool CommandEnabled { get; set; }
 
