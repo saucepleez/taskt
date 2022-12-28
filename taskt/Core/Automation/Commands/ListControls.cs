@@ -103,6 +103,21 @@ namespace taskt.Core.Automation.Commands
         public static string v_WhenValueIsNotNumeric { get; }
 
         /// <summary>
+        /// List index property
+        /// </summary>
+        [PropertyDescription("Index of the List")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**0**", "Get First List Item")]
+        [PropertyDetailSampleUsage("**-1**", "Get Last List Item")]
+        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
+        [Remarks("**-1** means index of the last row. If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "Current Position")]
+        [PropertyDisplayText(true, "Index")]
+        public static string v_ListIndex { get; }
+
+        /// <summary>
         /// get List&lt;string&gt; variable from variable name
         /// </summary>
         /// <param name="variableName"></param>
