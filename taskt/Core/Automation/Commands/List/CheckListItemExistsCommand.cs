@@ -16,40 +16,25 @@ namespace taskt.Core.Automation.Commands
     public class CheckListItemExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the List Variable Name.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter a existing List.")]
-        [SampleUsage("**myList** or **{{{myList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please enter the value to search.")]
+        [PropertyDescription("Search Value")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**0** or **{{{vValue}}}**")]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Search Value")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Search Value")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Search Value")]
+        [PropertyIsOptional(true, "Empty")]
         public string v_SearchItem { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the variable to apply Result")]
-        [InputSpecification("")]
-        [SampleUsage("**vResult** or **{{{vResult}}}**")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Result")]
+        [Remarks("If Item Exists, the Result is **True**")]
         public string v_Result { get; set; }
 
         public CheckListItemExistsCommand()

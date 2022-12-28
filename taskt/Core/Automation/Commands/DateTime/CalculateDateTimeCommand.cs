@@ -15,24 +15,13 @@ namespace taskt.Core.Automation.Commands
     public class CalculateDateTimeCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a DateTime Variable Name")]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vDateTime}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyValidationRule("DateTime Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Variable")]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Calculation Method")]
+        [PropertyDescription("Calculation Method")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Add Years")]
@@ -52,11 +41,12 @@ namespace taskt.Core.Automation.Commands
         public string v_CalculationMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Value to Add or Substruct")]
+        [PropertyDescription("Value to Add or Substruct")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**5** or **vValue** or **{{{vValue}}}**")]
-        [Remarks("")]
+        [PropertyDetailSampleUsage("**5**", "Add or Substruct **5**")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", "Add or Substruct Value of Variable **vValue**")]
+        [Remarks("Adding **-5** is same as Substructing **5**")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -64,18 +54,8 @@ namespace taskt.Core.Automation.Commands
         public string v_Value { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vResult** or **{{{vResult}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("Result Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Result")]
         public string v_Result { get; set; }
 
         public CalculateDateTimeCommand()
@@ -93,10 +73,8 @@ namespace taskt.Core.Automation.Commands
 
             var myDT = v_DateTime.GetDateTimeVariable(engine);
 
-            //string meth = v_CalculationMethod.GetUISelectionValue("v_CalculationMethod", this, engine);
             string meth = this.GetUISelectionValue(nameof(v_CalculationMethod), "Calculation Method", engine);
 
-            //int value = v_Value.ConvertToUserVariableAsInteger("Value", engine);
             int value = this.ConvertToUserVariableAsInteger(nameof(v_Value), "Value", engine);
 
             string[] method = meth.Split(' ');

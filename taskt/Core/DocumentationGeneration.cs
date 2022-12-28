@@ -259,7 +259,7 @@ namespace taskt.Core
                     
                     foreach(var s in sampleUsages)
                     {
-                        sb.AppendLine("|" + settings.replaceApplicationKeyword(s.sampleUsage) + "|" + s.means + "|");
+                        sb.AppendLine("| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |");
                     }
                 }
 
@@ -267,15 +267,23 @@ namespace taskt.Core
                 count++;
 
                 // nav
-                if (count < maxCount)
+                sb.AppendLine("<div style=\"font-size: 90%; text-align: center\">");
+                sb.AppendLine(Environment.NewLine);
+                if (count == 1)
                 {
-                    sb.AppendLine("<div style=\"font-size: 90%; text-align: center\">");
-                    sb.AppendLine(Environment.NewLine);
-                    sb.AppendLine("[prev](#param_" + (count - 1) + ") / [list](#param_list) / [next](#param_" + count + ")");
-                    sb.AppendLine(Environment.NewLine);
-                    sb.AppendLine("</div>");
-                    sb.AppendLine(Environment.NewLine);
+                    sb.AppendLine("prev / [list](#param_list) / [next](#param_" + count + ")");
                 }
+                else if (count < maxCount)
+                {
+                    sb.AppendLine("[prev](#param_" + (count - 1) + ") / [list](#param_list) / [next](#param_" + count + ")");
+                }
+                else
+                {
+                    sb.AppendLine("[prev](#param_" + (count - 1) + ") / [list](#param_list) / next");
+                }
+                sb.AppendLine(Environment.NewLine);
+                sb.AppendLine("</div>");
+                sb.AppendLine(Environment.NewLine);
             }
 
             sb.AppendLine("## Developer/Additional Reference");
@@ -363,6 +371,35 @@ namespace taskt.Core
             {
                 return smp;
             }
+        }
+
+        private static string GetSampleUsageMeansText(PropertyDetailSampleUsage smp, ApplicationSettings settings)
+        {
+            string ret = "";
+            switch (smp.valueType)
+            {
+                case PropertyDetailSampleUsage.ValueType.Manual:
+                    return smp.means;
+
+                case PropertyDetailSampleUsage.ValueType.Value:
+                    ret = "Specify " + smp.sampleUsage;
+                    break;
+
+                case PropertyDetailSampleUsage.ValueType.VariableValue:
+                    string vName = settings.replaceApplicationKeyword(smp.sampleUsage).Replace(settings.EngineSettings.VariableStartMarker, "").Replace(settings.EngineSettings.VariableEndMarker, "");
+                    ret = "Specify Value of Variable " + vName;
+                    break;
+
+                case PropertyDetailSampleUsage.ValueType.VariableName:
+                    string vName2 = settings.replaceApplicationKeyword(smp.sampleUsage).Replace(settings.EngineSettings.VariableStartMarker, "").Replace(settings.EngineSettings.VariableEndMarker, "");
+                    ret = "Specify Variable Name " + vName2;
+                    break;
+            }
+            if (smp.target != "")
+            {
+                ret += " for " + smp.target;
+            }
+            return ret;
         }
 
         private static string GetErrorValidation(PropertyInfo propInfo, PropertyInfo virtualPropInfo)

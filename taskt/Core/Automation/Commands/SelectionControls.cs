@@ -6,6 +6,9 @@ using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// methods for PropertyUISelection attributes
+    /// </summary>
     internal static class SelectionControls
     {
         /// <summary>
@@ -16,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="propertyDescription"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
         private static string GetUISelectionValue(PropertyInfo propInfo, string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             var virtualPropInfo = propInfo.GetVirtualProperty();
@@ -75,7 +78,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="propertyDescription"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
         public static string GetUISelectionValue(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             var propInfo = command.GetProperty(propertyName);
@@ -92,6 +95,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
+        /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
         public static string GetUISelectionValue(this PropertyConvertTag p, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
             return GetUISelectionValue(command, p.Name, p.Description, engine);
@@ -105,6 +109,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
+        /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
         public static string GetUISelectionValue(this string text, string propertyName, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
             return new PropertyConvertTag(text, propertyName, "").GetUISelectionValue(command, engine);

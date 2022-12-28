@@ -17,32 +17,39 @@ namespace taskt.Core.Automation.Commands
     public class ConvertListToDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Supply the List to convert")]
-        [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List to Convert", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List to Convert")]
+        //[PropertyDescription("Supply the List to convert")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vList** or **{{{vList}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyValidationRule("List to Convert", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List to Convert")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyDescription("List Variable to convert")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Select Dictionary Keys Type")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Key Prefix")]
-        [PropertyUISelectionOption("List")]
-        [PropertyUISelectionOption("Comma Separated")]
-        [PropertyUISelectionOption("Space Separated")]
-        [PropertyUISelectionOption("Tab Separated")]
-        [PropertyUISelectionOption("NewLine Separated")]
+        //[PropertyDescription("Please Select Dictionary Keys Type")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "Key Prefix")]
+        //[PropertyUISelectionOption("List")]
+        //[PropertyUISelectionOption("Comma Separated")]
+        //[PropertyUISelectionOption("Space Separated")]
+        //[PropertyUISelectionOption("Tab Separated")]
+        //[PropertyUISelectionOption("NewLine Separated")]
+        //[PropertyUISelectionOption("Key Prefix")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDisplayText(true, "Dictionary Keys Type")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_ColumnType))]
+        [PropertyDescription("Dictionary Keys Type")]
         [PropertyUISelectionOption("Key Prefix")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Key Prefix")]
         [PropertyDisplayText(true, "Dictionary Keys Type")]
         public string v_KeyType { get; set; }
 
@@ -60,27 +67,32 @@ namespace taskt.Core.Automation.Commands
         public string v_Keys { get; set; }
 
         [XmlAttribute]
+        //[PropertyDescription("When the number of items in the List is greater than the number of Keys")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "Ignore")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyUISelectionOption("Try Create Keys")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_ANotEnough))]
         [PropertyDescription("When the number of items in the List is greater than the number of Keys")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Ignore")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
         [PropertyUISelectionOption("Try Create Keys")]
         public string v_KeysNotEnough { get; set; }
 
         [XmlAttribute]
+        //[PropertyDescription("When the number of Keys is greater than the number of items in the List")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "Ignore")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyUISelectionOption("Insert Empty Value")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_ListItemNotEnough))]
         [PropertyDescription("When the number of Keys is greater than the number of items in the List")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Ignore")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyUISelectionOption("Insert Empty Value")]
         public string v_ListItemNotEnough { get; set; }
 
         [XmlAttribute]
@@ -223,87 +235,6 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
             myDic.StoreInUserVariable(engine, v_applyToVariableName);
-
-            //if (String.IsNullOrEmpty(v_Keys))
-            //{
-            //    for (int i = 0; i < targetList.Count; i++)
-            //    {
-            //        myDic.Add("item" + i.ToString(), targetList[i]);
-            //    }
-            //}
-            //else
-            //{
-            //    List<string> targetKeys = v_Keys.GetListVariable(engine);
-
-            //    //string keysNotEnough = v_KeysNotEnough.GetUISelectionValue("v_KeysNotEnough", this, engine);
-            //    string keysNotEnough = this.GetUISelectionValue(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
-            //    //string listItemNotEnough = v_ListItemNotEnough.GetUISelectionValue("v_ListItemNotEnough", this, engine);
-            //    string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
-
-            //    if ((keysNotEnough == "error") && (targetList.Count > targetKeys.Count))
-            //    {
-            //        throw new Exception("The number of keys in " + v_Keys + " is not enough");
-            //    }
-            //    if ((listItemNotEnough == "error") && (targetKeys.Count > targetList.Count))
-            //    {
-            //        throw new Exception("The number of List items in " + v_InputList + " is not enough");
-            //    }
-
-            //    if (targetList.Count == targetKeys.Count)
-            //    {
-            //        for (int i = 0; i < targetList.Count; i++)
-            //        {
-            //            myDic.Add(targetKeys[i], targetList[i]);
-            //        }
-            //    }
-            //    else if (targetList.Count > targetKeys.Count)
-            //    {
-            //        switch (keysNotEnough)
-            //        {
-            //            case "ignore":
-            //                for (int i = 0; i < targetKeys.Count; i++)
-            //                {
-            //                    myDic.Add(targetKeys[i], targetList[i]);
-            //                }
-            //                break;
-
-            //            case "try create keys":
-            //                for (int i = 0; i < targetKeys.Count; i++)
-            //                {
-            //                    myDic.Add(targetKeys[i], targetList[i]);
-            //                }
-            //                for (int i = targetKeys.Count; i < targetList.Count; i++)
-            //                {
-            //                    myDic.Add("item" + i.ToString(), targetList[i]);
-            //                }
-            //                break;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        switch (listItemNotEnough)
-            //        {
-            //            case "ignore":
-            //                for (int i = 0; i < targetList.Count; i++)
-            //                {
-            //                    myDic.Add(targetKeys[i], targetList[i]);
-            //                }
-            //                break;
-
-            //            case "insert empty value":
-            //                for (int i = 0; i < targetList.Count; i++)
-            //                {
-            //                    myDic.Add(targetKeys[i], targetList[i]);
-            //                }
-            //                for (int i = targetList.Count; i < targetKeys.Count; i++)
-            //                {
-            //                    myDic.Add(targetKeys[i], "");
-            //                }
-            //                break;
-            //        }
-            //    }
-            //}
-            //myDic.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

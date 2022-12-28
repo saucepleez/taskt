@@ -15,25 +15,15 @@ namespace taskt.Core.Automation.Commands
     public class CreateDateTimeFromExcelSerialCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a DateTime Variable Name")]
-        [InputSpecification("")]
-        [SampleUsage("**vDateTime** or **{{{vDateTime}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Variable")]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_OutputDateTime))]
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Excel Serial Value to Create DateTime")]
+        [PropertyDescription("Excel Serial Value")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**43210** or **{{{vSerial}}}**")]
+        [PropertyDetailSampleUsage("**43210**", "Specify **43210** for Excel Serial. It's means 2018-04-20.")]
+        [PropertyDetailSampleUsage("**{{{vSerial}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Excel Serial")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
@@ -54,7 +44,6 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //decimal value = new PropertyConvertTag(v_Serial, "Serial").ConvertToUserVariableAsDecimal(engine);
             decimal value = this.ConvertToUserVariableAsDecimal(nameof(v_Serial), "Serial", engine);
 
             try

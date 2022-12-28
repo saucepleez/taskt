@@ -1,5 +1,16 @@
-﻿namespace taskt.Core.Automation.Attributes.PropertyAttributes
+﻿using System;
+using System.Security.RightsManagement;
+
+namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
+    #region enum
+    public enum MutiAttributesBehavior
+    {
+        Merge = 0,
+        Overwrite,
+    }
+    #endregion
+
     #region Virtual Property
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class PropertyVirtualProperty : System.Attribute
@@ -13,6 +24,7 @@
         }
     }
     #endregion
+
     #region to Label, Document
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class InputSpecification : System.Attribute
@@ -23,6 +35,7 @@
             this.inputSpecification = desc;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class SampleUsage : System.Attribute
     {
@@ -32,12 +45,15 @@
             this.sampleUsage = desc;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public class PropertyDetailSampleUsage : System.Attribute
     {
         public string sampleUsage = "";
         public string means = "";
         public bool showInDescription = true;
+        public ValueType valueType = ValueType.Manual;
+        public string target = "";
 
         public PropertyDetailSampleUsage(string sampleUsage, string means, bool showDescription = true)
         {
@@ -45,7 +61,38 @@
             this.means = means;
             this.showInDescription = showDescription;
         }
+        public PropertyDetailSampleUsage(string sampleUsage, ValueType type, string target = "", bool showDescription = true)
+        {
+            this.sampleUsage = sampleUsage;
+            this.valueType = type;
+            this.target = target;
+            this.showInDescription = showDescription;
+        }
+
+        public enum ValueType
+        {
+            Manual,
+            Value,
+            VariableValue,
+            VariableName
+        }
     }
+
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class PropertyDetailSampleUsageBehavior : System.Attribute
+    {
+        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+
+        public PropertyDetailSampleUsageBehavior()
+        {
+
+        }
+        public PropertyDetailSampleUsageBehavior(MutiAttributesBehavior behavior)
+        {
+            this.behavior = behavior;
+        }
+    }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class Remarks : System.Attribute
     {
@@ -55,6 +102,7 @@
             this.remarks = desc;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyDescription : System.Attribute
     {
@@ -64,6 +112,7 @@
             this.propertyDescription = description;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyShowSampleUsageInDescription : System.Attribute
     {
@@ -110,6 +159,21 @@
             this.remarks = remarks;
         }
     }
+
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class PropertyAddtionalParameterInfoBehavior : System.Attribute
+    {
+        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+
+        public PropertyAddtionalParameterInfoBehavior()
+        {
+
+        }
+        public PropertyAddtionalParameterInfoBehavior(MutiAttributesBehavior behavior)
+        {
+            this.behavior = behavior;
+        }
+    }
     #endregion
 
     #region for UIHelper/CustomUIHelper
@@ -128,6 +192,22 @@
             ShowFolderSelectionHelper,
         }
     }
+
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class PropertyUIHelperBehavior : System.Attribute
+    {
+        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+
+        public PropertyUIHelperBehavior()
+        {
+
+        }
+        public PropertyUIHelperBehavior(MutiAttributesBehavior behavior)
+        {
+            this.behavior = behavior;
+        }
+    }
+
     [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyCustomUIHelper : System.Attribute
     {
@@ -139,6 +219,21 @@
             this.labelText = labelText;
             this.methodName = methodName;
             this.nameKey = nameKey;
+        }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class PropertyCustomUIHelperBehavior : System.Attribute
+    {
+        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+
+        public PropertyCustomUIHelperBehavior()
+        {
+
+        }
+        public PropertyCustomUIHelperBehavior(MutiAttributesBehavior behavior)
+        {
+            this.behavior = behavior;
         }
     }
     #endregion
@@ -164,6 +259,7 @@
             Label
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyInstanceType : System.Attribute
     {
@@ -202,6 +298,7 @@
             MailKitEMailList
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyParameterDirection : System.Attribute
     {
@@ -235,6 +332,7 @@
             this.secondLabelName = secondLabelName;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyValidationRule : System.Attribute
     {
@@ -277,6 +375,7 @@
             NotBetween = 128,
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyValueRange : System.Attribute
     {
@@ -284,10 +383,19 @@
         public double max;
         public PropertyValueRange(double min, double max)
         {
-            this.min = min;
-            this.max = max;
+            if (max > min)
+            {
+                this.min = min;
+                this.max = max;
+            }
+            else
+            {
+                this.min = max;
+                this.max = min;
+            }
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyDisplayText : System.Attribute
     {
@@ -305,6 +413,7 @@
             this.afterText = afterText;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyIsOptional : System.Attribute
     {
@@ -376,6 +485,21 @@
     }
 
     [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class PropertyUISelectionOptionBehavior : System.Attribute
+    {
+        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+
+        public PropertyUISelectionOptionBehavior()
+        {
+
+        }
+        public PropertyUISelectionOptionBehavior(MutiAttributesBehavior behavior)
+        {
+            this.behavior = behavior;
+        }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertySelectionValueSensitive : System.Attribute
     {
         public bool caseSensitive = false;
@@ -404,6 +528,7 @@
             this.methodName = methodName;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyIsWindowNamesList : System.Attribute
     {
@@ -424,6 +549,7 @@
             this.allowDesktop = allowDesktop;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public sealed class PropertyIsVariablesList : System.Attribute
     {
@@ -466,6 +592,7 @@
             this.headerRowHeight = headerRowHeight;
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyDataGridViewColumnSettings : System.Attribute
     {
@@ -492,6 +619,7 @@
             All
         }
     }
+
     [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
     public sealed class PropertyDataGridViewCellEditEvent : System.Attribute
     {

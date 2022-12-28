@@ -15,25 +15,15 @@ namespace taskt.Core.Automation.Commands
     public class CreateDateTimeCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a DateTime Variable Name")]
-        [InputSpecification("")]
-        [SampleUsage("**vDateTime** or **{{{vDateTime}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DateTime, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Variable")]
+        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_OutputDateTime))]
         public string v_DateTime { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Year to set")]
+        [PropertyDescription("Year to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**2000** or **{{{vYear}}}**")]
+        [PropertyDetailSampleUsage("**2000**", PropertyDetailSampleUsage.ValueType.Value, "Year")]
+        [PropertyDetailSampleUsage("**{{{vYear}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Year")]
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -43,10 +33,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Year { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Month to set")]
+        [PropertyDescription("Month to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vMonth}}}**")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Month")]
+        [PropertyDetailSampleUsage("**{{{vMonth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Month")]
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -57,10 +48,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Month { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Day to set")]
+        [PropertyDescription("Day to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vDay}}}**")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Day")]
+        [PropertyDetailSampleUsage("**{{{vDay}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Day")]
         [Remarks("")]
         [PropertyIsOptional(true, "1")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -71,10 +63,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Day { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Hour to set")]
+        [PropertyDescription("Hour to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vHour}}}**")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Hour")]
+        [PropertyDetailSampleUsage("**{{{vHour}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Hour")]
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -85,10 +78,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Hour { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Minute to set")]
+        [PropertyDescription("Minute to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vMinute}}}**")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Minute")]
+        [PropertyDetailSampleUsage("**{{{vMinute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Minute")]
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -99,10 +93,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Minute { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Second to set")]
+        [PropertyDescription("Second to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        [SampleUsage("**1** or **{{{vSecond}}}**")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Second")]
+        [PropertyDetailSampleUsage("**{{{vSecond}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Second")]
         [Remarks("")]
         [PropertyIsOptional(true, "0")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -125,70 +120,16 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //if (String.IsNullOrEmpty(v_Year))
-            //{
-            //    v_Year = "1";
-            //}
-            //int year = v_Year.ConvertToUserVariableAsInteger("Year", engine);
-            //if (year < 1) 
-            //{
-            //    throw new Exception("Year is less than 1");
-            //}
             int year = this.ConvertToUserVariableAsInteger(nameof(v_Year), "Year", engine);
 
-            //if (String.IsNullOrEmpty(v_Month))
-            //{
-            //    v_Month = "1";
-            //}
-            //int month = v_Month.ConvertToUserVariableAsInteger("Month", engine);
-            //if ((month < 1) || (month > 12))
-            //{
-            //    throw new Exception("Month is out of range");
-            //}
             int month = this.ConvertToUserVariableAsInteger(nameof(v_Month), "Month", engine);
 
-            //if (String.IsNullOrEmpty(v_Day))
-            //{
-            //    v_Day = "1";
-            //}
-            //int day = v_Day.ConvertToUserVariableAsInteger("Day", engine);
-            //if ((day < 1) || (day > 31))
-            //{
-            //    throw new Exception("Day is out of range");
-            //}
             int day = this.ConvertToUserVariableAsInteger(nameof(v_Day), "Day", engine);
 
-            //if (String.IsNullOrEmpty(v_Hour))
-            //{
-            //    v_Hour = "0";
-            //}
-            //int hour = v_Hour.ConvertToUserVariableAsInteger("Hour", engine);
-            //if ((hour < 0) || (hour > 24))
-            //{
-            //    throw new Exception("Hour is out of range");
-            //}
             int hour = this.ConvertToUserVariableAsInteger(nameof(v_Hour), "Hour", engine);
 
-            //if (String.IsNullOrEmpty(v_Minute))
-            //{
-            //    v_Minute = "0";
-            //}
-            //int minute = v_Minute.ConvertToUserVariableAsInteger("Hour", engine);
-            //if ((minute < 0) || (minute > 24))
-            //{
-            //    throw new Exception("Minite is out of range");
-            //}
             int minute = this.ConvertToUserVariableAsInteger(nameof(v_Minute), "Minute", engine);
 
-            //if (String.IsNullOrEmpty(v_Second))
-            //{
-            //    v_Second = "0";
-            //}
-            //int second = v_Second.ConvertToUserVariableAsInteger("Second", engine);
-            //if ((second < 0) || (second > 24))
-            //{
-            //    throw new Exception("Second is out of range");
-            //}
             int second = this.ConvertToUserVariableAsInteger(nameof(v_Second), "Second", engine);
 
             DateTime myDT = new DateTime(year, month, day, hour, minute, second);

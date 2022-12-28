@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,36 +19,35 @@ namespace taskt.Core.Automation.Commands
     public class CreateListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the List Variable Name.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter a existing List.")]
-        [SampleUsage("**myList** or **{{{myList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List")]
+        //[PropertyDescription("Please indicate the List Variable Name.")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Enter a existing List.")]
+        //[SampleUsage("**myList** or **{{{myList}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         public string v_ListName { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Assign to List Values")]
+        [PropertyDescription("List Values")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Values", "Values", false)]
-        //[PropertyControlIntoCommandField("ListValuesGridViewHelper")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDisplayText(true, "Items")]
+        [PropertyDetailSampleUsage("**1**", "Set **1**")]
+        [PropertyDetailSampleUsage("**ABC**", "Set **ABC**")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", "Set Value of Variable **vValue**")]
         public DataTable v_ListValues { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView ListValuesGridViewHelper;
 
         public CreateListCommand()
         {
@@ -63,41 +63,15 @@ namespace taskt.Core.Automation.Commands
 
             List<string> newList = new List<string>();
 
-            foreach(DataRow row in v_ListValues.Rows)
-            {
-                newList.Add(row["Values"].ToString());
-            }
+            newList.AddRange(v_ListValues.AsEnumerable().Select(r => r["Values"]?.ToString() ?? "").ToArray());
 
             newList.StoreInUserVariable(engine, v_ListName);
         }
-        
-        //private void ListValuesDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        //ListValuesGridViewHelper.BeginEdit(false);
-        //        ((DataGridView)sender).BeginEdit(false);
-        //    }
-        //}
 
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            //var ListValuesGridViewHelper = (DataGridView)this.ControlsList[nameof(v_ListValues)];
-
-            //if (ListValuesGridViewHelper.IsCurrentCellDirty || ListValuesGridViewHelper.IsCurrentRowDirty)
-            //{
-            //    ListValuesGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            //    var newRow = v_ListValues.NewRow();
-            //    v_ListValues.Rows.Add(newRow);
-            //    for (var i = v_ListValues.Rows.Count - 1; i >= 0; i--)
-            //    {
-            //        if (v_ListValues.Rows[i][0].ToString() == "")
-            //        {
-            //            v_ListValues.Rows[i].Delete();
-            //        }
-            //    }
-            //}
+            
             DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_ListValues)], v_ListValues);
         }
     }
