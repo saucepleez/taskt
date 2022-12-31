@@ -422,6 +422,7 @@ namespace taskt.Core.Automation.Commands
                 dgv.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 var newRow = table.NewRow();
                 table.Rows.Add(newRow);
+                table.AcceptChanges();
                 int cols = table.Columns.Count;
                 for (int i = table.Rows.Count - 1; i >= 0; i--)
                 {
@@ -439,6 +440,7 @@ namespace taskt.Core.Automation.Commands
                         table.Rows[i].Delete();
                     }
                 }
+                table.AcceptChanges();
             }
         }
     }
