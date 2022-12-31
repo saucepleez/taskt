@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
-        public static string v_OutputDictionaryName { get; set; }
+        public static string v_OutputDictionaryName { get; }
 
         /// <summary>
         /// input Dictionary property
@@ -44,7 +44,23 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
-        public static string v_InputDictionaryName { get; set; }
+        public static string v_InputDictionaryName { get; }
+
+        /// <summary>
+        /// Dictionary key name
+        /// </summary>
+        [PropertyDescription("Name of the Dictionary Key")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**key1**", PropertyDetailSampleUsage.ValueType.Value, "Dictionary Key")]
+        [PropertyDetailSampleUsage("**{{{vKey}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Dictionary Key")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Key", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Key")]
+        public static string v_Key { get; }
 
         /// <summary>
         /// get Dictionary&lt;string, string&gt; Variable from variable name
