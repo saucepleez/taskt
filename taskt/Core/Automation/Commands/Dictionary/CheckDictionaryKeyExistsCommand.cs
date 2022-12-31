@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
-        [Remarks("If Item Exists, the Result is **True**")]
+        [Remarks("When the Key Exists, the Result is **True**")]
         public string v_applyToVariable { get; set; }
 
         public CheckDictionaryKeyExistsCommand()
