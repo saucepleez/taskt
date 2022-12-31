@@ -62,20 +62,6 @@ namespace taskt.Core
             '\n', '\r', '\t'
         };
 
-        public static bool ConvertToUserVariableAsBool(this string str, string parameterName, object sender)
-        {
-            string convertedText = str.ConvertToUserVariable(sender);
-            bool v;
-            if (bool.TryParse(convertedText, out v))
-            {
-                return v;
-            }
-            else
-            {
-                throw new Exception(parameterName + " '" + str + "' is not a boolean.");
-            }
-        }
-
         public static DateTime ConvertToUserVariableAsDateTime(this string str, string parameterName, object sender)
         {
             string convertedText = str.ConvertToUserVariable(sender);
@@ -993,11 +979,6 @@ namespace taskt.Core
             //};
             //newVariableCommand.RunCommand(sender);
             StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
-        }
-
-        public static void StoreInUserVariable(this bool value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", sender, false);
         }
 
         public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
