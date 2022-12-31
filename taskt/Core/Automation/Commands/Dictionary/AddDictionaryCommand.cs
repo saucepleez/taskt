@@ -73,23 +73,7 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> outputDictionary = v_DictionaryName.GetDictionaryVariable(engine);
 
-            // Check Items
-            foreach (DataRow row in v_ColumnNameDataTable.Rows)
-            {
-                string k = (row.Field<string>("Keys") ?? "").ConvertToUserVariable(engine);
-                if (k == "")
-                {
-                    throw new Exception("Key value is empty.");
-                }
-            }
-
-            // Add Items
-            foreach (DataRow row in v_ColumnNameDataTable.Rows)
-            {
-                var key = row.Field<string>("Keys").ConvertToUserVariable(engine);
-                var value = (row.Field<string>("Values") ?? "").ConvertToUserVariable(engine);
-                outputDictionary.Add(key, value);
-            }
+            outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
         }
         
         //private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)

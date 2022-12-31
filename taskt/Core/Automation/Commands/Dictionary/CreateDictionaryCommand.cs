@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyDataGridViewColumnSettings("Keys", "Keys", false)]
         //[PropertyDataGridViewColumnSettings("Values", "Values", false)]
         //[PropertyDataGridViewSetting(true, true, true)]
-        ////[PropertyControlIntoCommandField("ColumnNameDataGridViewHelper")]
+        //[PropertyControlIntoCommandField("ColumnNameDataGridViewHelper")]
         //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         //[PropertyDisplayText(true, "Items")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_KeyAndValue))]
@@ -63,10 +63,7 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> outputDictionary = new Dictionary<string, string>();
 
-            foreach (DataRow rwColumnName in v_ColumnNameDataTable.Rows)
-            {
-                outputDictionary.Add(rwColumnName.Field<string>("Keys"), rwColumnName.Field<string>("Values"));
-            }
+            outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
 
             outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
         }

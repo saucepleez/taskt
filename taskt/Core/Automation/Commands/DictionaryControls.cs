@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
@@ -156,6 +157,44 @@ namespace taskt.Core.Automation.Commands
         public static void StoreInUserVariable(this Dictionary<string, string> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+        }
+
+        /// <summary>
+        /// add new item to Dictionary from DataTable. check key name is empty
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <param name="table"></param>
+        /// <param name="engine"></param>
+        /// <exception cref="Exception"></exception>
+        public static void AddDataAndValueFromDataTable(this Dictionary<string, string> dic, DataTable table, Automation.Engine.AutomationEngineInstance engine)
+        {
+            //var keys = new List<string>();
+
+            // Check Items
+            foreach (DataRow row in table.Rows)
+            {
+                string k = (row.Field<string>("Keys") ?? "").ConvertToUserVariable(engine);
+                if (k == "")
+                {
+                    throw new Exception("Key value is empty.");
+                }
+                //if (keys.Contains(k))
+                //{
+                //    throw new Exception("Duplicate Key. Name: '" + k + "'");
+                //}
+                //else
+                //{
+                //    keys.Add(k);
+                //}
+            }
+
+            // Add Items
+            foreach (DataRow row in table.Rows)
+            {
+                var key = row.Field<string>("Keys").ConvertToUserVariable(engine);
+                var value = (row.Field<string>("Values") ?? "").ConvertToUserVariable(engine);
+                dic.Add(key, value);
+            }
         }
     }
 }
