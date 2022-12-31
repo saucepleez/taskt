@@ -64,6 +64,34 @@ namespace taskt.Core.Automation.Commands
         public static string v_Key { get; }
 
         /// <summary>
+        /// Dictionary Key and Value property
+        /// </summary>
+        [PropertyDescription("Define Keys and Values")]
+        [InputSpecification("Enter the Keys and Values required for your dictionary")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(true, true, true)]
+        [PropertyDataGridViewColumnSettings("Keys", "Keys", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        [PropertyDataGridViewColumnSettings("Values", "Values", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDisplayText(true, "Items")]
+        [PropertyDetailSampleUsage(@"
+| Keys | Values |
+|---|---|
+| **Age** | **15** |", "Add an item whose key is **Age** and value is **15**")]
+        [PropertyDetailSampleUsage(@"
+| Keys | Values |
+|---|---|
+| **Name** | **Alice** |", "Add an item whose key is **Name** and value is **Alice**")]
+        [PropertyDetailSampleUsage(@"
+| Keys | Values |
+|---|---|
+| **{{{vKey}}** | **{{{vValue}}}** |", "Add an item whose key is Value of Variable **vKey** and value is Value of Variable **vValue**")]
+        public static string v_KeyAndValue { get; }
+
+        /// <summary>
         /// get Dictionary&lt;string, string&gt; Variable from variable name
         /// </summary>
         /// <param name="variableName"></param>
