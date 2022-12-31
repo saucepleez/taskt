@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
-        [Remarks("If Item Exists, the Result is **True**")]
+        [Remarks("When the Item Exists, the Result is **True**")]
         public string v_Result { get; set; }
 
         public CheckListItemExistsCommand()
