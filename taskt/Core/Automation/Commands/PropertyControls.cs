@@ -96,27 +96,27 @@ namespace taskt.Core.Automation.Commands
             // DBG
             //Console.WriteLine("### wv : " + typeof(T).Name);
 
-            MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+            MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
             switch (typeof(T).Name)
             {
                 case nameof(PropertyDetailSampleUsage):
-                    behavior = GetCustomAttributeWithVirtual<PropertyDetailSampleUsageBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    behavior = GetCustomAttributeWithVirtual<PropertyDetailSampleUsageBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
                     break;
                 case nameof(PropertyAddtionalParameterInfo):
-                    behavior = GetCustomAttributeWithVirtual<PropertyAddtionalParameterInfoBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    behavior = GetCustomAttributeWithVirtual<PropertyAddtionalParameterInfoBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
                     break;
                 case nameof(PropertyUIHelper):
-                    behavior = GetCustomAttributeWithVirtual<PropertyUIHelperBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    behavior = GetCustomAttributeWithVirtual<PropertyUIHelperBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
                     break;
                 case nameof(PropertyCustomUIHelper):
-                    behavior = GetCustomAttributeWithVirtual<PropertyCustomUIHelperBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    behavior = GetCustomAttributeWithVirtual<PropertyCustomUIHelperBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
                     break;
                 case nameof(PropertyUISelectionOption):
-                    behavior = GetCustomAttributeWithVirtual<PropertyUISelectionOptionBehavior>(propInfo, virtualPropInfo)?.behavior ?? MutiAttributesBehavior.Merge;
+                    behavior = GetCustomAttributeWithVirtual<PropertyUISelectionOptionBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
                     break;
             }
 
-            if (behavior == MutiAttributesBehavior.Merge)
+            if (behavior == MultiAttributesBehavior.Merge)
             {
                 var a = new List<T>();
                 var attrV = virtualPropInfo?.GetCustomAttributes<T>().ToList() ?? new List<T>();

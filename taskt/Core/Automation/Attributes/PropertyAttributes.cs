@@ -4,7 +4,7 @@ using System.Security.RightsManagement;
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
     #region enum
-    public enum MutiAttributesBehavior
+    public enum MultiAttributesBehavior
     {
         Merge = 0,
         Overwrite,
@@ -81,13 +81,13 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class PropertyDetailSampleUsageBehavior : System.Attribute
     {
-        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+        public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
         public PropertyDetailSampleUsageBehavior()
         {
 
         }
-        public PropertyDetailSampleUsageBehavior(MutiAttributesBehavior behavior)
+        public PropertyDetailSampleUsageBehavior(MultiAttributesBehavior behavior)
         {
             this.behavior = behavior;
         }
@@ -163,13 +163,13 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class PropertyAddtionalParameterInfoBehavior : System.Attribute
     {
-        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+        public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
         public PropertyAddtionalParameterInfoBehavior()
         {
 
         }
-        public PropertyAddtionalParameterInfoBehavior(MutiAttributesBehavior behavior)
+        public PropertyAddtionalParameterInfoBehavior(MultiAttributesBehavior behavior)
         {
             this.behavior = behavior;
         }
@@ -196,13 +196,13 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class PropertyUIHelperBehavior : System.Attribute
     {
-        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+        public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
         public PropertyUIHelperBehavior()
         {
 
         }
-        public PropertyUIHelperBehavior(MutiAttributesBehavior behavior)
+        public PropertyUIHelperBehavior(MultiAttributesBehavior behavior)
         {
             this.behavior = behavior;
         }
@@ -225,13 +225,13 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class PropertyCustomUIHelperBehavior : System.Attribute
     {
-        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+        public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
         public PropertyCustomUIHelperBehavior()
         {
 
         }
-        public PropertyCustomUIHelperBehavior(MutiAttributesBehavior behavior)
+        public PropertyCustomUIHelperBehavior(MultiAttributesBehavior behavior)
         {
             this.behavior = behavior;
         }
@@ -487,13 +487,13 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class PropertyUISelectionOptionBehavior : System.Attribute
     {
-        public MutiAttributesBehavior behavior = MutiAttributesBehavior.Merge;
+        public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
         public PropertyUISelectionOptionBehavior()
         {
 
         }
-        public PropertyUISelectionOptionBehavior(MutiAttributesBehavior behavior)
+        public PropertyUISelectionOptionBehavior(MultiAttributesBehavior behavior)
         {
             this.behavior = behavior;
         }
