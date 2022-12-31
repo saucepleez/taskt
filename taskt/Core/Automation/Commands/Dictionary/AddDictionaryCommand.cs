@@ -33,29 +33,30 @@ namespace taskt.Core.Automation.Commands
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Define Keys and Values")]
-        [InputSpecification("Enter the Keys and Values required for your dictionary")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(true, true, true)]
-        [PropertyDataGridViewColumnSettings("Keys", "Keys", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewColumnSettings("Values", "Values", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewCellEditEvent(nameof(ColumnNameDataGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [PropertyDisplayText(true, "Items")]
-        [PropertyDetailSampleUsage(@"
-| Keys | Values |
-|---|---|
-| **Age** | **15** |", "Add an item whose key is **Age** and value is **15**")]
-        [PropertyDetailSampleUsage(@"
-| Keys | Values |
-|---|---|
-| **Name** | **Alice** |", "Add an item whose key is **Name** and value is **Alice**")]
-        [PropertyDetailSampleUsage(@"
-| Keys | Values |
-|---|---|
-| **{{{vKey}}** | **{{{vValue}}}** |", "Add an item whose key is Value of Variable **vKey** and value is Value of Variable **vValue**")]
+        //        [PropertyDescription("Define Keys and Values")]
+        //        [InputSpecification("Enter the Keys and Values required for your dictionary")]
+        //        [SampleUsage("")]
+        //        [Remarks("")]
+        //        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        //        [PropertyDataGridViewSetting(true, true, true)]
+        //        [PropertyDataGridViewColumnSettings("Keys", "Keys", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        //        [PropertyDataGridViewColumnSettings("Values", "Values", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        //        [PropertyDataGridViewCellEditEvent(nameof(ColumnNameDataGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //        [PropertyDisplayText(true, "Items")]
+        //        [PropertyDetailSampleUsage(@"
+        //| Keys | Values |
+        //|---|---|
+        //| **Age** | **15** |", "Add an item whose key is **Age** and value is **15**")]
+        //        [PropertyDetailSampleUsage(@"
+        //| Keys | Values |
+        //|---|---|
+        //| **Name** | **Alice** |", "Add an item whose key is **Name** and value is **Alice**")]
+        //        [PropertyDetailSampleUsage(@"
+        //| Keys | Values |
+        //|---|---|
+        //| **{{{vKey}}** | **{{{vValue}}}** |", "Add an item whose key is Value of Variable **vKey** and value is Value of Variable **vValue**")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_KeyAndValue))]
         public DataTable v_ColumnNameDataTable { get; set; }
 
         public AddDictionaryCommand()
@@ -91,18 +92,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
         
-        private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            DataGridView ColumnNameDataGridViewHelper = (DataGridView)sender;
-            if (e.ColumnIndex >= 0)
-            {
-                ColumnNameDataGridViewHelper.BeginEdit(false);
-            }
-            else
-            {
-                ColumnNameDataGridViewHelper.EndEdit();
-            }
-        }
+        //private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    DataGridView ColumnNameDataGridViewHelper = (DataGridView)sender;
+        //    if (e.ColumnIndex >= 0)
+        //    {
+        //        ColumnNameDataGridViewHelper.BeginEdit(false);
+        //    }
+        //    else
+        //    {
+        //        ColumnNameDataGridViewHelper.EndEdit();
+        //    }
+        //}
 
         public override void BeforeValidate()
         {
