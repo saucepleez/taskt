@@ -32,8 +32,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchItem { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
+        [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("If Item Exists, the Result is **True**")]
         public string v_Result { get; set; }
 
