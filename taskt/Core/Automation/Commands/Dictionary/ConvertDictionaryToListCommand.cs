@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -16,31 +17,33 @@ namespace taskt.Core.Automation.Commands
     public class ConvertDictionaryToListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please input The Dictionary Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter a string of comma seperated values.")]
-        [SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Dictionary")]
+        //[PropertyDescription("Please input The Dictionary Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Enter a string of comma seperated values.")]
+        //[SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Dictionary")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the variable to apply List")]
-        [InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List")]
+        //[PropertyDescription("Please indicate the variable to apply List")]
+        //[InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        //[SampleUsage("**vList** or **{{{vList}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_OutputVariable { get; set; }
 
         public ConvertDictionaryToListCommand()
@@ -57,12 +60,13 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
 
-            List<string> lst = new List<string>();
-            foreach(var itm in dic)
-            {
-                lst.Add(itm.Value);
-            }
-            lst.StoreInUserVariable(engine, v_OutputVariable);
+            //List<string> lst = new List<string>();
+            //foreach(var itm in dic)
+            //{
+            //    lst.Add(itm.Value);
+            //}
+            //lst.StoreInUserVariable(engine, v_OutputVariable);
+            dic.Values.ToList().StoreInUserVariable(engine, v_OutputVariable);
         }
     }
 }
