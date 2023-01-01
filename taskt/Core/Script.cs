@@ -252,6 +252,8 @@ namespace taskt.Core.Script
 
         private static XDocument convertOldScript(XDocument doc)
         {
+            // very important!
+            // ** DO NOT USE nameof to change command name **
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
             convertTo3_5_0_47(doc);

@@ -36,12 +36,15 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
-            //var controlList = command.GetType().GetProperties().Where(
-            //        prop => (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
-            //    ).Select(prop => prop.Name).ToList();
-            var controlList = command.GetParameterProperties().Select(prop => prop.Name).ToList();
+            var props = command.GetParameterProperties();
+            var controlList = new List<Control>();
 
-            return MultiCreateInferenceDefaultControlGroupFor(controlList, command, editor);
+            foreach(var prop in props)
+            {
+                controlList.AddRange(CreateInferenceDefaultControlGroupFor(prop, command, editor));
+            }
+
+            return controlList;
         }
 
         /// <summary>
@@ -75,7 +78,21 @@ namespace taskt.UI.CustomControls
         public static List<Control> CreateInferenceDefaultControlGroupFor(string propertyName, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
         {
             var propInfo = command.GetProperty(propertyName);
-            //var virtualPropInfo = GetViratulProperty(propInfo);
+
+            return CreateInferenceDefaultControlGroupFor(propInfo, command, editor);
+        }
+
+        /// <summary>
+        /// create control group. this method use PropertyRecommendedUIControl attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<Control> CreateInferenceDefaultControlGroupFor(PropertyInfo propInfo, Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
+        {
+            string propertyName = propInfo.Name;
             var virtualPropInfo = propInfo.GetVirtualProperty();
 
             var attrRecommended = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropInfo);
@@ -86,7 +103,7 @@ namespace taskt.UI.CustomControls
                     case PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
                     case PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
                         return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
-                        
+
                     case PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
                         return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
 

@@ -18,14 +18,18 @@ namespace taskt.Core.Automation.Commands
     public class FilterDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a Dictionary Variable Name to Filter")]
-        [InputSpecification("")]
-        [SampleUsage("**vDic** or **{{{vDic}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyDescription("Please select a Dictionary Variable Name to Filter")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vDic** or **{{{vDic}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyValidationRule("Dictionary to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Dictionary to Filter")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
+        [PropertyDescription("Dictionary Variable Name to Filter")]
         [PropertyValidationRule("Dictionary to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary to Filter")]
         public string v_InputDictionary { get; set; }
@@ -38,7 +42,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        //[PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
@@ -50,7 +53,6 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyControlIntoCommandField("FilterActionComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
@@ -66,36 +68,27 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        //[PropertyControlIntoCommandField("FilterParametersGridViewHelper")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select a Dictionary Variable Name of the Filtered List")]
-        [InputSpecification("")]
-        [SampleUsage("**vNewDic** or **{{{vNewDic}}}**")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyDescription("Please select a Dictionary Variable Name of the Filtered List")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vNewDic** or **{{{vNewDic}}}**")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyValidationRule("Filtered Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Result")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
+        [PropertyDescription("Dictionary Variable Name of the Filtered List")]
         [PropertyValidationRule("Filtered Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]
         public string v_OutputDictionary { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox TargetTypeComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox FilterActionComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView FilterParametersGridViewHelper;
 
         public FilterDictionaryCommand()
         {
@@ -113,20 +106,10 @@ namespace taskt.Core.Automation.Commands
 
             var targetDic = v_InputDictionary.GetDictionaryVariable(engine);
 
-            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            //string filterAction = v_FilterAction.GetUISelectionValue("v_FilterAction", this, engine);
             var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);
 
             var res = new Dictionary<string, string>();
-
-            //foreach(var item in targetDic)
-            //{
-            //    if (ConditionControls.FilterDeterminStatementTruth(item.Value, targetType, filterAction, v_FilterActionParameterTable, engine))
-            //    {
-            //        res.Add(item.Key, item.Value);
-            //    }
-            //}
 
             foreach(var item in targetDic)
             {

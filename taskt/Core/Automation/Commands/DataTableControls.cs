@@ -133,14 +133,16 @@ namespace taskt.Core.Automation.Commands
 
         private static bool IsColumnExists(DataTable table, string columnName)
         {
-            for (int i = 0; i < table.Columns.Count; i++)
-            {
-                if (table.Columns[i].ColumnName == columnName)
-                {
-                    return true;
-                }
-            }
-            return false;
+            //for (int i = 0; i < table.Columns.Count; i++)
+            //{
+            //    if (table.Columns[i].ColumnName == columnName)
+            //    {
+            //        return true;
+            //    }
+            //}
+            //return false;
+
+            return table.Columns.Contains(columnName);
         }
         private static bool IsColumnExists(DataTable table, int columnIndex)
         {
@@ -242,14 +244,22 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Parameter Column or Value Column does not exists");
             }
 
-            for (int i = 0; i < dt.Rows.Count; i++)
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+            //    {
+            //        //return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+            //        return dt.Rows[i][valueColumnName]?.ToString() ?? "";
+            //    }
+            //}
+            foreach (DataRow row in dt.Rows)
             {
-                if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+                if ((row.Field<string>(parameterColumnName) ?? "") == parameterName)
                 {
-                    //return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
-                    return dt.Rows[i][valueColumnName]?.ToString() ?? "";
+                    return row.Field<string>(valueColumnName) ?? "";
                 }
             }
+
             return "";
         }
 
@@ -269,7 +279,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             //return dt.Rows[rowIndex][columnName] == null ? "" : dt.Rows[rowIndex][columnName].ToString();
-            return dt.Rows[rowIndex][columnName]?.ToString() ?? "";
+            //return dt.Rows[rowIndex][columnName]?.ToString() ?? "";
+            return dt.Rows[rowIndex].Field<string>(columnName) ?? "";
         }
 
         public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
@@ -422,6 +433,7 @@ namespace taskt.Core.Automation.Commands
                 dgv.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 var newRow = table.NewRow();
                 table.Rows.Add(newRow);
+                table.AcceptChanges();
                 int cols = table.Columns.Count;
                 for (int i = table.Rows.Count - 1; i >= 0; i--)
                 {
@@ -439,6 +451,7 @@ namespace taskt.Core.Automation.Commands
                         table.Rows[i].Delete();
                     }
                 }
+                table.AcceptChanges();
             }
         }
     }

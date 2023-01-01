@@ -18,39 +18,41 @@ namespace taskt.Core.Automation.Commands
     public class ReplaceDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a Dictionary Variable Name to Replace")]
-        [InputSpecification("")]
-        [SampleUsage("**vDic** or **{{{vDic}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyDescription("Please select a Dictionary Variable Name to Replace")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vDic** or **{{{vDic}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Dictionary to Replace")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
+        [PropertyDescription("Dictionary Variable Name to Replace")]
         [PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary to Replace")]
         public string v_TargetDictionary { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select replace target value type")]
+        [PropertyDescription("Replace Target Value Type")]
         [InputSpecification("")]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Text")]
         [PropertyUISelectionOption("Numeric")]
-        //[PropertyControlIntoCommandField("TargetTypeComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select replace action")]
+        [PropertyDescription("Replace Action")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyControlIntoCommandField("ReplaceActionComboboxHelper")]
         [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
         [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Action")]
@@ -66,31 +68,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(false, false, true, 400, 120)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        //[PropertyControlIntoCommandField("ReplaceParametersGridViewHelper")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Replace value")]
+        [PropertyDescription("Replace value")]
         [InputSpecification("")]
         [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyDisplayText(true, "Replace Value")]
         public string v_ReplaceValue { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox TargetTypeComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox ReplaceActionComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView ReplaceParametersGridViewHelper;
 
         public ReplaceDictionaryCommand()
         {
@@ -108,9 +97,6 @@ namespace taskt.Core.Automation.Commands
 
             var targetDic = v_TargetDictionary.GetDictionaryVariable(engine);
 
-            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            //string replaceAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
-
             var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
@@ -118,13 +104,6 @@ namespace taskt.Core.Automation.Commands
 
             var keys = targetDic.Keys.ToList();
 
-            //foreach (var key in keys)
-            //{
-            //    if (ConditionControls.FilterDeterminStatementTruth(targetDic[key], targetType, replaceAction, v_ReplaceActionParameterTable, engine))
-            //    {
-            //        targetDic[key] = newValue;
-            //    }
-            //}
             foreach(var key in keys)
             {
                 if (checkFunc(targetDic[key], parameters))

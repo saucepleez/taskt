@@ -8,6 +8,7 @@ using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
 using static taskt.Core.Automation.Commands.PropertyControls;
+using Markdig;
 
 namespace taskt.Core
 {
@@ -27,6 +28,11 @@ namespace taskt.Core
             public string Description { get; set; }
             public string Location { get; set; }
         }
+
+        /// <summary>
+        /// for convert md to html, contains table
+        /// </summary>
+        private static Markdig.MarkdownPipeline mdPipeline = new Markdig.MarkdownPipelineBuilder().UsePipeTables().Build();
 
         /// <summary>
         /// Returns a path that contains the generated markdown files
@@ -168,9 +174,12 @@ namespace taskt.Core
 
             // create Parameters List
             int maxCount = 0;
+            List<PropertyInfo> vPropList = new List<PropertyInfo>();
             foreach(var prop in propInfos)
             {
-                var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings);
+                var virtualProp = prop.GetVirtualProperty();
+                vPropList.Add(virtualProp);
+                var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings, virtualProp);
                 sb.AppendLine("- [" + commandLabel + "](#param_" + maxCount +  ")");
                 maxCount++;
             }
@@ -181,8 +190,8 @@ namespace taskt.Core
             int count = 0;
             foreach (var prop in propInfos)
             {
-                var virtualProp = prop.GetVirtualProperty();
-                var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings);
+                //var virtualProp = prop.GetVirtualProperty();
+                var commandLabel = CommandControls.GetLabelText(prop.Name, prop, settings, vPropList[count]);
 
                 sb.AppendLine("<a id=\"param_" + count + "\"></a>");
                 sb.AppendLine("### " + commandLabel);
@@ -193,7 +202,7 @@ namespace taskt.Core
                 sb.AppendLine("<dl>");
 
                 // what to input
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetCustomAttributeWithVirtual<InputSpecification>(prop, virtualProp)?.inputSpecification ?? "");
+                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetCustomAttributeWithVirtual<InputSpecification>(prop, vPropList[count])?.inputSpecification ?? "");
                 if (helpfulExplanation == "")
                 {
                     helpfulExplanation = "(nothing)";
@@ -201,37 +210,37 @@ namespace taskt.Core
                 sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
 
                 // value instance type
-                (var valueName, var valueDescription) = GetValueInstanceType(prop, virtualProp);
+                (var valueName, var valueDescription) = GetValueInstanceType(prop, vPropList[count]);
                 if (valueName != "")
                 {
                     sb.AppendLine("<dt>" + valueName + "</dt><dd>" + valueDescription + "</dd>");
                 }
 
                 // direction
-                var direction = GetCustomAttributeWithVirtual<PropertyParameterDirection>(prop, virtualProp);
+                var direction = GetCustomAttributeWithVirtual<PropertyParameterDirection>(prop, vPropList[count]);
                 if (direction != null)
                 {
                     sb.AppendLine("<dt>Parameter Direction</dt><dd>" + direction.porpose.ToString() + "</dd>");
                 }
 
                 // error validation
-                var validationRules = GetErrorValidation(prop, virtualProp);
+                var validationRules = GetErrorValidation(prop, vPropList[count]);
                 if (validationRules != "")
                 {
                     sb.AppendLine("<dt>Error Occurs When the Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
                 }
 
-                var sampleUsage = GetSampleUsageText(prop, virtualProp, settings);
+                var sampleUsage = GetSampleUsageText(prop, vPropList[count], settings);
                 sb.AppendLine("<dt>Sample Usage</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
 
-                var remarks = GetRemarksText(prop, virtualProp, settings);
+                var remarks = GetRemarksText(prop, vPropList[count], settings);
                 sb.AppendLine("<dt>Remarks</dt><dd>" + ConvertMDToHTML(remarks) + "</dd>");
                 sb.AppendLine("</dl>");
 
                 sb.AppendLine(Environment.NewLine);
 
                 // Additional Parameter Info
-                var paramInfos = GetCustomAttributesWithVirtual<PropertyAddtionalParameterInfo>(prop, virtualProp);
+                var paramInfos = GetCustomAttributesWithVirtual<PropertyAddtionalParameterInfo>(prop, vPropList[count]);
                 if (paramInfos.Count > 0)
                 {
                     sb.AppendLine("#### Addtional Info about &quot;" + commandLabel + "&quot;");
@@ -249,18 +258,23 @@ namespace taskt.Core
                 }
 
                 // Detail Sample Usage
-                var sampleUsages = GetCustomAttributesWithVirtual<PropertyDetailSampleUsage>(prop, virtualProp);
+                var sampleUsages = GetCustomAttributesWithVirtual<PropertyDetailSampleUsage>(prop, vPropList[count]);
                 if (sampleUsages.Count > 0)
                 {
                     sb.AppendLine(Environment.NewLine);
                     sb.AppendLine("#### Sample Usage");
+
+                    //string sampleUsageTabe = "| Value | Means |\n|---|---|\n";
+
                     sb.AppendLine("| Value | Means |");
                     sb.AppendLine("|---|---|");
                     
                     foreach(var s in sampleUsages)
                     {
                         sb.AppendLine("| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |");
+                        //sampleUsageTabe += "| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |\n";
                     }
+                    //sb.AppendLine(ConvertMDToHTML(sampleUsageTabe));
                 }
 
                 sb.AppendLine(Environment.NewLine);
@@ -488,8 +502,15 @@ namespace taskt.Core
 
         private static string ConvertMDToHTML(string md)
         {
-            var html = Markdig.Markdown.ToHtml(md).Trim();
-            return html.Replace("<p>", "").Replace("</p>", "");
+            var html = Markdig.Markdown.ToHtml(md, mdPipeline).Trim();
+            if (html.StartsWith("<table>")) 
+            {
+                return html.Replace("\n", "");
+            }
+            else
+            {
+                return html.Replace("<p>", "").Replace("</p>", "");
+            }
         }
      }
 }
