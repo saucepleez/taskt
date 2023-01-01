@@ -8,6 +8,7 @@ using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
 using static taskt.Core.Automation.Commands.PropertyControls;
+using Markdig;
 
 namespace taskt.Core
 {
@@ -27,6 +28,11 @@ namespace taskt.Core
             public string Description { get; set; }
             public string Location { get; set; }
         }
+
+        /// <summary>
+        /// for convert md to html, contains table
+        /// </summary>
+        private static Markdig.MarkdownPipeline mdPipeline = new Markdig.MarkdownPipelineBuilder().UsePipeTables().Build();
 
         /// <summary>
         /// Returns a path that contains the generated markdown files
@@ -257,13 +263,18 @@ namespace taskt.Core
                 {
                     sb.AppendLine(Environment.NewLine);
                     sb.AppendLine("#### Sample Usage");
+
+                    //string sampleUsageTabe = "| Value | Means |\n|---|---|\n";
+
                     sb.AppendLine("| Value | Means |");
                     sb.AppendLine("|---|---|");
                     
                     foreach(var s in sampleUsages)
                     {
                         sb.AppendLine("| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |");
+                        //sampleUsageTabe += "| " + ConvertMDToHTML(settings.replaceApplicationKeyword(s.sampleUsage)) + " | " + GetSampleUsageMeansText(s, settings) + " |\n";
                     }
+                    //sb.AppendLine(ConvertMDToHTML(sampleUsageTabe));
                 }
 
                 sb.AppendLine(Environment.NewLine);
@@ -491,8 +502,15 @@ namespace taskt.Core
 
         private static string ConvertMDToHTML(string md)
         {
-            var html = Markdig.Markdown.ToHtml(md).Trim();
-            return html.Replace("<p>", "").Replace("</p>", "");
+            var html = Markdig.Markdown.ToHtml(md, mdPipeline).Trim();
+            if (html.StartsWith("<table>")) 
+            {
+                return html.Replace("\n", "");
+            }
+            else
+            {
+                return html.Replace("<p>", "").Replace("</p>", "");
+            }
         }
      }
 }
