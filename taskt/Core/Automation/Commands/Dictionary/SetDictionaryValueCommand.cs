@@ -15,29 +15,31 @@ namespace taskt.Core.Automation.Commands
     public class SetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please input The Dictionary Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter a string of comma seperated values.")]
-        [SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Dictionary")]
+        //[PropertyDescription("Please input The Dictionary Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Enter a string of comma seperated values.")]
+        //[SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Dictionary")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the key for the Dictionary")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter a string of comma seperated values.")]
-        [SampleUsage("**key1** or **{{{vKeyName}}}**")]
-        [Remarks("If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyIsOptional(true, "Current Position")]
-        [PropertyDisplayText(true, "Key")]
+        //[PropertyDescription("Please indicate the key for the Dictionary")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Enter a string of comma seperated values.")]
+        //[SampleUsage("**key1** or **{{{vKeyName}}}**")]
+        //[Remarks("If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyIsOptional(true, "Current Position")]
+        //[PropertyDisplayText(true, "Key")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Key))]
         public string v_Key { get; set; }
 
         [XmlAttribute]
@@ -52,16 +54,21 @@ namespace taskt.Core.Automation.Commands
         public string v_Value { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Select If Key does not Exists")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUISelectionOption("Error")]
+        //[PropertyDescription("Please Select If Key does not Exists")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Add")]
+        //[PropertyIsOptional(true, "Error")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_WhenKeyDoesNotExists))]
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Add")]
-        [PropertyIsOptional(true, "Error")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDetailSampleUsage("**Ignore**", "Don't Set the Dictionary Item")]
+        [PropertyDetailSampleUsage("**Add**", "Add New Dictionary Item")]
         public string v_IfKeyDoesNotExists { get; set; }
 
         public SetDictionaryValueCommand()
@@ -76,27 +83,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
-
-            //string vKey;
-            //if (String.IsNullOrEmpty(v_Key))
-            //{
-            //    var variable = v_InputData.GetRawVariable(engine);
-            //    int pos = variable.CurrentPosition;
-            //    string[] keys = dic.Keys.ToArray();
-            //    if ((pos >= 0) && (pos < keys.Length))
-            //    {
-            //        vKey = keys[pos];
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("Strange Current Position in Dictionary " + pos);
-            //    }
-            //}
-            //else
-            //{
-            //    vKey = v_Key.ConvertToUserVariable(engine);
-            //}
             (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
             string valueToSet = v_Value.ConvertToUserVariable(engine);

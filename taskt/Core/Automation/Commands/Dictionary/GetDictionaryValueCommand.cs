@@ -15,54 +15,60 @@ namespace taskt.Core.Automation.Commands
     public class GetDictionaryValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please input The Dictionary Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Dictionary")]
+        //[PropertyDescription("Please input The Dictionary Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Dictionary")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the key for the Dictionary")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**key1** or **{{{vKeyName}}}**")]
-        [Remarks("If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyIsOptional(true, "Current Position")]
-        [PropertyDisplayText(true, "Key")]
+        //[PropertyDescription("Please indicate the key for the Dictionary")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**key1** or **{{{vKeyName}}}**")]
+        //[Remarks("If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyIsOptional(true, "Current Position")]
+        //[PropertyDisplayText(true, "Key")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Key))]
         public string v_Key { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the variable to apply result")]
-        [InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        [SampleUsage("**vMyData** or **{{{myData}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Result")]
+        //[PropertyDescription("Please indicate the variable to apply result")]
+        //[InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        //[SampleUsage("**vMyData** or **{{{myData}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Result")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_OutputVariable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Select If Key does not Exists")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUISelectionOption("Error")]
+        //[PropertyDescription("Please Select If Key does not Exists")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyUISelectionOption("Set Empty")]
+        //[PropertyIsOptional(true, "Error")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_WhenKeyDoesNotExists))]
         [PropertyUISelectionOption("Set Empty")]
-        [PropertyIsOptional(true, "Error")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDetailSampleUsage("**Set Empty**", "Result is Empty Value")]
         public string v_IfKeyDoesNotExists { get; set; }
 
         public GetDictionaryValueCommand()
@@ -77,27 +83,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
-
-            //string vKey;
-            //if (String.IsNullOrEmpty(v_Key))
-            //{
-            //    var variable = v_InputData.GetRawVariable(engine);
-            //    int pos = variable.CurrentPosition;
-            //    string[] keys = dic.Keys.ToArray();
-            //    if ((pos >= 0) && (pos < keys.Length))
-            //    {
-            //        vKey = keys[pos];
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("Strange Current Position value in Dictionary " + pos);
-            //    }
-            //}
-            //else
-            //{
-            //    vKey = v_Key.ConvertToUserVariable(sender);
-            //}
             (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
             if (dic.ContainsKey(vKey))
