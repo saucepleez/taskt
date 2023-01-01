@@ -93,6 +93,19 @@ namespace taskt.Core.Automation.Commands
         public static string v_KeyAndValue { get; }
 
         /// <summary>
+        /// when specifed key does not exists
+        /// </summary>
+        [PropertyDescription("When Key does not Exists")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public static string v_WhenKeyDoesNotExists { get; }
+
+        /// <summary>
         /// get Dictionary&lt;string, string&gt; Variable from variable name
         /// </summary>
         /// <param name="variableName"></param>
