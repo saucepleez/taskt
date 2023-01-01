@@ -133,16 +133,16 @@ namespace taskt.Core.Automation.Commands
 
         private static bool IsColumnExists(DataTable table, string columnName)
         {
-            for (int i = 0; i < table.Columns.Count; i++)
-            {
-                if (table.Columns[i].ColumnName == columnName)
-                {
-                    return true;
-                }
-            }
-            return false;
+            //for (int i = 0; i < table.Columns.Count; i++)
+            //{
+            //    if (table.Columns[i].ColumnName == columnName)
+            //    {
+            //        return true;
+            //    }
+            //}
+            //return false;
 
-            //return table.Columns.Contains(columnName);
+            return table.Columns.Contains(columnName);
         }
         private static bool IsColumnExists(DataTable table, int columnIndex)
         {
