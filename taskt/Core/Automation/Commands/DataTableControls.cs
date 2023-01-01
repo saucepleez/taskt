@@ -141,6 +141,8 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             return false;
+
+            //return table.Columns.Contains(columnName);
         }
         private static bool IsColumnExists(DataTable table, int columnIndex)
         {
@@ -242,14 +244,22 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Parameter Column or Value Column does not exists");
             }
 
-            for (int i = 0; i < dt.Rows.Count; i++)
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+            //    {
+            //        //return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+            //        return dt.Rows[i][valueColumnName]?.ToString() ?? "";
+            //    }
+            //}
+            foreach (DataRow row in dt.Rows)
             {
-                if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+                if ((row.Field<string>(parameterColumnName) ?? "") == parameterName)
                 {
-                    //return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
-                    return dt.Rows[i][valueColumnName]?.ToString() ?? "";
+                    return row.Field<string>(valueColumnName) ?? "";
                 }
             }
+
             return "";
         }
 
@@ -269,7 +279,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             //return dt.Rows[rowIndex][columnName] == null ? "" : dt.Rows[rowIndex][columnName].ToString();
-            return dt.Rows[rowIndex][columnName]?.ToString() ?? "";
+            //return dt.Rows[rowIndex][columnName]?.ToString() ?? "";
+            return dt.Rows[rowIndex].Field<string>(columnName) ?? "";
         }
 
         public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
