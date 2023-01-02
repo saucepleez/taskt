@@ -1146,7 +1146,9 @@ namespace taskt.UI.CustomControls
                 //                            .Where(v => (v.showInDescription))
                 //                            .ToList();
                 //}
-                var attrDetailSamples = GetCustomAttributesWithVirtual<PropertyDetailSampleUsage>(propInfo, virtualPropInfo);
+                var attrDetailSamples = GetCustomAttributesWithVirtual<PropertyDetailSampleUsage>(propInfo, virtualPropInfo)
+                                            .Where(v => v.showInDescription)
+                                            .ToList();
 
                 if (attrDetailSamples.Count > 0)
                 {
