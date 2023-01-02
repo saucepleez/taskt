@@ -114,7 +114,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
-        public static string v_ValueToAdd { get; set; }
+        public static string v_ValueToAdd { get; }
 
         /// <summary>
         /// get JSON text from text value or variable contains text. this method returns root type "object" or "array".
