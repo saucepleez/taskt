@@ -17,30 +17,32 @@ namespace taskt.Core.Automation.Commands
     public class ConvertJSONToDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Supply the JSON Object or Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Select or provide a variable or json array value")]
-        [SampleUsage("**{\"id\":123, \"name\": \"John\"}** or **{{{vJSON}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "JSON")]
+        //[PropertyDescription("Supply the JSON Object or Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Select or provide a variable or json array value")]
+        //[SampleUsage("**{\"id\":123, \"name\": \"John\"}** or **{{{vJSON}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "JSON")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_InputJSONName))]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the Dictionary")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Dictionary")]
+        //[PropertyDescription("Please select the variable to receive the Dictionary")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Dictionary")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
         public string v_applyToVariableName { get; set; }
 
         public ConvertJSONToDictionaryCommand()
@@ -55,33 +57,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
-            //if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
-            //{
-            //    Dictionary<string, string> resultDic = new Dictionary<string, string>();
-            //    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
-
-            //    foreach(var result in obj)
-            //    {
-            //        resultDic.Add(result.Key, result.Value.ToString());
-            //    }
-            //    resultDic.StoreInUserVariable(engine, v_applyToVariableName);
-            //}
-            //else if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
-            //{
-            //    Dictionary<string, string> resultDic = new Dictionary<string, string>();
-            //    Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
-
-            //    for (int i = 0; i < arr.Count; i++)
-            //    {
-            //        resultDic.Add("key" + i.ToString(), arr[i].ToString());
-            //    }
-            //    resultDic.StoreInUserVariable(engine, v_applyToVariableName);
-            //}
-            //else
-            //{
-            //    throw new Exception("Strange JSON");
-            //}
             Action<JObject> objFunc = new Action<JObject>((obj) =>
             {
                 Dictionary<string, string> resultDic = new Dictionary<string, string>();
