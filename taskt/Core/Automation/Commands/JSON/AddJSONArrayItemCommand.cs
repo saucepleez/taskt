@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using Newtonsoft.Json.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
