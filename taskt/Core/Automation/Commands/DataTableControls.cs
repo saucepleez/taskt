@@ -237,6 +237,15 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
+        /// <summary>
+        /// get DataTable Value, specify ParameterName, ParameterValue column name
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterColumnName"></param>
+        /// <param name="valueColumnName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static string GetFieldValue(DataTable dt, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
             if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
@@ -362,6 +371,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        #region Event handlers
         public static void AllEditableDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             var myDGV = (DataGridView)sender;
@@ -425,7 +435,9 @@ namespace taskt.Core.Automation.Commands
                 e.Cancel = true;
             }
         }
+        #endregion
 
+        #region Validate
         public static void BeforeValidate(DataGridView dgv, DataTable table)
         {
             if (dgv.IsCurrentCellDirty || dgv.IsCurrentRowDirty)
@@ -454,5 +466,6 @@ namespace taskt.Core.Automation.Commands
                 table.AcceptChanges();
             }
         }
+        #endregion
     }
 }
