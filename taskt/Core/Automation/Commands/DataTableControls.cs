@@ -272,6 +272,14 @@ namespace taskt.Core.Automation.Commands
             return "";
         }
 
+        /// <summary>
+        /// get DataTable Value, specify RowIndex, ParameterValue column name
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static string GetFieldValue(DataTable dt, int rowIndex, string columnName = "ParameterValue")
         {
             if (!IsColumnExists(dt, columnName))
@@ -292,6 +300,15 @@ namespace taskt.Core.Automation.Commands
             return dt.Rows[rowIndex].Field<string>(columnName) ?? "";
         }
 
+        /// <summary>
+        /// get DataTable Values as Dictionary
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="parameterColumnName"></param>
+        /// <param name="valueColumnName"></param>
+        /// <param name="engine">if not null, expand variables in ValueColumn values</param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
         {
             if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
@@ -300,13 +317,21 @@ namespace taskt.Core.Automation.Commands
             }
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    if (dt.Rows[i][parameterColumnName] != null)
+            //    {
+            //        //string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+            //        string value = dt.Rows[i][valueColumnName]?.ToString() ?? "";
+            //        dic.Add(dt.Rows[i][parameterColumnName].ToString(), value);
+            //    }
+            //}
+            foreach (DataRow row in dt.Rows)
             {
-                if (dt.Rows[i][parameterColumnName] != null)
+                var key = row.Field<string>(parameterColumnName) ?? "";
+                if (key != "")
                 {
-                    //string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
-                    string value = dt.Rows[i][valueColumnName]?.ToString() ?? "";
-                    dic.Add(dt.Rows[i][parameterColumnName].ToString(), value);
+                    dic.Add(key, row.Field<string>(valueColumnName) ?? "");
                 }
             }
 
@@ -322,23 +347,48 @@ namespace taskt.Core.Automation.Commands
             return dic;
         }
 
+        /// <summary>
+        /// set DataTable value specified by column names
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="newValue"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterColumnName"></param>
+        /// <param name="valueColumnName"></param>
+        /// <returns></returns>
         public static bool SetParameterValue(DataTable dt, string newValue, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
             if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
             {
                 return false;
             }
-            for (int i = 0; i < dt.Rows.Count; i++)
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+            //    {
+            //        dt.Rows[i][valueColumnName] = newValue;
+            //        return true;
+            //    }
+            //}
+            foreach (DataRow row in dt.Rows)
             {
-                if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+                var key = row.Field<string>(parameterColumnName) ?? "";
+                if (key == parameterName)
                 {
-                    dt.Rows[i][valueColumnName] = newValue;
+                    row.SetField<string>(valueColumnName, newValue);
                     return true;
                 }
             }
             return false;
         }
 
+        /// <summary>
+        /// check parameter names exists
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="parameterNames"></param>
+        /// <param name="parameterNameColumn"></param>
+        /// <returns></returns>
         public static bool IsParameterNamesExists(DataTable dt, List<string> parameterNames, string parameterNameColumn = "ParameterName")
         {
             if (!IsColumnExists(dt, parameterNameColumn))
@@ -351,18 +401,26 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                foreach(string n in parameterNames)
-                { 
-                    bool isExists = false;
-                    for (int i = dt.Rows.Count - 1; i >= 0; i--)
-                    {
-                        if (dt.Rows[i][parameterNameColumn].ToString() == n)
-                        {
-                            isExists = true;
-                            break;
-                        }
-                    }
-                    if (!isExists)
+                //foreach(string n in parameterNames)
+                //{ 
+                //    bool isExists = false;
+                //    for (int i = dt.Rows.Count - 1; i >= 0; i--)
+                //    {
+                //        if (dt.Rows[i][parameterNameColumn].ToString() == n)
+                //        {
+                //            isExists = true;
+                //            break;
+                //        }
+                //    }
+                //    if (!isExists)
+                //    {
+                //        return false;
+                //    }
+                //}
+                foreach (DataRow row in dt.Rows)
+                {
+                    var key = row.Field<string>(parameterNameColumn) ?? "";
+                    if (!parameterNameColumn.Contains(key))
                     {
                         return false;
                     }
