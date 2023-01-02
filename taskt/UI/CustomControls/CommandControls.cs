@@ -277,6 +277,29 @@ namespace taskt.UI.CustomControls
             // body
             controlList.Add(createdInput);
 
+            // into Field (Scheduled to be discontinued)
+            var attrInto = GetCustomAttributeWithVirtual<PropertyControlIntoCommandField>(propInfo, virtualPropInfo);
+            if (attrInto != null)
+            {
+                var tp = command.GetType();
+                if (attrInto.bodyName != "")
+                {
+                    var field = tp.GetField(attrInto.bodyName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as Body does not Exists. Name: '" + attrInto.bodyName + "'");
+                    field.SetValue(command, createdInput);
+                }
+                if (attrInto.labelName != "")
+                {
+                    var field = tp.GetField(attrInto.labelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as Label does not Exists. Name: '" + attrInto.bodyName + "'");
+                    field.SetValue(command, label);
+                }
+                if (attrInto.secondLabelName != "")
+                {
+                    var field = tp.GetField(attrInto.secondLabelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as 2nd-Label does not Exists. Name: '" + attrInto.bodyName + "'");
+                    var label2nd = controlList.Where(c => (c.Name == "lbl2_" + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
+                    field.SetValue(command, label2nd);
+                }
+            }
+
             return controlList;
         }
         #endregion
