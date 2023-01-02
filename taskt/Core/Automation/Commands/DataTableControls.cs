@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// for DataTable methods
+    /// </summary>
     internal static class DataTableControls
     {
         /// <summary>
