@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.ModelBinding;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -72,7 +71,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("JSONPath Helper", nameof(JSONControls) + "+" + nameof(lnkJsonPathHelper_Click))]
         [PropertyValidationRule("JSON Extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Extractor")]
-        public static string v_JSONPath { get; set; }
+        public static string v_JSONPath { get; }
 
         /// <summary>
         /// Value type to Add JSON
