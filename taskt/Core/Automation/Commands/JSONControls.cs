@@ -1,11 +1,44 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     static internal class JSONControls
     {
+        /// <summary>
+        /// input JSON Variable or Value
+        /// </summary>
+        [PropertyDescription("JSON Variable Name or JSON Value")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**{ \"id\": 3, \"value\": \"Hello\" }", "Specify the JSON Object Text")]
+        [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]", "Specify the JSON Array Text")]
+        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
+        public static string v_InputJSONName { get; }
+
+        /// <summary>
+        /// output JSON Variable
+        /// </summary>
+        [PropertyDescription("JSON Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
+        public static string v_OutputJSONName { get; }
+
         /// <summary>
         /// get JSON text from text value or variable contains text. this method returns root type "object" or "array".
         /// </summary>
