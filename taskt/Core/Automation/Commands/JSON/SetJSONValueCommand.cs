@@ -40,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("JSON extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Extractor")]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_JSONPath))]
+        [PropertyDetailSampleUsage("**$.names[0]**", "Specify the First item in the Array of **names** Property")]
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
