@@ -30,18 +30,19 @@ namespace taskt.Core.Automation.Commands
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the variable to apply JSON")]
-        [InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        [SampleUsage("**vJSON** or **{{{vJSON}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
-        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "JSON")]
+        //[PropertyDescription("Please indicate the variable to apply JSON")]
+        //[InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        //[SampleUsage("**vJSON** or **{{{vJSON}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "JSON")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
         public string v_OutputVariable { get; set; }
 
         public ConvertDictionaryToJSONCommand()

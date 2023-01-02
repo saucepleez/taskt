@@ -31,16 +31,17 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the JSON")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
-        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "JSON")]
+        //[PropertyDescription("Please select the variable to receive the JSON")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "JSON")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
         public string v_applyToVariableName { get; set; }
 
         public ConvertListToJSONCommand()

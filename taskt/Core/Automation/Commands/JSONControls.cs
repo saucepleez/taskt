@@ -30,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
