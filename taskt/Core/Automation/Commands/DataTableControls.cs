@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -11,6 +12,86 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class DataTableControls
     {
+        /// <summary>
+        /// input DataTable property
+        /// </summary>
+        [PropertyDescription("DataTable Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
+        public static string v_InputDataTableName { get; }
+
+        /// <summary>
+        /// output DataTable property
+        /// </summary>
+        [PropertyDescription("DataTable Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
+        public static string v_OutputDataTableName { get; }
+
+        /// <summary>
+        /// when column does not exists
+        /// </summary>
+        [PropertyDescription("When DataTable Column does not Exists")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not add a Column")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public static string v_WhenColumnNotExists { get; }
+
+        /// <summary>
+        /// column type
+        /// </summary>
+        [PropertyDescription("Column type")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Column Name**", "Specify the Column Name like **Name**")]
+        [PropertyDetailSampleUsage("**Index**", "Specify the Column Index like **0** or **1**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Column Name")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyIsOptional(true, "Column Name")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDisplayText(true, "Column Type")]
+        public static string v_ColumnType { get; }
+
+        /// <summary>
+        /// column name or index
+        /// </summary>
+        [PropertyDescription("Name or Index of the Column")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Column Name")]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Column Index")]
+        [PropertyDetailSampleUsage("**-1**", "Specify Last Column Index")]
+        [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column Name or Index")]
+        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
+        public static string v_ColumnNameIndex { get; set; }
+
         /// <summary>
         /// get DataTable variable from variable name
         /// </summary>
