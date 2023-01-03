@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Value to Search.")]
+        [PropertyDescription("Value to Search")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         //[SampleUsage("**0** or **{{{vValue}}}**")]

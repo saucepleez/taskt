@@ -16,14 +16,18 @@ namespace taskt.Core.Automation.Commands
     public class SortListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name to sort")]
-        [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyDescription("Please select a List Variable Name to sort")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vList** or **{{{vList}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyValidationRule("List to Sort", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List to Sort")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyDescription("List Variable Name to Sort")]
         [PropertyValidationRule("List to Sort", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List to Sort")]
         public string v_InputList { get; set; }
@@ -53,14 +57,18 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select a List Variable Name of the Sorted List")]
-        [InputSpecification("")]
-        [SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyDescription("Please select a List Variable Name of the Sorted List")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "New List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
+        [PropertyDescription("New List Variable Name")]
         [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New List")]
         public string v_OutputList { get; set; }
@@ -77,10 +85,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //string sortOrder = v_SortOrder.GetUISelectionValue("v_SortOrder", this, engine);
             string sortOrder = this.GetUISelectionValue(nameof(v_SortOrder), "Sort Order", engine);
 
-            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
             string targetType = this.GetUISelectionValue(nameof(v_TargetType), "Target Type", engine);
 
             switch (targetType)
@@ -101,10 +107,7 @@ namespace taskt.Core.Automation.Commands
                 case "number":
                     List<decimal> targetValueList = v_InputList.GetDecimalListVariable(false, engine);
                     List<decimal> valueList = new List<decimal>(targetValueList);
-                    //foreach(var v in targetValueList)
-                    //{
-                    //    valueList.Add(decimal.Parse(v));
-                    //}
+
                     valueList.Sort();
                     if (sortOrder == "descending")
                     {

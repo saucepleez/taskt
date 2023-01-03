@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("List to Convert", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "List to Convert")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("List Variable to convert")]
+        [PropertyDescription("List Variable Name to convert")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]

@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("List to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "List to Copy")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("List Variable to Copy")]
+        [PropertyDescription("List Variable Name to be Copied")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
@@ -42,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "New List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
+        [PropertyDescription("New List Variable Name")]
         [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New List")]
         public string v_OutputList { get; set; }
