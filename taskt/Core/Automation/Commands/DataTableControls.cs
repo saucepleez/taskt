@@ -92,6 +92,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Column")]
         public static string v_ColumnNameIndex { get; }
 
+        /// <summary>
+        /// row index
+        /// </summary>
         [PropertyDescription("Index of the Row")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
