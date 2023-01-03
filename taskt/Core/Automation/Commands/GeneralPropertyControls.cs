@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Value")]
-        public static string v_DisallowNewLine_OneLineTextBox { get; set; }
+        public static string v_DisallowNewLine_OneLineTextBox { get; }
 
         /// <summary>
         /// One line textbox property, new line allow
@@ -46,6 +46,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
-        public static string v_OneLineTextBox { get; set; }
+        public static string v_OneLineTextBox { get; }
     }
 }
