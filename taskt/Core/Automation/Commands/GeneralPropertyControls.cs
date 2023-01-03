@@ -28,7 +28,6 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Value")]
         [InputSpecification("")]
-        [SampleUsage("")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
@@ -41,7 +40,6 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Value")]
         [InputSpecification("")]
-        [SampleUsage("")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyShowSampleUsageInDescription(true)]
