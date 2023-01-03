@@ -90,7 +90,21 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Column")]
-        public static string v_ColumnNameIndex { get; set; }
+        public static string v_ColumnNameIndex { get; }
+
+        [PropertyDescription("Index of the Row")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**0**", "Specify First Row Index")]
+        [PropertyDetailSampleUsage("**-1**", "Specify Last Row Index")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Row Index")]
+        [PropertyDetailSampleUsage("**{{{vRowIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Row Index")]
+        [Remarks("**-1** means index of the last row.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "Current Row")]
+        [PropertyDisplayText(true, "Row")]
+        public static string v_RowIndex { get; }
 
         /// <summary>
         /// get DataTable variable from variable name
