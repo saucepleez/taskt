@@ -229,6 +229,9 @@ namespace taskt.Core
                         case "output":
                             desc = "The Parameter for Storing the Result of command execution";
                             break;
+                        case "both":
+                            desc = "The Input Parameter for Executing the command And also The Parameter for Storing the Result of command execution";
+                            break;
                         default:
                             desc = "Unkown";
                             break;
