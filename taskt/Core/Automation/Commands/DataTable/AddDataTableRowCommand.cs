@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         public string v_DataTableName { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Data")]
+        [PropertyDescription("Column Names and Values")]
         [InputSpecification("Enter the Column Names required for each column of data")]
         [SampleUsage("")]
         [Remarks("")]
