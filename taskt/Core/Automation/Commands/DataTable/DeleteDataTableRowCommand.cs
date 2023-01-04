@@ -15,27 +15,29 @@ namespace taskt.Core.Automation.Commands
     public class DeleteDataTableRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the DataTable Variable Name to be delete a row")]
-        [InputSpecification("Enter a existing DataTable Variable Name")]
-        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
+        //[PropertyDescription("Please indicate the DataTable Variable Name to be delete a row")]
+        //[InputSpecification("Enter a existing DataTable Variable Name")]
+        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the Row Index to delete")]
-        [InputSpecification("")]
-        [SampleUsage("**0** or **1** or **-1** or **{{{vRow}}}**")]
-        [Remarks("**-1** means index of the last row.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsOptional(true, "Current Row")]
-        [PropertyDisplayText(true, "Row")]
+        //[PropertyDescription("Please specify the Row Index to delete")]
+        //[InputSpecification("")]
+        //[SampleUsage("**0** or **1** or **-1** or **{{{vRow}}}**")]
+        //[Remarks("**-1** means index of the last row.")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyIsOptional(true, "Current Row")]
+        //[PropertyDisplayText(true, "Row")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]]
         public string v_RowIndex { get; set; }
 
         public DeleteDataTableRowCommand()
@@ -49,10 +51,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-
-            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
-
-            //int index = DataTableControls.GetRowIndex(v_DataTableName, v_RowIndex, engine);
 
             (var myDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
 
