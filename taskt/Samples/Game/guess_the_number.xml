@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="19ee4637-47f5-4e5a-b3fa-bcedaf4dd2c8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Guess the Number" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RandomNumberCommand" CommandID="eb50a306-61c2-4c88-9f0b-2131223a3676" CommandName="RandomNumberCommand" IsCommented="false" SelectionName="Random Number" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="create random number" CommandEnabled="true" v_RandomType="Integer Number" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MathCalculationCommand" CommandID="89c870ca-47dc-4503-b6ca-d101de285e5c" CommandName="MathCalculationCommand" IsCommented="false" SelectionName="Math Calculation" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="change range 1 to 100" CommandEnabled="true" v_InputValue="(⦃num⦄ % 101) + 1" v_ThousandSeperator="" v_DecimalSeperator="." v_applyToVariableName="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="40fef6f2-b23e-429f-967c-d9bc89292f68" CommandName="MessageBoxCommand" IsCommented="true" SelectionName="Show Message" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Answer: ⦃num⦄" v_AutoCloseAfter="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginContinousLoopCommand" CommandID="35dbf3d2-5569-4d5f-a76b-56709d8c6e21" CommandName="BeginContinousLoopCommand" IsCommented="false" SelectionName="Loop Continuously" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="UserInputCommand" CommandID="c8f3cbb0-36f9-4ec6-accb-eb31b36b975d" CommandName="UserInputCommand" IsCommented="false" SelectionName="Prompt for Input" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InputHeader="Guess the Number (1 to 100)" v_InputDirections="Guess the Number (1 to 100)">
+          <v_UserInputConfig>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="UserInputConfig010423.121824">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Type" type="xs:string" default="TextBox" minOccurs="0" />
+                    <xs:element name="Label" type="xs:string" minOccurs="0" />
+                    <xs:element name="Size" type="xs:string" minOccurs="0" />
+                    <xs:element name="DefaultValue" type="xs:string" minOccurs="0" />
+                    <xs:element name="UserInput" type="xs:string" minOccurs="0" />
+                    <xs:element name="ApplyToVariable" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UserInputConfig010423.121824" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="UserInputConfig010423.121824" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <UserInputConfig010423.121824 diffgr:id="UserInputConfig010423.1218241" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                  <Type>TextBox</Type>
+                  <Label>Number</Label>
+                  <Size>500,100</Size>
+                  <DefaultValue>⦃guess⦄</DefaultValue>
+                  <UserInput></UserInput>
+                  <ApplyToVariable>⦃guess⦄</ApplyToVariable>
+                </UserInputConfig010423.121824>
+              </DocumentElement>
+              <diffgr:before>
+                <UserInputConfig010423.121824 diffgr:id="UserInputConfig010423.1218241" msdata:rowOrder="0">
+                  <Type>TextBox</Type>
+                  <Label>Number</Label>
+                  <Size>500,100</Size>
+                  <DefaultValue>{guess}</DefaultValue>
+                  <ApplyToVariable>{guess}</ApplyToVariable>
+                </UserInputConfig010423.121824>
+              </diffgr:before>
+            </diffgr:diffgram>
+          </v_UserInputConfig>
+        </ScriptCommand>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="19ee4637-47f5-4e5a-b3fa-bcedaf4dd2c8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Check number" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="BeginIfCommand" CommandID="4bcca222-5e63-46e9-8664-c4d6c8406dc6" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Is Numeric">
+          <v_IfActionParameterTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9Ac午ionPara26Table010423.122648" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="I9Ac午ionPara26Table010423.122648">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <I9Ac午ionPara26Table010423.122648 diffgr:id="I9Ac午ionPara26Table010423.1226481" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                  <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>⦃guess⦄</Parameter_x0020_Value>
+                </I9Ac午ionPara26Table010423.122648>
+              </DocumentElement>
+              <diffgr:before>
+                <I9Ac午ionPara26Table010423.122648 diffgr:id="I9Ac午ionPara26Table010423.1226481" msdata:rowOrder="0">
+                  <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>{guess}</Parameter_x0020_Value>
+                </I9Ac午ionPara26Table010423.122648>
+              </diffgr:before>
+            </diffgr:diffgram>
+          </v_IfActionParameterTable>
+        </ScriptCommand>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="ElseCommand" CommandID="c50af2d0-df51-4468-874c-b41abbd98092" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b8e86eb-49e6-410f-a08d-897abff5f1e4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Please type a Number" v_AutoCloseAfter="" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="NextLoopCommand" CommandID="c2cd3c63-b66b-4643-b4dc-c7432000358e" CommandName="NextLoopCommand" IsCommented="false" SelectionName="Next Loop" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="EndIfCommand" CommandID="2fd613fe-bdd8-42dc-ac75-b58ffc54cdb7" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="19ee4637-47f5-4e5a-b3fa-bcedaf4dd2c8" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Correct or not ?" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="BeginIfCommand" CommandID="4649d8aa-b935-46f5-b71c-13901b8fb694" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Numeric Compare">
+          <v_IfActionParameterTable>
+            <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+              <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I2Ac午ionPara19Table010423.121904" msdata:UseCurrentLocale="true">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="I2Ac午ionPara19Table010423.121904">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                          <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:schema>
+            <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+              <DocumentElement>
+                <I2Ac午ionPara19Table010423.121904 diffgr:id="I2Ac午ionPara19Table010423.1219041" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                  <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>⦃guess⦄</Parameter_x0020_Value>
+                </I2Ac午ionPara19Table010423.121904>
+                <I2Ac午ionPara19Table010423.121904 diffgr:id="I2Ac午ionPara19Table010423.1219042" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                  <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+                </I2Ac午ionPara19Table010423.121904>
+                <I2Ac午ionPara19Table010423.121904 diffgr:id="I2Ac午ionPara19Table010423.1219043" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                  <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>⦃num⦄</Parameter_x0020_Value>
+                </I2Ac午ionPara19Table010423.121904>
+              </DocumentElement>
+              <diffgr:before>
+                <I2Ac午ionPara19Table010423.121904 diffgr:id="I2Ac午ionPara19Table010423.1219041" msdata:rowOrder="0">
+                  <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>{guess}</Parameter_x0020_Value>
+                </I2Ac午ionPara19Table010423.121904>
+                <I2Ac午ionPara19Table010423.121904 diffgr:id="I2Ac午ionPara19Table010423.1219042" msdata:rowOrder="1">
+                  <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+                </I2Ac午ionPara19Table010423.121904>
+                <I2Ac午ionPara19Table010423.121904 diffgr:id="I2Ac午ionPara19Table010423.1219043" msdata:rowOrder="2">
+                  <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                  <Parameter_x0020_Value>{num}</Parameter_x0020_Value>
+                </I2Ac午ionPara19Table010423.121904>
+              </diffgr:before>
+            </diffgr:diffgram>
+          </v_IfActionParameterTable>
+        </ScriptCommand>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b8e86eb-49e6-410f-a08d-897abff5f1e4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="You Win !" v_AutoCloseAfter="" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="ExitLoopCommand" CommandID="fb9a7415-6637-4b3b-8b59-4bc94f9efcd0" CommandName="ExitLoopCommand" IsCommented="false" SelectionName="Exit Loop" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="ElseCommand" CommandID="aa76f0fc-9749-4104-a32a-5f99c2992a72" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="BeginIfCommand" CommandID="1fc7aa91-3c90-40aa-9634-362ee5fd8ace" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Numeric Compare">
+            <v_IfActionParameterTable>
+              <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+                <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9Ac午ionPara19Table010423.121938" msdata:UseCurrentLocale="true">
+                  <xs:complexType>
+                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                      <xs:element name="I9Ac午ionPara19Table010423.121938">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                            <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:choice>
+                  </xs:complexType>
+                </xs:element>
+              </xs:schema>
+              <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+                <DocumentElement>
+                  <I9Ac午ionPara19Table010423.121938 diffgr:id="I9Ac午ionPara19Table010423.1219381" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                    <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                    <Parameter_x0020_Value>⦃guess⦄</Parameter_x0020_Value>
+                  </I9Ac午ionPara19Table010423.121938>
+                  <I9Ac午ionPara19Table010423.121938 diffgr:id="I9Ac午ionPara19Table010423.1219382" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                    <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                    <Parameter_x0020_Value>is less than</Parameter_x0020_Value>
+                  </I9Ac午ionPara19Table010423.121938>
+                  <I9Ac午ionPara19Table010423.121938 diffgr:id="I9Ac午ionPara19Table010423.1219383" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                    <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                    <Parameter_x0020_Value>⦃num⦄</Parameter_x0020_Value>
+                  </I9Ac午ionPara19Table010423.121938>
+                </DocumentElement>
+                <diffgr:before>
+                  <I9Ac午ionPara19Table010423.121938 diffgr:id="I9Ac午ionPara19Table010423.1219381" msdata:rowOrder="0">
+                    <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                    <Parameter_x0020_Value>{guess}</Parameter_x0020_Value>
+                  </I9Ac午ionPara19Table010423.121938>
+                  <I9Ac午ionPara19Table010423.121938 diffgr:id="I9Ac午ionPara19Table010423.1219382" msdata:rowOrder="1">
+                    <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                    <Parameter_x0020_Value>is less than</Parameter_x0020_Value>
+                  </I9Ac午ionPara19Table010423.121938>
+                  <I9Ac午ionPara19Table010423.121938 diffgr:id="I9Ac午ionPara19Table010423.1219383" msdata:rowOrder="2">
+                    <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                    <Parameter_x0020_Value>{num}</Parameter_x0020_Value>
+                  </I9Ac午ionPara19Table010423.121938>
+                </diffgr:before>
+              </diffgr:diffgram>
+            </v_IfActionParameterTable>
+          </ScriptCommand>
+          <AdditionalScriptCommands>
+            <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b8e86eb-49e6-410f-a08d-897abff5f1e4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Too Small" v_AutoCloseAfter="" />
+          </AdditionalScriptCommands>
+          <AdditionalScriptCommands>
+            <ScriptCommand xsi:type="ElseCommand" CommandID="241c9a11-891f-43f8-8856-227035431a5c" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" CommandEnabled="true" />
+          </AdditionalScriptCommands>
+          <AdditionalScriptCommands>
+            <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4b8e86eb-49e6-410f-a08d-897abff5f1e4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Too Big" v_AutoCloseAfter="" />
+          </AdditionalScriptCommands>
+          <AdditionalScriptCommands>
+            <ScriptCommand xsi:type="EndIfCommand" CommandID="d33df21c-2faa-4367-9c92-57844ebf1820" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" />
+          </AdditionalScriptCommands>
+        </AdditionalScriptCommands>
+        <AdditionalScriptCommands>
+          <ScriptCommand xsi:type="EndIfCommand" CommandID="53ea9c36-211a-4e9c-8caa-2174515e6920" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" />
+        </AdditionalScriptCommands>
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="9faf8403-e934-4185-a234-b75312080185" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.21</TasktVersion>
+    <Author />
+    <LastRunTime>2023-01-04T12:27:41.1173747+09:00</LastRunTime>
+    <RunTimes>8</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>guess</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>num</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
