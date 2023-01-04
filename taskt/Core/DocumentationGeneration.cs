@@ -220,7 +220,20 @@ namespace taskt.Core
                 var direction = GetCustomAttributeWithVirtual<PropertyParameterDirection>(prop, vPropList[count]);
                 if (direction != null)
                 {
-                    sb.AppendLine("<dt>Parameter Direction</dt><dd>" + direction.porpose.ToString() + "</dd>");
+                    string desc = "";
+                    switch (direction.porpose.ToString().ToLower())
+                    {
+                        case "input":
+                            desc = "The Input Parameter for Executing the command";
+                            break;
+                        case "output":
+                            desc = "The Parameter for Storing the Result of command execution";
+                            break;
+                        default:
+                            desc = "Unkown";
+                            break;
+                    }
+                    sb.AppendLine("<dt>Parameter Direction</dt><dd>" + desc + "</dd>");
                 }
 
                 // error validation
@@ -362,7 +375,7 @@ namespace taskt.Core
 
         private static string GetSampleUsageText(PropertyInfo propInfo, PropertyInfo virtualPropInfo, ApplicationSettings settings)
         {
-            var smp = CommandControls.GetSampleUsageText(propInfo, settings, null, false);
+            var smp = CommandControls.GetSampleUsageText(propInfo, settings, virtualPropInfo, false);
 
             if (smp == "")
             {
