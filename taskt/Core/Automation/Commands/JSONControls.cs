@@ -21,6 +21,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
         public static string v_InputJSONName { get; }
@@ -36,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
         public static string v_InputJSONVariableName { get; }
@@ -56,6 +58,23 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
         public static string v_OutputJSONName { get; }
+
+        /// <summary>
+        /// input & output JSON Variable
+        /// </summary>
+        [PropertyDescription("JSON Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
+        public static string v_BothJSONName { get; }
 
         /// <summary>
         /// JSON path
