@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "DataTable")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyShowSampleUsageInDescription(true)]
         //[PropertyIsOptional(true, "Current Row")]
         //[PropertyDisplayText(true, "Row")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
         public string v_RowIndex { get; set; }
 
         public DeleteDataTableRowCommand()

@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyUISelectionOption("Index")]
         //[PropertyIsOptional(true, "Column Name")]
         //[PropertyDisplayText(true, "Column Type")
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyTextBoxSetting(1, false)]
         //[PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Column")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnNameIndex))]]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnNameIndex))]
         public string v_DeleteColumnName { get; set; }
 
         public DeleteDataTableColumnCommand()
