@@ -110,6 +110,36 @@ namespace taskt.Core.Automation.Commands
         public static string v_RowIndex { get; }
 
         /// <summary>
+        /// for set column values parameter
+        /// </summary>
+        [PropertyDescription("When there are Less Rows than *** to set")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not Add New Rows")]
+        [PropertyDetailSampleUsage("**Add Rows**", "Add New Rows")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Add Rows")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public static string v_WhenLessRows { get; }
+
+        /// <summary>
+        /// for set column values parameter
+        /// </summary>
+        [PropertyDescription("When there are Less Rows than DataTable to be Setted")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not Set Value")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public static string v_WhenGreaterRows { set; get; }
+
+        /// <summary>
         /// get DataTable variable from variable name
         /// </summary>
         /// <param name="variableName"></param>
