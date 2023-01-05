@@ -43,6 +43,26 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "List")]
         public static string v_OutputListName { get; }
 
+        /// <summary>
+        /// input & output List variable Property
+        /// </summary>
+        [PropertyDescription("List Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
+        public static string v_BothListName { get; }
+
+        /// <summary>
+        /// column type
+        /// </summary>
         [PropertyDescription("Columns Type")]
         [InputSpecification("")]
         [SampleUsage("")]
