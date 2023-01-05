@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "List")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_BothListName))]
         public string v_ListName { get; set; }
 
         [XmlAttribute]

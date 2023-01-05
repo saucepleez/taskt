@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "List")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_ListName { get; set; }
 
         [XmlElement]

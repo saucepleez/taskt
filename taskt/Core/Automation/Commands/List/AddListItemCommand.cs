@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class AddListItemCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_BothListName))]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
