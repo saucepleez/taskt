@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
         [PropertyDataGridViewColumnSettings("Data", "Data", false)]
-        [PropertyDataGridViewCellEditEvent("AddDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyCustomUIHelper("Load Column Names From Existing Table", nameof(LoadSchemaControl_Click), "load_column")]
         [PropertyDisplayText(true, "Rows", "items")]
         public DataTable v_AddDataDataTable { get; set; }
