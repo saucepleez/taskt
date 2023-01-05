@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         //[PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Dictionary to Replace")]
-        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_BothDictionaryName))]
         [PropertyDescription("Dictionary Variable Name to Replace")]
         [PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary to Replace")]

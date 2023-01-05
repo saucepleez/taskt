@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Dictionary")]
-        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
