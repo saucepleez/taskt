@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -39,11 +40,17 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
+            //var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
 
-            var list = ListControls.GetDecimalListVariable(v_InputList, (notNumeric == "ignore"), engine);
+            //var list = ListControls.GetDecimalListVariable(v_InputList, (notNumeric == "ignore"), engine);
 
-            list.Max().ToString().StoreInUserVariable(engine, v_Result);
+            //list.Max().ToString().StoreInUserVariable(engine, v_Result);
+            ListControls.MathProcess(this, nameof(v_IfValueIsNotNumeric), v_InputList, engine,
+                new Func<List<decimal>, decimal>((lst) =>
+                {
+                    return lst.Max();
+                })
+            ).StoreInUserVariable(engine, v_Result);
         }
     }
 }

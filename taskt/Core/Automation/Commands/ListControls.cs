@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -189,6 +190,24 @@ namespace taskt.Core.Automation.Commands
             }
 
             return numList;
+        }
+
+        /// <summary>
+        /// math calc process to List
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="notNumericName"></param>
+        /// <param name="listName"></param>
+        /// <param name="engine"></param>
+        /// <param name="mathFunc"></param>
+        /// <returns></returns>
+        public static string MathProcess(ScriptCommand command, string notNumericName, string listName, Engine.AutomationEngineInstance engine, Func<List<decimal>, decimal> mathFunc)
+        {
+            var notNumeric = command.GetUISelectionValue(notNumericName, "Not Numeric", engine);
+
+            var list = GetDecimalListVariable(listName, (notNumeric == "ignore"), engine);
+
+            return mathFunc(list).ToString();
         }
     }
 }
