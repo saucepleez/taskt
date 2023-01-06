@@ -18,16 +18,6 @@ namespace taskt.Core.Automation.Commands
     public class FilterListCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name to Filter")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vList** or **{{{vList}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         [PropertyDescription("List Variable Name to Filter")]
         [PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -72,21 +62,10 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name of the Filtered List")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("Result List Variable Name")]
-        [PropertyValidationRule("Result List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Result")]
+        [PropertyDescription("New List Variable Name")]
+        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New List")]
         public string v_OutputList { get; set; }
 
         public FilterListCommand()
