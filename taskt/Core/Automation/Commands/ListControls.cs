@@ -201,6 +201,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <param name="mathFunc"></param>
         /// <returns></returns>
+        /// <exception cref=""></exception>
         public static string MathProcess(ScriptCommand command, string notNumericName, string listName, Engine.AutomationEngineInstance engine, Func<List<decimal>, decimal> mathFunc)
         {
             var notNumeric = command.GetUISelectionValue(notNumericName, "Not Numeric", engine);
