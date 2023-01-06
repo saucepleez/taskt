@@ -46,6 +46,24 @@ namespace taskt.Core.Automation.Commands
         public static string v_OutputListName { get; }
 
         /// <summary>
+        /// New output List variable Property
+        /// </summary>
+        [PropertyDescription("New List Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vNewList**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNewList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New List")]
+        public static string v_NewOutputListName { get; }
+
+        /// <summary>
         /// input & output List variable Property
         /// </summary>
         [PropertyDescription("List Variable Name")]
