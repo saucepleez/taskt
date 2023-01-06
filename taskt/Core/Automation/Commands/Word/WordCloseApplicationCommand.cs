@@ -29,7 +29,10 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter a TRUE or FALSE value")]
         [Attributes.PropertyAttributes.SampleUsage("'TRUE' or 'FALSE'")]
         [Attributes.PropertyAttributes.Remarks("")]
-        public bool v_WordSaveOnExit { get; set; }
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("TRUE")]
+        [Attributes.PropertyAttributes.PropertyUISelectionOption("FALSE")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        public string v_WordSaveOnExit { get; set; }
         public WordCloseApplicationCommand()
         {
             this.CommandName = "WordCloseApplicationCommand";
@@ -70,7 +73,7 @@ namespace taskt.Core.Automation.Commands
             UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Word);
             RenderedControls.AddRange(instanceCtrls);
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WordSaveOnExit", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_WordSaveOnExit", this, editor));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

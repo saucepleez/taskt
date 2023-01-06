@@ -16,45 +16,49 @@ namespace taskt.Core.Automation.Commands
     public class SetDataTableRowValuesByDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the DataTable Variable Name to be setted a row")]
-        [InputSpecification("Enter a existing DataTable Variable Name")]
-        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
+        //[PropertyDescription("Please indicate the DataTable Variable Name to be setted a row")]
+        //[InputSpecification("Enter a existing DataTable Variable Name")]
+        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the Row index to set values")]
-        [InputSpecification("")]
-        [SampleUsage("**0** or **1** or **-1** or **{{{vIndex}}}**")]
-        [Remarks("**-1** means index of the last row.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsOptional(true, "Current Row")]
-        [PropertyDisplayText(true, "Row")]
+        //[PropertyDescription("Please specify the Row index to set values")]
+        //[InputSpecification("")]
+        //[SampleUsage("**0** or **1** or **-1** or **{{{vIndex}}}**")]
+        //[Remarks("**-1** means index of the last row.")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyIsOptional(true, "Current Row")]
+        //[PropertyDisplayText(true, "Row")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
         public string v_RowIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the Dictionary Variable Name to set to the DataTable")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Dictionary")]
+        //[PropertyDescription("Please specify the Dictionary Variable Name to set to the DataTable")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Dictionary")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         public string v_RowValues { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the if Dictionary key does not exists")]
+        [PropertyDescription("When Dictionary Key does not Exists")]
         [InputSpecification("")]
-        [SampleUsage("**Ignore** or **Error**")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not Set a Value")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Ignore")]
@@ -74,17 +78,13 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
-            //int rowIndex = DataTableControls.GetRowIndex(v_DataTableName, v_RowValues, engine);
             (var myDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
 
             var myDic = v_RowValues.GetDictionaryVariable(engine);
 
-            //string ifNotExistsKey = v_NotExistsKey.GetUISelectionValue("v_NotExistsKey", this, engine);
             string ifKeyNotExists = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Not Exists", engine);
 
             // get columns list
-            //List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
             new GetDataTableColumnListCommand
             {
                 v_DataTableName = this.v_DataTableName,

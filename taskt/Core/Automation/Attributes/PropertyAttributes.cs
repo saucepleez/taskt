@@ -315,7 +315,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         {
             Unknown,
             Input,
-            Output
+            Output,
+            Both
         }
     }
 

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            taskt.Core.Theme theme2 = new taskt.Core.Theme();
+            taskt.Core.Theme theme1 = new taskt.Core.Theme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmScriptBuilder));
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new taskt.UI.CustomControls.UIMenuStrip();
@@ -77,6 +77,7 @@
             this.optionToolStripSep3 = new System.Windows.Forms.ToolStripSeparator();
             this.showGUIInspectToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showJSONPathHelperToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFormatCheckerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptActionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -198,7 +199,6 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
-            this.showFormatCheckerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -706,6 +706,14 @@
             this.showJSONPathHelperToolToolStripMenuItem.Text = "&JSONPath Helper";
             this.showJSONPathHelperToolToolStripMenuItem.Click += new System.EventHandler(this.jsonPathHelperToolStripMenuItem_Click);
             // 
+            // showFormatCheckerToolStripMenuItem
+            // 
+            this.showFormatCheckerToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.showFormatCheckerToolStripMenuItem.Name = "showFormatCheckerToolStripMenuItem";
+            this.showFormatCheckerToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.showFormatCheckerToolStripMenuItem.Text = "&Format Checker";
+            this.showFormatCheckerToolStripMenuItem.Click += new System.EventHandler(this.showFormatCheckerToolStripMenuItem_Click);
+            // 
             // scriptActionsToolStripMenuItem
             // 
             this.scriptActionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -811,7 +819,7 @@
             this.tasktProjectPageStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktProjectPageStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktProjectPageStripMenuItem.Name = "tasktProjectPageStripMenuItem";
-            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktProjectPageStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.tasktProjectPageStripMenuItem.Text = "taskt &Project Page";
             this.tasktProjectPageStripMenuItem.Click += new System.EventHandler(this.tasktProjectPageStripMenuItem_Click);
             // 
@@ -820,7 +828,7 @@
             this.tasktWikiStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktWikiStripMenuItem.Image = global::taskt.Properties.Resources.taskt_logo_alt;
             this.tasktWikiStripMenuItem.Name = "tasktWikiStripMenuItem";
-            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktWikiStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.tasktWikiStripMenuItem.Text = "taskt &Wiki";
             this.tasktWikiStripMenuItem.Click += new System.EventHandler(this.tasktWikiStripMenuItem_Click);
             // 
@@ -828,20 +836,20 @@
             // 
             this.tasktGitterStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.tasktGitterStripMenuItem.Name = "tasktGitterStripMenuItem";
-            this.tasktGitterStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tasktGitterStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.tasktGitterStripMenuItem.Text = "taskt Gitter &Chat";
             this.tasktGitterStripMenuItem.Click += new System.EventHandler(this.tasktGitterStripMenuItem_Click);
             // 
             // helpToolStripSeparator1
             // 
             this.helpToolStripSeparator1.Name = "helpToolStripSeparator1";
-            this.helpToolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.helpToolStripSeparator1.Size = new System.Drawing.Size(165, 6);
             // 
             // releaseToolStripMenuItem
             // 
             this.releaseToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
-            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.releaseToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.releaseToolStripMenuItem.Text = "&Release";
             this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
             // 
@@ -849,21 +857,21 @@
             // 
             this.issueToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.issueToolStripMenuItem.Name = "issueToolStripMenuItem";
-            this.issueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.issueToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.issueToolStripMenuItem.Text = "&Issue";
             this.issueToolStripMenuItem.Click += new System.EventHandler(this.issueToolStripMenuItem_Click);
             // 
             // helpToolStripSeparator2
             // 
             this.helpToolStripSeparator2.Name = "helpToolStripSeparator2";
-            this.helpToolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.helpToolStripSeparator2.Size = new System.Drawing.Size(165, 6);
             // 
             // aboutStripMenuItem
             // 
             this.aboutStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.aboutStripMenuItem.Image = global::taskt.Properties.Resources.logo;
             this.aboutStripMenuItem.Name = "aboutStripMenuItem";
-            this.aboutStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.aboutStripMenuItem.Text = "&About";
             this.aboutStripMenuItem.Click += new System.EventHandler(this.aboutStripMenuItem_Click);
             // 
@@ -1278,9 +1286,9 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(979, 41);
             this.pnlMain.TabIndex = 2;
-            theme2.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
-            theme2.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
-            this.pnlMain.Theme = theme2;
+            theme1.BgGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(50)))), ((int)(((byte)(178)))));
+            theme1.BgGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(136)))), ((int)(((byte)(204)))));
+            this.pnlMain.Theme = theme1;
             // 
             // lblMainLogo
             // 
@@ -1320,7 +1328,9 @@
             this.pnlStatus.Name = "pnlStatus";
             this.pnlStatus.Size = new System.Drawing.Size(979, 31);
             this.pnlStatus.TabIndex = 3;
+            this.myToolTip.SetToolTip(this.pnlStatus, "Double click to view the status message in a new window");
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
+            this.pnlStatus.DoubleClick += new System.EventHandler(this.pnlStatus_DoubleClick);
             // 
             // pnlControlContainer
             // 
@@ -2087,14 +2097,6 @@
             // miniMapLoadingDelayTimer
             // 
             this.miniMapLoadingDelayTimer.Tick += new System.EventHandler(this.miniMapLoadingDelayTimer_Tick);
-            // 
-            // showFormatCheckerToolStripMenuItem
-            // 
-            this.showFormatCheckerToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.showFormatCheckerToolStripMenuItem.Name = "showFormatCheckerToolStripMenuItem";
-            this.showFormatCheckerToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.showFormatCheckerToolStripMenuItem.Text = "&Format Checker";
-            this.showFormatCheckerToolStripMenuItem.Click += new System.EventHandler(this.showFormatCheckerToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 

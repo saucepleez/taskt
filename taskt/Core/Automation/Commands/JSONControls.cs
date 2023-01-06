@@ -1,11 +1,139 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
     static internal class JSONControls
     {
+        /// <summary>
+        /// input JSON Variable or Value
+        /// </summary>
+        [PropertyDescription("JSON Variable Name or JSON Value")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**{ \"id\": 3, \"value\": \"Hello\" }**", "Specify the JSON Object Text")]
+        [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]**", "Specify the JSON Array Text")]
+        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
+        public static string v_InputJSONName { get; }
+
+        /// <summary>
+        /// input JSON Variable (Variable Only)
+        /// </summary>
+        [PropertyDescription("JSON Variable Name")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
+        public static string v_InputJSONVariableName { get; }
+
+        /// <summary>
+        /// output JSON Variable
+        /// </summary>
+        [PropertyDescription("JSON Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
+        public static string v_OutputJSONName { get; }
+
+        /// <summary>
+        /// input & output JSON Variable
+        /// </summary>
+        [PropertyDescription("JSON Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "JSON")]
+        public static string v_BothJSONName { get; }
+
+        /// <summary>
+        /// JSON path
+        /// </summary>
+        [PropertyDescription("JSON Extractor (JSONPath)")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Specify the JSON token extractor")]
+        [PropertyDetailSampleUsage("**$.id**", "Specify **id** for Root child node")]
+        [PropertyDetailSampleUsage("**$..id**", "Specify Anywhere **id**")]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON Extractor")]
+        [Remarks("See this URL for details. https://github.com/json-path/JsonPath")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyCustomUIHelper("JSONPath Helper", nameof(JSONControls) + "+" + nameof(lnkJsonPathHelper_Click))]
+        [PropertyValidationRule("JSON Extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Extractor")]
+        public static string v_JSONPath { get; }
+
+        /// <summary>
+        /// Value type to Add JSON
+        /// </summary>
+        [PropertyDescription("Value Type to Add")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Auto")]
+        [PropertyUISelectionOption("Text")]
+        [PropertyUISelectionOption("Number")]
+        [PropertyUISelectionOption("null")]
+        [PropertyUISelectionOption("bool")]
+        [PropertyUISelectionOption("Object")]
+        [PropertyUISelectionOption("Array")]
+        [PropertyDetailSampleUsage("**Auto**", "Automatically determines the Value Type")]
+        [PropertyDetailSampleUsage("**Text**", PropertyDetailSampleUsage.ValueType.Value, "Value Type")]
+        [PropertyDetailSampleUsage("**Text**", PropertyDetailSampleUsage.ValueType.Value, "Value Type")]
+        [PropertyDetailSampleUsage("**bool**", PropertyDetailSampleUsage.ValueType.Value, "Value Type")]
+        [PropertyDetailSampleUsage("**Object**", "Specify JSON Object for Value Type")]
+        [PropertyDetailSampleUsage("**Array**", "Specify Array Object for Value Type")]
+        [PropertyIsOptional(true, "Auto")]
+        [PropertyDisplayText(true, "Value Type")]
+        public static string v_ValueType { get; }
+
+        /// <summary>
+        /// value to add property
+        /// </summary>
+        [PropertyDescription("Value to Add")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Hello**", "Add Text **Hello**")]
+        [PropertyDetailSampleUsage("**1**", "Add Number **Hello**")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", "Add Value of Variable **vValue**")]
+        [PropertyDetailSampleUsage("**{ \"id\": 1, \"value\": \"Hello\" }**", "Add JSON Object", false)]
+        [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]**", "Add JSON Array", false)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_ValueToAdd { get; }
+
         /// <summary>
         /// get JSON text from text value or variable contains text. this method returns root type "object" or "array".
         /// </summary>
@@ -215,6 +343,29 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
             return ret;
+        }
+
+        public static void lnkJsonPathHelper_Click(object sender, EventArgs e)
+        {
+            using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    var ctrl = ((CommandItemControl)sender).Tag;
+                    if (ctrl is TextBox txt)
+                    {
+                        txt.Text = fm.JSONPath;
+                    }
+                    else if (ctrl is ComboBox cmb)
+                    {
+                        cmb.Text = fm.JSONPath;
+                    }
+                    else if (ctrl is DataGridView dgv)
+                    {
+                        dgv.CurrentCell.Value = fm.JSONPath;
+                    }
+                }
+            }
         }
     }
 }

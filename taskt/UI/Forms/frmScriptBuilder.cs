@@ -3122,6 +3122,14 @@ namespace taskt.UI.Forms
             }
         }
 
+        private void pnlStatus_DoubleClick(object sender, EventArgs e)
+        {
+            using (var fm = new UI.Forms.Supplemental.frmDialog(notificationText, "Status Message", Supplemental.frmDialog.DialogType.OkOnly, 0))
+            {
+                fm.ShowDialog();
+            }
+        }
+
         private void frmScriptBuilder_SizeChanged(object sender, EventArgs e)
         {
             lstScriptActions.Columns[2].Width = this.Width - 340;

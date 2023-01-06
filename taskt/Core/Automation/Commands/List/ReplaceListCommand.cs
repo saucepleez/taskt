@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         //[PropertyValidationRule("List to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "List")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_BothListName))]
         [PropertyDescription("List Variable Name to Replace")]
         [PropertyValidationRule("List to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TargetList { get; set; }

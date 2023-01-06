@@ -84,8 +84,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("List Variable Name to Filtered List")]
-        [PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDescription("Result List Variable Name")]
+        [PropertyValidationRule("Result List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]
         public string v_OutputList { get; set; }
 

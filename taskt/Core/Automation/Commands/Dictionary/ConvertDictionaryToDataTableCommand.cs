@@ -31,18 +31,19 @@ namespace taskt.Core.Automation.Commands
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the variable to apply DataTable")]
-        [InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        [SampleUsage("**vTable** or **{{{vTable}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
+        //[PropertyDescription("Please indicate the variable to apply DataTable")]
+        //[InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
+        //[SampleUsage("**vTable** or **{{{vTable}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public string v_OutputVariable { get; set; }
 
         public ConvertDictionaryToDataTableCommand()

@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "New List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyDescription("List Variable Name of the Reverse List")]
+        [PropertyDescription("New List Variable Name")]
         [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New List")]
         public string v_OutputList { get; set; }

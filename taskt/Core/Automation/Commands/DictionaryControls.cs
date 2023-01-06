@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
         /// output Dictionary property
         /// </summary>
         [XmlAttribute]
-        [PropertyDescription("Dictionary Name")]
+        [PropertyDescription("Dictionary Variable Name")]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**vDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         /// input Dictionary property
         /// </summary>
         [XmlAttribute]
-        [PropertyDescription("Dictionary Name")]
+        [PropertyDescription("Dictionary Variable Name")]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**vDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
@@ -47,6 +47,24 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
         public static string v_InputDictionaryName { get; }
+
+        /// <summary>
+        /// input & output Dictionary property
+        /// </summary>
+        [XmlAttribute]
+        [PropertyDescription("Dictionary Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary")]
+        public static string v_BothDictionaryName { get; }
 
         /// <summary>
         /// Dictionary key name
@@ -89,7 +107,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage(@"
 | Keys | Values |
 |---|---|
-| **{{{vKey}}** | **{{{vValue}}}** |", "Add an item whose key is Value of Variable **vKey** and value is Value of Variable **vValue**")]
+| **{{{vKey}}}** | **{{{vValue}}}** |", "Add an item whose key is Value of Variable **vKey** and value is Value of Variable **vValue**")]
         public static string v_KeyAndValue { get; }
 
         /// <summary>

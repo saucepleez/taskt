@@ -17,44 +17,47 @@ namespace taskt.Core.Automation.Commands
     public class ReplaceDataTableColumnValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a DataTable Variable Name to Replace")]
-        [InputSpecification("")]
-        [SampleUsage("**vTable** or **{{{vTable}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyValidationRule("DataTable to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
+        //[PropertyDescription("Please select a DataTable Variable Name to Replace")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vTable** or **{{{vTable}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyValidationRule("DataTable to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_InputDataTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Column type")]
-        [InputSpecification("")]
-        [SampleUsage("**Column Name** or **Index**")]
-        [Remarks("")]
-        [PropertyUISelectionOption("Column Name")]
-        [PropertyUISelectionOption("Index")]
-        [PropertyIsOptional(true, "Column Name")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyDisplayText(true, "Column Type")]
+        //[PropertyDescription("Please specify Column type")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Column Name** or **Index**")]
+        //[Remarks("")]
+        //[PropertyUISelectionOption("Column Name")]
+        //[PropertyUISelectionOption("Index")]
+        //[PropertyIsOptional(true, "Column Name")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDisplayText(true, "Column Type")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please enter the Name or Index of the Column")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter a valid Column index value")]
-        [SampleUsage("**id** or **0** or **{{{vColumn}}}** or **-1**")]
-        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Column")]
+        //[PropertyDescription("Please enter the Name or Index of the Column")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Enter a valid Column index value")]
+        //[SampleUsage("**id** or **0** or **{{{vColumn}}}** or **-1**")]
+        //[Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Column")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnNameIndex))]
         public string v_TargetColumnIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select replace target value type")]
+        [PropertyDescription("replace target value type")]
         [InputSpecification("")]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
@@ -67,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select replace action")]
+        [PropertyDescription("replace action")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
@@ -100,18 +103,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Replace Value")]
         public string v_NewValue { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox TargetTypeComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox ReplaceActionComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView ReplaceParametersGridViewHelper;
-
         public ReplaceDataTableColumnValueCommand()
         {
             this.CommandName = "ReplaceDataTableColumnValueCommand";
@@ -126,36 +117,13 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var targetDT = v_InputDataTable.GetDataTableVariable(engine);
-            //string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
-            //int colIndex = 0;
-            //switch (colType)
-            //{
-            //    case "column name":
-            //        colIndex = DataTableControls.GetColumnIndexFromName(targetDT, v_TargetColumnIndex, engine);
-            //        break;
-            //    case "index":
-            //        colIndex = DataTableControls.GetColumnIndex(targetDT, v_TargetColumnIndex, engine);
-            //        break;
-            //}
             (var targetDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_InputDataTable), nameof(v_ColumnType), nameof(v_TargetColumnIndex), engine);
 
-            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            //string replaceAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
             var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
             string newValue = v_NewValue.ConvertToUserVariable(engine);
 
-            //int rows = targetDT.Rows.Count;
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    string value = (targetDT.Rows[i][colIndex] == null) ? "" : targetDT.Rows[i][colIndex].ToString();
-            //    if (ConditionControls.FilterDeterminStatementTruth(value, targetType, replaceAction, v_ReplaceActionParameterTable, engine))
-            //    {
-            //        targetDT.Rows[i][colIndex] = newValue;
-            //    }
-            //}
             int rows = targetDT.Rows.Count;
             for (int i = 0; i < rows; i++)
             {

@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// input List variable property
         /// </summary>
-        [PropertyDescription("List Variable")]
+        [PropertyDescription("List Variable Name")]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
@@ -23,26 +23,48 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List Variable")]
+        [PropertyDisplayText(true, "List")]
         public static string v_InputListName { get; }
 
         /// <summary>
         /// output List variable Property
         /// </summary>
-        [PropertyDescription("List Variable")]
+        [PropertyDescription("List Variable Name")]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List Variable")]
+        [PropertyDisplayText(true, "List")]
         public static string v_OutputListName { get; }
 
+        /// <summary>
+        /// input & output List variable Property
+        /// </summary>
+        [PropertyDescription("List Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "List")]
+        public static string v_BothListName { get; }
+
+        /// <summary>
+        /// column type
+        /// </summary>
         [PropertyDescription("Columns Type")]
         [InputSpecification("")]
         [SampleUsage("")]

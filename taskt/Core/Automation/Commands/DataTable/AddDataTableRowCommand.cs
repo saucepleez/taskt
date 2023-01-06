@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -16,22 +15,24 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add a row to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a row to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class AddDataTableRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the DataTable Variable Name")]
-        [InputSpecification("Enter a existing DataTable to add rows to.")]
-        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule( "DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDescription("Please indicate the DataTable Variable Name")]
+        //[InputSpecification("Enter a existing DataTable to add rows to.")]
+        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Define Data")]
+        [PropertyDescription("Column Names and Values")]
         [InputSpecification("Enter the Column Names required for each column of data")]
         [SampleUsage("")]
         [Remarks("")]
@@ -40,18 +41,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
         [PropertyDataGridViewColumnSettings("Data", "Data", false)]
-        [PropertyDataGridViewCellEditEvent("AddDataGridViewHelper_CellClick", PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyCustomUIHelper("Load Column Names From Existing Table", nameof(LoadSchemaControl_Click), "load_column")]
+        [PropertyDisplayText(true, "Rows", "items")]
         public DataTable v_AddDataDataTable { get; set; }
-
 
         [XmlIgnore]
         [NonSerialized]
         private List<CreateDataTableCommand> DataTableCreationCommands;
-
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView AddDataGridViewHelper;
 
         public AddDataTableRowCommand()
         {
@@ -70,21 +67,20 @@ namespace taskt.Core.Automation.Commands
 
             foreach (DataRow rw in v_AddDataDataTable.Rows)
             {
-                var columnName = rw.Field<string>("Column Name").ConvertToUserVariable(sender);
-                var data = rw.Field<string>("Data").ConvertToUserVariable(sender);
+                var columnName = (rw.Field<string>("Column Name") ?? "").ConvertToUserVariable(sender);
+                var data = (rw.Field<string>("Data") ?? "").ConvertToUserVariable(sender);
                 newRow.SetField(columnName, data); 
             }
 
             dataTable.Rows.Add(newRow);
         }
-        public override List<Control> Render(frmCommandEditor editor)
+
+        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
         {
             base.Render(editor);
 
             var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
             RenderedControls.AddRange(ctrls);
-
-            AddDataGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_AddDataDataTable")[0];
 
             DataTableCreationCommands = editor.configuredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
 
@@ -98,78 +94,33 @@ namespace taskt.Core.Automation.Commands
             {
                 items.Add(item.v_DataTableName);
             }
-            UI.Forms.Supplemental.frmItemSelector selectionForm = new UI.Forms.Supplemental.frmItemSelector(items, "Load Schema", "Select a table from the list");
-            //selectionForm.Text = "Load Schema";
-            //selectionForm.lblHeader.Text = "Select a table from the list";
-            //foreach (var item in DataTableCreationCommands)
-            //{
-            //    selectionForm.lstVariables.Items.Add(item.v_DataTableName);
-            //}
 
-            var result = selectionForm.ShowDialog();
-
-            if (result == DialogResult.OK)
+            using (var selectionForm = new UI.Forms.Supplemental.frmItemSelector(items, "Load Schema", "Select a table from the list"))
             {
-                //var tableName = selectionForm.lstVariables.SelectedItem.ToString();
-                var tableName = selectionForm.selectedItem.ToString();
-                var schema = DataTableCreationCommands.Where(f => f.v_DataTableName == tableName).FirstOrDefault();
-
-                v_AddDataDataTable.Rows.Clear();
-
-                foreach (DataRow rw in schema.v_ColumnNameDataTable.Rows)
+                if (selectionForm.ShowDialog() == DialogResult.OK)
                 {
-                    v_AddDataDataTable.Rows.Add(rw.Field<string>("Column Name"), "");
+                    var tableName = selectionForm.selectedItem.ToString();
+                    var schema = DataTableCreationCommands.Where(f => f.v_DataTableName == tableName).FirstOrDefault();
+
+                    v_AddDataDataTable.Rows.Clear();
+
+                    foreach (DataRow rw in schema.v_ColumnNameDataTable.Rows)
+                    {
+                        v_AddDataDataTable.Rows.Add(rw.Field<string>("Column Name"), "");
+                    }
                 }
-            }   
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [{v_AddDataDataTable.Rows.Count} Fields, apply to '{v_DataTableName}']";
-        }
-
-        private void AddDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                AddDataGridViewHelper.BeginEdit(false);
-            }
-            else
-            {
-                AddDataGridViewHelper.EndEdit();
             }
         }
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + $" [{v_AddDataDataTable.Rows.Count} Fields, apply to '{v_DataTableName}']";
+        //}
 
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            //if (AddDataGridViewHelper.IsCurrentCellDirty || AddDataGridViewHelper.IsCurrentRowDirty)
-            //{
-            //    AddDataGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            //    var newRow = v_AddDataDataTable.NewRow();
-            //    v_AddDataDataTable.Rows.Add(newRow);
-            //    for (var i = v_AddDataDataTable.Rows.Count - 1; i >= 0; i--)
-            //    {
-            //        if (v_AddDataDataTable.Rows[i][0].ToString() == "" && v_AddDataDataTable.Rows[i][1].ToString() == "")
-            //        {
-            //            v_AddDataDataTable.Rows[i].Delete();
-            //        }
-            //    }
-            //}
             DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AddDataDataTable)], v_AddDataDataTable);
         }
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DataTableName))
-        //    {
-        //        this.validationResult += "DataTable Name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

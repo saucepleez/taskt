@@ -17,76 +17,83 @@ namespace taskt.Core.Automation.Commands
     public class SetDataTableColumnValuesByListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the DataTable Variable Name")]
-        [InputSpecification("Enter a existing DataTable to add rows to.")]
-        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
+        //[PropertyDescription("Please indicate the DataTable Variable Name")]
+        //[InputSpecification("Enter a existing DataTable to add rows to.")]
+        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Column type")]
-        [InputSpecification("")]
-        [SampleUsage("**Column Name** or **Index**")]
-        [Remarks("")]
-        [PropertyUISelectionOption("Column Name")]
-        [PropertyUISelectionOption("Index")]
-        [PropertyIsOptional(true, "Column Name")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyDisplayText(true, "Column Type")]
+        //[PropertyDescription("Please specify Column type")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Column Name** or **Index**")]
+        //[Remarks("")]
+        //[PropertyUISelectionOption("Column Name")]
+        //[PropertyUISelectionOption("Index")]
+        //[PropertyIsOptional(true, "Column Name")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDisplayText(true, "Column Type")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the Column Name to set")]
-        [InputSpecification("")]
-        [SampleUsage("**0** or **newColumn** or **{{{vNewColumn}}}** or **-1**")]
-        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Column")]
+        //[PropertyDescription("Please specify the Column Name to set")]
+        //[InputSpecification("")]
+        //[SampleUsage("**0** or **newColumn** or **{{{vNewColumn}}}** or **-1**")]
+        //[Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Column")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnNameIndex))]
         public string v_SetColumnName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the List to set new Column values")]
-        [InputSpecification("")]
-        [SampleUsage("**vList** or **{{{vList}}}**")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "List")]
+        //[PropertyDescription("Please specify the List to set new Column values")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vList** or **{{{vList}}}**")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         public string v_SetListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("If the number of rows is less than the List")]
-        [InputSpecification("")]
-        [SampleUsage("**Ignore** or **Add Rows** or **Error**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Add Rows")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyIsOptional(true, "Ignore")]
+        //[PropertyDescription("If the number of rows is less than the List")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Ignore** or **Add Rows** or **Error**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Add Rows")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyIsOptional(true, "Ignore")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_WhenLessRows))]
+        [PropertyDescription("When there are Less Rows than List to set")]
         public string v_IfRowNotEnough { set; get; }
 
         [XmlAttribute]
-        [PropertyDescription("If the number of List items is less than the rows")]
-        [InputSpecification("")]
-        [SampleUsage("**Ignore** or **Error**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Ignore")]
-        [PropertyUISelectionOption("Error")]
-        [PropertyIsOptional(true, "Ignore")]
+        //[PropertyDescription("If the number of List items is less than the rows")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Ignore** or **Error**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Ignore")]
+        //[PropertyUISelectionOption("Error")]
+        //[PropertyIsOptional(true, "Ignore")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_WhenGreaterRows))]
         public string v_IfListNotEnough { set; get; }
 
         public SetDataTableColumnValuesByListCommand()
@@ -101,25 +108,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
-            //string colType = v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine);
-
-            //string trgColumnName;
-            //if (colType == "column name")
-            //{
-            //    trgColumnName = DataTableControls.GetColumnName(myDT, v_SetColumnName, engine);
-            //}
-            //else
-            //{
-            //    int colIndex = DataTableControls.GetColumnIndex(myDT, v_SetColumnName, engine);
-            //    trgColumnName = myDT.Columns[colIndex].ColumnName;
-            //}
             (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
             string trgColumnName = myDT.Columns[colIndex].ColumnName;
 
             List<string> myList = v_SetListName.GetListVariable(engine);
 
-            //string ifRowNotEnough = v_IfRowNotEnough.GetUISelectionValue("v_IfRowNotEnough", this, engine);
             string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check
             if (myDT.Rows.Count < myList.Count)
@@ -134,7 +127,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            //string ifListNotEnough = v_IfListNotEnough.GetUISelectionValue("v_IfListNotEnough", this, engine);
             string ifListNotEnough = this.GetUISelectionValue(nameof(v_IfListNotEnough), "List Not Enough", engine);
             if ((myDT.Rows.Count > myList.Count) && (ifListNotEnough == "error"))
             {

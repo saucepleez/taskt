@@ -17,30 +17,32 @@ namespace taskt.Core.Automation.Commands
     public class ConvertJSONToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Supply the JSON Object or Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Select or provide a variable or json array value")]
-        [SampleUsage("**{\"id\":123, \"name\": \"John\"}** or **{{{vJSON}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "JSON")]
+        //[PropertyDescription("Supply the JSON Object or Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Select or provide a variable or json array value")]
+        //[SampleUsage("**{\"id\":123, \"name\": \"John\"}** or **{{{vJSON}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "JSON")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_InputJSONName))]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the DataTable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
+        //[PropertyDescription("Please select the variable to receive the DataTable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public string v_applyToVariableName { get; set; }
 
         public ConvertJSONToDataTableCommand()
@@ -54,34 +56,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-
-            //var variableInput = v_InputValue.ConvertToUserVariable(sender).Trim();
-            //if (variableInput.StartsWith("{") && variableInput.EndsWith("}"))
-            //{
-            //    DataTable resultDT = new DataTable();
-            //    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(variableInput);
-
-            //    resultDT.Rows.Add();
-            //    int i = 0;
-            //    foreach(var result in obj)
-            //    {
-            //        resultDT.Columns.Add(result.Key);
-            //        resultDT.Rows[0][i] = result.Value.ToString();
-            //        i++;
-            //    }
-            //    resultDT.StoreInUserVariable(engine, v_applyToVariableName);
-            //}
-            //else if (variableInput.StartsWith("[") && variableInput.EndsWith("]"))
-            //{
-            //    DataTable resultDT = new DataTable();
-            //    Newtonsoft.Json.Linq.JArray arr = Newtonsoft.Json.Linq.JArray.Parse(variableInput);
-
-            //    parseJSONArrayAsDataTable(arr, resultDT).StoreInUserVariable(engine, v_applyToVariableName);
-            //}
-            //else
-            //{
-            //    throw new Exception("Strange JSON");
-            //}
 
             Action<JObject> objFunc = new Action<JObject>((obj) =>
             {

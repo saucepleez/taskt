@@ -17,20 +17,21 @@ namespace taskt.Core.Automation.Commands
     public class ReplaceDataTableValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a DataTable Variable Name to Replace")]
-        [InputSpecification("")]
-        [SampleUsage("**vTable** or **{{{vTable}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyValidationRule("DataTable to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "DataTable")]
+        //[PropertyDescription("Please select a DataTable Variable Name to Replace")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vTable** or **{{{vTable}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyValidationRule("DataTable to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "DataTable")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_InputDataTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select replace target value type")]
+        [PropertyDescription("replace target value type")]
         [InputSpecification("")]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
@@ -43,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select replace action")]
+        [PropertyDescription("replace action")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
@@ -76,18 +77,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Replace Value")]
         public string v_NewValue { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox TargetTypeComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox ReplaceActionComboboxHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView ReplaceParametersGridViewHelper;
-
         public ReplaceDataTableValueCommand()
         {
             this.CommandName = "ReplaceDataTableValueCommand";
@@ -104,8 +93,6 @@ namespace taskt.Core.Automation.Commands
 
             var targetDT = v_InputDataTable.GetDataTableVariable(engine);
 
-            //string targetType = v_TargetType.GetUISelectionValue("v_TargetType", this, engine);
-            //string filterAction = v_ReplaceAction.GetUISelectionValue("v_ReplaceAction", this, engine);
             var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
@@ -114,17 +101,6 @@ namespace taskt.Core.Automation.Commands
             int cols = targetDT.Columns.Count;
             int rows = targetDT.Rows.Count;
 
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    for (int j = 0; j < cols; j++)
-            //    {
-            //        string value = (targetDT.Rows[i][j] == null) ? "" : targetDT.Rows[i][j].ToString();
-            //        if (ConditionControls.FilterDeterminStatementTruth(value, targetType, filterAction, v_ReplaceActionParameterTable, engine))
-            //        {
-            //            targetDT.Rows[i][j] = newValue;
-            //        }
-            //    }
-            //}
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)

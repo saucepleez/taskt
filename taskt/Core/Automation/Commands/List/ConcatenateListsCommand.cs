@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("List1 Variable")]
+        [PropertyDescription("List1 Variable Name")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
         [PropertyDetailSampleUsage("**vList1**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList1}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("List2 Variable")]
+        [PropertyDescription("List2 Variable Name")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
         [PropertyDetailSampleUsage("**vList2**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList2}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyDescription("List Variable Name of the New List")]
+        [PropertyDescription("New List Variable Name")]
         [Remarks("Concatenate List1, List2 in that order")]
         [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New List")]

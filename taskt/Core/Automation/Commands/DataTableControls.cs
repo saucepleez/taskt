@@ -3,11 +3,160 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// for DataTable methods
+    /// </summary>
     internal static class DataTableControls
     {
+        /// <summary>
+        /// input DataTable property
+        /// </summary>
+        [PropertyDescription("DataTable Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
+        public static string v_InputDataTableName { get; }
+
+        /// <summary>
+        /// output DataTable property
+        /// </summary>
+        [PropertyDescription("DataTable Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
+        public static string v_OutputDataTableName { get; }
+
+        /// <summary>
+        /// input & output DataTable parameter
+        /// </summary>
+        [PropertyDescription("DataTable Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
+        public static string v_BothDataTableName { get; }
+
+        /// <summary>
+        /// when column does not exists
+        /// </summary>
+        [PropertyDescription("When DataTable Column does not Exists")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not add a Column")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public static string v_WhenColumnNotExists { get; }
+
+        /// <summary>
+        /// column type
+        /// </summary>
+        [PropertyDescription("Column type")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Column Name**", "Specify the Column Name like **Name**")]
+        [PropertyDetailSampleUsage("**Index**", "Specify the Column Index like **0** or **1**")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Column Name")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyIsOptional(true, "Column Name")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDisplayText(true, "Column Type")]
+        public static string v_ColumnType { get; }
+
+        /// <summary>
+        /// column name or index
+        /// </summary>
+        [PropertyDescription("Name or Index of the Column")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Column Name")]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Column Index")]
+        [PropertyDetailSampleUsage("**-1**", "Specify Last Column Index")]
+        [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column Name or Index")]
+        [Remarks("If **-1** is specified for Column Index, it means the last column.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Column")]
+        public static string v_ColumnNameIndex { get; }
+
+        /// <summary>
+        /// row index
+        /// </summary>
+        [PropertyDescription("Index of the Row")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**0**", "Specify First Row Index")]
+        [PropertyDetailSampleUsage("**-1**", "Specify Last Row Index")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Row Index")]
+        [PropertyDetailSampleUsage("**{{{vRowIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Row Index")]
+        [Remarks("**-1** means index of the last row.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "Current Row")]
+        [PropertyDisplayText(true, "Row")]
+        public static string v_RowIndex { get; }
+
+        /// <summary>
+        /// for set column values parameter
+        /// </summary>
+        [PropertyDescription("When there are Less Rows than *** to set")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not Add New Rows")]
+        [PropertyDetailSampleUsage("**Add Rows**", "Add New Rows")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Add Rows")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public static string v_WhenLessRows { get; }
+
+        /// <summary>
+        /// for set column values parameter
+        /// </summary>
+        [PropertyDescription("When there are Less Rows than DataTable to be Setted")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not Set Value")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyIsOptional(true, "Ignore")]
+        public static string v_WhenGreaterRows { set; get; }
+
         /// <summary>
         /// get DataTable variable from variable name
         /// </summary>
@@ -237,6 +386,15 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
+        /// <summary>
+        /// get DataTable Value, specify ParameterName, ParameterValue column name
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterColumnName"></param>
+        /// <param name="valueColumnName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static string GetFieldValue(DataTable dt, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
             if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
@@ -263,6 +421,14 @@ namespace taskt.Core.Automation.Commands
             return "";
         }
 
+        /// <summary>
+        /// get DataTable Value, specify RowIndex, ParameterValue column name
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static string GetFieldValue(DataTable dt, int rowIndex, string columnName = "ParameterValue")
         {
             if (!IsColumnExists(dt, columnName))
@@ -283,6 +449,15 @@ namespace taskt.Core.Automation.Commands
             return dt.Rows[rowIndex].Field<string>(columnName) ?? "";
         }
 
+        /// <summary>
+        /// get DataTable Values as Dictionary
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="parameterColumnName"></param>
+        /// <param name="valueColumnName"></param>
+        /// <param name="engine">if not null, expand variables in ValueColumn values</param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
         {
             if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
@@ -291,13 +466,21 @@ namespace taskt.Core.Automation.Commands
             }
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    if (dt.Rows[i][parameterColumnName] != null)
+            //    {
+            //        //string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
+            //        string value = dt.Rows[i][valueColumnName]?.ToString() ?? "";
+            //        dic.Add(dt.Rows[i][parameterColumnName].ToString(), value);
+            //    }
+            //}
+            foreach (DataRow row in dt.Rows)
             {
-                if (dt.Rows[i][parameterColumnName] != null)
+                var key = row.Field<string>(parameterColumnName) ?? "";
+                if (key != "")
                 {
-                    //string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
-                    string value = dt.Rows[i][valueColumnName]?.ToString() ?? "";
-                    dic.Add(dt.Rows[i][parameterColumnName].ToString(), value);
+                    dic.Add(key, row.Field<string>(valueColumnName) ?? "");
                 }
             }
 
@@ -313,23 +496,48 @@ namespace taskt.Core.Automation.Commands
             return dic;
         }
 
+        /// <summary>
+        /// set DataTable value specified by column names
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="newValue"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterColumnName"></param>
+        /// <param name="valueColumnName"></param>
+        /// <returns></returns>
         public static bool SetParameterValue(DataTable dt, string newValue, string parameterName, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue")
         {
             if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
             {
                 return false;
             }
-            for (int i = 0; i < dt.Rows.Count; i++)
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+            //    {
+            //        dt.Rows[i][valueColumnName] = newValue;
+            //        return true;
+            //    }
+            //}
+            foreach (DataRow row in dt.Rows)
             {
-                if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
+                var key = row.Field<string>(parameterColumnName) ?? "";
+                if (key == parameterName)
                 {
-                    dt.Rows[i][valueColumnName] = newValue;
+                    row.SetField<string>(valueColumnName, newValue);
                     return true;
                 }
             }
             return false;
         }
 
+        /// <summary>
+        /// check parameter names exists
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="parameterNames"></param>
+        /// <param name="parameterNameColumn"></param>
+        /// <returns></returns>
         public static bool IsParameterNamesExists(DataTable dt, List<string> parameterNames, string parameterNameColumn = "ParameterName")
         {
             if (!IsColumnExists(dt, parameterNameColumn))
@@ -342,18 +550,26 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                foreach(string n in parameterNames)
-                { 
-                    bool isExists = false;
-                    for (int i = dt.Rows.Count - 1; i >= 0; i--)
-                    {
-                        if (dt.Rows[i][parameterNameColumn].ToString() == n)
-                        {
-                            isExists = true;
-                            break;
-                        }
-                    }
-                    if (!isExists)
+                //foreach(string n in parameterNames)
+                //{ 
+                //    bool isExists = false;
+                //    for (int i = dt.Rows.Count - 1; i >= 0; i--)
+                //    {
+                //        if (dt.Rows[i][parameterNameColumn].ToString() == n)
+                //        {
+                //            isExists = true;
+                //            break;
+                //        }
+                //    }
+                //    if (!isExists)
+                //    {
+                //        return false;
+                //    }
+                //}
+                foreach (DataRow row in dt.Rows)
+                {
+                    var key = row.Field<string>(parameterNameColumn) ?? "";
+                    if (!parameterNameColumn.Contains(key))
                     {
                         return false;
                     }
@@ -362,6 +578,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        #region Event handlers
         public static void AllEditableDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             var myDGV = (DataGridView)sender;
@@ -425,7 +642,9 @@ namespace taskt.Core.Automation.Commands
                 e.Cancel = true;
             }
         }
+        #endregion
 
+        #region Validate
         public static void BeforeValidate(DataGridView dgv, DataTable table)
         {
             if (dgv.IsCurrentCellDirty || dgv.IsCurrentRowDirty)
@@ -454,5 +673,6 @@ namespace taskt.Core.Automation.Commands
                 table.AcceptChanges();
             }
         }
+        #endregion
     }
 }

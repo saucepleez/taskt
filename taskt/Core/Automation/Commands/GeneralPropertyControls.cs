@@ -22,5 +22,28 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]
         public static string v_Result { get; }
+
+        /// <summary>
+        /// One line textbox property, new line not allow
+        /// </summary>
+        [PropertyDescription("Value")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_DisallowNewLine_OneLineTextBox { get; }
+
+        /// <summary>
+        /// One line textbox property, new line allow
+        /// </summary>
+        [PropertyDescription("Value")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_OneLineTextBox { get; }
     }
 }

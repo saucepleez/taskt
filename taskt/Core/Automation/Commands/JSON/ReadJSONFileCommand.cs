@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     public class ReadJSONFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the path to the file")]
+        [PropertyDescription("Path to the File")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [InputSpecification("Enter or Select the path to the text file.")]
@@ -27,16 +27,17 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please define where the JSON should be stored")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
-        [PropertyValidationRule("Store", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please define where the JSON should be stored")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
+        //[PropertyValidationRule("Store", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
         public string v_userVariableName { get; set; }
 
         public ReadJSONFileCommand()
