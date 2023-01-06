@@ -278,7 +278,7 @@ namespace taskt.Core
                 if (sampleUsages.Count > 0)
                 {
                     sb.AppendLine(Environment.NewLine);
-                    sb.AppendLine("#### Sample Usage");
+                    sb.AppendLine("#### More Detailed Sample Usage(s)");
 
                     //string sampleUsageTabe = "| Value | Means |\n|---|---|\n";
 
@@ -363,14 +363,22 @@ namespace taskt.Core
                 return ("Value", "Window Names");
             }
             var isVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
-            if (isVar != null)
-            {
-                return ("Value", "Variables");
-            }
             var ins = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
-            if (ins != null)
+
+            if ((isVar != null) && (ins != null))
             {
-                return ("Instance Type", ins.instanceType.ToString());
+                return ("Value", ins.instanceType.ToString() + " Variable");
+            }
+            else
+            {
+                if (isVar != null)
+                {
+                    return ("Value", "Variables");
+                }
+                if (ins != null)
+                {
+                    return ("Instance Type", ins.instanceType.ToString());
+                }
             }
 
             return ("", "");
