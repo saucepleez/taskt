@@ -47,6 +47,24 @@ namespace taskt.Core.Automation.Commands
         public static string v_OutputDataTableName { get; }
 
         /// <summary>
+        /// input & output DataTable parameter
+        /// </summary>
+        [PropertyDescription("DataTable Variable Name")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "DataTable")]
+        public static string v_BothDataTableName { get; }
+
+        /// <summary>
         /// when column does not exists
         /// </summary>
         [PropertyDescription("When DataTable Column does not Exists")]
