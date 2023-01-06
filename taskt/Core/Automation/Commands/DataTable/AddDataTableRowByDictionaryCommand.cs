@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "DataTable")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         [PropertyDescription("DataTable Variable Name to be Added a Row")]
         public string v_DataTableName { get; set; }
 

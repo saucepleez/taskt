@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         //[PropertyValidationRule("DataTable to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "DataTable")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_InputDataTable { get; set; }
 
         [XmlAttribute]

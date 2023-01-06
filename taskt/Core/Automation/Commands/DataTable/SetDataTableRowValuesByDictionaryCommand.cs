@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "DataTable")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
