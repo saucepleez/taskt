@@ -34,11 +34,8 @@ namespace taskt.Core.Automation.Commands
         public string v_InputListB { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyDescription("New List Variable Name")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
         [Remarks("Concatenate List1, List2 in that order")]
-        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New List")]
         public string v_OutputList { get; set; }
 
         public ConcatenateListsCommand()

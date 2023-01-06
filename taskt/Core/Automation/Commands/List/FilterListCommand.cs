@@ -62,10 +62,7 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("New List Variable Name")]
-        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
         public string v_OutputList { get; set; }
 
         public FilterListCommand()

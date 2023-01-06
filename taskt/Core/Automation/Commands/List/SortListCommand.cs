@@ -47,10 +47,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyDescription("New List Variable Name")]
-        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
         public string v_OutputList { get; set; }
 
         public SortListCommand()

@@ -16,28 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class SetListItemCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the List Variable Name.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a existing List.")]
-        //[SampleUsage("**myList** or **{{{myList}}}** or **[1,2,3]**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_BothListName))]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please enter the index of the List item.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a valid List index value")]
-        //[SampleUsage("**0** or **-1** or **{{{vIndex}}}**")]
-        //[Remarks("**-1** means index of the last row. If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsOptional(true, "Current Position")]
-        //[PropertyDisplayText(true, "Index")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_ListIndex))]
         public string v_ItemIndex { get; set; }
 
