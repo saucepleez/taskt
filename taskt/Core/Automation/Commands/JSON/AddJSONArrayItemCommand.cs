@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
         //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "JSON")]
-        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_InputJSONVariableName))]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_BothJSONName))]
         [PropertyDescription("JSON Array Variable Name")]
         public string v_InputValue { get; set; }
 
