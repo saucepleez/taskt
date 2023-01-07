@@ -20,15 +20,7 @@ namespace taskt.Core.Automation.Commands
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Search Value")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Search Value")]
-        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Search Value")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "Search Value")]
-        [PropertyIsOptional(true, "Empty")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_SearchValue))]
         public string v_SearchItem { get; set; }
 
         [XmlAttribute]
