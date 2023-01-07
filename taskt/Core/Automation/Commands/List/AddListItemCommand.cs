@@ -20,13 +20,10 @@ namespace taskt.Core.Automation.Commands
         public string v_ListName { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
         [PropertyDescription("Value to be added the List")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "the Value to be added List")]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "the Value to be added List")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
         public string v_Input { get; set; }
 

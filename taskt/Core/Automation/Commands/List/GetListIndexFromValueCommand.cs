@@ -24,9 +24,8 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchItem { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Search Method")]
-        [InputSpecification("**First Index** or **Last Index**")]
-        [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("First Index")]

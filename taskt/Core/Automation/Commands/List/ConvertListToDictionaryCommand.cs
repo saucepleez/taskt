@@ -21,22 +21,22 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_ColumnType))]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_AType))]
         [PropertyDescription("Dictionary Keys Type")]
         [PropertyUISelectionOption("Key Prefix")]
         [PropertyIsOptional(true, "Key Prefix")]
         [PropertyDisplayText(true, "Dictionary Keys Type")]
+        [PropertyDetailSampleUsage("**item**", "When Select **Key Prefix** and Enter **item**, Key Name is item0, item1, item2, ...")]
         public string v_KeyType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Dictionary Keys Name")]
-        [InputSpecification("")]
-        [SampleUsage("**a,b,c** or **{{{vKeys}}}**")]
-        [Remarks("If keys is empty, Dictionary key is item0, item1, ...")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Dictionary Keys Name List or Key Names")]
+        [PropertyDetailSampleUsage("{{{vColumns}}}", "Specify List Variable Name **vColumns**")]
+        [PropertyDetailSampleUsage("**A,B,C**", "Specify Column Names **A**, **B**, and **C** As **Comma Separate**")]
+        [Remarks("When keys is empty, Dictionary key is item0, item1, ...")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyDisplayText(true, "Dictionary Keys Name List")]
         public string v_Keys { get; set; }
