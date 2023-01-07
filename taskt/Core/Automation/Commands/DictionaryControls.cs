@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [XmlAttribute]
         [PropertyDescription("Dictionary Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("Dictionary Variable Name", true)]
         [PropertyDetailSampleUsage("**vDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [XmlAttribute]
         [PropertyDescription("Dictionary Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("Dictionary Variable Name", true)]
         [PropertyDetailSampleUsage("**vDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [XmlAttribute]
         [PropertyDescription("Dictionary Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("Dictionary Variable Name", true)]
         [PropertyDetailSampleUsage("**vDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Name of the Dictionary Key")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("Key Name", true)]
         [PropertyDetailSampleUsage("**key1**", PropertyDetailSampleUsage.ValueType.Value, "Dictionary Key")]
         [PropertyDetailSampleUsage("**{{{vKey}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Dictionary Key")]
         [Remarks("")]
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Define Keys and Values")]
         [InputSpecification("Enter the Keys and Values required for your dictionary")]
-        [SampleUsage("")]
+        [SampleUsage("Keys and Values", true)]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
@@ -114,7 +114,7 @@ namespace taskt.Core.Automation.Commands
         /// when specifed key does not exists
         /// </summary>
         [PropertyDescription("When Key does not Exists")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]

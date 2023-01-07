@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
         /// column type
         /// </summary>
         [PropertyDescription("??? Type")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsOptional(true, "List")]
@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.Commands
         /// for convert parameter
         /// </summary>
         [PropertyDescription("When the number of items in the List is greater than the number of ???")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsOptional(true, "Ignore")]
@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands
         /// for convert parameter
         /// </summary>
         [PropertyDescription("When the number of ??? is greater than the number of items in the List")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsOptional(true, "Ignore")]
@@ -136,7 +136,7 @@ namespace taskt.Core.Automation.Commands
         /// when convert number
         /// </summary>
         [PropertyDescription("Action When List Value is Not Numeric")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [Remarks("")]
         [PropertyDetailSampleUsage("Ignore", "Ignore not numeric value")]
         [PropertyDetailSampleUsage("Error", "Rise the Error")]
