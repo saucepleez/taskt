@@ -158,6 +158,21 @@ namespace taskt.Core.Automation.Commands
         public static string v_ListIndex { get; }
 
         /// <summary>
+        /// search value property
+        /// </summary>
+        [PropertyDescription("Value to Search")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value to Search")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "Empty")]
+        [PropertyDisplayText(true, "Value to Search")]
+        public static string v_SearchValue { get; set; }
+
+        /// <summary>
         /// get List&lt;string&gt; variable from variable name
         /// </summary>
         /// <param name="variableName"></param>
