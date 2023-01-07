@@ -358,17 +358,21 @@ namespace taskt.Core
             if (attrInput != null)
             {
                 var txt = settings.EngineSettings.replaceEngineKeyword(attrInput.inputSpecification);
-                if (txt == "")
+                if (attrInput.autoGenerate)
                 {
-                    return "(nothing)";
+                    if (txt == "")
+                    {
+                        var uiOpts = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualProp);
+                        return ((uiOpts.Count > 0) ? "Select or Enter the One of the Options" : "(nothing)");
+                    }
+                    else
+                    {
+                        return "Enter or Select the " + txt;
+                    }
                 }
                 else
                 {
-                    if (attrInput.autoGenerate)
-                    {
-                        txt = "Enter of Select the " + txt;
-                    }
-                    return txt;
+                    return ((txt == "") ? "(nothing)" : txt);
                 }
             }
             else
