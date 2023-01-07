@@ -71,7 +71,6 @@ namespace taskt.Core.Automation.Commands
                 case "text":
                     List<string> targetList = v_InputList.GetListVariable(engine);
                     List<string> newList = new List<string>(targetList);
-                    //newList.AddRange();
 
                     newList.Sort();
                     if (sortOrder == "descending")
