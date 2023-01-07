@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
         /// input DataTable property
         /// </summary>
         [PropertyDescription("DataTable Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("DataTable Variable Name", true)]
         [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         /// output DataTable property
         /// </summary>
         [PropertyDescription("DataTable Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("DataTable Variable Name", true)]
         [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         /// input & output DataTable parameter
         /// </summary>
         [PropertyDescription("DataTable Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("DataTable Variable Name", true)]
         [PropertyDetailSampleUsage("**vDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
         /// when column does not exists
         /// </summary>
         [PropertyDescription("When DataTable Column does not Exists")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**Ignore**", "Do not add a Column")]
         [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
         [Remarks("")]
@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         /// column type
         /// </summary>
         [PropertyDescription("Column type")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**Column Name**", "Specify the Column Name like **Name**")]
         [PropertyDetailSampleUsage("**Index**", "Specify the Column Index like **0** or **1**")]
         [Remarks("")]
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Name or Index of the Column")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Column Name")]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Column Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Column Index")]
@@ -115,7 +115,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Index of the Row")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("Index of the Row")]
         [PropertyDetailSampleUsage("**0**", "Specify First Row Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Row Index")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Row Index")]
@@ -131,7 +131,7 @@ namespace taskt.Core.Automation.Commands
         /// for set column values parameter
         /// </summary>
         [PropertyDescription("When there are Less Rows than *** to set")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**Ignore**", "Do not Add New Rows")]
         [PropertyDetailSampleUsage("**Add Rows**", "Add New Rows")]
         [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
@@ -147,7 +147,7 @@ namespace taskt.Core.Automation.Commands
         /// for set column values parameter
         /// </summary>
         [PropertyDescription("When there are Less Rows than DataTable to be Setted")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**Ignore**", "Do not Set Value")]
         [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
         [Remarks("")]
