@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         public string v_KeyType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Supply the Dictionary Keys Name")]
+        [PropertyDescription("Dictionary Keys Name")]
         [InputSpecification("")]
         [SampleUsage("**a,b,c** or **{{{vKeys}}}**")]
         [Remarks("If keys is empty, Dictionary key is item0, item1, ...")]
