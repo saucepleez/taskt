@@ -9,6 +9,8 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
 using static taskt.Core.Automation.Commands.PropertyControls;
 using Markdig;
+using Microsoft.Office.Core;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core
 {
@@ -202,11 +204,12 @@ namespace taskt.Core
                 sb.AppendLine("<dl>");
 
                 // what to input
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetCustomAttributeWithVirtual<InputSpecification>(prop, vPropList[count])?.inputSpecification ?? "");
-                if (helpfulExplanation == "")
-                {
-                    helpfulExplanation = "(nothing)";
-                }
+                //var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetCustomAttributeWithVirtual<InputSpecification>(prop, vPropList[count])?.inputSpecification ?? "");
+                //if (helpfulExplanation == "")
+                //{
+                //    helpfulExplanation = "(nothing)";
+                //}
+                var helpfulExplanation = GetInputSpecification(prop, vPropList[count], settings);
                 sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
 
                 // value instance type
@@ -346,6 +349,32 @@ namespace taskt.Core
             var serverPath = "/" + kebobDestination + "/" + kebobFileName;
            
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
+        }
+
+        private static string GetInputSpecification(PropertyInfo propInfo, PropertyInfo virtualProp, ApplicationSettings settings)
+        {
+            var attrInput = GetCustomAttributeWithVirtual<InputSpecification>(propInfo, virtualProp);
+
+            if (attrInput != null)
+            {
+                var txt = settings.EngineSettings.replaceEngineKeyword(attrInput.inputSpecification);
+                if (txt == "")
+                {
+                    return "(nothing)";
+                }
+                else
+                {
+                    if (attrInput.autoGenerate)
+                    {
+                        txt = "Enter of Select the " + txt;
+                    }
+                    return txt;
+                }
+            }
+            else
+            {
+                return "(nothing)";
+            }
         }
 
         private static (string dtName, string ddValue) GetValueInstanceType(PropertyInfo propInfo, PropertyInfo virtualPropInfo)

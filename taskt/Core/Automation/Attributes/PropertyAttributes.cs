@@ -30,9 +30,18 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     public class InputSpecification : System.Attribute
     {
         public string inputSpecification;
-        public InputSpecification(string desc)
+        public bool autoGenerate = false;
+
+        public InputSpecification()
+        {
+            inputSpecification = "";
+            autoGenerate = false;
+        }
+
+        public InputSpecification(string desc, bool autoGenerate = false)
         {
             this.inputSpecification = desc;
+            this.autoGenerate = autoGenerate;
         }
     }
 

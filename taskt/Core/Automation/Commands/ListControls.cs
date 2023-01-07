@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
         /// input List variable property
         /// </summary>
         [PropertyDescription("List Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         /// output List variable Property
         /// </summary>
         [PropertyDescription("List Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         /// New output List variable Property
         /// </summary>
         [PropertyDescription("New List Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vNewList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vNewList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
         /// input & output List variable Property
         /// </summary>
         [PropertyDescription("List Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
@@ -151,7 +151,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Index of the List")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("Index of the List", true)]
         [PropertyDetailSampleUsage("**0**", "Get First List Item")]
         [PropertyDetailSampleUsage("**-1**", "Get Last List Item")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
@@ -166,7 +166,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Value to Search")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("Value to Search", true)]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value to Search")]
