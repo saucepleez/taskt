@@ -40,8 +40,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_InputList.GetListVariable(engine);
 
-            List<string> newList = new List<string>();
-            newList.AddRange(targetList);
+            List<string> newList = new List<string>(targetList);
             newList.Reverse();
             newList.StoreInUserVariable(engine, v_OutputList);
         }
