@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// column type
         /// </summary>
-        [PropertyDescription("Columns Type")]
+        [PropertyDescription("??? Type")]
         [InputSpecification("")]
         [SampleUsage("")]
         [Remarks("")]
@@ -96,7 +96,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("NewLine Separated")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public static string v_ColumnType { get; }
+        [PropertyDetailSampleUsage("**List**", "Specify the List Variable Name")]
+        [PropertyDetailSampleUsage("**Comman Separated**", "Enter like **A,B,C**")]
+        [PropertyDetailSampleUsage("**Space Separated**", "Enter like **A B C**")]
+        [PropertyDetailSampleUsage("**Tab Separated**", "Enter like **A\tB\tC**")]
+        public static string v_AType { get; }
 
 
         /// <summary>
