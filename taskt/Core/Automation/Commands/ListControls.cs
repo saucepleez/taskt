@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("NewLine Separated")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public static string v_ColumnType { get; set; }
+        public static string v_ColumnType { get; }
 
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Empty")]
         [PropertyDisplayText(true, "Value to Search")]
-        public static string v_SearchValue { get; set; }
+        public static string v_SearchValue { get; }
 
         /// <summary>
         /// get List&lt;string&gt; variable from variable name
