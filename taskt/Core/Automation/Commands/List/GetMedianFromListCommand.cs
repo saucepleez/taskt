@@ -39,22 +39,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
-
-            //var list = ListControls.GetDecimalListVariable(v_InputList, (notNumeric == "ignore"), engine);
-
-            //decimal med;
-            //if (list.Count() % 2 == 0)
-            //{
-            //    int center = list.Count() / 2;
-            //    med = (list[center - 1] + list[center]) * (decimal)0.5;
-            //}
-            //else
-            //{
-            //    med = list[list.Count() / 2];
-            //}
-
-            //med.ToString().StoreInUserVariable(engine, v_Result);
             ListControls.MathProcess(this, nameof(v_IfValueIsNotNumeric), v_InputList, engine,
                 new Func<System.Collections.Generic.List<decimal>, decimal>((lst) =>
                 {

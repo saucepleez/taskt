@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyDescription("Sort Order")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [SampleUsage("**Ascending** or **Descending**")]
         [Remarks("")]
         [PropertyIsOptional(true, "Ascending")]
@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyDescription("Sort Target Value Type")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
         [PropertyIsOptional(true, "Text")]

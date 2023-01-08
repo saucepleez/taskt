@@ -24,43 +24,16 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Filter Target Value Type")]
-        //[InputSpecification("")]
-        //[SampleUsage("**Text** or **Number**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyUISelectionOption("Text")]
-        //[PropertyUISelectionOption("Numeric")]
-        //[PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Type")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterValueType))]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Filter Action")]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Action")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterAction))]
         [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         public string v_FilterAction { get; set; }
 
         [XmlElement]
-        //[PropertyDescription("Additional Parameters")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        //[PropertyDataGridViewSetting(false, false, true, 400, 120)]
-        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
-        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ActionParameterTable))]
         public DataTable v_FilterActionParameterTable { get; set; }
 
