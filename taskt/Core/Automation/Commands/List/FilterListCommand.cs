@@ -47,9 +47,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Filter List";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            //this.v_TargetType = "Text";
-            //this.v_FilterAction = "Contains";
         }
 
         public override void RunCommand(object sender)

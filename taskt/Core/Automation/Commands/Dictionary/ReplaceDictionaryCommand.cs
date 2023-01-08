@@ -18,16 +18,6 @@ namespace taskt.Core.Automation.Commands
     public class ReplaceDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a Dictionary Variable Name to Replace")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vDic** or **{{{vDic}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Dictionary to Replace")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_BothDictionaryName))]
         [PropertyDescription("Dictionary Variable Name to Replace")]
         [PropertyValidationRule("Dictionary to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -35,53 +25,20 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetDictionary { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Replace Target Value Type")]
-        //[InputSpecification("")]
-        //[SampleUsage("**Text** or **Number**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyUISelectionOption("Text")]
-        //[PropertyUISelectionOption("Numeric")]
-        //[PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Type")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceValueType))]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Replace Action")]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Action")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceAction))]
         [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
         public string v_ReplaceAction { get; set; }
 
         [XmlElement]
-        //[PropertyDescription("Additional Parameters")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        //[PropertyDataGridViewSetting(false, false, true, 400, 120)]
-        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
-        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ActionParameterTable))]
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Replace value")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyDisplayText(true, "Replace Value")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceValue))]
         public string v_ReplaceValue { get; set; }
 
@@ -91,8 +48,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Replace Dictionary";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            //this.v_TargetType = "Text";
         }
 
         public override void RunCommand(object sender)
