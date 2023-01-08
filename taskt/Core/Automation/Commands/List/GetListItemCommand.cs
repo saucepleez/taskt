@@ -16,42 +16,14 @@ namespace taskt.Core.Automation.Commands
     public class GetListItemCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the List Variable Name.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a existing List.")]
-        //[SampleUsage("**myList** or **{{{myList}}}** or **[1,2,3]**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Index of the List item")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[PropertyDetailSampleUsage("**0**", "Get First List Item")]
-        //[PropertyDetailSampleUsage("**-1**", "Get Last List Item")]
-        //[PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
-        //[Remarks("**-1** means index of the last row. If it is empty, it will be the value of Current Position, which can be used for Loop List command.")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsOptional(true, "Current Position")]
-        //[PropertyDisplayText(true, "Index")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_ListIndex))]
         public string v_ItemIndex { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify a Variable Name to Store Result")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_UserVariableName { get; set; }
 

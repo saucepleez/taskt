@@ -16,36 +16,16 @@ namespace taskt.Core.Automation.Commands
     public class GetListIndexFromValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the List Variable Name.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a existing List.")]
-        //[SampleUsage("**myList** or **{{{myList}}}** or **[1,2,3]**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         public string v_ListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Value to Search")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        //[SampleUsage("**0** or **{{{vValue}}}**")]
-        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
-        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
-        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value to Search")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "Value to Search")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_SearchValue))]
         public string v_SearchItem { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Search Method")]
-        [InputSpecification("**First Index** or **Last Index**")]
-        [SampleUsage("")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("First Index")]
@@ -55,15 +35,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify the variable to apply index")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vResult** or **{{{vResult}}}**")]
-        //[Remarks("If list does not contains value, result is -1.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [Remarks("When List does not have value, Result is **-1**")]
         public string v_Result { get; set; }

@@ -16,35 +16,12 @@ namespace taskt.Core.Automation.Commands
     public class CopyListCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name to copy")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vList** or **{{{vList}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List to Copy")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         [PropertyDescription("List Variable Name to be Copied")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name of the New List")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "New List")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyDescription("New List Variable Name")]
-        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
         public string v_OutputList { get; set; }
 
         public CopyListCommand()
@@ -60,8 +37,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             List<string> targetList = v_InputList.GetListVariable(engine);
-            List<string> newList = new List<string>();
-            newList.AddRange(targetList);
+            List<string> newList = new List<string>(targetList);
             newList.StoreInUserVariable(engine, v_OutputList);
         }
     }

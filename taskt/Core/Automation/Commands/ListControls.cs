@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -13,12 +14,11 @@ namespace taskt.Core.Automation.Commands
         /// input List variable property
         /// </summary>
         [PropertyDescription("List Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
@@ -30,12 +30,11 @@ namespace taskt.Core.Automation.Commands
         /// output List variable Property
         /// </summary>
         [PropertyDescription("List Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
@@ -45,15 +44,31 @@ namespace taskt.Core.Automation.Commands
         public static string v_OutputListName { get; }
 
         /// <summary>
+        /// New output List variable Property
+        /// </summary>
+        [PropertyDescription("New List Variable Name")]
+        [InputSpecification("List Variable Name", true)]
+        [PropertyDetailSampleUsage("**vNewList**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNewList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New List")]
+        public static string v_NewOutputListName { get; }
+
+        /// <summary>
         /// input & output List variable Property
         /// </summary>
         [PropertyDescription("List Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("List Variable Name", true)]
         [PropertyDetailSampleUsage("**vList**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
@@ -65,8 +80,8 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// column type
         /// </summary>
-        [PropertyDescription("Columns Type")]
-        [InputSpecification("")]
+        [PropertyDescription("??? Type")]
+        [InputSpecification("", true)]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsOptional(true, "List")]
@@ -75,16 +90,19 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Space Separated")]
         [PropertyUISelectionOption("Tab Separated")]
         [PropertyUISelectionOption("NewLine Separated")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public static string v_ColumnType { get; set; }
+        [PropertyDetailSampleUsage("**List**", "Specify the List Variable Name")]
+        [PropertyDetailSampleUsage("**Comman Separated**", "Enter like **A,B,C**")]
+        [PropertyDetailSampleUsage("**Space Separated**", "Enter like **A B C**")]
+        [PropertyDetailSampleUsage("**Tab Separated**", "Enter like **A\tB\tC**")]
+        public static string v_AType { get; }
 
 
         /// <summary>
         /// for convert parameter
         /// </summary>
         [PropertyDescription("When the number of items in the List is greater than the number of ???")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsOptional(true, "Ignore")]
@@ -98,7 +116,7 @@ namespace taskt.Core.Automation.Commands
         /// for convert parameter
         /// </summary>
         [PropertyDescription("When the number of ??? is greater than the number of items in the List")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [SampleUsage("")]
         [Remarks("")]
         [PropertyIsOptional(true, "Ignore")]
@@ -113,7 +131,7 @@ namespace taskt.Core.Automation.Commands
         /// when convert number
         /// </summary>
         [PropertyDescription("Action When List Value is Not Numeric")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [Remarks("")]
         [PropertyDetailSampleUsage("Ignore", "Ignore not numeric value")]
         [PropertyDetailSampleUsage("Error", "Rise the Error")]
@@ -127,8 +145,7 @@ namespace taskt.Core.Automation.Commands
         /// List index property
         /// </summary>
         [PropertyDescription("Index of the List")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("Index of the List", true)]
         [PropertyDetailSampleUsage("**0**", "Get First List Item")]
         [PropertyDetailSampleUsage("**-1**", "Get Last List Item")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
@@ -137,6 +154,20 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Current Position")]
         [PropertyDisplayText(true, "Index")]
         public static string v_ListIndex { get; }
+
+        /// <summary>
+        /// search value property
+        /// </summary>
+        [PropertyDescription("Value to Search")]
+        [InputSpecification("Value to Search", true)]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value to Search")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "Empty")]
+        [PropertyDisplayText(true, "Value to Search")]
+        public static string v_SearchValue { get; }
 
         /// <summary>
         /// get List&lt;string&gt; variable from variable name
@@ -189,6 +220,25 @@ namespace taskt.Core.Automation.Commands
             }
 
             return numList;
+        }
+
+        /// <summary>
+        /// math calc process to List
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="notNumericName"></param>
+        /// <param name="listName"></param>
+        /// <param name="engine"></param>
+        /// <param name="mathFunc"></param>
+        /// <returns></returns>
+        /// <exception cref=""></exception>
+        public static string MathProcess(ScriptCommand command, string notNumericName, string listName, Engine.AutomationEngineInstance engine, Func<List<decimal>, decimal> mathFunc)
+        {
+            var notNumeric = command.GetUISelectionValue(notNumericName, "Not Numeric", engine);
+
+            var list = GetDecimalListVariable(listName, (notNumeric == "ignore"), engine);
+
+            return mathFunc(list).ToString();
         }
     }
 }

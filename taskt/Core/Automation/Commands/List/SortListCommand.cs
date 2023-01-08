@@ -16,16 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class SortListCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name to sort")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vList** or **{{{vList}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List to Sort", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List to Sort")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         [PropertyDescription("List Variable Name to Sort")]
         [PropertyValidationRule("List to Sort", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -33,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select sort order")]
+        [PropertyDescription("Sort Order")]
         [InputSpecification("")]
         [SampleUsage("**Ascending** or **Descending**")]
         [Remarks("")]
@@ -45,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SortOrder { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select sort target value type")]
+        [PropertyDescription("Sort Target Value Type")]
         [InputSpecification("")]
         [SampleUsage("**Text** or **Number**")]
         [Remarks("")]
@@ -57,20 +47,7 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name of the Sorted List")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "New List")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyDescription("New List Variable Name")]
-        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
         public string v_OutputList { get; set; }
 
         public SortListCommand()
@@ -93,8 +70,7 @@ namespace taskt.Core.Automation.Commands
             {
                 case "text":
                     List<string> targetList = v_InputList.GetListVariable(engine);
-                    List<string> newList = new List<string>();
-                    newList.AddRange(targetList);
+                    List<string> newList = new List<string>(targetList);
 
                     newList.Sort();
                     if (sortOrder == "descending")

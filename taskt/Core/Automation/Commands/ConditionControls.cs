@@ -3,10 +3,11 @@ using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-    internal class ConditionControls
+    internal static class ConditionControls
     {
         #region Determin Statement Truth
         public static bool DetermineStatementTruth(string actionType, DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
@@ -300,13 +301,6 @@ namespace taskt.Core.Automation.Commands
         }
         private static bool DetermineStatementTruth_WindowNameExists(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
-            //var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", engine);
-
-            ////search for window
-            //IntPtr windowPtr = User32.User32Functions.FindWindow(param["Window Name"]);
-
-            //return (windowPtr != IntPtr.Zero);
-
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
             try
             {
@@ -320,12 +314,6 @@ namespace taskt.Core.Automation.Commands
         }
         private static bool DetermineStatementTruth_ActiveWindow(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
-            //var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
-
-            //var currentWindowTitle = User32.User32Functions.GetActiveWindowTitle();
-
-            //return (currentWindowTitle == param["Window Name"]);
-
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
             var searchFunc = WindowNameControls.getWindowSearchMethod(param["Search Method"]);
             return (searchFunc(WindowNameControls.GetCurrentWindowName(), param["Window Name"]));
@@ -818,9 +806,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool ValueValidate(DataTable actionParameters, out string result)
         {
-            //string operand = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                   where rw.Field<string>("Parameter Name") == "Operand"
-            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault());
             string operand = DataTableControls.GetFieldValue(actionParameters, "Operand", "Parameter Name", "Parameter Value");
             result = "";
             if (String.IsNullOrEmpty(operand))
@@ -836,9 +821,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool VariableValidate(DataTable actionParameters, out string result)
         {
-            //string v = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //             where rw.Field<string>("Parameter Name") == "Variable Name"
-            //             select rw.Field<string>("Parameter Value")).FirstOrDefault());
             string variableName = DataTableControls.GetFieldValue(actionParameters, "Variable Name", "Parameter Name", "Parameter Value");
             result = "";
             if (String.IsNullOrEmpty(variableName))
@@ -854,9 +836,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool WindowValidate(DataTable actionParameters, out string result)
         {
-            //string windowName = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                      where rw.Field<string>("Parameter Name") == "Window Name"
-            //                      select rw.Field<string>("Parameter Value")).FirstOrDefault());
             string windowName = DataTableControls.GetFieldValue(actionParameters, "Window Name", "Parameter Name", "Parameter Value");
             result = "";
             if (String.IsNullOrEmpty(windowName))
@@ -872,9 +851,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool FileValidate(DataTable actionParameters, out string result)
         {
-            //string fp = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //              where rw.Field<string>("Parameter Name") == "File Path"
-            //              select rw.Field<string>("Parameter Value")).FirstOrDefault());
             string filePath = DataTableControls.GetFieldValue(actionParameters, "File Path", "Parameter Name", "Parameter Value");
             result = "";
             if (String.IsNullOrEmpty(filePath))
@@ -890,9 +866,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool FolderValidate(DataTable actionParameters, out string result)
         {
-            //string fp = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //              where rw.Field<string>("Parameter Name") == "Folder Path"
-            //              select rw.Field<string>("Parameter Value")).FirstOrDefault());
             string folderPath = DataTableControls.GetFieldValue(actionParameters, "Folder Path", "Parameter Name", "Parameter Value");
             result = "";
             if (String.IsNullOrEmpty(folderPath))
@@ -908,18 +881,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool WebValidate(DataTable actionParameters, out string result)
         {
-            //string instance = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                    where rw.Field<string>("Parameter Name") == "Selenium Instance Name"
-            //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //string method = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                  where rw.Field<string>("Parameter Name") == "Element Search Method"
-            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //string param = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-            //                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
             var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
             result = "";
             if (String.IsNullOrEmpty(param["WebBrowser Instance Name"]))
@@ -940,18 +901,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool GUIValidate(DataTable actionParameters, out string result)
         {
-            //string window = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                  where rw.Field<string>("Parameter Name") == "Window Name"
-            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //string method = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                  where rw.Field<string>("Parameter Name") == "Element Search Method"
-            //                  select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-            //string param = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                 where rw.Field<string>("Parameter Name") == "Element Search Parameter"
-            //                 select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
             var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
             result = "";
 
@@ -973,10 +922,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool ErrorValidate(DataTable actionParameters, out string result)
         {
-            //string line = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                where rw.Field<string>("Parameter Name") == "Line Number"
-            //                select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
             string line = DataTableControls.GetFieldValue(actionParameters, "Line Number", "Parameter Name", "Parameter Value");
             result = "";
 
@@ -1000,10 +945,6 @@ namespace taskt.Core.Automation.Commands
 
         public static bool BooleanValidate(DataTable actionParameters, out string result)
         {
-            //string variable = ((from rw in v_IfActionParameterTable.AsEnumerable()
-            //                    where rw.Field<string>("Parameter Name") == "Variable Name"
-            //                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
             string variable = DataTableControls.GetFieldValue(actionParameters, "Variable Name", "Parameter Name", "Parameter Value");
             result = "";
 
@@ -1165,6 +1106,98 @@ namespace taskt.Core.Automation.Commands
                     return commandPrefix + " .... ";
             }
         }
+        #endregion
+
+        #region Properties Filter
+
+        /// <summary>
+        /// filter type property, please specify ProeprtySelectionChangeEvent in commands
+        /// </summary>
+        [PropertyDescription("Type of Values to be Filterd")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Text")]
+        [PropertyUISelectionOption("Numeric")]
+        [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
+        [PropertyFirstValue("Text")]
+        [PropertyDetailSampleUsage("**Text**", PropertyDetailSampleUsage.ValueType.Value, "Type of Values")]
+        [PropertyDetailSampleUsage("**Numeric**", PropertyDetailSampleUsage.ValueType.Value, "Type of Values")]
+        [PropertyDetailSampleUsage("**{{{vType}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Type of Values")]
+
+        public static string v_FilterValueType { get; }
+
+        /// <summary>
+        /// filter action property, please specify PropertySelectionChangeEvent in commands
+        /// </summary>
+        [PropertyDescription("Filter Action")]
+        [InputSpecification("", true)]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
+        public static string v_FilterAction { get; }
+
+        /// <summary>
+        /// filter/replace action parameters property
+        /// </summary>
+        [PropertyDescription("Additional Parameters")]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(false, false, true, 400, 120)]
+        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
+        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        public static string v_ActionParameterTable { get; }
+
+        /// <summary>
+        /// Replace value type property, please specify PropertySelectionChangeEvent in commands
+        /// </summary>
+        [PropertyDescription("Type of Values to be Replaced")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Text")]
+        [PropertyUISelectionOption("Numeric")]
+        [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
+        [PropertyDetailSampleUsage("**Text**", PropertyDetailSampleUsage.ValueType.Value, "Type of Values")]
+        [PropertyDetailSampleUsage("**Numeric**", PropertyDetailSampleUsage.ValueType.Value, "Type of Values")]
+        [PropertyDetailSampleUsage("**{{{vType}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Type of Values")]
+        [PropertyFirstValue("Text")]
+        public static string v_ReplaceValueType { get; }
+
+        /// <summary>
+        /// Replace action property, please specify PropertySelectionChangeEvent in commands
+        /// </summary>
+        [PropertyDescription("Replace Action")]
+        [InputSpecification("", true)]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
+        public static string v_ReplaceAction { get; }
+
+        /// <summary>
+        /// Replace value property
+        /// </summary>
+        [PropertyDescription("Replace Value")]
+        [InputSpecification("Replace Value", true)]
+        [PropertyDetailSampleUsage("**1**", "Replace with **1**")]
+        [PropertyDetailSampleUsage("**a**", "Replace with **a**")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", "Replace with the Value of Variable **{{{vValue}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Replace Value")]
+        [PropertyIsOptional(true, "Empty")]
+        public static string v_ReplaceValue { get; }
+
         #endregion
 
         #region ComboBox Items Filter
@@ -1355,7 +1388,6 @@ namespace taskt.Core.Automation.Commands
 
         private static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc_Text(string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
-            //string filterAction = command.GetUISelectionValue(filterActionName, "Filter Action", engine);
             string filterAction = command.ConvertToUserVariable(filterActionName, "Filter Action", engine).ToLower();
             Func<string, string, bool> checkFunc = null;
             switch (filterAction)
@@ -1456,7 +1488,6 @@ namespace taskt.Core.Automation.Commands
         }
         private static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc_Numeric(string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
-            //string filterAction = command.GetUISelectionValue(filterActionName, "Filter Action", engine);
             string filterAction = command.ConvertToUserVariable(filterActionName, "Filter Action", engine).ToLower();
 
             Func<string, Dictionary<string, string>, (decimal trgValue, decimal value1, decimal value2)> convFunc;

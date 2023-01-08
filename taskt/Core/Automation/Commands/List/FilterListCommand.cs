@@ -18,75 +18,54 @@ namespace taskt.Core.Automation.Commands
     public class FilterListCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name to Filter")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vList** or **{{{vList}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         [PropertyDescription("List Variable Name to Filter")]
         [PropertyValidationRule("List to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Filter Target Value Type")]
-        [InputSpecification("")]
-        [SampleUsage("**Text** or **Number**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Text")]
-        [PropertyUISelectionOption("Numeric")]
+        //[PropertyDescription("Filter Target Value Type")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Text** or **Number**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Text")]
+        //[PropertyUISelectionOption("Numeric")]
+        //[PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Type")]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterValueType))]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
-        [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Filter Action")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDescription("Filter Action")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Action")]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterAction))]
         [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
-        [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Additional Parameters")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(false, false, true, 400, 120)]
-        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
-        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //[PropertyDescription("Additional Parameters")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        //[PropertyDataGridViewSetting(false, false, true, 400, 120)]
+        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
+        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ActionParameterTable))]
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name of the Filtered List")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("Filtered List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Result")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("Result List Variable Name")]
-        [PropertyValidationRule("Result List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Result")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
         public string v_OutputList { get; set; }
 
         public FilterListCommand()
@@ -96,7 +75,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_TargetType = "Text";
+            //this.v_TargetType = "Text";
             //this.v_FilterAction = "Contains";
         }
 

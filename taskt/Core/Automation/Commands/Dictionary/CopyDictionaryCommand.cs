@@ -45,13 +45,13 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         //[PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "New Dictionary")]
-        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        [PropertyDescription("New Dictionary Variable")]
-        [PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New Dictionary")]
-        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
-        [PropertyDetailSampleUsage("**vNewDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vNewDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
+        //[PropertyDescription("New Dictionary Variable")]
+        //[PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "New Dictionary")]
+        //[PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        //[PropertyDetailSampleUsage("**vNewDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vNewDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         public string v_OutputName { get; set; }
 
         public CopyDictionaryCommand()

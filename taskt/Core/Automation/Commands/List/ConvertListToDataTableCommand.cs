@@ -19,26 +19,25 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyDescription("List Variable Name to convert")]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_ColumnType))]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_AType))]
         [PropertyDescription("DataTable Columns Type")]
         [PropertyUISelectionOption("Column Prefix")]
         [PropertyIsOptional(true, "Column Prefix")]
         [PropertyDisplayText(true, "DataTable Columns Type")]
+        [PropertyDetailSampleUsage("**col**", "When Select **Column Prefix** and Enter **col**, Column Name is col0, col1, col2, ...")]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("DataTable Columns Name List")]
-        [InputSpecification("")]
-        [SampleUsage("**vColumns** or **{{{vColumns}}}**")]
-        [Remarks("If Columns is empty, DataTable column is column0, column1, ...")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("DataTable Columns Name List or Column Names")]
+        [PropertyDetailSampleUsage("{{{vColumns}}}", "Specify List Variable Name **vColumns**")]
+        [PropertyDetailSampleUsage("**A,B,C**", "Specify Column Names **A**, **B**, and **C** As **Comma Separate**")]
+        [Remarks("When Columns is empty, DataTable column is column0, column1, ...")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyDisplayText(true, "Columns Name List")]
         public string v_Columns { get; set; }
@@ -55,16 +54,6 @@ namespace taskt.Core.Automation.Commands
         public string v_ListItemNotEnough { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("DataTable Variable Name")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public string v_applyToVariableName { get; set; }
 

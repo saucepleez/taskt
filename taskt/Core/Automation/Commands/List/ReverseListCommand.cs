@@ -16,16 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class ReverseListCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name to Reverse")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vList** or **{{{vList}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List to Reverse", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List to Reverse")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         [PropertyDescription("List Variable Name to Reverse")]
         [PropertyValidationRule("List to Reverse", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -33,20 +23,7 @@ namespace taskt.Core.Automation.Commands
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name of the Reverse List")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNewList** or **{{{vNewList}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "New List")]
-        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyDescription("New List Variable Name")]
-        [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New List")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_NewOutputListName))]
         public string v_OutputList { get; set; }
 
         public ReverseListCommand()
@@ -63,8 +40,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_InputList.GetListVariable(engine);
 
-            List<string> newList = new List<string>();
-            newList.AddRange(targetList);
+            List<string> newList = new List<string>(targetList);
             newList.Reverse();
             newList.StoreInUserVariable(engine, v_OutputList);
         }

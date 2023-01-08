@@ -12,8 +12,7 @@ namespace taskt.Core.Automation.Commands
         /// input JSON Variable or Value
         /// </summary>
         [PropertyDescription("JSON Variable Name or JSON Value")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("JSON Value or JSON Variable Name", true)]
         [PropertyDetailSampleUsage("**{ \"id\": 3, \"value\": \"Hello\" }**", "Specify the JSON Object Text")]
         [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]**", "Specify the JSON Array Text")]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
@@ -30,8 +29,7 @@ namespace taskt.Core.Automation.Commands
         /// input JSON Variable (Variable Only)
         /// </summary>
         [PropertyDescription("JSON Variable Name")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("JSON **Variable Name**", true)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -46,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         /// output JSON Variable
         /// </summary>
         [PropertyDescription("JSON Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("JSON **Variable Name**", true)]
         [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
@@ -63,7 +61,7 @@ namespace taskt.Core.Automation.Commands
         /// input & output JSON Variable
         /// </summary>
         [PropertyDescription("JSON Variable Name")]
-        [InputSpecification("")]
+        [InputSpecification("JSON **Variable Name**", true)]
         [PropertyDetailSampleUsage("**vJSON**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
@@ -80,8 +78,7 @@ namespace taskt.Core.Automation.Commands
         /// JSON path
         /// </summary>
         [PropertyDescription("JSON Extractor (JSONPath)")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Specify the JSON token extractor")]
+        [InputSpecification("JSONPath", true)]
         [PropertyDetailSampleUsage("**$.id**", "Specify **id** for Root child node")]
         [PropertyDetailSampleUsage("**$..id**", "Specify Anywhere **id**")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON Extractor")]
@@ -96,8 +93,7 @@ namespace taskt.Core.Automation.Commands
         /// Value type to Add JSON
         /// </summary>
         [PropertyDescription("Value Type to Add")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Auto")]
@@ -121,8 +117,7 @@ namespace taskt.Core.Automation.Commands
         /// value to add property
         /// </summary>
         [PropertyDescription("Value to Add")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
+        [InputSpecification("Value", true)]
         [PropertyDetailSampleUsage("**Hello**", "Add Text **Hello**")]
         [PropertyDetailSampleUsage("**1**", "Add Number **Hello**")]
         [PropertyDetailSampleUsage("**{{{vValue}}}**", "Add Value of Variable **vValue**")]

@@ -47,41 +47,44 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetRowIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("filter target value type")]
-        [InputSpecification("")]
-        [SampleUsage("**Text** or **Number**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Text")]
-        [PropertyUISelectionOption("Numeric")]
+        //[PropertyDescription("filter target value type")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Text** or **Number**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Text")]
+        //[PropertyUISelectionOption("Numeric")]
+        //[PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Type")]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterValueType))]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
-        [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("filter action")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDescription("filter action")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Action")]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterAction))]
         [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
-        [PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Action")]
         public string v_FilterAction { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Additional Parameters")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(false, false, true, 400, 120)]
-        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
-        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //[PropertyDescription("Additional Parameters")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        //[PropertyDataGridViewSetting(false, false, true, 400, 120)]
+        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
+        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ActionParameterTable))]
         public DataTable v_FilterActionParameterTable { get; set; }
 
         [XmlAttribute]
@@ -96,13 +99,13 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         //[PropertyValidationRule("Filtered DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "New DataTable")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        [PropertyDescription("New DataTable Variable Name")]
-        [PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New DataTable")]
-        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
-        [PropertyDetailSampleUsage("**vNewDataTale**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vNewDataTale}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
+        //[PropertyDescription("New DataTable Variable Name")]
+        //[PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "New DataTable")]
+        //[PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        //[PropertyDetailSampleUsage("**vNewDataTale**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vNewDataTale}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         public string v_OutputDataTable { get; set; }
 
         public FilterDataTableColumnByRowValueCommand()
@@ -112,7 +115,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_TargetType = "Text";
+            //this.v_TargetType = "Text";
         }
 
         public override void RunCommand(object sender)

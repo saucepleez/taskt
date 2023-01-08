@@ -9,6 +9,8 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
 using static taskt.Core.Automation.Commands.PropertyControls;
 using Markdig;
+using Microsoft.Office.Core;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core
 {
@@ -202,11 +204,12 @@ namespace taskt.Core
                 sb.AppendLine("<dl>");
 
                 // what to input
-                var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetCustomAttributeWithVirtual<InputSpecification>(prop, vPropList[count])?.inputSpecification ?? "");
-                if (helpfulExplanation == "")
-                {
-                    helpfulExplanation = "(nothing)";
-                }
+                //var helpfulExplanation = settings.EngineSettings.replaceEngineKeyword(GetCustomAttributeWithVirtual<InputSpecification>(prop, vPropList[count])?.inputSpecification ?? "");
+                //if (helpfulExplanation == "")
+                //{
+                //    helpfulExplanation = "(nothing)";
+                //}
+                var helpfulExplanation = GetInputSpecification(prop, vPropList[count], settings);
                 sb.AppendLine("<dt>What to input</dt><dd>" + ConvertMDToHTML(helpfulExplanation) + "</dd>");
 
                 // value instance type
@@ -278,7 +281,7 @@ namespace taskt.Core
                 if (sampleUsages.Count > 0)
                 {
                     sb.AppendLine(Environment.NewLine);
-                    sb.AppendLine("#### Sample Usage");
+                    sb.AppendLine("#### More Detailed Sample Usage(s)");
 
                     //string sampleUsageTabe = "| Value | Means |\n|---|---|\n";
 
@@ -348,6 +351,36 @@ namespace taskt.Core
             return new CommandMetaData() { Group = groupName, SubGroup = subGroupName, Description = classDescription, Name = commandName, Location = serverPath };
         }
 
+        private static string GetInputSpecification(PropertyInfo propInfo, PropertyInfo virtualProp, ApplicationSettings settings)
+        {
+            var attrInput = GetCustomAttributeWithVirtual<InputSpecification>(propInfo, virtualProp);
+
+            if (attrInput != null)
+            {
+                var txt = settings.EngineSettings.replaceEngineKeyword(attrInput.inputSpecification);
+                if (attrInput.autoGenerate)
+                {
+                    if (txt == "")
+                    {
+                        var uiOpts = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualProp);
+                        return ((uiOpts.Count > 0) ? "Select or Enter the One of the Options" : "(nothing)");
+                    }
+                    else
+                    {
+                        return "Enter or Select the " + txt;
+                    }
+                }
+                else
+                {
+                    return ((txt == "") ? "(nothing)" : txt);
+                }
+            }
+            else
+            {
+                return "(nothing)";
+            }
+        }
+
         private static (string dtName, string ddValue) GetValueInstanceType(PropertyInfo propInfo, PropertyInfo virtualPropInfo)
         {
             var uiSels = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
@@ -363,14 +396,22 @@ namespace taskt.Core
                 return ("Value", "Window Names");
             }
             var isVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
-            if (isVar != null)
-            {
-                return ("Value", "Variables");
-            }
             var ins = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
-            if (ins != null)
+
+            if ((isVar != null) && (ins != null))
             {
-                return ("Instance Type", ins.instanceType.ToString());
+                return ("Value", ins.instanceType.ToString() + " Variable");
+            }
+            else
+            {
+                if (isVar != null)
+                {
+                    return ("Value", "Variables");
+                }
+                if (ins != null)
+                {
+                    return ("Instance Type", ins.instanceType.ToString());
+                }
             }
 
             return ("", "");

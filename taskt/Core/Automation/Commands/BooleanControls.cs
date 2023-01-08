@@ -13,15 +13,18 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class BooleanControls
     {
+        /// <summary>
+        /// output variable property
+        /// </summary>
         [XmlAttribute]
         [PropertyDescription("Variable Name to Store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**vResult**", "Specify Variable Name **vResult**")]
         [PropertyDetailSampleUsage("**{{{vResult}}}**", "Specify Variable Name **vResult**")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsVariablesList(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]

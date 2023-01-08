@@ -14,7 +14,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**vColor**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vColor}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true)]
@@ -23,8 +22,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Variable")]
         public static string v_InputColorVariableName { get; }
 
+        /// <summary>
+        /// color value property
+        /// </summary>
         [PropertyDescription("Color Value")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**0**", "Specify value **0**. **0** is min value of range")]
         [PropertyDetailSampleUsage("**255**", "Specify value **255**. **255** is max value of range")]

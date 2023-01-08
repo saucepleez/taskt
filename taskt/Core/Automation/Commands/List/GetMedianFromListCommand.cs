@@ -16,41 +16,14 @@ namespace taskt.Core.Automation.Commands
     public class GetMedianFromListCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a List Variable Name")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vList** or **{{{vList}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "List")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
         public string v_InputList { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select a Variable Name to Store Result")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vResult** or **{{{vResult}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select If List Value is Not Numeric")]
-        //[InputSpecification("")]
-        //[SampleUsage("**Ignore** or **Error**")]
-        //[Remarks("")]
-        //[PropertyUISelectionOption("Ignore")]
-        //[PropertyUISelectionOption("Error")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsOptional(true, "Ignore")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_WhenValueIsNotNumeric))]
         public string v_IfValueIsNotNumeric { get; set; }
 
@@ -66,23 +39,38 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var notNumeric = v_IfValueIsNotNumeric.GetUISelectionValue("v_IfValueIsNotNumeric", this, engine);
-            var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
+            //var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
 
-            var list = ListControls.GetDecimalListVariable(v_InputList, (notNumeric == "ignore"), engine);
+            //var list = ListControls.GetDecimalListVariable(v_InputList, (notNumeric == "ignore"), engine);
 
-            decimal med;
-            if (list.Count() % 2 == 0)
-            {
-                int center = list.Count() / 2;
-                med = (list[center - 1] + list[center]) * (decimal)0.5;
-            }
-            else
-            {
-                med = list[list.Count() / 2];
-            }
+            //decimal med;
+            //if (list.Count() % 2 == 0)
+            //{
+            //    int center = list.Count() / 2;
+            //    med = (list[center - 1] + list[center]) * (decimal)0.5;
+            //}
+            //else
+            //{
+            //    med = list[list.Count() / 2];
+            //}
 
-            med.ToString().StoreInUserVariable(engine, v_Result);
+            //med.ToString().StoreInUserVariable(engine, v_Result);
+            ListControls.MathProcess(this, nameof(v_IfValueIsNotNumeric), v_InputList, engine,
+                new Func<System.Collections.Generic.List<decimal>, decimal>((lst) =>
+                {
+                    decimal med;
+                    if (lst.Count() % 2 == 0)
+                    {
+                        int center = lst.Count() / 2;
+                        med = (lst[center - 1] + lst[center]) * (decimal)0.5;
+                    }
+                    else
+                    {
+                        med = lst[lst.Count() / 2];
+                    }
+                    return med;
+                })
+            ).StoreInUserVariable(engine, v_Result);
         }
     }
 }

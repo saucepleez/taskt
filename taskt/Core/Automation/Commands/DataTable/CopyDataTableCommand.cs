@@ -44,13 +44,13 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         //[PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "New DataTable")]
-        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        [PropertyDescription("New DataTable Variable Name")]
-        [PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New DataTable")]
-        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
-        [PropertyDetailSampleUsage("**vNewDataTale**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vNewDataTale}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
+        //[PropertyDescription("New DataTable Variable Name")]
+        //[PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "New DataTable")]
+        //[PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        //[PropertyDetailSampleUsage("**vNewDataTale**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vNewDataTale}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         public string v_OutputVariableName { get; set; }
 
         public CopyDataTableCommand()
