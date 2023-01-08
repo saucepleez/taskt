@@ -54,10 +54,10 @@ namespace taskt.Core.Automation.Commands
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyUISelectionOption("Text")]
         //[PropertyUISelectionOption("Numeric")]
-        //[PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         //[PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Type")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterValueType))]
+        [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
@@ -66,10 +66,10 @@ namespace taskt.Core.Automation.Commands
         //[SampleUsage("")]
         //[Remarks("")]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         //[PropertyValidationRule("Filter Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Action")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_FilterAction))]
+        [PropertySelectionChangeEvent(nameof(cmbFilterAction_SelectionChangeCommited))]
         public string v_FilterAction { get; set; }
 
         [XmlElement]
