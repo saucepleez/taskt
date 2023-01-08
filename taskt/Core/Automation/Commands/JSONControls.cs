@@ -12,7 +12,6 @@ namespace taskt.Core.Automation.Commands
         /// input JSON Variable or Value
         /// </summary>
         [PropertyDescription("JSON Variable Name or JSON Value")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("JSON Value or JSON Variable Name", true)]
         [PropertyDetailSampleUsage("**{ \"id\": 3, \"value\": \"Hello\" }**", "Specify the JSON Object Text")]
         [PropertyDetailSampleUsage("**[ 1, 2, \"Hello\" ]**", "Specify the JSON Array Text")]
@@ -30,7 +29,6 @@ namespace taskt.Core.Automation.Commands
         /// input JSON Variable (Variable Only)
         /// </summary>
         [PropertyDescription("JSON Variable Name")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("JSON **Variable Name**", true)]
         [PropertyDetailSampleUsage("**{{{vJSON}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "JSON")]
         [Remarks("")]
@@ -80,7 +78,6 @@ namespace taskt.Core.Automation.Commands
         /// JSON path
         /// </summary>
         [PropertyDescription("JSON Extractor (JSONPath)")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("JSONPath", true)]
         [PropertyDetailSampleUsage("**$.id**", "Specify **id** for Root child node")]
         [PropertyDetailSampleUsage("**$..id**", "Specify Anywhere **id**")]
@@ -96,7 +93,6 @@ namespace taskt.Core.Automation.Commands
         /// Value type to Add JSON
         /// </summary>
         [PropertyDescription("Value Type to Add")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("", true)]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
@@ -121,7 +117,6 @@ namespace taskt.Core.Automation.Commands
         /// value to add property
         /// </summary>
         [PropertyDescription("Value to Add")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Value", true)]
         [PropertyDetailSampleUsage("**Hello**", "Add Text **Hello**")]
         [PropertyDetailSampleUsage("**1**", "Add Number **Hello**")]

@@ -19,7 +19,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
@@ -36,7 +35,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
@@ -54,7 +52,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vNewList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
@@ -72,7 +69,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vList}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyShowSampleUsageInDescription(true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
@@ -94,7 +90,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Space Separated")]
         [PropertyUISelectionOption("Tab Separated")]
         [PropertyUISelectionOption("NewLine Separated")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDetailSampleUsage("**List**", "Specify the List Variable Name")]
         [PropertyDetailSampleUsage("**Comman Separated**", "Enter like **A,B,C**")]
@@ -150,7 +145,6 @@ namespace taskt.Core.Automation.Commands
         /// List index property
         /// </summary>
         [PropertyDescription("Index of the List")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Index of the List", true)]
         [PropertyDetailSampleUsage("**0**", "Get First List Item")]
         [PropertyDetailSampleUsage("**-1**", "Get Last List Item")]
@@ -165,7 +159,6 @@ namespace taskt.Core.Automation.Commands
         /// search value property
         /// </summary>
         [PropertyDescription("Value to Search")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Value to Search", true)]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Search")]

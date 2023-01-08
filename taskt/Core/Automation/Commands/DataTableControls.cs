@@ -21,7 +21,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -37,7 +36,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
@@ -55,7 +53,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
@@ -97,7 +94,6 @@ namespace taskt.Core.Automation.Commands
         /// column name or index
         /// </summary>
         [PropertyDescription("Name or Index of the Column")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Column Name")]
         [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Column Index")]
@@ -114,7 +110,6 @@ namespace taskt.Core.Automation.Commands
         /// row index
         /// </summary>
         [PropertyDescription("Index of the Row")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Index of the Row")]
         [PropertyDetailSampleUsage("**0**", "Specify First Row Index")]
         [PropertyDetailSampleUsage("**-1**", "Specify Last Row Index")]
