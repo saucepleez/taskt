@@ -16,42 +16,14 @@ namespace taskt.Core.Automation.Commands
     public class ConvertDataTableColumnToDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the DataTable Variable Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a existing DataTable to fet rows from.")]
-        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Column type")]
-        //[InputSpecification("")]
-        //[SampleUsage("**Column Name** or **Index**")]
-        //[Remarks("")]
-        //[PropertyUISelectionOption("Column Name")]
-        //[PropertyUISelectionOption("Index")]
-        //[PropertyIsOptional(true, "Column Name")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyDisplayText(true, "Column Type")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please enter the Name or Index of the Column")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a valid Column index value")]
-        //[SampleUsage("**id** or **0** or **{{{vColumn}}}** or **-1**")]
-        //[Remarks("If **-1** is specified for Column Index, it means the last column.")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Column")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnNameIndex))]
         public string v_DataColumnIndex { get; set; }
 
@@ -59,7 +31,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Dictionary Key prefix")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
-        //[SampleUsage("**row** or **{{{vPrefix}}}**")]
         [PropertyDetailSampleUsage("**row**", PropertyDetailSampleUsage.ValueType.Value, "prefix")]
         [PropertyDetailSampleUsage("**{{{vPrefix}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "prefix")]
         [Remarks("When Specified **row** for Prefix, the Dictionary key is row0, row1, ...")]
@@ -69,17 +40,6 @@ namespace taskt.Core.Automation.Commands
         public string v_KeyPrefix { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please Specify the Variable Name To Assign The Dictionary")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
         public string v_OutputVariableName { get; set; }
 

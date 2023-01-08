@@ -17,80 +17,28 @@ namespace taskt.Core.Automation.Commands
     public class ReplaceDataTableRowValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a DataTable Variable Name to Replace")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vTable** or **{{{vTable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyValidationRule("DataTable to Replace", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_InputDataTable { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please enter the Index of the Row")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a valid Column index value")]
-        //[SampleUsage("**id** or **0** or **{{{vRow}}}** or **-1**")]
-        //[Remarks("If **-1** is specified for Row Index, it means the last row.")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Row")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
         public string v_TargetRowIndex { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("replace target value type")]
-        //[InputSpecification("")]
-        //[SampleUsage("**Text** or **Number**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyUISelectionOption("Text")]
-        //[PropertyUISelectionOption("Numeric")]
-        //[PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Type")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceValueType))]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("replace action")]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Action")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceAction))]
         [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
         public string v_ReplaceAction { get; set; }
 
         [XmlElement]
-        //[PropertyDescription("Additional Parameters")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        //[PropertyDataGridViewSetting(false, false, true, 400, 120)]
-        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
-        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ActionParameterTable))]
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify replace value")]
-        //[InputSpecification("")]
-        //[SampleUsage("**newValue** or **{{{vNewValue}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyDisplayText(true, "Replace Value")]
         [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceValue))]
         public string v_NewValue { get; set; }
 
@@ -100,8 +48,6 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Replace DataTable Row Value";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            //this.v_TargetType = "Text";
         }
 
         public override void RunCommand(object sender)
