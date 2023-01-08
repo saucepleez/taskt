@@ -115,7 +115,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_TargetType = "Text";
+            //this.v_TargetType = "Text";
         }
 
         public override void RunCommand(object sender)
