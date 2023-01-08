@@ -30,6 +30,23 @@ namespace taskt.Core.Automation.Commands
         public static string v_OutputDictionaryName { get; }
 
         /// <summary>
+        /// New output Dictionary property
+        /// </summary>
+        [XmlAttribute]
+        [PropertyDescription("New Dictionary Variable Name")]
+        [InputSpecification("New Dictionary Variable Name", true)]
+        [PropertyDetailSampleUsage("**vNewDictionary**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNewDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New Dictionary")]
+        public static string v_NewOutputDictionaryName { get; }
+
+        /// <summary>
         /// input Dictionary property
         /// </summary>
         [XmlAttribute]

@@ -84,13 +84,13 @@ namespace taskt.Core.Automation.Commands
         //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         //[PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "New Dictionary")]
-        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
         [Remarks("Concatenate Dictionary 1, Dictionary 2 in that order")]
-        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
-        [PropertyDetailSampleUsage("**vNewDic**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vNewDic}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New Dictionary")]
+        //[PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        //[PropertyDetailSampleUsage("**vNewDic**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vNewDic}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "New Dictionary")]
         public string v_OutputName { get; set; }
 
         public ConcatenateDictionaryCommand()
