@@ -1155,6 +1155,49 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public static string v_ActionParameterTable { get; }
 
+        /// <summary>
+        /// Replace value type property, please specify PropertySelectionChangeEvent in commands
+        /// </summary>
+        [PropertyDescription("Type of Values to be Replaced")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Text")]
+        [PropertyUISelectionOption("Numeric")]
+        [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
+        [PropertyDetailSampleUsage("**Text**", PropertyDetailSampleUsage.ValueType.Value, "Type of Values")]
+        [PropertyDetailSampleUsage("**Numeric**", PropertyDetailSampleUsage.ValueType.Value, "Type of Values")]
+        [PropertyDetailSampleUsage("**{{{vType}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Type of Values")]
+        [PropertyFirstValue("Text")]
+        public static string v_ReplaceValueType { get; }
+
+        /// <summary>
+        /// Replace action property, please specify PropertySelectionChangeEvent in commands
+        /// </summary>
+        [PropertyDescription("Replace Action")]
+        [InputSpecification("", true)]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
+        public static string v_ReplaceAction { get; }
+
+        /// <summary>
+        /// Replace value property
+        /// </summary>
+        [PropertyDescription("Replace Value")]
+        [InputSpecification("Replace Value", true)]
+        [PropertyDetailSampleUsage("**1**", "Replace with **1**")]
+        [PropertyDetailSampleUsage("**a**", "Replace with **a**")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", "Replace with the Value of Variable **{{{vValue}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Replace Value")]
+        [PropertyIsOptional(true, "Empty")]
+        public static string v_ReplaceValue { get; }
+
         #endregion
 
         #region ComboBox Items Filter

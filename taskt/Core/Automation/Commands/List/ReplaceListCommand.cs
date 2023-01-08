@@ -24,52 +24,56 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetList { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Replace Target Value Type")]
-        [InputSpecification("")]
-        [SampleUsage("**Text** or **Number**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Text")]
-        [PropertyUISelectionOption("Numeric")]
+        //[PropertyDescription("Replace Target Value Type")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Text** or **Number**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Text")]
+        //[PropertyUISelectionOption("Numeric")]
+        //[PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Type")]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceValueType))]
         [PropertySelectionChangeEvent(nameof(cmbTargetType_SelectionChangeCommited))]
-        [PropertyValidationRule("Target Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Type")]
         public string v_TargetType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Replace Action")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDescription("Replace Action")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Action")]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceValueType))]
         [PropertySelectionChangeEvent(nameof(cmbReplaceAction_SelectionChangeCommited))]
-        [PropertyValidationRule("Replace Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Action")]
         public string v_ReplaceAction { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Additional Parameters")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(false, false, true, 400, 120)]
-        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
-        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
-        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //[PropertyDescription("Additional Parameters")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        //[PropertyDataGridViewSetting(false, false, true, 400, 120)]
+        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true)]
+        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false)]
+        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ActionParameterTable))]
         public DataTable v_ReplaceActionParameterTable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Replace Value")]
-        [InputSpecification("")]
-        [PropertyDetailSampleUsage("**1**", "Replace with **1**")]
-        [PropertyDetailSampleUsage("**a**", "Replace with **a**")]
-        [PropertyDetailSampleUsage("**{{{vValue}}}**", "Replace with the Value of Variable **{{{vValue}}}**")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyDisplayText(true, "Replace Value")]
+        //[PropertyDescription("Replace Value")]
+        //[InputSpecification("")]
+        //[PropertyDetailSampleUsage("**1**", "Replace with **1**")]
+        //[PropertyDetailSampleUsage("**a**", "Replace with **a**")]
+        //[PropertyDetailSampleUsage("**{{{vValue}}}**", "Replace with the Value of Variable **{{{vValue}}}**")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyDisplayText(true, "Replace Value")]
+        [PropertyVirtualProperty(nameof(ConditionControls), nameof(ConditionControls.v_ReplaceValue))]
         public string v_ReplaceValue { get; set; }
 
         public ReplaceListCommand()
@@ -79,7 +83,7 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_TargetType = "Text";
+            //this.v_TargetType = "Text";
         }
 
         public override void RunCommand(object sender)
