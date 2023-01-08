@@ -135,6 +135,20 @@ namespace taskt.Core.Automation.Commands
         public static string v_WhenKeyDoesNotExists { get; }
 
         /// <summary>
+        /// Dictionary Value property
+        /// </summary>
+        [PropertyDescription("Dictionary Value")]
+        [InputSpecification("Dictionary Value", true)]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Dictionary Value")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Dictionary Value")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Dictionary Value")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_Value { get; }
+
+        /// <summary>
         /// get Dictionary&lt;string, string&gt; Variable from variable name
         /// </summary>
         /// <param name="variableName"></param>

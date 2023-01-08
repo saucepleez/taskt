@@ -23,14 +23,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Key { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the value for the Dictionary")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**value1** or **{{{vValue}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        [PropertyDisplayText(true, "Value")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Value))]
         public string v_Value { get; set; }
 
         [XmlAttribute]

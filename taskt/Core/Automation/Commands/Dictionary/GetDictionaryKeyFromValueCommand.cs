@@ -20,16 +20,7 @@ namespace taskt.Core.Automation.Commands
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Value of the Dictionary")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [PropertyDetailSampleUsage("**A**", PropertyDetailSampleUsage.ValueType.Value, "Value of the Dictionary")]
-        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value of the Dictionary")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Value")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Value))]
         public string v_Value { get; set; }
 
         [XmlAttribute]
