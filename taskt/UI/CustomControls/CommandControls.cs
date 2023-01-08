@@ -745,12 +745,14 @@ namespace taskt.UI.CustomControls
 
             var propertyUIHelpers = GetCustomAttributesWithVirtual<PropertyUIHelper>(propInfo, virtualPropInfo);
 
-            var controlList = new List<Control>();
-            if (propertyUIHelpers.Count() == 0)
+            // force add Variable Helper
+            if (propertyUIHelpers.Where(attr => (attr.additionalHelper == PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper))
+                    .Count() == 0)
             {
-                return controlList;
+                propertyUIHelpers.Add(new PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper));
             }
 
+            var controlList = new List<Control>();
             int count = 0;
             foreach (PropertyUIHelper uiHelper in propertyUIHelpers)
             {
