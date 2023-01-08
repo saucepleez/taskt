@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -9,6 +10,60 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class EMailControls
     {
+        /// <summary>
+        /// input EMail Variable property
+        /// </summary>
+        [PropertyDescription("EMail Variable Name")]
+        [InputSpecification("EMail Variable Name", true)]
+        [PropertyDetailSampleUsage("**vEMailName**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vEMailName}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyDisplayText(true, "EMail")]
+        public static string v_InputEMailName { get; }
+
+        /// <summary>
+        /// output EMail Variable Name property
+        /// </summary>
+        [PropertyDescription("EMail Variable Name")]
+        [InputSpecification("EMail Variable Name", true)]
+        [PropertyDetailSampleUsage("**vEMailName**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vEMailName}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyDisplayText(true, "EMail")]
+        public static string v_OutputEMailName { get; }
+
+        /// <summary>
+        /// Address Type property
+        /// </summary>
+        [PropertyDescription("Address Type")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("From")]
+        [PropertyUISelectionOption("To")]
+        [PropertyUISelectionOption("CC")]
+        [PropertyUISelectionOption("BCC")]
+        [PropertyUISelectionOption("Reply-To")]
+        [PropertyUISelectionOption("Resent-From")]
+        [PropertyUISelectionOption("Resent-To")]
+        [PropertyUISelectionOption("Resent-CC")]
+        [PropertyUISelectionOption("Resent-BCC")]
+        [PropertyUISelectionOption("Resent-Reply-To")]
+        [PropertyValidationRule("Address Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Type")]
+        public static string v_AddressType { get; }
+
+
         /// <summary>
         /// get EMailList Variable from variable name specified argument
         /// </summary>
