@@ -45,6 +45,23 @@ namespace taskt.Core.Automation.Commands
         public static string v_OutputDataTableName { get; }
 
         /// <summary>
+        /// New output DataTable property
+        /// </summary>
+        [PropertyDescription("New DataTable Variable Name")]
+        [InputSpecification("New DataTable Variable Name", true)]
+        [PropertyDetailSampleUsage("**vNewDataTable**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNewDataTable}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New DataTable")]
+        public static string v_NewOutputDataTableName { get; }
+
+        /// <summary>
         /// input & output DataTable parameter
         /// </summary>
         [PropertyDescription("DataTable Variable Name")]
