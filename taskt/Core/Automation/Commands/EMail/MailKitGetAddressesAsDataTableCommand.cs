@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mail = v_MailName.GetMailKitMailVariable(engine);
+            var mail = v_MailName.GetMailKitEMailVariable(engine);
 
             var addressType = v_AddressesType.GetUISelectionValue("v_AddressesType", this, engine);
 
