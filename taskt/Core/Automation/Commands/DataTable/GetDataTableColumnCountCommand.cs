@@ -16,29 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class GetDataTableColumnCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the DataTable Variable Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a existing DataTable.")]
-        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please Specify the Variable Name To Assign the column count")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_OutputVariableName { get; set; }
 

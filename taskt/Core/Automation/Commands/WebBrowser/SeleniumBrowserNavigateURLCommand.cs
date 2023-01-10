@@ -40,7 +40,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyUISelectionOption("False")]
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        public bool v_UseHttps { get; set; }
+        public string v_UseHttps { get; set; }
+
         private Dictionary<bool, string> v_HttpsChoice = new Dictionary<bool, string>();
 
 
@@ -51,7 +52,7 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_UseHttps = true;
+            this.v_UseHttps = "True";
             this.v_HttpsChoice.Add(true, "https://");
             this.v_HttpsChoice.Add(false, "http://");
 
@@ -59,18 +60,19 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var caseType = v_UseHttps.ToString().ConvertToUserVariable(sender);
+            //var caseType = v_UseHttps.ToString().ConvertToUserVariable(sender);
 
-            this.v_UseHttps = bool.Parse(caseType.ToLower());
+            //this.v_UseHttps = bool.Parse(caseType.ToLower());
+
+            var useHttps = v_UseHttps.ConvertToUserVariableAsBool("Use HTTPS", engine);
 
             var parsedURL = v_URL.ConvertToUserVariable(sender);
             if (!parsedURL.StartsWith("http"))
             {
-                parsedURL = this.v_HttpsChoice[v_UseHttps] + parsedURL;
+                parsedURL = this.v_HttpsChoice[useHttps] + parsedURL;
             }
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
 
@@ -97,6 +99,7 @@ namespace taskt.Core.Automation.Commands
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {
                 this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+                this.v_UseHttps = "True";
             }
 
             return RenderedControls;
@@ -115,7 +118,8 @@ namespace taskt.Core.Automation.Commands
             }
             if (!url.StartsWith("http"))
             {
-                return base.GetDisplayValue() + " [URL: '" + v_HttpsChoice[v_UseHttps] + v_URL + "', Instance Name: '" + v_InstanceName + "']";
+                var useHttps = (v_UseHttps.Trim().ToLower() == "true");
+                return base.GetDisplayValue() + " [URL: '" + v_HttpsChoice[useHttps] + v_URL + "', Instance Name: '" + v_InstanceName + "']";
             }
             else
             {

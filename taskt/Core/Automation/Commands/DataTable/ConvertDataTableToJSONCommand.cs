@@ -17,31 +17,10 @@ namespace taskt.Core.Automation.Commands
     public class ConvertDataTableToJSONCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the DataTable Variable Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a existing DataTable to fet rows from.")]
-        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please Specify the Variable Name To Assign The JSON")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
-        //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
         public string v_OutputVariableName { get; set; }
 

@@ -15,42 +15,14 @@ namespace taskt.Core.Automation.Commands
     public class DeleteDataTableColumnCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the DataTable Variable Name")]
-        //[InputSpecification("Enter a existing DataTable to add rows to.")]
-        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify the Column type")]
-        //[InputSpecification("")]
-        //[SampleUsage("**Column Name** or **Index**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyUISelectionOption("Column Name")]
-        //[PropertyUISelectionOption("Index")]
-        //[PropertyIsOptional(true, "Column Name")]
-        //[PropertyDisplayText(true, "Column Type")
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify the Column Name to delete")]
-        //[InputSpecification("")]
-        //[SampleUsage("**0** or **newColumn** or **{{{vColumn}}}** or **-1**")]
-        //[Remarks("If **-1** is specified for Column Index, it means the last column.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Column")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnNameIndex))]
         public string v_DeleteColumnName { get; set; }
 

@@ -19,15 +19,6 @@ namespace taskt.Core.Automation.Commands
     public class AddDataTableRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the DataTable Variable Name")]
-        //[InputSpecification("Enter a existing DataTable to add rows to.")]
-        //[SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         public string v_DataTableName { get; set; }
 

@@ -18,34 +18,10 @@ namespace taskt.Core.Automation.Commands
     public class CreateDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Indicate Dictionary Variable Name")]
-        //[InputSpecification("Indicate a unique reference name for later use")]
-        //[SampleUsage("**vMyDictionary** or **{{{vMyDictionary}}}**")]
-        //[Remarks("Create Dictionary<string, string>")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Dictionary")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
-        //[PropertyDescription("Define Keys and Values")]
-        //[InputSpecification("Enter the Keys and Values required for your dictionary")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        //[PropertyDataGridViewColumnSettings("Keys", "Keys", false)]
-        //[PropertyDataGridViewColumnSettings("Values", "Values", false)]
-        //[PropertyDataGridViewSetting(true, true, true)]
-        //[PropertyControlIntoCommandField("ColumnNameDataGridViewHelper")]
-        //[PropertyDataGridViewCellEditEvent(nameof(DataTableControls)+"+"+nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        //[PropertyDisplayText(true, "Items")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_KeyAndValue))]
         public DataTable v_ColumnNameDataTable { get; set; }
 
@@ -61,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            Dictionary<string, string> outputDictionary = new Dictionary<string, string>();
+            var outputDictionary = new Dictionary<string, string>();
 
             outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
 

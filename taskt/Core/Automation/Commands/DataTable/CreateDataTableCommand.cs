@@ -17,17 +17,6 @@ namespace taskt.Core.Automation.Commands
     public class CreateDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Indicate DataTable Variable Name")]
-        //[InputSpecification("Indicate a unique reference name for later use")]
-        //[SampleUsage("**vMyDatatable** or **{{{vMyDatatable}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public string v_DataTableName { get; set; }
 

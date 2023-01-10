@@ -16,16 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class ConcatenateDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please input The Dictionary Variable 1")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a string of comma seperated values.")]
-        //[SampleUsage("**myDictionary1** or **{{{vMyDic1}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyValidationRule("Dictionary1", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Dictionary1")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         [PropertyDescription("Dictionary1 Variable Name")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
@@ -36,16 +26,6 @@ namespace taskt.Core.Automation.Commands
         public string v_InputDataA { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please input The Dictionary Variable 2")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a string of comma seperated values.")]
-        //[SampleUsage("**myDictionary2** or **{{{vMyDic2}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyValidationRule("Dictionary2", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Dictionary2")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         [PropertyDescription("Dictionary2 Variable Name")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
@@ -58,8 +38,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("When Key already Exists")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        //[SampleUsage("**Ignore** or **Overwrite** or **Error**")]
+        [InputSpecification("", true)]
         [PropertyDetailSampleUsage("**Ignore**", "Priority on Dictionary 1")]
         [PropertyDetailSampleUsage("**Overwrite**", "Priority on Dictionary 2")]
         [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
@@ -72,25 +51,8 @@ namespace taskt.Core.Automation.Commands
         public string v_KeyExists { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the result Dictionary")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**newDic** or **{{{newDic}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "New Dictionary")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
         [Remarks("Concatenate Dictionary 1, Dictionary 2 in that order")]
-        //[PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
-        //[PropertyDetailSampleUsage("**vNewDic**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        //[PropertyDetailSampleUsage("**{{{vNewDic}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        //[PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "New Dictionary")]
         public string v_OutputName { get; set; }
 
         public ConcatenateDictionaryCommand()
@@ -105,11 +67,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            Dictionary<string, string> dicA = v_InputDataA.GetDictionaryVariable(engine);
+            var dicA = v_InputDataA.GetDictionaryVariable(engine);
 
-            Dictionary<string, string> dicB = v_InputDataB.GetDictionaryVariable(engine);
+            var dicB = v_InputDataB.GetDictionaryVariable(engine);
 
-            Dictionary<string, string> myDic = new Dictionary<string, string>(dicA);
+            var myDic = new Dictionary<string, string>(dicA);
 
             string keyExists = this.GetUISelectionValue(nameof(v_KeyExists), "When Key Exists", engine);
 

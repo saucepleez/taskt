@@ -16,43 +16,14 @@ namespace taskt.Core.Automation.Commands
     public class GetDictionaryKeyFromValueCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please input The Dictionary Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a string of comma seperated values.")]
-        //[SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Dictionary")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Value of the Dictionary")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [PropertyDetailSampleUsage("**A**", PropertyDetailSampleUsage.ValueType.Value, "Value of the Dictionary")]
-        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value of the Dictionary")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Value")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Value))]
         public string v_Value { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the variable to apply Key name")]
-        //[InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        //[SampleUsage("**vKey** or **{{{vKey}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Key", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Key name")]
         [Remarks("When value not found, Result is Empty")]
@@ -71,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             var vValue = v_Value.ConvertToUserVariable(sender);
 
-            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_InputData.GetDictionaryVariable(engine);
             
             foreach(KeyValuePair<string, string> item in dic)
             {

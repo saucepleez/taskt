@@ -509,7 +509,7 @@ namespace taskt.UI.CustomControls
 
         #region combobox
         /// <summary>
-        /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
+        /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyParameterDirection, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
@@ -533,18 +533,27 @@ namespace taskt.UI.CustomControls
                 uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowCurrentWindow, attrIsWin.allowDesktop));
             }
 
-            // variable names list
+            // variable names list & instance name list
             var attrIsVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
+            var attrIsInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
             if (attrIsVar?.isVariablesList ?? false)
             {
                 uiOptions.AddRange(GetVariableNames(editor));
             }
-
-            // instance name list
-            var attrIsInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
-            if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
+            else
             {
-                uiOptions.AddRange(GetInstanceNames(editor, attrIsInstance.instanceType));
+                var attrDirection = GetCustomAttributeWithVirtual<PropertyParameterDirection>(propInfo, virtualPropInfo);
+                if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
+                {
+                    if ((attrDirection?.porpose ?? PropertyParameterDirection.ParameterDirection.Unknown) == PropertyParameterDirection.ParameterDirection.Output)
+                    {
+                        uiOptions.AddRange(GetVariableNames(editor));
+                    }
+                    else
+                    {
+                        uiOptions.AddRange(GetInstanceNames(editor, attrIsInstance.instanceType));
+                    }
+                }
             }
 
             // ui options

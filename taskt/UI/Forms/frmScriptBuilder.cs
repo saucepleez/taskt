@@ -3118,7 +3118,11 @@ namespace taskt.UI.Forms
             {
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
-                notifyTray.Visible = false;
+
+                if (appSettings.ClientSettings.HideNotifyAutomatically)
+                {
+                    notifyTray.Visible = false;
+                }
             }
         }
 
@@ -3127,6 +3131,12 @@ namespace taskt.UI.Forms
             using (var fm = new UI.Forms.Supplemental.frmDialog(notificationText, "Status Message", Supplemental.frmDialog.DialogType.OkOnly, 0))
             {
                 fm.ShowDialog();
+            }
+            if (appSettings.ClientSettings.HideNotifyAutomatically)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyTray.Visible = false;
             }
         }
 

@@ -40,11 +40,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var notNumeric = this.GetUISelectionValue(nameof(v_IfValueIsNotNumeric), "Not Numeric", engine);
-
-            //var list = ListControls.GetDecimalListVariable(v_InputList, (notNumeric == "ignore"), engine);
-
-            //list.Sum().ToString().StoreInUserVariable(engine, v_Result);
             ListControls.MathProcess(this, nameof(v_IfValueIsNotNumeric), v_InputList, engine,
                 new Func<List<decimal>, decimal>((lst) =>
                 {

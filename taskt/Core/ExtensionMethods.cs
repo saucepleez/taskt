@@ -991,16 +991,6 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value, sender, false);
         }
 
-        public static void StoreInUserVariable(this List<MimeKit.MimeMessage> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
-        public static void StoreInUserVariable(this MimeKit.MimeMessage value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
@@ -1069,32 +1059,6 @@ namespace taskt.Core
             else
             {
                 throw new Exception("Variable " + variableName + " is not AutomationElement");
-            }
-        }
-
-        public static List<MimeKit.MimeMessage> GetMailKitMailListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is List<MimeKit.MimeMessage>)
-            {
-                return (List<MimeKit.MimeMessage>)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not MailKit MailList");
-            }
-        }
-
-        public static MimeKit.MimeMessage GetMailKitMailVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is MimeKit.MimeMessage)
-            {
-                return (MimeKit.MimeMessage)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not MailKit Mail");
             }
         }
 

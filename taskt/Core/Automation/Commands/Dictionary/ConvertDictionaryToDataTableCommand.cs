@@ -17,32 +17,10 @@ namespace taskt.Core.Automation.Commands
     public class ConvertDictionaryToDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please input The Dictionary Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter a string of comma seperated values.")]
-        //[SampleUsage("**myDictionary** or **{{{vMyDic}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
-        //[PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Dictionary")]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
         public string v_InputData { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the variable to apply DataTable")]
-        //[InputSpecification("Enter a unique dataset name that will be used later to traverse over the data")]
-        //[SampleUsage("**vTable** or **{{{vTable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public string v_OutputVariable { get; set; }
 
@@ -58,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            Dictionary<string, string> dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_InputData.GetDictionaryVariable(engine);
 
             DataTable DT = new DataTable();
             DT.Rows.Add();

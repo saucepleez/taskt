@@ -479,6 +479,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Optional field to enter a custom comment which could potentially describe this command or the need for this command, if required")]
         [Attributes.PropertyAttributes.SampleUsage("I am using this command to ...")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [Attributes.PropertyAttributes.PropertyTextBoxSetting(3, true)]
         [Attributes.PropertyAttributes.PropertyIsOptional(true)]
         public string v_Comment { get; set; }
         
@@ -690,7 +692,8 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public bool Replace(SearchReplaceControls.ReplaceTarget trg, string keyword, string replacedText, bool caseSensitive, string instanceType = "")
         {
-            return SearchReplaceControls.Replace(this, trg, keyword, replacedText, caseSensitive, instanceType);
+            this.IsDontSavedCommand =  SearchReplaceControls.Replace(this, trg, keyword, replacedText, caseSensitive, instanceType);
+            return this.IsDontSavedCommand;
         }
         #endregion
 
