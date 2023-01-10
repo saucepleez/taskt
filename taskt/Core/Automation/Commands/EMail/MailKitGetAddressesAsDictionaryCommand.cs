@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -127,20 +124,5 @@ namespace taskt.Core.Automation.Commands
             }
             addresses.StoreInUserVariable(engine, v_AddressesDictionary);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [EMail: '" + v_MailName + "', Type: '" + v_AddressesType + "', Store: '" + v_AddressesDictionary + "']"; ;
-        //}
     }
 }
