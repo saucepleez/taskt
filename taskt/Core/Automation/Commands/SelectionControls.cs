@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
     internal static class SelectionControls
     {
         /// <summary>
-        /// private GetUISelectionValue method. This method supports check selection value, first value, case sensitive.
+        /// private GetUISelectionValue method. This method supports check selection value, first value, case sensitive.  This method may use PropertyValidationRule, PropertyDisplayValue, PropertyDescription attributes.
         /// </summary>
         /// <param name="propInfo"></param>
         /// <param name="propertyValue"></param>
@@ -92,6 +92,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// Get selected item value from property name.  This method supports check selection value, first value, case sensitive. This method may use PropertyValidationRule, PropertyDisplayValue, PropertyDescription attributes.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         public static string GetUISelectionValue(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
             return GetUISelectionValue(command, propertyName, "", engine);
