@@ -692,7 +692,8 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public bool Replace(SearchReplaceControls.ReplaceTarget trg, string keyword, string replacedText, bool caseSensitive, string instanceType = "")
         {
-            return SearchReplaceControls.Replace(this, trg, keyword, replacedText, caseSensitive, instanceType);
+            this.IsDontSavedCommand =  SearchReplaceControls.Replace(this, trg, keyword, replacedText, caseSensitive, instanceType);
+            return this.IsDontSavedCommand;
         }
         #endregion
 
