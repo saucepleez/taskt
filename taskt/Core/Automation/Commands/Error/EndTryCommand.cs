@@ -28,7 +28,8 @@ namespace taskt.Core.Automation.Commands
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Comment", this, editor));
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Comment", this, editor));
+            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(new List<string>() { nameof(v_Comment) }, this, editor));
             return RenderedControls;
         }
         public override string GetDisplayValue()
