@@ -83,7 +83,6 @@ namespace taskt.Core.Automation.Commands
 
             var mail = v_MailName.GetMailKitEMailVariable(engine);
 
-            //var addressType = v_AddressesType.GetUISelectionValue("v_AddressesType", this, engine);
             var addressType = this.GetUISelectionValue(nameof(v_AddressesType), "Type", engine);
 
             MimeKit.InternetAddressList lst = null;
