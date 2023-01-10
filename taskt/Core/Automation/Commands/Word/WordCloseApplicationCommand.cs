@@ -54,7 +54,8 @@ namespace taskt.Core.Automation.Commands
             //check if document exists and save
             if (wordInstance.Documents.Count >= 1)
             {
-                wordInstance.ActiveDocument.Close(v_WordSaveOnExit);
+                var isSave = v_WordSaveOnExit.ConvertToUserVariableAsBool("Document should be saved", engine);
+                wordInstance.ActiveDocument.Close(isSave);
             }
 
             //close word
