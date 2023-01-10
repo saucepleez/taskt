@@ -22,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vDictionary}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
