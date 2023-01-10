@@ -24,6 +24,28 @@ namespace taskt.Core.Automation.Commands
         {
             var virtualPropInfo = propInfo.GetVirtualProperty();
 
+            if (propertyDescription == "")
+            {
+                // search property description
+                var attrValidation = GetCustomAttributeWithVirtual<PropertyValidationRule>(propInfo, virtualPropInfo);
+                if (attrValidation != null)
+                {
+                    propertyDescription = attrValidation.parameterName;
+                }
+                else
+                {
+                    var attrDisplay = GetCustomAttributeWithVirtual<PropertyDisplayText>(propInfo, virtualPropInfo);
+                    if (attrDisplay != null)
+                    {
+                        propertyDescription = attrDisplay.parameterName;
+                    }
+                    else
+                    {
+                        propertyDescription = GetCustomAttributeWithVirtual<PropertyDescription>(propInfo, virtualPropInfo)?.propertyDescription ?? "";
+                    }
+                }
+            }
+
             var attrIsOpt = GetCustomAttributeWithVirtual<PropertyIsOptional>(propInfo, virtualPropInfo);
             if (string.IsNullOrEmpty(propertyValue))
             {
@@ -68,6 +90,11 @@ namespace taskt.Core.Automation.Commands
             {
                 return value;
             }
+        }
+
+        public static string GetUISelectionValue(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        {
+            return GetUISelectionValue(command, propertyName, "", engine);
         }
 
         /// <summary>
