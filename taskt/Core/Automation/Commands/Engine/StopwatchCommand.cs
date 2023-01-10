@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
             MeasureControls = CommandControls.CreateDefaultDropdownGroupFor("v_userVariableName", this, editor);
 
             //load variables for selection
-            var comboBox = (ComboBox)MeasureControls[1];
+            var comboBox = (ComboBox)MeasureControls[2];
             comboBox.AddVariableNames(editor);
 
             MeasureControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
