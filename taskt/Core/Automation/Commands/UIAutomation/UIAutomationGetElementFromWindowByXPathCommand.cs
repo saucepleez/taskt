@@ -124,7 +124,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkInspectTool_Clicked(object sender, EventArgs e)
         {
             TextBox txt = (TextBox)ControlsList[nameof(v_SearchXPath)];
-            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(XPathTextBox);
+            AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(txt);
         }
 
         //public override List<Control> Render(frmCommandEditor editor)
