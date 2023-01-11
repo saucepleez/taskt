@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -19,10 +15,12 @@ namespace taskt.Core.Automation.Commands
     public class MailKitGetEMailFromEMailListCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify EMailList Variable Name")]
+        [PropertyDescription("EMailList Variable Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vMailList}}}**")]
+        [InputSpecification("EMailList Variable Name", true)]
+        //[SampleUsage("**{{{vMailList}}}**")]
+        [PropertyDetailSampleUsage("**vMailList**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyDetailSampleUsage("**{{{vMailList}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("EMailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -33,30 +31,32 @@ namespace taskt.Core.Automation.Commands
         public string v_MailListName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify EMailList Index")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("EMailList Index")]
+        [InputSpecification("EMailList Index", true)]
+        [PropertyDetailSampleUsage("**0**", "Specify the First EMail Index")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
+        [PropertyDetailSampleUsage("**-1**", "Specify the Last EMail Index")]
+        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "CurrentPosition")]
-        [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Index")]
         public string v_Index { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store EMail")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vEMail** or **{{{vEMail}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("EMail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please specify Variable Name to Store EMail")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**vEMail** or **{{{vEMail}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("EMail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputEMailName))]
         public string v_MailVariable { get; set; }
 
         public MailKitGetEMailFromEMailListCommand()
@@ -106,21 +106,5 @@ namespace taskt.Core.Automation.Commands
                 newMes.StoreInUserVariable(engine, v_MailVariable);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    string index = (v_Index == null) ? "" : v_Index;
-        //    return base.GetDisplayValue() + " [EMailList: '" + v_MailListName + "', Index: '" + index + "', Store: '" + v_MailVariable + "']";
-        //}
     }
 }

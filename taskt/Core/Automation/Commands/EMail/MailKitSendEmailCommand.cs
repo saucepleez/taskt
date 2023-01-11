@@ -19,49 +19,57 @@ namespace taskt.Core.Automation.Commands
     public class MailKitSendEmailCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Host Name")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the host/service name that the script should use")]
-        [SampleUsage("**smtp.mymail.com** or **{{{vHost}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("SMTP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(true, "Host")]
+        //[PropertyDescription("Please specify SMTP Host Name")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the host/service name that the script should use")]
+        //[SampleUsage("**smtp.mymail.com** or **{{{vHost}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("SMTP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyDisplayText(true, "Host")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
+        [PropertyDetailSampleUsage("**smtp.example.com**", PropertyDetailSampleUsage.ValueType.Value, "Host")]
         public string v_SMTPHost { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Port")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the port number that should be used when contacting the SMTP service")]
-        [SampleUsage("**25** or **587** or **{{{vPort}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("SMTP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(true, "Port")]
+        //[PropertyDescription("Please specify SMTP Port")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the port number that should be used when contacting the SMTP service")]
+        //[SampleUsage("**25** or **587** or **{{{vPort}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("SMTP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyDisplayText(true, "Port")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Port))]
+        [PropertyDetailSampleUsage("**25**", PropertyDetailSampleUsage.ValueType.Value, "Port")]
+        [PropertyDetailSampleUsage("**587**", PropertyDetailSampleUsage.ValueType.Value, "Port")]
+        [PropertyDetailSampleUsage("**{{{vPort}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Port")]
         public string v_SMTPPort { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Username")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the username to use when contacting the SMTP service")]
-        [SampleUsage("**username** or **{{{vUserName}}}**")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "From Email")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
+        //[PropertyDescription("Please specify SMTP Username")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the username to use when contacting the SMTP service")]
+        //[SampleUsage("**username** or **{{{vUserName}}}**")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "From Email")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_UserName))]
         public string v_SMTPUserName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify SMTP Password")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the password to use when contacting the SMTP service")]
-        [SampleUsage("**password** or **{{{vPassword}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyTextBoxSetting(1, false)]
+        //[PropertyDescription("Please specify SMTP Password")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the password to use when contacting the SMTP service")]
+        //[SampleUsage("**password** or **{{{vPassword}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Password))]
         public string v_SMTPPassword { get; set; }
 
         [XmlAttribute]
@@ -146,19 +154,20 @@ namespace taskt.Core.Automation.Commands
         public string v_SMTPAttachment { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Secure Option")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyFirstValue("Auto")]
-        [PropertyIsOptional(true, "Auto")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Auto")]
-        [PropertyUISelectionOption("No SSL or TLS")]
-        [PropertyUISelectionOption("Use SSL or TLS")]
-        [PropertyUISelectionOption("STARTTLS")]
-        [PropertyUISelectionOption("STARTTLS When Available")]
+        //[PropertyDescription("Please specify Secure Option")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyFirstValue("Auto")]
+        //[PropertyIsOptional(true, "Auto")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Auto")]
+        //[PropertyUISelectionOption("No SSL or TLS")]
+        //[PropertyUISelectionOption("Use SSL or TLS")]
+        //[PropertyUISelectionOption("STARTTLS")]
+        //[PropertyUISelectionOption("STARTTLS When Available")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_SecureOption))]
         public string v_SMTPSecureOption { get; set; }
 
         public MailKitSendEmailCommand()
@@ -288,20 +297,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [From: '" + v_SMTPFromEmail + "', To Address: '" + v_SMTPToEmail + "', Subject: '" + v_SMTPSubject + "']";
-        //}
     }
 }

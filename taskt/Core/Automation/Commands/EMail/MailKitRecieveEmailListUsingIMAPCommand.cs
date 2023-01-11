@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -19,80 +16,90 @@ namespace taskt.Core.Automation.Commands
     public class MailKitRecieveEmailListUsingIMAPCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Host Name")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the host/service name that the script should use")]
-        [SampleUsage("**imap.mymail.com** or **{{{vHost}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("IMAP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(true, "Host")]
+        //[PropertyDescription("Please specify IMAP Host Name")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the host/service name that the script should use")]
+        //[SampleUsage("**imap.mymail.com** or **{{{vHost}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("IMAP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyDisplayText(true, "Host")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
+        [PropertyDetailSampleUsage("**imap.example.com**", PropertyDetailSampleUsage.ValueType.Value, "Host")]
         public string v_IMAPHost { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Port")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the port number that should be used when contacting the IMAP service")]
-        [SampleUsage("**143** or **993** or **{{{vPort}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("POP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(true, "Port")]
+        //[PropertyDescription("Please specify IMAP Port")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the port number that should be used when contacting the IMAP service")]
+        //[SampleUsage("**143** or **993** or **{{{vPort}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("POP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyDisplayText(true, "Port")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Port))]
+        [PropertyDetailSampleUsage("**143**", PropertyDetailSampleUsage.ValueType.Value, "Port")]
+        [PropertyDetailSampleUsage("**993**", PropertyDetailSampleUsage.ValueType.Value, "Port")]
+        [PropertyDetailSampleUsage("**{{{vPort}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Port")]
         public string v_IMAPPort { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Username")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the username to use when contacting the IMAP service")]
-        [SampleUsage("**username** or **{{{vUserName}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(true, "User")]
+        //[PropertyDescription("Please specify IMAP Username")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the username to use when contacting the IMAP service")]
+        //[SampleUsage("**username** or **{{{vUserName}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyDisplayText(true, "User")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_UserName))]
         public string v_IMAPUserName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify IMAP Password")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Define the password to use when contacting the IMAP service")]
-        [SampleUsage("**password** or **{{{vPassword}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyTextBoxSetting(1, false)]
+        //[PropertyDescription("Please specify IMAP Password")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Define the password to use when contacting the IMAP service")]
+        //[SampleUsage("**password** or **{{{vPassword}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Password))]
         public string v_IMAPPassword { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Secure Option")]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyFirstValue("Auto")]
-        [PropertyIsOptional(true, "Auto")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Auto")]
-        [PropertyUISelectionOption("No SSL or TLS")]
-        [PropertyUISelectionOption("Use SSL or TLS")]
-        [PropertyUISelectionOption("STARTTLS")]
-        [PropertyUISelectionOption("STARTTLS When Available")]
+        //[PropertyDescription("Please specify Secure Option")]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyFirstValue("Auto")]
+        //[PropertyIsOptional(true, "Auto")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Auto")]
+        //[PropertyUISelectionOption("No SSL or TLS")]
+        //[PropertyUISelectionOption("Use SSL or TLS")]
+        //[PropertyUISelectionOption("STARTTLS")]
+        //[PropertyUISelectionOption("STARTTLS When Available")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_SecureOption))]
         public string v_IMAPSecureOption { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store EMailList")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vMailList** or **{{{vMailList}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("EMailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please specify Variable Name to Store EMailList")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**vMailList** or **{{{vMailList}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("EMailList", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputMailListName))]
         public string v_MailListName { get; set; }
 
         public MailKitRecieveEmailListUsingIMAPCommand()
@@ -107,7 +114,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            // pop host
+            // imap host
             string pop = v_IMAPHost.ConvertToUserVariable(engine);
             int port = v_IMAPPort.ConvertToUserVariableAsInteger("IMAP Port", engine);
             // auth
@@ -162,20 +169,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Host: '" + v_IMAPHost + "', User: '" + v_IMAPUserName + "', Store: '" + v_MailListName + "']";
-        //}
     }
 }

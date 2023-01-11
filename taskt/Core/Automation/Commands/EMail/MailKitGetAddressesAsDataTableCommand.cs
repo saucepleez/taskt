@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MimeKit;
+using System;
 using System.Data;
+using System.Linq;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -81,49 +83,50 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mail = v_MailName.GetMailKitEMailVariable(engine);
+            //var mail = v_MailName.GetMailKitEMailVariable(engine);
 
-            var addressType = this.GetUISelectionValue(nameof(v_AddressesType), "Type", engine);
+            //var addressType = this.GetUISelectionValue(nameof(v_AddressesType), "Type", engine);
 
-            MimeKit.InternetAddressList lst = null;
-            switch (addressType)
-            {
-                case "from":
-                    lst = mail.From;
-                    break;
-                case "to":
-                    lst = mail.To;
-                    break;
-                case "cc":
-                    lst = mail.Cc;
-                    break;
-                case "bcc":
-                    lst = mail.Bcc;
-                    break;
-                case "reply-to":
-                    lst = mail.ReplyTo;
-                    break;
-                case "resent-from":
-                    lst = mail.ResentFrom;
-                    break;
-                case "resent-to":
-                    lst = mail.ResentTo;
-                    break;
-                case "resent-cc":
-                    lst = mail.ResentCc;
-                    break;
-                case "resent-bcc":
-                    lst = mail.ResentBcc;
-                    break;
-                case "resent-reply-to":
-                    lst = mail.ResentReplyTo;
-                    break;
-            }
+            //MimeKit.InternetAddressList lst = null;
+            //switch (addressType)
+            //{
+            //    case "from":
+            //        lst = mail.From;
+            //        break;
+            //    case "to":
+            //        lst = mail.To;
+            //        break;
+            //    case "cc":
+            //        lst = mail.Cc;
+            //        break;
+            //    case "bcc":
+            //        lst = mail.Bcc;
+            //        break;
+            //    case "reply-to":
+            //        lst = mail.ReplyTo;
+            //        break;
+            //    case "resent-from":
+            //        lst = mail.ResentFrom;
+            //        break;
+            //    case "resent-to":
+            //        lst = mail.ResentTo;
+            //        break;
+            //    case "resent-cc":
+            //        lst = mail.ResentCc;
+            //        break;
+            //    case "resent-bcc":
+            //        lst = mail.ResentBcc;
+            //        break;
+            //    case "resent-reply-to":
+            //        lst = mail.ResentReplyTo;
+            //        break;
+            //}
+            var lst = this.GetMailKitEMailAddresses(nameof(v_MailName), nameof(v_AddressesType), engine);
 
             DataTable addresses = new DataTable();
             addresses.Columns.Add("Name");
             addresses.Columns.Add("Address");
-            foreach (MimeKit.MailboxAddress item in lst)
+            foreach (MimeKit.MailboxAddress item in lst.Cast<MailboxAddress>())
             {
                 addresses.Rows.Add(new object[] { item.Name, item.Address });
             }
