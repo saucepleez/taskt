@@ -101,7 +101,8 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Port Number", true)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
+        [PropertyValueRange(0, 65535)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Port")]
         public static string v_Port { get; }
@@ -251,6 +252,29 @@ namespace taskt.Core.Automation.Commands
                 default:
                     throw new Exception("Strange Address Type '" + addressType + "'");
             }
+        }
+
+        public static MailKit.Security.SecureSocketOptions GetMailKitSecureOption(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        {
+            var secureOption = command.GetUISelectionValue(propertyName, engine);
+
+            var option = MailKit.Security.SecureSocketOptions.Auto;
+            switch (secureOption)
+            {
+                case "no ssl or tls":
+                    option = MailKit.Security.SecureSocketOptions.None;
+                    break;
+                case "use ssl or tls":
+                    option = MailKit.Security.SecureSocketOptions.SslOnConnect;
+                    break;
+                case "starttls":
+                    option = MailKit.Security.SecureSocketOptions.StartTls;
+                    break;
+                case "starttls when available":
+                    option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
+                    break;
+            }
+            return option;
         }
     }
 }
