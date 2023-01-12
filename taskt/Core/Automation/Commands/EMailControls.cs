@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_AddressType { get; }
 
         /// <summary>
-        /// pop & imap mail host proeprty
+        /// pop & imap & smtp mail host proeprty
         /// </summary>
         [PropertyDescription("Host Name")]
         [InputSpecification("Host Name", true)]
@@ -95,7 +95,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_Host { get; set; }
 
         /// <summary>
-        /// pop & imap port property
+        /// pop & imap & smtp port property
         /// </summary>
         [PropertyDescription("Port")]
         [InputSpecification("Port Number", true)]
@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_Port { get; }
 
         /// <summary>
-        /// pop & imap user name property
+        /// pop & imap & smtp user name property
         /// </summary>
         [PropertyDescription("Username")]
         [InputSpecification("Username", true)]
@@ -122,7 +122,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_UserName { get; }
 
         /// <summary>
-        /// pop & imap password property
+        /// pop & imap & smtp password property
         /// </summary>
         [PropertyDescription("Password")]
         [InputSpecification("Password")]
@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_Password { get; set; }
 
         /// <summary>
-        /// pop & imap secure option property
+        /// pop & imap & smtp secure option property
         /// </summary>
         [PropertyDescription("Secure Option")]
         [InputSpecification("", true)]
