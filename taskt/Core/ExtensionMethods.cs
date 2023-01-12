@@ -27,6 +27,7 @@ namespace taskt.Core
         public string Description
         {
             get;
+            private set;
         }
         public bool HasName
         {
@@ -51,6 +52,11 @@ namespace taskt.Core
         public void SetNewValue(string value)
         {
             this.Value = value;
+        }
+
+        public void SetNewDescription(string desc)
+        {
+            this.Description = desc;
         }
     }
 
