@@ -116,30 +116,32 @@ namespace taskt.Core.Automation.Commands
 
             // pop host
             string pop = v_POPHost.ConvertToUserVariable(engine);
-            int port = v_POPPort.ConvertToUserVariableAsInteger("POP Port", engine);
+            var port = this.ConvertToUserVariableAsInteger(nameof(v_POPPort), engine);
+
             // auth
             string user = v_POPUserName.ConvertToUserVariable(engine);
             string pass = v_POPPassword.ConvertToUserVariable(engine);
-            string secureOption = v_POPSecureOption.GetUISelectionValue("v_POPSecureOption", this, engine);
+            //var secureOption = this.GetUISelectionValue(nameof(v_POPSecureOption), engine);
 
             using (var client = new MailKit.Net.Pop3.Pop3Client())
             {
-                var option = MailKit.Security.SecureSocketOptions.Auto;
-                switch (secureOption)
-                {
-                    case "no ssl or tls":
-                        option = MailKit.Security.SecureSocketOptions.None;
-                        break;
-                    case "use ssl or tls":
-                        option = MailKit.Security.SecureSocketOptions.SslOnConnect;
-                        break;
-                    case "starttls":
-                        option = MailKit.Security.SecureSocketOptions.StartTls;
-                        break;
-                    case "starttls when available":
-                        option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
-                        break;
-                }
+                //var option = MailKit.Security.SecureSocketOptions.Auto;
+                //switch (secureOption)
+                //{
+                //    case "no ssl or tls":
+                //        option = MailKit.Security.SecureSocketOptions.None;
+                //        break;
+                //    case "use ssl or tls":
+                //        option = MailKit.Security.SecureSocketOptions.SslOnConnect;
+                //        break;
+                //    case "starttls":
+                //        option = MailKit.Security.SecureSocketOptions.StartTls;
+                //        break;
+                //    case "starttls when available":
+                //        option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
+                //        break;
+                //}
+                var option = this.GetMailKitSecureOption(nameof(v_POPSecureOption), engine);
                 try
                 {
                     lock (client.SyncRoot)

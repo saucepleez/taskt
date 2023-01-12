@@ -116,30 +116,32 @@ namespace taskt.Core.Automation.Commands
 
             // imap host
             string pop = v_IMAPHost.ConvertToUserVariable(engine);
-            int port = v_IMAPPort.ConvertToUserVariableAsInteger("IMAP Port", engine);
+            var port = this.ConvertToUserVariableAsInteger(nameof(v_IMAPPort), engine);
+
             // auth
             string user = v_IMAPUserName.ConvertToUserVariable(engine);
             string pass = v_IMAPPassword.ConvertToUserVariable(engine);
-            string secureOption = v_IMAPSecureOption.GetUISelectionValue("v_IMAPSecureOption", this, engine);
+            //var secureOption = this.GetUISelectionValue(nameof(v_IMAPSecureOption), engine);
 
             using (var client = new MailKit.Net.Imap.ImapClient())
             {
-                var option = MailKit.Security.SecureSocketOptions.Auto;
-                switch (secureOption)
-                {
-                    case "no ssl or tls":
-                        option = MailKit.Security.SecureSocketOptions.None;
-                        break;
-                    case "use ssl or tls":
-                        option = MailKit.Security.SecureSocketOptions.SslOnConnect;
-                        break;
-                    case "starttls":
-                        option = MailKit.Security.SecureSocketOptions.StartTls;
-                        break;
-                    case "starttls when available":
-                        option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
-                        break;
-                }
+                //var option = MailKit.Security.SecureSocketOptions.Auto;
+                //switch (secureOption)
+                //{
+                //    case "no ssl or tls":
+                //        option = MailKit.Security.SecureSocketOptions.None;
+                //        break;
+                //    case "use ssl or tls":
+                //        option = MailKit.Security.SecureSocketOptions.SslOnConnect;
+                //        break;
+                //    case "starttls":
+                //        option = MailKit.Security.SecureSocketOptions.StartTls;
+                //        break;
+                //    case "starttls when available":
+                //        option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
+                //        break;
+                //}
+                var option = this.GetMailKitSecureOption(nameof(v_IMAPSecureOption), engine);
                 try
                 {
                     lock (client.SyncRoot)

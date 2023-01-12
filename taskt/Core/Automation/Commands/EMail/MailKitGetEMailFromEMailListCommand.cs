@@ -81,7 +81,8 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                index = v_Index.ConvertToUserVariableAsInteger("Index", engine);   
+                //index = v_Index.ConvertToUserVariableAsInteger("Index", engine);   
+                index = this.ConvertToUserVariableAsInteger(nameof(v_Index), engine);
             }
 
             if (index < 0)

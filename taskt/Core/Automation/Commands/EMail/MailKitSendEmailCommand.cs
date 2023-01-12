@@ -208,7 +208,8 @@ namespace taskt.Core.Automation.Commands
 
             // smtp host
             string smtp = v_SMTPHost.ConvertToUserVariable(engine);
-            int port = v_SMTPPort.ConvertToUserVariableAsInteger("SMTP Port", engine);
+            var port = this.ConvertToUserVariableAsInteger(nameof(v_SMTPPort), engine);
+
             // auth
             string user = v_SMTPUserName.ConvertToUserVariable(engine);
             if (String.IsNullOrEmpty(user))
@@ -216,7 +217,7 @@ namespace taskt.Core.Automation.Commands
                 user = from;
             }
             string pass = v_SMTPPassword.ConvertToUserVariable(engine);
-            string secureOption = v_SMTPSecureOption.GetUISelectionValue("v_SMTPSecureOption", this, engine);
+            //string secureOption = v_SMTPSecureOption.GetUISelectionValue("v_SMTPSecureOption", this, engine);
 
             // attachment
             string attachmentFilePath = v_SMTPAttachment.ConvertToUserVariable(engine);
@@ -284,22 +285,23 @@ namespace taskt.Core.Automation.Commands
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                var option = MailKit.Security.SecureSocketOptions.Auto;
-                switch (secureOption)
-                {
-                    case "no ssl or tls":
-                        option = MailKit.Security.SecureSocketOptions.None;
-                        break;
-                    case "use ssl or tls":
-                        option = MailKit.Security.SecureSocketOptions.SslOnConnect;
-                        break;
-                    case "starttls":
-                        option = MailKit.Security.SecureSocketOptions.StartTls;
-                        break;
-                    case "starttls when available":
-                        option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
-                        break;
-                }
+                //var option = MailKit.Security.SecureSocketOptions.Auto;
+                //switch (secureOption)
+                //{
+                //    case "no ssl or tls":
+                //        option = MailKit.Security.SecureSocketOptions.None;
+                //        break;
+                //    case "use ssl or tls":
+                //        option = MailKit.Security.SecureSocketOptions.SslOnConnect;
+                //        break;
+                //    case "starttls":
+                //        option = MailKit.Security.SecureSocketOptions.StartTls;
+                //        break;
+                //    case "starttls when available":
+                //        option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
+                //        break;
+                //}
+                var option = this.GetMailKitSecureOption(nameof(v_SMTPSecureOption), engine);
                 try
                 {
                     client.Connect(smtp, port, option);
