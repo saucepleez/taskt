@@ -11,6 +11,19 @@ namespace taskt.Core.Automation.Commands
     internal static class NumberControls
     {
         /// <summary>
+        /// Convert property value to integer from property name. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref=""></exception>
+        public static int ConvertToUserVariableAsInteger(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        {
+            return ConvertToUserVariableAsInteger(command, propertyName, "", engine);
+        }
+
+        /// <summary>
         /// Convert property value to integer from property name. This method supports validate, first value.
         /// </summary>
         /// <param name="command"></param>
@@ -31,6 +44,19 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception(propertyDescription + " is out of Integer Range.");
             }
+        }
+
+        /// <summary>
+        /// Convert property value to decimal from property name. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref=""></exception>
+        public static decimal ConvertToUserVariableAsDecimal(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        {
+            return ConvertToUserVariableAsDecimal(command, propertyName, "", engine);
         }
 
         /// <summary>
@@ -103,7 +129,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert property value to decimal from PropertyConvertTag that specified property name, etc. This method supports validate, first value.
+        /// convert property value to decimal from PropertyConvertTag that specified property name, etc. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
         /// <param name="prop"></param>
         /// <param name="propInfo"></param>
@@ -120,6 +146,28 @@ namespace taskt.Core.Automation.Commands
                 if ((optAttr.setBlankToValue != "") && (String.IsNullOrEmpty(prop.Value)))
                 {
                     prop.SetNewValue(optAttr.setBlankToValue);
+                }
+            }
+
+            if (prop.Description == "")
+            {
+                // try get description
+                var attrValidate = GetCustomAttributeWithVirtual<PropertyValidationRule>(propInfo, virtualPropInfo);
+                if (attrValidate != null)
+                {
+                    prop.SetNewDescription(attrValidate.parameterName);
+                }
+                else
+                {
+                    var attrDisp = GetCustomAttributeWithVirtual<PropertyDisplayText>(propInfo, virtualPropInfo);
+                    if (attrDisp != null)
+                    {
+                        prop.SetNewDescription(attrDisp.parameterName);
+                    }
+                    else
+                    {
+                        prop.SetNewDescription(GetCustomAttributeWithVirtual<PropertyDescription>(propInfo, virtualPropInfo).propertyDescription);
+                    }
                 }
             }
 
