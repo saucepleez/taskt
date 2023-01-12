@@ -151,6 +151,20 @@ namespace taskt.Core.Automation.Commands
         public static string v_SecureOption { get; }
 
         /// <summary>
+        /// mail address property
+        /// </summary>
+        [PropertyDescription("EMail Address")]
+        [InputSpecification("EMail Address", true)]
+        [PropertyDetailSampleUsage("**my-robot@example.com**", PropertyDetailSampleUsage.ValueType.Value, "EMail Address")]
+        [PropertyDetailSampleUsage("**{{{vAddress}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "EMail Address")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("EMail Address", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "EMail Address")]
+        public static string v_EmailAddress { get; }
+
+        /// <summary>
         /// get EMailList Variable from variable name specified argument
         /// </summary>
         /// <param name="variableName"></param>
