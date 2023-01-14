@@ -50,6 +50,23 @@ namespace taskt.Core.Automation.Commands
         public static string v_OutputAutomationElementName { get; }
 
         /// <summary>
+        /// New output AutomationElement name
+        /// </summary>
+        [PropertyDescription("AutomationElement Variable Name")]
+        [InputSpecification("AutomationElement Variable Name", true)]
+        [PropertyDetailSampleUsage("**vNewElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyDetailSampleUsage("**{{{vNewElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("New AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New Element")]
+        public static string v_NewOutputAutomationElementName { get; }
+
+        /// <summary>
         /// xpath property
         /// </summary>
         [PropertyDescription("Search XPath")]
