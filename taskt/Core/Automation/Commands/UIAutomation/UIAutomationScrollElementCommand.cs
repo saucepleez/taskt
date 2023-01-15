@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Data;
 using System.Windows.Automation;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -21,25 +16,25 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationScrollElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify AutomationElement Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vElement}}}**")]
-        [Remarks("Supported Element must have a ScrollBar.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Element")]
+        //[PropertyDescription("Please specify AutomationElement Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**{{{vElement}}}**")]
+        //[Remarks("Supported Element must have a ScrollBar.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Element")]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify ScrollBar Type")]
-        [InputSpecification("")]
+        [PropertyDescription("ScrollBar Type")]
+        [InputSpecification("", true)]
         [PropertyUISelectionOption("Vertical")]
         [PropertyUISelectionOption("Horizonal")]
-        [SampleUsage("**Horizonal** or **Vertical**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("ScrollBar Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -47,13 +42,12 @@ namespace taskt.Core.Automation.Commands
         public string v_ScrollBarType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Scroll Method")]
-        [InputSpecification("")]
+        [PropertyDescription("Scroll Method")]
+        [InputSpecification("", true)]
         [PropertyUISelectionOption("Scroll Small Down or Right")]
         [PropertyUISelectionOption("Scroll Large Down or Right")]
         [PropertyUISelectionOption("Scroll Small Up or Left")]
         [PropertyUISelectionOption("Scroll Large Up or Left")]
-        [SampleUsage("**Scroll Small Down or Right** or **Scroll Large Down or Right** or **Scroll Small Up or Left** or **Scroll Large Up or Left**")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Scroll Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -120,21 +114,5 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrl);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', ScrollBar Type: " + v_ScrollBarType + ", Scroll Method: " + v_DirectionAndAmount + "]";
-        //}
-
     }
 }

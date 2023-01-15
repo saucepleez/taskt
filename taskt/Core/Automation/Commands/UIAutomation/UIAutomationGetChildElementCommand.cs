@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Automation;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -21,44 +16,50 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationGetChildElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify AutomationElement Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vElement}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Root Element")]
+        //[PropertyDescription("Please specify AutomationElement Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**{{{vElement}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Root Element")]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyDescription("Root AutomationElement Variable")]
         public string v_RootElement { get; set; }
 
         [XmlElement]
-        [PropertyDescription("Set Search Parameters")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(lnkGUIInspectTool_Click))]
-        [PropertyCustomUIHelper("Inspect Tool Parser", nameof(lnkInspectToolParser_Click))]
-        [PropertyCustomUIHelper("Add Empty Parameters", nameof(lnkAddEmptyParameter_Click))]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyIsOptional(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [PropertyDataGridViewSetting(false, false, true)]
-        [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
-        [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        //[PropertyControlIntoCommandField("SearchParametersGridViewHelper")]
-        [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        //[PropertyDescription("Set Search Parameters")]
+        //[PropertyCustomUIHelper("GUI Inspect Tool", nameof(lnkGUIInspectTool_Click))]
+        //[PropertyCustomUIHelper("Inspect Tool Parser", nameof(lnkInspectToolParser_Click))]
+        //[PropertyCustomUIHelper("Add Empty Parameters", nameof(lnkAddEmptyParameter_Click))]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        //[PropertyDataGridViewSetting(false, false, true)]
+        //[PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
+        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
+        ////[PropertyControlIntoCommandField("SearchParametersGridViewHelper")]
+        //[PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        //[PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Child Element Index")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Child Element Index")]
+        [InputSpecification("Index", true)]
+        //[SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        [PropertyDetailSampleUsage("**0**", "Specfity the First AutomationElement")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
+        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
@@ -66,17 +67,19 @@ namespace taskt.Core.Automation.Commands
         public string v_Index { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Variable to store Result AutomationElement")]
-        [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please specify a Variable to store Result AutomationElement")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vElement** or **{{{vElement}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        [PropertyDescription("AutomationElemnet Variable Name to Store Child Element")]
         public string v_AutomationElementVariable { get; set; }
 
         //[XmlIgnore]
@@ -109,37 +112,19 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
-        {
-            AutomationElementControls.CreateEmptyParamters(v_SearchParameters);
-        }
-
-        private void lnkInspectToolParser_Click(object sender, EventArgs e)
-        {
-            AutomationElementControls.InspectToolParserClicked(v_SearchParameters);
-        }
-
-        private void lnkGUIInspectTool_Click(object sender, EventArgs e)
-        {
-            AutomationElementControls.GUIInspectTool_UsedByInspectResult_Clicked(v_SearchParameters);
-        }
-
-        //public override List<Control> Render(frmCommandEditor editor)
+        //private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
         //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    SearchParametersGridViewHelper = (DataGridView)CommandControls.GetControlsByName(ctrls, "v_ActionParameters", CommandControls.CommandControlType.Body)[0];
-
-        //    return RenderedControls;
+        //    AutomationElementControls.CreateEmptyParamters(v_SearchParameters);
         //}
 
-        //public override string GetDisplayValue()
+        //private void lnkInspectToolParser_Click(object sender, EventArgs e)
         //{
-        //    return base.GetDisplayValue() + " [Root Element: '" + v_RootElement + "', Index: " + v_Index + ", Store: '" + v_AutomationElementVariable + "']";
+        //    AutomationElementControls.InspectToolParserClicked(v_SearchParameters);
         //}
 
+        //private void lnkGUIInspectTool_Click(object sender, EventArgs e)
+        //{
+        //    AutomationElementControls.GUIInspectTool_UsedByInspectResult_Clicked(v_SearchParameters);
+        //}
     }
 }

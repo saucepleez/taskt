@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Automation;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -47,17 +42,18 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify a Variable to store AutomationElement")]
-        [InputSpecification("")]
-        [SampleUsage("**vElement** or **{{{vElement}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please specify a Variable to store AutomationElement")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vElement** or **{{{vElement}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
 
         public UIAutomationGetElementFromWindowCommand()
@@ -81,21 +77,6 @@ namespace taskt.Core.Automation.Commands
             var windowElement = AutomationElementControls.GetFromWindowName(windowName, engine);
             windowElement.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrl);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Window: '" + v_WindowName + "', Store: '" + v_AutomationElementVariable + "']";
-        //}
 
         public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {

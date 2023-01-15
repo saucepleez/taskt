@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Data;
 using System.Windows.Automation;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -21,26 +16,26 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSetTextToElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify AutomationElement Variable")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vElement}}}**")]
-        [Remarks("Supported Element is TextBox, etc.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Element")]
+        //[PropertyDescription("Please specify AutomationElement Variable")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**{{{vElement}}}**")]
+        //[Remarks("Supported Element is TextBox, etc.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Element")]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Text to Set")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**Hello** or **{{{vText}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
+        [PropertyDescription("Text to Set")]
+        [InputSpecification("Text", true)]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value)]
+        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDisplayText(true, "Text")]
         public string v_TextVariable { get; set; }
 
@@ -70,21 +65,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("AutomationElement '" + v_TargetElement + "' can not set Text");
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrl);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Target Element: '" + v_TargetElement + "', Text to Set: '" + v_TextVariable + "']";
-        //}
-
     }
 }
