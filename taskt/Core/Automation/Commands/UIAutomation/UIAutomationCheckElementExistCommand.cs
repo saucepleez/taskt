@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyIsVariablesList(true)]
         //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Store")]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Element exists, Result value is **True**")]
         public string v_Result { get; set; }
 
