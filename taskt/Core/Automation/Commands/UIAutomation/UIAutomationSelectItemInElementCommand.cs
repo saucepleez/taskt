@@ -16,17 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSelectItemInElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify AutomationElement Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vElement}}}**")]
-        //[Remarks("Supported Element is ComboBox, ListBox, etc.")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Element")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
         public string v_TargetElement { get; set; }
 

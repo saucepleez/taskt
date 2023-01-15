@@ -16,37 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationWaitForElementExistCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify AutomationElement Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vElement}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Root Element")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        //[PropertyDescription("Set Search Parameters")]
-        //[PropertyCustomUIHelper("GUI Inspect Tool", nameof(lnkGUIInspectTool_Click))]
-        //[PropertyCustomUIHelper("Inspect Tool Parser", nameof(lnkInspectToolParser_Click))]
-        //[PropertyCustomUIHelper("Add Empty Parameters", nameof(lnkAddEmptyParameter_Click))]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        //[PropertyDataGridViewSetting(false, false, true)]
-        //[PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
-        //[PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        //[PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        ////[PropertyControlIntoCommandField("SearchParametersGridViewHelper")]
-        //[PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        //[PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
@@ -61,10 +34,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Wait", "s")]
         public string v_WaitTime { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView SearchParametersGridViewHelper;
 
         public UIAutomationWaitForElementExistCommand()
         {
@@ -101,19 +70,5 @@ namespace taskt.Core.Automation.Commands
                 System.Threading.Thread.Sleep(1000);
             }
         }
-
-        //private void lnkAddEmptyParameter_Click(object sender, EventArgs e)
-        //{
-        //    AutomationElementControls.CreateEmptyParamters(v_SearchParameters);
-        //}
-
-        //private void lnkInspectToolParser_Click(object sender, EventArgs e)
-        //{
-        //    AutomationElementControls.InspectToolParserClicked(v_SearchParameters);
-        //}
-        //private void lnkGUIInspectTool_Click(object sender, EventArgs e)
-        //{
-        //    AutomationElementControls.GUIInspectTool_UsedByInspectResult_Clicked(v_SearchParameters);
-        //}
     }
 }

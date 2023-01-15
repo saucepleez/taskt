@@ -16,33 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationGetSelectionItemsFromElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify AutomationElement Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vElement}}}**")]
-        //[Remarks("Supported Element is ComboBox, ListBox, Tree, etc.")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Element")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify a Variable to store Selection Items")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vList** or **{{{vList}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_ListVariable { get; set; }
 

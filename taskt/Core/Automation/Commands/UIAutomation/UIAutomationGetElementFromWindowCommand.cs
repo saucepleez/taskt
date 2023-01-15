@@ -42,17 +42,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify a Variable to store AutomationElement")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vElement** or **{{{vElement}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
 

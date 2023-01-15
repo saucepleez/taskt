@@ -17,47 +17,14 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationCheckElementExistByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify AutomationElement Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vElement}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Element")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        //[PropertyDescription("Please specify search XPath")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyCustomUIHelper("GUI Inspect Tool", "lnkInspectTool_Clicked")]
-        //[InputSpecification("")]
-        //[SampleUsage("**//Button[@Name=\"OK\"]** or **{{{vXPath}}}**")]
-        //[Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "XPath")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify a Variable to store Result")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vElement** or **{{{vElement}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Element exists, Result value is **True**")]
         public string v_Result { get; set; }
@@ -87,11 +54,5 @@ namespace taskt.Core.Automation.Commands
             XElement resElem = xml.XPathSelectElement(xpath);
             (resElem != null).StoreInUserVariable(engine, v_Result);
         }
-
-        //private void lnkInspectTool_Clicked(object sender, EventArgs e)
-        //{
-        //    TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
-        //    AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(txt);
-        //}
     }
 }
