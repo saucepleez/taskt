@@ -70,7 +70,6 @@ namespace taskt.Core.Automation.Commands
         /// xpath property
         /// </summary>
         [PropertyDescription("Search XPath")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", "lnkInspectTool_Clicked")]
         [InputSpecification("Search XPath", true)]
         [PropertyDetailSampleUsage("**//Button[@Name=\"OK\"]**", "Specify a Button whose **Name** Attribute is **OK** in descendant node of the criteria AutomationElement")]
         [PropertyDetailSampleUsage("**/Pane[1]/Button[2]**", "Specify the **second** Button of the **first** Pane child node of the child node of the criteria AutomationElement")]
@@ -87,7 +86,7 @@ namespace taskt.Core.Automation.Commands
         /// Search paramters property
         /// </summary>
         [PropertyDescription("Search Parameters")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.lnkGUIInspectTool_UsedByInspectResult_Click))]
+        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(AutomationElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByInspectResult_Click))]
         [PropertyCustomUIHelper("Inspect Tool Parser", nameof(AutomationElementControls) + "+" + nameof(lnkInspectToolParser_Click))]
         [PropertyCustomUIHelper("Add Empty Parameters", nameof(AutomationElementControls) + "+" + nameof(lnkAddEmptyParameter_Click))]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
