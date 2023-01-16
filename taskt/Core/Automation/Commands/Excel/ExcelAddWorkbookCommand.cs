@@ -15,23 +15,26 @@ namespace taskt.Core.Automation.Commands
     public class ExcelAddWorkbookCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyFirstValue("%kwd_default_excel_instance%")]
-        [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Instance")]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyFirstValue("%kwd_default_excel_instance%")]
+        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Instance")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Select If Workbook Exists")]
+        [PropertyDescription("When Workbook Exists")]
         [InputSpecification("")]
-        [SampleUsage("**Ignore** or **Error** or **Add**")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not add a Workbook")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [PropertyDetailSampleUsage("**Add**", "Add a Workbook. This should result in two Workbooks open")]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Ignore")]
@@ -53,9 +56,7 @@ namespace taskt.Core.Automation.Commands
 
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //var ifWorkbookExists = v_IfWorkbookExists.GetUISelectionValue("v_IfWorkbookExists", this, engine);
-            //var ifWorkbookExists = new PropertyConvertTag(v_IfWorkbookExists, nameof(v_IfWorkbookExists), "If Workbook exists").GetUISelectionValue(this, engine);
-            var ifWorkbookExists = this.GetUISelectionValue(nameof(v_IfWorkbookExists), "If Workbook exists", engine);
+            var ifWorkbookExists = this.GetUISelectionValue(nameof(v_IfWorkbookExists), engine);
 
             if (excelInstance.Workbooks.Count > 0)
             {

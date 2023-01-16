@@ -49,12 +49,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             var splittext = v_TextToSet.Split(',');
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //var excelInstance = v_InstanceName.GetExcelInstance(engine);
-            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             int i = 1;            
