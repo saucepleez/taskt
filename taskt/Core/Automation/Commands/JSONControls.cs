@@ -105,7 +105,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Array")]
         [PropertyDetailSampleUsage("**Auto**", "Automatically determines the Value Type")]
         [PropertyDetailSampleUsage("**Text**", PropertyDetailSampleUsage.ValueType.Value, "Value Type")]
-        [PropertyDetailSampleUsage("**Text**", PropertyDetailSampleUsage.ValueType.Value, "Value Type")]
+        [PropertyDetailSampleUsage("**Number**", PropertyDetailSampleUsage.ValueType.Value, "Value Type")]
         [PropertyDetailSampleUsage("**bool**", PropertyDetailSampleUsage.ValueType.Value, "Value Type")]
         [PropertyDetailSampleUsage("**Object**", "Specify JSON Object for Value Type")]
         [PropertyDetailSampleUsage("**Array**", "Specify Array Object for Value Type")]
