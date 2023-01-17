@@ -128,6 +128,68 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Type")]
         public static string v_CheckableValueType { get; }
 
+        /// <summary>
+        /// column type propertys
+        /// </summary>
+        [PropertyDescription("Column Type")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**Range**", "Use Range, like **A**. It means first column.")]
+        [PropertyDetailSampleUsage("**RC**", "Use Row-Column, like **1**. It means first column.")]
+        [PropertyIsOptional(true, "Range")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Range")]
+        [PropertyUISelectionOption("RC")]
+        [PropertySelectionValueSensitive(false)]
+        [PropertyDisplayText(true, "Column Type")]
+        public static string v_ColumnType { get; }
+
+        /// <summary>
+        /// column location or index
+        /// </summary>
+        [PropertyDescription("Column Location or Index")]
+        [InputSpecification("Column Location or Index", true)]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
+        [PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
+        [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        [PropertyDisplayText(true, "Column")]
+        public static string v_ColumnNameOrIndex { get; }
+
+        /// <summary>
+        /// start row
+        /// </summary>
+        [PropertyDescription("Start Row Index")]
+        [InputSpecification("Start Row", true)]
+        [PropertyDetailSampleUsage("**1**", "Specify the First Row Index for Start Row")]
+        [PropertyDetailSampleUsage("**2**", PropertyDetailSampleUsage.ValueType.Value, "Start Row")]
+        [PropertyDetailSampleUsage("**{{{vRow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Start Row")]
+        [Remarks("")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "1")]
+        [PropertyDisplayText(true, "Start Row")]
+        public static string v_RowStart { get; }
+
+        /// <summary>
+        /// end row
+        /// </summary>
+        [PropertyDescription("End Row Index")]
+        [InputSpecification("End Row", true)]
+        [PropertyDetailSampleUsage("**1**", "Specify the First Row Index for Start Row")]
+        [PropertyDetailSampleUsage("**2**", PropertyDetailSampleUsage.ValueType.Value, "Start Row")]
+        [PropertyDetailSampleUsage("**{{{vRow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Start Row")]
+        [Remarks("When End Row Index is Empty, Automatically specifies the Last Row where values are entered consecutively")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "Last Row")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "End Row")]
+        public static string v_RowEnd { get; }
+
+
         #region instance, worksheet methods
         public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
