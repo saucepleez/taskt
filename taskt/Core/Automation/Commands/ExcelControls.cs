@@ -20,6 +20,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Please specify the Excel Instance Name created by **Create Excel Instance** command in advance.")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyFirstValue("%kwd_default_excel_instance%")]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
