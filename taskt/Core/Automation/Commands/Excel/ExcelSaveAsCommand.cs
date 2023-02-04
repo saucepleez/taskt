@@ -30,16 +30,18 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("File Path to Save")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("File Path to Save", true)]
-        //[SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vExcelFilePath}}}**")]
-        [PropertyDetailSampleUsage("**C:\\temp\\myfile.xlsx**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
-        [PropertyDetailSampleUsage("**{{{vExcelFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
-        [Remarks("If file does not contain extensin, supplement xlsx extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.")]
-        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "File")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("File Path to Save")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("File Path to Save", true)]
+        ////[SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vExcelFilePath}}}**")]
+        //[PropertyDetailSampleUsage("**C:\\temp\\myfile.xlsx**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
+        //[PropertyDetailSampleUsage("**{{{vExcelFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
+        //[Remarks("If file does not contain extensin, supplement xlsx extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.")]
+        //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "File")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
+        [PropertyDescription("Excel File Path to Save")]
         public string v_FileName { get; set; }
 
         [XmlAttribute]

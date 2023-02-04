@@ -235,6 +235,22 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         public static string v_WhenItemNotEnough { get; }
 
+        /// <summary>
+        /// excel file path
+        /// </summary>
+        [PropertyDescription("Workbook (Excel File) Path")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("Excel File Path", true)]
+        [PropertyDetailSampleUsage("**C:\\temp\\myfile.xlsx**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
+        [PropertyDetailSampleUsage("**{{{vFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
+        [Remarks("If file does not contain extension, supplement extensions supported by Excel.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "File")]
+        public static string v_FilePath { get; }
+
 
         #region instance, worksheet methods
         public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
