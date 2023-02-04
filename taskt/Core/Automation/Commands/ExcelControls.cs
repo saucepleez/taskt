@@ -189,6 +189,52 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "End Row")]
         public static string v_RowEnd { get; }
 
+        /// <summary>
+        /// column start property
+        /// </summary>
+        [PropertyDescription("Start Column Location or Index")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Column Location or Index", true)]
+        [PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
+        [PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
+        [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
+        [Remarks("")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        [PropertyDisplayText(true, "Start Column")]
+        public static string v_ColumnStart { get; }
+
+        /// <summary>
+        /// column end property
+        /// </summary>
+        [PropertyDescription("End Column Location or Index")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Column Location or Index", true)]
+        [PropertyDetailSampleUsage("**A**", "Specify the First Column when **Range** is specified for Column Type.")]
+        [PropertyDetailSampleUsage("**1**", "Specify the First Column when **RC** is specified for Column Type.")]
+        [PropertyDetailSampleUsage("**{{{vColumn}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Column")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Last Column")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "End Column")]
+        public static string v_ColumnEnd { get; }
+
+        /// <summary>
+        /// when items not enough
+        /// </summary>
+        [PropertyDescription("When A Items Not Enough")]
+        [InputSpecification("", true)]
+        [PropertyDetailSampleUsage("**Ignore**", "Don't Set the Value")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Ignore")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        public static string v_WhenItemNotEnough { get; }
+
 
         #region instance, worksheet methods
         public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
