@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             //var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var seleniumInstance = SeleniumBrowserControls.GetSeleniumBrowserInstance(v_InstanceName, engine);
+            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
             seleniumInstance.Quit();
             seleniumInstance.Dispose();

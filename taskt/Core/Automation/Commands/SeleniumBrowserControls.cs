@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IWebDriver GetSeleniumBrowserInstance(string instanceName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static IWebDriver GetSeleniumBrowserInstance(this string instanceName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             var vInstance = instanceName.ConvertToUserVariable(engine);
             var browserObject = engine.GetAppInstance(vInstance);

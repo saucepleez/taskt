@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             //}
             try
             {
-                var _ = SeleniumBrowserControls.GetSeleniumBrowserInstance(v_InstanceName, engine);
+                var _ = v_InstanceName.GetSeleniumBrowserInstance(engine);
                 true.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch
