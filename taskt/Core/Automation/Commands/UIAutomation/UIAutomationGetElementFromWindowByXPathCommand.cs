@@ -44,33 +44,10 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchMethod { get; set; }
 
         [XmlElement]
-        //[PropertyDescription("Please specify search XPath")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyCustomUIHelper("GUI Inspect Tool", "lnkInspectTool_Clicked")]
-        //[InputSpecification("")]
-        //[SampleUsage("**//Button[@Name=\"OK\"]** or **{{{vXPath}}}**")]
-        //[Remarks("XPath does not support to use parent, following-sibling, and preceding-sibling for root element.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyControlIntoCommandField("XPathTextBox")]
-        //[PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "XPath")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify a Variable to store Result AutomationElement")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vElement** or **{{{vElement}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
 
@@ -114,11 +91,5 @@ namespace taskt.Core.Automation.Commands
             AutomationElement res = dic[resElem.Attribute("Hash").Value];
             res.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
-
-        //private void lnkInspectTool_Clicked(object sender, EventArgs e)
-        //{
-        //    TextBox txt = (TextBox)ControlsList[nameof(v_SearchXPath)];
-        //    AutomationElementControls.GUIInspectTool_UsedByXPath_Clicked(txt);
-        //}
     }
 }

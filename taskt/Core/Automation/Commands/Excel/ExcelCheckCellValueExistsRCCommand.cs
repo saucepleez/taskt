@@ -18,86 +18,80 @@ namespace taskt.Core.Automation.Commands
     public class ExcelCheckCellValueExistsRCCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Instance")]
-        [PropertyFirstValue("%kwd_default_excel_instance%")]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Instance")]
+        //[PropertyFirstValue("%kwd_default_excel_instance%")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Enter the Row Location")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter the actual location of the cell.")]
-        [SampleUsage("**1** or **2** or **{{{vRow}}}**")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Row")]
+        //[PropertyDescription("Please Enter the Row Location")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Enter the actual location of the cell.")]
+        //[SampleUsage("**1** or **2** or **{{{vRow}}}**")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyDisplayText(true, "Row")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
         public string v_CellRow { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Enter the Column Location")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter the actual location of the cell.")]
-        [SampleUsage("**1** or **2** or **{{{vColumn}}}**")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Column")]
+        //[PropertyDescription("Please Enter the Column Location")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Enter the actual location of the cell.")]
+        //[SampleUsage("**1** or **2** or **{{{vColumn}}}**")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyDisplayText(true, "Column")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
         public string v_CellColumn { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the result")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please select the variable to receive the result")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
+        [Remarks("When the Value Exists, Result is **True**")]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Value type")]
-        [InputSpecification("")]
-        [SampleUsage("**Cell** or **Formula** or **Format** or **Color** or **Comment**")]
-        [Remarks("")]
-        [PropertyUISelectionOption("Cell")]
-        [PropertyUISelectionOption("Formula")]
-        [PropertyUISelectionOption("Back Color")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsOptional(true, "Cell")]
-        [PropertySecondaryLabel(true)]
-        [PropertyAddtionalParameterInfo("Cell", "Check cell has value or not")]
-        [PropertyAddtionalParameterInfo("Formula", "Check cell has formula or not")]
-        [PropertyAddtionalParameterInfo("Back Color", "Check back color is not white")]
-        [PropertySelectionChangeEvent("cmbValueType_SelectedIndexChanged")]
-        //[PropertyControlIntoCommandField("cmbValueType", "lblValueType", "lbl2ndValueType")]
-        [PropertyDisplayText(true, "Type")]
+        //[PropertyDescription("Value type")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Cell** or **Formula** or **Format** or **Color** or **Comment**")]
+        //[Remarks("")]
+        //[PropertyUISelectionOption("Cell")]
+        //[PropertyUISelectionOption("Formula")]
+        //[PropertyUISelectionOption("Back Color")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsOptional(true, "Cell")]
+        //[PropertySecondaryLabel(true)]
+        //[PropertyAddtionalParameterInfo("Cell", "Check cell has value or not")]
+        //[PropertyAddtionalParameterInfo("Formula", "Check cell has formula or not")]
+        //[PropertyAddtionalParameterInfo("Back Color", "Check back color is not white")]
+        //[PropertySelectionChangeEvent("cmbValueType_SelectedIndexChanged")]
+        //[PropertyDisplayText(true, "Type")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CheckableValueType))]
+        [PropertySelectionChangeEvent(nameof(cmbValueType_SelectedIndexChanged))]
         public string v_ValueType { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox cmbValueType;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private Label lbl2ndValueType;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private Label lblValueType;
 
         public ExcelCheckCellValueExistsRCCommand()
         {
@@ -113,30 +107,12 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            //var rg = ((v_CellRow, nameof(v_CellRow)), (v_CellColumn, nameof(v_CellColumn))).ConvertToExcelRange(engine, excelInstance, excelSheet, this);
             var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
 
-            //var valueType = new PropertyConvertTag(v_ValueType, nameof(v_ValueType), "Value Type").GetUISelectionValue(this, engine);
-            var valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+            var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
 
             var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
 
-            //bool valueState = false;
-            //switch (valueType)
-            //{
-            //    case "cell":
-            //        valueState = !String.IsNullOrEmpty((string)rg.Text);
-            //        break;
-            //    case "formula":
-            //        valueState = ((string)rg.Formula).StartsWith("=");
-            //        break;
-            //    case "back Color":
-            //        valueState = ((long)rg.Interior.Color) != 16777215;
-            //        break;
-            //}
-
-            //var valueState = chkFunc(rg);
-            //valueState.StoreInUserVariable(engine, v_userVariableName);
             chkFunc(rg).StoreInUserVariable(engine, v_userVariableName);
         }
 

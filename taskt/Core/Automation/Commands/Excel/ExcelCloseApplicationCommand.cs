@@ -15,26 +15,28 @@ namespace taskt.Core.Automation.Commands
     public class ExcelCloseApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Instance")]
-        [PropertyFirstValue("%kwd_default_excel_instance%")]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Instance")]
+        //[PropertyFirstValue("%kwd_default_excel_instance%")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Indicate if the Workbook should be saved")]
+        [PropertyDescription("If the Workbook should be Saved")]
         [PropertyUISelectionOption("True")]
         [PropertyUISelectionOption("False")]
-        [InputSpecification("Enter a True or False value")]
-        [SampleUsage("**True** or **False**")]
+        [InputSpecification("", true)]
         [Remarks("")]
+        [PropertyDetailSampleUsage("**True**", "If the Workbook needs to be Saved, Save it and then Close it")]
+        [PropertyDetailSampleUsage("**False**", "Whether the Workbook needs to be Saved or not, Close it without saving")]
         [PropertyIsOptional(true, "False")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ExcelSaveOnExit { get; set; }
@@ -57,7 +59,6 @@ namespace taskt.Core.Automation.Commands
             //check if workbook exists and save
             if (excelInstance.ActiveWorkbook != null)
             {
-                //string vSaved = new PropertyConvertTag(v_ExcelSaveOnExit, nameof(v_ExcelSaveOnExit), "Save Setting").GetUISelectionValue(this, engine);
                 string vSaved = this.GetUISelectionValue(nameof(v_ExcelSaveOnExit), "Save Setting", engine);
 
                 excelInstance.ActiveWorkbook.Close((vSaved == "true"));
