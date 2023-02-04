@@ -52,6 +52,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**myPassword**", PropertyDetailSampleUsage.ValueType.Value, "Password")]
         [PropertyDetailSampleUsage("**{{{vPassword}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Password")]
         [PropertyIsOptional(true)]
+        [PropertyDisplayText(false, "")]
         public string v_Password { get; set; }
 
         [XmlAttribute]
