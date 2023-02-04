@@ -25,6 +25,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyTextBoxSetting(1, false)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -38,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Keep Instance Alive**", "Allow subsequent tasks to call the instance by name")]
         [Remarks("Calling the **Close Browser** command or ending the browser session will end the instance.  This command only works during the lifetime of the application.  If the application is closed, the references will be forgetten automatically.")]
         [PropertyIsOptional(true, "Forget Instance")]
+        [PropertyDisplayText(false, "")]
         public string v_InstanceTracking { get; set; }
 
         [XmlAttribute]
@@ -51,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Maximize**", "Start the WebBrowser in maximized mode")]
         [Remarks("")]
         [PropertyIsOptional(true, "Normal")]
+        [PropertyDisplayText(false, "")]
         public string v_BrowserWindowOption { get; set; }
 
         [XmlAttribute]
