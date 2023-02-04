@@ -16,33 +16,35 @@ namespace taskt.Core.Automation.Commands
     public class ExcelGetWorksheetsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Instance")]
-        [PropertyFirstValue("%kwd_default_excel_instance%")]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Instance")]
+        //[PropertyFirstValue("%kwd_default_excel_instance%")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Indicate the name of the sheet to search")]
-        [InputSpecification("Specify the name of the actual sheet")]
-        [SampleUsage("**mySheet** or **%kwd_current_worksheet%** or **{{{vSheet}}}**")]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyIsOptional(true, "empty, and get all sheets")]
-        [PropertyDisplayText(true, "Search")]
+        //[PropertyDescription("Indicate the name of the sheet to search")]
+        //[InputSpecification("Specify the name of the actual sheet")]
+        //[SampleUsage("**mySheet** or **%kwd_current_worksheet%** or **{{{vSheet}}}**")]
+        //[Remarks("")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyIsOptional(true, "empty, and get all sheets")]
+        //[PropertyDisplayText(true, "Search")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         public string v_SheetName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Specify search method")]
-        [InputSpecification("")]
+        [PropertyDescription("Search Method")]
+        [InputSpecification("", true)]
         [SampleUsage("**Contains** or **Start with** or **End with**")]
         [Remarks("")]
         [PropertyUISelectionOption("Contains")]
@@ -53,16 +55,17 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive sheet names")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyDescription("Please select the variable to receive sheet names")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_applyToVariable { get; set; }
 
         public ExcelGetWorksheetsCommand()
@@ -93,7 +96,6 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                //var searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
                 var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
 
                 switch (searchMethod)

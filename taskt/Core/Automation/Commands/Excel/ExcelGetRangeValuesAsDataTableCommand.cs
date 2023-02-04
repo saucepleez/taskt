@@ -16,108 +16,117 @@ namespace taskt.Core.Automation.Commands
     public class ExcelGetRangeValuesAsDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("Instance Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyFirstValue("%kwd_default_excel_instance%")]
-        [PropertyDisplayText(true, "Instance")]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Instance Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyFirstValue("%kwd_default_excel_instance%")]
+        //[PropertyDisplayText(true, "Instance")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify Column Type")]
-        [InputSpecification("")]
-        [SampleUsage("**Range** or **RC**")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Range")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Range")]
-        [PropertyUISelectionOption("RC")]
-        [PropertySelectionValueSensitive(false)]
-        [PropertyDisplayText(true, "Column Type")]
+        //[PropertyDescription("Please Specify Column Type")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Range** or **RC**")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "Range")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUISelectionOption("Range")]
+        //[PropertyUISelectionOption("RC")]
+        //[PropertySelectionValueSensitive(false)]
+        //[PropertyDisplayText(true, "Column Type")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Enter the Start Column Location")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
-        [PropertyDisplayText(true, "Start Column")]
+        //[PropertyDescription("Please Enter the Start Column Location")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        //[PropertyDisplayText(true, "Start Column")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
         public string v_ColumnStart { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Enter the End Column Location")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Last Column")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "End Column")]
+        //[PropertyDescription("Please Enter the End Column Location")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**A** or **1** or **{{{vColumn}}}**")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "Last Column")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "End Column")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
         public string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Enter the Start Row Index")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**1** or **2** or **{{{vRow}}}**")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Start Row", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
-        [PropertyDisplayText(true, "Start Row")]
+        //[PropertyDescription("Please Enter the Start Row Index")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**1** or **2** or **{{{vRow}}}**")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Start Row", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        //[PropertyDisplayText(true, "Start Row")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowStart))]
+        [PropertyIsOptional(false)]
         public string v_RowStart { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Enter the End Row Index")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**1** or **2** or **{{{vRow}}}**")]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Last Row")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "End Row")]
+        //[PropertyDescription("Please Enter the End Row Index")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**1** or **2** or **{{{vRow}}}**")]
+        //[Remarks("")]
+        //[PropertyIsOptional(true, "Last Row")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "End Row")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowEnd))]
         public string v_RowEnd { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the DataTable Variable Name to store results")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
-        [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please specify the DataTable Variable Name to store results")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the Value type to get")]
-        [InputSpecification("")]
-        [SampleUsage("**Cell** or **Formula** or **Format** or **Color** or **Comment**")]
-        [Remarks("")]
-        [PropertyUISelectionOption("Cell")]
-        [PropertyUISelectionOption("Formula")]
-        [PropertyUISelectionOption("Format")]
-        [PropertyUISelectionOption("Font Color")]
-        [PropertyUISelectionOption("Back Color")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsOptional(true, "Cell")]
-        [PropertySelectionValueSensitive(false)]
-        [PropertyDisplayText(true, "Value Type")]
+        //[PropertyDescription("Please specify the Value type to get")]
+        //[InputSpecification("")]
+        //[SampleUsage("**Cell** or **Formula** or **Format** or **Color** or **Comment**")]
+        //[Remarks("")]
+        //[PropertyUISelectionOption("Cell")]
+        //[PropertyUISelectionOption("Formula")]
+        //[PropertyUISelectionOption("Format")]
+        //[PropertyUISelectionOption("Font Color")]
+        //[PropertyUISelectionOption("Back Color")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsOptional(true, "Cell")]
+        //[PropertySelectionValueSensitive(false)]
+        //[PropertyDisplayText(true, "Value Type")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
         public string v_ValueType { get; set; }
 
         public ExcelGetRangeValuesAsDataTableCommand()
@@ -134,15 +143,12 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            //string valueType = v_ValueType.GetUISelectionValue("v_ValueType", this, engine);
             string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
 
-            //int rowStartIndex = v_RowStart.ConvertToUserVariableAsInteger("Start Row", engine);
             int rowStartIndex = this.ConvertToUserVariableAsInteger(nameof(v_RowStart), "Start Row", engine);
 
             int columnStartIndex = 0;
             int columnEndIndex = 0;
-            //switch(v_ColumnType.GetUISelectionValue("v_ColumnType", this, engine))
             switch(this.GetUISelectionValue(nameof(v_ColumnType), "Column Type", engine))
             {
                 case "range":
@@ -158,7 +164,6 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "rc":
-                    //columnStartIndex = v_ColumnStart.ConvertToUserVariableAsInteger("Column Start", engine);
                     columnStartIndex = this.ConvertToUserVariableAsInteger(nameof(v_ColumnStart), "Column Start", engine);
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
@@ -166,7 +171,6 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        //columnEndIndex = v_ColumnEnd.ConvertToUserVariableAsInteger("Column End", engine);
                         columnEndIndex = this.ConvertToUserVariableAsInteger(nameof(v_ColumnEnd), "Column End", engine);
                     }
                     break;
@@ -186,7 +190,6 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //rowEndIndex = v_RowEnd.ConvertToUserVariableAsInteger("Row End", engine);
                 rowEndIndex = this.ConvertToUserVariableAsInteger(nameof(v_RowEnd), "Row End", engine);
             }
 

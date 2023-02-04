@@ -15,37 +15,41 @@ namespace taskt.Core.Automation.Commands
     public class ExcelSaveAsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Instance")]
-        [PropertyFirstValue("%kwd_default_excel_instance%")]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error.")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Instance")]
+        //[PropertyFirstValue("%kwd_default_excel_instance%")]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the file path to save")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("File Path to Save")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Enter or Select the path to the file.")]
-        [SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vExcelFilePath}}}**")]
+        [InputSpecification("File Path to Save", true)]
+        //[SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vExcelFilePath}}}**")]
+        [PropertyDetailSampleUsage("**C:\\temp\\myfile.xlsx**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
+        [PropertyDetailSampleUsage("**{{{vExcelFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
         [Remarks("If file does not contain extensin, supplement xlsx extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
         public string v_FileName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify If Excel File Exists")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**Error** or **Overwrite** or **Ignore**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("When Excel File Exists")]
+        [InputSpecification("", true)]
+        //[SampleUsage("**Error** or **Overwrite** or **Ignore**")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [PropertyDetailSampleUsage("**Overwrite**", "Overwrite file")]
+        [PropertyDetailSampleUsage("**Ignore**", "Don't save the file")]
         [Remarks("")]
         [PropertyUISelectionOption("Error")]
         [PropertyUISelectionOption("Overwrite")]
@@ -97,7 +101,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         case "error":
                             throw new Exception("Excel file '" + v_FileName + "' is already exists.");
-                            break;
+                            
                         case "overwrite":
                             saveAsProcess();
                             break;
