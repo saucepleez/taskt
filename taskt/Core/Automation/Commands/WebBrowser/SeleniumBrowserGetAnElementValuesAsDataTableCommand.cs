@@ -105,18 +105,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         public string v_DataTableVariableName { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox SearchMethodComboBox;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView AttributesNameGridHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private List<Control> ElementIndexControls;
-
         public SeleniumBrowserGetAnElementValuesAsDataTableCommand()
         {
             this.CommandName = "SeleniumBrowserGetAnElementValuesAsDataTableCommand";
@@ -129,54 +117,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var seleniumInstance = SeleniumControls.getWebBrowserInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
-            //var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
-
-            ////string searchMethod = v_SeleniumSearchType.GetUISelectionValue("v_SeleniumSearchType", this, engine);
-            //var searchMethod = this.GetUISelectionValue(nameof(v_SeleniumSearchType), engine);
-            //string seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
-            //var element = SeleniumControls.findElement(seleniumInstance, seleniumSearchParam, searchMethod);
-
-            //IWebElement trgElem;
-            //if (element is IWebElement webElem)
-            //{
-            //    trgElem = webElem;
-            //}
-            //else if (element is ReadOnlyCollection<IWebElement> webElems)
-            //{
-            //    int index = int.Parse(v_ElementIndex.ConvertToUserVariable(engine));
-            //    if ((index >= 0) && (index < webElems.Count))
-            //    {
-            //        trgElem = webElems[index];
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("Element index " + v_ElementIndex + " not exists");
-            //    }
-            //}
-            //else
-            //{
-            //    throw new Exception("not WebBrowser Element");
-            //}
-
             (var _, var trgElem) = GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_ElementIndex), engine);
 
             DataTable newDT = new DataTable();
 
-            //int rows = v_AttributesName.Rows.Count;
-            //if (rows > 0)
-            //{
-            //    newDT.Rows.Add();
-            //}
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    string attrName = (v_AttributesName.Rows[i][0] == null) ? "" : v_AttributesName.Rows[i][0].ToString();
-            //    if (attrName != "")
-            //    {
-            //        newDT.Columns.Add(attrName);
-            //        newDT.Rows[0][i] = SeleniumControls.getAttribute(trgElem, attrName);
-            //    }
-            //}
             GetElementAttributes(trgElem, v_AttributesName, engine, new Action<string, string>( (name, value) =>
                 {
                     if (newDT.Rows.Count == 0)
@@ -200,65 +144,10 @@ namespace taskt.Core.Automation.Commands
             SeleniumBrowserControls.SearchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_ElementIndex));
         }
 
-        //private void AttributesNameGridHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        AttributesNameGridHelper.BeginEdit(false);
-        //    }
-        //}
-
         public override void BeforeValidate()
         {
             base.BeforeValidate();
             DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AttributesName)], v_AttributesName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    ElementIndexControls = ctrls.Where(t => (t.Name.Contains("v_ElementIndex"))).ToList();
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get " + v_SeleniumSearchType + " element " + v_AttributesName.Rows.Count + " Attributes to store " + v_DataTableVariableName + ", Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if ((!String.IsNullOrEmpty(this.v_SeleniumSearchType))
-        //            && (this.v_SeleniumSearchType.ToLower().StartsWith("find elements")))
-        //    {
-
-        //        if (String.IsNullOrEmpty(this.v_ElementIndex))
-        //        {
-        //            this.IsValid = false;
-        //            this.validationResult += "Element Index is empty.\n";
-        //        }
-        //        else
-        //        {
-        //            int idx = 0;
-        //            if (int.TryParse(this.v_ElementIndex, out idx))
-        //            {
-        //                if (idx < 0)
-        //                {
-        //                    this.IsValid = false;
-        //                    this.validationResult += "Element Index is less than 0";
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
