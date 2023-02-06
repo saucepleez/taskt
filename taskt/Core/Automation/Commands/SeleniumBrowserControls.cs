@@ -178,6 +178,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get element attributes specified DataTable
+        /// </summary>
+        /// <param name="elem"></param>
+        /// <param name="attributes"></param>
+        /// <param name="engine"></param>
+        /// <param name="setValueFunc"></param>
         public static void GetElementAttributes(IWebElement elem, DataTable attributes, Engine.AutomationEngineInstance engine, Action<string, string> setValueFunc)
         {
             int rows = attributes.Rows.Count;
@@ -315,7 +322,15 @@ namespace taskt.Core.Automation.Commands
                     return sz.Width.ToString() + "," + sz.Height.ToString();
 
                 default:
-                    return element.GetAttribute(attributeName);
+                    var attr = element.GetAttribute(attributeName);
+                    if (attr != null)
+                    {
+                        return attr;
+                    }
+                    else
+                    {
+                        throw new Exception("Attribute '" + attributeName + "' does not exists.");
+                    }
             }
         }
 
