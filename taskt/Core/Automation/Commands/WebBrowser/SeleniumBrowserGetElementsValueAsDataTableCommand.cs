@@ -100,32 +100,45 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumInstance = SeleniumControls.getWebBrowserInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
+            //var seleniumInstance = SeleniumControls.getWebBrowserInstance(engine, v_InstanceName.ConvertToUserVariable(engine));
+            //string searchMethod = v_SeleniumSearchType.GetUISelectionValue("v_SeleniumSearchType", this, engine);
+            //string seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
+            //var elements = SeleniumControls.findElement(seleniumInstance, seleniumSearchParam, searchMethod);
+            //string attributeName = v_AttributeName.ConvertToUserVariable(engine);
 
-            string searchMethod = v_SeleniumSearchType.GetUISelectionValue("v_SeleniumSearchType", this, engine);
-            string seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
-            var elements = SeleniumControls.findElement(seleniumInstance, seleniumSearchParam, searchMethod);
+            (var _, var elems) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElements(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), engine);
 
-            string attributeName = v_AttributeName.ConvertToUserVariable(engine);
             DataTable newDT = new DataTable();
-            newDT.Columns.Add(attributeName);
 
-            if (elements is IWebElement)
-            {
-                newDT.Rows.Add();
-                newDT.Rows[0][0] = SeleniumControls.getAttribute((IWebElement)elements, attributeName);
-            }
-            else if (elements is ReadOnlyCollection<IWebElement>)
-            {
-                int i = 0;
-                var elems = (ReadOnlyCollection<IWebElement>)elements;
-                foreach(IWebElement elem in elems)
+            //newDT.Columns.Add(attributeName);
+
+            //if (elements is IWebElement)
+            //{
+            //    newDT.Rows.Add();
+            //    newDT.Rows[0][0] = SeleniumControls.getAttribute((IWebElement)elements, attributeName);
+            //}
+            //else if (elements is ReadOnlyCollection<IWebElement>)
+            //{
+            //    int i = 0;
+            //    var elems = (ReadOnlyCollection<IWebElement>)elements;
+            //    foreach(IWebElement elem in elems)
+            //    {
+            //        newDT.Rows.Add();
+            //        newDT.Rows[i][0] = SeleniumControls.getAttribute(elem, attributeName);
+            //        i++;
+            //    }
+            //}
+
+            SeleniumBrowserControls.GetElementsAttribute(elems, v_AttributeName, engine, new Action<int, string, string>((idx, name, value) =>
                 {
-                    newDT.Rows.Add();
-                    newDT.Rows[i][0] = SeleniumControls.getAttribute(elem, attributeName);
-                    i++;
-                }
-            }
+                    if (!newDT.Columns.Contains(name))
+                    {
+                        newDT.Columns.Add(name);
+                    }
+                    newDT.Rows[idx][0] = value;
+                })
+            );
+
             newDT.StoreInUserVariable(engine, v_DataTableVariableName);
         }
 

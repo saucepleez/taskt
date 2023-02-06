@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using OpenQA.Selenium;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -133,7 +134,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get WebBrowser Instance and Searched Elemnet
+        /// get WebBrowser Instance and Searched One Element
         /// </summary>
         /// <param name="command"></param>
         /// <param name="instanceParameterName"></param>
@@ -195,6 +196,55 @@ namespace taskt.Core.Automation.Commands
                 {
                     setValueFunc(attrName, GetAttribute(elem, attrName, engine));
                 }
+            }
+        }
+
+        /// <summary>
+        /// get WebBrowser Instance and Searched Elements List
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="instanceParameterName"></param>
+        /// <param name="searchMethodName"></param>
+        /// <param name="searchParameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static (IWebDriver, List<IWebElement>) GetSeleniumBrowserInstanceAndElements(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, Engine.AutomationEngineInstance engine)
+        {
+            var instanceName = command.ConvertToUserVariable(instanceParameterName, "WebBrowser Instance Name", engine);
+            var seleniumInstance = instanceName.GetSeleniumBrowserInstance(engine);
+
+            var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
+            var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
+            object e = FindElement(seleniumInstance, searchParameter, searchMethod, engine);
+
+            if (e is IWebElement elem)
+            {
+                return (seleniumInstance, new List<IWebElement>() { elem });
+            }
+            else if (e is ReadOnlyCollection<IWebElement> elems)
+            {
+                return (seleniumInstance, elems.ToList());
+            }
+            else
+            {
+                throw new Exception("Fail Get Element. Method: '" + searchMethod + "', Parameter: '" + searchParameter + "'");
+            }
+        }
+
+        /// <summary>
+        /// get Elements attribute specified by argument
+        /// </summary>
+        /// <param name="elems"></param>
+        /// <param name="attributeValue"></param>
+        /// <param name="engine"></param>
+        /// <param name="setValueFunc"></param>
+        public static void GetElementsAttribute(List<IWebElement> elems, string attributeValue, Engine.AutomationEngineInstance engine, Action<int, string, string> setValueFunc)
+        {
+            var attr = attributeValue.ConvertToUserVariable(engine);
+            for (int i = 0; i < elems.Count; i++)
+            {
+                setValueFunc(i, attr, GetAttribute(elems[i], attr, engine));
             }
         }
 
