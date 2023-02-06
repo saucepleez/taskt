@@ -145,7 +145,8 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static (IWebDriver, IWebElement) GetSeleniumBrowserInstanceAndElement(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, string elementIndexName, Engine.AutomationEngineInstance engine)
         {
-            var seleniumInstance = instanceParameterName.GetSeleniumBrowserInstance(engine);
+            var instanceName = command.ConvertToUserVariable(instanceParameterName, "WebBrowser Instance Name", engine);
+            var seleniumInstance = instanceName.GetSeleniumBrowserInstance(engine);
 
             var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
             var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
