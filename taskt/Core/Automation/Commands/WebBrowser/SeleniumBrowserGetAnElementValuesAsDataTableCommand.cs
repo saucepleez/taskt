@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -148,5 +149,35 @@ namespace taskt.Core.Automation.Commands
             base.BeforeValidate();
             DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AttributesName)], v_AttributesName);
         }
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if ((!String.IsNullOrEmpty(this.v_SeleniumSearchType))
+        //            && (this.v_SeleniumSearchType.ToLower().StartsWith("find elements")))
+        //    {
+
+        //        if (String.IsNullOrEmpty(this.v_ElementIndex))
+        //        {
+        //            this.IsValid = false;
+        //            this.validationResult += "Element Index is empty.\n";
+        //        }
+        //        else
+        //        {
+        //            int idx = 0;
+        //            if (int.TryParse(this.v_ElementIndex, out idx))
+        //            {
+        //                if (idx < 0)
+        //                {
+        //                    this.IsValid = false;
+        //                    this.validationResult += "Element Index is less than 0";
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }
