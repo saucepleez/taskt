@@ -3,7 +3,6 @@ using System.Data;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using static taskt.Core.Automation.Commands.SeleniumBrowserControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -117,11 +116,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var _, var trgElem) = GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SearchMethod), nameof(v_SearchParameter), nameof(v_ElementIndex), engine);
+            (var _, var trgElem) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), engine);
 
             DataTable newDT = new DataTable();
 
-            GetElementAttributes(trgElem, v_AttributesName, engine, new Action<string, string>( (name, value) =>
+            SeleniumBrowserControls.GetElementAttributes(trgElem, v_AttributesName, engine, new Action<string, string>( (name, value) =>
                 {
                     if (newDT.Rows.Count == 0)
                     {
