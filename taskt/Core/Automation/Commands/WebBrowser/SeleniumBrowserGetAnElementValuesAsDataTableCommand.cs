@@ -3,7 +3,6 @@ using System.Data;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
