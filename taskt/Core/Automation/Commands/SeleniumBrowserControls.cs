@@ -109,6 +109,27 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public static string v_AttributesName { get; }
 
+        /// <summary>
+        /// attribute name
+        /// </summary>
+        [PropertyDescription("Attributes Name to Get")]
+        [InputSpecification("Attributes Name", true)]
+        [PropertyDetailSampleUsage("**id**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
+        [PropertyDetailSampleUsage("**title**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
+        [PropertyDetailSampleUsage("**textContent**", "Specify the Element **Text Content** Value")]
+        [PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
+        [PropertyDetailSampleUsage("**Displayed**", "Get the Specified Element is Displayed or Not", false)]
+        [PropertyDetailSampleUsage("**Enabled**", "Get the Specified Element is Enabled or Not", false)]
+        [PropertyDetailSampleUsage("**Location**", "Get the Specified Element Location. like **X,Y**, comma separated.", false)]
+        [PropertyDetailSampleUsage("**Selected**", "Get the Specified Element is Selected or Not", false)]
+        [PropertyDetailSampleUsage("**Size**", "Get the Specified Element Size. like **W,H**, comma separated.", false)]
+        [PropertyDetailSampleUsage("**TagName**", "Get the Specified Element Tag Name.", false)]
+        [PropertyDetailSampleUsage("**Text**", "Get the Specified Element innerText.", false)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        public static string v_AttributeName { get; }
+
         #region methods
 
         /// <summary>
@@ -220,7 +241,7 @@ namespace taskt.Core.Automation.Commands
 
             if (e is IWebElement elem)
             {
-                return (seleniumInstance, new List<IWebElement>() { elem });
+                return (seleniumInstance, new List<IWebElement> { elem });
             }
             else if (e is ReadOnlyCollection<IWebElement> elems)
             {
