@@ -123,14 +123,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_FirstRowMethod { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox SearchMethodComboBox;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private List<Control> ElementIndexControls;
-
         public SeleniumBrowserGetTableValueAsDataTableCommand()
         {
             this.CommandName = "SeleniumBrowserGetTableValueAsDataTableCommand";
