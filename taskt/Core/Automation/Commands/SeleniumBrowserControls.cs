@@ -127,6 +127,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Text**", "Get the Specified Element innerText.", false)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public static string v_AttributeName { get; }
 
