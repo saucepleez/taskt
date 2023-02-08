@@ -30,7 +30,6 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "WebBrowserNavigateCommand";
             this.SelectionName = "Navigate Forward";
-            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

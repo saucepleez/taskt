@@ -29,7 +29,6 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserCloseCommand";
             this.SelectionName = "Close Browser";
-            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

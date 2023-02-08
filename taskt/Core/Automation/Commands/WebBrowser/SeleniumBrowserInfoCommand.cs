@@ -52,7 +52,6 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserInfoCommand";
             this.SelectionName = "Get Browser Info";
-            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

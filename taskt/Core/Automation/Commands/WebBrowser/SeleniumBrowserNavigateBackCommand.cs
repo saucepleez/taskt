@@ -30,7 +30,6 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserNavigateBackCommand";
             this.SelectionName = "Navigate Back";
-            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }

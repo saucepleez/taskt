@@ -57,7 +57,6 @@ namespace taskt.Core.Automation.Commands
         {
             this.CommandName = "SeleniumBrowserNavigateURLCommand";
             this.SelectionName = "Navigate to URL";
-            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
             //this.v_UseHttps = "True";
