@@ -8,7 +8,12 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class WindowNameControls
     {
-
+        /// <summary>
+        /// get window name search method (Func)
+        /// </summary>
+        /// <param name="searchMethod"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Func<string, string, bool> GetWindowSearchMethod(string searchMethod)
         {
             Func<string, string, bool> ret;
@@ -32,16 +37,28 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
+        /// <summary>
+        /// get all window names and handles
+        /// </summary>
+        /// <returns></returns>
         private static Dictionary<IntPtr, string> GetAllWindows()
         {
             return User32.User32Functions.GetWindowNames();
         }
 
+        /// <summary>
+        /// get current window name
+        /// </summary>
+        /// <returns></returns>
         public static string GetCurrentWindowName()
         {
             return User32.User32Functions.GetActiveWindowTitle();
         }
 
+        /// <summary>
+        /// get current window handle
+        /// </summary>
+        /// <returns></returns>
         public static IntPtr GetCurrentWindowHandle()
         {
             return User32.User32Functions.GetActiveWindow();
