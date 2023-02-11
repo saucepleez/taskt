@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.Linq;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,150 +10,171 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserSwitchFrameCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance , {{{vInstance}}})")]
-        [Attributes.PropertyAttributes.InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDescription("Please Enter the instance name (ex. myInstance , {{{vInstance}}})")]
+        //[InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
+        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Indicate Frame Selection Type")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Index")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Name or ID")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Parent Frame")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Default Content")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Alert")]
-        [Attributes.PropertyAttributes.InputSpecification("Select an option which best fits to the specification you would like to make.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select one of the provided options.")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Frame Type")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyUISelectionOption("Name or ID")]
+        [PropertyUISelectionOption("Parent Frame")]
+        [PropertyUISelectionOption("Default Content")]
+        [PropertyUISelectionOption("Alert")]
+        [InputSpecification("", true)]
+        //[SampleUsage("")]
+        [PropertyDetailSampleUsage("**Index**", "Specify Frame Index to Frame Search Parameter")]
+        [PropertyDetailSampleUsage("**Name or ID**", "Specify Frame Name or ID to Frame Search Parameter")]
+        [PropertyDetailSampleUsage("**Parent Frame**", "Switch to Parent Frame")]
+        [PropertyDetailSampleUsage("**Default Content**", "Switch to Default Content")]
+        [PropertyDetailSampleUsage("**Alert**", "Switch to Alert")]
+        [Remarks("")]
+        [PropertyFirstValue("Index")]
+        [PropertyValidationRule("Frame Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Frame Type")]
         public string v_SelectionType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Frame Search Parameter (If Selection Type is 'Index' or 'Name of ID', please enter)")]
-        [Attributes.PropertyAttributes.SampleUsage("Index: **0** or **{{{vIndex}}}**, Name/ID: **top** or **{{{vName}}}**")]
-        [Attributes.PropertyAttributes.Remarks("If selection type is 'Index', default index is 0.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Frame Search Parameter")]
+        [SampleUsage("Index: **0** or **{{{vIndex}}}**, Name/ID: **top** or **{{{vName}}}**")]
+        [Remarks("If Frame Type is **Index** or **Name of ID**, please enter. If Frame Type is **Index**, default index is **0**.")]
+        [PropertyIsOptional(true)]
+        [PropertyFirstValue("0")]
+        [PropertyDisplayText(true, "Frame")]
         public string v_FrameParameter { get; set; }
 
         public SeleniumBrowserSwitchFrameCommand()
         {
             this.CommandName = "SeleniumBrowserSwitchFrameCommand";
             this.SelectionName = "Switch Browser Frame";
-            this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_SelectionType = "Index";
-            this.v_FrameParameter = "0";
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(sender);
+            //var vInstance = v_InstanceName.ConvertToUserVariable(sender);
+            //var browserObject = engine.GetAppInstance(vInstance);
+            //var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
-            var browserObject = engine.GetAppInstance(vInstance);
-            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
-            var frameIndex = v_FrameParameter.ConvertToUserVariable(sender);
-            var selectionType = v_SelectionType.ConvertToUserVariable(sender);
-
+            //var selectionType = v_SelectionType.ConvertToUserVariable(sender);
+            var selectionType = this.GetUISelectionValue(nameof(v_SelectionType), engine);
             switch (selectionType)
             {
-                case "Index":
-                    int intFrameIndex;
-                    if (!int.TryParse(frameIndex, out intFrameIndex))
+                case "index":
+                    //var frameIndex = v_FrameParameter.ConvertToUserVariable(sender);
+                    //int intFrameIndex;
+                    //if (!int.TryParse(frameIndex, out intFrameIndex))
+                    //{
+                    //    intFrameIndex = 0;
+                    //}
+                    if (string.IsNullOrEmpty(v_FrameParameter))
                     {
-                        intFrameIndex = 0;
+                        v_FrameParameter = "0";
                     }
-                    seleniumInstance.SwitchTo().Frame(intFrameIndex);
-                    break;
-                case "Name or ID":
+                    var frameIndex = this.ConvertToUserVariableAsInteger(nameof(v_FrameParameter), engine);
                     seleniumInstance.SwitchTo().Frame(frameIndex);
                     break;
-                case "Parent Frame":
+
+                case "name or id":
+                    var frameName = v_FrameParameter.ConvertToUserVariable(engine);
+                    seleniumInstance.SwitchTo().Frame(frameName);
+                    break;
+
+                case "parent frame":
                     seleniumInstance.SwitchTo().ParentFrame();
                     break;
-                case "Default Content":
+
+                case "default content":
                     seleniumInstance.SwitchTo().DefaultContent();
                     break;
-                case "Alert":
+
+                case "alert":
                     seleniumInstance.SwitchTo().Alert();
                     break;
-                default:
-                    throw new NotImplementedException($"Logic to Select Frame '{selectionType}' Not Implemented");
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
-            RenderedControls.AddRange(instanceCtrls);
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SelectionType", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FrameParameter", this, editor));
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-            {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-            }
+        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.WebBrowser);
+        //    RenderedControls.AddRange(instanceCtrls);
+        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SelectionType", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FrameParameter", this, editor));
 
-            return RenderedControls;
-        }
+        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+        //    {
+        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+        //    }
 
-        public override string GetDisplayValue()
-        {
-            return $"{base.GetDisplayValue()} - [Find {v_SelectionType}, Instance Name: '{v_InstanceName}']";
-        }
+        //    return RenderedControls;
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override string GetDisplayValue()
+        //{
+        //    return $"{base.GetDisplayValue()} - [Find {v_SelectionType}, Instance Name: '{v_InstanceName}']";
+        //}
 
-            if (String.IsNullOrEmpty(this.v_InstanceName))
-            {
-                this.validationResult += "Instance name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_SelectionType))
-            {
-                this.validationResult += "Selection Type is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                switch (this.v_SelectionType)
-                {
-                    case "Index":
-                        break;
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-                    case "Name or ID":
-                        NameOrIDValidate();
-                        break;
+        //    if (String.IsNullOrEmpty(this.v_InstanceName))
+        //    {
+        //        this.validationResult += "Instance name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_SelectionType))
+        //    {
+        //        this.validationResult += "Selection Type is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        switch (this.v_SelectionType)
+        //        {
+        //            case "Index":
+        //                break;
 
-                    default:
-                        break;
-                }
-            }
+        //            case "Name or ID":
+        //                NameOrIDValidate();
+        //                break;
 
-            return this.IsValid;
-        }
+        //            default:
+        //                break;
+        //        }
+        //    }
 
-        private void NameOrIDValidate()
-        {
-            if (String.IsNullOrEmpty(this.v_FrameParameter))
-            {
-                this.validationResult += "Frame Search Parameter is empty.\n";
-                this.IsValid = false;
-            }
-        }
+        //    return this.IsValid;
+        //}
+
+        //private void NameOrIDValidate()
+        //{
+        //    if (String.IsNullOrEmpty(this.v_FrameParameter))
+        //    {
+        //        this.validationResult += "Frame Search Parameter is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //}
     }
 }

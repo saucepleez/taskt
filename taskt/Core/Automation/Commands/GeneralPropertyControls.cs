@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         /// combobox (dropdown)
         /// </summary>
         [PropertyDescription("Value")]
-        [InputSpecification("")]
+        [InputSpecification("", true)]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]

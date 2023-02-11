@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -11,6 +10,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -23,91 +23,91 @@ namespace taskt.Core.Automation.Commands
     public class SeleniumBrowserElementActionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyDescription("WebBrowser Instance Name")]
+        [InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
+        [SampleUsage("**myInstance** or **{{{vInstance}}}**")]
+        [Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyShowSampleUsageInDescription(true)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Element Search Method")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By XPath")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By ID")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Tag Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Class Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By CSS Selector")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Element By Link Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By XPath")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By ID")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Tag Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Class Name")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By CSS Selector")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Find Elements By Link Text")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Element Search Method")]
+        [PropertyUISelectionOption("Find Element By XPath")]
+        [PropertyUISelectionOption("Find Element By ID")]
+        [PropertyUISelectionOption("Find Element By Name")]
+        [PropertyUISelectionOption("Find Element By Tag Name")]
+        [PropertyUISelectionOption("Find Element By Class Name")]
+        [PropertyUISelectionOption("Find Element By CSS Selector")]
+        [PropertyUISelectionOption("Find Element By Link Text")]
+        [PropertyUISelectionOption("Find Elements By XPath")]
+        [PropertyUISelectionOption("Find Elements By ID")]
+        [PropertyUISelectionOption("Find Elements By Name")]
+        [PropertyUISelectionOption("Find Elements By Tag Name")]
+        [PropertyUISelectionOption("Find Elements By Class Name")]
+        [PropertyUISelectionOption("Find Elements By CSS Selector")]
+        [PropertyUISelectionOption("Find Elements By Link Text")]
+        [InputSpecification("Select the specific search type that you want to use to isolate the element in the web page.")]
+        [SampleUsage("Select **Find Element By XPath**, **Find Element By ID**, **Find Element By Name**, **Find Element By Tag Name**, **Find Element By Class Name**, **Find Element By CSS Selector**, **Find Element By Link Text**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_SeleniumSearchType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Element Search Parameter")]
-        [Attributes.PropertyAttributes.InputSpecification("Specifies the parameter text that matches to the element based on the previously selected search type.")]
-        [Attributes.PropertyAttributes.SampleUsage("If search type **Find Element By ID** was specified, for example, given <div id='name'></div>, the value of this field would be **name**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Element Search Parameter")]
+        [InputSpecification("Specifies the parameter text that matches to the element based on the previously selected search type.")]
+        [SampleUsage("If search type **Find Element By ID** was specified, for example, given <div id='name'></div>, the value of this field would be **name**")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SeleniumSearchParameter { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Target Element Index (Only Use Fined Elements ***)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
-        [Attributes.PropertyAttributes.Remarks("If parameter is $x('//div') and index is 5, it's means target is $x('//div')[5].")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyDescription("Target Element Index (Only Use Fined Elements ***)")]
+        [InputSpecification("")]
+        [SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        [Remarks("If parameter is $x('//div') and index is 5, it's means target is $x('//div')[5].")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         public string v_SeleniumElementIndex { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Element Action")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Invoke Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Clear Element")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Attribute")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Matching Elements")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Wait For Element To Exist")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Switch to frame")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Count")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Options")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Select Option")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**, **Get Count**")]
-        [Attributes.PropertyAttributes.Remarks("Selecting this field changes the parameters that will be required in the next step")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertySelectionChangeEvent("seleniumAction_SelectionChangeCommitted")]
+        [PropertyDescription("Element Action")]
+        [PropertyUISelectionOption("Invoke Click")]
+        [PropertyUISelectionOption("Left Click")]
+        [PropertyUISelectionOption("Right Click")]
+        [PropertyUISelectionOption("Middle Click")]
+        [PropertyUISelectionOption("Double Left Click")]
+        [PropertyUISelectionOption("Clear Element")]
+        [PropertyUISelectionOption("Set Text")]
+        [PropertyUISelectionOption("Get Text")]
+        [PropertyUISelectionOption("Get Attribute")]
+        [PropertyUISelectionOption("Get Matching Elements")]
+        [PropertyUISelectionOption("Wait For Element To Exist")]
+        [PropertyUISelectionOption("Switch to frame")]
+        [PropertyUISelectionOption("Get Count")]
+        [PropertyUISelectionOption("Get Options")]
+        [PropertyUISelectionOption("Select Option")]
+        [InputSpecification("Select the appropriate corresponding action to take once the element has been located")]
+        [SampleUsage("Select from **Invoke Click**, **Left Click**, **Right Click**, **Middle Click**, **Double Left Click**, **Clear Element**, **Set Text**, **Get Text**, **Get Attribute**, **Wait For Element To Exist**, **Get Count**")]
+        [Remarks("Selecting this field changes the parameters that will be required in the next step")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertySelectionChangeEvent("seleniumAction_SelectionChangeCommitted")]
         public string v_SeleniumElementAction { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Additional Parameters")]
-        [Attributes.PropertyAttributes.InputSpecification("Additioal Parameters will be required based on the action settings selected.")]
-        [Attributes.PropertyAttributes.SampleUsage("Additional Parameters range from adding offset coordinates to specifying a variable to apply element text to.")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, true)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ElementsGridViewHelper_CellClick", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent("ElementsGridViewHelper_CellBeginEdit", Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        public System.Data.DataTable v_WebActionParameterTable { get; set; }
+        [PropertyDescription("Additional Parameters")]
+        [InputSpecification("Additioal Parameters will be required based on the action settings selected.")]
+        [SampleUsage("Additional Parameters range from adding offset coordinates to specifying a variable to apply element text to.")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(false, false, true)]
+        [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
+        [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        [PropertyDataGridViewCellEditEvent(nameof(ElementsGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewCellEditEvent(nameof(ElementsGridViewHelper_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        public DataTable v_WebActionParameterTable { get; set; }
 
         [XmlIgnore]
         [NonSerialized]
@@ -128,32 +128,18 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-
-            //this.v_WebActionParameterTable = new System.Data.DataTable
-            //{
-            //    TableName = "WebActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            //};
-            //this.v_WebActionParameterTable.Columns.Add("Parameter Name");
-            //this.v_WebActionParameterTable.Columns.Add("Parameter Value");
         }
-
-        //private void ElementsGridViewHelper_MouseEnter(object sender, EventArgs e)
-        //{
-        //    seleniumAction_SelectionChangeCommitted(null, null);
-        //}
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            //convert to user variable -- https://github.com/saucepleez/taskt/issues/66
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
 
-
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-
-            var browserObject = engine.GetAppInstance(vInstance);
-
-            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            //var browserObject = engine.GetAppInstance(vInstance);
+            //var seleniumInstance = (IWebDriver)browserObject;
+            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
             dynamic element = null;
 
@@ -225,7 +211,7 @@ namespace taskt.Core.Automation.Commands
                     if (elementPositionY > seleniumWindowHeightY)
                     {
                         String scroll = String.Format("window.scroll(0, {0})", elementPositionY);
-                        IJavaScriptExecutor js = browserObject as IJavaScriptExecutor;
+                        IJavaScriptExecutor js = seleniumInstance as IJavaScriptExecutor;
                         js.ExecuteScript(scroll);
                     }
                     element.Click();
@@ -283,7 +269,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (encryptedData == "Encrypted")
                     {
-                        textToSet = Core.EncryptionServices.DecryptString(textToSet, "TASKT");
+                        textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
                     }
                    
                     string[] potentialKeyPresses = textToSet.Split('{', '}');
@@ -448,9 +434,9 @@ namespace taskt.Core.Automation.Commands
 
                     //create json list
                     List<string> jsonList = new List<string>();
-                    foreach (OpenQA.Selenium.IWebElement item in element)
+                    foreach (IWebElement item in element)
                     {
-                        var json = Newtonsoft.Json.JsonConvert.SerializeObject(item, settings);
+                        var json = JsonConvert.SerializeObject(item, settings);
                         jsonList.Add(json);
                     }
 
@@ -480,7 +466,7 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        private object FindElement(OpenQA.Selenium.IWebDriver seleniumInstance, string searchParameter)
+        private object FindElement(IWebDriver seleniumInstance, string searchParameter)
         {
             object element = null;
 
@@ -553,7 +539,7 @@ namespace taskt.Core.Automation.Commands
         public bool ElementExists(object sender, string searchType, string elementName)
         {
             //get engine reference
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             var seleniumSearchParam = elementName.ConvertToUserVariable(sender);
 
             //get instance name
@@ -564,7 +550,7 @@ namespace taskt.Core.Automation.Commands
 
             //get selenium instance driver
             //var seleniumInstance = (OpenQA.Selenium.Chrome.ChromeDriver)browserObject;
-            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+            var seleniumInstance = (IWebDriver)browserObject;
 
             try
             {

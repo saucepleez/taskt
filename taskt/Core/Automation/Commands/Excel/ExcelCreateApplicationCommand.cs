@@ -28,6 +28,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyFirstValue("%kwd_default_excel_instance%")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
+        [PropertyTextBoxSetting(1, false)]
         public string v_InstanceName { get; set; }
 
         public ExcelCreateApplicationCommand()
