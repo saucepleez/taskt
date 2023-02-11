@@ -61,7 +61,7 @@ namespace taskt.UI.Forms.Supplemental
             //IntPtr hWnd = User32Functions.FindWindow(windowName);
             try
             {
-                IntPtr hWnd = WindowNameControls.FindWindow(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
+                IntPtr hWnd = WindowNameControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
                 WindowNameControls.ActivateWindow(hWnd);
                 User32Functions.SetWindowPosition(hWnd, 0, 0);
 

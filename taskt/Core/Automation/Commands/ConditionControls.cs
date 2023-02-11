@@ -304,7 +304,7 @@ namespace taskt.Core.Automation.Commands
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
             try
             {
-                IntPtr wHnd = WindowNameControls.FindWindow(param["Window Name"], param["Search Method"], engine);
+                IntPtr wHnd = WindowNameControls.FindWindowHandle(param["Window Name"], param["Search Method"], engine);
                 return true;
             }
             catch

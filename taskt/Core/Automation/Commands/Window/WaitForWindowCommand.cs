@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
             {
                 try
                 {
-                    IntPtr wHnd = WindowNameControls.FindWindow(windowName, searchMethod, engine);
+                    IntPtr wHnd = WindowNameControls.FindWindowHandle(windowName, searchMethod, engine);
                     return true;
                 }
                 catch

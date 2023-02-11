@@ -122,7 +122,7 @@ namespace taskt.Core.Automation.Commands
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            var handles = WindowNameControls.FindWindows(windowName, searchMethod, engine);
+            var handles = WindowNameControls.FindWindowsHandles(windowName, searchMethod, engine);
             foreach (var handle in handles)
             {
                 User32Functions.CloseWindow(handle);

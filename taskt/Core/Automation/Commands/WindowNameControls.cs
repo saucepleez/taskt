@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             return User32.User32Functions.GetActiveWindow();
         }
 
-        public static IntPtr FindWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        public static IntPtr FindWindowHandle(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
@@ -86,7 +86,7 @@ namespace taskt.Core.Automation.Commands
             throw new Exception("Window Name '" + windowName + "' not found");
         }
         
-        public static List<IntPtr> FindWindows(string windowName, string searchMethod, Engine.AutomationEngineInstance engine)
+        public static List<IntPtr> FindWindowsHandles(string windowName, string searchMethod, Engine.AutomationEngineInstance engine)
         {
             List<IntPtr> ret = new List<IntPtr>();
 
@@ -117,24 +117,12 @@ namespace taskt.Core.Automation.Commands
 
         public static List<string> GetAllWindowTitles()
         {
-            List<string> ret = new List<string>();
-            var windows = GetAllWindows();
-            foreach(var win in windows)
-            {
-                ret.Add(win.Value);
-            }
-            return ret;
+            return new List<string>(GetAllWindows().Values);
         }
 
         public static List<IntPtr> GetAllWindowHandles()
         {
-            List<IntPtr> ret = new List<IntPtr>();
-            var windows = GetAllWindows();
-            foreach (var win in windows)
-            {
-                ret.Add(win.Key);
-            }
-            return ret;
+            return new List<IntPtr>(GetAllWindows().Keys);
         }
 
         public static void ActivateWindow(IntPtr handle)
@@ -148,7 +136,7 @@ namespace taskt.Core.Automation.Commands
 
         public static void ActivateWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
-            IntPtr hwnd = FindWindow(windowName, searchMethod, engine);
+            IntPtr hwnd = FindWindowHandle(windowName, searchMethod, engine);
             ActivateWindow(hwnd);
         }
 

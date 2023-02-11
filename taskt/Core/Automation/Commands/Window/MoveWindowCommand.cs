@@ -169,7 +169,7 @@ namespace taskt.Core.Automation.Commands
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            IntPtr wHnd = WindowNameControls.FindWindow(windowName, searchMethod, engine);
+            IntPtr wHnd = WindowNameControls.FindWindowHandle(windowName, searchMethod, engine);
             User32Functions.RECT pos = User32Functions.GetWindowPosition(wHnd);
 
             var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);

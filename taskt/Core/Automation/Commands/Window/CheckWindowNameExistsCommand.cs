@@ -150,7 +150,7 @@ namespace taskt.Core.Automation.Commands
             {
                 try
                 {
-                    IntPtr whnd = WindowNameControls.FindWindow(windowName, searchMethod, engine);
+                    IntPtr whnd = WindowNameControls.FindWindowHandle(windowName, searchMethod, engine);
                     true.StoreInUserVariable(engine, v_UserVariableName);
                 }
                 catch(Exception ex)

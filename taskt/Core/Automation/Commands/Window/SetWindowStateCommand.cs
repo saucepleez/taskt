@@ -183,7 +183,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            IntPtr wHnd = WindowNameControls.FindWindow(windowName, searchMethod, engine);
+            IntPtr wHnd = WindowNameControls.FindWindowHandle(windowName, searchMethod, engine);
 
             if (User32Functions.IsIconic(wHnd) && (state != User32Functions.WindowState.SW_MINIMIZE))
             {

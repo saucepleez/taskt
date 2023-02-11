@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
             int xSize = v_XWindowSize.ConvertToUserVariableAsInteger("X Window Size", engine);
             int ySize = v_YWindowSize.ConvertToUserVariableAsInteger("Y Window Size", engine);
 
-            IntPtr wHnd = WindowNameControls.FindWindow(windowName, serachMethod, engine);
+            IntPtr wHnd = WindowNameControls.FindWindowHandle(windowName, serachMethod, engine);
             User32Functions.SetWindowSize(wHnd, xSize, ySize);
         }
         public override List<Control> Render(frmCommandEditor editor)
