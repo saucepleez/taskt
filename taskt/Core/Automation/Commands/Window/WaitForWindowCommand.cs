@@ -94,16 +94,16 @@ namespace taskt.Core.Automation.Commands
             //    throw new Exception("Window was not found in the allowed time!");
             //}
 
-            Func<bool> windowWaitFunc = new Func<bool>(() =>
+            var windowWaitFunc = new Func<(bool, object)>(() =>
             {
                 try
                 {
                     IntPtr wHnd = WindowNameControls.FindWindowHandle(windowName, searchMethod, engine);
-                    return true;
+                    return (true, null);
                 }
                 catch
                 {
-                    return false;
+                    return (false, null);
                 }
             });
             this.WaitProcess(nameof(v_LengthToWait), "Window", windowWaitFunc, engine);

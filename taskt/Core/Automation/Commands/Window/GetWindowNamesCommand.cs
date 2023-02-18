@@ -140,7 +140,7 @@ namespace taskt.Core.Automation.Commands
             string windowName = v_WindowName.ConvertToUserVariable(sender);
             string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
 
-            var searchFunc = WindowNameControls.GetWindowSearchMethod(searchMethod);
+            var searchFunc = WindowNameControls.GetWindowNameCompareMethod(searchMethod);
             var list = WindowNameControls.GetAllWindowTitles();
 
             var ret = new List<string>();

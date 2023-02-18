@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -9,15 +12,15 @@ namespace taskt.Core.Automation.Commands
     internal static class WindowNameControls
     {
         /// <summary>
-        /// get window name search method (Func)
+        /// get window name compare method (Func)
         /// </summary>
-        /// <param name="searchMethod"></param>
+        /// <param name="compareType"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Func<string, string, bool> GetWindowSearchMethod(string searchMethod)
+        public static Func<string, string, bool> GetWindowNameCompareMethod(string compareType)
         {
             Func<string, string, bool> ret;
-            switch (searchMethod.ToLower())
+            switch (compareType.ToLower())
             {
                 case "starts with":
                     ret = (a, b) => a.StartsWith(b);
@@ -32,10 +35,118 @@ namespace taskt.Core.Automation.Commands
                     ret = (a, b) => a.Contains(b);
                     break;
                 default:
-                    throw new Exception("Search method " + searchMethod + " is not support.");
+                    throw new Exception("Search method " + compareType + " is not support.");
             }
             return ret;
         }
+
+        /// <summary>
+        /// Get Window Match Function
+        /// </summary>
+        /// <param name="matchType"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static Func<List<IntPtr>, List<IntPtr>> GetWindowMatchMethod(string matchType, int index)
+        {
+            Func<List<IntPtr>, List<IntPtr>> ret;
+            switch(matchType.ToLower())
+            {
+                case "first":
+                    ret = (lst) =>
+                    {
+                        return (lst.Count > 0 ? new List<IntPtr>() { lst[0] } : throw new Exception("No Matched Windows exists."));
+                    };
+                    break;
+                case "last":
+                    ret = (lst) =>
+                    {
+                        return (lst.Count > 0 ? new List<IntPtr>() { lst[lst.Count - 1] } : throw new Exception("No Matched Windows exists."));
+                    };
+                    break;
+                case "all":
+                    ret = (lst) =>
+                    {
+                        return (lst.Count > 0 ? new List<IntPtr>(lst) : throw new Exception("No Matched Windows exists."));
+                    };
+                    break;
+                case "index":
+                    ret = (lst) =>
+                    {
+                        var count = lst.Count;
+                        if (count == 0)
+                        {
+                            throw new Exception("No Matched Windows exists.");
+                        }
+                        if (index < 0)
+                        {
+                            index += count;
+                        }
+                        if (index >= 0 && index < count)
+                        {
+                            return new List<IntPtr>() { lst[index] };
+                        }
+                        else
+                        {
+                            throw new Exception("No Item Exists. Index: " + index);
+                        }
+                    };
+                    break;
+                default:
+                    throw new Exception("Match type " + matchType + " is not support.");
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// get window name search method (Func)
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="searchMethod"></param>
+        /// <param name="matchType"></param>
+        /// <param name="index"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static Func<List<IntPtr>> GetWindowSearchMethod(string window, string searchMethod, string matchType, int index, Engine.AutomationEngineInstance engine)
+        {
+            if (window == engine.engineSettings.CurrentWindowKeyword)
+            {
+                // current window
+                return new Func<List<IntPtr>>(() =>
+                {
+                    return new List<IntPtr>() { GetCurrentWindowHandle() };
+                });
+            }
+            else if (window == engine.engineSettings.AllWindowsKeyword)
+            {
+                // all windows & match-type
+                return new Func<List<IntPtr>>(() =>
+                {
+                    var matchedWindows = GetAllWindowHandles();
+                    var matchFunc = GetWindowMatchMethod(matchType, index);
+                    return matchFunc(matchedWindows);
+                });
+            }
+            else
+            {
+                // matched windows
+                return new Func<List<IntPtr>>(() => {
+                    var matchedWindows = new List<IntPtr>();
+                    var wins = GetAllWindows();
+                    var searchFunc = GetWindowNameCompareMethod(searchMethod);
+                    foreach (var key in wins.Keys)
+                    {
+                        if (searchFunc(wins[key], window))
+                        {
+                            matchedWindows.Add(key);
+                        }
+                    }
+                    var matchFunc = GetWindowMatchMethod(matchType, index);
+                    return matchFunc(matchedWindows);
+                });
+            }
+        }
+
 
         /// <summary>
         /// get all window names and handles
@@ -73,7 +184,7 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 var windows = GetAllWindows();
-                var method = GetWindowSearchMethod(searchMethod);
+                var method = GetWindowNameCompareMethod(searchMethod);
                 foreach(var win in windows)
                 {
                     if (method(win.Value, windowName))
@@ -96,7 +207,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             var windows = GetAllWindows();
-            var method = GetWindowSearchMethod(searchMethod);
+            var method = GetWindowNameCompareMethod(searchMethod);
             foreach (var win in windows)
             {
                 if (method(win.Value, windowName))
@@ -149,7 +260,7 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 var windows = GetAllWindows();
-                var method = GetWindowSearchMethod(searchMethod);
+                var method = GetWindowNameCompareMethod(searchMethod);
                 foreach (var win in windows)
                 {
                     if (method(win.Value, windowName))
@@ -161,6 +272,108 @@ namespace taskt.Core.Automation.Commands
             // not found
             throw new Exception("Window Name '" + windowName + "' not found");
         }
+
+        /// <summary>
+        /// expand variable as Window Name
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static string ConvertToUserVariableAsWindowName(this string value, Engine.AutomationEngineInstance engine)
+        {
+            if ((value == engine.engineSettings.CurrentWindowKeyword) || (value == engine.engineSettings.AllWindowsKeyword))
+            {
+                return value;
+            }
+            else
+            {
+                return value.ConvertToUserVariable(engine);
+            }
+        }
+
+        /// <summary>
+        /// expand specified property value as Window Name 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static string ConvertToUserVariableAsWindowName(this ScriptCommand command, string windowName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(windowName);
+            var value = prop.GetValue(command)?.ToString() ?? "";
+            return value.ConvertToUserVariableAsWindowName(engine);
+        }
+
+        /// <summary>
+        /// search & wait window name. this method use argument values, DON'T convert variable.
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="searchMethod"></param>
+        /// <param name="matchType"></param>
+        /// <param name="index"></param>
+        /// <param name="waitTime"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static List<IntPtr> FindWindows(string window, string searchMethod, string matchType, int index, int waitTime, Engine.AutomationEngineInstance engine)
+        {
+            var searchFunc = GetWindowSearchMethod(window, searchMethod, matchType, index, engine);
+
+            var waitFunc = new Func<(bool, object)>(() =>
+            {
+                try
+                {
+                    var ret = searchFunc();
+                    if (ret.Count > 0)
+                    {
+                        return (true, ret);
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }
+                catch
+                {
+                    return (false, null);
+                }
+            });
+
+            var obj = WaitControls.WaitProcess(waitTime, "Window", waitFunc, engine);
+
+            if (obj is List<IntPtr> lst)
+            {
+                return lst;
+            }
+            else
+            {
+                throw new Exception("Strange Value returned in FindWindows. Type: " + obj.GetType().FullName);
+            }
+        }
+
+        /// <summary>
+        /// search & wait window name. this method use argument values, convert variable.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="compareMethodName"></param>
+        /// <param name="matchTypeName"></param>
+        /// <param name="indexName"></param>
+        /// <param name="waitName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static List<IntPtr> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine)
+        {
+            var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
+            var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
+            var matchType = command.GetUISelectionValue(matchTypeName, engine);
+            var index = command.ConvertToUserVariableAsInteger(indexName, engine);
+            var waitTime = command.ConvertToUserVariableAsInteger(waitName, engine);
+
+            return FindWindows(window, compareMethod, matchType, index, waitTime, engine);
+        }
+
 
         public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
         {
