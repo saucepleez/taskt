@@ -2,23 +2,48 @@
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// general wait methods
+    /// </summary>
     internal static class WaitControls
     {
-        public static void WaitProcess(this ScriptCommand command, string waitTimeName, string targetName, Func<bool> waitFunc, Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// general waiting process, this method get pauseTime from command property
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="targetName"></param>
+        /// <param name="waitFunc"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static object WaitProcess(this ScriptCommand command, string waitTimeName, string targetName, Func<(bool, object)> waitFunc, Engine.AutomationEngineInstance engine)
         {
             int pauseTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
 
+            return WaitProcess(pauseTime, targetName, waitFunc, engine);
+        }
+
+        /// <summary>
+        /// general waiting process
+        /// </summary>
+        /// <param name="pauseTime"></param>
+        /// <param name="targetName"></param>
+        /// <param name="waitFunc"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static object WaitProcess(int pauseTime, string targetName, Func<(bool, object)> waitFunc, Engine.AutomationEngineInstance engine)
+        {
             var stopWaiting = DateTime.Now.AddSeconds(pauseTime);
 
-            var fileFound = false;
+            object ret = null;
+            var isFound = false;
 
             //while target not been found
-            while (!fileFound)
+            while (!isFound)
             {
-                if (waitFunc())
-                {
-                    fileFound = true;
-                }
+                (isFound, ret) = waitFunc();
 
                 //test if we should exit and throw exception
                 if (DateTime.Now > stopWaiting)
@@ -30,6 +55,8 @@ namespace taskt.Core.Automation.Commands
                 engine.ReportProgress(targetName + " Not Yet Found... " + (int)((stopWaiting - DateTime.Now).TotalSeconds) + "s remain");
                 System.Threading.Thread.Sleep(1000);
             }
+
+            return ret;
         }
     }
 }
