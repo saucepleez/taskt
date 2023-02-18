@@ -1,8 +1,10 @@
-﻿using Microsoft.Office.Interop.Word;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
+using taskt.UI.CustomControls;
+using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -11,6 +13,93 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class WindowNameControls
     {
+
+        #region virtualproperty
+
+        /// <summary>
+        /// windows name property
+        /// </summary>
+        [PropertyDescription("Window Name")]
+        [InputSpecification("Window Name", true)]
+        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
+        [PropertyDetailSampleUsage("**Untitled - Notepad**", "Specify the **Notepad**")]
+        [PropertyDetailSampleUsage("**%kwd_current_window%**", "Specify the Current Activate Window")]
+        [PropertyDetailSampleUsage("**{{{vWindow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Name")]
+        [Remarks("")]
+        [PropertyIsWindowNamesList(true)]
+        [PropertyCustomUIHelper("Up-to-date", nameof(WindowNameControls) + "+" + nameof(WindowNameControls.lnkWindowNameUpToDate_Click))]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Name")]
+        public static string v_WindowName { get; }
+
+        /// <summary>
+        /// windows name compare(search) method
+        /// </summary>
+        [PropertyDescription("Search Method for the Window Name")]
+        [InputSpecification("", true)]
+        [PropertyUISelectionOption("Contains")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
+        [PropertyUISelectionOption("Exact match")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Contains")]
+        [PropertyDisplayText(true, "Search Method")]
+        public static string v_CompareMethod { get; }
+
+        /// <summary>
+        /// match method
+        /// </summary>
+        [PropertyDescription("Match Method for the Window Name")]
+        [InputSpecification("", true)]
+        [PropertyUISelectionOption("First")]
+        [PropertyUISelectionOption("Last")]
+        [PropertyUISelectionOption("All")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyDetailSampleUsage("**First**", "Specify the First Window")]
+        [PropertyDetailSampleUsage("**Last**", "Specify the Last Window")]
+        [PropertyDetailSampleUsage("**All**", "Specify the All Windows")]
+        [PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means First Window")]
+        [Remarks("Specify when there are Multiple Matching Windows")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "First")]
+        public static string v_MatchMethod { get; }
+
+        /// <summary>
+        /// window index for match
+        /// </summary>
+        [PropertyDescription("Window Index")]
+        [InputSpecification("Window Index", true)]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**0**", "Specify the First Window")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Window Index")]
+        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Index")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        public static string v_TargetWindowIndex { get; }
+
+        /// <summary>
+        /// window wait time
+        /// </summary>
+        [PropertyDescription("Wait Time (sec)")]
+        [InputSpecification("Wait Time", true)]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**60**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "60")]
+        [PropertyFirstValue("60")]
+        public static string v_WaitTime { get; }
+
+        #endregion
+
+        #region Func<>
+
         /// <summary>
         /// get window name compare method (Func)
         /// </summary>
@@ -147,6 +236,9 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        #endregion
+
+        #region methods
 
         /// <summary>
         /// get all window names and handles
@@ -374,6 +466,33 @@ namespace taskt.Core.Automation.Commands
             return FindWindows(window, compareMethod, matchType, index, waitTime, engine);
         }
 
+        #endregion
+
+        #region Events
+
+        public static void lnkWindowNameUpToDate_Click(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
+            string currentText = cmb.Text;
+
+            cmb.BeginUpdate();
+            cmb.Items.Clear();
+
+            var winList = GetAllWindowTitles();
+
+            foreach (var title in winList)
+            {
+                cmb.Items.Add(title);
+            }
+
+            cmb.EndUpdate();
+
+            if (winList.Contains(currentText))
+            {
+                cmb.Text = currentText;
+            }
+        }
+
 
         public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
         {
@@ -396,5 +515,7 @@ namespace taskt.Core.Automation.Commands
                 cmb.Text = currentText;
             }
         }
+
+        #endregion
     }
 }
