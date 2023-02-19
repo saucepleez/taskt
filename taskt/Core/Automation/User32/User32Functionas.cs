@@ -252,6 +252,14 @@ namespace taskt.Core.Automation.User32
             return true;
         }
 
+        public static string GetWindowTitle(IntPtr hWnd)
+        {
+            int titleLengthA = GetWindowTextLengthW(hWnd);
+            StringBuilder title = new StringBuilder(titleLengthA + 1);
+            GetWindowTextW(hWnd, title, title.Capacity);
+            return title.ToString();
+        }
+
 
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
@@ -350,18 +358,18 @@ namespace taskt.Core.Automation.User32
             return "";
         }
 
-        public static string GetWindowTitle(IntPtr hWnd)
-        {
-            const int nChars = 256;
-            StringBuilder Buff = new StringBuilder(nChars);
-            IntPtr handle = GetForegroundWindow();
+        //public static string GetWindowTitle(IntPtr hWnd)
+        //{
+        //    const int nChars = 256;
+        //    StringBuilder Buff = new StringBuilder(nChars);
+        //    IntPtr handle = GetForegroundWindow();
 
-            if (GetWindowText(hWnd, Buff, nChars) > 0)
-            {
-                return Buff.ToString();
-            }
-            return "";
-        }
+        //    if (GetWindowText(hWnd, Buff, nChars) > 0)
+        //    {
+        //        return Buff.ToString();
+        //    }
+        //    return "";
+        //}
 
         [DllImport("user32.dll")]
         private static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
