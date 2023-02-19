@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
 using taskt.UI.CustomControls;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -21,7 +19,6 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Window Name")]
         [InputSpecification("Window Name", true)]
-        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
         [PropertyDetailSampleUsage("**Untitled - Notepad**", "Specify the **Notepad**")]
         [PropertyDetailSampleUsage("**%kwd_current_window%**", "Specify the Current Activate Window")]
         [PropertyDetailSampleUsage("**{{{vWindow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Name")]
@@ -50,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_CompareMethod { get; }
 
         /// <summary>
-        /// match method
+        /// match method, please specify PropertySelectionChangeEvent
         /// </summary>
         [PropertyDescription("Match Method for the Window Name")]
         [InputSpecification("", true)]
@@ -289,34 +286,34 @@ namespace taskt.Core.Automation.Commands
             throw new Exception("Window Name '" + windowName + "' not found");
         }
         
-        public static List<IntPtr> FindWindowsHandles(string windowName, string searchMethod, Engine.AutomationEngineInstance engine)
-        {
-            List<IntPtr> ret = new List<IntPtr>();
+        //public static List<IntPtr> FindWindowsHandles(string windowName, string searchMethod, Engine.AutomationEngineInstance engine)
+        //{
+        //    List<IntPtr> ret = new List<IntPtr>();
 
-            if (windowName == engine.engineSettings.CurrentWindowKeyword)
-            {
-                windowName = GetCurrentWindowName();
-            }
+        //    if (windowName == engine.engineSettings.CurrentWindowKeyword)
+        //    {
+        //        windowName = GetCurrentWindowName();
+        //    }
 
-            var windows = GetAllWindows();
-            var method = GetWindowNameCompareMethod(searchMethod);
-            foreach (var win in windows)
-            {
-                if (method(win.Value, windowName))
-                {
-                    ret.Add(win.Key);
-                }
-            }
-            if (ret.Count > 0)
-            {
-                return ret;
-            }
-            else
-            {
-                // not found
-                throw new Exception("Window Name '" + windowName + "' not found");
-            }
-        }
+        //    var windows = GetAllWindows();
+        //    var method = GetWindowNameCompareMethod(searchMethod);
+        //    foreach (var win in windows)
+        //    {
+        //        if (method(win.Value, windowName))
+        //        {
+        //            ret.Add(win.Key);
+        //        }
+        //    }
+        //    if (ret.Count > 0)
+        //    {
+        //        return ret;
+        //    }
+        //    else
+        //    {
+        //        // not found
+        //        throw new Exception("Window Name '" + windowName + "' not found");
+        //    }
+        //}
 
         public static List<string> GetAllWindowTitles()
         {
@@ -337,11 +334,16 @@ namespace taskt.Core.Automation.Commands
             User32.User32Functions.SetForegroundWindow(handle);
         }
 
-        public static void ActivateWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        public static string GetWindowNameFromHandle(IntPtr handle)
         {
-            IntPtr hwnd = FindWindowHandle(windowName, searchMethod, engine);
-            ActivateWindow(hwnd);
+            return User32.User32Functions.GetWindowTitle(handle);
         }
+
+        //public static void ActivateWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    IntPtr hwnd = FindWindowHandle(windowName, searchMethod, engine);
+        //    ActivateWindow(hwnd);
+        //}
 
         public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
@@ -466,6 +468,24 @@ namespace taskt.Core.Automation.Commands
             return FindWindows(window, compareMethod, matchType, index, waitTime, engine);
         }
 
+        /// <summary>
+        /// search & wait window name. this method use argument values, convert variable.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="compareMethodName"></param>
+        /// <param name="waitName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static List<IntPtr> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine)
+        {
+            var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
+            var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
+            var waitTime = command.ConvertToUserVariableAsInteger(waitName, engine);
+
+            return FindWindows(window, compareMethod, "All", 60, waitTime, engine);
+        }
+
         #endregion
 
         #region Events
@@ -493,6 +513,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        public static void MatchMethodComboBox_SelectionChangeCommitted(Dictionary<string, Control> controlsList, ComboBox matchMethodComboBox, string indexParameterName)
+        {
+            string item = matchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
+            GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
+        }
 
         public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
         {

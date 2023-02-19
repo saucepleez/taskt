@@ -59,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         //[PropertyIsOptional(true, "First")]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         public string v_MatchMethod { get; set; }
 
         [XmlAttribute]
@@ -112,6 +113,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        }
 
         public override void Refresh(frmCommandEditor editor)
         {
