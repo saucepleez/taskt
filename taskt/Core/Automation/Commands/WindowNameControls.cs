@@ -65,6 +65,22 @@ namespace taskt.Core.Automation.Commands
         public static string v_MatchMethod { get; }
 
         /// <summary>
+        /// match method get one window, please specify PropertySelectionChangeEvent
+        /// </summary>
+        [PropertyDescription("Match Method for the Window Name")]
+        [InputSpecification("", true)]
+        [PropertyUISelectionOption("First")]
+        [PropertyUISelectionOption("Last")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyDetailSampleUsage("**First**", "Specify the First Window")]
+        [PropertyDetailSampleUsage("**Last**", "Specify the Last Window")]
+        [PropertyDetailSampleUsage("**Index**", "the Window specifed by Index. **0** means First Window")]
+        [Remarks("Specify when there are Multiple Matching Windows")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "First")]
+        public static string v_MatchMethod_Single { get; }
+
+        /// <summary>
         /// window index for match
         /// </summary>
         [PropertyDescription("Window Index")]
