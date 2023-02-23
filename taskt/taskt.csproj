@@ -497,6 +497,7 @@
     <Compile Include="Core\Automation\Commands\WindowNameControls.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordControls.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordCheckWordInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckExcelInstanceExistsCommand.cs" />
