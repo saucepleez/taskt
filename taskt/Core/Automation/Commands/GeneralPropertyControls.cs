@@ -52,6 +52,17 @@ namespace taskt.Core.Automation.Commands
         public static string v_OneLineTextBox { get; }
 
         /// <summary>
+        /// Multi lines textbox property, new line allow
+        /// </summary>
+        [PropertyDescription("Value")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_MultiLinesTextBox { get; }
+
+        /// <summary>
         /// combobox (dropdown)
         /// </summary>
         [PropertyDescription("Value")]
