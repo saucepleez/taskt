@@ -26,16 +26,17 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Word File Path")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Word File Path", true)]
-        //[SampleUsage(@"C:\temp\myfile.docx or {vFilePath}")]
-        [PropertyDetailSampleUsage("**C:\\temp\\myfile.docx**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
-        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
-        [Remarks("If file does not contain extensin, supplement extentions supported by Word.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
-        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Path")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Word File Path")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("Word File Path", true)]
+        ////[SampleUsage(@"C:\temp\myfile.docx or {vFilePath}")]
+        //[PropertyDetailSampleUsage("**C:\\temp\\myfile.docx**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
+        //[PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
+        //[Remarks("If file does not contain extensin, supplement extentions supported by Word.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
+        //[PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Path")]
+        [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_FilePath))]
         public string v_FilePath { get; set; }
 
         public WordOpenDocumentCommand()
