@@ -30,6 +30,20 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("%kwd_default_word_instance%")]
         public static string v_InstanceName { get; }
 
+        /// <summary>
+        /// word file name property
+        /// </summary>
+        [PropertyDescription("Word File Path")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("Word File Path", true)]
+        [PropertyDetailSampleUsage("**C:\\temp\\myfile.docx**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("If file does not contain extensin, supplement extentions supported by Word.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Path")]
+        public static string v_FilePath { get; }
 
         /// <summary>
         /// get word instace from value (specified argument)
