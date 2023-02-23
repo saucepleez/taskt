@@ -413,26 +413,28 @@ namespace taskt.Core.Automation.Commands
         public static void SearchMethodComboBox_SelectionChangeCommitted(Dictionary<string, Control> controlsList, ComboBox searchMethodComboBox, string indexParameterName)
         {
             string item = searchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
-            if (item.StartsWith("find elements"))
-            {
-                foreach (var ctrl in controlsList)
-                {
-                    if (ctrl.Key.Contains(indexParameterName))
-                    {
-                        ctrl.Value.Visible = true;
-                    }
-                }
-            }
-            else
-            {
-                foreach (var ctrl in controlsList)
-                {
-                    if (ctrl.Key.Contains(indexParameterName))
-                    {
-                        ctrl.Value.Visible = false;
-                    }
-                }
-            }
+            //if (item.StartsWith("find elements"))
+            //{
+            //    foreach (var ctrl in controlsList)
+            //    {
+            //        if (ctrl.Key.Contains(indexParameterName))
+            //        {
+            //            ctrl.Value.Visible = true;
+            //        }
+            //    }
+            //    //GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, true);
+            //}
+            //else
+            //{
+            //    foreach (var ctrl in controlsList)
+            //    {
+            //        if (ctrl.Key.Contains(indexParameterName))
+            //        {
+            //            ctrl.Value.Visible = false;
+            //        }
+            //    }
+            //}
+            GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, item.StartsWith("find elements"));
         }
 
         #endregion

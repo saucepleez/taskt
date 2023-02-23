@@ -125,7 +125,7 @@ namespace taskt.Core.Automation.Commands
                 // try window handle
                 try
                 {
-                    IntPtr wHnd = WindowNameControls.FindWindow(windowName, "exact match", engine);
+                    IntPtr wHnd = WindowNameControls.FindWindowHandle(windowName, "exact match", engine);
                     windowElement = AutomationElement.FromHandle(wHnd);
                 }
                 catch

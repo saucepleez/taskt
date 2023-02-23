@@ -84,9 +84,9 @@ namespace taskt.Core.Automation.Commands
             //    System.Threading.Thread.Sleep(1000);
             //}
 
-            Func<bool> fileCheckFunc = new Func<bool>(() =>
+            var fileCheckFunc = new Func<(bool, object)>(() =>
             {
-                return System.IO.File.Exists(fileName);
+                return (System.IO.File.Exists(fileName), null);
             });
             this.WaitProcess(nameof(v_WaitTime), "File", fileCheckFunc, engine);
         }

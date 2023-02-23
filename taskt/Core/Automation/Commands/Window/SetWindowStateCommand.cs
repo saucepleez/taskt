@@ -15,47 +15,66 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command sets a target window's state.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change a window's state to minimized, maximized, or restored state")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SetWindowStateCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please enter or select the window that you want to target for change.")]
-        [InputSpecification("Input or Type the name of the window that you want to change.")]
-        [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Up-to-date", "lnkUpToDate_Click")]
-        [PropertyIsWindowNamesList(true)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDescription("Please enter or select the window that you want to target for change.")]
+        //[InputSpecification("Input or Type the name of the window that you want to change.")]
+        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyCustomUIHelper("Up-to-date", "lnkUpToDate_Click")]
+        //[PropertyIsWindowNamesList(true)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
+
         [XmlAttribute]
-        [PropertyDescription("Window title search method")]
-        [InputSpecification("")]
-        [PropertyUISelectionOption("Contains")]
-        [PropertyUISelectionOption("Starts with")]
-        [PropertyUISelectionOption("Ends with")]
-        [PropertyUISelectionOption("Exact match")]
-        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsOptional(true, "Contains")]
+        //[PropertyDescription("Window title search method")]
+        //[InputSpecification("")]
+        //[PropertyUISelectionOption("Contains")]
+        //[PropertyUISelectionOption("Starts with")]
+        //[PropertyUISelectionOption("Ends with")]
+        //[PropertyUISelectionOption("Exact match")]
+        //[SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsOptional(true, "Contains")]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
+
         [XmlAttribute]
-        [PropertyDescription("Please choose the new required state of the window.")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("State of the Window")]
         [PropertyUISelectionOption("Maximize")]
         [PropertyUISelectionOption("Minimize")]
         [PropertyUISelectionOption("Restore")]
-        [InputSpecification("Select the appropriate window state required")]
-        [SampleUsage("Choose from **Minimize**, **Maximize** and **Restore**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [InputSpecification("", true)]
+        //[SampleUsage("Choose from **Minimize**, **Maximize** and **Restore**")]
         [PropertyValidationRule("Window State", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "State")]
         public string v_WindowState { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        public ComboBox WindowNameControl;
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        public string v_MatchMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        public string v_TargetWindowIndex { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
+        //[XmlIgnore]
+        //[NonSerialized]
+        //public ComboBox WindowNameControl;
 
         public SetWindowStateCommand()
         {
@@ -67,111 +86,9 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            ////convert window name
-            //string windowName = v_WindowName.ConvertToUserVariable(sender);
-
-            //string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(searchMethod))
-            //{
-            //    searchMethod = "Contains";
-            //}
-
-            //bool targetIsCurrentWindow = ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
-
-            //var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
-
-            //User32Functions.WindowState WINDOW_STATE = User32Functions.WindowState.SW_SHOWNORMAL;
-            //switch (v_WindowState)
-            //{
-            //    case "Maximize":
-            //        WINDOW_STATE = User32Functions.WindowState.SW_MAXIMIZE;
-            //        break;
-
-            //    case "Minimize":
-            //        WINDOW_STATE = User32Functions.WindowState.SW_MINIMIZE;
-            //        break;
-
-            //    case "Restore":
-            //        WINDOW_STATE = User32Functions.WindowState.SW_RESTORE;
-            //        break;
-
-            //    default:
-            //        break;
-            //}
-
-            //if (searchMethod == "Contains" || targetIsCurrentWindow)
-            //{
-            //    //loop each window and set the window state
-            //    foreach (var targetedWindow in targetWindows)
-            //    {
-            //        //if (User32Functions.IsIconic(targetedWindow) && (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE))
-            //        //{
-            //        //    User32Functions.ShowWindowAsync(targetedWindow, WINDOW_STATE);
-            //        //}
-
-            //        //User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
-
-            //        //if (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE)
-            //        //{
-            //        //    User32Functions.SetForegroundWindow(targetedWindow);
-            //        //}
-            //        SetWindowState(targetedWindow, WINDOW_STATE);
-            //    }
-            //}
-            //else
-            //{
-            //    Func<string, bool> searchFunc;
-            //    switch (searchMethod)
-            //    {
-            //        case "Starts with":
-            //            searchFunc = (s) => s.StartsWith(windowName);
-            //            break;
-
-            //        case "Ends with":
-            //            searchFunc = (s) => s.EndsWith(windowName);
-            //            break;
-
-            //        case "Exact match":
-            //            searchFunc = (s) => (s == windowName);
-            //            break;
-
-            //        default:
-            //            throw new Exception("Search method " + searchMethod + " is not support.");
-            //            break;
-            //    }
-
-            //    bool isChanged = false;
-            //    foreach (var targetedWindow in targetWindows)
-            //    {
-            //        if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
-            //        {
-            //            //if (User32Functions.IsIconic(targetedWindow) && (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE))
-            //            //{
-            //            //    User32Functions.ShowWindowAsync(targetedWindow, WINDOW_STATE);
-            //            //}
-
-            //            //User32Functions.SetWindowState(targetedWindow, WINDOW_STATE);
-
-            //            //if (WINDOW_STATE != User32Functions.WindowState.SW_MINIMIZE)
-            //            //{
-            //            //    User32Functions.SetForegroundWindow(targetedWindow);
-            //            //}
-            //            SetWindowState(targetedWindow, WINDOW_STATE);
-            //            isChanged = true;
-            //        }
-            //    }
-            //    if (!isChanged)
-            //    {
-            //        throw new Exception("Window name '" + windowName + "' is not found.Search method " + searchMethod + ".");
-            //    }
-            //}
-
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string windowName = v_WindowName.ConvertToUserVariable(sender);
-            string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
-
-            string windowState = v_WindowState.GetUISelectionValue("v_WindowState", this, engine);
+            var windowState = this.GetUISelectionValue(nameof(v_WindowState), engine);
             User32Functions.WindowState state = User32Functions.WindowState.SW_RESTORE;
             switch (windowState.ToLower())
             {
@@ -183,13 +100,28 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            IntPtr wHnd = WindowNameControls.FindWindow(windowName, searchMethod, engine);
-
-            if (User32Functions.IsIconic(wHnd) && (state != User32Functions.WindowState.SW_MINIMIZE))
+            var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            foreach (var whnd in handles)
             {
-                User32Functions.ShowWindowAsync(wHnd, state);
-            }
-            User32Functions.SetWindowState(wHnd, state);
+                if (User32Functions.IsIconic(whnd) && (state != User32Functions.WindowState.SW_MINIMIZE))
+                {
+                    User32Functions.ShowWindowAsync(whnd, state);
+                }
+                User32Functions.SetWindowState(whnd, state);
+            }   
+        }
+
+        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        }
+
+        public override void Refresh(frmCommandEditor editor)
+        {
+            base.Refresh();
+            //WindowNameControl.AddWindowNames();
+            ComboBox cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
+            cmb.AddWindowNames();
         }
 
         //private void SetWindowState(IntPtr whnd, User32Functions.WindowState state)
@@ -207,43 +139,39 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            //create window name helper control
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            //WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
-            //RenderedControls.Add(WindowNameControl);
+        //    //create window name helper control
+        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+        //    //WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
+        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
+        //    //RenderedControls.Add(WindowNameControl);
 
-            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
+        //    //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
-            //var windowStateLabel = CommandControls.CreateDefaultLabelFor("v_WindowState", this);
-            //RenderedControls.Add(windowStateLabel);
+        //    //var windowStateLabel = CommandControls.CreateDefaultLabelFor("v_WindowState", this);
+        //    //RenderedControls.Add(windowStateLabel);
 
-            //var windowStateControl = CommandControls.CreateDropdownFor("v_WindowState", this);
-            //RenderedControls.Add(windowStateControl);
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+        //    //var windowStateControl = CommandControls.CreateDropdownFor("v_WindowState", this);
+        //    //RenderedControls.Add(windowStateControl);
+        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            return RenderedControls;
+        //    return RenderedControls;
 
-        }
-        public override void Refresh(frmCommandEditor editor)
-        {
-            base.Refresh();
-            WindowNameControl.AddWindowNames();
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Window State: " + v_WindowState + "]";
-        }
+        //}
 
-        private void lnkUpToDate_Click(object sender, EventArgs e)
-        {
-            ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
-            WindowNameControls.UpdateWindowTitleCombobox(cmb);
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Window State: " + v_WindowState + "]";
+        //}
+
+        //private void lnkUpToDate_Click(object sender, EventArgs e)
+        //{
+        //    ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
+        //    WindowNameControls.UpdateWindowTitleCombobox(cmb);
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{

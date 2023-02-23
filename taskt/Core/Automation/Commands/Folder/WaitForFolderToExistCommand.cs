@@ -80,9 +80,9 @@ namespace taskt.Core.Automation.Commands
             //    System.Threading.Thread.Sleep(1000);
             //}
 
-            Func<bool> checkFolderFunc = new Func<bool>(() =>
+            var checkFolderFunc = new Func<(bool, object)>(() =>
             {
-                return System.IO.Directory.Exists(folder);
+                return (System.IO.Directory.Exists(folder), null);
             });
 
             this.WaitProcess(nameof(v_WaitTime), "Folder", checkFolderFunc, engine);
