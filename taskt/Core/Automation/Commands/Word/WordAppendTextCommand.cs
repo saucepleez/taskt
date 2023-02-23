@@ -26,13 +26,11 @@ namespace taskt.Core.Automation.Commands
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
         [PropertyDescription("Text to Set")]
         [InputSpecification("Text to Set", true)]
-        [Remarks("")]
-        //[SampleUsage("Hello World or {vText}")]
         [PropertyDetailSampleUsage("**Hello World**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
         [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyDisplayText(true, "Text")]
         public string v_TextToSet { get; set; }
 
