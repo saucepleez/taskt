@@ -19,9 +19,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Word Instance Name")]
         [InputSpecification("Word Instance Name", true)]
         //[SampleUsage("**myInstance** or **wordInstance**")]
+        [Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
         [PropertyDetailSampleUsage("**RPAWord**", PropertyDetailSampleUsage.ValueType.Value, "Word Instance")]
         [PropertyDetailSampleUsage("**{{{vInstance}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Word Instance")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
+        [PropertyShowSampleUsageInDescription(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Word)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
@@ -31,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_InstanceName { get; }
 
 
-        public static Application GetWordInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        public static Application GetWordInstance(this string instanceName, Engine.AutomationEngineInstance engine)
         {
             var instance = instanceName.ConvertToUserVariable(engine);
             var instanceObject = engine.GetAppInstance(instance);
@@ -42,6 +43,20 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 throw new Exception("Instance '" + instanceName + "' is not Word Instance");
+            }
+        }
+
+        public static (Application, Document) GetWordInstanceAndDocument(this string instanceName, Engine.AutomationEngineInstance engine)
+        {
+            var ins = instanceName.GetWordInstance(engine);
+
+            if (ins.Documents.Count > 0)
+            {
+                return (ins, ins.ActiveDocument);
+            }
+            else
+            {
+                throw new Exception("Word Instance '" + instanceName + "' has no Document");
             }
         }
 
