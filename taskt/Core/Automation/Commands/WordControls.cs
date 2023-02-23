@@ -18,7 +18,6 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Word Instance Name")]
         [InputSpecification("Word Instance Name", true)]
-        //[SampleUsage("**myInstance** or **wordInstance**")]
         [Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
         [PropertyDetailSampleUsage("**RPAWord**", PropertyDetailSampleUsage.ValueType.Value, "Word Instance")]
         [PropertyDetailSampleUsage("**{{{vInstance}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Word Instance")]
@@ -32,6 +31,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_InstanceName { get; }
 
 
+        /// <summary>
+        /// get word instace from value (specified argument)
+        /// </summary>
+        /// <param name="instanceName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Application GetWordInstance(this string instanceName, Engine.AutomationEngineInstance engine)
         {
             var instance = instanceName.ConvertToUserVariable(engine);
@@ -46,6 +52,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get word instance and ActiveDocument from value (specified argument)
+        /// </summary>
+        /// <param name="instanceName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static (Application, Document) GetWordInstanceAndDocument(this string instanceName, Engine.AutomationEngineInstance engine)
         {
             var ins = instanceName.GetWordInstance(engine);
