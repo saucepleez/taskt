@@ -535,27 +535,27 @@ namespace taskt.Core.Automation.Commands
             GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
         }
 
-        public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
-        {
-            string currentText = cmb.Text;
+        //public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
+        //{
+        //    string currentText = cmb.Text;
 
-            cmb.BeginUpdate();
-            cmb.Items.Clear();
+        //    cmb.BeginUpdate();
+        //    cmb.Items.Clear();
 
-            var winList = GetAllWindowTitles();
+        //    var winList = GetAllWindowTitles();
 
-            foreach(var title in winList)
-            {
-                cmb.Items.Add(title);
-            }
+        //    foreach(var title in winList)
+        //    {
+        //        cmb.Items.Add(title);
+        //    }
 
-            cmb.EndUpdate();
+        //    cmb.EndUpdate();
 
-            if (winList.Contains(currentText))
-            {
-                cmb.Text = currentText;
-            }
-        }
+        //    if (winList.Contains(currentText))
+        //    {
+        //        cmb.Text = currentText;
+        //    }
+        //}
 
         #endregion
     }
