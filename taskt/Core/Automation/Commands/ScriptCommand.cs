@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.ClassAttributes;
+using Microsoft.Office.Interop.Word;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -623,7 +624,28 @@ namespace taskt.Core.Automation.Commands
         /// <param name="variables"></param>
         public virtual void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
-            IntermediateControls.ConvertToIntermediate(this, settings, variables);
+            //IntermediateControls.ConvertToIntermediate(this, settings, variables);
+            var convertMethods = new Dictionary<string, string>();
+            var props = this.GetParameterProperties(true);
+            foreach(var prop in props)
+            {
+                var virtualProp = prop.GetVirtualProperty();
+                var methods = PropertyControls.GetCustomAttributeWithVirtual<taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert>(prop, virtualProp) ?? new Attributes.PropertyAttributes.PropertyIntermediateConvert();
+
+                if (methods.intermediateMethod.Length > 0)
+                {
+                    convertMethods.Add(prop.Name, methods.intermediateMethod);
+                }
+            }
+
+            if (convertMethods.Count > 0)
+            {
+                IntermediateControls.ConvertToIntermediate(this, settings, convertMethods, variables);
+            }
+            else
+            {
+                IntermediateControls.ConvertToIntermediate(this, settings, variables);
+            }
         }
 
         /// <summary>
@@ -643,7 +665,28 @@ namespace taskt.Core.Automation.Commands
         /// <param name="settings"></param>
         public virtual void ConvertToRaw(EngineSettings settings)
         {
-            IntermediateControls.ConvertToRaw(this, settings);
+            //IntermediateControls.ConvertToRaw(this, settings);
+            var convertMethods = new Dictionary<string, string>();
+            var props = this.GetParameterProperties(true);
+            foreach (var prop in props)
+            {
+                var virtualProp = prop.GetVirtualProperty();
+                var methods = PropertyControls.GetCustomAttributeWithVirtual<taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert>(prop, virtualProp) ?? new Attributes.PropertyAttributes.PropertyIntermediateConvert();
+                
+                if (methods.rawMethod.Length > 0)
+                {
+                    convertMethods.Add(prop.Name, methods.rawMethod);
+                }
+            }
+
+            if (convertMethods.Count > 0)
+            {
+                IntermediateControls.ConvertToRaw(this, settings, convertMethods);
+            }
+            else
+            {
+                IntermediateControls.ConvertToRaw(this, settings);
+            }
         }
 
         /// <summary>
