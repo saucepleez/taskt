@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.RightsManagement;
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
@@ -12,8 +11,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region Virtual Property
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PropertyVirtualProperty : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyVirtualProperty : Attribute
     {
         public string className;
         public string propertyName;
@@ -25,9 +24,27 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     }
     #endregion
 
+    #region Intermediate/Raw
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyIntermediateConvert : Attribute
+    {
+        public string intermediateMethod = "";
+        public string rawMethod = "";
+
+        public PropertyIntermediateConvert()
+        {
+        }
+        public PropertyIntermediateConvert(string intermediateMethod, string rawMethod)
+        {
+            this.intermediateMethod = intermediateMethod;
+            this.rawMethod = rawMethod;
+        }
+    }
+    #endregion
+
     #region to Label, Document
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class InputSpecification : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class InputSpecification : Attribute
     {
         public string inputSpecification;
         public bool autoGenerate = false;
@@ -45,8 +62,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class SampleUsage : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class SampleUsage : Attribute
     {
         public string sampleUsage;
         public SampleUsage(string desc)
@@ -55,8 +72,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
-    public class PropertyDetailSampleUsage : System.Attribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public class PropertyDetailSampleUsage : Attribute
     {
         public string sampleUsage = "";
         public string means = "";
@@ -87,8 +104,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PropertyDetailSampleUsageBehavior : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyDetailSampleUsageBehavior : Attribute
     {
         public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
@@ -102,8 +119,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class Remarks : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class Remarks : Attribute
     {
         public string remarks;
         public Remarks(string desc)
@@ -112,8 +129,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyDescription : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyDescription : Attribute
     {
         public string propertyDescription;
         public PropertyDescription(string description)
@@ -122,8 +139,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyShowSampleUsageInDescription : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyShowSampleUsageInDescription : Attribute
     {
         public bool showSampleUsage = false;
         public PropertyShowSampleUsageInDescription()
@@ -138,8 +155,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region for 2ndLabel
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertySecondaryLabel : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertySecondaryLabel : Attribute
     {
         public bool useSecondaryLabel = false;
 
@@ -153,8 +170,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class PropertyAddtionalParameterInfo : System.Attribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyAddtionalParameterInfo : Attribute
     {
         public string searchKey = "";
         public string description = "";
@@ -169,8 +186,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PropertyAddtionalParameterInfoBehavior : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyAddtionalParameterInfoBehavior : Attribute
     {
         public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
@@ -186,8 +203,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region for UIHelper/CustomUIHelper
-    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class PropertyUIHelper : System.Attribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyUIHelper : Attribute
     {
         public UIAdditionalHelperType additionalHelper;
         public PropertyUIHelper(UIAdditionalHelperType helperType)
@@ -202,8 +219,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PropertyUIHelperBehavior : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyUIHelperBehavior : Attribute
     {
         public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
@@ -217,8 +234,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class PropertyCustomUIHelper : System.Attribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyCustomUIHelper : Attribute
     {
         public string labelText;
         public string methodName;
@@ -231,8 +248,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PropertyCustomUIHelperBehavior : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyCustomUIHelperBehavior : Attribute
     {
         public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
@@ -248,8 +265,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region for All Controls
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyRecommendedUIControl : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyRecommendedUIControl : Attribute
     {
         public RecommendeUIControlType recommendedControl = RecommendeUIControlType.TextBox;
         public PropertyRecommendedUIControl(RecommendeUIControlType ctl)
@@ -269,8 +286,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyInstanceType : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyInstanceType : Attribute
     {
         public InstanceType instanceType = InstanceType.none;
         public bool autoWrapVariableMarker = false;
@@ -308,8 +325,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyParameterDirection : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyParameterDirection : Attribute
     {
         public ParameterDirection porpose = ParameterDirection.Unknown;
         public PropertyParameterDirection()
@@ -329,8 +346,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyControlIntoCommandField : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyControlIntoCommandField : Attribute
     {
         public string labelName = "";
         public string bodyName = "";
@@ -343,8 +360,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyValidationRule : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyValidationRule : Attribute
     {
         public string parameterName = "";
         public ValidationRuleFlags errorRule = 0;
@@ -371,7 +388,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             return ((this.warningRule & warn) == warn);
         }
 
-        [System.Flags]
+        [Flags]
         public enum ValidationRuleFlags
         {
             None = 0,
@@ -386,8 +403,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyValueRange : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyValueRange : Attribute
     {
         public double min;
         public double max;
@@ -406,8 +423,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyDisplayText : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyDisplayText : Attribute
     {
         public bool parameterDisplay = false;
         public string parameterName = "";
@@ -424,8 +441,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyIsOptional : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyIsOptional : Attribute
     {
         public bool isOptional = false;
         public string setBlankToValue = "";
@@ -443,8 +460,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region for TextBox/ComboBox
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyFirstValue : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyFirstValue : Attribute
     {
         public string firstValue = "";
         public PropertyFirstValue()
@@ -459,8 +476,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region for TextBox
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyTextBoxSetting : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyTextBoxSetting : Attribute
     {
         public int height = 1;
         public bool allowNewLine = true;
@@ -484,8 +501,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region for ComboBox
-    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class PropertyUISelectionOption : System.Attribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyUISelectionOption : Attribute
     {
         public string uiOption;
         public PropertyUISelectionOption(string description)
@@ -494,8 +511,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public class PropertyUISelectionOptionBehavior : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyUISelectionOptionBehavior : Attribute
     {
         public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
 
@@ -509,8 +526,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertySelectionValueSensitive : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertySelectionValueSensitive : Attribute
     {
         public bool caseSensitive = false;
         public bool whiteSpaceSensitive = true;
@@ -525,8 +542,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertySelectionChangeEvent : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertySelectionChangeEvent : Attribute
     {
         public string methodName = "";
         public PropertySelectionChangeEvent()
@@ -539,8 +556,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyIsWindowNamesList : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyIsWindowNamesList : Attribute
     {
         public bool isWindowNamesList = false;
         public bool allowCurrentWindow = true;
@@ -560,8 +577,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyIsVariablesList : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyIsVariablesList : Attribute
     {
         public bool isVariablesList = false;
         public PropertyIsVariablesList()
@@ -576,8 +593,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region for DataGridView
-    [System.AttributeUsage(System.AttributeTargets.Property)]
-    public sealed class PropertyDataGridViewSetting : System.Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyDataGridViewSetting : Attribute
     {
         public bool allowAddRow = true;
         public bool allowDeleteRow = true;
@@ -603,8 +620,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class PropertyDataGridViewColumnSettings : System.Attribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyDataGridViewColumnSettings : Attribute
     {
         public string columnName = "";
         public string headerText = "";
@@ -630,8 +647,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [System.AttributeUsage(System.AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class PropertyDataGridViewCellEditEvent : System.Attribute
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public sealed class PropertyDataGridViewCellEditEvent : Attribute
     {
         public string methodName;
         public DataGridViewCellEvent eventRaise;
