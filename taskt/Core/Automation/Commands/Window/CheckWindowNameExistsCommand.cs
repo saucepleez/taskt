@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
 
-        public CheckWindowNameExistsCommand() : base()
+        public CheckWindowNameExistsCommand()
         {
             //this.CommandName = "CheckWindowNameExistsCommand";
             //this.SelectionName = "Check Window Name Exists";

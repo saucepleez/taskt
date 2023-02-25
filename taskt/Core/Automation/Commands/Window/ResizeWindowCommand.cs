@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public ResizeWindowCommand() : base()
+        public ResizeWindowCommand()
         {
             //this.CommandName = "ResizeWindowCommand";
             //this.SelectionName = "Resize Window";

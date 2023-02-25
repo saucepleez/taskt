@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public CloseWindowCommand() : base()
+        public CloseWindowCommand()
         {
             //this.CommandName = "CloseWindowCommand";
             //this.SelectionName = "Close Window";

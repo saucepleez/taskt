@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public ActivateWindowCommand() : base()
+        public ActivateWindowCommand()
         {
             //this.CommandName = "ActivateWindowCommand";
             //this.SelectionName = "Activate Window";

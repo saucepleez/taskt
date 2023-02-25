@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         public ComboBox WindowNameControl;
 
-        public WaitForWindowCommand() : base()
+        public WaitForWindowCommand()
         {
             //this.CommandName = "WaitForWindowCommand";
             //this.SelectionName = "Wait For Window To Exist";

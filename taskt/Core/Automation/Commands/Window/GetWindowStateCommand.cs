@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public GetWindowStateCommand() : base()
+        public GetWindowStateCommand()
         {
             //this.CommandName = "GetWindowStateCommand";
             //this.SelectionName = "Get Window State";
