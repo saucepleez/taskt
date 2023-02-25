@@ -77,4 +77,22 @@ namespace taskt.Core.Automation.Attributes.ClassAttributes
             this.enableAutomateRender = enableAutomateRender;
         }
     }
+    [System.AttributeUsage(System.AttributeTargets.Class)]
+    public class CommandSettings : System.Attribute
+    {
+        public string selectionName = "";
+        public bool commandEnable = true;
+        public bool customeRender = true;
+        
+        public CommandSettings()
+        {
+
+        }
+        public CommandSettings(string selectionName, bool commandEnable = true, bool customeRender = true)
+        {
+            this.selectionName = selectionName;
+            this.commandEnable = commandEnable;
+            this.customeRender = customeRender;
+        }
+    }
 }

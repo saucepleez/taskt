@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Activate Window")]
     [Attributes.ClassAttributes.Description("This command activates a window and brings it to the front.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to active a window by name or bring it to attention.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -38,13 +39,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public ActivateWindowCommand()
+        public ActivateWindowCommand() : base()
         {
-            this.CommandName = "ActivateWindowCommand";
-            this.SelectionName = "Activate Window";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ActivateWindowCommand";
+            //this.SelectionName = "Activate Window";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

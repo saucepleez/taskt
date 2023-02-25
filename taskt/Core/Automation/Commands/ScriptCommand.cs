@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using System.Reflection;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.ClassAttributes;
-using Microsoft.Office.Interop.Word;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -531,6 +530,13 @@ namespace taskt.Core.Automation.Commands
             this.IsMatched = false;
             this.IsDontSavedCommand = false;
             this.IsNewInsertedCommand = false;
+
+            var tp = this.GetType();
+            this.CommandName = tp.Name;
+            var commandSettings = tp.GetCustomAttribute<CommandSettings>() ?? new CommandSettings();
+            this.SelectionName = commandSettings.selectionName;
+            this.CommandEnabled = commandSettings.commandEnable;
+            this.CustomRendering = commandSettings.customeRender;
         }
 
         public void GenerateID()
