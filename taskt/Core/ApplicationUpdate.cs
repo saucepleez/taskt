@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
@@ -219,7 +216,9 @@ namespace taskt.Core
 
                     var updateProcess = new System.Diagnostics.Process();
                     updateProcess.StartInfo.FileName = updaterExecutionResources;
-                    updateProcess.StartInfo.Arguments = "/d " + manifestConfig.PackageURL;
+
+                    var zipURL = manifestConfig.PackageURL.Replace("%release_url%", MyURLs.GitReleaseURL).Replace("%version%", manifestConfig.RemoteVersion);
+                    updateProcess.StartInfo.Arguments = "/d " + zipURL;
 
                     updateProcess.Start();
                     Application.Exit();

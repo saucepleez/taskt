@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace taskt.Core
+﻿namespace taskt.Core
 {
     public class MyURLs
     {
@@ -35,7 +29,7 @@ namespace taskt.Core
         {
             string page = commandName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
             string parent = groupName.ToLower().Replace(" ", "-").Replace("/", "-");
-            return (Core.MyURLs.WikiBaseURL + parent + "/" + page);
+            return WikiBaseURL + parent + "/" + page;
         }
     }
 }
