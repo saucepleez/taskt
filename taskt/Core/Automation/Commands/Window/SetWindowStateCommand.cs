@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Set Window State")]
     [Attributes.ClassAttributes.Description("This command sets a target window's state.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change a window's state to minimized, maximized, or restored state")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -50,12 +51,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public SetWindowStateCommand()
+        public SetWindowStateCommand() : base()
         {
-            this.CommandName = "SetWindowStateCommand";
-            this.SelectionName = "Set Window State";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetWindowStateCommand";
+            //this.SelectionName = "Set Window State";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

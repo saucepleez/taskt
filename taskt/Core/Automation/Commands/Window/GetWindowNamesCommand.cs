@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.CommandSettings("Get Window Names")]
     [Attributes.ClassAttributes.Description("This command returns window names.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want window names.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -50,10 +51,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetWindowNamesCommand()
         {
-            this.CommandName = "GetWindowNamesCommand";
-            this.SelectionName = "Get Window Names";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetWindowNamesCommand";
+            //this.SelectionName = "Get Window Names";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

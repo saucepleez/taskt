@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.CommandSettings("Get Window Position")]
     [Attributes.ClassAttributes.Description("This command returns window position.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want window position.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -67,12 +68,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public GetWindowPositionCommand()
+        public GetWindowPositionCommand() : base()
         {
-            this.CommandName = "GetWindowPositionCommand";
-            this.SelectionName = "Get Window Position";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetWindowPositionCommand";
+            //this.SelectionName = "Get Window Position";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {

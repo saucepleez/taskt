@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.CommandSettings("Get Window State")]
     [Attributes.ClassAttributes.Description("This command returns a state of window name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a window state.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -44,12 +45,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public GetWindowStateCommand()
+        public GetWindowStateCommand() : base()
         {
-            this.CommandName = "GetWindowStateCommand";
-            this.SelectionName = "Get Window State";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetWindowStateCommand";
+            //this.SelectionName = "Get Window State";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For Window To Exist")]
     [Attributes.ClassAttributes.Description("This command waits for a window to exist.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to explicitly wait for a window to exist before continuing script execution.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'ShowWindow' from user32.dll to achieve automation.")]
@@ -33,12 +34,12 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         public ComboBox WindowNameControl;
 
-        public WaitForWindowCommand()
+        public WaitForWindowCommand() : base()
         {
-            this.CommandName = "WaitForWindowCommand";
-            this.SelectionName = "Wait For Window To Exist";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WaitForWindowCommand";
+            //this.SelectionName = "Wait For Window To Exist";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

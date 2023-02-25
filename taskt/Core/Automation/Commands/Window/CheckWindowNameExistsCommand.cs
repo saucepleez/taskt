@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window State")]
+    [Attributes.ClassAttributes.CommandSettings("Check Window Name Exists")]
     [Attributes.ClassAttributes.Description("This command returns a existence of window name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check a existence of window name.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -36,12 +37,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
 
-        public CheckWindowNameExistsCommand()
+        public CheckWindowNameExistsCommand() : base()
         {
-            this.CommandName = "CheckWindowNameExistsCommand";
-            this.SelectionName = "Check Window Name Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckWindowNameExistsCommand";
+            //this.SelectionName = "Check Window Name Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

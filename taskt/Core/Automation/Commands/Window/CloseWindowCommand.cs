@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Close Window")]
     [Attributes.ClassAttributes.Description("This command closes an open window.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an existing window by name.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -39,12 +40,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public CloseWindowCommand()
+        public CloseWindowCommand() : base()
         {
-            this.CommandName = "CloseWindowCommand";
-            this.SelectionName = "Close Window";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CloseWindowCommand";
+            //this.SelectionName = "Close Window";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Move Window")]
     [Attributes.ClassAttributes.Description("This command moves a window to a specified location on screen.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move an existing window by name to a certain point on the screen.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -73,12 +74,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public MoveWindowCommand()
+        public MoveWindowCommand() : base()
         {
-            this.CommandName = "MoveWindowCommand";
-            this.SelectionName = "Move Window";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MoveWindowCommand";
+            //this.SelectionName = "Move Window";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
