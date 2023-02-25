@@ -60,6 +60,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("New Sheet Name")]
         [PropertyDisplayText(true, "New Sheet Name")]
         [PropertyIsOptional(true)]
+        [PropertyIntermediateConvert("", "")]
         public string v_newSheetName { get; set; }
 
         public ExcelCopyWorksheetCommand()
@@ -84,18 +85,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add(nameof(v_sourceSheet), "convertToIntermediateExcelSheet");
-            ConvertToIntermediate(settings, cnv, variables);
-        }
+        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add(nameof(v_sourceSheet), "convertToIntermediateExcelSheet");
+        //    ConvertToIntermediate(settings, cnv, variables);
+        //}
 
-        public override void ConvertToRaw(EngineSettings settings)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add(nameof(v_sourceSheet), "convertToRawExcelSheet");
-            ConvertToRaw(settings, cnv);
-        }
+        //public override void ConvertToRaw(EngineSettings settings)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add(nameof(v_sourceSheet), "convertToRawExcelSheet");
+        //    ConvertToRaw(settings, cnv);
+        //}
     }
 }

@@ -65,18 +65,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add(nameof(v_SheetName), "convertToIntermediateExcelSheet");
-            ConvertToIntermediate(settings, cnv, variables);
-        }
+        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add(nameof(v_SheetName), "convertToIntermediateExcelSheet");
+        //    ConvertToIntermediate(settings, cnv, variables);
+        //}
 
-        public override void ConvertToRaw(EngineSettings settings)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add(nameof(v_SheetName), "convertToRawExcelSheet");
-            ConvertToRaw(settings, cnv);
-        }
+        //public override void ConvertToRaw(EngineSettings settings)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add(nameof(v_SheetName), "convertToRawExcelSheet");
+        //    ConvertToRaw(settings, cnv);
+        //}
     }
 }
