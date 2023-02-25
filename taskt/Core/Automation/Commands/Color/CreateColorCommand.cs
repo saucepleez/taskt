@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Color Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Create Color")]
     [Attributes.ClassAttributes.Description("This command allows you to create Color.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create Color.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -54,10 +55,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateColorCommand()
         {
-            this.CommandName = "CreateColorCommand";
-            this.SelectionName = "Create Color";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateColorCommand";
+            //this.SelectionName = "Create Color";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Color Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Create Color From HEX")]
     [Attributes.ClassAttributes.Description("This command allows you to create Color from HEX.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create Color from HEX.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -35,10 +36,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateColorFromHexCommand()
         {
-            this.CommandName = "CreateColorFromHEXCommand";
-            this.SelectionName = "Create Color From HEX";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateColorFromHEXCommand";
+            //this.SelectionName = "Create Color From HEX";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

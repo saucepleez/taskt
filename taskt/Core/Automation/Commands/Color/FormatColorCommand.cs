@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Color Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Format Color")]
     [Attributes.ClassAttributes.Description("This command allows you to get Format Color Value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Format Color Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -69,10 +70,10 @@ namespace taskt.Core.Automation.Commands
 
         public FormatColorCommand()
         {
-            this.CommandName = "FormatColorCommand";
-            this.SelectionName = "Format Color";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "FormatColorCommand";
+            //this.SelectionName = "Format Color";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
