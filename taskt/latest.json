@@ -1,5 +1,5 @@
 {
-  "RemoteVersion": "3.5.1.28",
-  "Beta": false,
-  "PackageURL": "%release_url%/download/v%version%/taskt.v%version%.zip"
+  "RemoteVersion": "3.5.1.29",
+  "Beta": true,
+  "PackageURL": "%release_url%/download/v%version%/taskt-uob_v%version%.zip"
 }
