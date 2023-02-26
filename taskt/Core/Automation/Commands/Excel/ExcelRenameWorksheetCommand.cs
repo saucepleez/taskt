@@ -60,6 +60,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("New Worksheet Name")]
         [PropertyValidationRule("New Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New Sheet")]
+        [PropertyIntermediateConvert("", "")]
         public string v_newName { get; set; }
 
         public ExcelRenameWorksheetCommand()
@@ -80,18 +81,18 @@ namespace taskt.Core.Automation.Commands
             targetSheet.Name = newName;
         }
 
-        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_sourceSheet", "convertToIntermediateExcelSheet");
-            ConvertToIntermediate(settings, cnv, variables);
-        }
+        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add("v_sourceSheet", "convertToIntermediateExcelSheet");
+        //    ConvertToIntermediate(settings, cnv, variables);
+        //}
 
-        public override void ConvertToRaw(EngineSettings settings)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_sourceSheet", "convertToRawExcelSheet");
-            ConvertToRaw(settings, cnv);
-        }
+        //public override void ConvertToRaw(EngineSettings settings)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add("v_sourceSheet", "convertToRawExcelSheet");
+        //    ConvertToRaw(settings, cnv);
+        //}
     }
 }

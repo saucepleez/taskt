@@ -40,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Sheet")]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateExcelSheet), nameof(ApplicationSettings.EngineSettings.convertToRawExcelSheet))]
         public static string v_SheetName { get; }
 
         /// <summary>

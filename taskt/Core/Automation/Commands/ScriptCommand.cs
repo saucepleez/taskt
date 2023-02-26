@@ -530,6 +530,13 @@ namespace taskt.Core.Automation.Commands
             this.IsMatched = false;
             this.IsDontSavedCommand = false;
             this.IsNewInsertedCommand = false;
+
+            var tp = this.GetType();
+            this.CommandName = tp.Name;
+            var commandSettings = tp.GetCustomAttribute<CommandSettings>() ?? new CommandSettings();
+            this.SelectionName = commandSettings.selectionName;
+            this.CommandEnabled = commandSettings.commandEnable;
+            this.CustomRendering = commandSettings.customeRender;
         }
 
         public void GenerateID()
@@ -623,7 +630,28 @@ namespace taskt.Core.Automation.Commands
         /// <param name="variables"></param>
         public virtual void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
-            IntermediateControls.ConvertToIntermediate(this, settings, variables);
+            //IntermediateControls.ConvertToIntermediate(this, settings, variables);
+            var convertMethods = new Dictionary<string, string>();
+            var props = this.GetParameterProperties(true);
+            foreach(var prop in props)
+            {
+                var virtualProp = prop.GetVirtualProperty();
+                var methods = PropertyControls.GetCustomAttributeWithVirtual<taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert>(prop, virtualProp) ?? new Attributes.PropertyAttributes.PropertyIntermediateConvert();
+
+                if (methods.intermediateMethod.Length > 0)
+                {
+                    convertMethods.Add(prop.Name, methods.intermediateMethod);
+                }
+            }
+
+            if (convertMethods.Count > 0)
+            {
+                IntermediateControls.ConvertToIntermediate(this, settings, convertMethods, variables);
+            }
+            else
+            {
+                IntermediateControls.ConvertToIntermediate(this, settings, variables);
+            }
         }
 
         /// <summary>
@@ -643,7 +671,28 @@ namespace taskt.Core.Automation.Commands
         /// <param name="settings"></param>
         public virtual void ConvertToRaw(EngineSettings settings)
         {
-            IntermediateControls.ConvertToRaw(this, settings);
+            //IntermediateControls.ConvertToRaw(this, settings);
+            var convertMethods = new Dictionary<string, string>();
+            var props = this.GetParameterProperties(true);
+            foreach (var prop in props)
+            {
+                var virtualProp = prop.GetVirtualProperty();
+                var methods = PropertyControls.GetCustomAttributeWithVirtual<taskt.Core.Automation.Attributes.PropertyAttributes.PropertyIntermediateConvert>(prop, virtualProp) ?? new Attributes.PropertyAttributes.PropertyIntermediateConvert();
+                
+                if (methods.rawMethod.Length > 0)
+                {
+                    convertMethods.Add(prop.Name, methods.rawMethod);
+                }
+            }
+
+            if (convertMethods.Count > 0)
+            {
+                IntermediateControls.ConvertToRaw(this, settings, convertMethods);
+            }
+            else
+            {
+                IntermediateControls.ConvertToRaw(this, settings);
+            }
         }
 
         /// <summary>

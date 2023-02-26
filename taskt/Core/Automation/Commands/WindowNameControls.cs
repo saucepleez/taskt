@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("Up-to-date", nameof(WindowNameControls) + "+" + nameof(WindowNameControls.lnkWindowNameUpToDate_Click))]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowName), nameof(ApplicationSettings.EngineSettings.convertToRawWindowName))]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Name")]
         public static string v_WindowName { get; }
