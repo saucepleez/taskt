@@ -1,0 +1,813 @@
+﻿//Copyright (c) 2019 Jason Bayldon
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using System.Data;
+using System.Linq.Expressions;
+using taskt.Core.Automation.Commands;
+
+namespace taskt.Core.Script
+{
+    #region Script and Variables
+
+    public class Script
+    {
+        /// <summary>
+        /// Contains user-defined variables
+        /// </summary>
+        public List<ScriptVariable> Variables { get; set; }
+        /// <summary>
+        /// Contains user-selected commands
+        /// </summary>
+        public List<ScriptAction> Commands;
+
+        public ScriptInformation Info;
+
+        public Script()
+        {
+            //initialize
+            Variables = new List<ScriptVariable>();
+            Commands = new List<ScriptAction>();
+            Info = new ScriptInformation();
+        }
+        /// <summary>
+        /// Returns a new 'Top-Level' command.  
+        /// </summary>
+        public ScriptAction AddNewParentCommand(ScriptCommand scriptCommand)
+        {
+            ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
+            Commands.Add(newExecutionCommand);
+            return newExecutionCommand;
+        }
+
+        /// <summary>
+        /// Converts and serializes the user-defined commands into an XML file  
+        /// </summary>
+        public static Script SerializeScript(ListView.ListViewItemCollection scriptCommands, List<ScriptVariable> scriptVariables, ScriptInformation info, EngineSettings engineSettings, XmlSerializer serializer = null, string scriptFilePath = "")
+        {
+            var script = new Script
+            {
+                //save variables to file
+                Variables = scriptVariables,
+                Info = info
+            };
+
+            //save listview tags to command list
+
+            int lineNumber = 1;
+
+            List<ScriptAction> subCommands = new List<ScriptAction>();
+
+            foreach (ListViewItem commandItem in scriptCommands)
+            {
+                var srcCommand = (ScriptCommand)commandItem.Tag;
+                srcCommand.IsDontSavedCommand = false;
+
+                var command = srcCommand.Clone();
+                command.LineNumber = lineNumber;
+
+                if ((command is BeginNumberOfTimesLoopCommand) || (command is BeginContinousLoopCommand) || (command is BeginListLoopCommand) || (command is BeginIfCommand) || (command is BeginMultiIfCommand) || (command is TryCommand) || (command is BeginLoopCommand) || (command is BeginMultiLoopCommand))
+                {
+                    if (subCommands.Count == 0)  //if this is the first loop
+                    {
+                        //add command to root node
+                        var newCommand = script.AddNewParentCommand(command);
+                        //add to tracking for additional commands
+                        subCommands.Add(newCommand);
+                    }
+                    else  //we are already looping so add to sub item
+                    {
+                        //get reference to previous node
+                        var parentCommand = subCommands[subCommands.Count - 1];
+                        //add as new node to previous node
+                        var nextNodeParent = parentCommand.AddAdditionalAction(command);
+                        //add to tracking for additional commands
+                        subCommands.Add(nextNodeParent);
+                    }
+                }
+                else if ((command is EndLoopCommand) || (command is EndIfCommand) || (command is EndTryCommand))  //if current loop scenario is ending
+                {
+                    //get reference to previous node
+                    var parentCommand = subCommands[subCommands.Count - 1];
+                    //add to end command // DECIDE WHETHER TO ADD WITHIN LOOP NODE OR PREVIOUS NODE
+                    parentCommand.AddAdditionalAction(command);
+                    //remove last command since loop is ending
+                    subCommands.RemoveAt(subCommands.Count - 1);
+                }
+                else if (subCommands.Count == 0) //add command as a root item
+                {
+                    script.AddNewParentCommand(command);
+                }
+                else //we are within a loop so add to the latest tracked loop item
+                {
+                    var parentCommand = subCommands[subCommands.Count - 1];
+                    parentCommand.AddAdditionalAction(command);
+                }
+
+                //increment line number
+                lineNumber++;
+            }
+
+            // Convert Intermediate
+            if (engineSettings.ExportIntermediateXML)
+            {
+                foreach (var cmd in script.Commands)
+                {
+                    cmd.ConvertToIntermediate(engineSettings, scriptVariables);
+                }
+            }
+
+            //output to xml file
+            //XmlSerializer serializer = new XmlSerializer(typeof(Script));
+            if (serializer == null)
+            {
+                serializer = CreateSerializer();
+            }
+            var settings = new XmlWriterSettings
+            {
+                NewLineHandling = NewLineHandling.Entitize,
+                Indent = true
+            };
+
+            //if output path was provided
+            if (scriptFilePath != "")
+            {
+                //write to file
+                using (System.IO.FileStream fs = System.IO.File.Create(scriptFilePath))
+                {
+                    using (XmlWriter writer = XmlWriter.Create(fs, settings))
+                    {
+                        serializer.Serialize(writer, script);
+                    }
+                }
+            }
+
+            return script;
+        }
+
+        /// <summary>
+        /// Deserializes a valid XML file back into user-defined commands
+        /// </summary>
+        public static Script DeserializeFile(string scriptFilePath, EngineSettings engineSettings, XmlSerializer serializer = null)
+        {
+            XDocument xmlScript = XDocument.Load(scriptFilePath);
+
+            // pre-convert
+            convertOldScript(xmlScript);
+
+            using (var reader = xmlScript.Root.CreateReader())
+            {
+                //XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                if (serializer == null)
+                {
+                    serializer = CreateSerializer();
+                }
+                Script des = (Script)serializer.Deserialize(reader);
+
+                foreach (var cmd in des.Commands)
+                {
+                    cmd.ConvertToRaw(engineSettings);
+                }
+
+                return des;
+            }
+        }
+
+        /// <summary>
+        /// Deserializes an XML string into user-defined commands (server sends a string to the client)
+        /// </summary>
+        public static Script DeserializeXML(string scriptXML, XmlSerializer serializer = null)
+        {
+            try
+            {
+                using (System.IO.StringReader reader = new System.IO.StringReader(scriptXML))
+                {
+                    //XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                    if (serializer == null)
+                    {
+                        serializer = CreateSerializer();
+                    }
+                    Script deserializedData = (Script)serializer.Deserialize(reader);
+                    return deserializedData;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static string SerializeScript(List<ScriptCommand> commands, XmlSerializer serializer)
+        {
+            //XmlSerializer serializer = new XmlSerializer(typeof(Script));
+            if (serializer == null)
+            {
+                serializer = CreateSerializer();
+            }
+
+            var actions = new Script();
+            foreach (ScriptCommand cmd in commands)
+            {
+                actions.AddNewParentCommand(cmd);
+            }
+            using (var writer = new System.IO.StringWriter())
+            {
+                serializer.Serialize(writer, actions);
+                actions = null;
+                return writer.ToString();
+            }
+        }
+
+        public static Script DeserializeScript(string scriptXML, XmlSerializer serializer = null)
+        {
+            using (var reader = new System.IO.StringReader(scriptXML))
+            {
+                //XmlSerializer serializer = new XmlSerializer(typeof(Script));
+                if (serializer == null)
+                {
+                    serializer = CreateSerializer();
+                }
+                var ret = (Script)serializer.Deserialize(reader);
+                return ret;
+            }
+        }
+
+        /// <summary>
+        /// Create Script XML Serializer
+        /// </summary>
+        /// <returns></returns>
+        public static XmlSerializer CreateSerializer()
+        {
+            var subClasses = System.Reflection.Assembly.GetAssembly(typeof(ScriptCommand))
+                                .GetTypes()
+                                .Where(x => x.IsSubclassOf(typeof(ScriptCommand)) && !x.IsAbstract)
+                                .ToArray();
+
+            return new XmlSerializer(typeof(Script), subClasses);
+        }
+
+        /// <summary>
+        /// script xml converter
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        private static XDocument convertOldScript(XDocument doc)
+        {
+            // very important!
+            // ** DO NOT USE nameof to change command name **
+            convertTo3_5_0_45(doc);
+            convertTo3_5_0_46(doc);
+            convertTo3_5_0_47(doc);
+            convertTo3_5_0_50(doc);
+            convertTo3_5_0_51(doc);
+            convertTo3_5_0_52(doc);
+            convertTo3_5_0_57(doc);
+            convertTo3_5_0_67(doc);
+            fixUIAutomationCommandEnableParameterValue(doc);
+            convertTo3_5_0_73(doc);
+            convertTo3_5_0_74(doc);
+            convertTo3_5_0_78(doc);
+            fixUIAutomationGroupEnableParameterValue(doc);
+            convertTo3_5_0_83(doc);
+            convertTo3_5_1_16(doc);
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_45(XDocument doc)
+        {
+            // change "Start with" -> "Starts with", "End with" -> "Ends with"
+            IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
+                    (string)el.Attribute("CommandName") == "ActivateWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "CheckWindowNameExistsCommand" ||
+                    (string)el.Attribute("CommandName") == "CloseWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "GetWindowNamesCommand" ||
+                    (string)el.Attribute("CommandName") == "GetWindowPositionCommand" ||
+                    (string)el.Attribute("CommandName") == "GetWindowStateCommand" ||
+                    (string)el.Attribute("CommandName") == "MoveWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "ResizeWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "SetWindowStateCommand" ||
+                    (string)el.Attribute("CommandName") == "WaitForWindowCommand" ||
+                    (string)el.Attribute("CommandName") == "SendAdvancedKeyStrokesCommand" ||
+                    (string)el.Attribute("CommandName") == "SendHotkeyCommand" ||
+                    (string)el.Attribute("CommandName") == "SendKeysCommand" ||
+                    (string)el.Attribute("CommandName") == "UIAutomationCommand"
+                )
+            );
+            foreach (var cmd in cmdWindowNames)
+            {
+                if (cmd.Attribute("v_SearchMethod") != null)
+                {
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Starts with");
+                    }
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+                    }
+                }
+            }
+
+            // ExcelCreateDataset -> LoadDataTable
+            ChangeCommandName(doc, "ExcelCreateDatasetCommand", "LoadDataTableCommand", "Load DataTable");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_46(XDocument doc)
+        {
+            // AddToVariable -> AddListItem
+            ChangeCommandName(doc, "AddToVariableCommand", "AddListItemCommand", "Add List Item");
+
+            // SetVariableIndex -> SetListIndex
+            ChangeCommandName(doc, "SetVariableIndexCommand", "SetListIndexCommand", "Set List Index");
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_47(XDocument doc)
+        {
+            // AddListItem.v_userVariableName, SetListIndex.v_userVariableName -> *.v_ListName
+            IEnumerable<XElement> cmdIndex = doc.Descendants("ScriptCommand")
+                .Where(el =>
+                    ((string)el.Attribute("CommandName") == "AddListItemCommand") ||
+                    ((string)el.Attribute("CommandName") == "SetListIndexCommand")
+            );
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in cmdIndex)
+            {
+                var listNameAttr = cmd.Attribute("v_userVariableName");
+                if (listNameAttr != null)
+                {
+                    cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
+                    listNameAttr.Remove();
+                }
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_50(XDocument doc)
+        {
+            // ParseJSONArray -> ConvertJSONToList
+            ChangeCommandName(doc, "ParseJSONArrayCommand", "ConvertJSONToListCommand", "Convert JSON To List");
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_51(XDocument doc)
+        {
+            // GetDataCountRowCommand -> GetDataTableRowCountCommand
+            ChangeCommandName(doc, "GetDataRowCountCommand", "GetDataTableRowCountCommand", "Get DataTable Row Count");
+
+            // AddDataRow -> AddDataTableRow
+            ChangeCommandName(doc, "AddDataRowCommand", "AddDataTableRowCommand", "Add DataTable Row");
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_52(XDocument doc)
+        {
+            // change "Start with" -> "Starts with", "End with" -> "Ends with"
+            IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
+                    (string)el.Attribute("CommandName") == "GetFilesCommand" ||
+                    (string)el.Attribute("CommandName") == "GetFoldersCommand" ||
+                    (string)el.Attribute("CommandName") == "CheckStringCommand"
+                )
+            );
+            foreach (var cmd in cmdWindowNames)
+            {
+                if (cmd.Attribute("v_SearchMethod") != null)
+                {
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Starts with");
+                    }
+                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
+                    {
+                        cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+                    }
+                }
+            }
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_57(XDocument doc)
+        {
+            // StringCheckTextCommand -> CheckTextCommand
+            ChangeCommandName(doc, "CheckStringCommand", "CheckTextCommand", "Check Text");
+
+            // ModifyVariableCommand -> ModifyTextCommand
+            IEnumerable<XElement> modifyTextList = doc.Descendants("ScriptCommand")
+                .Where(el => (
+                    ((string)el.Attribute("CommandName") == "ModifyVariableCommand") ||
+                    ((string)el.Attribute("CommandName") == "StringCaseCommand"))
+                );
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in modifyTextList)
+            {
+                cmd.SetAttributeValue("CommandName", "ModifyTextCommand");
+                cmd.SetAttributeValue(ns + "type", "ModifyTextCommand");
+                cmd.SetAttributeValue("SelectionName", "Modify Text");
+            }
+
+            // RegExExtractorCommand -> RegExExtractionText
+            ChangeCommandName(doc, "RegExExtractorCommand", "RegExExtractionTextCommand", "RegEx Extraction Text");
+
+            // StringReplaceCommand -> ReplaceTextCommand
+            ChangeCommandName(doc, "StringReplaceCommand", "ReplaceTextCommand", "Replace Text");
+
+            // StringSplitCommand -> SplitTextCommand
+            ChangeCommandName(doc, "StringSplitCommand", "SplitTextCommand", "Split Text");
+
+            // StringSubstringCommand -> SubstringTextCommand
+            ChangeCommandName(doc, "StringSubstringCommand", "SubstringTextCommand", "Substring Text");
+
+            // TextExtractorCommand -> ExtractionTextCommand
+            ChangeCommandName(doc, "TextExtractorCommand", "ExtractionTextCommand", "Extraction Text");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_67(XDocument doc)
+        {
+            // GetAElement -> GetAnElement
+            ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsListCommand", "SeleniumBrowserGetAnElementValuesAsListCommand", "Get An Element Values As List");
+
+            ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDictionaryCommand", "SeleniumBrowserGetAnElementValuesAsDictionaryCommand", "Get An Element Values As Dictionary");
+
+            ChangeCommandName(doc, "SeleniumBrowserGetAElementValuesAsDataTableCommand", "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "Get An Element Values As DataTable");
+
+            return doc;
+        }
+
+        private static XDocument fixUIAutomationCommandEnableParameterValue(XDocument doc)
+        {
+            // UI Automation Boolean Fix
+            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationCommand"));
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach (var cmd in getList)
+            {
+                XElement tableParams = cmd.Element("v_UIASearchParameters").Element(ns + "diffgram").Element("DocumentElement");
+                var elems = tableParams.Elements();
+                foreach (XElement elem in elems)
+                {
+                    XElement elemEnabled = elem.Element("Enabled");
+                    switch (elemEnabled.Value.ToLower())
+                    {
+                        case "true":
+                        case "false":
+                            break;
+
+                        default:
+                            elemEnabled.SetValue("False");
+                            break;
+                    }
+                }
+            }
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_73(XDocument doc)
+        {
+            // BeginIf Selenium -> WebBrowser
+            IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach(XElement cmd in getIf)
+            {
+                if ((string)cmd.Attribute("v_IfActionType") == "Web Element Exists")
+                {
+                    XElement tableParams = cmd.Element("v_IfActionParameterTable").Element(ns + "diffgram").Element("DocumentElement");
+                    var elems = tableParams.Elements();
+                    foreach(XElement elem in elems)
+                    {
+                        if (elem.Element("Parameter_x0020_Name").Value == "Selenium Instance Name")
+                        {
+                            elem.Element("Parameter_x0020_Name").Value = "WebBrowser Instance Name";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // BeginLoop Selenium -> WebBrowser
+            IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            foreach (XElement cmd in getLoop)
+            {
+                if ((string)cmd.Attribute("v_LoopActionType") == "Web Element Exists")
+                {
+                    XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(ns + "diffgram").Element("DocumentElement");
+                    var elems = tableParams.Elements();
+                    foreach (XElement elem in elems)
+                    {
+                        if (elem.Element("Parameter_x0020_Name").Value == "Selenium Instance Name")
+                        {
+                            elem.Element("Parameter_x0020_Name").Value = "WebBrowser Instance Name";
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_74(XDocument doc)
+        {
+            // BeginIf Value, Variable Compare -> Numeric Compare, Text Compare
+            IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
+            foreach (XElement cmd in getIf)
+            {
+                switch ((string)cmd.Attribute("v_IfActionType"))
+                {
+                    case "Value":
+                        cmd.Attribute("v_IfActionType").Value = "Numeric Compare";
+                        break;
+
+                    case "Variable Compare":
+                        cmd.Attribute("v_IfActionType").Value = "Text Compare";
+                        break;
+                }
+            }
+
+            // BeginLoop Value, Variable Compare -> Numeric Compare, Text Compare
+            IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            foreach (XElement cmd in getLoop)
+            {
+                switch ((string)cmd.Attribute("v_LoopActionType"))
+                {
+                    case "Value":
+                        cmd.Attribute("v_LoopActionType").Value = "Numeric Compare";
+                        break;
+
+                    case "Variable Compare":
+                        cmd.Attribute("v_LoopActionType").Value = "Text Compare";
+                        break;
+                }
+            }
+
+            return doc;
+        }
+        private static XDocument convertTo3_5_0_78(XDocument doc)
+        {
+            // BeginIf Window Search Method
+            IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
+            XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
+            foreach (XElement cmd in getIf)
+            {
+                switch ((string)cmd.Attribute("v_IfActionType"))
+                {
+                    case "Window Name Exists":
+                    case "Active Window Name Is":
+                        XElement tableParams = cmd.Element("v_IfActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
+                        var elems = tableParams.Elements();
+                        bool isExists = false;
+                        foreach (XElement elem in elems)
+                        {
+                            if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
+                            {
+                                isExists = true;
+                                break;
+                            }
+                        }
+                        if (!isExists)
+                        {
+                            var elem = elems.ElementAt(0);
+                            var newElem = new XElement(elem.Name);
+                            newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
+                            newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
+
+                            // name
+                            var nameElem = new XElement("Parameter_x0020_Name");
+                            nameElem.Value = "Search Method";
+
+                            // value
+                            var valueElem = new XElement("Parameter_x0020_Value");
+                            valueElem.Value = "Contains";
+
+                            newElem.Add(nameElem);
+                            newElem.Add(valueElem);
+
+                            tableParams.Add(newElem);
+                        }
+                        break;
+                }
+            }
+
+            // BeginLoop Window Search Method
+            IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            foreach (XElement cmd in getLoop)
+            {
+                switch ((string)cmd.Attribute("v_LoopActionType"))
+                {
+                    case "Window Name Exists":
+                    case "Active Window Name Is":
+                        XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
+                        var elems = tableParams.Elements();
+                        bool isExists = false;
+                        foreach (XElement elem in elems)
+                        {
+                            if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
+                            {
+                                isExists = true;
+                                break;
+                            }
+                        }
+                        if (!isExists)
+                        {
+                            var elem = elems.ElementAt(0);
+                            var newElem = new XElement(elem.Name);
+                            newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
+                            newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
+
+                            // name
+                            var nameElem = new XElement("Parameter_x0020_Name");
+                            nameElem.Value = "Search Method";
+
+                            // value
+                            var valueElem = new XElement("Parameter_x0020_Value");
+                            valueElem.Value = "Contains";
+
+                            newElem.Add(nameElem);
+                            newElem.Add(valueElem);
+
+                            tableParams.Add(newElem);
+                        }
+                        break;
+                }
+            }
+
+            return doc;
+        }
+        private static XDocument fixUIAutomationGroupEnableParameterValue(XDocument doc)
+        {
+            // UI Automation Boolean Fix
+            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationGetChidrenElementsInformationCommand") ||
+                            ((string)el.Attribute("CommandName") == "UIAutomationGetChildElementCommand") ||
+                            ((string)el.Attribute("CommandName") == "UIAutomationGetElementFromElementCommand")
+                );
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach (var cmd in getList)
+            {
+                XElement tableParams = cmd.Element("v_SearchParameters").Element(ns + "diffgram").Element("DocumentElement");
+                var elems = tableParams.Elements();
+                foreach (XElement elem in elems)
+                {
+                    XElement elemEnabled = elem.Element("Enabled");
+                    switch (elemEnabled.Value.ToLower())
+                    {
+                        case "true":
+                        case "false":
+                            break;
+
+                        default:
+                            elemEnabled.SetValue("False");
+                            break;
+                    }
+                }
+            }
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_0_83(XDocument doc)
+        {
+            // SMTPSendEmail -> MailKitSendEmail
+            ChangeCommandName(doc, "SMTPCommand", "MailKitSendEmailCommand", "Send Email");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_16(XDocument doc)
+        {
+            // Parse Json -> Get JSON Value List
+            ChangeCommandName(doc, "ParseJsonCommand", "GetJSONValueListCommand", "Get JSON Value List");
+            // Parse Json Model -> Get Multi JSON Value List
+            ChangeCommandName(doc, "ParseJsonModelCommand", "GetMultiJSONValueListCommand", "Get Multi JSON Value List");
+            return doc;
+        }
+
+        private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
+        {
+            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == targetName));
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach(var cmd in commandList)
+            {
+                cmd.SetAttributeValue("CommandName", newName);
+                cmd.SetAttributeValue(ns + "type", newName);
+                cmd.SetAttributeValue("SelectionName", newSelectioName);
+            }
+            return doc;
+        }
+
+        // not work yet
+        private static XDocument ChangeCommandName(XDocument doc, List<string> targetNames, string newName, string newSelectioName)
+        {
+            var paramXElem = Expression.Parameter(typeof(XElement), "el");
+
+            var attrMethod = typeof(XElement).GetMethod("Attribute");
+
+            var paramProp = Expression.Call(paramXElem, attrMethod, Expression.Constant("CommandName"));
+
+            BinaryExpression bodies = null;
+            int index = 0;
+            foreach(var targetName in targetNames)
+            {
+                var body = Expression.Equal(paramProp, Expression.Constant(targetNames));
+                if (index == 0)
+                {
+                    bodies = body;
+                }
+                else
+                {
+                    bodies = Expression.Or(bodies, body);
+                }
+                index++;
+            }
+            var whereFunc = Expression.Lambda<Func<XElement, bool>>(bodies, paramXElem).Compile();
+
+            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+               .Where(whereFunc);
+
+            foreach(var command in commandList)
+            {
+
+            }
+
+            return doc;
+        }
+    }
+
+    [Serializable]
+    public class ScriptAction
+    {
+        /// <summary>
+        /// generic 'top-level' user-defined script command (ex. not nested)
+        /// </summary>
+        [XmlElement(Order = 1)]
+        public ScriptCommand ScriptCommand { get; set; }
+        /// <summary>
+        /// generic 'sub-level' commands (ex. nested commands within a loop)
+        /// </summary>
+        [XmlElement(Order = 2)]
+        public List<ScriptAction> AdditionalScriptCommands { get; set; }
+        /// <summary>
+        /// adds a command as a nested command to a top-level command
+        /// </summary>
+        public ScriptAction AddAdditionalAction(ScriptCommand scriptCommand)
+        {
+            if (AdditionalScriptCommands == null)
+            {
+                AdditionalScriptCommands = new List<ScriptAction>();
+            }
+
+            ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
+            AdditionalScriptCommands.Add(newExecutionCommand);
+            return newExecutionCommand;
+        }
+
+        public void ConvertToIntermediate(EngineSettings settings, List<ScriptVariable> variables)
+        {
+            ScriptCommand.ConvertToIntermediate(settings, variables);
+            if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
+            {
+                foreach (var cmd in AdditionalScriptCommands)
+                {
+                    cmd.ConvertToIntermediate(settings, variables);
+                }
+            }
+        }
+
+        public void ConvertToRaw(EngineSettings settings)
+        {
+            ScriptCommand.ConvertToRaw(settings);
+            if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
+            {
+                foreach (var cmd in AdditionalScriptCommands)
+                {
+                    cmd.ConvertToRaw(settings);
+                }
+            }
+        }
+    }
+    #endregion Script and Variables
+}
