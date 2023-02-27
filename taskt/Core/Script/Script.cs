@@ -711,6 +711,12 @@ namespace taskt.Core.Script
             // AddDataTableRowByDataTableCommand -> AddDataTableRowsByDataTableCommand
             ChangeCommandName(doc, "AddDataTableRowByDataTableCommand", "AddDataTableRowsByDataTableCommand", "Add DataTable Rows By DataTable");
 
+            // SetDataTableColumnByDataTableCommand -> SetDataTableColumnValuesByDataTableCommand
+            ChangeCommandName(doc, "SetDataTableColumnByDataTableCommand", "SetDataTableColumnValuesByDataTableCommand", "Set DataTable Column Values By DataTable");
+
+            // SetDataTableColumnByListCommand -> SetDataTableColumnValuesByListCommand
+            ChangeCommandName(doc, "SetDataTableColumnByListCommand", "SetDataTableColumnValuesByListCommand", "Set DataTable Column Values By List");
+
             return doc;
         }
 
