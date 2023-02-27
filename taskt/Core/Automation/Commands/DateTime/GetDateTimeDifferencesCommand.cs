@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Get DateTime Differences")]
     [Attributes.ClassAttributes.Description("This command allows you to Get 2 DateTime Differences.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get 2 DateTime Differences.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -55,10 +56,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetDateTimeDifferencesCommand()
         {
-            this.CommandName = "GetDateTimeDifferencesCommand";
-            this.SelectionName = "Get DateTime Differences";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetDateTimeDifferencesCommand";
+            //this.SelectionName = "Get DateTime Differences";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

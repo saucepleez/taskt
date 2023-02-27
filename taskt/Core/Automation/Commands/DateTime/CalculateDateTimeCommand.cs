@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Calculate DateTime")]
     [Attributes.ClassAttributes.Description("This command allows you to Calculate DateTime. Add Day, Minute, etc.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Calculate DateTime. Add Day, Minute, etc.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -60,10 +61,10 @@ namespace taskt.Core.Automation.Commands
 
         public CalculateDateTimeCommand()
         {
-            this.CommandName = "CalculateDateTimeCommand";
-            this.SelectionName = "Calculate DateTime";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CalculateDateTimeCommand";
+            //this.SelectionName = "Calculate DateTime";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

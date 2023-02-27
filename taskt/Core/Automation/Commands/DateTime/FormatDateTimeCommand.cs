@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Format DateTime")]
     [Attributes.ClassAttributes.Description("This command allows you to Format DateTime Text.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Format DateTime Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -41,10 +42,10 @@ namespace taskt.Core.Automation.Commands
 
         public FormatDateTimeCommand()
         {
-            this.CommandName = "FormatDateTimeCommand";
-            this.SelectionName = "Format DateTime";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "FormatDateTimeCommand";
+            //this.SelectionName = "Format DateTime";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
