@@ -12,22 +12,14 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using SuperSocket.ClientEngine;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.WebSockets;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Commands;
 
@@ -40,7 +32,6 @@ namespace taskt.UI.Forms
         private TreeNode[] bufferedCommandList;
         private ImageList bufferedCommandTreeImages;
 
-        //private List<ListViewItem> rowsSelectedForCopy { get; set; }
         private List<Core.Script.ScriptVariable> scriptVariables;
         private Core.Script.ScriptInformation scriptInfo;
         
@@ -52,7 +43,6 @@ namespace taskt.UI.Forms
         private List<List<ListViewItem>> undoList;
         private DateTime lastAntiIdleEvent;
         private int undoIndex = -1;
-        //private int reqdIndex;
         private int selectedIndex = -1;
         private int DnDIndex = -1;
 
@@ -62,8 +52,6 @@ namespace taskt.UI.Forms
         private int[,] miniMap = null;
         private Bitmap miniMapImg = null;
 
-        //private Timer miniMapLoadingDelayTimer = new Timer() { Interval = 100 };
-
         public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
         public CommandEditAction currentEditAction = CommandEditAction.Normal;
 
@@ -71,7 +59,6 @@ namespace taskt.UI.Forms
         private Point lastEditorPosition;
 
         // search & replace
-        //private List<int> matchingSearchIndex = new List<int>();
         private int currentIndexInMatchItems = -1;
         public int MatchedLines { private set; get; }
 
@@ -84,6 +71,7 @@ namespace taskt.UI.Forms
         private frmAttendedMode frmAttended = null;
 
         private string _scriptFilePath = null;
+        private XmlSerializer scriptSerializer = null;
 
         #region properties
         private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
@@ -194,11 +182,11 @@ namespace taskt.UI.Forms
             }
 
             Core.Server.HttpServerClient.associatedBuilder = this;
-
+    
             Core.Server.LocalTCPListener.Initialize(this);
-            //Core.Sockets.SocketClient.Initialize();
-            //Core.Sockets.SocketClient.associatedBuilder = this;
 
+            // script serializer
+            this.scriptSerializer = Core.Script.Script.CreateSerializer();
 
             //handle action bar preference
             //hide action panel
@@ -257,9 +245,6 @@ namespace taskt.UI.Forms
                 scriptInfo = new Core.Script.ScriptInformation();
             }
 
-
-            //pnlHeader.BackColor = Color.FromArgb(255, 214, 88);
-
             //instantiate and populate display icons for commands
             scriptImages = UI.Images.UIImageList();
 
@@ -268,9 +253,6 @@ namespace taskt.UI.Forms
             lstScriptActions.Columns[0].Width = 14; // 1digit width
             lstScriptActions.Columns[1].Width = 16; // icon size
             lstScriptActions.Columns[2].Width = lstScriptActions.ClientSize.Width - 30;
-
-            // myToolTip
-            //myToolTip.SetToolTip(lstScriptActions, "");
 
             //set listview column size
             frmScriptBuilder_SizeChanged(null, null);
@@ -282,8 +264,6 @@ namespace taskt.UI.Forms
             if (appSettings.ClientSettings.StartupMode == "Attended Task Mode")
             {
                 this.WindowState = FormWindowState.Minimized;
-                //var frmAttended = new frmAttendedMode();
-                //frmAttended.Show();
                 showAttendedModeFormProcess();
             }
 
@@ -1502,7 +1482,7 @@ namespace taskt.UI.Forms
                 }
                 lstScriptActions.EndUpdate();
                 // set clipborad xml string
-                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands));
+                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands, scriptSerializer));
 
                 // remove instance name
                 RemoveInstanceName(commands);
@@ -1546,7 +1526,7 @@ namespace taskt.UI.Forms
                 }
 
                 // set clipborad xml string
-                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands));
+                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands, scriptSerializer));
 
                 //Notify(rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
                 Notify(commands.Count + " item(s) copied to clipboard!");
@@ -1588,7 +1568,7 @@ namespace taskt.UI.Forms
             //    InsertExecutionCommands(sc.Commands);
             //}
 
-            var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText());
+            var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText(), scriptSerializer);
             if (sc != null)
             {
                 ChangeSaveState(true);
@@ -2968,7 +2948,7 @@ namespace taskt.UI.Forms
         {
             var currentCommand = (taskt.Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
 
-            string scriptXML = taskt.Core.Script.Script.SerializeScript(new List<Core.Automation.Commands.ScriptCommand>() { currentCommand });
+            string scriptXML = taskt.Core.Script.Script.SerializeScript(new List<Core.Automation.Commands.ScriptCommand>() { currentCommand }, scriptSerializer);
 
             int startIdx = scriptXML.IndexOf("<ScriptCommand ");
 
@@ -3200,7 +3180,7 @@ namespace taskt.UI.Forms
                 instanceList = new Core.InstanceCounter(appSettings);
 
                 //get deserialized script
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings);
+                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -3291,7 +3271,7 @@ namespace taskt.UI.Forms
             try
             {
                 //deserialize file      
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings);
+                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -3511,7 +3491,7 @@ namespace taskt.UI.Forms
             try
             {
                 scriptInfo.TasktVersion = Application.ProductVersion;
-                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, this.ScriptFilePath);
+                var exportedScript = Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, scriptSerializer, this.ScriptFilePath);
                 //show success dialog
                 Notify("File has been saved successfully!");
                 ChangeSaveState(false);

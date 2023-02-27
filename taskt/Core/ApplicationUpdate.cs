@@ -12,7 +12,7 @@ namespace taskt.Core
         {
             //create web client
             WebClient webClient = new WebClient();
-            string manifestData = "";
+            string manifestData;
 
             //get manifest
             try
@@ -67,7 +67,6 @@ namespace taskt.Core
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("Error getting manifest: " + ex.ToString());
                 if (!silent)
                 {
                     using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("Error getting manifest: " + ex.ToString(), "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
@@ -93,34 +92,6 @@ namespace taskt.Core
 
             if (startUpdate)
             {
-                //using (UI.Forms.Supplement_Forms.frmUpdate frmUpdate = new UI.Forms.Supplement_Forms.frmUpdate(manifest))
-                //{
-                //    if (frmUpdate.ShowDialog() == DialogResult.OK)
-                //    {
-
-                //        //move update exe to root folder for execution
-                //        var updaterExecutionResources = System.IO.Path.Combine(Application.StartupPath, "Resources", "taskt-updater.exe");
-                //        //var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
-
-                //        if (!System.IO.File.Exists(updaterExecutionResources))
-                //        {
-                //            //MessageBox.Show("taskt-updater.exe not found in Resources folder!");
-                //            using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt-updater.exe not found in Resources folder!", "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
-                //            {
-                //                fm.ShowDialog();
-                //            }
-                //            return;
-                //        }
-
-                //        var updateProcess = new System.Diagnostics.Process();
-                //        //updateProcess.StartInfo.FileName = updaterExecutableDestination;
-                //        updateProcess.StartInfo.FileName = updaterExecutionResources;
-                //        updateProcess.StartInfo.Arguments = "/d " + manifest.PackageURL;
-
-                //        updateProcess.Start();
-                //        Application.Exit();
-                //    }
-                //}
                 ShowUpdateForm(manifest);
             }
             else
@@ -217,7 +188,7 @@ namespace taskt.Core
                     var updateProcess = new System.Diagnostics.Process();
                     updateProcess.StartInfo.FileName = updaterExecutionResources;
 
-                    var zipURL = manifestConfig.PackageURL.Replace("%release_url%", MyURLs.GitReleaseURL).Replace("%version%", manifestConfig.RemoteVersion);
+                    var zipURL = manifestConfig.PackageURL2.Replace("%release_url%", MyURLs.GitReleaseURL).Replace("%version%", manifestConfig.RemoteVersion);
                     updateProcess.StartInfo.Arguments = "/d " + zipURL;
 
                     updateProcess.Start();
@@ -233,6 +204,7 @@ namespace taskt.Core
         public string RemoteVersion { get; set; }
         public bool Beta { get; set; }
         public string PackageURL { get; set; }
+        public string PackageURL2 { get; set; }
 
         //helpers
         public bool RemoteVersionNewer { get; set; }
