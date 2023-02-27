@@ -286,6 +286,7 @@ namespace taskt.Core.Script
             fixUIAutomationGroupEnableParameterValue(doc);
             convertTo3_5_0_83(doc);
             convertTo3_5_1_16(doc);
+            convertTo3_5_1_30(doc);
 
             return doc;
         }
@@ -702,6 +703,14 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "ParseJsonCommand", "GetJSONValueListCommand", "Get JSON Value List");
             // Parse Json Model -> Get Multi JSON Value List
             ChangeCommandName(doc, "ParseJsonModelCommand", "GetMultiJSONValueListCommand", "Get Multi JSON Value List");
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_30(XDocument doc)
+        {
+            // AddDataTableRowByDataTableCommand -> AddDataTableRowsByDataTableCommand
+            ChangeCommandName(doc, "AddDataTableRowByDataTableCommand", "AddDataTableRowsByDataTableCommand", "Add DataTable Rows By DataTable");
+
             return doc;
         }
 
