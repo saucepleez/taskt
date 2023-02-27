@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Column Action")]
+    [Attributes.ClassAttributes.CommandSettings("Set DataTable Column Values By List")]
     [Attributes.ClassAttributes.Description("This command allows you to set a column to a DataTable by a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a column to a DataTable by a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -43,10 +44,10 @@ namespace taskt.Core.Automation.Commands
 
         public SetDataTableColumnValuesByListCommand()
         {
-            this.CommandName = "SetDataTableColumnByListCommand";
-            this.SelectionName = "Set DataTable Column By List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetDataTableColumnByListCommand";
+            //this.SelectionName = "Set DataTable Column Values By List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

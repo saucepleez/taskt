@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("DataTable Action")]
+    [Attributes.ClassAttributes.CommandSettings("Replace DataTable Row Value")]
     [Attributes.ClassAttributes.Description("This command allows you to Replace Row values.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Replace Row values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -44,10 +45,10 @@ namespace taskt.Core.Automation.Commands
 
         public ReplaceDataTableRowValueCommand()
         {
-            this.CommandName = "ReplaceDataTableRowValueCommand";
-            this.SelectionName = "Replace DataTable Row Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ReplaceDataTableRowValueCommand";
+            //this.SelectionName = "Replace DataTable Row Value";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("DataTable Action")]
+    [Attributes.ClassAttributes.CommandSettings("Filter DataTable Row By Column Value")]
     [Attributes.ClassAttributes.Description("This command allows you to Filter Rows by reference to Column values.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Filter Rows by reference to Column values.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -51,10 +52,10 @@ namespace taskt.Core.Automation.Commands
 
         public FilterDataTableRowByColumnValueCommand()
         {
-            this.CommandName = "FilterDataTableRowByColumnValueCommand";
-            this.SelectionName = "Filter DataTable Row By Column Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "FilterDataTableRowByColumnValueCommand";
+            //this.SelectionName = "Filter DataTable Row By Column Value";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             //this.v_TargetType = "Text";
         }

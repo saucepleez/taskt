@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("DataTable Action")]
+    [Attributes.ClassAttributes.CommandSettings("Create DataTable")]
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new DataTable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -35,10 +36,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateDataTableCommand()
         {
-            this.CommandName = "CreateDataTableCommand";
-            this.SelectionName = "Create DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateDataTableCommand";
+            //this.SelectionName = "Create DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             //initialize data table
             //this.v_ColumnNameDataTable = new System.Data.DataTable

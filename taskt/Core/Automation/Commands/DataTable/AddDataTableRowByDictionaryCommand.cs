@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Row Action")]
+    [Attributes.ClassAttributes.CommandSettings("Add DataTable Row By Dictionary")]
     [Attributes.ClassAttributes.Description("This command allows you to add a DataTable Row to a DataTable by a Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a DataTable Row to a DataTable by a Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -34,10 +35,10 @@ namespace taskt.Core.Automation.Commands
 
         public AddDataTableRowByDictionaryCommand()
         {
-            this.CommandName = "AddDataTableRowByDictionaryCommand";
-            this.SelectionName = "Add DataTable Row By Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "AddDataTableRowByDictionaryCommand";
+            //this.SelectionName = "Add DataTable Row By Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

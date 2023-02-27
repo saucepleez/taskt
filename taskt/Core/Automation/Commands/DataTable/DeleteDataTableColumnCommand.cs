@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Column Action")]
+    [Attributes.ClassAttributes.CommandSettings("Delete DataTable Column")]
     [Attributes.ClassAttributes.Description("This command allows you to delete a column to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a column to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -28,10 +29,10 @@ namespace taskt.Core.Automation.Commands
 
         public DeleteDataTableColumnCommand()
         {
-            this.CommandName = "DeleteDataTableColumnCommand";
-            this.SelectionName = "Delete DataTable Column";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "DeleteDataTableColumnCommand";
+            //this.SelectionName = "Delete DataTable Column";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

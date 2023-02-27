@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Row Action")]
+    [Attributes.ClassAttributes.CommandSettings("Delete DataTable Row")]
     [Attributes.ClassAttributes.Description("This command allows you to delete a DataTable Row")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a DataTable Row.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -24,10 +25,10 @@ namespace taskt.Core.Automation.Commands
 
         public DeleteDataTableRowCommand()
         {
-            this.CommandName = "DeleteDataTableRowCommand";
-            this.SelectionName = "Delete DataTable Row";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "DeleteDataTableRowCommand";
+            //this.SelectionName = "Delete DataTable Row";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

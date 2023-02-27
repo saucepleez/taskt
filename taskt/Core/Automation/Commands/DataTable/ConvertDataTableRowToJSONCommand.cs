@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Convert Row")]
+    [Attributes.ClassAttributes.CommandSettings("Convert DataTable Row To JSON")]
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to JSON")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to JSON.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -29,10 +30,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConvertDataTableRowToJSONCommand()
         {
-            this.CommandName = "ConvertDataTableRowToJSONCommand";
-            this.SelectionName = "Convert DataTable Row To JSON";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;         
+            //this.CommandName = "ConvertDataTableRowToJSONCommand";
+            //this.SelectionName = "Convert DataTable Row To JSON";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;         
         }
 
         public override void RunCommand(object sender)

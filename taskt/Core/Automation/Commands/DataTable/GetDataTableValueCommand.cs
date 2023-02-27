@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -8,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("DataTable Action")]
+    [Attributes.ClassAttributes.CommandSettings("Get DataTable Value")]
     [Attributes.ClassAttributes.Description("This command allows you to get the DataTable value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the DataTable value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -37,10 +37,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetDataTableValueCommand()
         {
-            this.CommandName = "GetDataTableValueCommand";
-            this.SelectionName = "Get DataTable Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetDataTableValueCommand";
+            //this.SelectionName = "Get DataTable Value";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
