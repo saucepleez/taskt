@@ -294,15 +294,6 @@ namespace taskt.Core.Automation.Commands
 
         private static bool IsColumnExists(DataTable table, string columnName)
         {
-            //for (int i = 0; i < table.Columns.Count; i++)
-            //{
-            //    if (table.Columns[i].ColumnName == columnName)
-            //    {
-            //        return true;
-            //    }
-            //}
-            //return false;
-
             return table.Columns.Contains(columnName);
         }
         private static bool IsColumnExists(DataTable table, int columnIndex)
@@ -414,14 +405,6 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Parameter Column or Value Column does not exists");
             }
 
-            //for (int i = 0; i < dt.Rows.Count; i++)
-            //{
-            //    if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
-            //    {
-            //        //return dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
-            //        return dt.Rows[i][valueColumnName]?.ToString() ?? "";
-            //    }
-            //}
             foreach (DataRow row in dt.Rows)
             {
                 if ((row.Field<string>(parameterColumnName) ?? "") == parameterName)
@@ -456,8 +439,6 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Strange Row Index " + rowIndex);
             }
 
-            //return dt.Rows[rowIndex][columnName] == null ? "" : dt.Rows[rowIndex][columnName].ToString();
-            //return dt.Rows[rowIndex][columnName]?.ToString() ?? "";
             return dt.Rows[rowIndex].Field<string>(columnName) ?? "";
         }
 
@@ -478,15 +459,6 @@ namespace taskt.Core.Automation.Commands
             }
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            //for (int i = 0; i < dt.Rows.Count; i++)
-            //{
-            //    if (dt.Rows[i][parameterColumnName] != null)
-            //    {
-            //        //string value = dt.Rows[i][valueColumnName] == null ? "" : dt.Rows[i][valueColumnName].ToString();
-            //        string value = dt.Rows[i][valueColumnName]?.ToString() ?? "";
-            //        dic.Add(dt.Rows[i][parameterColumnName].ToString(), value);
-            //    }
-            //}
             foreach (DataRow row in dt.Rows)
             {
                 var key = row.Field<string>(parameterColumnName) ?? "";
@@ -523,14 +495,7 @@ namespace taskt.Core.Automation.Commands
             {
                 return false;
             }
-            //for (int i = 0; i < dt.Rows.Count; i++)
-            //{
-            //    if (dt.Rows[i][parameterColumnName].ToString() == parameterName)
-            //    {
-            //        dt.Rows[i][valueColumnName] = newValue;
-            //        return true;
-            //    }
-            //}
+
             foreach (DataRow row in dt.Rows)
             {
                 var key = row.Field<string>(parameterColumnName) ?? "";
@@ -562,22 +527,6 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //foreach(string n in parameterNames)
-                //{ 
-                //    bool isExists = false;
-                //    for (int i = dt.Rows.Count - 1; i >= 0; i--)
-                //    {
-                //        if (dt.Rows[i][parameterNameColumn].ToString() == n)
-                //        {
-                //            isExists = true;
-                //            break;
-                //        }
-                //    }
-                //    if (!isExists)
-                //    {
-                //        return false;
-                //    }
-                //}
                 foreach (DataRow row in dt.Rows)
                 {
                     var key = row.Field<string>(parameterNameColumn) ?? "";
@@ -635,7 +584,6 @@ namespace taskt.Core.Automation.Commands
                     {
                         myDGV.BeginEdit(false);
                     }
-                    //else if (targetCell is DataGridViewComboBoxCell && targetCell.Value.ToString() == "")
                     else if (targetCell is DataGridViewComboBoxCell)
                     {
                         SendKeys.Send("{F4}");
