@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Load Email")]
     [Attributes.ClassAttributes.Description("This command allows you to load EMail from File.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load EMail from File.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -16,40 +17,27 @@ namespace taskt.Core.Automation.Commands
     public class MailKitLoadEmailCommand : ScriptCommand
     {
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Path to the EMail")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsVariablesList(true)]
-        [PropertyTextBoxSetting(1, false)]
+        [InputSpecification("Path", true)]
+        //[SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
+        [PropertyDetailSampleUsage("**C:\\temp\\mymail.eml**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify EMail Variable Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vEMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputEMailName))]
         public string v_MailName { get; set; }
 
         public MailKitLoadEmailCommand()
         {
-            this.CommandName = "MailKitLoadEmailCommand";
-            this.SelectionName = "Load Email";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitLoadEmailCommand";
+            //this.SelectionName = "Load Email";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

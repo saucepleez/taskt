@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Get Email Attachments Name")]
     [Attributes.ClassAttributes.Description("This command allows you to get Attachment File Name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attachment File Name.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -16,43 +17,19 @@ namespace taskt.Core.Automation.Commands
     public class MailKitGetEmailAttachmentsNameCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify EMail Variable Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vEMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyDisplayText(true, "EMail")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_InputEMailName))]
         public string v_MailName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Variable Name to Store Result")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNames** or **{{{vNames}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_AttachmentsList { get; set; }
 
         public MailKitGetEmailAttachmentsNameCommand()
         {
-            this.CommandName = "MailKitGetEmailAttachmentsNameCommand";
-            this.SelectionName = "Get Email Attachments Name";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitGetEmailAttachmentsNameCommand";
+            //this.SelectionName = "Get Email Attachments Name";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -60,16 +37,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var mail = v_MailName.GetMailKitEMailVariable(engine);
-
-            //List<string> attachments = new List<string>();
-
-            //foreach(var at in mail.Attachments)
-            //{
-            //    if (at is MimeKit.MimePart)
-            //    {
-            //        attachments.Add(((MimeKit.MimePart)at).FileName);
-            //    }
-            //}
 
             var attachments = mail.Attachments.Cast<MimeKit.MimePart>().Select(a => a.FileName).ToList();
 

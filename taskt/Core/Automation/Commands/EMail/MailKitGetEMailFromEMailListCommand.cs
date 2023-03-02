@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Get EMail From EMailList")]
     [Attributes.ClassAttributes.Description("This command allows you to get EMail from EMailList.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMail from EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -18,7 +19,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("EMailList Variable Name")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("EMailList Variable Name", true)]
-        //[SampleUsage("**{{{vMailList}}}**")]
         [PropertyDetailSampleUsage("**vMailList**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vMailList}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
@@ -44,27 +44,15 @@ namespace taskt.Core.Automation.Commands
         public string v_Index { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Variable Name to Store EMail")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vEMail** or **{{{vEMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("EMail Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputEMailName))]
         public string v_MailVariable { get; set; }
 
         public MailKitGetEMailFromEMailListCommand()
         {
-            this.CommandName = "MailKitGetEMailFromMailListCommand";
-            this.SelectionName = "Get EMail From MailList";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitGetEMailFromMailListCommand";
+            //this.SelectionName = "Get EMail From EMailList";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -80,8 +68,7 @@ namespace taskt.Core.Automation.Commands
                 index = mailsVariable.CurrentPosition;
             }
             else
-            {
-                //index = v_Index.ConvertToUserVariableAsInteger("Index", engine);   
+            {  
                 index = this.ConvertToUserVariableAsInteger(nameof(v_Index), engine);
             }
 
