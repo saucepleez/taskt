@@ -502,7 +502,7 @@ namespace taskt.UI
             {nameof(FormatDateTimeCommand), "taskt.Properties.Resources.command_function"},
 
             // Dictionary
-            {nameof(AddDictionaryCommand), "taskt.Properties.Resources.command_dictionary"},
+            {nameof(AddDictionaryItemCommand), "taskt.Properties.Resources.command_dictionary"},
             {nameof(CheckDictionaryKeyExistsCommand), "taskt.Properties.Resources.command_dictionary"},
             {nameof(ConcatenateDictionaryCommand), "taskt.Properties.Resources.command_dictionary"},
             {nameof(ConvertDictionaryToDataTableCommand), "taskt.Properties.Resources.command_dictionary"},
