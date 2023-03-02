@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Item")]
+    [Attributes.ClassAttributes.CommandSettings("Get Dictionary Value")]
     [Attributes.ClassAttributes.Description("This command allows you to get value in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get value in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -34,10 +35,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetDictionaryValueCommand()
         {
-            this.CommandName = "GetDictionaryValueCommand";
-            this.SelectionName = "Get Dictionary Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetDictionaryValueCommand";
+            //this.SelectionName = "Get Dictionary Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

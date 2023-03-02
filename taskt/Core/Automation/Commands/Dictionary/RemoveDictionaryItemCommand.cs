@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Item")]
+    [Attributes.ClassAttributes.CommandSettings("Remove Dictionary Item")]
     [Attributes.ClassAttributes.Description("This command allows you to remove item in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to remove item in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public RemoveDictionaryItemCommand()
         {
-            this.CommandName = "RemoveDictionaryItemCommand";
-            this.SelectionName = "Remove Dictionary Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "RemoveDictionaryItemCommand";
+            //this.SelectionName = "Remove Dictionary Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

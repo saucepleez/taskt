@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
+    [Attributes.ClassAttributes.CommandSettings("Replace Dictionary")]
     [Attributes.ClassAttributes.Description("This command allows you to relace Dictionary value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to relpace Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -44,10 +45,10 @@ namespace taskt.Core.Automation.Commands
 
         public ReplaceDictionaryCommand()
         {
-            this.CommandName = "ReplaceDictionaryCommand";
-            this.SelectionName = "Replace Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ReplaceDictionaryCommand";
+            //this.SelectionName = "Replace Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

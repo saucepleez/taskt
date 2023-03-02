@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Key")]
+    [Attributes.ClassAttributes.CommandSettings("Get Dictionary Keys List")]
     [Attributes.ClassAttributes.Description("This command allows you to get Keys List in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Keys List in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -26,10 +27,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetDictionaryKeysListCommand()
         {
-            this.CommandName = "GetDictionaryKeysListCommand";
-            this.SelectionName = "Get Dictionary Keys List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetDictionaryKeysListCommand";
+            //this.SelectionName = "Get Dictionary Keys List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
