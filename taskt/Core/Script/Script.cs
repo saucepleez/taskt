@@ -726,6 +726,9 @@ namespace taskt.Core.Script
             // GetDictionaryValueCommand (fix Display Command Name)
             ChangeCommandName(doc, "GetDictionaryValueCommand", "GetDictionaryValueCommand", "Get Dictionary Value");
 
+            // MailKitGetEMailFromMailListCommand -> MailKitGetEMailFromEMailListCommand
+            ChangeCommandName(doc, "MailKitGetEMailFromMailListCommand", "MailKitGetEMailFromEMailListCommand", "Get EMail From EMailList");
+
             return doc;
         }
 
