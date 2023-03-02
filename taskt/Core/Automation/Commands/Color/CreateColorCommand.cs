@@ -66,11 +66,11 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            int r = this.ConvertToUserVariableAsInteger(nameof(v_Red), "Red", engine);
-            int g = this.ConvertToUserVariableAsInteger(nameof(v_Green), "Green", engine);
-            int b = this.ConvertToUserVariableAsInteger(nameof(v_Blue), "Blue", engine);
+            int r = this.ConvertToUserVariableAsInteger(nameof(v_Red), engine);
+            int g = this.ConvertToUserVariableAsInteger(nameof(v_Green), engine);
+            int b = this.ConvertToUserVariableAsInteger(nameof(v_Blue), engine);
 
-            int a = this.ConvertToUserVariableAsInteger(nameof(v_Alpha), "Alpha", engine);
+            int a = this.ConvertToUserVariableAsInteger(nameof(v_Alpha), engine);
 
             Color co = Color.FromArgb(a, r, g, b);
             co.StoreInUserVariable(engine, v_Color);
