@@ -717,6 +717,15 @@ namespace taskt.Core.Script
             // SetDataTableColumnByListCommand -> SetDataTableColumnValuesByListCommand
             ChangeCommandName(doc, "SetDataTableColumnByListCommand", "SetDataTableColumnValuesByListCommand", "Set DataTable Column Values By List");
 
+            // AddDictionaryCommand -> AddDictionaryItemCommand
+            ChangeCommandName(doc, "AddDictionaryCommand", "AddDictionaryItemCommand", "Add Dictionary Item");
+
+            // ConvertDictionaryToDataTableCommand (fix typo)
+            ChangeCommandName(doc, "ConvertDictionaryToDataTableCommand", "ConvertDictionaryToDataTableCommand", "Convert Dictionary To DataTable");
+
+            // GetDictionaryValueCommand (fix Display Command Name)
+            ChangeCommandName(doc, "GetDictionaryValueCommand", "GetDictionaryValueCommand", "Get Dictionary Value");
+
             return doc;
         }
 
