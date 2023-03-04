@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Row Action")]
+    [Attributes.ClassAttributes.CommandSettings("Get DataTable Row Count")]
     [Attributes.ClassAttributes.Description("This command allows you to get the Row count of a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the Row count of a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetDataTableRowCountCommand()
         {
-            this.CommandName = "GetDataTableRowCountCommand";
-            this.SelectionName = "Get DataTable Row Count";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetDataTableRowCountCommand";
+            //this.SelectionName = "Get DataTable Row Count";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

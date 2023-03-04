@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Convert Row")]
+    [Attributes.ClassAttributes.CommandSettings("Convert DataTable Row To DataTable")]
     [Attributes.ClassAttributes.Description("This command allows you to convert DataTable Row to DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert DataTable Row to DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConvertDataTableRowToDataTableCommand()
         {
-            this.CommandName = "ConvertDataTableRowToDataTableCommand";
-            this.SelectionName = "Convert DataTable Row To DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;         
+            //this.CommandName = "ConvertDataTableRowToDataTableCommand";
+            //this.SelectionName = "Convert DataTable Row To DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;         
         }
 
         public override void RunCommand(object sender)

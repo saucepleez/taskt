@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Column Action")]
+    [Attributes.ClassAttributes.CommandSettings("Check DataTable Column Exists")]
     [Attributes.ClassAttributes.Description("This command allows you to check the column name existance")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check the column name existance.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -39,10 +40,10 @@ namespace taskt.Core.Automation.Commands
 
         public CheckDataTableColumnExistsCommand()
         {
-            this.CommandName = "CheckDataTableColumnExistsCommand";
-            this.SelectionName = "Check DataTable Column Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckDataTableColumnExistsCommand";
+            //this.SelectionName = "Check DataTable Column Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

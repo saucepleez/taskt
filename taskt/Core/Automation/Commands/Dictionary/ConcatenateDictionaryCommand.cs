@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
+    [Attributes.ClassAttributes.CommandSettings("Concatenate Dictionary")]
     [Attributes.ClassAttributes.Description("This command allows you to concatenate two Dictionaries.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to concatenate two Dictionaries.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -57,10 +58,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConcatenateDictionaryCommand()
         {
-            this.CommandName = "ConcatenateDictionaryCommand";
-            this.SelectionName = "Concatenate Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConcatenateDictionaryCommand";
+            //this.SelectionName = "Concatenate Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

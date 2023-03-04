@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Create DateTime From Excel Serial")]
     [Attributes.ClassAttributes.Description("This command allows you to create DateTime from Excel Serial Value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create DateTime from Excel Serial Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -33,10 +34,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateDateTimeFromExcelSerialCommand()
         {
-            this.CommandName = "CreateDateTimeFromExcelSerialCommand";
-            this.SelectionName = "Create DateTime From Excel Serial";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateDateTimeFromExcelSerialCommand";
+            //this.SelectionName = "Create DateTime From Excel Serial";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -44,7 +45,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            decimal value = this.ConvertToUserVariableAsDecimal(nameof(v_Serial), "Serial", engine);
+            decimal value = this.ConvertToUserVariableAsDecimal(nameof(v_Serial), engine);
 
             try
             {

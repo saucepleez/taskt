@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Key")]
+    [Attributes.ClassAttributes.CommandSettings("Check Dictionary Key Exists")]
     [Attributes.ClassAttributes.Description("This command allows you to check key existance in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check key existance in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public CheckDictionaryKeyExistsCommand()
         {
-            this.CommandName = "CheckDictionaryKeyExistsCommand";
-            this.SelectionName = "Check Dictionary Key Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckDictionaryKeyExistsCommand";
+            //this.SelectionName = "Check Dictionary Key Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

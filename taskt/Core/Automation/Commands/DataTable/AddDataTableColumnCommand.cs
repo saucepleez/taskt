@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Column Action")]
+    [Attributes.ClassAttributes.CommandSettings("Add DataTable Column")]
     [Attributes.ClassAttributes.Description("This command allows you to add a column to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a column to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -44,10 +45,10 @@ namespace taskt.Core.Automation.Commands
 
         public AddDataTableColumnCommand()
         {
-            this.CommandName = "AddDataTableColumnCommand";
-            this.SelectionName = "Add DataTable Column";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "AddDataTableColumnCommand";
+            //this.SelectionName = "Add DataTable Column";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

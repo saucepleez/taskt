@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Data;
-using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -9,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Convert")]
+    [Attributes.ClassAttributes.CommandSettings("Convert Dictionary To DataTable")]
     [Attributes.ClassAttributes.Description("This command allows you to convert Dictionary to DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to convert Dictionary to DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -26,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConvertDictionaryToDataTableCommand()
         {
-            this.CommandName = "ConvertDictionaryTDataTableCommand";
-            this.SelectionName = "Convert Dictionary To DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConvertDictionaryTDataTableCommand";
+            //this.SelectionName = "Convert Dictionary To DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

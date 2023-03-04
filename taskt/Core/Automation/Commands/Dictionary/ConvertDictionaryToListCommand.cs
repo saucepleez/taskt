@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Linq;
 
@@ -9,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Convert")]
+    [Attributes.ClassAttributes.CommandSettings("Convert Dictionary To List")]
     [Attributes.ClassAttributes.Description("This command allows you to get List from Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get List from Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -26,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConvertDictionaryToListCommand()
         {
-            this.CommandName = "ConvertDictionaryToListCommand";
-            this.SelectionName = "Convert Dictionary To List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConvertDictionaryToListCommand";
+            //this.SelectionName = "Convert Dictionary To List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

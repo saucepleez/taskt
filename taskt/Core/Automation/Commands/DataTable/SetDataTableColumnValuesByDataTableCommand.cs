@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("Column Action")]
+    [Attributes.ClassAttributes.CommandSettings("Set DataTable Column Values By DataTable")]
     [Attributes.ClassAttributes.Description("This command allows you to set a column to a DataTable by a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a column to a DataTable by a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -48,10 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public SetDataTableColumnValuesByDataTableCommand()
         {
-            this.CommandName = "SetDataTableColumnByDataTableCommand";
-            this.SelectionName = "Set DataTable Column By DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetDataTableColumnByDataTableCommand";
+            //this.SelectionName = "Set DataTable Column Values By DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

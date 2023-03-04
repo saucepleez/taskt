@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
     [Attributes.ClassAttributes.SubGruop("DataTable Action")]
+    [Attributes.ClassAttributes.CommandSettings("Set DataTable Value")]
     [Attributes.ClassAttributes.Description("This command allows you to set the DataTable value")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set the DataTable value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -43,10 +44,10 @@ namespace taskt.Core.Automation.Commands
 
         public SetDataTableValueCommand()
         {
-            this.CommandName = "SetDataTableValueCommand";
-            this.SelectionName = "Set DataTable Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetDataTableValueCommand";
+            //this.SelectionName = "Set DataTable Value";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

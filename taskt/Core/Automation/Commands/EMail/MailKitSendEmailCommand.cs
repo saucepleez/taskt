@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Send Email")]
     [Attributes.ClassAttributes.Description("This command allows you to send EMail using SMTP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an EMail and have access to SMTP server credentials to generate an EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -15,30 +16,12 @@ namespace taskt.Core.Automation.Commands
     public class MailKitSendEmailCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify SMTP Host Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Define the host/service name that the script should use")]
-        //[SampleUsage("**smtp.mymail.com** or **{{{vHost}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("SMTP Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyDisplayText(true, "Host")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
         [PropertyDescription("SMTP Host Name")]
         [PropertyDetailSampleUsage("**smtp.example.com**", PropertyDetailSampleUsage.ValueType.Value, "Host")]
         public string v_SMTPHost { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify SMTP Port")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Define the port number that should be used when contacting the SMTP service")]
-        //[SampleUsage("**25** or **587** or **{{{vPort}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("SMTP Port", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyDisplayText(true, "Port")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Port))]
         [PropertyDescription("SMTP Port")]
         [PropertyDetailSampleUsage("**25**", PropertyDetailSampleUsage.ValueType.Value, "Port")]
@@ -47,41 +30,16 @@ namespace taskt.Core.Automation.Commands
         public string v_SMTPPort { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify SMTP Username")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Define the username to use when contacting the SMTP service")]
-        //[SampleUsage("**username** or **{{{vUserName}}}**")]
-        //[Remarks("")]
-        //[PropertyIsOptional(true, "From Email")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_UserName))]
         [PropertyDescription("SMTP User Name")]
         public string v_SMTPUserName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify SMTP Password")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Define the password to use when contacting the SMTP service")]
-        //[SampleUsage("**password** or **{{{vPassword}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyTextBoxSetting(1, false)]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Password))]
         [PropertyDescription("SMTP Password")]
         public string v_SMTPPassword { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify From Email Address")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Specify how the 'From' field should appear.")]
-        //[SampleUsage("**my-robot@company.com** or **{{{vFromMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("From Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyDisplayText(true, "From")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("From EMail Address")]
         [PropertyValidationRule("From Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -89,15 +47,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SMTPFromEmail { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify To Email Address")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Specify the destination email that should be addressed.")]
-        //[SampleUsage("**john@company.com** or **{{{vToMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("To Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyDisplayText(true, "To")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("To EMail Address")]
         [PropertyValidationRule("To Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -105,14 +54,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SMTPToEmail { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify CC Email Address")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Specify the destination email that should be addressed.")]
-        //[SampleUsage("**tom@company.com** or **{{{vCCMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsOptional(true)]
-        //[PropertyTextBoxSetting(1, false)]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("CC EMail Address")]
         [PropertyValidationRule("CC Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -120,14 +61,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SMTPCCEmail { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify BCC Email Address")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Specify the destination email that should be addressed.")]
-        //[SampleUsage("**bob@company.com** or **{{{vBCCMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyIsOptional(true)]
-        //[PropertyTextBoxSetting(1, false)]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("BCC EMail Address")]
         [PropertyValidationRule("BCC Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -158,40 +91,26 @@ namespace taskt.Core.Automation.Commands
         public string v_SMTPBody { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Email Attachment File Path")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Indicates the file path to attachment.")]
-        [SampleUsage("**c:\\temp\\file.txt** or **{{{vPath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
+        [InputSpecification("File Path", true)]
+        //[SampleUsage("**c:\\temp\\file.txt** or **{{{vPath}}}**")]
+        [PropertyDetailSampleUsage("**C:\temp\\myfile.txt**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
         [PropertyIsOptional(true, "")]
-        [PropertyTextBoxSetting(1, false)]
         public string v_SMTPAttachment { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Secure Option")]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyFirstValue("Auto")]
-        //[PropertyIsOptional(true, "Auto")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyUISelectionOption("Auto")]
-        //[PropertyUISelectionOption("No SSL or TLS")]
-        //[PropertyUISelectionOption("Use SSL or TLS")]
-        //[PropertyUISelectionOption("STARTTLS")]
-        //[PropertyUISelectionOption("STARTTLS When Available")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_SecureOption))]
         public string v_SMTPSecureOption { get; set; }
 
         public MailKitSendEmailCommand()
         {
-            this.CommandName = "MailKitSendEmailCommand";
-            this.SelectionName = "Send Email";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitSendEmailCommand";
+            //this.SelectionName = "Send Email";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -217,7 +136,6 @@ namespace taskt.Core.Automation.Commands
                 user = from;
             }
             string pass = v_SMTPPassword.ConvertToUserVariable(engine);
-            //string secureOption = v_SMTPSecureOption.GetUISelectionValue("v_SMTPSecureOption", this, engine);
 
             // attachment
             string attachmentFilePath = v_SMTPAttachment.ConvertToUserVariable(engine);
@@ -285,22 +203,6 @@ namespace taskt.Core.Automation.Commands
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                //var option = MailKit.Security.SecureSocketOptions.Auto;
-                //switch (secureOption)
-                //{
-                //    case "no ssl or tls":
-                //        option = MailKit.Security.SecureSocketOptions.None;
-                //        break;
-                //    case "use ssl or tls":
-                //        option = MailKit.Security.SecureSocketOptions.SslOnConnect;
-                //        break;
-                //    case "starttls":
-                //        option = MailKit.Security.SecureSocketOptions.StartTls;
-                //        break;
-                //    case "starttls when available":
-                //        option = MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable;
-                //        break;
-                //}
                 var option = this.GetMailKitSecureOption(nameof(v_SMTPSecureOption), engine);
                 try
                 {

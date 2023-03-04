@@ -286,6 +286,7 @@ namespace taskt.Core.Script
             fixUIAutomationGroupEnableParameterValue(doc);
             convertTo3_5_0_83(doc);
             convertTo3_5_1_16(doc);
+            convertTo3_5_1_30(doc);
 
             return doc;
         }
@@ -702,6 +703,32 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "ParseJsonCommand", "GetJSONValueListCommand", "Get JSON Value List");
             // Parse Json Model -> Get Multi JSON Value List
             ChangeCommandName(doc, "ParseJsonModelCommand", "GetMultiJSONValueListCommand", "Get Multi JSON Value List");
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_30(XDocument doc)
+        {
+            // AddDataTableRowByDataTableCommand -> AddDataTableRowsByDataTableCommand
+            ChangeCommandName(doc, "AddDataTableRowByDataTableCommand", "AddDataTableRowsByDataTableCommand", "Add DataTable Rows By DataTable");
+
+            // SetDataTableColumnByDataTableCommand -> SetDataTableColumnValuesByDataTableCommand
+            ChangeCommandName(doc, "SetDataTableColumnByDataTableCommand", "SetDataTableColumnValuesByDataTableCommand", "Set DataTable Column Values By DataTable");
+
+            // SetDataTableColumnByListCommand -> SetDataTableColumnValuesByListCommand
+            ChangeCommandName(doc, "SetDataTableColumnByListCommand", "SetDataTableColumnValuesByListCommand", "Set DataTable Column Values By List");
+
+            // AddDictionaryCommand -> AddDictionaryItemCommand
+            ChangeCommandName(doc, "AddDictionaryCommand", "AddDictionaryItemCommand", "Add Dictionary Item");
+
+            // ConvertDictionaryToDataTableCommand (fix typo)
+            ChangeCommandName(doc, "ConvertDictionaryToDataTableCommand", "ConvertDictionaryToDataTableCommand", "Convert Dictionary To DataTable");
+
+            // GetDictionaryValueCommand (fix Display Command Name)
+            ChangeCommandName(doc, "GetDictionaryValueCommand", "GetDictionaryValueCommand", "Get Dictionary Value");
+
+            // MailKitGetEMailFromMailListCommand -> MailKitGetEMailFromEMailListCommand
+            ChangeCommandName(doc, "MailKitGetEMailFromMailListCommand", "MailKitGetEMailFromEMailListCommand", "Get EMail From EMailList");
+
             return doc;
         }
 

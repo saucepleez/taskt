@@ -166,6 +166,21 @@ namespace taskt.Core.Automation.Commands
         public static string v_EmailAddress { get; }
 
         /// <summary>
+        /// EMail path property
+        /// </summary>
+        [PropertyDescription("Path of the EMail")]
+        [InputSpecification("Path", true)]
+        [PropertyDetailSampleUsage("**C:\\Temp\\mymail.eml**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Path")]
+        public static string v_EMailPath { get; }
+
+        /// <summary>
         /// get EMailList Variable from variable name specified argument
         /// </summary>
         /// <param name="variableName"></param>

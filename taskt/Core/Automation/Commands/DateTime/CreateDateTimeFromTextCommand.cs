@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("DateTime Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Create DateTime From Text")]
     [Attributes.ClassAttributes.Description("This command allows you to create DateTime from Text.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create DateTime from Text.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -33,10 +34,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateDateTimeFromTextCommand()
         {
-            this.CommandName = "CreateDateTimeFromTextCommand";
-            this.SelectionName = "Create DateTime From Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateDateTimeFromTextCommand";
+            //this.SelectionName = "Create DateTime From Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

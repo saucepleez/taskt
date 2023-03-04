@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Item")]
+    [Attributes.ClassAttributes.CommandSettings("Set Dictionary Value")]
     [Attributes.ClassAttributes.Description("This command allows you to set value in Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set value in Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -36,10 +37,10 @@ namespace taskt.Core.Automation.Commands
 
         public SetDictionaryValueCommand()
         {
-            this.CommandName = "SetDictionaryValueCommand";
-            this.SelectionName = "Set Dictionary Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetDictionaryValueCommand";
+            //this.SelectionName = "Set Dictionary Value";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

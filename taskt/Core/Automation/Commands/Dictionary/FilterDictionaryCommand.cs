@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
     [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
+    [Attributes.ClassAttributes.CommandSettings("Filter Dictionary")]
     [Attributes.ClassAttributes.Description("This command allows you to filter Dictionary value.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to filter Dictionary value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -44,10 +45,10 @@ namespace taskt.Core.Automation.Commands
 
         public FilterDictionaryCommand()
         {
-            this.CommandName = "FilterDictionaryCommand";
-            this.SelectionName = "Filter Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "FilterDictionaryCommand";
+            //this.SelectionName = "Filter Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

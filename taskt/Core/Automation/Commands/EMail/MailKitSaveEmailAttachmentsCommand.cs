@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
+    [Attributes.ClassAttributes.CommandSettings("Save Email Attachments")]
     [Attributes.ClassAttributes.Description("This command allows you to save EMail Attachments.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save EMail Attachments.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -15,39 +16,26 @@ namespace taskt.Core.Automation.Commands
     public class MailKitSaveEmailAttachmentsCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify EMail Variable Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vEMail}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("EMail", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyDisplayText(true, "EMail")]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_InputEMailName))]
         public string v_MailName { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Folder Path to Save Attachments")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**C:\\Temp** or **{{{vPath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
+        [InputSpecification("Folder Path", true)]
+        [PropertyDetailSampleUsage("**C:\\Temp**", PropertyDetailSampleUsage.ValueType.Value, "Folder Path")]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Folder Path")]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
         public string v_SaveFolder { get; set; }
 
         public MailKitSaveEmailAttachmentsCommand()
         {
-            this.CommandName = "MailKitSaveEmailAttachmentsCommand";
-            this.SelectionName = "Save Email Attachments";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitSaveEmailAttachmentsCommand";
+            //this.SelectionName = "Save Email Attachments";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
