@@ -16,30 +16,11 @@ namespace taskt.Core.Automation.Commands
     public class RemoveJSONArrayItemCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Specify the JSON Variable Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vSomeVariable}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.JSON)]
-        //[PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "JSON")]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_BothJSONName))]
         [PropertyDescription("JSON Array Variable Name")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please Specify a JSON extractor (JSONPath)")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Input a JSON token extractor")]
-        //[SampleUsage("**$.id**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyCustomUIHelper("JSONPath Helper", nameof(lnkJsonPathHelper_Click))]
-        //[PropertyValidationRule("JSON extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Extractor")]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_JSONPath))]
         public string v_JsonExtractor { get; set; }
 
@@ -89,17 +70,5 @@ namespace taskt.Core.Automation.Commands
             });
             this.JSONModifyByJSONPath(nameof(v_InputValue), nameof(v_JsonExtractor), removeItemFunc, removeItemFunc, engine);
         }
-
-        //public void lnkJsonPathHelper_Click(object sender, EventArgs e)
-        //{
-        //    using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
-        //    {
-        //        if (fm.ShowDialog() == DialogResult.OK)
-        //        {
-        //            //v_JsonExtractor = fm.JSONPath;
-        //            ((TextBox)((CommandItemControl)sender).Tag).Text = fm.JSONPath;
-        //        }
-        //    }
-        //}
     }
 }
