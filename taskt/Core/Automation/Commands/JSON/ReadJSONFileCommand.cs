@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("File")]
+    [Attributes.ClassAttributes.CommandSettings("Read JSON File")]
     [Attributes.ClassAttributes.Description("This command reads JSON data into a variable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to read data from JSON files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
@@ -32,10 +33,10 @@ namespace taskt.Core.Automation.Commands
 
         public ReadJSONFileCommand()
         {
-            this.CommandName = "ReadJSONFileCommand";
-            this.SelectionName = "Read JSON File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ReadJSONFileCommand";
+            //this.SelectionName = "Read JSON File";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Get/Set")]
+    [Attributes.ClassAttributes.CommandSettings("Set JSON Value")]
     [Attributes.ClassAttributes.Description("This command allows you to set value in JSON.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -36,10 +37,10 @@ namespace taskt.Core.Automation.Commands
 
         public SetJSONValueCommand()
         {
-            this.CommandName = "SetJSONValue";
-            this.SelectionName = "Set JSON Value";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetJSONValue";
+            //this.SelectionName = "Set JSON Value";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

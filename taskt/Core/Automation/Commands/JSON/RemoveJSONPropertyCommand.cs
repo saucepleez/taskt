@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Remove JSON Property")]
     [Attributes.ClassAttributes.Description("This command allows you to remove a property in JSON")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -26,10 +27,10 @@ namespace taskt.Core.Automation.Commands
 
         public RemoveJSONPropertyCommand()
         {
-            this.CommandName = "Remove JSON Property";
-            this.SelectionName = "Remove JSON Property";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "Remove JSON Property";
+            //this.SelectionName = "Remove JSON Property";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

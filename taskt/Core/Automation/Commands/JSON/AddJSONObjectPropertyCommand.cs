@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Add JSON Object Property")]
     [Attributes.ClassAttributes.Description("This command allows you to add property to JSON Object.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -46,10 +47,10 @@ namespace taskt.Core.Automation.Commands
 
         public AddJSONObjectPropertyCommand()
         {
-            this.CommandName = "AddJSONObjectProperty";
-            this.SelectionName = "Add JSON Object Property";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "AddJSONObjectProperty";
+            //this.SelectionName = "Add JSON Object Property";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

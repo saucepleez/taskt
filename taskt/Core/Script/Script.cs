@@ -287,6 +287,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_83(doc);
             convertTo3_5_1_16(doc);
             convertTo3_5_1_30(doc);
+            convertTo3_5_1_31(doc);
 
             return doc;
         }
@@ -728,6 +729,35 @@ namespace taskt.Core.Script
 
             // MailKitGetEMailFromMailListCommand -> MailKitGetEMailFromEMailListCommand
             ChangeCommandName(doc, "MailKitGetEMailFromMailListCommand", "MailKitGetEMailFromEMailListCommand", "Get EMail From EMailList");
+
+            return doc;
+        }
+
+        public static XDocument convertTo3_5_1_31(XDocument doc)
+        {
+            // AddJSONArrayItem -> AddJSONArrayItemCommand
+            ChangeCommandName(doc, "AddJSONArrayItem", "AddJSONArrayItemCommand", "Add JSON Array Item");
+
+            // AddJSONObjectProperty -> AddJSONObjectPropertyCommand
+            ChangeCommandName(doc, "AddJSONObjectProperty", "AddJSONObjectPropertyCommand", "Add JSON Object Property");
+
+            // CreateJSONVariable -> CreateJSONVariableCommand
+            ChangeCommandName(doc, "CreateJSONVariable", "CreateJSONVariableCommand", "Create JSON Variable");
+
+            // InsertJSONArrayItem -> InsertJSONArrayItemCommand
+            ChangeCommandName(doc, "InsertJSONArrayItem", "InsertJSONArrayItemCommand", "Insert JSON Array Item");
+
+            // InsertJSONObjectProperty -> InsertJSONObjectPropertyCommand
+            ChangeCommandName(doc, "InsertJSONObjectProperty", "InsertJSONObjectPropertyCommand", "Insert JSON Object Property");
+
+            // RemoveJSONArrayItem -> RemoveJSONArrayItemCommand
+            ChangeCommandName(doc, "RemoveJSONArrayItem", "RemoveJSONArrayItemCommand", "Remove JSON Array Item");
+
+            // Remove JSON Property -> RemoveJSONPropertyCommand
+            ChangeCommandName(doc, "Remove JSON Property", "RemoveJSONPropertyCommand", "Remove JSON Property");
+
+            // SetJSONValue -> SetJSONValueCommand
+            ChangeCommandName(doc, "SetJSONValue", "SetJSONValueCommand", "Set JSON Value");
 
             return doc;
         }
