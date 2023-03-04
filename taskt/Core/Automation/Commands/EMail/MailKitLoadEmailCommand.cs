@@ -17,15 +17,16 @@ namespace taskt.Core.Automation.Commands
     public class MailKitLoadEmailCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EMailPath))]
         [PropertyDescription("Path to the EMail")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Path", true)]
-        //[SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
-        [PropertyDetailSampleUsage("**C:\\temp\\mymail.eml**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
-        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
-        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Path")]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("Path", true)]
+        ////[SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
+        //[PropertyDetailSampleUsage("**C:\\temp\\mymail.eml**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
+        //[PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
+        //[PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Path")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]

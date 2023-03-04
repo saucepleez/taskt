@@ -20,16 +20,17 @@ namespace taskt.Core.Automation.Commands
         public string v_MailName { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EMailPath))]
         [PropertyDescription("Path to Save the File")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Path")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**C:\\Temp\\mymail.eml** or **{{{vPath}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Path")]
         public string v_SavePath { get; set; }
 
         public MailKitSaveEmailCommand()
