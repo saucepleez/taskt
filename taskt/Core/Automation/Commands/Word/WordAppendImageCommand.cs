@@ -15,13 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class WordAppendImageCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        //[SampleUsage("**myInstance** or **wordInstance**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Word)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
         public string v_InstanceName { get; set; }
 
@@ -49,10 +42,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var wordObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
-            //Document wordDocument = wordInstance.ActiveDocument;
             (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
 
             //Appends image after text/images
@@ -62,28 +51,5 @@ namespace taskt.Core.Automation.Commands
             imageRange.Collapse(ref collapseEnd);
             imageRange.InlineShapes.AddPicture(vImagePath, Type.Missing, Type.Missing, imageRange);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Word);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ImagePath", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " ['" + v_ImagePath + "' To Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

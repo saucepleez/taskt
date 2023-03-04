@@ -15,21 +15,10 @@ namespace taskt.Core.Automation.Commands
     public class WordAppendDataTableCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        //[SampleUsage("**myInstance** or **wordInstance**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Word)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the DataTable Name")]
-        //[InputSpecification("Enter the DataTable you would like to append.")]
-        //[SampleUsage("**myData**")]
-        //[Remarks("")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
         public string v_DataTableName { get; set; }
 
@@ -45,16 +34,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var wordObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
-            //var wordInstance = v_InstanceName.GetWordInstance(engine);
-            //Document wordDocument = wordInstance.ActiveDocument;
             (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
 
-            //var dataSetVariable = LookupVariable(engine);
-            //System.Data.DataTable dataTable = new System.Data.DataTable();
-            //dataTable = (System.Data.DataTable)dataSetVariable.VariableValue;
             var dataTable = v_DataTableName.GetDataTableVariable(engine);
 
             //converting System DataTable to Word DataTable
@@ -118,43 +99,5 @@ namespace taskt.Core.Automation.Commands
             wordDocument.Application.Selection.Cells.VerticalAlignment = WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             wordDocument.Application.Selection.Font.Bold = 1;
         }
-
-        //private Script.ScriptVariable LookupVariable(Engine.AutomationEngineInstance sendingInstance)
-        //{
-        //    //search for the variable
-        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataTableName).FirstOrDefault();
-
-        //    //if variable was not found but it starts with variable naming pattern
-        //    if ((requiredVariable == null) && (v_DataTableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DataTableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-        //    {
-        //        //reformat and attempt
-        //        var reformattedVariable = v_DataTableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-        //        requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-        //    }
-
-        //    return requiredVariable;
-        //}
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Word);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " ['" + v_DataTableName + "' To Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

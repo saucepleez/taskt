@@ -14,13 +14,6 @@ namespace taskt.Core.Automation.Commands
     public class WordCloseApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        //[SampleUsage("**myInstance** or **wordInstance**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Word)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
         public string v_InstanceName { get; set; }
 
@@ -63,29 +56,5 @@ namespace taskt.Core.Automation.Commands
             //remove instance
             engine.RemoveAppInstance(vInstance);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Word);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_WordSaveOnExit", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
-        //    }
-
-        //    return RenderedControls;
-
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Save On Close: " + v_WordSaveOnExit + ", Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }
