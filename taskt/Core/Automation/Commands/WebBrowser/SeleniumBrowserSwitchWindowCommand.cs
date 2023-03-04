@@ -16,13 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class SeleniumBrowserSwitchWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
-        //[InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
@@ -112,35 +105,6 @@ namespace taskt.Core.Automation.Commands
                     continue;
                 }
 
-                //string matchData = "";
-                //switch(matchType)
-                //{
-                //    case "Window URL":
-                //        matchData = tempHandle.Url;
-                //        break;
-
-                //    case "Window Title":
-                //        matchData = tempHandle.Title;
-                //        break;
-
-                //    case "Handle ID":
-                //        matchData = tempHandle.CurrentWindowHandle;
-                //        break;
-                //}
-
-                //if (!caseSensitive)
-                //{
-                //    matchData = matchData.ToLower();
-                //    matchParam = matchParam.ToLower();
-                //}
-
-                //if ((exactMatchRequired && matchData == matchParam) || (!exactMatchRequired && matchData.Contains(matchParam)))
-                //{
-                //    //match was made
-                //    matchFound = true;
-                //    break;
-                //}
-
                 matchFound = matchFunc(tempHandle, matchParam);
                 if (matchFound)
                 {
@@ -212,51 +176,5 @@ namespace taskt.Core.Automation.Commands
             }
             return retFunc;
         }
-
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.WebBrowser);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_WindowMatchType", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MatchSpecification", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CaseSensitiveMatch", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MatchParameter", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return $"{base.GetDisplayValue()} - [To {v_WindowMatchType} '{v_MatchParameter}', Instance Name: '{v_InstanceName}']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_WindowMatchType))
-        //    {
-        //        this.validationResult += "Type of match is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

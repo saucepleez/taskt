@@ -15,13 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class SeleniumBrowserResizeBrowser : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Browser** command")]
-        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
@@ -61,9 +54,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var browserObject = engine.GetAppInstance(vInstance);
-            //var seleniumInstance = (IWebDriver)browserObject;
             var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
             var currentSize = seleniumInstance.Manage().Window.Size;
@@ -75,7 +65,6 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //width = int.Parse(v_BrowserWidth.ConvertToUserVariable(sender));
                 width = this.ConvertToUserVariableAsInteger(nameof(v_BrowserWidth), engine);
             }
 
@@ -86,43 +75,9 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //height = int.Parse(v_BrowserHeight.ConvertToUserVariable(sender));
                 height = this.ConvertToUserVariableAsInteger(nameof(v_BrowserHeight), engine);
             }
             seleniumInstance.Manage().Window.Size = new System.Drawing.Size(width, height);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

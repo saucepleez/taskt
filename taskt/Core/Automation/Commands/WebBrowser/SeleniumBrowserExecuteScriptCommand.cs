@@ -15,13 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class SeleniumBrowserExecuteScriptCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name (ex. myInstance, {{{{vInstance}}})")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.WebBrowser)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
@@ -78,14 +71,6 @@ namespace taskt.Core.Automation.Commands
         public string v_Args { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive the data")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable** or **{{{vVariableName}}}**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyIsOptional(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Recieve Result Value")]
         [PropertyIsOptional(true)]
@@ -107,10 +92,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //if (String.IsNullOrEmpty(v_CodeType))
-            //{
-            //    v_CodeType = "Code";
-            //}
             var codeType = SelectionControls.GetUISelectionValue(this, nameof(v_CodeType), engine);
 
             string script = "";
@@ -126,9 +107,6 @@ namespace taskt.Core.Automation.Commands
 
             var args = v_Args.ConvertToUserVariable(sender);
             
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var browserObject = engine.GetAppInstance(vInstance);
-            //var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
             var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
             //configure timeout
@@ -179,51 +157,5 @@ namespace taskt.Core.Automation.Commands
                 result.ToString().StoreInUserVariable(sender, v_userVariableName);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    //UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
-        //    //RenderedControls.AddRange(instanceCtrls);
-        //    ////RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptCode", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Args", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TimeOut", this, editor));
-
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    //RenderedControls.Add(VariableNameControl);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InstanceName))
-        //    {
-        //        this.validationResult += "Instance name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
