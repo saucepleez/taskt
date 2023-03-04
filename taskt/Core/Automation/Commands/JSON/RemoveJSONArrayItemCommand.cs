@@ -26,18 +26,19 @@ namespace taskt.Core.Automation.Commands
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Index to Remove")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        //[SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
-        [PropertyDetailSampleUsage("**0**", "Specify the First Index to be Removed")]
-        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index to Remove")]
-        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index to Remove")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "Index")]
-        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_ArrayIndex))]
+        //[PropertyDescription("Index to Remove")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        ////[SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        //[PropertyDetailSampleUsage("**0**", "Specify the First Index to be Removed")]
+        //[PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index to Remove")]
+        //[PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index to Remove")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "Index")]
+        //[PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_RemoveIndex { get; set; }
 
         public RemoveJSONArrayItemCommand()

@@ -26,16 +26,17 @@ namespace taskt.Core.Automation.Commands
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Property Name to Insert")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [PropertyDetailSampleUsage("**Name**", PropertyDetailSampleUsage.ValueType.Value, "Property Name")]
-        [PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Property Name")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Property Name")]
+        //[PropertyDescription("Property Name to Insert")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[PropertyDetailSampleUsage("**Name**", PropertyDetailSampleUsage.ValueType.Value, "Property Name")]
+        //[PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Property Name")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Property Name")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_PropertyName))]
         public string v_PropertyName { get; set; }
 
         [XmlAttribute]
