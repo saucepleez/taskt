@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
+    [Attributes.ClassAttributes.CommandSettings("Get Text From Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Text Value from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -24,10 +25,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetTextFromElementCommand()
         {
-            this.CommandName = "UIAutomationGetTextFromElementCommand";
-            this.SelectionName = "Get Text From Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetTextFromElementCommand";
+            //this.SelectionName = "Get Text From Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

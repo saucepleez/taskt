@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
+    [Attributes.ClassAttributes.CommandSettings("Get Text From Table Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Text Value from Table AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from Table AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -47,10 +48,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetTextFromTableElementCommand()
         {
-            this.CommandName = "UIAutomationGetTextFromTableElementCommand";
-            this.SelectionName = "Get Text From Table Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetTextFromTableElementCommand";
+            //this.SelectionName = "Get Text From Table Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Check Element Exist")]
     [Attributes.ClassAttributes.Description("This command allows you to to check AutomationElement existence.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check AutomationElement existence")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationCheckElementExistCommand()
         {
-            this.CommandName = "UIAutomationCheckElementExistCommand";
-            this.SelectionName = "Check Element Exist";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationCheckElementExistCommand";
+            //this.SelectionName = "Check Element Exist";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For Element Exist By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to Wait until the AutomationElement exists using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the AutomationElement exists using by XPath.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -38,10 +39,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationWaitForElementExistByXPathCommand()
         {
-            this.CommandName = "UIAutomationWaitForElementExistByXPathCommand";
-            this.SelectionName = "Wait For Element Exist By XPath";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationWaitForElementExistByXPathCommand";
+            //this.SelectionName = "Wait For Element Exist By XPath";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
