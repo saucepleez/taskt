@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 JArray ary = (JArray)searchResult;
 
-                var index = this.ConvertToUserVariableAsInteger(nameof(v_RemoveIndex), "Index", engine);
+                var index = this.ConvertToUserVariableAsInteger(nameof(v_RemoveIndex), engine);
 
                 if ((index < 0) && (index > ary.Count))
                 {

@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_InsertIndex = ary.Count.ToString();
                 }
-                var index = this.ConvertToUserVariableAsInteger(nameof(v_InsertIndex), "Index", engine);
+                var index = this.ConvertToUserVariableAsInteger(nameof(v_InsertIndex), engine);
 
                 if ((index < 0) && (index > ary.Count))
                 {
