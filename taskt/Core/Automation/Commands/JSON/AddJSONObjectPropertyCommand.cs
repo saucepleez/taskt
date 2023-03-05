@@ -39,14 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_PropertyName))]
         public string v_PropertyName { get; set; }
 
-        //[PropertyDescription("Please Specify Property Value to Add")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**Hello** or **{{{vValue}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyDisplayText(true, "Value")]
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_ValueToAdd))]
         public string v_PropertyValue { get; set; }
 
