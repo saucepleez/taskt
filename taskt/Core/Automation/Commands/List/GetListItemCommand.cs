@@ -40,72 +40,98 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var listVariable = v_ListName.GetRawVariable(engine);
-            if (listVariable == null)
-            {
-                throw new Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            //var listVariable = v_ListName.GetRawVariable(engine);
+            //if (listVariable == null)
+            //{
+            //    throw new Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
 
-            dynamic listToIndex;
-            var varType = listVariable.VariableValue.GetType();
-            if (listVariable.VariableValue is List<string> list_string)
-            {
-                listToIndex = list_string;
-            }
-            else if (varType.IsGenericType && (varType.GetGenericTypeDefinition() == typeof(List<>)))
-            {
-                listToIndex = listVariable.VariableValue;
-            }
-            else
-            {
-                var listValue = listVariable.VariableValue;
-                if ((listValue is string) &&
-                        (listValue.ToString().StartsWith("[") && listValue.ToString().EndsWith("]") && listValue.ToString().Contains(",")))
-                {
-                    Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
+            //dynamic listToIndex;
+            //var varType = listVariable.VariableValue.GetType();
+            //if (listVariable.VariableValue is List<string> list_string)
+            //{
+            //    listToIndex = list_string;
+            //}
+            //else if (varType.IsGenericType && (varType.GetGenericTypeDefinition() == typeof(List<>)))
+            //{
+            //    listToIndex = listVariable.VariableValue;
+            //}
+            //else
+            //{
+            //    var listValue = listVariable.VariableValue;
+            //    if ((listValue is string) &&
+            //            (listValue.ToString().StartsWith("[") && listValue.ToString().EndsWith("]") && listValue.ToString().Contains(",")))
+            //    {
+            //        Newtonsoft.Json.Linq.JArray jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(listVariable.VariableValue.ToString()) as Newtonsoft.Json.Linq.JArray;
 
-                    var itemList = new List<string>();
-                    foreach (var jsonItem in jsonArray)
-                    {
-                        var value = (Newtonsoft.Json.Linq.JValue)jsonItem;
-                        itemList.Add(value.ToString());
-                    }
-                    listToIndex = itemList;
-                }
-                else
-                {
-                    throw new Exception(v_ListName + " is not List");
-                }
-            }
+            //        var itemList = new List<string>();
+            //        foreach (var jsonItem in jsonArray)
+            //        {
+            //            var value = (Newtonsoft.Json.Linq.JValue)jsonItem;
+            //            itemList.Add(value.ToString());
+            //        }
+            //        listToIndex = itemList;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception(v_ListName + " is not List");
+            //    }
+            //}
 
+            //int index;
+            //if (String.IsNullOrEmpty(v_ItemIndex))
+            //{
+            //    index = listVariable.CurrentPosition;
+            //}
+            //else
+            //{
+            //    index = v_ItemIndex.ConvertToUserVariableAsInteger("Index", engine);
+            //}
+
+            //if (index < 0)
+            //{
+            //    index = listToIndex.Count + index;
+            //}
+
+            //if ((index >= 0) && (index < listToIndex.Count))
+            //{
+            //    if (listToIndex is List<string>)
+            //    {
+            //        ((string)listToIndex[index]).StoreInUserVariable(engine, v_UserVariableName);
+            //    }
+            //    else
+            //    {
+            //        // set new variable
+            //        "".StoreInUserVariable(engine, v_UserVariableName);
+            //        var targetVariable = v_UserVariableName.GetRawVariable(engine);
+            //        targetVariable.VariableValue = listToIndex[index];
+            //    }
+            //}
+            //else
+            //{
+            //    throw new Exception("Strange index " + v_ItemIndex + ", parsed " + index);
+            //}
+
+            var list = v_ListName.GetListVariable(engine);
             int index;
             if (String.IsNullOrEmpty(v_ItemIndex))
             {
-                index = listVariable.CurrentPosition;
+                var rawVariable = v_ListName.GetRawVariable(engine);
+                index = rawVariable.CurrentPosition;
             }
             else
             {
-                index = v_ItemIndex.ConvertToUserVariableAsInteger("Index", engine);
-            }
-            
-            if (index < 0)
-            {
-                index = listToIndex.Count + index;
+                index = this.ConvertToUserVariableAsInteger(nameof(v_ItemIndex), engine);
             }
 
-            if ((index >= 0) && (index < listToIndex.Count))
+            if (index < 0)
             {
-                if (listToIndex is List<string>)
-                {
-                    ((string)listToIndex[index]).StoreInUserVariable(engine, v_UserVariableName);
-                }
-                else
-                {
-                    // set new variable
-                    "".StoreInUserVariable(engine, v_UserVariableName);
-                    var targetVariable = v_UserVariableName.GetRawVariable(engine);
-                    targetVariable.VariableValue = listToIndex[index];
-                }
+                index += list.Count;
+            }
+
+            if ((index >= 0) && (index < list.Count))
+            {
+                list[index].StoreInUserVariable(engine, v_UserVariableName);
             }
             else
             {
