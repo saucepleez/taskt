@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Item")]
+    [Attributes.ClassAttributes.CommandSettings("Set List Item")]
     [Attributes.ClassAttributes.Description("This command allows you want to set an item in a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set an item in a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -34,10 +35,10 @@ namespace taskt.Core.Automation.Commands
 
         public SetListItemCommand()
         {
-            this.CommandName = "SetListItemCommand";
-            this.SelectionName = "Set List Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetListItemCommand";
+            //this.SelectionName = "Set List Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

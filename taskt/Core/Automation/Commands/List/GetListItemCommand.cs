@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Item")]
+    [Attributes.ClassAttributes.CommandSettings("Get List Item")]
     [Attributes.ClassAttributes.Description("This command allows you to get an item from a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get an item from a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -29,10 +30,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetListItemCommand()
         {
-            this.CommandName = "GetListItemCommand";
-            this.SelectionName = "Get List Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetListItemCommand";
+            //this.SelectionName = "Get List Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("Convert")]
+    [Attributes.ClassAttributes.CommandSettings("Convert List To JSON")]
     [Attributes.ClassAttributes.Description("This command convert a JSON array to a list.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConvertListToJSONCommand()
         {
-            this.CommandName = "ConvertListToJSONCommand";
-            this.SelectionName = "Convert List To JSON";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConvertListToJSONCommand";
+            //this.SelectionName = "Convert List To JSON";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

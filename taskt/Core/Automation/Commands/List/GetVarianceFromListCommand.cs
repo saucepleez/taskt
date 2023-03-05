@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("Math")]
+    [Attributes.ClassAttributes.CommandSettings("Get Variance From List")]
     [Attributes.ClassAttributes.Description("This command allows you to get variance value from a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get variance value from a list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetVarianceFromListCommand()
         {
-            this.CommandName = "GetVarianceFromListCommand";
-            this.SelectionName = "Get Variance From List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetVarianceFromListCommand";
+            //this.SelectionName = "Get Variance From List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

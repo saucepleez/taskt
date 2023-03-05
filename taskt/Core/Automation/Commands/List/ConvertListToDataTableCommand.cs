@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("Convert")]
+    [Attributes.ClassAttributes.CommandSettings("Convert List To DataTable")]
     [Attributes.ClassAttributes.Description("This command convert a List to a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -59,10 +60,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConvertListToDataTableCommand()
         {
-            this.CommandName = "ConvertListToDataTableCommand";
-            this.SelectionName = "Convert List To DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConvertListToDataTableCommand";
+            //this.SelectionName = "Convert List To DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

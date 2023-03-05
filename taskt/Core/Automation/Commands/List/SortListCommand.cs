@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Sort List")]
     [Attributes.ClassAttributes.Description("This command allows you to sort list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to sort list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -52,10 +53,10 @@ namespace taskt.Core.Automation.Commands
 
         public SortListCommand()
         {
-            this.CommandName = "SortListCommand";
-            this.SelectionName = "Sort List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SortListCommand";
+            //this.SelectionName = "Sort List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

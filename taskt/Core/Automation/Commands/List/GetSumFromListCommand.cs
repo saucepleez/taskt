@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("Math")]
+    [Attributes.ClassAttributes.CommandSettings("Get Sum From List")]
     [Attributes.ClassAttributes.Description("This command allows you to get sum value from a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get sum value from a list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetSumFromListCommand()
         {
-            this.CommandName = "GetSumFromListCommand";
-            this.SelectionName = "Get Sum From List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetSumFromListCommand";
+            //this.SelectionName = "Get Sum From List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

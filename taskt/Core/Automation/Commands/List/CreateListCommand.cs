@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Create List")]
     [Attributes.ClassAttributes.Description("This command allows you to create new List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create new List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -39,10 +40,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateListCommand()
         {
-            this.CommandName = "CreateListCommand";
-            this.SelectionName = "Create List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateListCommand";
+            //this.SelectionName = "Create List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

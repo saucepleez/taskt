@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("Convert")]
+    [Attributes.ClassAttributes.CommandSettings("Convert List To Dictionary")]
     [Attributes.ClassAttributes.Description("This command convert a List to Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -58,10 +59,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConvertListToDictionaryCommand()
         {
-            this.CommandName = "ConvertListToDictionaryCommand";
-            this.SelectionName = "Convert List To Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConvertListToDictionaryCommand";
+            //this.SelectionName = "Convert List To Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

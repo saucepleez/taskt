@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Concatenate Lists")]
     [Attributes.ClassAttributes.Description("This command allows you to concatenate 2 lists.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to concatenate 2 lists.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -40,10 +41,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConcatenateListsCommand()
         {
-            this.CommandName = "ConcatenateListsCommand";
-            this.SelectionName = "Concatenate Lists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConcatenateListsCommand";
+            //this.SelectionName = "Concatenate Lists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
