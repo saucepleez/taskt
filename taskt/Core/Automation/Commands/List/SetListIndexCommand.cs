@@ -28,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List")]
         public string v_ListName { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please set the current Index of the List")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -38,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Index")]
         public string v_Index { get; set; }
+
         public SetListIndexCommand()
         {
             //this.CommandName = "SetListIndexCommand";
