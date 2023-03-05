@@ -857,8 +857,8 @@ namespace taskt.UI
             {nameof(WordOpenDocumentCommand), "taskt.Properties.Resources.command_files"},
             {nameof(WordReadDocumentCommand), "taskt.Properties.Resources.command_files"},
             {nameof(WordReplaceTextCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(WordSaveCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(WordSaveAsCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(WordSaveDocumentCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(WordSaveDocumentAsCommand), "taskt.Properties.Resources.command_files"},
 
             //// NOTHING ///
             {"BeginExcelDatasetLoopCommand", "taskt.Properties.Resources.command_startloop"},

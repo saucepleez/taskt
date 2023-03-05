@@ -759,6 +759,15 @@ namespace taskt.Core.Script
             // SetJSONValue -> SetJSONValueCommand
             ChangeCommandName(doc, "SetJSONValue", "SetJSONValueCommand", "Set JSON Value");
 
+            // CheckWordInstanceExistsCommand -> WordCheckWordInstanceExistsCommand
+            ChangeCommandName(doc, "CheckWordInstanceExistsCommand", "WordCheckWordInstanceExistsCommand", "Check Word Instance Exists");
+
+            // WordSaveAsCommand -> WordSaveDocumentAs
+            ChangeCommandName(doc, "WordSaveAsCommand", "WordSaveDocumentAsCommand", "Save Document As");
+
+            // WordSaveCommand -> WordSaveDocumentCommand
+            ChangeCommandName(doc, "WordSaveCommand", "WordSaveDocumentCommand", "Save Document");
+
             return doc;
         }
 

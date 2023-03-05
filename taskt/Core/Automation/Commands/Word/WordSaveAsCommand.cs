@@ -8,11 +8,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to save an Word document.")]
+    [Attributes.ClassAttributes.CommandSettings("Save Document As")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a document to a file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class WordSaveAsCommand : ScriptCommand
+    public class WordSaveDocumentAsCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
@@ -22,12 +23,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_FilePath))]
         public string v_FileName { get; set; }
 
-        public WordSaveAsCommand()
+        public WordSaveDocumentAsCommand()
         {
-            this.CommandName = "WordSaveAsCommand";
-            this.SelectionName = "Save Document As";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WordSaveAsCommand";
+            //this.SelectionName = "Save Document As";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
