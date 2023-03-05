@@ -39,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_PropertyName))]
         public string v_PropertyName { get; set; }
 
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_ValueToAdd))]
         public string v_PropertyValue { get; set; }
 
