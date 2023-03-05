@@ -200,15 +200,15 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static (List<string>, int) GetListVariableAndIndex(this ScriptCommand command, string variableName, string indexName, Engine.AutomationEngineInstance engine)
         {
-            var ln = command.ConvertToUserVariable(variableName, "List Variable Name", engine);
+            var listVariableName = command.ConvertToUserVariable(variableName, "List Variable Name", engine);
 
-            var list = ln.GetListVariable(engine);
+            var list = listVariableName.GetListVariable(engine);
 
             var indexValue = command.ConvertToUserVariable(indexName, "Index", engine);
             int index;
             if (String.IsNullOrEmpty(indexValue))
             {
-                var raw = ln.GetRawVariable(engine);
+                var raw = listVariableName.GetRawVariable(engine);
                 index = raw.CurrentPosition;
             }
             else if (!int.TryParse(indexValue, out index))
