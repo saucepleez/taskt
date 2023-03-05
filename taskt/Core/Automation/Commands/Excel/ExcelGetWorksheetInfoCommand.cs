@@ -16,30 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class ExcelGetWorksheetInfoCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Signifies a unique name that will represemt the application instance.  This unique name allows you to refer to the instance by name in future commands, ensuring that the commands you specify run against the correct application.")]
-        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Instance")]
-        //[PropertyFirstValue("%kwd_default_excel_instance%")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the sheet name")]
-        //[InputSpecification("")]
-        //[SampleUsage("**mySheet** or **%kwd_current_worksheet%** or **{{{vSheet}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Sheet")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         public string v_SheetName { get; set; }
 
@@ -61,14 +41,6 @@ namespace taskt.Core.Automation.Commands
         public string v_InfoType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive a sheet info")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariable { get; set; }
 
@@ -126,19 +98,5 @@ namespace taskt.Core.Automation.Commands
 
             ret.StoreInUserVariable(sender, v_applyToVariable);
         }
-
-        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        //{
-        //    var cnv = new Dictionary<string, string>();
-        //    cnv.Add("v_SheetName", "convertToIntermediateExcelSheet");
-        //    ConvertToIntermediate(settings, cnv, variables);
-        //}
-
-        //public override void ConvertToRaw(EngineSettings settings)
-        //{
-        //    var cnv = new Dictionary<string, string>();
-        //    cnv.Add("v_SheetName", "convertToRawExcelSheet");
-        //    ConvertToRaw(settings, cnv);
-        //}
     }
 }

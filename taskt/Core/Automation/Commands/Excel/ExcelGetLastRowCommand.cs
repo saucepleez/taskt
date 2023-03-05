@@ -15,16 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class ExcelGetLastRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Intance")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
@@ -44,14 +34,6 @@ namespace taskt.Core.Automation.Commands
         public string v_ColumnLetter { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive the row number")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 

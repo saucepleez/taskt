@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -16,30 +15,10 @@ namespace taskt.Core.Automation.Commands
     public class ExcelActivateSheetCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyFirstValue("%kwd_default_excel_instance%")]
-        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Instance")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Indicate the name of the sheet within the Workbook to activate")]
-        //[InputSpecification("Specify the name of the actual sheet")]
-        //[SampleUsage("**mySheet**, **%kwd_current_worksheet%**, **{{{vSheet}}}**")]
-        //[Remarks("")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Sheet")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         public string v_SheetName { get; set; }
 
@@ -64,19 +43,5 @@ namespace taskt.Core.Automation.Commands
                 targetSheet.Select();
             }
         }
-
-        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        //{
-        //    var cnv = new Dictionary<string, string>();
-        //    cnv.Add(nameof(v_SheetName), "convertToIntermediateExcelSheet");
-        //    ConvertToIntermediate(settings, cnv, variables);
-        //}
-
-        //public override void ConvertToRaw(EngineSettings settings)
-        //{
-        //    var cnv = new Dictionary<string, string>();
-        //    cnv.Add(nameof(v_SheetName), "convertToRawExcelSheet");
-        //    ConvertToRaw(settings, cnv);
-        //}
     }
 }
