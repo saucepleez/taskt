@@ -7,17 +7,17 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Resize Browser")]
     [Attributes.ClassAttributes.Description("This command allows you to change browser window size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change browser window size.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SeleniumBrowserResizeBrowser : ScriptCommand
+    public class SeleniumBrowserResizeBrowserCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
-
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -30,7 +30,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Width")]
         public string v_BrowserWidth { get; set; }
 
-
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Browser Window Height")]
@@ -42,12 +41,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Height")]
         public string v_BrowserHeight { get; set; }
 
-        public SeleniumBrowserResizeBrowser()
+        public SeleniumBrowserResizeBrowserCommand()
         {
-            this.CommandName = "SeleniumBrowserResizeBrowserCommand";
-            this.SelectionName = "Resize Browser";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserResizeBrowserCommand";
+            //this.SelectionName = "Resize Browser";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

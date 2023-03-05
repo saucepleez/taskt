@@ -828,7 +828,7 @@ namespace taskt.UI
             {nameof(SeleniumBrowserNavigateForwardCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserNavigateURLCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserRefreshCommand), "taskt.Properties.Resources.command_web"},
-            {nameof(SeleniumBrowserResizeBrowser), "taskt.Properties.Resources.command_web"},
+            {nameof(SeleniumBrowserResizeBrowserCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserSwitchFrameCommand), "taskt.Properties.Resources.command_window"},
             {nameof(SeleniumBrowserSwitchWindowCommand), "taskt.Properties.Resources.command_window"},
             {nameof(SeleniumBrowserTakeScreenshotCommand), "taskt.Properties.Resources.command_web"},

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Navigate")]
+    [Attributes.ClassAttributes.CommandSettings("Navigate Forward")]
     [Attributes.ClassAttributes.Description("This command allows you to navigate forward a Selenium web browser session.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to simulate a forward click in the web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
@@ -21,10 +22,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserNavigateForwardCommand()
         {
-            this.CommandName = "WebBrowserNavigateCommand";
-            this.SelectionName = "Navigate Forward";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WebBrowserNavigateCommand";
+            //this.SelectionName = "Navigate Forward";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

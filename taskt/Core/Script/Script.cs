@@ -766,6 +766,12 @@ namespace taskt.Core.Script
             // WordSaveCommand -> WordSaveDocumentCommand
             ChangeCommandName(doc, "WordSaveCommand", "WordSaveDocumentCommand", "Save Document");
 
+            // WebBrowserNavigateCommand -> SeleniumBrowserNavigateForwardCommand
+            ChangeCommandName(doc, "WebBrowserNavigateCommand", "SeleniumBrowserNavigateForwardCommand", "Navigate Forward");
+
+            // SeleniumBrowserResizeBrowser -> SeleniumBrowserResizeBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserResizeBrowser", "SeleniumBrowserResizeBrowserCommand", "Resize Browser");
+
             return doc;
         }
 
