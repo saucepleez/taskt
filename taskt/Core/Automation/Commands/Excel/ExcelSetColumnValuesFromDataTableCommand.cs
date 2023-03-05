@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Column")]
+    [Attributes.ClassAttributes.CommandSettings("Set Column Values From DataTable")]
     [Attributes.ClassAttributes.Description("This command set Column values from DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set Column values from DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -65,10 +66,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetColumnValuesFromDataTableCommand()
         {
-            this.CommandName = "ExcelSetColumnValuesFromDataTableCommand";
-            this.SelectionName = "Set Column Values From DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelSetColumnValuesFromDataTableCommand";
+            //this.SelectionName = "Set Column Values From DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

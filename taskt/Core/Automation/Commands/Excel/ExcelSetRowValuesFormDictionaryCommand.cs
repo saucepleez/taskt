@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
+    [Attributes.ClassAttributes.CommandSettings("Set Row Values From Dictionary")]
     [Attributes.ClassAttributes.Description("This command set Row values from Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a Row values from Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -50,10 +51,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetRowValuesFromDictionaryCommand()
         {
-            this.CommandName = "ExcelSetRowValuesFromDictionaryCommand";
-            this.SelectionName = "Set Row Values From Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelSetRowValuesFromDictionaryCommand";
+            //this.SelectionName = "Set Row Values From Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

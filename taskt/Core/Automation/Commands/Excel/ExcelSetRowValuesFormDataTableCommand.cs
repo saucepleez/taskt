@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
+    [Attributes.ClassAttributes.CommandSettings("Set Row Values From DataTable")]
     [Attributes.ClassAttributes.Description("This command set Row values from DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a Row values from DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -62,11 +63,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetRowValuesFromDataTableCommand()
         {
-            this.CommandName = "ExcelSetRowValuesFromDataTableCommand";
-            this.SelectionName = "Set Row Values From DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelSetRowValuesFromDataTableCommand";
+            //this.SelectionName = "Set Row Values From DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

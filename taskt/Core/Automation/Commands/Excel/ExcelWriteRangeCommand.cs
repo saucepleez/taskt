@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Range")]
+    [Attributes.ClassAttributes.CommandSettings("Write Range")]
     [Attributes.ClassAttributes.Description("This command writes a datatable to an excel sheet starting from the given cell address.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -53,10 +54,10 @@ namespace taskt.Core.Automation.Commands
         public string v_AddHeaders { get; set; }
         public ExcelWriteRangeCommand()
         {
-            this.CommandName = "ExcelWriteRangeCommand";
-            this.SelectionName = "Write Range";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelWriteRangeCommand";
+            //this.SelectionName = "Write Range";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             this.v_InstanceName = "";
             this.v_AddHeaders = "Yes";

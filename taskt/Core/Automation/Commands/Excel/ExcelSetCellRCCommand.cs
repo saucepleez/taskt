@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Cell")]
+    [Attributes.ClassAttributes.CommandSettings("Set Cell RC")]
     [Attributes.ClassAttributes.Description("This command sets the value of a cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -42,13 +43,14 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetCellRCCommand()
         {
-            this.CommandName = "ExcelSetCellRCCommand";
-            this.SelectionName = "Set Cell RC";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelSetCellRCCommand";
+            //this.SelectionName = "Set Cell RC";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
-            this.v_InstanceName = "";
+            //this.v_InstanceName = "";
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

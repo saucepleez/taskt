@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.CommandSettings("Get Worksheets")]
     [Attributes.ClassAttributes.Description("This command allows you to get a specific worksheet names")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -41,11 +42,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetWorksheetsCommand()
         {
-            this.CommandName = "ExcelGetWorksheetsCommand";
-            this.SelectionName = "Get Worksheets";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetWorksheetsCommand";
+            //this.SelectionName = "Get Worksheets";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
+    [Attributes.ClassAttributes.CommandSettings("Set Row Values From List")]
     [Attributes.ClassAttributes.Description("This command set Row values from List.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a Row values from List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -50,10 +51,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetRowValuesFromListCommand()
         {
-            this.CommandName = "ExcelSetRowValuesFromListCommand";
-            this.SelectionName = "Set Row Values From List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelSetRowValuesFromListCommand";
+            //this.SelectionName = "Set Row Values From List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

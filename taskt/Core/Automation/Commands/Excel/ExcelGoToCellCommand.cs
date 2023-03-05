@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Cell")]
+    [Attributes.ClassAttributes.CommandSettings("Go To Cell")]
     [Attributes.ClassAttributes.Description("This command moves to a specific cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move to a new cell from your currently selected cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -24,11 +25,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGoToCellCommand()
         {
-            this.CommandName = "ExcelGoToCellCommand";
-            this.SelectionName = "Go To Cell";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGoToCellCommand";
+            //this.SelectionName = "Go To Cell";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

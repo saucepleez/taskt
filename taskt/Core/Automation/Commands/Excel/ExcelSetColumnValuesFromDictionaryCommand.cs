@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Column")]
+    [Attributes.ClassAttributes.CommandSettings("Set Column Values From Dictionary")]
     [Attributes.ClassAttributes.Description("This command set Column values from Ditionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set Column values from Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -50,10 +51,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSetColumnValuesFromDictionaryCommand()
         {
-            this.CommandName = "ExcelSetColumnValuesFromDictionaryCommand";
-            this.SelectionName = "Set Column Values From Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelSetColumnValuesFromDictionaryCommand";
+            //this.SelectionName = "Set Column Values From Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

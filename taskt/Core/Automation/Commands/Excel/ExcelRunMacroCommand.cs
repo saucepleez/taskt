@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Other")]
+    [Attributes.ClassAttributes.CommandSettings("Run Macro")]
     [Attributes.ClassAttributes.Description("This command runs a macro.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a run a specific macro in the Excel workbook.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -42,11 +43,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelRunMacroCommand()
         {
-            this.CommandName = "ExcelRunMacroCommand";
-            this.SelectionName = "Run Macro";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelRunMacroCommand";
+            //this.SelectionName = "Run Macro";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

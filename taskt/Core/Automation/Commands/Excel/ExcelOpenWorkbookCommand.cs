@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("File/Book")]
+    [Attributes.ClassAttributes.CommandSettings("Open Workbook")]
     [Attributes.ClassAttributes.Description("This command opens an Excel Workbook.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to open an existing Excel Workbook.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -50,11 +51,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelOpenWorkbookCommand()
         {
-            this.CommandName = "ExcelOpenWorkbookCommand";
-            this.SelectionName = "Open Workbook";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelOpenWorkbookCommand";
+            //this.SelectionName = "Open Workbook";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
