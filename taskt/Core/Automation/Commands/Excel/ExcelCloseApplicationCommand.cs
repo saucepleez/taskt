@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
+    [Attributes.ClassAttributes.CommandSettings("Close Excel Application")]
     [Attributes.ClassAttributes.Description("This command allows you to close Excel.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -32,10 +33,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCloseApplicationCommand()
         {
-            this.CommandName = "ExcelCloseApplicationCommand";
-            this.SelectionName = "Close Excel Application";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelCloseApplicationCommand";
+            //this.SelectionName = "Close Excel Application";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

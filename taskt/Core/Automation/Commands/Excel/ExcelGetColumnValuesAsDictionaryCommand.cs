@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Column")]
+    [Attributes.ClassAttributes.CommandSettings("Get Column Values As Dictionary")]
     [Attributes.ClassAttributes.Description("This command get Column values as Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Column values as Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -45,10 +46,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetColumnValuesAsDictionaryCommand()
         {
-            this.CommandName = "ExcelGetColumnValuesAsDictionaryCommand";
-            this.SelectionName = "Get Column Values As Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetColumnValuesAsDictionaryCommand";
+            //this.SelectionName = "Get Column Values As Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

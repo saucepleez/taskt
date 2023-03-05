@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.CommandSettings("Get Current Worksheet")]
     [Attributes.ClassAttributes.Description("This command allows you to get current sheet name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -24,10 +25,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetCurrentWorksheetCommand()
         {
-            this.CommandName = "ExcelGetCurrentWorksheetCommand";
-            this.SelectionName = "Get Current Worksheet";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetCurrentWorksheetCommand";
+            //this.SelectionName = "Get Current Worksheet";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

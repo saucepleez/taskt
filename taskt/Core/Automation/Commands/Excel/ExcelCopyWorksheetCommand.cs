@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.CommandSettings("Copy Worksheet")]
     [Attributes.ClassAttributes.Description("This command copy a Excel Worksheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy a new worksheet to an Excel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -35,10 +36,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCopyWorksheetCommand()
         {
-            this.CommandName = "ExcelCopyWorksheetCommand";
-            this.SelectionName = "Copy Worksheet";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelCopyWorksheetCommand";
+            //this.SelectionName = "Copy Worksheet";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {

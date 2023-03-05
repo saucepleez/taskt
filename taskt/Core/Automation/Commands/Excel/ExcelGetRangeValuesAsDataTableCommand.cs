@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Range")]
+    [Attributes.ClassAttributes.CommandSettings("Get Range Values As DataTable")]
     [Attributes.ClassAttributes.Description("This command get Range values as DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Range values as DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -50,10 +51,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRangeValuesAsDataTableCommand()
         {
-            this.CommandName = "ExcelGetRangeValuesAsDataTableCommand";
-            this.SelectionName = "Get Range Values As DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetRangeValuesAsDataTableCommand";
+            //this.SelectionName = "Get Range Values As DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

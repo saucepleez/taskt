@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Range")]
+    [Attributes.ClassAttributes.CommandSettings("Get Range As Datatable")]
     [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range and put it into a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific range.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
@@ -68,12 +69,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRangeCommandAsDT()
         {
-            this.CommandName = "ExcelGetRangeCommandAsDT";
-            this.SelectionName = "Get Range As Datatable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_AddHeaders = "Yes";
+            //this.CommandName = "ExcelGetRangeCommandAsDT";
+            //this.SelectionName = "Get Range As Datatable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
+            this.v_AddHeaders = "Yes";
             this.v_InstanceName = "";
         }
 

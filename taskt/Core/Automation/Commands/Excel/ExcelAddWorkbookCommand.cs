@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("File/Book")]
+    [Attributes.ClassAttributes.CommandSettings("Add Workbook")]
     [Attributes.ClassAttributes.Description("This command adds a new Excel Workbook.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new workbook to an Exel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -34,10 +35,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAddWorkbookCommand()
         {
-            this.CommandName = "ExcelAddWorkbookCommand";
-            this.SelectionName = "Add Workbook";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelAddWorkbookCommand";
+            //this.SelectionName = "Add Workbook";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {

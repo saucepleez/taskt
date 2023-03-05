@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Cell")]
+    [Attributes.ClassAttributes.CommandSettings("Get Cell")]
     [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
@@ -32,10 +33,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetCellCommand()
         {
-            this.CommandName = "ExcelGetCellCommand";
-            this.SelectionName = "Get Cell";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetCellCommand";
+            //this.SelectionName = "Get Cell";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

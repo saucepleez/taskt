@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Other")]
+    [Attributes.ClassAttributes.CommandSettings("Get Excel Info")]
     [Attributes.ClassAttributes.Description("This command allows you to get current sheet name.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -40,11 +41,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetExcelInfoCommand()
         {
-            this.CommandName = "ExcelGetExcelInfoCommand";
-            this.SelectionName = "Get Excel Info";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetExcelInfoCommand";
+            //this.SelectionName = "Get Excel Info";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

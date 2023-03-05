@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.CommandSettings("Delete Worksheet")]
     [Attributes.ClassAttributes.Description("This command delete a Excel Worksheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new worksheet to an Excel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -24,11 +25,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelDeleteWorksheetCommand()
         {
-            this.CommandName = "ExcelDeleteWorksheetCommand";
-            this.SelectionName = "Delete Worksheet";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelDeleteWorksheetCommand";
+            //this.SelectionName = "Delete Worksheet";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;

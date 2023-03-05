@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Column")]
+    [Attributes.ClassAttributes.CommandSettings("Get Column Values As List")]
     [Attributes.ClassAttributes.Description("This command get Column values as List.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Column values as List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -45,10 +46,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetColumnValuesAsListCommand()
         {
-            this.CommandName = "ExcelGetColumnValuesAsListCommand";
-            this.SelectionName = "Get Column Values As List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetColumnValuesAsListCommand";
+            //this.SelectionName = "Get Column Values As List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

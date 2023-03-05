@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Cell")]
+    [Attributes.ClassAttributes.CommandSettings("Check Cell Value Exists RC")]
     [Attributes.ClassAttributes.Description("This command checks existance value from a specified Excel Cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
@@ -41,10 +42,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCheckCellValueExistsRCCommand()
         {
-            this.CommandName = "ExcelCheckCellValueExistsRCCommand";
-            this.SelectionName = "Check Cell Value Exists RC";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelCheckCellValueExistsRCCommand";
+            //this.SelectionName = "Check Cell Value Exists RC";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
+    [Attributes.ClassAttributes.CommandSettings("Get Row Values As DataTable")]
     [Attributes.ClassAttributes.Description("This command get Row values as DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Row values as DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -45,10 +46,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRowValuesAsDataTableCommand()
         {
-            this.CommandName = "ExcelGetRowValuesAsDataTableCommand";
-            this.SelectionName = "Get Row Values As DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetRowValuesAsDataTableCommand";
+            //this.SelectionName = "Get Row Values As DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

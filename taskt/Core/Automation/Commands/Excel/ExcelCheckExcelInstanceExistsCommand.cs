@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
+    [Attributes.ClassAttributes.CommandSettings("Check Excel Instance Exists")]
     [Attributes.ClassAttributes.Description("This command returns existance of Excel instance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check Excel instance.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -25,11 +26,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCheckExcelInstanceExistsCommand()
         {
-            this.CommandName = "CheckExcelInstanceExistsCommand";
-            this.SelectionName = "Check Excel Instance Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckExcelInstanceExistsCommand";
+            //this.SelectionName = "Check Excel Instance Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
