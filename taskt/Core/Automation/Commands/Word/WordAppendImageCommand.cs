@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
     [Attributes.ClassAttributes.Description("This command appends an image to a word document.")]
+    [Attributes.ClassAttributes.CommandSettings("Append Image")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to append an image to a specific document.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -32,10 +33,10 @@ namespace taskt.Core.Automation.Commands
 
         public WordAppendImageCommand()
         {
-            this.CommandName = "WordAppendImageCommand";
-            this.SelectionName = "Append Image";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WordAppendImageCommand";
+            //this.SelectionName = "Append Image";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

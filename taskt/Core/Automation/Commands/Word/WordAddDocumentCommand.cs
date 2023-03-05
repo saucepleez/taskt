@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
     [Attributes.ClassAttributes.Description("This command adds a new Word Document.")]
+    [Attributes.ClassAttributes.CommandSettings("Add Document")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new document to a Word Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -19,10 +20,10 @@ namespace taskt.Core.Automation.Commands
 
         public WordAddDocumentCommand()
         {
-            this.CommandName = "WordAddDocumentCommand";
-            this.SelectionName = "Add Document";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WordAddDocumentCommand";
+            //this.SelectionName = "Add Document";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

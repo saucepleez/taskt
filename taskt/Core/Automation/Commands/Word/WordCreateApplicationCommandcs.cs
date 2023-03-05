@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
     [Attributes.ClassAttributes.Description("This command creates a Word Application.")]
+    [Attributes.ClassAttributes.CommandSettings("Create Word Application")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Word.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -23,10 +24,10 @@ namespace taskt.Core.Automation.Commands
 
         public WordCreateApplicationCommand()
         {
-            this.CommandName = "WordCreateApplicationCommand";
-            this.SelectionName = "Create Word Application";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WordCreateApplicationCommand";
+            //this.SelectionName = "Create Word Application";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

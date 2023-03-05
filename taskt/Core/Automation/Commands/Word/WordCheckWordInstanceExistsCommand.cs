@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
     [Attributes.ClassAttributes.Description("This command returns existance of Word instance.")]
+    [Attributes.ClassAttributes.CommandSettings("Check Word Instance Exists")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check Word instance.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -24,10 +25,10 @@ namespace taskt.Core.Automation.Commands
 
         public WordCheckWordInstanceExistsCommand()
         {
-            this.CommandName = "CheckWordInstanceExistsCommand";
-            this.SelectionName = "Check Word Instance Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckWordInstanceExistsCommand";
+            //this.SelectionName = "Check Word Instance Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             //this.v_InstanceName = "";
         }
