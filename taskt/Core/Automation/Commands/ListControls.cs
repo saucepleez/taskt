@@ -189,6 +189,41 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get List Variabe and Index value from specified Command parameters name
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="variableName"></param>
+        /// <param name="indexName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static (List<string>, int) GetListVariableAndIndex(this ScriptCommand command, string variableName, string indexName, Engine.AutomationEngineInstance engine)
+        {
+            var ln = command.ConvertToUserVariable(variableName, "List Variable Name", engine);
+
+            var list = ln.GetListVariable(engine);
+
+            var indexValue = command.ConvertToUserVariable(indexName, "Index", engine);
+            int index;
+            if (String.IsNullOrEmpty(indexValue))
+            {
+                var raw = ln.GetRawVariable(engine);
+                index = raw.CurrentPosition;
+            }
+            else if (!int.TryParse(indexValue, out index))
+            {
+                throw new Exception("Index is not Integer Number. Value: '" + indexValue + "'");
+            }
+
+            if (index < 0)
+            {
+                index += list.Count;
+            }
+
+            return (list, index);
+        }
+
         public static void StoreInUserVariable<Type>(this List<Type> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);

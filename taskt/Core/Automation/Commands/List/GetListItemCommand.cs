@@ -112,17 +112,19 @@ namespace taskt.Core.Automation.Commands
             //    throw new Exception("Strange index " + v_ItemIndex + ", parsed " + index);
             //}
 
-            var list = v_ListName.GetListVariable(engine);
-            int index;
-            if (String.IsNullOrEmpty(v_ItemIndex))
-            {
-                var rawVariable = v_ListName.GetRawVariable(engine);
-                index = rawVariable.CurrentPosition;
-            }
-            else
-            {
-                index = this.ConvertToUserVariableAsInteger(nameof(v_ItemIndex), engine);
-            }
+            //var list = v_ListName.GetListVariable(engine);
+            //int index;
+            //if (String.IsNullOrEmpty(v_ItemIndex))
+            //{
+            //    var rawVariable = v_ListName.GetRawVariable(engine);
+            //    index = rawVariable.CurrentPosition;
+            //}
+            //else
+            //{
+            //    index = this.ConvertToUserVariableAsInteger(nameof(v_ItemIndex), engine);
+            //}
+
+            (var list, var index) = this.GetListVariableAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
 
             if (index < 0)
             {
