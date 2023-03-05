@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
+    [Attributes.ClassAttributes.CommandSettings("Get An Element Values As List")]
     [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for an Element As List.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for an Element As List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -44,10 +45,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserGetAnElementValuesAsListCommand()
         {
-            this.CommandName = "SeleniumBrowserGetAnElementValuesAsListCommand";
-            this.SelectionName = "Get An Element Values As List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserGetAnElementValuesAsListCommand";
+            //this.SelectionName = "Get An Element Values As List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

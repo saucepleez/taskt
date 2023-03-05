@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
+    [Attributes.ClassAttributes.CommandSettings("Create Browser")]
     [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data.\nIf this command does not work, please check your browser version, and WebDriver version.\nYou can check the WebDriver version with \"foo.exe -v\" in command prompt.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
@@ -102,10 +103,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserCreateCommand()
         {
-            this.CommandName = "SeleniumBrowserCreateCommand";
-            this.SelectionName = "Create Browser";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserCreateCommand";
+            //this.SelectionName = "Create Browser";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
             //this.v_EngineType = "Chrome";
             //this.v_InstanceName = "";
         }

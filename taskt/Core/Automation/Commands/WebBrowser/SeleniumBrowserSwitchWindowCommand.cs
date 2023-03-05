@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Switch Browser Window")]
     [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
@@ -66,11 +67,12 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserSwitchWindowCommand()
         {
-            this.CommandName = "SeleniumBrowserSwitchWindowCommand";
-            this.SelectionName = "Switch Browser Window";
+            //this.CommandName = "SeleniumBrowserSwitchWindowCommand";
+            //this.SelectionName = "Switch Browser Window";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
+
             //this.v_InstanceName = "";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
 
             //set defaults
             //this.v_WindowMatchType = "Window URL";

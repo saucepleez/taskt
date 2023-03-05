@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Navigate")]
+    [Attributes.ClassAttributes.CommandSettings("Navigate to URL")]
     [Attributes.ClassAttributes.Description("This command allows you to navigate a Selenium web browser session to a given URL or resource.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to navigate an existing Selenium instance to a known URL or web resource")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
@@ -46,10 +47,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserNavigateURLCommand()
         {
-            this.CommandName = "SeleniumBrowserNavigateURLCommand";
-            this.SelectionName = "Navigate to URL";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserNavigateURLCommand";
+            //this.SelectionName = "Navigate to URL";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
             //this.v_UseHttps = "True";
             //this.v_HttpsChoice.Add(true, "https://");
             //this.v_HttpsChoice.Add(false, "http://");

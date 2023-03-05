@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Take Screenshot")]
     [Attributes.ClassAttributes.Description("This command allows you to take a screenshot in Selenium web browser session.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to take a screenshot from the current displayed webpage within the web browser.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
@@ -48,13 +49,13 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserTakeScreenshotCommand()
         {
-            this.CommandName = "SeleniumBrowserTakeScreenshotCommand";
-            this.SelectionName = "Take Screenshot";
+            //this.CommandName = "SeleniumBrowserTakeScreenshotCommand";
+            //this.SelectionName = "Take Screenshot";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
             //this.v_InstanceName = "";
             //this.v_SeleniumScreenshotPathParameter = "";
             //this.v_SeleniumScreenshotFileNameParameter = "screenshot_001";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
+    [Attributes.ClassAttributes.CommandSettings("Get An Element Values As Dictionary")]
     [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for an Element As Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for an Element As Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -45,10 +46,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserGetAnElementValuesAsDictionaryCommand()
         {
-            this.CommandName = "SeleniumBrowserGetAnElementValuesAsDictionaryCommand";
-            this.SelectionName = "Get An Element Values As Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserGetAnElementValuesAsDictionaryCommand";
+            //this.SelectionName = "Get An Element Values As Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

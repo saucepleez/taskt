@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
+    [Attributes.ClassAttributes.CommandSettings("Get Table Value As DataTable")]
     [Attributes.ClassAttributes.Description("This command allows you to get a Table Values As DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Table Values As DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -62,10 +63,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserGetTableValueAsDataTableCommand()
         {
-            this.CommandName = "SeleniumBrowserGetTableValueAsDataTableCommand";
-            this.SelectionName = "Get Table Value As DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserGetTableValueAsDataTableCommand";
+            //this.SelectionName = "Get Table Value As DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

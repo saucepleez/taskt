@@ -17,6 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Element Action")]
     [Attributes.ClassAttributes.Description("This command allows you to close a Selenium web browser session.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to manipulate, set, or get data on a webpage within the web browser.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
@@ -123,11 +124,11 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserElementActionCommand()
         {
-            this.CommandName = "SeleniumBrowserElementActionCommand";
-            this.SelectionName = "Element Action";
-            this.v_InstanceName = "";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserElementActionCommand";
+            //this.SelectionName = "Element Action";
+            //this.v_InstanceName = "";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -136,9 +137,6 @@ namespace taskt.Core.Automation.Commands
 
             var seleniumSearchParam = v_SeleniumSearchParameter.ConvertToUserVariable(sender);
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var browserObject = engine.GetAppInstance(vInstance);
-            //var seleniumInstance = (IWebDriver)browserObject;
             var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
             dynamic element = null;

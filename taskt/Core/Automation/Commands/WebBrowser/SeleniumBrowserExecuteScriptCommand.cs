@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Execute Script")]
     [Attributes.ClassAttributes.Description("This command allows you to execute a script in a Selenium web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -79,10 +80,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserExecuteScriptCommand()
         {
-            this.CommandName = "SeleniumBrowserExecuteScriptCommand";
-            this.SelectionName = "Execute Script";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserExecuteScriptCommand";
+            //this.SelectionName = "Execute Script";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
             
             //this.v_InstanceName = "";
             //this.v_CodeType = "Code";

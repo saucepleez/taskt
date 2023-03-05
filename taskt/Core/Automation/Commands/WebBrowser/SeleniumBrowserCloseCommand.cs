@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
+    [Attributes.ClassAttributes.CommandSettings("Close Browser")]
     [Attributes.ClassAttributes.Description("This command allows you to close a Selenium web browser session.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close and end a web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
@@ -20,10 +21,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserCloseCommand()
         {
-            this.CommandName = "SeleniumBrowserCloseCommand";
-            this.SelectionName = "Close Browser";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserCloseCommand";
+            //this.SelectionName = "Close Browser";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

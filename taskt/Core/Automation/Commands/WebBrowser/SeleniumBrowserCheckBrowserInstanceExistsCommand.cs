@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
+    [Attributes.ClassAttributes.CommandSettings("Check Browser Instance Exists")]
     [Attributes.ClassAttributes.Description("This command returns existance of browser instance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -25,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public SeleniumBrowserCheckBrowserInstanceExistsCommand()
         {
-            this.CommandName = "SeleniumBrowserCheckBrowserInstanceExistsCommand";
-            this.SelectionName = "Check Browser Instance Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserCheckBrowserInstanceExistsCommand";
+            //this.SelectionName = "Check Browser Instance Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             //this.v_InstanceName = "";
         }
