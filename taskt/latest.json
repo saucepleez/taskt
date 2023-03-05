@@ -3,5 +3,5 @@
   "RemoteBetaVersion": "3.5.1.31",
   "Beta": true,
   "PackageURL": "https://github.com/saucepleez/taskt/releases/download/v3.5.1.31/taskt-uob_v3.5.1.31.zip",
-  "PackageURL2": "%release_url%/download/v%version%/taskt.v%version%.zip"
+  "PackageURL2": "%release_url%/download/v%version%/taskt-uob_v%version%.zip"
 }
