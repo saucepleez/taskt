@@ -770,7 +770,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "WebBrowserNavigateCommand", "SeleniumBrowserNavigateForwardCommand", "Navigate Forward");
 
             // SeleniumBrowserResizeBrowser -> SeleniumBrowserResizeBrowserCommand
-            ChangeCommandName(doc, "SeleniumBrowserResizeBrowser", "SeleniumBrowserResizeBrowserCommand", "Resize Browser");
+            ChangeCommandName(doc, "SeleniumBrowserResizeBrowserCommand", "SeleniumBrowserResizeBrowserCommand", "Resize Browser");
 
             // CheckExcelInstanceExistsCommand -> ExcelCheckExcelInstanceExistsCommand
             ChangeCommandName(doc, "CheckExcelInstanceExistsCommand", "ExcelCheckExcelInstanceExistsCommand", "Check Excel Instance Exists");
