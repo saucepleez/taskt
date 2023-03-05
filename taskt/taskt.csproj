@@ -703,6 +703,7 @@
     <Compile Include="Core\ExtensionMethods.cs" />
     <Compile Include="Core\InstanceCounter.cs" />
     <Compile Include="Core\IO\Folders.cs" />
+    <Compile Include="Core\Script\ScriptAction.cs" />
     <Compile Include="Core\Script\ScriptInformation.cs" />
     <Compile Include="Core\Script\ScriptVariable.cs" />
     <Compile Include="Core\Server\LocalTCPListener.cs" />
