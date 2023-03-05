@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Get Parent Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Parent Element from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent Element from AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -25,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetParentElementCommand()
         {
-            this.CommandName = "UIAutomationGetParentElementCommand";
-            this.SelectionName = "Get Parent Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetParentElementCommand";
+            //this.SelectionName = "Get Parent Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

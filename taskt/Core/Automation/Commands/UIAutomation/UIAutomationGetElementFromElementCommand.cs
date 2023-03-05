@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Get Element From Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. Search for Descendants Elements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -31,10 +32,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetElementFromElementCommand()
         {
-            this.CommandName = "UIAutomationGetElementFromElementCommand";
-            this.SelectionName = "Get Element From Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetElementFromElementCommand";
+            //this.SelectionName = "Get Element From Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

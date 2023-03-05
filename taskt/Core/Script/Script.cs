@@ -24,8 +24,6 @@ using taskt.Core.Automation.Commands;
 
 namespace taskt.Core.Script
 {
-    #region Script and Variables
-
     public class Script
     {
         /// <summary>
@@ -287,6 +285,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_83(doc);
             convertTo3_5_1_16(doc);
             convertTo3_5_1_30(doc);
+            convertTo3_5_1_31(doc);
 
             return doc;
         }
@@ -732,6 +731,56 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        public static XDocument convertTo3_5_1_31(XDocument doc)
+        {
+            // AddJSONArrayItem -> AddJSONArrayItemCommand
+            ChangeCommandName(doc, "AddJSONArrayItem", "AddJSONArrayItemCommand", "Add JSON Array Item");
+
+            // AddJSONObjectProperty -> AddJSONObjectPropertyCommand
+            ChangeCommandName(doc, "AddJSONObjectProperty", "AddJSONObjectPropertyCommand", "Add JSON Object Property");
+
+            // CreateJSONVariable -> CreateJSONVariableCommand
+            ChangeCommandName(doc, "CreateJSONVariable", "CreateJSONVariableCommand", "Create JSON Variable");
+
+            // InsertJSONArrayItem -> InsertJSONArrayItemCommand
+            ChangeCommandName(doc, "InsertJSONArrayItem", "InsertJSONArrayItemCommand", "Insert JSON Array Item");
+
+            // InsertJSONObjectProperty -> InsertJSONObjectPropertyCommand
+            ChangeCommandName(doc, "InsertJSONObjectProperty", "InsertJSONObjectPropertyCommand", "Insert JSON Object Property");
+
+            // RemoveJSONArrayItem -> RemoveJSONArrayItemCommand
+            ChangeCommandName(doc, "RemoveJSONArrayItem", "RemoveJSONArrayItemCommand", "Remove JSON Array Item");
+
+            // Remove JSON Property -> RemoveJSONPropertyCommand
+            ChangeCommandName(doc, "Remove JSON Property", "RemoveJSONPropertyCommand", "Remove JSON Property");
+
+            // SetJSONValue -> SetJSONValueCommand
+            ChangeCommandName(doc, "SetJSONValue", "SetJSONValueCommand", "Set JSON Value");
+
+            // CheckWordInstanceExistsCommand -> WordCheckWordInstanceExistsCommand
+            ChangeCommandName(doc, "CheckWordInstanceExistsCommand", "WordCheckWordInstanceExistsCommand", "Check Word Instance Exists");
+
+            // WordSaveAsCommand -> WordSaveDocumentAs
+            ChangeCommandName(doc, "WordSaveAsCommand", "WordSaveDocumentAsCommand", "Save Document As");
+
+            // WordSaveCommand -> WordSaveDocumentCommand
+            ChangeCommandName(doc, "WordSaveCommand", "WordSaveDocumentCommand", "Save Document");
+
+            // WebBrowserNavigateCommand -> SeleniumBrowserNavigateForwardCommand
+            ChangeCommandName(doc, "WebBrowserNavigateCommand", "SeleniumBrowserNavigateForwardCommand", "Navigate Forward");
+
+            // SeleniumBrowserResizeBrowser -> SeleniumBrowserResizeBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserResizeBrowser", "SeleniumBrowserResizeBrowserCommand", "Resize Browser");
+
+            // CheckExcelInstanceExistsCommand -> ExcelCheckExcelInstanceExistsCommand
+            ChangeCommandName(doc, "CheckExcelInstanceExistsCommand", "ExcelCheckExcelInstanceExistsCommand", "Check Excel Instance Exists");
+
+            // ExcelWorksheetInfoCommand -> ExcelGetWorksheetInfoCommand
+            ChangeCommandName(doc, "ExcelWorksheetInfoCommand", "ExcelGetWorksheetInfoCommand", "Get Worksheet Info");
+
+            return doc;
+        }
+
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
@@ -783,58 +832,4 @@ namespace taskt.Core.Script
             return doc;
         }
     }
-
-    [Serializable]
-    public class ScriptAction
-    {
-        /// <summary>
-        /// generic 'top-level' user-defined script command (ex. not nested)
-        /// </summary>
-        [XmlElement(Order = 1)]
-        public ScriptCommand ScriptCommand { get; set; }
-        /// <summary>
-        /// generic 'sub-level' commands (ex. nested commands within a loop)
-        /// </summary>
-        [XmlElement(Order = 2)]
-        public List<ScriptAction> AdditionalScriptCommands { get; set; }
-        /// <summary>
-        /// adds a command as a nested command to a top-level command
-        /// </summary>
-        public ScriptAction AddAdditionalAction(ScriptCommand scriptCommand)
-        {
-            if (AdditionalScriptCommands == null)
-            {
-                AdditionalScriptCommands = new List<ScriptAction>();
-            }
-
-            ScriptAction newExecutionCommand = new ScriptAction() { ScriptCommand = scriptCommand };
-            AdditionalScriptCommands.Add(newExecutionCommand);
-            return newExecutionCommand;
-        }
-
-        public void ConvertToIntermediate(EngineSettings settings, List<ScriptVariable> variables)
-        {
-            ScriptCommand.ConvertToIntermediate(settings, variables);
-            if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
-            {
-                foreach (var cmd in AdditionalScriptCommands)
-                {
-                    cmd.ConvertToIntermediate(settings, variables);
-                }
-            }
-        }
-
-        public void ConvertToRaw(EngineSettings settings)
-        {
-            ScriptCommand.ConvertToRaw(settings);
-            if (AdditionalScriptCommands != null && AdditionalScriptCommands.Count > 0)
-            {
-                foreach (var cmd in AdditionalScriptCommands)
-                {
-                    cmd.ConvertToRaw(settings);
-                }
-            }
-        }
-    }
-    #endregion Script and Variables
 }

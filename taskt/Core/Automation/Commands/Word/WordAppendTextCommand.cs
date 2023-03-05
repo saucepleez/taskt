@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
     [Attributes.ClassAttributes.Description("This command appends text to a word document.")]
+    [Attributes.ClassAttributes.CommandSettings("Append Text")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to append text to a specific document.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -15,13 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class WordAppendTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        //[SampleUsage("**myInstance** or **wordInstance**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Word)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
         public string v_InstanceName { get; set; }
 
@@ -101,10 +95,10 @@ namespace taskt.Core.Automation.Commands
 
         public WordAppendTextCommand()
         {
-            this.CommandName = "WordAppendTextCommand";
-            this.SelectionName = "Append Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WordAppendTextCommand";
+            //this.SelectionName = "Append Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
             //this.v_FontName = "Calibri";
             //this.v_FontSize = "11";
             //this.v_FontBold = "No";
@@ -116,10 +110,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var wordObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
-            //Document wordDocument = wordInstance.ActiveDocument;
             (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
 
             var vText = v_TextToSet.ConvertToUserVariable(engine);
@@ -129,7 +119,6 @@ namespace taskt.Core.Automation.Commands
             paragraph.Range.Font.Name = v_FontName;
             paragraph.Range.Font.Size = float.Parse(v_FontSize);
 
-            //if (v_FontBold == "Yes")
             if (this.GetUISelectionValue(nameof(v_FontBold), engine) == "yes")
             {
                 paragraph.Range.Font.Bold = 1;
@@ -138,7 +127,6 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Bold = 0;
             }
-            //if (v_FontItalic == "Yes")
             if (this.GetUISelectionValue(nameof(v_FontItalic), engine) == "yes")
             {
                 paragraph.Range.Font.Italic = 1;
@@ -147,7 +135,6 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Italic = 0;
             }
-            //if (v_FontUnderline == "Yes")
             if (this.GetUISelectionValue(nameof(v_FontUnderline), engine) == "yes")
             {
                 paragraph.Range.Font.Underline = WdUnderline.wdUnderlineSingle;
@@ -159,33 +146,5 @@ namespace taskt.Core.Automation.Commands
 
             paragraph.Range.InsertParagraphAfter();
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Word);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FontName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FontSize", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FontBold", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FontItalic", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_FontUnderline", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " ['" + v_TextToSet + "' To Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

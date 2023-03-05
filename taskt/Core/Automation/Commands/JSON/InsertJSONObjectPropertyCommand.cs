@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Insert JSON Object Property")]
     [Attributes.ClassAttributes.Description("This command allows you to add property to JSON Object.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,16 +26,17 @@ namespace taskt.Core.Automation.Commands
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Property Name to Insert")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [PropertyDetailSampleUsage("**Name**", PropertyDetailSampleUsage.ValueType.Value, "Property Name")]
-        [PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Property Name")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Property Name")]
+        //[PropertyDescription("Property Name to Insert")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[PropertyDetailSampleUsage("**Name**", PropertyDetailSampleUsage.ValueType.Value, "Property Name")]
+        //[PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Property Name")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Property Name")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_PropertyName))]
         public string v_PropertyName { get; set; }
 
         [XmlAttribute]
@@ -47,10 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public InsertJSONObjectPropertyCommand()
         {
-            this.CommandName = "InsertJSONObjectProperty";
-            this.SelectionName = "Insert JSON Object Property";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "InsertJSONObjectProperty";
+            //this.SelectionName = "Insert JSON Object Property";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

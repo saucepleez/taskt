@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Range")]
+    [Attributes.ClassAttributes.CommandSettings("Split Range By Column")]
     [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range and splits it into separate ranges by column.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to split a range into separate ranges.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
@@ -80,12 +81,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelSplitRangeByColumnCommand()
         {
-            this.CommandName = "ExcelSplitRangeByColumnCommand";
-            this.SelectionName = "Split Range By Column";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            v_FileType = "xlsx";
+            //this.CommandName = "ExcelSplitRangeByColumnCommand";
+            //this.SelectionName = "Split Range By Column";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
+            this.v_FileType = "xlsx";
             this.v_InstanceName = "";
         }
 

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Insert JSON Array Item")]
     [Attributes.ClassAttributes.Description("This command allows you to insert item to JSON Array.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,18 +26,19 @@ namespace taskt.Core.Automation.Commands
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Index to Insert")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        //[SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
-        [PropertyDetailSampleUsage("**0**", "Specify the First Index to be Inserted")]
-        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index to Insert")]
-        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index to Insert")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsOptional(true, "Last Item")]
-        [PropertyDisplayText(true, "Index")]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_ArrayIndex))]
+        [PropertyIsOptional(true, "Last Index")]
+        //[PropertyDescription("Index to Insert")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        ////[SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        //[PropertyDetailSampleUsage("**0**", "Specify the First Index to be Inserted")]
+        //[PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index to Insert")]
+        //[PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index to Insert")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "Index")]
         public string v_InsertIndex { get; set; }
 
         [XmlAttribute]
@@ -49,10 +51,10 @@ namespace taskt.Core.Automation.Commands
 
         public InsertJSONArrayItemCommand()
         {
-            this.CommandName = "InsertJSONArrayItem";
-            this.SelectionName = "Insert JSON Array Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "InsertJSONArrayItem";
+            //this.SelectionName = "Insert JSON Array Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -73,7 +75,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_InsertIndex = ary.Count.ToString();
                 }
-                var index = this.ConvertToUserVariableAsInteger(nameof(v_InsertIndex), "Index", engine);
+                var index = this.ConvertToUserVariableAsInteger(nameof(v_InsertIndex), engine);
 
                 if ((index < 0) && (index > ary.Count))
                 {

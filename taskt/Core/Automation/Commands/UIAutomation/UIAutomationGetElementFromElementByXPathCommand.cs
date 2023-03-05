@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Get Element From Element By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. XPath does not support to use parent and sibling for root element.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -37,10 +38,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetElementFromElementByXPathCommand()
         {
-            this.CommandName = "UIAutomationGetElementFromElementByXPathCommand";
-            this.SelectionName = "Get Element From Element By XPath";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetElementFromElementByXPathCommand";
+            //this.SelectionName = "Get Element From Element By XPath";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

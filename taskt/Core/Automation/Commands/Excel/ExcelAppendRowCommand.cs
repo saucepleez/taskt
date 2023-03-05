@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
+    [Attributes.ClassAttributes.CommandSettings("Append Row")]
     [Attributes.ClassAttributes.Description("Append to last row of sheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command will take in a comma seprerated value and append it to the end of an excel sheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automations.")]
@@ -37,10 +38,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAppendRowCommand()
         {
-            this.CommandName = "ExcelAppendRowCommand";
-            this.SelectionName = "Append Row";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelAppendRowCommand";
+            //this.SelectionName = "Append Row";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             this.v_InstanceName = "";
         }

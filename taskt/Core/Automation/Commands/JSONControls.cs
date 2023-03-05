@@ -130,6 +130,35 @@ namespace taskt.Core.Automation.Commands
         public static string v_ValueToAdd { get; }
 
         /// <summary>
+        /// property name property
+        /// </summary>
+        [PropertyDescription("Property Name")]
+        [InputSpecification("Property Name", true)]
+        [PropertyDetailSampleUsage("**Name**", PropertyDetailSampleUsage.ValueType.Value, "Property Name")]
+        [PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Property Name")]
+        [Remarks("")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Property Name")]
+        public static string v_PropertyName { get; }
+
+        /// <summary>
+        /// array index property
+        /// </summary>
+        [PropertyDescription("Array Index")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**0**", "Specify the First Index")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
+        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
+        [Remarks("")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsOptional(true, "Last Item")]
+        [PropertyDisplayText(true, "Index")]
+        public static string v_ArrayIndex { get; }
+
+        /// <summary>
         /// get JSON text from text value or variable contains text. this method returns root type "object" or "array".
         /// </summary>
         /// <param name="jsonValue"></param>

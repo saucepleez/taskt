@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Scroll Element")]
     [Attributes.ClassAttributes.Description("This command allows you to Scroll AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Scroll AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -45,10 +46,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationScrollElementCommand()
         {
-            this.CommandName = "UIAutomationScrollElementCommand";
-            this.SelectionName = "Scroll Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationScrollElementCommand";
+            //this.SelectionName = "Scroll Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

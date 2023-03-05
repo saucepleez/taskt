@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Range")]
+    [Attributes.ClassAttributes.CommandSettings("Get Range")]
     [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
@@ -49,10 +50,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRangeCommand()
         {
-            this.CommandName = "ExcelGetRangeCommand";
-            this.SelectionName = "Get Range";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelGetRangeCommand";
+            //this.SelectionName = "Get Range";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             this.v_InstanceName = "";
         }
@@ -61,10 +62,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            //var excelObject = engine.GetAppInstance(vInstance);
-            //Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            //Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
             (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
             var targetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);

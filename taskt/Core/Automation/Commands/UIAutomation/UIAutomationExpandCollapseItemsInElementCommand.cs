@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Expand Collapse Items In Element")]
     [Attributes.ClassAttributes.Description("This command allows you to Expand or Collapse Items in AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Expand or Collapse Items in AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -33,10 +34,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationExpandCollapseItemsInElementCommand()
         {
-            this.CommandName = "UIAutomationExpandCollapseItemsInElementCommand";
-            this.SelectionName = "Expand Collapse Items In Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationExpandCollapseItemsInElementCommand";
+            //this.SelectionName = "Expand Collapse Items In Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

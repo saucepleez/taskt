@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Cell")]
+    [Attributes.ClassAttributes.CommandSettings("Check Cell Value Exists RC")]
     [Attributes.ClassAttributes.Description("This command checks existance value from a specified Excel Cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
@@ -18,87 +19,33 @@ namespace taskt.Core.Automation.Commands
     public class ExcelCheckCellValueExistsRCCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        //[SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Instance")]
-        //[PropertyFirstValue("%kwd_default_excel_instance%")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the Row Location")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter the actual location of the cell.")]
-        //[SampleUsage("**1** or **2** or **{{{vRow}}}**")]
-        //[Remarks("")]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        //[PropertyDisplayText(true, "Row")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
         public string v_CellRow { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the Column Location")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter the actual location of the cell.")]
-        //[SampleUsage("**1** or **2** or **{{{vColumn}}}**")]
-        //[Remarks("")]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        //[PropertyDisplayText(true, "Column")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
         public string v_CellColumn { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive the result")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Value Exists, Result is **True**")]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Value type")]
-        //[InputSpecification("")]
-        //[SampleUsage("**Cell** or **Formula** or **Format** or **Color** or **Comment**")]
-        //[Remarks("")]
-        //[PropertyUISelectionOption("Cell")]
-        //[PropertyUISelectionOption("Formula")]
-        //[PropertyUISelectionOption("Back Color")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsOptional(true, "Cell")]
-        //[PropertySecondaryLabel(true)]
-        //[PropertyAddtionalParameterInfo("Cell", "Check cell has value or not")]
-        //[PropertyAddtionalParameterInfo("Formula", "Check cell has formula or not")]
-        //[PropertyAddtionalParameterInfo("Back Color", "Check back color is not white")]
-        //[PropertySelectionChangeEvent("cmbValueType_SelectedIndexChanged")]
-        //[PropertyDisplayText(true, "Type")]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CheckableValueType))]
         [PropertySelectionChangeEvent(nameof(cmbValueType_SelectedIndexChanged))]
         public string v_ValueType { get; set; }
 
         public ExcelCheckCellValueExistsRCCommand()
         {
-            this.CommandName = "ExcelCheckCellValueExistsRCCommand";
-            this.SelectionName = "Check Cell Value Exists RC";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelCheckCellValueExistsRCCommand";
+            //this.SelectionName = "Check Cell Value Exists RC";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

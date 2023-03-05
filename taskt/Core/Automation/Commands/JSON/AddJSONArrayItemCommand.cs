@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Add JSON Array Item")]
     [Attributes.ClassAttributes.Description("This command allows you to add item to JSON Array.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -34,10 +35,10 @@ namespace taskt.Core.Automation.Commands
 
         public AddJSONArrayItemCommand()
         {
-            this.CommandName = "AddJSONArrayItem";
-            this.SelectionName = "Add JSON Array Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "AddJSONArrayItem";
+            //this.SelectionName = "Add JSON Array Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

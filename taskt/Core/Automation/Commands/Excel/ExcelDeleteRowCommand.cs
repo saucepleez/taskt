@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
+    [Attributes.ClassAttributes.CommandSettings("Delete Row")]
     [Attributes.ClassAttributes.Description("This command allows you to delete a specified row in Excel")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete an entire row from the current sheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -46,10 +47,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelDeleteRowCommand()
         {
-            this.CommandName = "ExcelDeleteRowCommand";
-            this.SelectionName = "Delete Row";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelDeleteRowCommand";
+            //this.SelectionName = "Delete Row";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

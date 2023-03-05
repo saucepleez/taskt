@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
+    [Attributes.ClassAttributes.CommandSettings("Get Selected State From Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Selected State from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selected State from AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -26,10 +27,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetSelectedStateFromElementCommand()
         {
-            this.CommandName = "UIAutomationGetSelectedStateFromElementCommand";
-            this.SelectionName = "Get Selected State From Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetSelectedStateFromElementCommand";
+            //this.SelectionName = "Get Selected State From Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

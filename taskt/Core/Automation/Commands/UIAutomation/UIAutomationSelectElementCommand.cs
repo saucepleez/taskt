@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Select Element")]
     [Attributes.ClassAttributes.Description("This command allows you to Select AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -21,10 +22,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationSelectElementCommand()
         {
-            this.CommandName = "UIAutomationSelectElementCommand";
-            this.SelectionName = "Select Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationSelectElementCommand";
+            //this.SelectionName = "Select Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

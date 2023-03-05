@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Get Element From Table Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Element from Table AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Element from Table AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -47,10 +48,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetElementFromTableElementCommand()
         {
-            this.CommandName = "UIAutomationGetElementFromTableElementCommand";
-            this.SelectionName = "Get Element From Table Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetElementFromTableElementCommand";
+            //this.SelectionName = "Get Element From Table Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

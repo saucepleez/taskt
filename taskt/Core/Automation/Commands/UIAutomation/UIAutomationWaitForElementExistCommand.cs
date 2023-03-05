@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For Element Exist")]
     [Attributes.ClassAttributes.Description("This command allows you to Wait until the AutomationElement exists.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the AutomationElement exists.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -37,10 +38,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationWaitForElementExistCommand()
         {
-            this.CommandName = "UIAutomationWaitForElementExistCommand";
-            this.SelectionName = "Wait For Element Exist";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationWaitForElementExistCommand";
+            //this.SelectionName = "Wait For Element Exist";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
+    [Attributes.ClassAttributes.CommandSettings("Get Selection Items From Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Selection Items Name from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selection Items Name from AutomationElement. Search for only Child Elements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -25,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetSelectionItemsFromElementCommand()
         {
-            this.CommandName = "UIAutomationGetSelectionItemsFromElementCommand";
-            this.SelectionName = "Get Selection Items From Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetSelectionItemsFromElementCommand";
+            //this.SelectionName = "Get Selection Items From Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

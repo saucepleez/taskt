@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
+    [Attributes.ClassAttributes.CommandSettings("Get Element Tree XML From Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Element Tree XML from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Element Tree XML from AutomationElement. XML content is based on WinAppDriver UI Recorder.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -34,10 +35,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationGetElementTreeXMLFromElementCommand()
         {
-            this.CommandName = "UIAutomationGetElementTreeXMLFromElementCommand";
-            this.SelectionName = "Get Element Tree XML From Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationGetElementTreeXMLFromElementCommand";
+            //this.SelectionName = "Get Element Tree XML From Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

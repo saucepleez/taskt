@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Create JSON Variable")]
     [Attributes.ClassAttributes.Description("This command allows you to create JSON Variable.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -33,10 +34,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateJSONVariableCommand()
         {
-            this.CommandName = "CreateJSONVariable";
-            this.SelectionName = "Create JSON Variable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateJSONVariable";
+            //this.SelectionName = "Create JSON Variable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

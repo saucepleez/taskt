@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("JSON Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Remove JSON Array Item")]
     [Attributes.ClassAttributes.Description("This command allows you to remove item to JSON Array.")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,26 +26,27 @@ namespace taskt.Core.Automation.Commands
         public string v_JsonExtractor { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Index to Remove")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        //[SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
-        [PropertyDetailSampleUsage("**0**", "Specify the First Index to be Removed")]
-        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index to Remove")]
-        [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index to Remove")]
-        [Remarks("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "Index")]
-        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_ArrayIndex))]
+        //[PropertyDescription("Index to Remove")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        ////[SampleUsage("**0** or **1** or **{{{vIndex}}}**")]
+        //[PropertyDetailSampleUsage("**0**", "Specify the First Index to be Removed")]
+        //[PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index to Remove")]
+        //[PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index to Remove")]
+        //[Remarks("")]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "Index")]
+        //[PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_RemoveIndex { get; set; }
 
         public RemoveJSONArrayItemCommand()
         {
-            this.CommandName = "RemoveJSONArrayItem";
-            this.SelectionName = "Remove JSON Array Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "RemoveJSONArrayItem";
+            //this.SelectionName = "Remove JSON Array Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -59,7 +61,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 JArray ary = (JArray)searchResult;
 
-                var index = this.ConvertToUserVariableAsInteger(nameof(v_RemoveIndex), "Index", engine);
+                var index = this.ConvertToUserVariableAsInteger(nameof(v_RemoveIndex), engine);
 
                 if ((index < 0) && (index > ary.Count))
                 {

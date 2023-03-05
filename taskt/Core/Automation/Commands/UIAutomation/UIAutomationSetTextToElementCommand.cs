@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Set Text To Element")]
     [Attributes.ClassAttributes.Description("This command allows you to set Text Value from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to set Text Value from AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public UIAutomationSetTextToElementCommand()
         {
-            this.CommandName = "UIAutomationSetTextToElementCommand";
-            this.SelectionName = "Set Text To Element";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "UIAutomationSetTextToElementCommand";
+            //this.SelectionName = "Set Text To Element";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

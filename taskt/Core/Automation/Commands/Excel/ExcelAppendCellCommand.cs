@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Cell")]
+    [Attributes.ClassAttributes.CommandSettings("Append Cell")]
     [Attributes.ClassAttributes.Description("Append input to last row of sheet into the first cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -36,10 +37,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelAppendCellCommand()
         {
-            this.CommandName = "ExcelAppendCellCommand";
-            this.SelectionName = "Append Cell";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelAppendCellCommand";
+            //this.SelectionName = "Append Cell";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             this.v_InstanceName = "";
         }
