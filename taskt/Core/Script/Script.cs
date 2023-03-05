@@ -772,6 +772,12 @@ namespace taskt.Core.Script
             // SeleniumBrowserResizeBrowser -> SeleniumBrowserResizeBrowserCommand
             ChangeCommandName(doc, "SeleniumBrowserResizeBrowser", "SeleniumBrowserResizeBrowserCommand", "Resize Browser");
 
+            // CheckExcelInstanceExistsCommand -> ExcelCheckExcelInstanceExistsCommand
+            ChangeCommandName(doc, "CheckExcelInstanceExistsCommand", "ExcelCheckExcelInstanceExistsCommand", "Check Excel Instance Exists");
+
+            // ExcelWorksheetInfoCommand -> ExcelGetWorksheetInfoCommand
+            ChangeCommandName(doc, "ExcelWorksheetInfoCommand", "ExcelGetWorksheetInfoCommand", "Get Worksheet Info");
+
             return doc;
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -8,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.CommandSettings("Check Worksheet Exists")]
     [Attributes.ClassAttributes.Description("This command allows you to check existance sheet")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
@@ -30,10 +30,10 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelCheckWorksheetExistsCommand()
         {
-            this.CommandName = "ExcelCheckWorksheetExistsCommand";
-            this.SelectionName = "Check Worksheet Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelCheckWorksheetExistsCommand";
+            //this.SelectionName = "Check Worksheet Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
