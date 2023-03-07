@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Item")]
+    [Attributes.ClassAttributes.CommandSettings("Get List Count")]
     [Attributes.ClassAttributes.Description("This command allows you to get the item count of a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get the item count of a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -25,10 +26,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetListCountCommand()
         {
-            this.CommandName = "GetListCountCommand";
-            this.SelectionName = "Get List Count";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetListCountCommand";
+            //this.SelectionName = "Get List Count";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

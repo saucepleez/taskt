@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Reverse List")]
     [Attributes.ClassAttributes.Description("This command allows you to reverse list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reverse list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -28,10 +29,10 @@ namespace taskt.Core.Automation.Commands
 
         public ReverseListCommand()
         {
-            this.CommandName = "ReverseListCommand";
-            this.SelectionName = "Reverse List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ReverseListCommand";
+            //this.SelectionName = "Reverse List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("Math")]
+    [Attributes.ClassAttributes.CommandSettings("Get Max From List")]
     [Attributes.ClassAttributes.Description("This command allows you to get max value from a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get max value from a list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetMaxFromListCommand()
         {
-            this.CommandName = "GetMaxFromListCommand";
-            this.SelectionName = "Get Max From List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetMaxFromListCommand";
+            //this.SelectionName = "Get Max From List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

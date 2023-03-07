@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("Math")]
+    [Attributes.ClassAttributes.CommandSettings("Get Median From List")]
     [Attributes.ClassAttributes.Description("This command allows you to get median value from a list.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get median value from a list.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -29,10 +30,10 @@ namespace taskt.Core.Automation.Commands
 
         public GetMedianFromListCommand()
         {
-            this.CommandName = "GetMedianFromListCommand";
-            this.SelectionName = "Get Median From List";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetMedianFromListCommand";
+            //this.SelectionName = "Get Median From List";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

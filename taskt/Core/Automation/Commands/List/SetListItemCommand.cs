@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Item")]
+    [Attributes.ClassAttributes.CommandSettings("Set List Item")]
     [Attributes.ClassAttributes.Description("This command allows you want to set an item in a List")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set an item in a List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -34,50 +35,52 @@ namespace taskt.Core.Automation.Commands
 
         public SetListItemCommand()
         {
-            this.CommandName = "SetListItemCommand";
-            this.SelectionName = "Set List Item";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SetListItemCommand";
+            //this.SelectionName = "Set List Item";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var listVariable = v_ListName.GetRawVariable(engine);
-            if (listVariable == null)
-            {
-                throw new Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
-            }
+            //var listVariable = v_ListName.GetRawVariable(engine);
+            //if (listVariable == null)
+            //{
+            //    throw new Exception("Complex Variable '" + v_ListName + "' or '" + v_ListName.ApplyVariableFormatting(engine) + "' not found. Ensure the variable exists before attempting to modify it.");
+            //}
 
-            List<string> targetList;
-            if (listVariable.VariableValue is List<string>)
-            {
-                targetList = (List<string>)listVariable.VariableValue;
-            }
-            else
-            {
-                throw new Exception(v_ListName + " is not List");
-            }
-            
-            int index = 0;
-            if (String.IsNullOrEmpty(v_ItemIndex))
-            {
-                index = listVariable.CurrentPosition;
-            }
-            else
-            {
-                string itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
-                index = int.Parse(itemIndex);
-            }
-            if (index < 0)
-            {
-                index = targetList.Count + index;
-            }
+            //List<string> targetList;
+            //if (listVariable.VariableValue is List<string>)
+            //{
+            //    targetList = (List<string>)listVariable.VariableValue;
+            //}
+            //else
+            //{
+            //    throw new Exception(v_ListName + " is not List");
+            //}
 
-            if ((index >= 0) && (index < targetList.Count))
+            //int index = 0;
+            //if (String.IsNullOrEmpty(v_ItemIndex))
+            //{
+            //    index = listVariable.CurrentPosition;
+            //}
+            //else
+            //{
+            //    string itemIndex = v_ItemIndex.ConvertToUserVariable(sender);
+            //    index = int.Parse(itemIndex);
+            //}
+            //if (index < 0)
+            //{
+            //    index = targetList.Count + index;
+            //}
+
+            (var list, var index) = this.GetListVariableAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
+
+            if ((index >= 0) && (index < list.Count))
             {
-                targetList[index] = v_NewValue.ConvertToUserVariable(engine);
+                list[index] = v_NewValue.ConvertToUserVariable(engine);
             }
             else
             {

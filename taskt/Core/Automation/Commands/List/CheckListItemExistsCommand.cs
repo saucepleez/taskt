@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("List Commands")]
     [Attributes.ClassAttributes.SubGruop("List Item")]
+    [Attributes.ClassAttributes.CommandSettings("Check List Item Exists")]
     [Attributes.ClassAttributes.Description("This command allows you want to check list has a value you specify")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check list has a value you specify")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -30,10 +31,10 @@ namespace taskt.Core.Automation.Commands
 
         public CheckListItemExistsCommand()
         {
-            this.CommandName = "CheckListItemExistsCommand";
-            this.SelectionName = "Check List Item Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckListItemExistsCommand";
+            //this.SelectionName = "Check List Item Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

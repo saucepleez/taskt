@@ -13,7 +13,6 @@ namespace taskt.Core.Automation.Commands
         /// specify variable name to store result property
         /// </summary>
         [PropertyDescription("Variable Name to Store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("")]
         [PropertyDetailSampleUsage("**vResult**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [PropertyDetailSampleUsage("**{{{vResult}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
@@ -32,7 +31,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Value")]
         [InputSpecification("")]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
@@ -45,7 +43,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Value")]
         [InputSpecification("")]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
@@ -68,7 +65,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Value")]
         [InputSpecification("", true)]
         [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDisplayText(true, "Value")]
         public static string v_ComboBox { get; }
