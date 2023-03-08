@@ -1,132 +1,170 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
 
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.CommandSettings("New Variable")]
     [Attributes.ClassAttributes.Description("This command allows you to explicitly add a variable if you are not using **Set Variable* with the setting **Create Missing Variables** at runtime.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class AddVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the name of the new variable")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If the variable exists, the value of the old variable will be replaced with the new one")]
+        [PropertyDescription("Variable Name")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vSomeVariable**", PropertyDetailSampleUsage.ValueType.Value, "Variable Name")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_userVariableName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable (ex. Hello, {{{vNum}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vNum}}}**")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
+        [PropertyDescription("Variable Value")]
+        [InputSpecification("Variable Value", true)]
+        //[SampleUsage("**Hello** or **{{{vNum}}}**")]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Variable Value")]
+        [PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Variable Value")]
+        [Remarks("")]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Value")]
         public string v_Input { get; set; }
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Define the action to take if the variable already exists (Default is Replace If Variable Exists)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Do Nothing If Variable Exists")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Error If Variable Exists")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Replace If Variable Exists")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the appropriate handler from the list")]
-        [Attributes.PropertyAttributes.SampleUsage("**Do Nothing If Variable Exists** or **Error If Variable Exists** or **Replace If Variable Exists**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+
+        [XmlAttribute]
+        [PropertyDescription("When the Variable Already Exists")]
+        [InputSpecification("", true)]
+        [PropertyUISelectionOption("Do Nothing If Variable Exists")]
+        [PropertyUISelectionOption("Error If Variable Exists")]
+        [PropertyUISelectionOption("Replace If Variable Exists")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Replace If Variable Exists")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_IfExists { get; set; }
+
         public AddVariableCommand()
         {
-            this.CommandName = "AddVariableCommand";
-            this.SelectionName = "New Variable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "AddVariableCommand";
+            //this.SelectionName = "New Variable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             //get sending instance
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
+            //if (!engine.VariableList.Any(f => f.VariableName == v_userVariableName))
+            //{
+            //    //variable does not exist so add to the list
+            //    try
+            //    {
 
-            if (!engine.VariableList.Any(f => f.VariableName == v_userVariableName))
+            //        var variableValue = v_Input.ConvertToUserVariable(engine);
+
+            //        engine.VariableList.Add(new Script.ScriptVariable
+            //        {
+            //            VariableName = v_userVariableName,
+            //            VariableValue = variableValue
+            //        });
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new Exception("Encountered an error when adding variable '" + v_userVariableName + "': " + ex.ToString());
+            //    }
+            //}
+            //else
+            //{
+            //    //variable exists so decide what to do
+            //    var ifExists = v_IfExists.ConvertToUserVariable(sender);
+            //    if (String.IsNullOrEmpty(ifExists))
+            //    {
+            //        ifExists = "Replace If Variable Exists";
+            //    }
+
+            //    switch (ifExists)
+            //    {
+            //        case "Replace If Variable Exists":
+            //            v_Input.ConvertToUserVariable(sender).StoreInUserVariable(engine, v_userVariableName);
+            //            break;
+            //        case "Error If Variable Exists":
+            //            throw new Exception("Attempted to create a variable that already exists! Use 'Set Variable' instead or change the Exception Setting in the 'Add Variable' Command.");
+            //        default:
+            //            break;
+            //    }  
+            //}
+
+            var variableValue = v_Input.ConvertToUserVariable(engine);
+
+            var ifExists = this.GetUISelectionValue(nameof(v_IfExists), engine);
+            var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
+            if (VariableControls.IsVariableExists(variableName, engine))
             {
-                //variable does not exist so add to the list
-                try
+                switch (ifExists)
                 {
+                    case "do nothing if variable exists":
+                        // nothing to do
+                        break;
 
-                    var variableValue = v_Input.ConvertToUserVariable(engine);
+                    case "replace if variable exists":
+                        variableValue.StoreInUserVariable(engine, variableName);
+                        break;
 
-                    engine.VariableList.Add(new Script.ScriptVariable
-                    {
-                        VariableName = v_userVariableName,
-                        VariableValue = variableValue
-                    });
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Encountered an error when adding variable '" + v_userVariableName + "': " + ex.ToString());
+                    case "error if variable exists":
+                        throw new Exception("Variable Name '" + variableName + "' is already exists! Use 'Set Variable' instead or change the Exception Setting in the 'Add Variable' Command.");
                 }
             }
             else
             {
-                //variable exists so decide what to do
-                var ifExists = v_IfExists.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(ifExists))
-                {
-                    ifExists = "Replace If Variable Exists";
-                }
-
-                switch (ifExists)
-                {
-                    case "Replace If Variable Exists":
-                        v_Input.ConvertToUserVariable(sender).StoreInUserVariable(engine, v_userVariableName);
-                        break;
-                    case "Error If Variable Exists":
-                        throw new Exception("Attempted to create a variable that already exists! Use 'Set Variable' instead or change the Exception Setting in the 'Add Variable' Command.");
-                    default:
-                        break;
-                }  
+                variableValue.StoreInUserVariable(engine, variableName);
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
-
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfExists", this));
-            var dropdown = CommandControls.CreateDefaultDropdownFor("v_IfExists", this);
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_IfExists", this, dropdown, editor));
-            RenderedControls.Add(dropdown);
-
-            return RenderedControls;
-        }
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
 
 
+        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfExists", this));
+        //    var dropdown = CommandControls.CreateDefaultDropdownFor("v_IfExists", this);
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_IfExists", this, dropdown, editor));
+        //    RenderedControls.Add(dropdown);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Assign '" + v_Input + "' to New Variable '" + v_userVariableName + "']";
-        }
+        //    return RenderedControls;
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_userVariableName))
-            {
-                this.validationResult += "New variable is empty.\n";
-                this.IsValid = false;
-            }
 
-            return this.IsValid;
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Assign '" + v_Input + "' to New Variable '" + v_userVariableName + "']";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_userVariableName))
+        //    {
+        //        this.validationResult += "New variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }
