@@ -5,7 +5,7 @@ using System.Linq;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// for variable methods
+    /// for variable (name) methods
     /// </summary>
     internal static class VariableControls
     {
