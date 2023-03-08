@@ -481,6 +481,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ValidationControls.cs" />
+    <Compile Include="Core\Automation\Commands\VariableControls.cs" />
     <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\PropertyControls.cs" />
