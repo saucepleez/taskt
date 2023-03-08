@@ -15,10 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class SetVariableIndexCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
-        //[Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        //[Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        //[Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyDescription("Variable Name")]
         [InputSpecification("Variable Name", true)]
         [PropertyDetailSampleUsage("**vSomeVariable**", PropertyDetailSampleUsage.ValueType.Value, "Variable Name")]
@@ -56,101 +52,12 @@ namespace taskt.Core.Automation.Commands
         {
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
-
-            //var requiredVariable = LookupVariable(engine);
-
-            ////if still not found and user has elected option, create variable at runtime
-            //if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
-            //{
-            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-            //    requiredVariable = LookupVariable(engine);
-            //}
-
-            //if (requiredVariable != null)
-            //{
-
-            //    var index = int.Parse(v_Index.ConvertToUserVariable(sender));
-
-            //    requiredVariable.CurrentPosition = index;
-            //}
-            //else
-            //{
-            //    throw new Exception("Attempted to update variable index, but variable was not found. Enclose variables within brackets, ex. {vVariable}");
-            //}
-
+            
             var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
             var rawVariable = variableName.GetRawVariable(engine);
 
             var index = this.ConvertToUserVariableAsInteger(nameof(v_Index), engine);
             rawVariable.CurrentPosition = index;
         }
-
-        //private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        //{
-        //    //search for the variable
-        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
-
-        //    //if variable was not found but it starts with variable naming pattern
-        //    if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-        //    {
-        //        //reformat and attempt
-        //        var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-        //        requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-        //    }
-
-        //    return requiredVariable;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Update Variable '" + v_userVariableName + "' index to '" + v_Index + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-
-        //    //create control for variable name
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Index", this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_userVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_Index))
-        //    {
-        //        this.validationResult += "Index is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        int idx;
-        //        if (int.TryParse(this.v_Index, out idx))
-        //        {
-        //            if (idx < 0)
-        //            {
-        //                this.validationResult += "Specify a value of 0 or more for index.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

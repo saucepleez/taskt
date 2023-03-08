@@ -27,17 +27,6 @@ namespace taskt.Core.Automation.Commands
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify the Variable to store result")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Enter the input that the variable's value should be set to.")]
-        //[SampleUsage("**vResult** or **{{{vResult}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Variable Exists, Result is **True**")]
         public string v_Result { get; set; }
@@ -55,38 +44,8 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //v_userVariableName = v_userVariableName.ConvertToUserVariable(engine);
-
-            //var variableList = engine.VariableList;
-            //foreach(var v in variableList)
-            //{
-            //    if (v.VariableName == v_userVariableName)
-            //    {
-            //        true.StoreInUserVariable(engine, v_Result);
-            //        return;
-            //    }
-            //}
-
-            //false.StoreInUserVariable(engine, v_Result);
-
             var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
             VariableControls.IsVariableExists(variableName, engine).StoreInUserVariable(engine, v_Result);
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Check Variable '" + v_userVariableName + "', Result '" + v_Result + "']";
-        //}
-
-        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
     }
 }

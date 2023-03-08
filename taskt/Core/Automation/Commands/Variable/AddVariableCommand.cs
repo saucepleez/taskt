@@ -65,46 +65,6 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //if (!engine.VariableList.Any(f => f.VariableName == v_userVariableName))
-            //{
-            //    //variable does not exist so add to the list
-            //    try
-            //    {
-
-            //        var variableValue = v_Input.ConvertToUserVariable(engine);
-
-            //        engine.VariableList.Add(new Script.ScriptVariable
-            //        {
-            //            VariableName = v_userVariableName,
-            //            VariableValue = variableValue
-            //        });
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw new Exception("Encountered an error when adding variable '" + v_userVariableName + "': " + ex.ToString());
-            //    }
-            //}
-            //else
-            //{
-            //    //variable exists so decide what to do
-            //    var ifExists = v_IfExists.ConvertToUserVariable(sender);
-            //    if (String.IsNullOrEmpty(ifExists))
-            //    {
-            //        ifExists = "Replace If Variable Exists";
-            //    }
-
-            //    switch (ifExists)
-            //    {
-            //        case "Replace If Variable Exists":
-            //            v_Input.ConvertToUserVariable(sender).StoreInUserVariable(engine, v_userVariableName);
-            //            break;
-            //        case "Error If Variable Exists":
-            //            throw new Exception("Attempted to create a variable that already exists! Use 'Set Variable' instead or change the Exception Setting in the 'Add Variable' Command.");
-            //        default:
-            //            break;
-            //    }  
-            //}
-
             var variableValue = v_Input.ConvertToUserVariable(engine);
 
             var ifExists = this.GetUISelectionValue(nameof(v_IfExists), engine);
@@ -130,41 +90,5 @@ namespace taskt.Core.Automation.Commands
                 variableValue.StoreInUserVariable(engine, variableName);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_userVariableName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
-
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_IfExists", this));
-        //    var dropdown = CommandControls.CreateDefaultDropdownFor("v_IfExists", this);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_IfExists", this, dropdown, editor));
-        //    RenderedControls.Add(dropdown);
-
-        //    return RenderedControls;
-        //}
-
-
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Assign '" + v_Input + "' to New Variable '" + v_userVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_userVariableName))
-        //    {
-        //        this.validationResult += "New variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

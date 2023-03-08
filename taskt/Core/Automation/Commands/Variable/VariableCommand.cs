@@ -15,10 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class VariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please select a variable to modify")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyDescription("Variable Name")]
         [InputSpecification("Variable Name", true)]
         [PropertyDetailSampleUsage("**vSomeVariable**", PropertyDetailSampleUsage.ValueType.Value, "Variable Name")]
@@ -65,31 +61,6 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //v_userVariableName = v_userVariableName.ConvertToUserVariable(engine);
-
-            //if (String.IsNullOrEmpty(v_ReplaceInputVariables))
-            //{
-            //    v_ReplaceInputVariables = "YES";
-            //}
-            //string variableInput;
-            //if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
-            //{
-            //    variableInput = v_Input.ConvertToUserVariable(sender);
-            //}
-            //else
-            //{
-            //    variableInput = v_Input;
-            //}
-            //if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
-            //{
-            //    var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
-            //    itemList.StoreInUserVariable(engine, v_userVariableName);
-            //}
-            //else
-            //{
-            //    variableInput.StoreInUserVariable(engine, v_userVariableName);
-            //}
-
             var isRepalce = this.GetUISelectionValue(nameof(v_ReplaceInputVariables), engine);
             string variableValue;
             if (isRepalce == "yes")
@@ -111,66 +82,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Variable Name '" + variableName + "' does not exists.");
             }
         }
-
-        //private Script.ScriptVariable LookupVariable(Engine.AutomationEngineInstance sendingInstance)
-        //{
-        //    //search for the variable
-        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
-
-        //    return requiredVariable;
-        //}
-
-        //private string parseVariableName(string variableName, Engine.AutomationEngineInstance engine)
-        //{
-        //    var settings = engine.engineSettings;
-        //    if (variableName.StartsWith(settings.VariableStartMarker) && variableName.EndsWith(settings.VariableEndMarker))
-        //    {
-        //        if (engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
-        //        {
-        //            variableName = variableName.Substring(settings.VariableStartMarker.Length, variableName.Length - settings.VariableStartMarker.Length - settings.VariableEndMarker.Length);
-        //        }
-        //    }
-        //    if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
-        //    {
-        //        variableName = variableName.ConvertToUserVariable(engine);
-        //    }
-
-        //    return variableName;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
-        //}
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    //custom rendering
-        //    base.Render(editor);
-
-
-        //    //create control for variable name
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ReplaceInputVariables", this, editor));
-        //    return RenderedControls;
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_userVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
