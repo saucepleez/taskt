@@ -1,189 +1,176 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Drawing;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Variable Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Set Variable")]
     [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class VariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select a variable to modify")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyDescription("Please select a variable to modify")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyDescription("Variable Name")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vSomeVariable**", PropertyDetailSampleUsage.ValueType.Value, "Variable Name")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
         public string v_userVariableName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input to be set to above variable (ex. Hello, 1, {{{vNum}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the input that the variable's value should be set to.")]
-        [Attributes.PropertyAttributes.SampleUsage("**1** or **Hello** or {{{vNum}}}")]
-        [Attributes.PropertyAttributes.Remarks("You can use variables in input if you encase them within brackets {{{vName}}}.  You can also perform basic math operations.")]
+        [PropertyDescription("Variable Value")]
+        [InputSpecification("Variable Value", true)]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Variable Value")]
+        [PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Variable Value")]
+        [Remarks("")]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Value")]
         public string v_Input { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Convert Variables in Input Text Above (Default is Yes)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the necessary option.")]
-        [Attributes.PropertyAttributes.Remarks("If {{{vNum}}} has '1' and you select 'Yes', variable will be assigned '1'. If you select 'No', variable will be assigned '{{{vNum}}}'.")]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyDescription("Convert Variables in Input Text Above")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("", true)]
+        [Remarks("If **{{{vNum}}}** has **'1'** and You select **'Yes'**, Variable will be Assigned **'1'**. If You Select **'No'**, Variable will be assigned **'{{{vNum}}}'**.")]
+        [PropertyIsOptional(true, "Yes")]
         public string v_ReplaceInputVariables { get; set; }
 
         public VariableCommand()
         {
-            this.CommandName = "VariableCommand";
-            this.SelectionName = "Set Variable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_ReplaceInputVariables = "Yes";
+            //this.CommandName = "VariableCommand";
+            //this.SelectionName = "Set Variable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
+            //this.v_ReplaceInputVariables = "Yes";
         }
 
         public override void RunCommand(object sender)
         {
             //get sending instance
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            v_userVariableName = v_userVariableName.ConvertToUserVariable(engine);
-            //v_userVariableName = parseVariableName(v_userVariableName, engine);
+            //v_userVariableName = v_userVariableName.ConvertToUserVariable(engine);
 
-            //var requiredVariable = LookupVariable(engine);
-
-            ////if still not found and user has elected option, create variable at runtime
-            //if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
+            //if (String.IsNullOrEmpty(v_ReplaceInputVariables))
             //{
-            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = v_userVariableName });
-            //    requiredVariable = LookupVariable(engine);
+            //    v_ReplaceInputVariables = "YES";
             //}
-
-            if (String.IsNullOrEmpty(v_ReplaceInputVariables))
-            {
-                v_ReplaceInputVariables = "YES";
-            }
-            string variableInput;
-            if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
-            {
-                variableInput = v_Input.ConvertToUserVariable(sender);
-            }
-            else
-            {
-                variableInput = v_Input;
-            }
-            if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
-            {
-                var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
-                itemList.StoreInUserVariable(engine, v_userVariableName);
-            }
-            else
-            {
-                variableInput.StoreInUserVariable(engine, v_userVariableName);
-            }
-
-            //if (requiredVariable != null)
+            //string variableInput;
+            //if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
             //{
-            //    string variableInput;
-            //    if (v_ReplaceInputVariables.ToUpperInvariant() == "YES")
-            //    {
-            //        variableInput = v_Input.ConvertToUserVariable(sender);
-            //    }
-            //    else
-            //    {
-            //        variableInput = v_Input;
-            //    }              
-
-            //    if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
-            //    {
-            //        var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
-            //        requiredVariable.VariableValue = itemList;
-            //    }
-            //    else
-            //    {
-            //        requiredVariable.VariableValue = variableInput;
-            //    }
+            //    variableInput = v_Input.ConvertToUserVariable(sender);
             //}
             //else
             //{
-            //    throw new Exception("Attempted to store data in a variable, but it was not found. Enclose variables within brackets, ex. [vVariable]");
+            //    variableInput = v_Input;
             //}
-        }
-
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
-
-            //if variable was not found but it starts with variable naming pattern
-            //if ((requiredVariable == null) && (v_userVariableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_userVariableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
+            //if (variableInput.StartsWith("{{") && variableInput.EndsWith("}}"))
             //{
-            //    //reformat and attempt
-            //    var reformattedVariable = v_userVariableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-            //    requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
+            //    var itemList = variableInput.Replace("{{", "").Replace("}}", "").Split('|').Select(s => s.Trim()).ToList();
+            //    itemList.StoreInUserVariable(engine, v_userVariableName);
+            //}
+            //else
+            //{
+            //    variableInput.StoreInUserVariable(engine, v_userVariableName);
             //}
 
-            return requiredVariable;
-        }
-
-        private string parseVariableName(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            var settings = engine.engineSettings;
-            if (variableName.StartsWith(settings.VariableStartMarker) && variableName.EndsWith(settings.VariableEndMarker))
+            var isRepalce = this.GetUISelectionValue(nameof(v_ReplaceInputVariables), engine);
+            string variableValue;
+            if (isRepalce == "yes")
             {
-                if (engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
-                {
-                    variableName = variableName.Substring(settings.VariableStartMarker.Length, variableName.Length - settings.VariableStartMarker.Length - settings.VariableEndMarker.Length);
-                }
+                variableValue = v_Input.ConvertToUserVariable(engine);
             }
-            if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
+            else
             {
-                variableName = variableName.ConvertToUserVariable(engine);
+                variableValue = v_Input;
             }
 
-            return variableName;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
-        }
-
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            //custom rendering
-            base.Render(editor);
-
-
-            //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
-            RenderedControls.Add(VariableNameControl);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ReplaceInputVariables", this, editor));
-            return RenderedControls;
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_userVariableName))
+            var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
+            if (VariableControls.IsVariableExists(variableName, engine))
             {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
+                variableValue.StoreInUserVariable(engine, variableName);
             }
-
-            return this.IsValid;
+            else
+            {
+                throw new Exception("Variable Name '" + variableName + "' does not exists.");
+            }
         }
+
+        //private Script.ScriptVariable LookupVariable(Engine.AutomationEngineInstance sendingInstance)
+        //{
+        //    //search for the variable
+        //    var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_userVariableName).FirstOrDefault();
+
+        //    return requiredVariable;
+        //}
+
+        //private string parseVariableName(string variableName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var settings = engine.engineSettings;
+        //    if (variableName.StartsWith(settings.VariableStartMarker) && variableName.EndsWith(settings.VariableEndMarker))
+        //    {
+        //        if (engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
+        //        {
+        //            variableName = variableName.Substring(settings.VariableStartMarker.Length, variableName.Length - settings.VariableStartMarker.Length - settings.VariableEndMarker.Length);
+        //        }
+        //    }
+        //    if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
+        //    {
+        //        variableName = variableName.ConvertToUserVariable(engine);
+        //    }
+
+        //    return variableName;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Apply '" + v_Input + "' to Variable '" + v_userVariableName + "']";
+        //}
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    //custom rendering
+        //    base.Render(editor);
+
+
+        //    //create control for variable name
+        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
+        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
+        //    RenderedControls.Add(VariableNameControl);
+
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Input", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ReplaceInputVariables", this, editor));
+        //    return RenderedControls;
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_userVariableName))
+        //    {
+        //        this.validationResult += "Variable is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }
