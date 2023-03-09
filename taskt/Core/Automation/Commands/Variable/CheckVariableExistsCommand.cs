@@ -15,15 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class CheckVariableExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Variable Name")]
-        //[InputSpecification("Variable Name", true)]
-        //[PropertyDetailSampleUsage("**vSomeVariable**", PropertyDetailSampleUsage.ValueType.Value, "Variable Name")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Variable")]
         [PropertyVirtualProperty(nameof(VariableNameControls), nameof(VariableNameControls.v_VariableName))]
         public string v_userVariableName { get; set; }
 

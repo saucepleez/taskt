@@ -16,29 +16,11 @@ namespace taskt.Core.Automation.Commands
     public class NewVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Variable Name")]
-        //[InputSpecification("Variable Name", true)]
-        //[PropertyDetailSampleUsage("**vSomeVariable**", PropertyDetailSampleUsage.ValueType.Value, "Variable Name")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Variable")]
         [PropertyVirtualProperty(nameof(VariableNameControls), nameof(VariableNameControls.v_VariableName))]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Variable Value")]
-        //[InputSpecification("Variable Value", true)]
-        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Variable Value")]
-        //[PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Variable Value")]
-        //[Remarks("")]
-        //[PropertyIsOptional(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyDisplayText(true, "Value")]
         [PropertyVirtualProperty(nameof(VariableNameControls), nameof(VariableNameControls.v_VariableValue))]
         public string v_Input { get; set; }
 
