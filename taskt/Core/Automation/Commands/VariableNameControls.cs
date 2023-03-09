@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -9,6 +10,35 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class VariableNameControls
     {
+
+        /// <summary>
+        /// variable name property
+        /// </summary>
+        [PropertyDescription("Variable Name")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vSomeVariable**", PropertyDetailSampleUsage.ValueType.Value, "Variable Name")]
+        [PropertyDetailSampleUsage("**{{{vSomeVariable}}}**", "Specify **vSomeVariable** for the Variable Name")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Variable")]
+        public static string v_VariableName { get; }
+
+        /// <summary>
+        /// variable value property
+        /// </summary>
+        [PropertyDescription("Variable Value")]
+        [InputSpecification("Variable Value", true)]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Variable Value")]
+        [PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Variable Value")]
+        [Remarks("")]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_VariableValue { get; }
 
         /// <summary>
         /// check variable name is exists
