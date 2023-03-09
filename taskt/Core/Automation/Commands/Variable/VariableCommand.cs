@@ -6,13 +6,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Variable Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Set Variable")]
+    [Attributes.ClassAttributes.CommandSettings("Set Variable Value")]
     [Attributes.ClassAttributes.Description("This command allows you to modify variables.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to modify the value of variables.  You can even use variables to modify other variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class VariableCommand : ScriptCommand
+    public class SetVariableValueCommand : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Variable Name")]
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Yes")]
         public string v_ReplaceInputVariables { get; set; }
 
-        public VariableCommand()
+        public SetVariableValueCommand()
         {
             //this.CommandName = "VariableCommand";
             //this.SelectionName = "Set Variable";

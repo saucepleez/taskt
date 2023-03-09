@@ -781,6 +781,17 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        public static XDocument convertTo3_5_1_32(XDocument doc)
+        {
+            // AddVariableCommand -> NewVariableCommand
+            ChangeCommandName(doc, "AddVariableCommand", "NewVariableCommand", "New Variable");
+
+            // VariableCommand -> SetVariableValueCommand
+            ChangeCommandName(doc, "VariableCommand", "SetVariableValueCommand", "Set Variable Value");
+
+            return doc;
+        }
+
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")

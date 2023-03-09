@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class AddVariableCommand : ScriptCommand
+    public class NewVariableCommand : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Variable Name")]
@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_IfExists { get; set; }
 
-        public AddVariableCommand()
+        public NewVariableCommand()
         {
             //this.CommandName = "AddVariableCommand";
             //this.SelectionName = "New Variable";
