@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
+            var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
             var rawVariable = variableName.GetRawVariable(engine);
 
             var index = this.ConvertToUserVariableAsInteger(nameof(v_Index), engine);

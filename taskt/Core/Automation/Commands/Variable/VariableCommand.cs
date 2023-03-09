@@ -72,8 +72,8 @@ namespace taskt.Core.Automation.Commands
                 variableValue = v_Input;
             }
 
-            var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
-            if (VariableControls.IsVariableExists(variableName, engine))
+            var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
+            if (VariableNameControls.IsVariableExists(variableName, engine))
             {
                 variableValue.StoreInUserVariable(engine, variableName);
             }

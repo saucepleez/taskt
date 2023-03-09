@@ -68,8 +68,8 @@ namespace taskt.Core.Automation.Commands
             var variableValue = v_Input.ConvertToUserVariable(engine);
 
             var ifExists = this.GetUISelectionValue(nameof(v_IfExists), engine);
-            var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
-            if (VariableControls.IsVariableExists(variableName, engine))
+            var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
+            if (VariableNameControls.IsVariableExists(variableName, engine))
             {
                 switch (ifExists)
                 {

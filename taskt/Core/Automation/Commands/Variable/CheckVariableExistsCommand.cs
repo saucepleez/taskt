@@ -44,8 +44,8 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var variableName = VariableControls.GetVariableName(v_userVariableName, engine);
-            VariableControls.IsVariableExists(variableName, engine).StoreInUserVariable(engine, v_Result);
+            var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
+            VariableNameControls.IsVariableExists(variableName, engine).StoreInUserVariable(engine, v_Result);
         }
     }
 }
