@@ -25,10 +25,10 @@ namespace taskt.Core.Automation.Commands
 
         public CheckVariableExistsCommand()
         {
-            this.CommandName = "CheckVariableExistsCommand";
-            this.SelectionName = "Check Variable Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckVariableExistsCommand";
+            //this.SelectionName = "Check Variable Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
