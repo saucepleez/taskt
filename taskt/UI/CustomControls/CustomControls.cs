@@ -679,6 +679,7 @@ namespace taskt.UI
             {nameof(FilterListCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetAverageFromListCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetListCountCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(GetListIndexCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetListIndexFromValueCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetListItemCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetMaxFromListCommand), "taskt.Properties.Resources.command_function"},
@@ -803,10 +804,11 @@ namespace taskt.UI
             {nameof(UIAutomationWaitForElementExistCommand), "taskt.Properties.Resources.command_window"},
 
             // Variable
-            {nameof(AddVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(CheckVariableExistsCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(GetVariableIndexCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetVariableTypeCommand), "taskt.Properties.Resources.command_function"},
-            {nameof(VariableCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(NewVariableCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(SetVariableValueCommand), "taskt.Properties.Resources.command_function"},
             {nameof(SetVariableIndexCommand), "taskt.Properties.Resources.command_function"},
 
             // Web

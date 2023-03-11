@@ -286,6 +286,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_16(doc);
             convertTo3_5_1_30(doc);
             convertTo3_5_1_31(doc);
+            convertTo3_5_1_32(doc);
 
             return doc;
         }
@@ -777,6 +778,17 @@ namespace taskt.Core.Script
 
             // ExcelWorksheetInfoCommand -> ExcelGetWorksheetInfoCommand
             ChangeCommandName(doc, "ExcelWorksheetInfoCommand", "ExcelGetWorksheetInfoCommand", "Get Worksheet Info");
+
+            return doc;
+        }
+
+        public static XDocument convertTo3_5_1_32(XDocument doc)
+        {
+            // AddVariableCommand -> NewVariableCommand
+            ChangeCommandName(doc, "AddVariableCommand", "NewVariableCommand", "New Variable");
+
+            // VariableCommand -> SetVariableValueCommand
+            ChangeCommandName(doc, "VariableCommand", "SetVariableValueCommand", "Set Variable Value");
 
             return doc;
         }

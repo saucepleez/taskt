@@ -365,6 +365,7 @@
     <Compile Include="Core\Automation\Commands\List\GetSumFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetVarianceFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\ListControls.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PlaySystemSoundCommand.cs" />
     <Compile Include="Core\Automation\Commands\NumberControls.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
@@ -481,9 +482,11 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetElementFromWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ValidationControls.cs" />
+    <Compile Include="Core\Automation\Commands\VariableNameControls.cs" />
     <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\PropertyControls.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\GetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValuesAsDataTableCommand.cs" />
@@ -535,7 +538,7 @@
     <Compile Include="Core\Automation\Commands\Regex\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataRowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Variable\AddVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\NewVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\BeginIfCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginContinousLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginExcelDatasetLoopCommand.cs" />
@@ -673,7 +676,7 @@
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
     <Compile Include="Core\Automation\Commands\Task\StopTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\UploadDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Variable\VariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\SetVariableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\WaitForFileToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAddDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendDataTableCommand.cs" />

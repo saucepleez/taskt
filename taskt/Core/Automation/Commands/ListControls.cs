@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Automation.Provider;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -219,6 +220,11 @@ namespace taskt.Core.Automation.Commands
             if (index < 0)
             {
                 index += list.Count;
+            }
+
+            if (list.Count <= index)
+            {
+                throw new Exception("Index is out of List index. Index: " + index);
             }
 
             return (list, index);
