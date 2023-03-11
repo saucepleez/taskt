@@ -803,9 +803,10 @@ namespace taskt.UI
             {nameof(UIAutomationWaitForElementExistCommand), "taskt.Properties.Resources.command_window"},
 
             // Variable
-            {nameof(NewVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(CheckVariableExistsCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(GetVariableIndexCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetVariableTypeCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(NewVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(SetVariableValueCommand), "taskt.Properties.Resources.command_function"},
             {nameof(SetVariableIndexCommand), "taskt.Properties.Resources.command_function"},
 

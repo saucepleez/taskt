@@ -485,6 +485,7 @@
     <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\PropertyControls.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\GetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValuesAsDataTableCommand.cs" />
