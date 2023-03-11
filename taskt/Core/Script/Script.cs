@@ -286,7 +286,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_16(doc);
             convertTo3_5_1_30(doc);
             convertTo3_5_1_31(doc);
-            convertTo3_5_1_32(doc);
+            convertTo3_5_1_33(doc);
 
             return doc;
         }
@@ -782,7 +782,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        public static XDocument convertTo3_5_1_32(XDocument doc)
+        public static XDocument convertTo3_5_1_33(XDocument doc)
         {
             // AddVariableCommand -> NewVariableCommand
             ChangeCommandName(doc, "AddVariableCommand", "NewVariableCommand", "New Variable");
