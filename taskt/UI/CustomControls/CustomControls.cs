@@ -679,6 +679,7 @@ namespace taskt.UI
             {nameof(FilterListCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetAverageFromListCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetListCountCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(GetListIndexCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetListIndexFromValueCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetListItemCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetMaxFromListCommand), "taskt.Properties.Resources.command_function"},

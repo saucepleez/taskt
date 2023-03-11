@@ -365,6 +365,7 @@
     <Compile Include="Core\Automation\Commands\List\GetSumFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetVarianceFromListCommand.cs" />
     <Compile Include="Core\Automation\Commands\ListControls.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PlaySystemSoundCommand.cs" />
     <Compile Include="Core\Automation\Commands\NumberControls.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
