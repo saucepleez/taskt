@@ -81,5 +81,23 @@ namespace taskt.Core.Automation.Commands
         {
             return (name.StartsWith(engine.engineSettings.VariableStartMarker) && name.EndsWith(engine.engineSettings.VariableEndMarker));
         }
+
+        /// <summary>
+        /// get wrapped variable name.
+        /// </summary>
+        /// <param name="name">name is not converted</param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string GetWrappedVariableName(string name, Engine.AutomationEngineInstance engine)
+        {
+            if (IsWrapVariableMarker(name, engine))
+            {
+                return name;
+            }
+            else
+            {
+                return engine.engineSettings.VariableStartMarker + name + engine.engineSettings.VariableEndMarker;
+            }
+        }
     }
 }
