@@ -732,7 +732,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        public static XDocument convertTo3_5_1_31(XDocument doc)
+        private static XDocument convertTo3_5_1_31(XDocument doc)
         {
             // AddJSONArrayItem -> AddJSONArrayItemCommand
             ChangeCommandName(doc, "AddJSONArrayItem", "AddJSONArrayItemCommand", "Add JSON Array Item");
@@ -782,7 +782,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        public static XDocument convertTo3_5_1_33(XDocument doc)
+        private static XDocument convertTo3_5_1_33(XDocument doc)
         {
             // AddVariableCommand -> NewVariableCommand
             ChangeCommandName(doc, "AddVariableCommand", "NewVariableCommand", "New Variable");
@@ -792,6 +792,8 @@ namespace taskt.Core.Script
 
             return doc;
         }
+
+        
 
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
