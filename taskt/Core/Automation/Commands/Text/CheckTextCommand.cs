@@ -136,9 +136,9 @@ namespace taskt.Core.Automation.Commands
         {
             string searchedKey = ((ComboBox)sender).SelectedItem.ToString();
 
-            Dictionary<string, string> dic = (Dictionary<string, string>)(ControlsList["lbl_" + nameof(v_applyToVariableName)].Tag);
+            Dictionary<string, string> dic = (Dictionary<string, string>)(ControlsList["lbl_" + nameof(v_CheckMethod)].Tag);
 
-            var lbl = (Label)ControlsList["lbl2_" + nameof(v_applyToVariableName)];
+            var lbl = (Label)ControlsList["lbl2_" + nameof(v_CheckMethod)];
             lbl.Text = (dic.ContainsKey(searchedKey) ? dic[searchedKey] : "");
         }
 
