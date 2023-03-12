@@ -287,6 +287,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_30(doc);
             convertTo3_5_1_31(doc);
             convertTo3_5_1_33(doc);
+            convertTo3_5_1_34(doc);
 
             return doc;
         }
@@ -793,7 +794,13 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        
+        private static XDocument convertTo3_5_1_34(XDocument doc)
+        {
+            // GetLengthCommand -> GetWordLengthCommand
+            ChangeCommandName(doc, "GetLengthCommand", "GetWordLengthCommand", "Get Word Length");
+
+            return doc;
+        }
 
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
