@@ -43,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**[crLF]**", "Specify **Line Break** for Delimiter")]
         [PropertyDetailSampleUsage("**[chars]**", "Split by one character")]
         [PropertyDetailSampleUsage("**{{{vChar}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Delimiter")]
+        [PropertyDetailSampleUsage("**{{{Char.Space}}}**", "Split by **Space**. Please specify **Disable Auto Calculation** before this command.", false)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Delimiter", PropertyValidationRule.ValidationRuleFlags.Empty)]
