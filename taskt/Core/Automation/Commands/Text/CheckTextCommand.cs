@@ -23,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
         [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Text to be Checked")]
         public string v_userVariableName { get; set; }
