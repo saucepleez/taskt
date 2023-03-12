@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Create Text Variable")]
     [Attributes.ClassAttributes.Description("This command allows you to create text variables.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create text variables.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -15,23 +16,27 @@ namespace taskt.Core.Automation.Commands
     public class CreateTextVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select a text variable name")]
-        [InputSpecification("")]
-        [SampleUsage("**vSomeVariable** or **{{{vSomeVariable}}}**")]
+        [PropertyDescription("Text Variable Name")]
+        [InputSpecification("Text Variable Name", true)]
+        [PropertyDetailSampleUsage("**vText**", "Specify Variable Name **vText**")]
+        [PropertyDetailSampleUsage("**{{{vText}}}**", "Specify Variable Name **vText**")]
         [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
 
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify Text Value to Set")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**1** or **Hello** or {{{vNum}}}")]
+        [PropertyDescription("Text Value")]
+        [InputSpecification("Text Value", true)]
         [Remarks("")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Text Value")]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text Value")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text Value")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyDisplayText(true, "Text")]
@@ -39,10 +44,10 @@ namespace taskt.Core.Automation.Commands
 
         public CreateTextVariableCommand()
         {
-            this.CommandName = "CreateTextVariable";
-            this.SelectionName = "Create Text Variable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateTextVariable";
+            //this.SelectionName = "Create Text Variable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

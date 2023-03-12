@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
-using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -13,49 +9,62 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("Check/Get")]
+    [Attributes.ClassAttributes.CommandSettings("Check Text")]
     [Attributes.ClassAttributes.Description("This command allows you to check a Text")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check a Text")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please Supply the Text or Variable to Checked")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Select or provide a variable or text value")]
-        [SampleUsage("**Hello** or **{{{vText}}}**")]
+        [PropertyDescription("Text to be Checked")]
+        [InputSpecification("Text", true)]
         [Remarks("")]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
+        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDisplayText(true, "Text to be Checked")]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Select the Check Method")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Index of** or **Last Index of**")]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Check Method")]
         [PropertyUISelectionOption("Contains")]
         [PropertyUISelectionOption("Starts with")]
         [PropertyUISelectionOption("Ends with")]
         [PropertyUISelectionOption("Index of")]
         [PropertyUISelectionOption("Last Index of")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Has Value")]
+        [PropertyUISelectionOption("Is a Number")]
+        [PropertyUISelectionOption("Is a Boolean")]
         [PropertyValidationRule("Check Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Method")]
+        [PropertySelectionChangeEvent(nameof(cmbCheckMethod_SelectionChanged))]
+        [PropertySecondaryLabel(true)]
+        [PropertyAddtionalParameterInfo("Contains", "Result is **TRUE** or **FALSE**")]
+        [PropertyAddtionalParameterInfo("Starts with", "Result is **TRUE** or **FALSE**")]
+        [PropertyAddtionalParameterInfo("Ends with", "Result is **TRUE** or **FALSE**")]
+        [PropertyAddtionalParameterInfo("Index of", "Result is a found position. If not found, the result is -1.")]
+        [PropertyAddtionalParameterInfo("Last Index of", "Result is the last position found. If not found, the result is -1.")]
+        [PropertyAddtionalParameterInfo("Has Value", "Result is **TRUE** or **FALSE**")]
+        [PropertyAddtionalParameterInfo("Is a Number", "Result is **TRUE** or **FALSE**")]
+        [PropertyAddtionalParameterInfo("Is a Boolean", "Result is **TRUE** or **FALSE**")]
         public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify Text to Check or Search")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**Ha** or **{{{vSearchedText}}}**")]
+        [PropertyDescription("Text to Check or Search")]
+        [InputSpecification("Text to Check or Search", true)]
         [Remarks("")]
+        [PropertyDetailSampleUsage("**Ha**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
+        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Text to Check or Search", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Text to Check or Search")]
         public string v_CheckParameter { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Select Case sensitive")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Indicate if only so many characters should be kept")]
+        [PropertyDescription("Case sensitive")]
+        [InputSpecification("", true)]
         [SampleUsage("**Yes** or **No**")]
         [Remarks("")]
         [PropertyUISelectionOption("Yes")]
@@ -65,144 +74,95 @@ namespace taskt.Core.Automation.Commands
         public string v_CaseSensitive { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the result")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertySecondaryLabel(true)]
-        [PropertyAddtionalParameterInfo("Contains", "Result is TRUE or FALSE")]
-        [PropertyAddtionalParameterInfo("Start with", "Result is TRUE or FALSE")]
-        [PropertyAddtionalParameterInfo("End with", "Result is TRUE or FALSE")]
-        [PropertyAddtionalParameterInfo("Index of", "Result is a found position. If not found, the result is -1.")]
-        [PropertyAddtionalParameterInfo("Last Index of", "Result is the last position found. If not found, the result is -1.")]
-        [PropertyControlIntoCommandField("", "", "variable2ndLabel")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
-
-        [XmlIgnore]
-        [NonSerialized]
-        private Label variable2ndLabel;
-
-        [XmlIgnore]
-        [NonSerialized]
-        private Label variableLabel;
 
         public CheckTextCommand()
         {
-            this.CommandName = "CheckTextCommand";
-            this.SelectionName = "Check Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckTextCommand";
+            //this.SelectionName = "Check Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
-            var stringValue = v_userVariableName.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var checkMethod = v_CheckMethod.ConvertToUserVariable(sender);
+            var targetValue = v_userVariableName.ConvertToUserVariable(engine);
+            var checkValue = v_CheckParameter.ConvertToUserVariable(engine);
 
-            var searchedValue = v_CheckParameter.ConvertToUserVariable(sender);
-
-            var caseSensitive = v_CaseSensitive.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(caseSensitive))
+            var caseSensitive = this.GetUISelectionValue(nameof(v_CaseSensitive), engine);
+            if (caseSensitive == "no")
             {
-                caseSensitive = "Yes";
+                targetValue = targetValue.ToLower();
+                checkValue = checkValue.ToLower();
             }
 
-            var resultValue = "";
+            var checkMethod = this.GetUISelectionValue(nameof(v_CheckMethod), engine);
+            bool resultValue = false;
             switch (checkMethod)
             {
-                case "Contains":
-                    if (caseSensitive == "Yes")
-                    {
-                        resultValue = stringValue.Contains(searchedValue) ? "TRUE" : "FALSE";
-                    }
-                    else
-                    {
-                        resultValue = stringValue.ToLower().Contains(searchedValue.ToLower()) ? "TRUE" : "FALSE";
-                    }
+                case "contains":
+                    resultValue = targetValue.Contains(checkValue);
                     break;
-
-                case "Starts with":
-                    if (caseSensitive == "Yes")
-                    {
-                        resultValue = stringValue.StartsWith(searchedValue) ? "TRUE" : "FALSE";
-                    }
-                    else
-                    {
-                        resultValue = stringValue.ToLower().StartsWith(searchedValue.ToLower()) ? "TRUE" : "FALSE";
-                    }
+                case "starts with":
+                    resultValue = targetValue.StartsWith(checkValue);
                     break;
-
-                case "Ends with":
-                    if (caseSensitive == "Yes")
-                    {
-                        resultValue = stringValue.EndsWith(searchedValue) ? "TRUE" : "FALSE";
-                    }
-                    else
-                    {
-                        resultValue = stringValue.ToLower().EndsWith(searchedValue.ToLower()) ? "TRUE" : "FALSE";
-                    }
+                case "ends with":
+                    resultValue = targetValue.EndsWith(checkValue);
                     break;
-
-                case "Index of":
-                    if (caseSensitive == "Yes")
-                    {
-                        resultValue = stringValue.IndexOf(searchedValue).ToString();
-                    }
-                    else
-                    {
-                        resultValue = stringValue.ToLower().IndexOf(searchedValue.ToLower()).ToString();
-                    }
+                case "has value":
+                    resultValue = String.IsNullOrEmpty(targetValue);
                     break;
-
-                case "Last Index of":
-                    if (caseSensitive == "Yes")
-                    {
-                        resultValue = stringValue.LastIndexOf(searchedValue).ToString();
-                    }
-                    else
-                    {
-                        resultValue = stringValue.ToLower().LastIndexOf(searchedValue.ToLower()).ToString();
-                    }
+                case "is a number":
+                    resultValue = decimal.TryParse(targetValue, out _);
                     break;
-
-                default:
-                    throw new NotImplementedException("Check Method '" + checkMethod + "' not implemented!");
+                case "is a boolean":
+                    resultValue = bool.TryParse(targetValue, out _);
+                    break;
+                case "index of":
+                    targetValue.IndexOf(checkValue).ToString().StoreInUserVariable(engine, v_applyToVariableName);
+                    return;
+                case "last index of":
+                    targetValue.LastIndexOf(checkValue).ToString().StoreInUserVariable(engine, v_applyToVariableName);
+                    return;
             }
 
-            resultValue.StoreInUserVariable(sender, v_applyToVariableName);
+            resultValue.StoreInUserVariable(engine, v_applyToVariableName);
         }
-        public override List<Control> Render(frmCommandEditor editor)
+
+        private void cmbCheckMethod_SelectionChanged(object sender, EventArgs e)
         {
-            base.Render(editor);
+            string searchedKey = ((ComboBox)sender).SelectedItem.ToString();
 
-            var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctls);
+            Dictionary<string, string> dic = (Dictionary<string, string>)(ControlsList["lbl_" + nameof(v_applyToVariableName)].Tag);
 
-            //variable2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_applyToVariableName").FirstOrDefault();
-
-            variableLabel = (Label)ctls.GetControlsByName("v_applyToVariableName", CommandControls.CommandControlType.Label)[0];
-
-            var chkCombobox = (ComboBox)ctls.Where(t => t.Name == "v_CheckMethod").FirstOrDefault();
-            chkCombobox.SelectedIndexChanged += (sender, e) => CheckMethod_SelectedIndexChanged(sender, e);
-
-            return RenderedControls;
+            var lbl = (Label)ControlsList["lbl2_" + nameof(v_applyToVariableName)];
+            lbl.Text = (dic.ContainsKey(searchedKey) ? dic[searchedKey] : "");
         }
 
-        private void CheckMethod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string searchedKey = ((ComboBox)sender).Text;
-            //var info = resultInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault();
-            Dictionary<string, string> dic = (Dictionary<string, string>)variableLabel.Tag;
-            variable2ndLabel.Text = (dic.ContainsKey(searchedKey) ? dic[searchedKey] : "");
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Check '" + v_userVariableName + "', Method '" + v_CheckMethod + "', Result '" + v_applyToVariableName + "']";
-        }
+        //    var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctls);
+
+        //    //variable2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_applyToVariableName").FirstOrDefault();
+
+        //    variableLabel = (Label)ctls.GetControlsByName("v_applyToVariableName", CommandControls.CommandControlType.Label)[0];
+
+        //    var chkCombobox = (ComboBox)ctls.Where(t => t.Name == "v_CheckMethod").FirstOrDefault();
+        //    chkCombobox.SelectedIndexChanged += (sender, e) => CheckMethod_SelectedIndexChanged(sender, e);
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Check '" + v_userVariableName + "', Method '" + v_CheckMethod + "', Result '" + v_applyToVariableName + "']";
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{
