@@ -20,12 +20,6 @@ namespace taskt.Core.Automation.Commands
     public class ExtractionTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Supply the value or variable requiring extraction")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Select or provide a variable or text value")]
-        //[SampleUsage("**Hello** or **{{{vText}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
         [PropertyDescription("Text")]
         [InputSpecification("Text", true)]
         [Remarks("")]
@@ -64,20 +58,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyAddtionalParameterInfo("Extract All Between Text\tSkip Past Occurences", "")]
         [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
         [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
-        //[PropertyControlIntoCommandField("ParametersGridViewHelper", "ParametersLabel", "Parameters2ndLabel")]
-        //[PropertyDataGridViewCellEditEvent(nameof(ParameterGridViewHelper_OnCellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        //[PropertyDataGridViewCellEditEvent(nameof(ParameterGridViewHelper_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive the extracted text")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 

@@ -17,12 +17,6 @@ namespace taskt.Core.Automation.Commands
     public class RegExExtractionTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please supply the value or variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Select or provide a variable or text value")]
-        //[SampleUsage("**Hello** or **{{{vText}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
         [PropertyDescription("Text")]
         [InputSpecification("Text", true)]
         [Remarks("")]
@@ -58,12 +52,6 @@ namespace taskt.Core.Automation.Commands
         public string v_MatchGroupIndex { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive the RegEx result")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
@@ -112,59 +100,5 @@ namespace taskt.Core.Automation.Commands
                 matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create standard group controls
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RegExExtractor", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MatchGroupIndex", this, editor));
-
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InputValue))
-        //    {
-        //        this.validationResult += "Value is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_RegExExtractor))
-        //    {
-        //        this.validationResult += "RegEx Extractor pattern is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_MatchGroupIndex))
-        //    {
-        //        this.validationResult += "Group index is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

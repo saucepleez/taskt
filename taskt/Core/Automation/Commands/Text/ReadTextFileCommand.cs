@@ -40,14 +40,6 @@ namespace taskt.Core.Automation.Commands
         public string v_ReadOption { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please Specify Variable the text should be stored")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vTextFile** or **{{{vTextFile}}}**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_userVariableName { get; set; }
 
@@ -100,20 +92,5 @@ namespace taskt.Core.Automation.Commands
             //assign text to user variable
             result.StoreInUserVariable(engine, v_userVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Read: '" + v_ReadOption + "', File: '" + v_FilePath + "', Store: '" + v_userVariableName + "']";
-        //}
     }
 }

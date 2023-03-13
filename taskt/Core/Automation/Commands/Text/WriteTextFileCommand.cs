@@ -21,7 +21,6 @@ namespace taskt.Core.Automation.Commands
         [Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
         [PropertyDetailSampleUsage("**C:\\temp\\myfile.txt**", PropertyDetailSampleUsage.ValueType.Value, "Path to the File")]
         [PropertyDetailSampleUsage("**{{{vFile}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path to the File")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -75,12 +74,6 @@ namespace taskt.Core.Automation.Commands
             
             var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
 
-            //var overwrite = v_Overwrite.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(overwrite))
-            //{
-            //    overwrite = "Overwrite";
-            //}
-
             var isOverwrite = this.GetUISelectionValue(nameof(v_Overwrite), engine);
             //append or overwrite as necessary
             if (isOverwrite == "append")
@@ -92,38 +85,5 @@ namespace taskt.Core.Automation.Commands
                 System.IO.File.WriteAllText(filePath, outputText);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToWrite", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Overwrite", this, editor));
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [" + v_Overwrite + " to '" + v_FilePath + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_FilePath))
-        //    {
-        //        this.validationResult += "File is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

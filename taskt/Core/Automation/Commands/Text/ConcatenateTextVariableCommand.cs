@@ -108,19 +108,5 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [ Variable: '" + v_TargetVariable + "', Text: '" + v_ConcatText + "', NewLine: '" + v_InsertNewLine + "']";
-        //}
     }
 }
