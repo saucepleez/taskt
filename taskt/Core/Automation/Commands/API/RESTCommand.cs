@@ -414,37 +414,41 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            //if (RESTParametersGridViewHelper.IsCurrentCellDirty || RESTParametersGridViewHelper.IsCurrentRowDirty)
-            //{
-            //    RESTParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            //    var newRow = v_RESTParameters.NewRow();
-            //    v_RESTParameters.Rows.Add(newRow);
+            if (RESTParametersGridViewHelper.IsCurrentCellDirty || RESTParametersGridViewHelper.IsCurrentRowDirty)
+            {
+                RESTParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_RESTParameters.NewRow();
+                v_RESTParameters.Rows.Add(newRow);
 
-            //    for (var i = v_RESTParameters.Rows.Count - 1; i >= 0; i--)
-            //    {
-            //        if (v_RESTParameters.Rows[i][0].ToString() == "" && v_RESTParameters.Rows[i][1].ToString() == "" && v_RESTParameters.Rows[i][2].ToString() == "")
-            //        {
-            //            v_RESTParameters.Rows[i].Delete();
-            //        }
-            //    }
-            //}
-            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_RESTParameters)], v_RESTParameters);
+                for (var i = v_RESTParameters.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_RESTParameters.Rows[i][0].ToString() == "" && v_RESTParameters.Rows[i][1].ToString() == "" && v_RESTParameters.Rows[i][2].ToString() == "")
+                    {
+                        v_RESTParameters.Rows[i].Delete();
+                    }
+                }
+            }
 
-            //if (AdvancedRESTParametersGridViewHelper.IsCurrentCellDirty || AdvancedRESTParametersGridViewHelper.IsCurrentRowDirty)
-            //{
-            //    AdvancedRESTParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            //    var newRow = v_AdvancedParameters.NewRow();
-            //    v_AdvancedParameters.Rows.Add(newRow);
+            // not work yet
+            //DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_RESTParameters)], v_RESTParameters);
 
-            //    for (var i = v_AdvancedParameters.Rows.Count - 1; i >= 0; i--)
-            //    {
-            //        if (v_AdvancedParameters.Rows[i][0].ToString() == "" && v_AdvancedParameters.Rows[i][1].ToString() == "" && v_AdvancedParameters.Rows[i][2].ToString() == "" && v_AdvancedParameters.Rows[i][3].ToString() == "")
-            //        {
-            //            v_AdvancedParameters.Rows[i].Delete();
-            //        }
-            //    }
-            //}
-            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AdvancedParameters)], v_AdvancedParameters);
+            if (AdvancedRESTParametersGridViewHelper.IsCurrentCellDirty || AdvancedRESTParametersGridViewHelper.IsCurrentRowDirty)
+            {
+                AdvancedRESTParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_AdvancedParameters.NewRow();
+                v_AdvancedParameters.Rows.Add(newRow);
+
+                for (var i = v_AdvancedParameters.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_AdvancedParameters.Rows[i][0].ToString() == "" && v_AdvancedParameters.Rows[i][1].ToString() == "" && v_AdvancedParameters.Rows[i][2].ToString() == "" && v_AdvancedParameters.Rows[i][3].ToString() == "")
+                    {
+                        v_AdvancedParameters.Rows[i].Delete();
+                    }
+                }
+            }
+
+            // not work yet
+            //DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_AdvancedParameters)], v_AdvancedParameters);
         }
 
     }

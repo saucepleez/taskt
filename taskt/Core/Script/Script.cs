@@ -287,6 +287,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_30(doc);
             convertTo3_5_1_31(doc);
             convertTo3_5_1_33(doc);
+            convertTo3_5_1_34(doc);
 
             return doc;
         }
@@ -732,7 +733,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        public static XDocument convertTo3_5_1_31(XDocument doc)
+        private static XDocument convertTo3_5_1_31(XDocument doc)
         {
             // AddJSONArrayItem -> AddJSONArrayItemCommand
             ChangeCommandName(doc, "AddJSONArrayItem", "AddJSONArrayItemCommand", "Add JSON Array Item");
@@ -782,13 +783,21 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        public static XDocument convertTo3_5_1_33(XDocument doc)
+        private static XDocument convertTo3_5_1_33(XDocument doc)
         {
             // AddVariableCommand -> NewVariableCommand
             ChangeCommandName(doc, "AddVariableCommand", "NewVariableCommand", "New Variable");
 
             // VariableCommand -> SetVariableValueCommand
             ChangeCommandName(doc, "VariableCommand", "SetVariableValueCommand", "Set Variable Value");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_34(XDocument doc)
+        {
+            // GetLengthCommand -> GetWordLengthCommand
+            ChangeCommandName(doc, "GetLengthCommand", "GetWordLengthCommand", "Get Word Length");
 
             return doc;
         }

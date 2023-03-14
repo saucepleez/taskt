@@ -1,101 +1,70 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Extraction Text")]
     [Attributes.ClassAttributes.Description("This command allows you to perform advanced string extraction.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract a piece of text from a larger text or variable")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExtractionTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Supply the value or variable requiring extraction")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable or text value")]
-        [Attributes.PropertyAttributes.SampleUsage("**Hello** or **{{{vText}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select text extraction type")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the type of extraction that is required.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from Before Text, After Text, Between Text")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All After Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Before Text")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Extract All Between Text")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("selectionControl")]
-        [Attributes.PropertyAttributes.PropertySelectionChangeEvent(nameof(textExtraction_SelectionChangeCommitted))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Text Extraction Type")]
+        [InputSpecification("", true)]
+        [PropertyUISelectionOption("Extract All After Text")]
+        [PropertyUISelectionOption("Extract All Before Text")]
+        [PropertyUISelectionOption("Extract All Between Text")]
+        [PropertySelectionChangeEvent(nameof(cmbTextExtraction_SelectionChangeCommitted))]
         public string v_TextExtractionType { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Extraction Parameters")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Define the required extraction parameters, which is dependent on the type of extraction.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewSetting(false, false, true, 400, 135)]
-        [Attributes.PropertyAttributes.PropertySecondaryLabel(true)]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All After Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All After Text\tSkip Past Occurences", "", "")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Before Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Before Text\tSkip Past Occurences", "")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
-        [Attributes.PropertyAttributes.PropertyAddtionalParameterInfo("Extract All Between Text\tSkip Past Occurences", "")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
-        [Attributes.PropertyAttributes.PropertyControlIntoCommandField("ParametersGridViewHelper", "ParametersLabel", "Parameters2ndLabel")]
-        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent(nameof(ParameterGridViewHelper_OnCellBeginEdit), Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent(nameof(ParameterGridViewHelper_CellClick), Attributes.PropertyAttributes.PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDescription("Extraction Parameters")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("")]
+        [SampleUsage("")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(false, false, true, 400, 135)]
+        [PropertySecondaryLabel(true)]
+        [PropertyAddtionalParameterInfo("Extract All After Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
+        [PropertyAddtionalParameterInfo("Extract All After Text\tSkip Past Occurences", "", "")]
+        [PropertyAddtionalParameterInfo("Extract All Before Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
+        [PropertyAddtionalParameterInfo("Extract All Before Text\tSkip Past Occurences", "")]
+        [PropertyAddtionalParameterInfo("Extract All Between Text\tLeading Text", "The beginning of the text to be extracted", "**Hello** or **{{{vStart}}}**")]
+        [PropertyAddtionalParameterInfo("Extract All Between Text\tTrailing Text", "The end of text to be extracted", "**Hello** or **{{{vEnd}}}**")]
+        [PropertyAddtionalParameterInfo("Extract All Between Text\tSkip Past Occurences", "")]
+        [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
+        [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_TextExtractionTable { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the variable to receive the extracted text")]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
-
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ParametersGridViewHelper;
-
-        [XmlIgnore]
-        [NonSerialized]
-        private Label ParametersLabel;
-
-        [XmlIgnore]
-        [NonSerialized]
-        private Label Parameters2ndLabel;
-
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox selectionControl;
 
         public ExtractionTextCommand()
         {
-
-            this.CommandName = "ExtractionTextCommand";
-            this.SelectionName = "Extraction Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExtractionTextCommand";
+            //this.SelectionName = "Extraction Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             //define parameter table
             //this.v_TextExtractionTable = new System.Data.DataTable
@@ -109,221 +78,139 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(sender);
+            var variableInput = v_InputValue.ConvertToUserVariable(engine);
 
-
-            string variableLeading, variableTrailing, skipOccurences, extractedText;
-
-            //handle extraction cases
-            switch (v_TextExtractionType)
+            var parms = DataTableControls.GetFieldValues(v_TextExtractionTable, "Parameter Name", "Parameter Value", engine);
+            string extractedText = "";
+            switch (this.GetUISelectionValue(nameof(v_TextExtractionType), engine))
             {
-                case "Extract All After Text":
-                    //extract trailing texts            
-                    variableLeading = GetParameterValue("Leading Text").ConvertToUserVariable(sender);
-                    skipOccurences = GetParameterValue("Skip Past Occurences").ConvertToUserVariable(sender);
-                    extractedText = ExtractLeadingText(variableInput, variableLeading, skipOccurences);
+                case "extract all after text":
+                    extractedText = ExtractLeadingText(variableInput, parms, engine);
                     break;
-                case "Extract All Before Text":
-                    //extract leading text
-                    variableTrailing = GetParameterValue("Trailing Text").ConvertToUserVariable(sender);
-                    skipOccurences = GetParameterValue("Skip Past Occurences").ConvertToUserVariable(sender);
-                    extractedText = ExtractTrailingText(variableInput, variableTrailing, skipOccurences);
+
+                case "extract all before text":
+                    extractedText = ExtractTrailingText(variableInput, parms, engine);
                     break;
-                case "Extract All Between Text":
-                    //extract leading and then trailing which gives the items between
-                    variableLeading = GetParameterValue("Leading Text").ConvertToUserVariable(sender);
-                    variableTrailing = GetParameterValue("Trailing Text").ConvertToUserVariable(sender);
-                    skipOccurences = GetParameterValue("Skip Past Occurences").ConvertToUserVariable(sender);
 
-                    //extract leading
-                    extractedText = ExtractLeadingText(variableInput, variableLeading, skipOccurences);
-
-                    //extract trailing -- assume we will take to the first item
-                    extractedText = ExtractTrailingText(extractedText, variableTrailing, "0");
-
+                case "extract all between text":
+                    extractedText = ExtractLeadingText(variableInput, parms, engine);
+                    parms["Skip Past Occurences"] = "0";    // force change parameter value
+                    extractedText = ExtractTrailingText(extractedText, parms, engine);
                     break;
-                default:
-                    throw new NotImplementedException("Extraction Type Not Implemented: " + v_TextExtractionType);
             }
 
             //store variable
             extractedText.StoreInUserVariable(sender, v_applyToVariableName);
-
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            //ParametersGridViewHelper = new DataGridView();
-            //ParametersGridViewHelper.AllowUserToAddRows = true;
-            //ParametersGridViewHelper.AllowUserToDeleteRows = true;
-            //ParametersGridViewHelper.Size = new Size(350, 125);
-            //ParametersGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_TextExtractionTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            //ParametersGridViewHelper = CommandControls.CreateDataGridView(this, "v_TextExtractionTable", false, false, false, 400, 160);
-            //ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
-            //ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionType", this));
-            //var selectionControl = (ComboBox)CommandControls.CreateDropdownFor("v_TextExtractionType", this);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionType", this, new Control[] { selectionControl }, editor));
-            //selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
-            //RenderedControls.Add(selectionControl);
-
-            ////create control for variable name
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-            //RenderedControls.Add(VariableNameControl);
-
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_TextExtractionTable", this));
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_TextExtractionTable", this, new Control[] { ParametersGridViewHelper }, editor));
-            //RenderedControls.Add(ParametersGridViewHelper);
-
-            var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctls);
-
-            //ParametersGridViewHelper = (DataGridView)ctls.Where(t => t.Name == "v_TextExtractionTable").FirstOrDefault();
-            //ParametersGridViewHelper.CellBeginEdit += ParameterGridViewHelper_OnCellBeginEdit;
-            //ParametersGridViewHelper.CellClick += ParameterGridViewHelper_CellClick;
-
-            //Parameters2ndLabel = (Label)ctls.Where(t => t.Name == "lbl2_v_TextExtractionTable").FirstOrDefault();
-            //ParametersLabel = (Label)ctls.GetControlsByName("v_TextExtractionTable", CommandControls.CommandControlType.Label)[0];
-
-            //selectionControl = (ComboBox)ctls.Where(t => t.Name == "v_TextExtractionType").FirstOrDefault();
-            //selectionControl.SelectionChangeCommitted += textExtraction_SelectionChangeCommitted;
-
-            return RenderedControls;
-        }
-        private void textExtraction_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cmbTextExtraction_SelectionChangeCommitted(object sender, EventArgs e)
         {
             ComboBox extractionAction = (ComboBox)sender;
 
-            if ((ParametersGridViewHelper == null) || (extractionAction == null) || (ParametersGridViewHelper.DataSource == null))
+            var ParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_TextExtractionTable)];
+
+            if (ParametersGridViewHelper.DataSource == null)
+            {
                 return;
-
-
+            }
             var textParameters = (DataTable)ParametersGridViewHelper.DataSource;
 
+            var Parameters2ndLabel = (Label)ControlsList["lbl2_" + nameof(v_TextExtractionTable)];
             Parameters2ndLabel.Text = "";
             textParameters.Rows.Clear();
-
 
             switch (extractionAction.SelectedItem)
             {
                 case "Extract All After Text":
                     textParameters.Rows.Add("Leading Text", "");
                     textParameters.Rows.Add("Skip Past Occurences", "0");
-                    textParameters.Columns[0].ReadOnly = true;
                     break;
+
                 case "Extract All Before Text":
                     textParameters.Rows.Add("Trailing Text", "");
                     textParameters.Rows.Add("Skip Past Occurences", "0");
-                    textParameters.Columns[0].ReadOnly = true;
                     break;
+
                 case "Extract All Between Text":
                     textParameters.Rows.Add("Leading Text", "");
                     textParameters.Rows.Add("Trailing Text", "");
                     textParameters.Rows.Add("Skip Past Occurences", "0");
-                    textParameters.Columns[0].ReadOnly = true;
                     break;
+
                 default:
                     break;
             }
         }
 
-        private void ParameterGridViewHelper_OnCellBeginEdit(object sender, System.Windows.Forms.DataGridViewCellCancelEventArgs e)
+        private static string ExtractLeadingText(string targetText, Dictionary<string, string> parms, Engine.AutomationEngineInstance engine)
         {
-            // column A readonly
-            if (e.ColumnIndex == 0)
+            if (parms.Keys.Contains("Leading Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                e.Cancel = true;
+                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var searchText = parms["Leading Text"];
+
+                var positions = SearchTextPositions(targetText, searchText);
+
+                if (index < 0)
+                {
+                    index += positions.Count;
+                }
+
+                if (positions.Count <= index)
+                {
+                    throw new Exception("No value was found after skipping " + index + " instance(s).");
+                }
+
+                return targetText.Substring(positions[index] + searchText.Length);
+            }
+            else
+            {
+                // error
+                throw new Exception("Extract Leading Text Parameters not Enough.");
             }
         }
 
-        private void ParameterGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
+        private static string ExtractTrailingText(string targetText, Dictionary<string, string> parms, Engine.AutomationEngineInstance engine)
         {
-            // click colmum b, change edit mode
-            if (e.RowIndex < 0)
+            if (parms.Keys.Contains("Trailing Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                return;
-            }
-            if (e.ColumnIndex == 1)
-            {
-                ParametersGridViewHelper.BeginEdit(false);
-            }
-            string searchedKey = selectionControl.Text + "\t" + ParametersGridViewHelper.Rows[e.RowIndex].Cells[0].Value;
+                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var searchText = parms["Trailing Text"];
 
-            Dictionary<string, string> dic = (Dictionary<string, string>)ParametersLabel.Tag;
-            Parameters2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
-            //Parameters2ndLabel.Text = CommandControls.GetAddtionalParameterInfoText(DGVInfo.Where(t => t.searchKey == searchedKey).FirstOrDefault());
+                var positions = SearchTextPositions(targetText, searchText);
+
+                if (index < 0)
+                {
+                    index += positions.Count;
+                }
+
+                if (positions.Count <= index)
+                {
+                    throw new Exception("No value was found after skipping " + index + " instance(s).");
+                }
+
+                return targetText.Substring(0, positions[index]);
+            }
+            else
+            {
+                // error
+                throw new Exception("Extract Trailing Text Parameters not Enough.");
+            }
         }
-        private string GetParameterValue(string parameterName)
+
+        private static List<int> SearchTextPositions(string targetText, string searchText)
         {
-            return ((from rw in v_TextExtractionTable.AsEnumerable()
-                     where rw.Field<string>("Parameter Name") == parameterName
-                     select rw.Field<string>("Parameter Value")).FirstOrDefault());
-
-        }
-        private string ExtractLeadingText(string input, string substring, string occurences)
-        {
-
-            //verify the occurence index
-            int leadingOccurenceIndex = 0;
-
-            if (!int.TryParse(occurences, out leadingOccurenceIndex))
+            var positions = new List<int>();
+            var pos = targetText.IndexOf(searchText, 0);
+            while (pos >= 0)
             {
-                throw new Exception("Invalid Index For Extraction - " + occurences);
+                positions.Add(pos);
+                pos = targetText.IndexOf(searchText, pos + 1);
             }
-
-            //find index matches
-            var leadingOccurencesFound = Regex.Matches(input, substring).Cast<Match>().Select(m => m.Index).ToList();
-
-            //handle if we are searching beyond what was found
-            if (leadingOccurenceIndex >= leadingOccurencesFound.Count)
-            {
-                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + leadingOccurencesFound.Count + " instances exist.");
-            }
-
-            //declare start position
-            var startPosition = leadingOccurencesFound[leadingOccurenceIndex] + substring.Length;
-
-            //substring and apply to variable
-            return input.Substring(startPosition);
-
-
-        }
-        private string ExtractTrailingText(string input, string substring, string occurences)
-        {
-            //verify the occurence index
-            int leadingOccurenceIndex = 0;
-            if (!int.TryParse(occurences, out leadingOccurenceIndex))
-            {
-                throw new Exception("Invalid Index For Extraction - " + occurences);
-            }
-
-            //find index matches
-            var trailingOccurencesFound = Regex.Matches(input, substring).Cast<Match>().Select(m => m.Index).ToList();
-
-            //handle if we are searching beyond what was found
-            if (leadingOccurenceIndex >= trailingOccurencesFound.Count)
-            {
-                throw new Exception("No value was found after skipping " + leadingOccurenceIndex + " instance(s).  Only " + trailingOccurencesFound.Count + " instances exist.");
-            }
-
-            //declare start position
-            var endPosition = trailingOccurencesFound[leadingOccurenceIndex];
-
-            //substring
-            return input.Substring(0, endPosition);
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Apply Extracted Text To Variable: " + v_applyToVariableName + "]";
+            return positions;
         }
     }
 }

@@ -278,20 +278,22 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            //if (ParametersGridViewHelper.IsCurrentCellDirty || ParametersGridViewHelper.IsCurrentRowDirty)
-            //{
-            //    ParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            //    var newRow = v_MethodParameters.NewRow();
-            //    v_MethodParameters.Rows.Add(newRow);
-            //    for (var i = v_MethodParameters.Rows.Count - 1; i >= 0; i--)
-            //    {
-            //        if (v_MethodParameters.Rows[i][0].ToString() == "" && v_MethodParameters.Rows[i][1].ToString() == "")
-            //        {
-            //            v_MethodParameters.Rows[i].Delete();
-            //        }
-            //    }
-            //}
-            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_MethodParameters)], v_MethodParameters);
+            if (ParametersGridViewHelper.IsCurrentCellDirty || ParametersGridViewHelper.IsCurrentRowDirty)
+            {
+                ParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                var newRow = v_MethodParameters.NewRow();
+                v_MethodParameters.Rows.Add(newRow);
+                for (var i = v_MethodParameters.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (v_MethodParameters.Rows[i][0].ToString() == "" && v_MethodParameters.Rows[i][1].ToString() == "")
+                    {
+                        v_MethodParameters.Rows[i].Delete();
+                    }
+                }
+            }
+
+            // not work yet this code
+            //DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_MethodParameters)], v_MethodParameters);
         }
 
         private void lnkGenerateDLLParameters_Clicked(object sender, EventArgs e)

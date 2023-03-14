@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -11,37 +7,29 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.CommandSettings("Concatenate Text Variable")]
     [Attributes.ClassAttributes.Description("This command allows you to you to concatenate text to Text Variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to concatenate text to Text Variable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ConcatenateTextVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify Target Text Variable Name")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vText** or **{{{vText}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Text Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_OutputTextVariableName))]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
         public string v_TargetVariable { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Text to Concatenate")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**Hello** or **{{{vText}}}**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         [PropertyValidationRule("Concatenate Text", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Concatenate")]
         public string v_ConcatText { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select Insert Line Break before Concatenate or Not")]
-        [InputSpecification("")]
-        [SampleUsage("**Yes** or **No**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Insert Line Break before Concatenate or Not")]
+        [InputSpecification("", true)]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Yes")]
@@ -50,11 +38,10 @@ namespace taskt.Core.Automation.Commands
         public string v_InsertNewLine { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select Concatenate Position")]
-        [InputSpecification("")]
-        [SampleUsage("**Before Variable Value** or **After Variable Value**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Concatenate Position")]
+        [InputSpecification("", true)]
         [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Before Variable Value")]
         [PropertyUISelectionOption("After Variable Value")]
         [PropertyIsOptional(true, "After Variable Value")]
@@ -62,10 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public ConcatenateTextVariableCommand()
         {
-            this.CommandName = "ConcatenateTextVariableCommand";
-            this.SelectionName = "Concatenate Text Variable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ConcatenateTextVariableCommand";
+            //this.SelectionName = "Concatenate Text Variable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -73,19 +60,10 @@ namespace taskt.Core.Automation.Commands
             //get engine
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string targetVariable;
-            if (engine.engineSettings.isWrappedVariableMarker(v_TargetVariable))
-            {
-                targetVariable = v_TargetVariable;
-            }
-            else
-            {
-                targetVariable = engine.engineSettings.wrapVariableMarker(v_TargetVariable);
-            }
+            var targetVariable = VariableNameControls.GetWrappedVariableName(v_TargetVariable, engine);
             var text = targetVariable.ConvertToUserVariable(engine);
             var con = v_ConcatText.ConvertToUserVariable(engine);
 
-            //var insertNewLine = v_InsertNewLine.GetUISelectionValue("v_InsertNewLine", this, engine);
             var insertNewLine = this.GetUISelectionValue(nameof(v_InsertNewLine), "Insert New Line", engine);
             var concatPosition = this.GetUISelectionValue(nameof(v_ConcatenatePosition), "Concatenate Position", engine);
 
@@ -114,20 +92,6 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
             }
-        }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [ Variable: '" + v_TargetVariable + "', Text: '" + v_ConcatText + "', NewLine: '" + v_InsertNewLine + "']";
         }
     }
 }

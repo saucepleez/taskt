@@ -1,64 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Net;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Text Commands")]
     [Attributes.ClassAttributes.SubGruop("File")]
+    [Attributes.ClassAttributes.CommandSettings("Read Text File")]
     [Attributes.ClassAttributes.Description("This command allows you to read text file into a variable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to read data from text files.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ReadTextFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the path to the file")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Enter or Select the path to the text file.")]
-        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}** or **http://example.com/mytext.txt** or **{{{vURL}}}**")]
-        [Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_FilePath))]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the read type")]
-        [InputSpecification("Select the appropriate window state required")]
-        [SampleUsage("**Content** or **Line Count**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Read Type")]
         [PropertyUISelectionOption("Content")]
         [PropertyUISelectionOption("Line Count")]
         [PropertyIsOptional(true, "Content")]
+        [PropertyFirstValue("Content")]
         public string v_ReadOption { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please Specify Variable the text should be stored")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vTextFile** or **{{{vTextFile}}}**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_userVariableName { get; set; }
 
 
         public ReadTextFileCommand()
         {
-            this.CommandName = "ReadTextFileCommand";
-            this.SelectionName = "Read Text File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_ReadOption = "Content";
+            //this.CommandName = "ReadTextFileCommand";
+            //this.SelectionName = "Read Text File";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
+            //this.v_ReadOption = "Content";
         }
 
         public override void RunCommand(object sender)
@@ -89,7 +71,8 @@ namespace taskt.Core.Automation.Commands
                 result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
             }
 
-            var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);
+            //var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);
+            var readPreference = this.GetUISelectionValue(nameof(v_ReadOption), engine);
             if (readPreference == "line count")
             {
                 result = result.Replace("\r\n", "\n");  // \n\n -> \n
@@ -97,21 +80,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //assign text to user variable
-            result.StoreInUserVariable(sender, v_userVariableName);
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
-
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Read: '" + v_ReadOption + "', File: '" + v_FilePath + "', Store: '" + v_userVariableName + "']";
+            result.StoreInUserVariable(engine, v_userVariableName);
         }
     }
 }
