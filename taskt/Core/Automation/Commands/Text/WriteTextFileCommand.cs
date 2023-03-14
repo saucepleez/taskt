@@ -16,29 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class WriteTextFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Path to the File")]
-        //[InputSpecification("Path to the File", true)]
-        //[Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[PropertyDetailSampleUsage("**C:\\temp\\myfile.txt**", PropertyDetailSampleUsage.ValueType.Value, "Path to the File")]
-        //[PropertyDetailSampleUsage("**{{{vFile}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path to the File")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Path")]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_FilePath))]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Text to be Written. [crLF] inserts a newline.")]
-        //[InputSpecification("Text", true)]
-        //[Remarks("")]
-        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
-        //[PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         [PropertyDescription("Text to be Written")]
         public string v_TextToWrite { get; set; }
@@ -46,11 +27,18 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Overwrite Option")]
-        [InputSpecification("", true)]
         [PropertyUISelectionOption("Append")]
         [PropertyUISelectionOption("Overwrite")]
         [PropertyIsOptional(true, "Overwrite")]
         public string v_Overwrite { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Replace [crLF] to Line Break")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [PropertyIsOptional(true, "No")]
+        public string v_ReplaceToLineBreak { get; set; }
 
         public WriteTextFileCommand()
         {
@@ -74,8 +62,13 @@ namespace taskt.Core.Automation.Commands
             {
                 filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt");
             }
-            
-            var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
+
+            //var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
+            var outputText = v_TextToWrite.ConvertToUserVariable(engine);
+            if (this.GetUISelectionValue(nameof(v_ReplaceToLineBreak), engine) == "yes")
+            {
+                outputText = outputText.Replace("[crLF]", Environment.NewLine);
+            }
 
             var isOverwrite = this.GetUISelectionValue(nameof(v_Overwrite), engine);
             //append or overwrite as necessary
