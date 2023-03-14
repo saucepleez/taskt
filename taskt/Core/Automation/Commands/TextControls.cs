@@ -41,8 +41,8 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         [PropertyDescription("Text Variable Name")]
         [InputSpecification("Text Variable Name", true)]
-        [PropertyDetailSampleUsage("**vText**", "Specify Variable Name **vText**")]
-        [PropertyDetailSampleUsage("**{{{vText}}}**", "Specify Variable Name **vText**")]
+        [PropertyDetailSampleUsage("**vText**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
