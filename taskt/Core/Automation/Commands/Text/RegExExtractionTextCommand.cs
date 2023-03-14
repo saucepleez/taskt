@@ -38,9 +38,10 @@ namespace taskt.Core.Automation.Commands
         //[SampleUsage("1")]
         [PropertyDetailSampleUsage("**0**", "Specify the First Matche")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
+        [PropertyDetailSampleUsage("**-1**", "Specify the Last Matches")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
         [PropertyFirstValue("0")]
-        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Index", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Index")]
         public string v_MatchGroupIndex { get; set; }
 
@@ -63,34 +64,51 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //get variablized strings
-            var variableInput = v_InputValue.ConvertToUserVariable(engine);
-            var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(engine);
-            
-            //var variableMatchGroup = v_MatchGroupIndex.ConvertToUserVariable(engine);
-            
-            //create regex matcher
-            Regex regex = new Regex(variableExtractorPattern);
-            Match match = regex.Match(variableInput);
+            ////get variablized strings
+            //var variableInput = v_InputValue.ConvertToUserVariable(engine);
+            //var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(engine);
 
-            //int matchGroup = 0;
-            //if (!int.TryParse(variableMatchGroup, out matchGroup))
+            ////create regex matcher
+            //Regex regex = new Regex(variableExtractorPattern);
+            //Match match = regex.Match(variableInput);
+
+            //if (!match.Success)
             //{
-            //    matchGroup = 0;
+            //    //throw exception if no match found
+            //    throw new Exception("RegEx Match was not found! Input: " + variableInput + ", Pattern: " + variableExtractorPattern);
+            //}
+            //else
+            //{
+            //    //store string in variable
+            //    var matchGroup = this.ConvertToUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
+
+            //    string matchedValue = match.Groups[matchGroup].Value;
+            //    matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
             //}
 
-            if (!match.Success)
+            var variableInput = v_InputValue.ConvertToUserVariable(engine);
+            var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(engine);
+
+            var regex = new Regex(variableExtractorPattern);
+            var matches = regex.Matches(variableInput);
+            if (matches.Count > 0)
             {
-                //throw exception if no match found
-                throw new Exception("RegEx Match was not found! Input: " + variableInput + ", Pattern: " + variableExtractorPattern);
+                var matchGroup = this.ConvertToUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
+
+                if (matchGroup < 0)
+                {
+                    matchGroup += matches.Count;
+                }
+                if (matchGroup >= matches.Count)
+                {
+                    throw new Exception("Match Group Index is out of Range.");
+                }
+
+                matches[matchGroup].Value.StoreInUserVariable(engine, v_applyToVariableName);
             }
             else
             {
-                //store string in variable
-                var matchGroup = this.ConvertToUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
-
-                string matchedValue = match.Groups[matchGroup].Value;
-                matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
+                throw new Exception("RegEx Match was not found! Input: " + variableInput + ", Pattern: " + variableExtractorPattern);
             }
         }
     }
