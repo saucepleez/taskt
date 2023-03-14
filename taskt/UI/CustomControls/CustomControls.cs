@@ -722,7 +722,7 @@ namespace taskt.UI
             {nameof(NLGSetParameterCommand), "taskt.Properties.Resources.command_nlg"},
 
             // Numeric
-            {nameof(CreateNumberVariableCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(CreateNumericalVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(DecreaseNumericalVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(FormatNumberCommand), "taskt.Properties.Resources.command_function"},
             {nameof(IncreaseNumericalVariableCommand), "taskt.Properties.Resources.command_function"},

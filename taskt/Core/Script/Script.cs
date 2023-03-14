@@ -799,6 +799,9 @@ namespace taskt.Core.Script
             // GetLengthCommand -> GetWordLengthCommand
             ChangeCommandName(doc, "GetLengthCommand", "GetWordLengthCommand", "Get Word Length");
 
+            // CreateNumberVariableCommand -> CreateNumericalVariableCommand
+            ChangeCommandName(doc, "CreateNumberVariableCommand", "CreateNumericalVariableCommand", "Create Numerical Variable");
+
             return doc;
         }
 
