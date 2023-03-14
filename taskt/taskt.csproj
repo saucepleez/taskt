@@ -370,7 +370,7 @@
     <Compile Include="Core\Automation\Commands\NumberControls.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Numerical\CreateNumberVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\CreateNumericalVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\IncreaseNumericalVariableCommand.cs" />
