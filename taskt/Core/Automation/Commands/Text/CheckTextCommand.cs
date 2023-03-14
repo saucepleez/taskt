@@ -18,13 +18,16 @@ namespace taskt.Core.Automation.Commands
     public class CheckTextCommand : ScriptCommand
     {
         [XmlAttribute]
+        //[PropertyDescription("Text to be Checked")]
+        //[InputSpecification("Text", true)]
+        //[Remarks("")]
+        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
+        //[PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "Text to be Checked")]
+        [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         [PropertyDescription("Text to be Checked")]
-        [InputSpecification("Text", true)]
-        [Remarks("")]
-        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
-        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Text to be Checked")]
         public string v_userVariableName { get; set; }
 
@@ -54,12 +57,15 @@ namespace taskt.Core.Automation.Commands
         public string v_CheckMethod { get; set; }
 
         [XmlAttribute]
+        //[PropertyDescription("Text to Check or Search")]
+        //[InputSpecification("Text to Check or Search", true)]
+        //[Remarks("")]
+        //[PropertyDetailSampleUsage("**Ha**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
+        //[PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "Text to Check or Search")]
+        [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text))]
         [PropertyDescription("Text to Check or Search")]
-        [InputSpecification("Text to Check or Search", true)]
-        [Remarks("")]
-        [PropertyDetailSampleUsage("**Ha**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
-        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Text to Check or Search")]
         public string v_CheckParameter { get; set; }
 

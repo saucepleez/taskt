@@ -19,18 +19,19 @@ namespace taskt.Core.Automation.Commands
     public class SplitTextCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Text")]
-        [InputSpecification("Text", true)]
-        [Remarks("")]
-        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
-        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyDisplayText(true, "Text")]
+        //[PropertyDescription("Text")]
+        //[InputSpecification("Text", true)]
+        //[Remarks("")]
+        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
+        //[PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        //[PropertyDisplayText(true, "Text")]
+        [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Delimiter (ex. [crLF] for new line, [chars] for each char, ',' , {{{vChar}}})")]
+        [PropertyDescription("Delimiter")]
         [InputSpecification("Delimiter", true)]
         [PropertyDetailSampleUsage("**,**", PropertyDetailSampleUsage.ValueType.Value, "Delimiter")]
         [PropertyDetailSampleUsage("**[crLF]**", "Specify **Line Break** for Delimiter")]
