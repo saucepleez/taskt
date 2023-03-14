@@ -16,14 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class GetWordCountCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Text")]
-        //[InputSpecification("Text", true)]
-        //[Remarks("")]
-        //[PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
-        //[PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        //[PropertyDisplayText(true, "Text")]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         public string v_InputValue { get; set; }
 

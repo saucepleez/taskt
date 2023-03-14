@@ -17,17 +17,6 @@ namespace taskt.Core.Automation.Commands
     public class ReadTextFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        //[PropertyDescription("Path to the File")]
-        //[InputSpecification("Path of the File", true)]
-        //[Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
-        //[PropertyDetailSampleUsage("**C:\\temp\\myfile.txt**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
-        //[PropertyDetailSampleUsage("**{{{vFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
-        //[PropertyDetailSampleUsage("**http://exmample.com/mytext.txt**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
-        //[PropertyDetailSampleUsage("**{{{vURL}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Path")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Path")]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_FilePath))]
         public string v_FilePath { get; set; }
 
