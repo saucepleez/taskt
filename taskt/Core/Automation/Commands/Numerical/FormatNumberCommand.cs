@@ -17,15 +17,6 @@ namespace taskt.Core.Automation.Commands
     public class FormatNumberCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify Number to Format")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**123** or **{{{vNumber}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Number")]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
         public string v_Number { get; set; }
 
@@ -45,16 +36,6 @@ namespace taskt.Core.Automation.Commands
         public string v_Format { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Variable Name to store Result")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vResult** or **{{{vResult}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 

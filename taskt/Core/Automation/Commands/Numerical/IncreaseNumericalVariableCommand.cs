@@ -15,30 +15,10 @@ namespace taskt.Core.Automation.Commands
     public class IncreaseNumericalVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Numerical Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[Remarks("")]
-        //[PropertyDetailSampleUsage("**vNum**", "Specifiy Variable **vNum**")]
-        //[PropertyDetailSampleUsage("**{{{vNum}}}**", "Specifiy Variable **vNum**")]
-        //[PropertyDetailSampleUsage("**{{{{{{vNum}}}}}}**", "Specifiy Variable of Value of Variable **vNum**", false)]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Variable")]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_BothNumericalVariableName))]
         public string v_VariableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Value to Increase")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**100** or **{{{vValue}}}**")]
-        //[Remarks("")]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyIsOptional(true, "1")]
-        //[PropertyDisplayText(true, "Increase")]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
         [PropertyDescription("Numerical Value to Increase")]
         [PropertyIsOptional(true, "1")]
@@ -57,15 +37,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //string variableName;
-            //if (engine.engineSettings.isWrappedVariableMarker(v_VariableName))
-            //{
-            //    variableName = v_VariableName;
-            //}
-            //else
-            //{
-            //    variableName = engine.engineSettings.wrapVariableMarker(v_VariableName);
-            //}
             var variableName = VariableNameControls.GetWrappedVariableName(v_VariableName, engine);
             var variableValue = new PropertyConvertTag(variableName, "Variable Name").ConvertToUserVariableAsDecimal(engine);
 

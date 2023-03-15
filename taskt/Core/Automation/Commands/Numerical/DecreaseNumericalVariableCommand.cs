@@ -15,28 +15,10 @@ namespace taskt.Core.Automation.Commands
     public class DecreaseNumericalVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify Numerical Variable")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vNum** or **{{{vNum}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Variable")]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_BothNumericalVariableName))]
         public string v_VariableName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify value to decrease")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**100** or **{{{vValue}}}**")]
-        //[Remarks("")]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyIsOptional(true, "1")]
-        //[PropertyDisplayText(true, "Decrease")]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
         [PropertyDescription("Numerical Value to Decrease")]
         [PropertyIsOptional(true, "1")]
@@ -55,20 +37,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //string variableName;
-            //if (engine.engineSettings.isWrappedVariableMarker(v_VariableName))
-            //{
-            //    variableName = v_VariableName;
-            //}
-            //else
-            //{
-            //    variableName = engine.engineSettings.wrapVariableMarker(v_VariableName);
-            //}
             var variableName = VariableNameControls.GetWrappedVariableName(v_VariableName, engine);
             var variableValue = new PropertyConvertTag(variableName, "Variable Name").ConvertToUserVariableAsDecimal(engine);
 
-            //var add = new PropertyConvertTag(v_Value, "v_Value", "Value").ConvertToUserVariableAsDecimal(this, engine);
-            //var add = this.ConvertToUserVariableAsDecimal(nameof(v_Value), "Value to Decrease", engine);
             var add = this.ConvertToUserVariableAsDecimal(nameof(v_VariableName), engine);
 
             (variableValue - add).ToString().StoreInUserVariable(engine, variableName);

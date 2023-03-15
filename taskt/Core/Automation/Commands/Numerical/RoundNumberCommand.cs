@@ -15,15 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class RoundNumberCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify Number Value")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**100** or **{{{vNum}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Number")]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
         public string v_Numeric { get; set; }
 
@@ -38,15 +29,6 @@ namespace taskt.Core.Automation.Commands
         public string v_RoundType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Variable Name to Store Result")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**vValue** or **{{{vValue}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Result")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
