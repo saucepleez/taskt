@@ -27,6 +27,22 @@ namespace taskt.Core.Automation.Commands
         public static string v_BothNumericalVariableName { get; }
 
         /// <summary>
+        /// for numerical value
+        /// </summary>
+        [PropertyDescription("Numerical Value")]
+        [InputSpecification("Numerical Value", true)]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Value")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_Value { get; }
+
+
+        /// <summary>
         /// Convert property value to integer from property name. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
         /// <param name="command"></param>

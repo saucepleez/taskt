@@ -6,6 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Numerical Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Round Number")]
     [Attributes.ClassAttributes.Description("This command allows you to Round up, down, or round off numbers.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Round up, down, or round off numbers.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -14,25 +15,21 @@ namespace taskt.Core.Automation.Commands
     public class RoundNumberCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify Number Value")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**100** or **{{{vNum}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Number")]
+        //[PropertyDescription("Please specify Number Value")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**100** or **{{{vNum}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Number")]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
         public string v_Numeric { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select Round Type")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(false)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Round Type")]
         [PropertyUISelectionOption("Round")]
         [PropertyUISelectionOption("Round Up")]
         [PropertyUISelectionOption("Round Down")]
@@ -41,23 +38,24 @@ namespace taskt.Core.Automation.Commands
         public string v_RoundType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vValue** or **{{{vValue}}}**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Result")]
+        //[PropertyDescription("Please specify Variable Name to Store Result")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**vValue** or **{{{vValue}}}**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Result")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
         public RoundNumberCommand()
         {
-            this.CommandName = "RoundNumberCommand";
-            this.SelectionName = "Round Number";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "RoundNumberCommand";
+            //this.SelectionName = "Round Number";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -65,10 +63,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //decimal num = new PropertyConvertTag(v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
-            var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), "Number", engine);
+            //var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), "Number", engine);
+            var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), engine);
 
             //var round = v_RoundType.GetUISelectionValue("v_RoundType", this, engine);
-            var round = this.GetUISelectionValue(nameof(v_RoundType), "Round Type", engine);
+            //var round = this.GetUISelectionValue(nameof(v_RoundType), "Round Type", engine);
+            var round = this.GetUISelectionValue(nameof(v_RoundType), engine);
 
             decimal res = 0;
             switch (round)

@@ -6,6 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Numerical Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Random Number")]
     [Attributes.ClassAttributes.Description("This command allows you to get Random Number.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Random Number.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -14,37 +15,33 @@ namespace taskt.Core.Automation.Commands
     public class RandomNumberCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please select Random Type")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Random Type")]
         [PropertyIsOptional(true, "Integer Number")]
-        [PropertyShowSampleUsageInDescription(false)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Integer Number")]
         [PropertyUISelectionOption("Real Number")]
         [PropertyDisplayText(true, "Random Type")]
         public string v_RandomType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Variable Name to Store Result")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**vValue** or **{{{vValue}}}**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Please specify Variable Name to Store Result")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**vValue** or **{{{vValue}}}**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
         public RandomNumberCommand()
         {
-            this.CommandName = "RandomNumberCommand";
-            this.SelectionName = "Random Number";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "RandomNumberCommand";
+            //this.SelectionName = "Random Number";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -52,7 +49,8 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //var t = v_RandomType.GetUISelectionValue("v_RandomType", this, engine);
-            var t = this.GetUISelectionValue(nameof(v_RandomType), "Random Type", engine);
+            //var t = this.GetUISelectionValue(nameof(v_RandomType), "Random Type", engine);
+            var t = this.GetUISelectionValue(nameof(v_RandomType), engine);
 
             Random rand = new Random();
 

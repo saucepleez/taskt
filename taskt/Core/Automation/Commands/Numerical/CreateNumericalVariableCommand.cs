@@ -25,18 +25,20 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("Variable Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "Variable Name")]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_BothNumericalVariableName))]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         public string v_VariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Number Value")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**1** or **1.1** or **{{{vNumber}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(true, "Number")]
+        //[PropertyDescription("Please specify Number Value")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**1** or **1.1** or **{{{vNumber}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Number", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyDisplayText(true, "Number")]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
         public string v_NumberValue { get; set; }
 
         public CreateNumericalVariableCommand()
