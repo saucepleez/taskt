@@ -11,6 +11,38 @@ namespace taskt.Core.Automation.Commands
     internal static class NumberControls
     {
         /// <summary>
+        /// for both numerical variable name
+        /// </summary>
+        [PropertyDescription("Numerical Variable Name")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**vNum**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Numerical Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Numerical Name")]
+        public static string v_BothNumericalVariableName { get; }
+
+        /// <summary>
+        /// for numerical value
+        /// </summary>
+        [PropertyDescription("Numerical Value")]
+        [InputSpecification("Numerical Value", true)]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Value")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Value")]
+        public static string v_Value { get; }
+
+
+        /// <summary>
         /// Convert property value to integer from property name. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
         /// <param name="command"></param>

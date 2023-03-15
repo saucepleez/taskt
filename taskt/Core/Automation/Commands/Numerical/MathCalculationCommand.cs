@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Numerical Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Math Calculation")]
     [Attributes.ClassAttributes.Description("This command allows you to perform a math calculation and apply it to a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a math calculation.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -15,58 +16,52 @@ namespace taskt.Core.Automation.Commands
     public class MathCalculationCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please supply the input to be computed")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Specify either text or a variable that contains valid math.")]
-        [SampleUsage("**2+1** or **{{{vNum}}}+1**")]
-        [Remarks("You can use known numbers or variables.")]
-        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Formula to be Computed")]
+        [InputSpecification("Formula to be Computed", true)]
+        //[SampleUsage("**2+1** or **{{{vNum}}}+1**")]
+        [PropertyDetailSampleUsage("**2+1**", PropertyDetailSampleUsage.ValueType.Value, "Formula")]
+        [PropertyDetailSampleUsage("**{{{vNum}}}+1**", "Add **1** to the value of Variable **vNum**")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Compute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Compute")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Indicate Thousand Seperator")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter the seperator used to identify decimal places")]
-        [SampleUsage("**,** or **.** or **{{{vSeperator}}}**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Thousand Seperator")]
+        [InputSpecification("Thousand Separator", true)]
         [Remarks("Typically a comma or a decimal point (period)")]
+        [PropertyDetailSampleUsage("**,**", "Specify **comma** for Thousand Separator")]
+        [PropertyDetailSampleUsage("**.**", "Specify **period** for Thousand Separator")]
+        [PropertyDetailSampleUsage("**{{{vSeparator}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Thousand Separator")]
         [PropertyIsOptional(true)]
         [PropertyFirstValue("")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(false, "")]
         public string v_ThousandSeperator { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Indicate Decimal Seperator")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter the seperator used to identify decimal places")]
-        [SampleUsage("**.** or **,** or **{{{vSeperator}}}**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Decimal Seperator")]
+        [InputSpecification("Decimal Separator", true)]
         [Remarks("Typically a comma or a decimal point (period)")]
+        [SampleUsage("**.** or **,** or **{{{vSeperator}}}**")]
+        [PropertyDetailSampleUsage("**,**", "Specify **comma** for Decimal Seperator")]
+        [PropertyDetailSampleUsage("**.**", "Specify **period** for Decimal Seperator")]
+        [PropertyDetailSampleUsage("**{{{vSeparator}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Decimal Seperator")]
         [PropertyIsOptional(true, ".")]
         [PropertyFirstValue(".")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyDisplayText(false, "")]
         public string v_DecimalSeperator { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the math calculation")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Result")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
         public MathCalculationCommand()
         {
-            this.CommandName = "MathCalculationCommand";
-            this.SelectionName = "Math Calculation";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MathCalculationCommand";
+            //this.SelectionName = "Math Calculation";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
