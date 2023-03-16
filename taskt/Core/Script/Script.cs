@@ -814,6 +814,9 @@ namespace taskt.Core.Script
             // OSVariableCommand -> GetOSVariableCommand
             ChangeCommandName(doc, "OSVariableCommand", "GetOSVariableCommand", "Get OS Variable");
 
+            // RemoteDesktopCommand -> LaunchRemoteDesktopCommand
+            ChangeCommandName(doc, "RemoteDesktopCommand", "LaunchRemoteDesktopCommand", "Launch Remote Desktop");
+
             return doc;
         }
 
