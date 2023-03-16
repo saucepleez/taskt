@@ -387,6 +387,8 @@ namespace taskt.UI.Forms
             }
 
         }
+
+        // TODO: is it possible to move to LaunchRemoteDesktopCommand or other class file
         public void LaunchRDPSession(string machineName, string userName, string password, int width, int height)
         {
             if (InvokeRequired)
