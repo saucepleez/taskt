@@ -288,6 +288,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_31(doc);
             convertTo3_5_1_33(doc);
             convertTo3_5_1_34(doc);
+            convertTo3_5_1_35(doc);
 
             return doc;
         }
@@ -801,6 +802,17 @@ namespace taskt.Core.Script
 
             // CreateNumberVariableCommand -> CreateNumericalVariableCommand
             ChangeCommandName(doc, "CreateNumberVariableCommand", "CreateNumericalVariableCommand", "Create Numerical Variable");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_35(XDocument doc)
+        {
+            // EnvironmentVariableCommand -> GetEnvironmentVariableCommand
+            ChangeCommandName(doc, "EnvironmentVariableCommand", "GetEnvironmentVariableCommand", "Get Environment Variable");
+
+            // OSVariableCommand -> GetOSVariableCommand
+            ChangeCommandName(doc, "OSVariableCommand", "GetOSVariableCommand", "Get OS Variable");
 
             return doc;
         }

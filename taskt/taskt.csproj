@@ -585,7 +585,7 @@
     <Compile Include="Core\Automation\Commands\NLG\NLGGeneratePhraseCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGSetParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserFindBrowserCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\OSVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\GetDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
@@ -616,7 +616,7 @@
     <Compile Include="Core\Automation\Commands\Misc\SMTPSendEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\StartProcessCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\RemoteDesktopCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\EnvironmentVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\GetEnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\SystemActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\StopProcessCommand.cs" />

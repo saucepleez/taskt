@@ -752,9 +752,9 @@ namespace taskt.UI
             {nameof(RemoteTaskCommand), "taskt.Properties.Resources.command_remote"},
 
             // System
-            {nameof(EnvironmentVariableCommand), "taskt.Properties.Resources.command_system"},
+            {nameof(GetEnvironmentVariableCommand), "taskt.Properties.Resources.command_system"},
             {nameof(RemoteDesktopCommand), "taskt.Properties.Resources.command_system"},
-            {nameof(OSVariableCommand), "taskt.Properties.Resources.command_system"},
+            {nameof(GetOSVariableCommand), "taskt.Properties.Resources.command_system"},
             {nameof(SystemActionCommand), "taskt.Properties.Resources.command_script"},
 
             // Task
