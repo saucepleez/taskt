@@ -26,6 +26,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Variable")]
         [PropertySelectionChangeEvent(nameof(cmbVariableNameComboBox_SelectedValueChanged))]
         [PropertySecondaryLabel(true)]
+        [SampleUsage("**BootDevide** or **Name**")]
+        [PropertyShowSampleUsageInDescription(true)]
         public string v_OSVariableName { get; set; }
 
         [XmlAttribute]
@@ -95,6 +97,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
+            // TODO: support new attribute for combobox
             osVariables = new Dictionary<string, string>();
 
             ComboBox cmb = (ComboBox)ControlsList[nameof(v_OSVariableName)];
