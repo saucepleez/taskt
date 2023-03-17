@@ -754,7 +754,7 @@ namespace taskt.UI
             // Script File
             {nameof(LoadScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
             {nameof(UnloadTaskCommand), "taskt.Properties.Resources.command_stop_process"},
-            {nameof(RunTaskCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(RunScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
             {nameof(StopTaskCommand), "taskt.Properties.Resources.command_stop_process"},
 
             // System

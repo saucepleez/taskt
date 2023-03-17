@@ -11,10 +11,11 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Script File Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Run Script File")]
     [Attributes.ClassAttributes.Description("This command runs tasks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run another task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
-    public class RunTaskCommand : ScriptCommand
+    public class RunScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Select a Task to run")]
@@ -60,12 +61,12 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private CheckBox PassParameters;
 
-        public RunTaskCommand()
+        public RunScriptFileCommand()
         {
-            this.CommandName = "RunTaskCommand";
-            this.SelectionName = "Run Task";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "RunTaskCommand";
+            //this.SelectionName = "Run Task";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             //v_VariableAssignments = new DataTable();
             //v_VariableAssignments.Columns.Add("VariableName"); 

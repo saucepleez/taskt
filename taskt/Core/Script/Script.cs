@@ -820,6 +820,9 @@ namespace taskt.Core.Script
             // LoadTaskCommand -> LoadScriptFileCommand
             ChangeCommandName(doc, "LoadTaskCommand", "LoadScriptFileCommand", "Load Script File");
 
+            // RunTaskCommand -> RunScriptFileCommand
+            ChangeCommandName(doc, "RunTaskCommand", "RunScriptFileCommand", "Run Script File");
+
             return doc;
         }
 

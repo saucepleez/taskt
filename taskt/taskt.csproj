@@ -573,7 +573,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\RenameFolderCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ScriptFile\LoadTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptFile\LoadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserTakeScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendHotkeyCommand.cs" />
@@ -672,7 +672,7 @@
     <Compile Include="Core\Automation\Commands\Engine\PauseCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ReadTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\RenameFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ScriptFile\RunTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptFile\RunScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptFile\StopTaskCommand.cs" />
