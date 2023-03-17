@@ -25,10 +25,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Action")]
         public string v_ActionName { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //public ComboBox ActionNameComboBox;
-
         public SystemActionCommand()
         {
             //this.CommandName = "SystemActionCommand";
@@ -41,7 +37,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var action = (string)v_ActionName.ConvertToUserVariable(sender);
             var action = this.GetUISelectionValue(nameof(v_ActionName), engine);
 
             switch (action)
@@ -58,28 +53,7 @@ namespace taskt.Core.Automation.Commands
                 case "lock screen":
                     User32.User32Functions.LockWorkStation();
                     break;
-                //default:
-                //    break;
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ActionNameComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_ActionName", this);
-        //    ActionNameComboBox = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_ActionName", this);
-        //    ActionNameComboBox.DataSource = new List<string> { "Shutdown", "Restart", "Lock Screen", "Logoff" };
-        //    RenderedControls.Add(ActionNameComboBoxLabel);
-        //    RenderedControls.Add(ActionNameComboBox);
-
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Action: " + v_ActionName + "]";
-        //}
     }
 }

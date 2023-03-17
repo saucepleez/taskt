@@ -85,8 +85,6 @@ namespace taskt.Core.Automation.Commands
             var userName = v_UserName.ConvertToUserVariable(sender);
             var password = v_Password.ConvertToUserVariable(sender);
 
-            //var width = int.Parse(v_RDPWidth.ConvertToUserVariable(sender));
-            //var height = int.Parse(v_RDPHeight.ConvertToUserVariable(sender));
             if (String.IsNullOrEmpty(v_RDPWidth))
             {
                 v_RDPWidth = SystemInformation.PrimaryMonitorSize.Width.ToString();
@@ -104,31 +102,5 @@ namespace taskt.Core.Automation.Commands
                 engine.tasktEngineUI.LaunchRDPSession(machineName, userName, password, width, height);
             }));
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MachineName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_UserName", this, editor));
-
-        //    //mask passwords
-        //    var passwordGroup = CommandControls.CreateDefaultInputGroupFor("v_Password", this, editor);
-        //    TextBox inputBox = (TextBox)passwordGroup[2];
-        //    inputBox.PasswordChar = '*';
-
-        //    RenderedControls.AddRange(passwordGroup);
-
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RDPWidth", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_RDPHeight", this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Logon " + v_UserName + " to " + v_MachineName + "]";
-        //}
     }
 }
