@@ -817,6 +817,9 @@ namespace taskt.Core.Script
             // RemoteDesktopCommand -> LaunchRemoteDesktopCommand
             ChangeCommandName(doc, "RemoteDesktopCommand", "LaunchRemoteDesktopCommand", "Launch Remote Desktop");
 
+            // LoadTaskCommand -> LoadScriptFileCommand
+            ChangeCommandName(doc, "LoadTaskCommand", "LoadScriptFileCommand", "Load Script File");
+
             return doc;
         }
 

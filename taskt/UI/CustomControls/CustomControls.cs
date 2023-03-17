@@ -751,17 +751,17 @@ namespace taskt.UI
             {nameof(RemoteAPICommand), "taskt.Properties.Resources.command_remote"},
             {nameof(RemoteTaskCommand), "taskt.Properties.Resources.command_remote"},
 
+            // Script File
+            {nameof(LoadScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(UnloadTaskCommand), "taskt.Properties.Resources.command_stop_process"},
+            {nameof(RunTaskCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(StopTaskCommand), "taskt.Properties.Resources.command_stop_process"},
+
             // System
             {nameof(GetEnvironmentVariableCommand), "taskt.Properties.Resources.command_system"},
             {nameof(LaunchRemoteDesktopCommand), "taskt.Properties.Resources.command_system"},
             {nameof(GetOSVariableCommand), "taskt.Properties.Resources.command_system"},
             {nameof(SystemActionCommand), "taskt.Properties.Resources.command_script"},
-
-            // Task
-            {nameof(LoadTaskCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(UnloadTaskCommand), "taskt.Properties.Resources.command_stop_process"},
-            {nameof(RunTaskCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(StopTaskCommand), "taskt.Properties.Resources.command_stop_process"},
 
             // Text
             {nameof(CheckTextCommand), "taskt.Properties.Resources.command_function"},
