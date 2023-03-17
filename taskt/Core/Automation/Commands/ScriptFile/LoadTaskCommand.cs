@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Task Commands")]
+    [Attributes.ClassAttributes.Group("Script File Commands")]
     [Attributes.ClassAttributes.Description("This command pre-loads tasks for future execution.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load a task but not immediately execute it.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

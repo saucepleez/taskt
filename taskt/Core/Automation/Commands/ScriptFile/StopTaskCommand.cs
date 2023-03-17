@@ -7,7 +7,7 @@ using taskt.UI.Forms;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Task Commands")]
+    [Attributes.ClassAttributes.Group("Script File Commands")]
     [Attributes.ClassAttributes.Description("This command stops the current task.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to stop the current running task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
