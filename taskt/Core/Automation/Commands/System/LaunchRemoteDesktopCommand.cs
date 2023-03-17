@@ -44,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Width", true)]
         [PropertyIsOptional(true, "Primary Monitor Size")]
         [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(false, "")]
         public string v_RDPWidth { get; set; }
 
         [XmlAttribute]
@@ -53,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Height", true)]
         [PropertyIsOptional(true, "Primary Monitor Size")]
         [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(false, "")]
         public string v_RDPHeight { get; set; }
 
         public LaunchRemoteDesktopCommand()
