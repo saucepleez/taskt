@@ -106,7 +106,6 @@ namespace taskt.Core.Automation.Commands
                 var variableReturn = "No";
                 if (rw.ItemArray[2].GetType().ToString() == "System.String")
                 {
-                    //variableReturn = (string)rw.ItemArray[2];
                     variableReturn = rw.Field<string>("VariableReturn");
                 }
                 variableList.Add(new Script.ScriptVariable
