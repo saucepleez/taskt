@@ -72,9 +72,11 @@ namespace taskt.Core.Automation.Attributes.ClassAttributes
     public class EnableAutomateRender : System.Attribute
     {
         public bool enableAutomateRender = false;
-        public EnableAutomateRender(bool enableAutomateRender)
+        public bool forceRenderComment = false;
+        public EnableAutomateRender(bool enableAutomateRender, bool forceRenderComment = false)
         {
             this.enableAutomateRender = enableAutomateRender;
+            this.forceRenderComment = forceRenderComment;
         }
     }
     [System.AttributeUsage(System.AttributeTargets.Class)]

@@ -577,7 +577,7 @@ namespace taskt.Core.Automation.Commands
             var attrAutoRender = this.GetType().GetCustomAttribute<EnableAutomateRender>();
             if (attrAutoRender?.enableAutomateRender ?? false)
             {
-                RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
+                RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor, attrAutoRender.forceRenderComment));
 
                 ControlsList = new Dictionary<string, Control>();
                 foreach (Control control in RenderedControls)
