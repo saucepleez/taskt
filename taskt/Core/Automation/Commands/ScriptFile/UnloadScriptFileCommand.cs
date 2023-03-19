@@ -11,6 +11,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command runs tasks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run another task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UnloadScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
@@ -47,13 +49,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            //deserialize task
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var startFile = v_taskPath.ConvertToUserVariable(sender);
             string startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
 
-            //var errorPreference = v_ErrorPreference.ConvertToUserVariable(sender).ToUpperInvariant();
             var errorPreference = this.GetUISelectionValue(nameof(v_ErrorPreference), engine);
 
             if (engine.PreloadedTasks.ContainsKey(startFile))
@@ -65,29 +64,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception($"The task {startFile} was not loaded.  Throwing error due to selected preference.");
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create file path and helpers
-        //    //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_taskPath", this));
-        //    //var taskPathControl = UI.CustomControls.CommandControls.CreateDefaultInputFor("v_taskPath", this);
-        //    //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_taskPath", this, new Control[] { taskPathControl }, editor));
-        //    //RenderedControls.Add(taskPathControl);
-
-        //    //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_ErrorPreference", this, editor));
-
-        //    var ctrls = UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-      
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [" + v_taskPath + "]";
-        //}
     }
 }
