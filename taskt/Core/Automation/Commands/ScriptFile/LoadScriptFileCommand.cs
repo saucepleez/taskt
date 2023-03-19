@@ -40,34 +40,11 @@ namespace taskt.Core.Automation.Commands
             //deserialize task
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var startFile = v_taskPath.ConvertToUserVariable(sender);
             string startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
             
             Script.Script deserializedScript = Script.Script.DeserializeFile(startFile, engine.engineSettings);
 
             engine.PreloadedTasks.Add(startFile, deserializedScript);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create file path and helpers
-        //    //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_taskPath", this));
-        //    //var taskPathControl = UI.CustomControls.CommandControls.CreateDefaultInputFor("v_taskPath", this);
-        //    //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_taskPath", this, new Control[] { taskPathControl }, editor));
-        //    //RenderedControls.Add(taskPathControl);
-
-        //    var ctrls = UI.CustomControls.CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    return RenderedControls;
-        //}
-
-      
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [" + v_taskPath + "]";
-        //}
     }
 }
