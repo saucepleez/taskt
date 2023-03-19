@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Data;
 using System.Linq.Expressions;
 using taskt.Core.Automation.Commands;
+using System.Web.ModelBinding;
 
 namespace taskt.Core.Script
 {
@@ -822,6 +823,20 @@ namespace taskt.Core.Script
 
             // RunTaskCommand -> RunScriptFileCommand
             ChangeCommandName(doc, "RunTaskCommand", "RunScriptFileCommand", "Run Script File");
+            // RunScriptFileCommand.v_AssingVariables
+            ChangeAttributeValue(doc, "RunScriptFileCommand", "v_AssignVariables", new Action<XAttribute>(attr =>
+            {
+                switch (attr?.Value.ToLower() ?? "")
+                {
+                    case "true":
+                        attr.Value = "Yes";
+                        break;
+
+                    default:
+                        attr.Value = "No";
+                        break;
+                }
+            }));
 
             return doc;
         }
@@ -836,6 +851,17 @@ namespace taskt.Core.Script
                 cmd.SetAttributeValue("CommandName", newName);
                 cmd.SetAttributeValue(ns + "type", newName);
                 cmd.SetAttributeValue("SelectionName", newSelectioName);
+            }
+            return doc;
+        }
+
+        private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
+        {
+            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == targetCommand));
+            foreach(var cmd in commandList)
+            {
+                changeFunc(cmd.Attribute(targetAttribute));
             }
             return doc;
         }
