@@ -838,6 +838,9 @@ namespace taskt.Core.Script
                 }
             }));
 
+            // StopTaskCommand -> StopCurrentScriptFileCommand
+            ChangeCommandName(doc, "StopTaskCommand", "StopCurrentScriptFileCommand", "Stop Current Script File");
+
             return doc;
         }
 
