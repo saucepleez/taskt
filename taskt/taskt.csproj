@@ -516,7 +516,7 @@
     <Compile Include="Core\Automation\Commands\Input\FolderDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\FileDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ConvertListToJSONCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ScriptFile\UnloadTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptFile\UnloadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PingCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\BeginMutliIfCommand.cs" />

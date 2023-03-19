@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     public class LoadScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Script File. After, Use 'Run Task' with the Same Path to Execute.")]
+        [PropertyDescription("Script File. After, Use 'Run Script File' with the Same Path to Execute.")]
         [InputSpecification("Script File", true)]
         [Remarks("")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]

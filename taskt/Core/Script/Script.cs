@@ -841,6 +841,9 @@ namespace taskt.Core.Script
             // StopTaskCommand -> StopCurrentScriptFileCommand
             ChangeCommandName(doc, "StopTaskCommand", "StopCurrentScriptFileCommand", "Stop Current Script File");
 
+            // UnloadTaskCommand -> UnloadScriptFileCommand
+            ChangeCommandName(doc, "UnloadTaskCommand", "UnloadScriptFileCommand", "Unload Script File");
+
             return doc;
         }
 
