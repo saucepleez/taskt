@@ -36,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
         [PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
         [PropertyIsOptional(true)]
+        [PropertyDisplayText(false, "")]
         public string v_Args { get; set; }
 
         [XmlAttribute]
