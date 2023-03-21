@@ -847,6 +847,14 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_36(XDocument doc)
+        {
+            // RunCustomCodeCommand -> RunCSharpCodeCommand
+            ChangeCommandName(doc, "RunCustomCodeCommand", "RunCSharpCodeCommand", "Run CSharp Code");
+
+            return doc;
+        }
+
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")

@@ -602,7 +602,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\RunCustomCodeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ProgramProcess\RunCSharpCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\RunScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserElementActionCommand.cs" />

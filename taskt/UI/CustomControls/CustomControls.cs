@@ -739,7 +739,7 @@ namespace taskt.UI
             {nameof(OutlookEmailCommand), "taskt.Properties.Resources.command_smtp"},
 
             // Program
-            {nameof(RunCustomCodeCommand), "taskt.Properties.Resources.command_script"},
+            {nameof(RunCSharpCodeCommand), "taskt.Properties.Resources.command_script"},
             {nameof(RunScriptCommand), "taskt.Properties.Resources.command_script"},
             {nameof(StartProcessCommand), "taskt.Properties.Resources.command_start_process"},
             {nameof(StopProcessCommand), "taskt.Properties.Resources.command_stop_process"},
