@@ -30,12 +30,6 @@ namespace taskt.Core.Automation.Commands
         public string v_ScriptPath { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Enter Powershell Command Arguments")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("Enter any necessary arguments")]
-        //[SampleUsage("")]
-        //[Remarks("")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Arguments")]
         [InputSpecification("Arguments", true)]
@@ -57,10 +51,6 @@ namespace taskt.Core.Automation.Commands
         public string v_ReplaceScriptVariables { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Optional - Select the variable to receive the output")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Receive the Output")]
         [PropertyIsOptional(true)]
@@ -119,40 +109,5 @@ namespace taskt.Core.Automation.Commands
                 output.StoreRawDataInUserVariable(sender, v_applyToVariableName);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptPath", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_PowerShellArgs", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ReplaceScriptVariables", this, editor));
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Script Path: " + v_ScriptPath + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_ScriptPath))
-        //    {
-        //        this.validationResult += "Script is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

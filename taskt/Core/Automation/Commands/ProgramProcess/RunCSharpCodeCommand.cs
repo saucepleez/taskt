@@ -114,30 +114,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        //{
-        //    var cnv = new Dictionary<string, string>();
-        //    cnv.Add("v_Code", "convertToIntermediateVariableParser");
-        //    ConvertToIntermediate(settings, cnv, variables);
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue();
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_Code))
-        //    {
-        //        this.validationResult += "C# code is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
