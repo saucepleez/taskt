@@ -856,6 +856,9 @@ namespace taskt.Core.Script
             // RunPowershellCommand -> RunPowerShellScriptFileCommand
             ChangeCommandName(doc, "RunPowershellCommand", "RunPowerShellScriptFileCommand", "Run PowerShell Script File");
 
+            // RunScriptCommand -> RunBatchScriptFileCommand
+            ChangeCommandName(doc, "RunScriptCommand", "RunBatchScriptFileCommand", "Run Batch Script File");
+
             return doc;
         }
 

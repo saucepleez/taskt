@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Run Script")]
+    [Attributes.ClassAttributes.CommandSettings("Run Batch Script File")]
     [Attributes.ClassAttributes.Description("This command allows you to run a script or program and wait for it to exit before proceeding.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a script (such as vbScript, javascript, or executable) but wait for it to close before taskt continues executing.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class RunScriptCommand : ScriptCommand
+    public class RunBatchScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Path")]
         public string v_ScriptPath { get; set; }
 
-        public RunScriptCommand()
+        public RunBatchScriptFileCommand()
         {
             //this.CommandName = "RunScriptCommand";
             //this.SelectionName = "Run Script";
