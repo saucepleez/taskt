@@ -865,6 +865,15 @@ namespace taskt.Core.Script
             // StopProgramCommand -> StopApplicationCommand
             ChangeCommandName(doc, "StopProgramCommand", "StopApplicationCommand", "Stop Application");
 
+            // ClipboardClearTextCommand -> ClearClipboardTextCommand
+            ChangeCommandName(doc, "ClipboardClearTextCommand", "ClearClipboardTextCommand", "Clear Clipboard Text");
+
+            // ClipboardCommand -> GetClipboardTextCommand
+            ChangeCommandName(doc, "ClipboardCommand", "GetClipboardTextCommand", "Get Clipboard Text");
+
+            // ClipboardSetTextCommand -> SetClipboardTextCommand
+            ChangeCommandName(doc, "ClipboardSetTextCommand", "SetClipboardTextCommand", "Set Clipboard Text");
+
             return doc;
         }
 

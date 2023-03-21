@@ -455,7 +455,7 @@
     <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingIMAPCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingPOPCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitSendEmailCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\ClipboardClearTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\ClearClipboardTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\CreateTextVariableCommand.cs" />
@@ -547,8 +547,8 @@
     <Compile Include="Core\Automation\Commands\Loop\BeginNumberOfTimesLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowCommand.cs" />
     <Compile Include="Core\Automation\Attributes\ClassAttributes.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\ClipboardGetTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\GetClipboardTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\SetClipboardTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CreateDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Database\DatabaseExecuteQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Database\DatabaseDefineConnectionCommand.cs" />

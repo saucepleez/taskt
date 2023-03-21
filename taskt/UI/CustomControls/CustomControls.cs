@@ -714,9 +714,9 @@ namespace taskt.UI
             {nameof(NextLoopCommand), "taskt.Properties.Resources.command_nextloop"},
 
             // Misc
-            {nameof(ClipboardClearTextCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(ClipboardSetTextCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(ClipboardGetTextCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(ClearClipboardTextCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(SetClipboardTextCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(GetClipboardTextCommand), "taskt.Properties.Resources.command_files"},
             {nameof(CommentCommand), "taskt.Properties.Resources.command_comment"},
             {nameof(CreateShortcutCommand), "taskt.Properties.Resources.command_files"},
             {nameof(EncryptionCommand), "taskt.Properties.Resources.command_input"},

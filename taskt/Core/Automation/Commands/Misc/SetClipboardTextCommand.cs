@@ -1,0 +1,66 @@
+﻿using System;
+using System.Xml.Serialization;
+using taskt.Core.Automation.User32;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+
+namespace taskt.Core.Automation.Commands
+{
+    [Serializable]
+    [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.SubGruop("Clipboard")]
+    [Attributes.ClassAttributes.CommandSettings("Set Clipboard Text")]
+    [Attributes.ClassAttributes.Description("This command allows you to set text to the clipboard.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to copy the data from the clipboard and apply it to a variable.  You can then use the variable to extract the value.")]
+    [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against the VariableList from the scripting engine using System.Windows.Forms.Clipboard.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
+    public class SetClipboardTextCommand : ScriptCommand
+    {
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_MultiLinesTextBox))]
+        [PropertyDescription("Value to Set Clipboard")]
+        [InputSpecification("Value", true)]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value")]
+        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value")]
+        public string v_InputValue { get; set; }
+
+        //[XmlIgnore]
+        //[NonSerialized]
+        //public ComboBox VariableNameControl;
+
+        public SetClipboardTextCommand()
+        {
+            //this.CommandName = "ClipboardSetTextCommand";
+            //this.SelectionName = "Set Clipboard Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
+        }
+
+        public override void RunCommand(object sender)
+        {
+            var engine = (Engine.AutomationEngineInstance)sender;
+            var input = v_InputValue.ConvertToUserVariable(engine);
+            User32Functions.SetClipboardText(input);
+        }
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    //create window name helper control
+        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_InputValue", this));
+        //    //VariableNameControl = CommandControls.CreateStandardComboboxFor("v_InputValue", this).AddVariableNames(editor);
+        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_InputValue", this, new Control[] { VariableNameControl }, editor));
+        //    //RenderedControls.Add(VariableNameControl);
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
+
+        //    return RenderedControls;
+
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Apply '" + v_InputValue + "' to Clipboard]";
+        //}
+    }
+}
