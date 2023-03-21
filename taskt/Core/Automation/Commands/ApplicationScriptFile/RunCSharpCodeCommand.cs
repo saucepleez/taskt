@@ -7,7 +7,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Application/Script File Commands")]
+    [Attributes.ClassAttributes.Group("Application/Script Commands")]
     [Attributes.ClassAttributes.CommandSettings("Run CSharp Code")]
     [Attributes.ClassAttributes.Description("This command allows you to run C# code from the input")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run custom C# code commands.  The code in this command is compiled and run at runtime when this command is invoked.  This command only supports the standard framework classes.")]

@@ -8,7 +8,7 @@ using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Application/Script File Commands")]
+    [Attributes.ClassAttributes.Group("Application/Script Commands")]
     [Attributes.ClassAttributes.CommandSettings("Stop Application")]
     [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
