@@ -430,6 +430,16 @@ namespace taskt.UI
             {nameof(RESTCommand), "taskt.Properties.Resources.command_run_code"},
             {nameof(HTTPRequestCommand), "taskt.Properties.Resources.command_web"},
             {nameof(HTTPQueryResultCommand), "taskt.Properties.Resources.command_search"},
+            
+            // Application
+            {nameof(RunCSharpCodeCommand), "taskt.Properties.Resources.command_script"},
+            {nameof(RunBatchScriptFileCommand), "taskt.Properties.Resources.command_script"},
+            {nameof(StartApplicationCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(StopApplicationCommand), "taskt.Properties.Resources.command_stop_process"},
+            {nameof(LoadScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(UnloadScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
+            {nameof(RunScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(StopCurrentScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
 
             // Color
             {nameof(CreateColorCommand), "taskt.Properties.Resources.command_function"},
@@ -738,24 +748,12 @@ namespace taskt.UI
             {nameof(OutlookReplyToEmailsCommand), "taskt.Properties.Resources.command_smtp"},
             {nameof(OutlookEmailCommand), "taskt.Properties.Resources.command_smtp"},
 
-            // Program
-            {nameof(RunCSharpCodeCommand), "taskt.Properties.Resources.command_script"},
-            {nameof(RunBatchScriptFileCommand), "taskt.Properties.Resources.command_script"},
-            {nameof(StartApplicationCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(StopApplicationCommand), "taskt.Properties.Resources.command_stop_process"},
-
             // Regex
             {nameof(GetRegexMatchesCommand), "taskt.Properties.Resources.command_function"},
 
             // Remote
             {nameof(RemoteAPICommand), "taskt.Properties.Resources.command_remote"},
             {nameof(RemoteTaskCommand), "taskt.Properties.Resources.command_remote"},
-
-            // Script File
-            {nameof(LoadScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(UnloadScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
-            {nameof(RunScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(StopCurrentScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
 
             // System
             {nameof(GetEnvironmentVariableCommand), "taskt.Properties.Resources.command_system"},
