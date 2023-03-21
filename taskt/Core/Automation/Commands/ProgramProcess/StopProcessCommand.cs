@@ -1,69 +1,97 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Stop Process")]
     [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class StopProcessCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter the process name to be stopped (ex. calc, notepad, {{{vPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Provide the program process name as it appears as a process in Windows Task Manager")]
-        [Attributes.PropertyAttributes.SampleUsage("**notepad** or **calc** or **{{{vPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("The program name may vary from the actual process name.  You can use Thick App commands instead to close an application window.")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Application Name")]
+        [InputSpecification("Application Name", true)]
+        [PropertyDetailSampleUsage("**notepad**", "Stop Notepad")]
+        [PropertyDetailSampleUsage("**myapp**", PropertyDetailSampleUsage.ValueType.Value, "Application Name")]
+        [PropertyDetailSampleUsage("**{{{vProcess}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Application Name")]
+        [Remarks("Provide the **Program Process Name** as it appears as a process in Windows Task Manager, **NOT** Window Name. The program name may vary from the actual process name.  You can use Thick App commands instead to close an application window.")]
+        [PropertyCustomUIHelper("Select from Current Process", nameof(lnkProcessSelector_Click))]
+        [PropertyValidationRule("Application Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Application")]
         public string v_ProgramShortName { get; set; }
 
         public StopProcessCommand()
         {
-            this.CommandName = "StopProgramCommand";
-            this.SelectionName = "Stop Process";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "StopProgramCommand";
+            //this.SelectionName = "Stop Process";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            string shortName = v_ProgramShortName.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
+
+            string shortName = v_ProgramShortName.ConvertToUserVariable(engine);
             var processes = System.Diagnostics.Process.GetProcessesByName(shortName);
 
             foreach (var prc in processes)
-                prc.CloseMainWindow();
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramShortName", this, editor));
-
-
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Process: " + v_ProgramShortName + "]";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_ProgramShortName))
             {
-                this.validationResult += "Process name is empty.\n";
-                this.IsValid = false;
+                prc.CloseMainWindow();
             }
-
-            return this.IsValid;
         }
+
+        private void lnkProcessSelector_Click(object sender, EventArgs e)
+        {
+            var txt = (TextBox)((CommandItemControl)sender).Tag;
+
+            var ps = System.Diagnostics.Process.GetProcesses()
+                .OrderByDescending(p => p.Id).Select(p => p.ProcessName).ToList();
+            using (var fm = new UI.Forms.Supplemental.frmItemSelector(ps))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    txt.Text = fm.selectedItem.ToString();
+                }
+            }
+        }
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramShortName", this, editor));
+
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Process: " + v_ProgramShortName + "]";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(this.v_ProgramShortName))
+        //    {
+        //        this.validationResult += "Process name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }
