@@ -614,7 +614,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserRefreshCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SMTPSendEmailCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\StartProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ProgramProcess\StartApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\LaunchRemoteDesktopCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\GetEnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\SystemActionCommand.cs" />

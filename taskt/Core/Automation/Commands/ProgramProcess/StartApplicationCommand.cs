@@ -6,17 +6,17 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Start Process")]
+    [Attributes.ClassAttributes.CommandSettings("Start Application")]
     [Attributes.ClassAttributes.Description("This command allows you to start a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to start applications by entering their name such as 'chrome.exe' or a fully qualified path to a file 'c:/some.exe'")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start'.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class StartProcessCommand : ScriptCommand
+    public class StartApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Path to the Program")]
+        [PropertyDescription("Path to the Application")]
         [InputSpecification("Path", true)]
         [PropertyDetailSampleUsage("**notepad**", "Run Notepad")]
         [PropertyDetailSampleUsage("**C:\\Apps\\myapp.exe**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
@@ -41,13 +41,13 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Wait for the Process to Complete")]
+        [PropertyDescription("Wait for the Application to Complete")]
         [PropertyUISelectionOption("Yes")]
         [PropertyUISelectionOption("No")]
         [PropertyIsOptional(true, "No")]
         public string v_WaitForExit { get; set; }
 
-        public StartProcessCommand()
+        public StartApplicationCommand()
         {
             //this.CommandName = "StartProcessCommand";
             //this.SelectionName = "Start Process";

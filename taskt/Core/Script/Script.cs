@@ -859,6 +859,9 @@ namespace taskt.Core.Script
             // RunScriptCommand -> RunBatchScriptFileCommand
             ChangeCommandName(doc, "RunScriptCommand", "RunBatchScriptFileCommand", "Run Batch Script File");
 
+            // StartProcessCommand -> StartApplicationCommand
+            ChangeCommandName(doc, "StartProcessCommand", "StartApplicationCommand", "Start Application");
+
             return doc;
         }
 
