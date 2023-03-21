@@ -45,7 +45,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Yes")]
         [PropertyUISelectionOption("No")]
         [PropertyIsOptional(true, "No")]
+        [PropertyDisplayText(false, "")]
         public string v_WaitForExit { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Application Process Name")]
+        [PropertyIsOptional(true)]
+        [PropertyDisplayText(false, "")]
+        public string v_StartedProcessName { get; set; }
 
         public StartApplicationCommand()
         {
@@ -70,6 +78,11 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 p = System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
+            }
+
+            if (!String.IsNullOrEmpty(v_StartedProcessName))
+            {
+                p.ProcessName.StoreInUserVariable(engine, v_StartedProcessName);
             }
 
             var waitForExit = this.GetUISelectionValue(nameof(v_WaitForExit), engine);
