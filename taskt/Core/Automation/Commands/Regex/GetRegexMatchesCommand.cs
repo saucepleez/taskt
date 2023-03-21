@@ -18,19 +18,21 @@ namespace taskt.Core.Automation.Commands
     public class GetRegexMatchesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Enter Regex Expressions.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
-        [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_Regex { get; set; }
-        [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please input the data you want to perform regex on.")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
         [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
         [Attributes.PropertyAttributes.Remarks("")]
         public string v_InputData { get; set; }
+
+        [XmlAttribute]
+        [Attributes.PropertyAttributes.PropertyDescription("Enter Regex Expressions.")]
+        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
+        [Attributes.PropertyAttributes.SampleUsage("name1,name2,name3,name4")]
+        [Attributes.PropertyAttributes.Remarks("")]
+        public string v_Regex { get; set; }
+
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please input a variable name.")]
         [Attributes.PropertyAttributes.InputSpecification("Enter a string of comma seperated values.")]
@@ -63,9 +65,8 @@ namespace taskt.Core.Automation.Commands
             };
 
             engine.VariableList.Add(outputMatches);
-
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -73,8 +74,6 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Regex", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputData", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_OutputVariable", this, editor));
-
-
 
             return RenderedControls;
         }
