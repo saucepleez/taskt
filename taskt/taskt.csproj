@@ -619,7 +619,7 @@
     <Compile Include="Core\Automation\Commands\System\GetEnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\SystemActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\StopwatchCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\StopProcessCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ProgramProcess\StopApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\WaitForWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\HTMLInputCommand.cs" />

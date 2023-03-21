@@ -9,13 +9,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Programs/Process Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Stop Process")]
+    [Attributes.ClassAttributes.CommandSettings("Stop Application")]
     [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class StopProcessCommand : ScriptCommand
+    public class StopApplicationCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Application")]
         public string v_ProgramShortName { get; set; }
 
-        public StopProcessCommand()
+        public StopApplicationCommand()
         {
             //this.CommandName = "StopProgramCommand";
             //this.SelectionName = "Stop Process";

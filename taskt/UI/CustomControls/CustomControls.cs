@@ -742,7 +742,7 @@ namespace taskt.UI
             {nameof(RunCSharpCodeCommand), "taskt.Properties.Resources.command_script"},
             {nameof(RunBatchScriptFileCommand), "taskt.Properties.Resources.command_script"},
             {nameof(StartApplicationCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(StopProcessCommand), "taskt.Properties.Resources.command_stop_process"},
+            {nameof(StopApplicationCommand), "taskt.Properties.Resources.command_stop_process"},
 
             // Regex
             {nameof(GetRegexMatchesCommand), "taskt.Properties.Resources.command_function"},
