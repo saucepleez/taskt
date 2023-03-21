@@ -862,8 +862,8 @@ namespace taskt.Core.Script
             // StartProcessCommand -> StartApplicationCommand
             ChangeCommandName(doc, "StartProcessCommand", "StartApplicationCommand", "Start Application");
 
-            // StopProcessCommand -> StopApplicationCommand
-            ChangeCommandName(doc, "StopProcessCommand", "StopApplicationCommand", "Stop Application");
+            // StopProgramCommand -> StopApplicationCommand
+            ChangeCommandName(doc, "StopProgramCommand", "StopApplicationCommand", "Stop Application");
 
             return doc;
         }
