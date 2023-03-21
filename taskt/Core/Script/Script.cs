@@ -290,6 +290,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_33(doc);
             convertTo3_5_1_34(doc);
             convertTo3_5_1_35(doc);
+            convertTo3_5_1_36(doc);
 
             return doc;
         }
@@ -851,6 +852,9 @@ namespace taskt.Core.Script
         {
             // RunCustomCodeCommand -> RunCSharpCodeCommand
             ChangeCommandName(doc, "RunCustomCodeCommand", "RunCSharpCodeCommand", "Run CSharp Code");
+
+            // RunPowershellCommand -> RunPowerShellScriptFileCommand
+            ChangeCommandName(doc, "RunPowershellCommand", "RunPowerShellScriptFileCommand", "Run PowerShell Script File");
 
             return doc;
         }

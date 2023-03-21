@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.Start' and waits for the script/program to exit before proceeding.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class RunPowershellCommand : ScriptCommand
+    public class RunPowerShellScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         public string v_applyToVariableName { get; set; }
 
-        public RunPowershellCommand()
+        public RunPowerShellScriptFileCommand()
         {
             //this.CommandName = "RunPowershellCommand";
             //this.SelectionName = "Run Powershell";
