@@ -330,7 +330,7 @@ namespace taskt.Core.Automation.Engine
                 {
                     parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Core.Automation.Commands.StopTaskCommand)
+                else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
                 {
                     IsCancellationPending = true;
                     return;

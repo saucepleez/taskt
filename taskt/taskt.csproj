@@ -516,7 +516,7 @@
     <Compile Include="Core\Automation\Commands\Input\FolderDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\FileDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ConvertListToJSONCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\UnloadTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptFile\UnloadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PingCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\BeginMutliIfCommand.cs" />
@@ -573,7 +573,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\RenameFolderCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\LoadTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptFile\LoadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserTakeScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendHotkeyCommand.cs" />
@@ -585,7 +585,7 @@
     <Compile Include="Core\Automation\Commands\NLG\NLGGeneratePhraseCommand.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGSetParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserFindBrowserCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\OSVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\GetDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
@@ -615,8 +615,8 @@
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SMTPSendEmailCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\StartProcessCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\RemoteDesktopCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\EnvironmentVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\LaunchRemoteDesktopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\GetEnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\SystemActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\ProgramProcess\StopProcessCommand.cs" />
@@ -672,10 +672,10 @@
     <Compile Include="Core\Automation\Commands\Engine\PauseCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ReadTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\RenameFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\RunTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptFile\RunScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\StopTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ScriptFile\StopCurrentScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\UploadDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\WaitForFileToExistCommand.cs" />

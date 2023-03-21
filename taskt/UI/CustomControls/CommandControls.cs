@@ -33,10 +33,11 @@ namespace taskt.UI.CustomControls
         /// </summary>
         /// <param name="command"></param>
         /// <param name="editor"></param>
+        /// <param name="renderComment"></param>
         /// <returns></returns>
-        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor)
+        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand command, Forms.frmCommandEditor editor, bool renderComment = false)
         {
-            var props = command.GetParameterProperties();
+            var props = command.GetParameterProperties(renderComment);
             var controlList = new List<Control>();
 
             foreach(var prop in props)

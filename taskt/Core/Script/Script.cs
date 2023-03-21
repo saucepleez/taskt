@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Data;
 using System.Linq.Expressions;
 using taskt.Core.Automation.Commands;
+using System.Web.ModelBinding;
 
 namespace taskt.Core.Script
 {
@@ -288,6 +289,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_31(doc);
             convertTo3_5_1_33(doc);
             convertTo3_5_1_34(doc);
+            convertTo3_5_1_35(doc);
 
             return doc;
         }
@@ -805,6 +807,46 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_35(XDocument doc)
+        {
+            // EnvironmentVariableCommand -> GetEnvironmentVariableCommand
+            ChangeCommandName(doc, "EnvironmentVariableCommand", "GetEnvironmentVariableCommand", "Get Environment Variable");
+
+            // OSVariableCommand -> GetOSVariableCommand
+            ChangeCommandName(doc, "OSVariableCommand", "GetOSVariableCommand", "Get OS Variable");
+
+            // RemoteDesktopCommand -> LaunchRemoteDesktopCommand
+            ChangeCommandName(doc, "RemoteDesktopCommand", "LaunchRemoteDesktopCommand", "Launch Remote Desktop");
+
+            // LoadTaskCommand -> LoadScriptFileCommand
+            ChangeCommandName(doc, "LoadTaskCommand", "LoadScriptFileCommand", "Load Script File");
+
+            // RunTaskCommand -> RunScriptFileCommand
+            ChangeCommandName(doc, "RunTaskCommand", "RunScriptFileCommand", "Run Script File");
+            // RunScriptFileCommand.v_AssingVariables
+            ChangeAttributeValue(doc, "RunScriptFileCommand", "v_AssignVariables", new Action<XAttribute>(attr =>
+            {
+                switch (attr?.Value.ToLower() ?? "")
+                {
+                    case "true":
+                        attr.Value = "Yes";
+                        break;
+
+                    default:
+                        attr.Value = "No";
+                        break;
+                }
+            }));
+
+            // StopTaskCommand -> StopCurrentScriptFileCommand
+            ChangeCommandName(doc, "StopTaskCommand", "StopCurrentScriptFileCommand", "Stop Current Script File");
+
+            // UnloadTaskCommand -> UnloadScriptFileCommand
+            ChangeCommandName(doc, "UnloadTaskCommand", "UnloadScriptFileCommand", "Unload Script File");
+
+            return doc;
+        }
+
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
@@ -815,6 +857,17 @@ namespace taskt.Core.Script
                 cmd.SetAttributeValue("CommandName", newName);
                 cmd.SetAttributeValue(ns + "type", newName);
                 cmd.SetAttributeValue("SelectionName", newSelectioName);
+            }
+            return doc;
+        }
+
+        private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
+        {
+            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == targetCommand));
+            foreach(var cmd in commandList)
+            {
+                changeFunc(cmd.Attribute(targetAttribute));
             }
             return doc;
         }
