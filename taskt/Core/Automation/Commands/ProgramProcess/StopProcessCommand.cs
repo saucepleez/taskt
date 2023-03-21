@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**myapp**", PropertyDetailSampleUsage.ValueType.Value, "Application Name")]
         [PropertyDetailSampleUsage("**{{{vProcess}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Application Name")]
         [Remarks("Provide the **Program Process Name** as it appears as a process in Windows Task Manager, **NOT** Window Name. The program name may vary from the actual process name.  You can use Thick App commands instead to close an application window.")]
-        [PropertyCustomUIHelper("Select from Current Process", nameof(lnkProcessSelector_Click))]
+        [PropertyCustomUIHelper("Show Process Selector", nameof(lnkProcessSelector_Click))]
         [PropertyValidationRule("Application Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Application")]
         public string v_ProgramShortName { get; set; }
