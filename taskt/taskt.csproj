@@ -1321,7 +1321,6 @@
     <None Include="Resources\various-chat-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Automation\Commands\ScriptFile\" />
     <Folder Include="External Dependencies\" />
     <Folder Include="Sample Scripts\" />
     <Folder Include="Samples\" />
