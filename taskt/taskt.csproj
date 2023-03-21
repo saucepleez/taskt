@@ -516,7 +516,7 @@
     <Compile Include="Core\Automation\Commands\Input\FolderDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\FileDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ConvertListToJSONCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ScriptFile\UnloadScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\UnloadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PingCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\BeginMutliIfCommand.cs" />
@@ -573,7 +573,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\RenameFolderCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ScriptFile\LoadScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\LoadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserTakeScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendHotkeyCommand.cs" />
@@ -672,10 +672,10 @@
     <Compile Include="Core\Automation\Commands\Engine\PauseCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ReadTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\RenameFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ScriptFile\RunScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ScriptFile\StopCurrentScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopCurrentScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\UploadDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\WaitForFileToExistCommand.cs" />
@@ -1321,6 +1321,7 @@
     <None Include="Resources\various-chat-icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Core\Automation\Commands\ScriptFile\" />
     <Folder Include="External Dependencies\" />
     <Folder Include="Sample Scripts\" />
     <Folder Include="Samples\" />

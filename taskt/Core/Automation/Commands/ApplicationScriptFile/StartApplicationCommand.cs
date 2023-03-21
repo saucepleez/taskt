@@ -6,6 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Application/Script Commands")]
+    [Attributes.ClassAttributes.SubGruop("Application")]
     [Attributes.ClassAttributes.CommandSettings("Start Application")]
     [Attributes.ClassAttributes.Description("This command allows you to start a program or a process.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to start applications by entering their name such as 'chrome.exe' or a fully qualified path to a file 'c:/some.exe'")]

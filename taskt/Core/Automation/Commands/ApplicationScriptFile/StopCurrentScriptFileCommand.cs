@@ -5,6 +5,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Application/Script Commands")]
+    [Attributes.ClassAttributes.SubGruop("taskt Script File")]
     [Attributes.ClassAttributes.CommandSettings("Stop Current Script File")]
     [Attributes.ClassAttributes.Description("This command stops the current task.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to stop the current running task.")]

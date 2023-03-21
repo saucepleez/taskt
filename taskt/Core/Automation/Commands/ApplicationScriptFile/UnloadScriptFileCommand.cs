@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Application/Script Commands")]
+    [Attributes.ClassAttributes.SubGruop("taskt Script File")]
     [Attributes.ClassAttributes.CommandSettings("Unload Script File")]
     [Attributes.ClassAttributes.Description("This command runs tasks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run another task.")]

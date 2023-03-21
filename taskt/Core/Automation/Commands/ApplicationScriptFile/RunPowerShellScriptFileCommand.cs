@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Application/Script Commands")]
+    [Attributes.ClassAttributes.SubGruop("Windows Script File")]
     [Attributes.ClassAttributes.CommandSettings("Run PowerShell Script File")]
     [Attributes.ClassAttributes.Description("This command allows you to run a powershell script and wait for it to exit before proceeding.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to run a powershell script and wait for it to close before taskt continues executing.")]
