@@ -72,11 +72,6 @@ namespace taskt.Core.Automation.Commands
                 p = System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
             }
 
-            //var waitForExit = v_WaitForExit.ConvertToUserVariable(engine);
-            //if (String.IsNullOrEmpty(waitForExit))
-            //{
-            //    waitForExit = "No";
-            //}
             var waitForExit = this.GetUISelectionValue(nameof(v_WaitForExit), engine);
 
             if (waitForExit == "Yes")
@@ -86,34 +81,5 @@ namespace taskt.Core.Automation.Commands
 
             System.Threading.Thread.Sleep(2000);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramName", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ProgramArgs", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_WaitForExit", this, editor));
-
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Process: " + v_ProgramName + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_ProgramName))
-        //    {
-        //        this.validationResult += "Program is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
