@@ -589,7 +589,7 @@
     <Compile Include="Core\Automation\Commands\Engine\GetDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\MessageBoxCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\ShowMessageCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ParseJSONArray.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGCreateInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\API\RESTCommand.cs" />

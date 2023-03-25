@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -65,8 +63,8 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(sender);
-            var passphrase = v_PassPhrase.ConvertToUserVariable(sender);
+            var variableInput = v_InputValue.ConvertToUserVariable(engine);
+            var passphrase = v_PassPhrase.ConvertToUserVariable(engine);
 
             string resultData = "";
 

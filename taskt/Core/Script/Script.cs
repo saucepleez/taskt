@@ -880,6 +880,9 @@ namespace taskt.Core.Script
             // EncryptionCommand -> EncryptTextCommand
             ChangeCommandName(doc, "EncryptionCommand", "EncryptTextCommand", "Encrypt Text");
 
+            // MessageBoxCommand -> ShowMessgeCommand
+            ChangeCommandName(doc, "MessageBoxCommand", "ShowMessageCommand", "Show Message");
+
             return doc;
         }
 
