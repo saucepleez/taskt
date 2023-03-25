@@ -874,6 +874,12 @@ namespace taskt.Core.Script
             // ClipboardSetTextCommand -> SetClipboardTextCommand
             ChangeCommandName(doc, "ClipboardSetTextCommand", "SetClipboardTextCommand", "Set Clipboard Text");
 
+            // CommentCommand (Display text only)
+            ChangeCommandName(doc, "CommentCommand", "CommentCommand", "Comment");
+
+            // EncryptionCommand -> EncryptTextCommand
+            ChangeCommandName(doc, "EncryptionCommand", "EncryptTextCommand", "Encrypt Text");
+
             return doc;
         }
 
