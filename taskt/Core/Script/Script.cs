@@ -918,6 +918,22 @@ namespace taskt.Core.Script
         }
 
         // not work yet
+        private static XDocument ChangeAttributeValue(XDocument doc, List<string> targetCommands, string targetAttribute, Action<XAttribute> changeFunc)
+        {
+            var tp = typeof(XElement);
+            var memberProperty = tp.GetProperty("CommandName");
+            var memberParamteter = Expression.Parameter(tp, "Attribute");
+
+            var propAccess = Expression.MakeMemberAccess(memberParamteter, memberProperty);
+
+            var toString = typeof(XAttribute).GetMethod("ToString");
+
+            //var x = Expression.Call()
+
+            return doc;
+        }
+
+        // not work yet
         private static XDocument ChangeCommandName(XDocument doc, List<string> targetNames, string newName, string newSelectioName)
         {
             var paramXElem = Expression.Parameter(typeof(XElement), "el");
