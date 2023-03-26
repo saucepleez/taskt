@@ -546,7 +546,7 @@ namespace taskt.UI
             // Engine
             {nameof(ErrorHandlingCommand), "taskt.Properties.Resources.command_error"},
             {nameof(GetBotStoreDataCommand), "taskt.Properties.Resources.command_server"},  // get bot data
-            {nameof(PauseCommand), "taskt.Properties.Resources.command_pause"},
+            {nameof(PauseScriptCommand), "taskt.Properties.Resources.command_pause"},
             {nameof(SetEngineDelayCommand), "taskt.Properties.Resources.command_pause"},
             {nameof(ShowEngineContextCommand), "taskt.Properties.Resources.command_window"},
             {nameof(SetEnginePreferenceCommand), "taskt.Properties.Resources.command_window"},

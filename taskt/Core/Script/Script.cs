@@ -898,6 +898,9 @@ namespace taskt.Core.Script
             // GetDataCommand -> GetBotStoreDataCommand
             ChangeCommandName(doc, "GetDataCommand", "GetBotStoreDataCommand", "Get BotStore Data");
 
+            // PauseCommand -> PauseScriptCommand
+            ChangeCommandName(doc, "PauseCommand", "PauseScriptCommand", "Pause Script");
+
             return doc;
         }
 
