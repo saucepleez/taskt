@@ -586,7 +586,7 @@
     <Compile Include="Core\Automation\Commands\NLG\NLGSetParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserFindBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\GetDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\GetBotStoreDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ShowMessageCommand.cs" />

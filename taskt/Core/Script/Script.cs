@@ -291,6 +291,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_34(doc);
             convertTo3_5_1_35(doc);
             convertTo3_5_1_36(doc);
+            convertTo3_5_1_37(doc);
 
             return doc;
         }
@@ -888,6 +889,14 @@ namespace taskt.Core.Script
 
             // SequenceCommand (Display text only)
             ChangeCommandName(doc, "SequenceCommand", "SequenceCommand", "Sequence");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_37(XDocument doc)
+        {
+            // GetDataCommand -> GetBotStoreDataCommand
+            ChangeCommandName(doc, "GetDataCommand", "GetBotStoreDataCommand", "Get BotStore Data");
 
             return doc;
         }
