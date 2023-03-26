@@ -5,8 +5,8 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.SubGruop("Other")]
+    [Attributes.ClassAttributes.Group("Text Commands")]
+    [Attributes.ClassAttributes.SubGruop("Action")]
     [Attributes.ClassAttributes.CommandSettings("Encrypt Decrypt Text")]
     [Attributes.ClassAttributes.Description("This command handles text encryption")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to store some data encrypted")]

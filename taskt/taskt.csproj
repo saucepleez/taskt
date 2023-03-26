@@ -562,7 +562,7 @@
     <Compile Include="Core\Automation\Commands\Dictionary\LoadDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\FinallyCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\EncryptDecryptTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\EncryptDecryptTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookForwardEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookGetEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookMoveEmailsCommand.cs" />
