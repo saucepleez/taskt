@@ -59,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyValidationRule("DateTime Format", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
+        // TODO: add format checker
         public string v_ToStringFormat { get; set; }
 
         public StopwatchCommand()
