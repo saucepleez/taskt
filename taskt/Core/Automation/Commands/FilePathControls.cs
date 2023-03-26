@@ -1,11 +1,49 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-    internal class FilePathControls
+    internal static class FilePathControls
     {
+        #region VirtualProperty
+        /// <summary>
+        /// for file path
+        /// </summary>
+        [PropertyDescription("File Path")]
+        [InputSpecification("File Path", true)]
+        [PropertyDetailSampleUsage("**C:\\temp\\myfile.txt**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
+        [PropertyDetailSampleUsage("**{{{vFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "File")]
+        public static string v_FilePath { get; }
+
+        /// <summary>
+        /// for wait time
+        /// </summary>
+        [PropertyDescription("Wait Time for the File to Exist (sec)")]
+        [InputSpecification("Wait Time", true)]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        [Remarks("Specify how long to Wait before an Error will occur because the File is not Found.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyIsOptional(true, "10")]
+        [PropertyFirstValue("10")]
+        [PropertyDisplayText(true, "Wait", "s")]
+        public static string v_WaitTime { get; }
+
+        #endregion
+
+        #region check methods
+
         /// <summary>
         /// check file path has folder path
         /// </summary>
@@ -52,6 +90,20 @@ namespace taskt.Core.Automation.Commands
 
             return false;
         }
+
+        /// <summary>
+        /// check file path is URL
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsURL(string path)
+        {
+            return (path.StartsWith("http:") || path.StartsWith("https:"));
+        }
+
+        #endregion
+
+        #region convert methods
 
         /// <summary>
         /// convert file path that contains FileCounter variable
@@ -186,15 +238,6 @@ namespace taskt.Core.Automation.Commands
             return FormatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
         }
 
-        /// <summary>
-        /// check file path is URL
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static bool IsURL(string path)
-        {
-            return (path.StartsWith("http:") || path.StartsWith("https:"));
-        }
 
         /// <summary>
         /// format file/folder path to specified format
@@ -234,6 +277,8 @@ namespace taskt.Core.Automation.Commands
                     return "";
             }
         }
+
+        #endregion
 
         /// <summary>
         /// get format information
