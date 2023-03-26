@@ -21,16 +21,6 @@ namespace taskt.Core.Automation.Commands
             //this.DisplayForeColor = System.Drawing.Color.ForestGreen;
         }
 
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", this));
-        //    RenderedControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", this, 100, 300));
-
-        //    return RenderedControls;
-        //}
-
         public override string GetDisplayValue()
         {
             return "// Comment: " + this.v_Comment;

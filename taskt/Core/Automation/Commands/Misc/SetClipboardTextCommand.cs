@@ -24,10 +24,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Value")]
         public string v_InputValue { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //public ComboBox VariableNameControl;
-
         public SetClipboardTextCommand()
         {
             //this.CommandName = "ClipboardSetTextCommand";
@@ -42,25 +38,5 @@ namespace taskt.Core.Automation.Commands
             var input = v_InputValue.ConvertToUserVariable(engine);
             User32Functions.SetClipboardText(input);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create window name helper control
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_InputValue", this));
-        //    //VariableNameControl = CommandControls.CreateStandardComboboxFor("v_InputValue", this).AddVariableNames(editor);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_InputValue", this, new Control[] { VariableNameControl }, editor));
-        //    //RenderedControls.Add(VariableNameControl);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputValue", this, editor));
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Apply '" + v_InputValue + "' to Clipboard]";
-        //}
     }
 }

@@ -26,20 +26,5 @@ namespace taskt.Core.Automation.Commands
         {
             User32Functions.SetClipboardText("");
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", this));
-        //    RenderedControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", this, 100, 300));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Clear Clipboard]";
-        //}
     }
 }

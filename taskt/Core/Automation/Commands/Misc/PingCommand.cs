@@ -30,10 +30,6 @@ namespace taskt.Core.Automation.Commands
 
         // TODO: json only?
         [XmlAttribute]
-        //[PropertyDescription("Apply Result To Variable")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [Remarks("The result is PingRelay class converted to JSON format.")]
         public string v_userVariableName { get; set; }
@@ -59,43 +55,5 @@ namespace taskt.Core.Automation.Commands
 
             pingReply.StoreInUserVariable(engine, v_userVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_HostName", this, editor));
-
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-        //}
-
-
-        //public override string GetDisplayValue()
-        //{
-        //    return $"Ping Host '{this.v_HostName}'";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_HostName))
-        //    {
-        //        this.validationResult += "IP address or Host is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_userVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

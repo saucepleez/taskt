@@ -48,15 +48,5 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [ " + v_scriptActions.Count() + " embedded commands ]";
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", this));
-        //    RenderedControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", this, 100, 300));
-
-        //    return RenderedControls;
-        //}
     }
 }
