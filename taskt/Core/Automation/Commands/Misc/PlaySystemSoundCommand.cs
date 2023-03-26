@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
     [Attributes.ClassAttributes.SubGruop("Other")]
+    [Attributes.ClassAttributes.CommandSettings("Play System Sound")]
     [Attributes.ClassAttributes.Description("This command allows you to Play System Sound.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Play System Sound.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -32,10 +33,10 @@ namespace taskt.Core.Automation.Commands
 
         public PlaySystemSoundCommand()
         {
-            this.CommandName = "PlaySystemSoundCommand";
-            this.SelectionName = "Play System Sound";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "PlaySystemSoundCommand";
+            //this.SelectionName = "Play System Sound";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
