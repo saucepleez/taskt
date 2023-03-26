@@ -40,6 +40,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
         [PropertyIsOptional(true)]
         [PropertyFirstValue("-NoProfile -ExecutionPolicy unrestricted")]
+        [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
         public string v_PowerShellArgs { get; set; }
 
         [XmlAttribute]
@@ -55,6 +57,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Receive the Output")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
         public string v_applyToVariableName { get; set; }
 
         public RunPowerShellScriptFileCommand()

@@ -37,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
         [Remarks("You will need to consult documentation to determine if your executable supports arguments or flags on startup.")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Arguments")]
         public string v_ProgramArgs { get; set; }
 
@@ -53,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Application Process Name")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         public string v_StartedProcessName { get; set; }
 

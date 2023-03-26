@@ -37,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**1 2 3**", PropertyDetailSampleUsage.ValueType.Value, "Arguments")]
         [PropertyDetailSampleUsage("**{{{vArgs}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Arguments")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("Arguments", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         public string v_Args { get; set; }
 
@@ -44,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Receive the Output")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Result")]
         public string v_applyToVariableName { get; set; }
 
