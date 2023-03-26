@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using taskt.Core.Automation.Attributes.ClassAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -12,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static bool HasFolderPath(string path)
         {
-            return (path != System.IO.Path.GetFileName(path));
+            return (path != Path.GetFileName(path));
         }
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static bool HasExtension(string path)
         {
-            return (System.IO.Path.GetExtension(path).Length > 0);
+            return (Path.GetExtension(path).Length > 0);
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="path"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static bool ContainsFileCounter(string path, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static bool ContainsFileCounter(string path, Engine.AutomationEngineInstance engine)
         {
             path = path ?? "";
 
@@ -60,7 +61,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="extension"></param>
         /// <param name="useExistsFile"></param>
         /// <returns></returns>
-        public static string FormatFilePath_ContainsFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
+        public static string FormatFilePath_ContainsFileCounter(string vPath, Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
         {
             vPath = vPath ?? "";
 
@@ -77,7 +78,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!HasFolderPath(path))
                 {
-                    path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(engine.FileName), path);
+                    path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
                 }
 
                 // extenstion
@@ -87,7 +88,7 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 // check existance
-                if (System.IO.File.Exists(path))
+                if (File.Exists(path))
                 {
                     // use if exists
                     if (useExistsFile)
@@ -117,14 +118,14 @@ namespace taskt.Core.Automation.Commands
         /// <param name="checkFileExistance"></param>
         /// <param name="allowNoExtensionFile"></param>
         /// <returns></returns>
-        public static string FormatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        public static string FormatFilePath_NoFileCounter(string vPath, Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
         {
             vPath = vPath ?? "";
             string path = vPath.ConvertToUserVariable(engine);
 
             if (!HasFolderPath(path))
             {
-                path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(engine.FileName), path);
+                path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
             }
 
             // no extension
@@ -133,7 +134,7 @@ namespace taskt.Core.Automation.Commands
                 if (checkFileExistance)
                 {
                     // no extension & exists
-                    if (System.IO.File.Exists(path))
+                    if (File.Exists(path))
                     {
                         return path;
                     }
@@ -152,7 +153,7 @@ namespace taskt.Core.Automation.Commands
                     foreach(var extension in extensions)
                     {
                         string testPath = path.EndsWith(".") ? path + extension : path + "." + extension;
-                        if (System.IO.File.Exists(testPath))
+                        if (File.Exists(testPath))
                         {
                             return testPath;
                         }
@@ -180,7 +181,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="checkFileExistance"></param>
         /// <param name="allowNoExtensionFile"></param>
         /// <returns></returns>
-        public static string FormatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        public static string FormatFilePath_NoFileCounter(string vPath, Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
         {
             return FormatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
         }
