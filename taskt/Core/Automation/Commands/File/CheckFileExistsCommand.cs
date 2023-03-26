@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             // var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
             var targetFile = this.ConvertToUserVariableAsFilePath(nameof(v_TargetFileName), engine);
 
-            System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName); FilePathControls.wa
+            System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
 
         }
     }
