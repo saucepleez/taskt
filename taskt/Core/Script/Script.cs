@@ -886,6 +886,9 @@ namespace taskt.Core.Script
             // PingCommand (Display text only)
             ChangeCommandName(doc, "PingCommand", "PingCommand", "Ping");
 
+            // SequenceCommand (Display text only)
+            ChangeCommandName(doc, "SequenceCommand", "SequenceCommand", "Sequence");
+
             return doc;
         }
 
