@@ -883,6 +883,9 @@ namespace taskt.Core.Script
             // MessageBoxCommand -> ShowMessgeCommand
             ChangeCommandName(doc, "MessageBoxCommand", "ShowMessageCommand", "Show Message");
 
+            // PingCommand (Display text only)
+            ChangeCommandName(doc, "PingCommand", "PingCommand", "Ping");
+
             return doc;
         }
 
