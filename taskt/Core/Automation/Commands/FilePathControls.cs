@@ -538,7 +538,15 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
-        private static string WaitForFile(string path, int waitTime, Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// Wait For File
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="waitTime"></param>
+        /// <param name="engine"></param>
+        /// <returns>file path</returns>
+        /// <exception cref="Exception"></exception>
+        public static string WaitForFile(string path, int waitTime, Engine.AutomationEngineInstance engine)
         {
             var ret = WaitControls.WaitProcess(waitTime, "File Path", new Func<(bool, object)>(() =>
             {
@@ -560,6 +568,35 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("Strange Value returned in WaitForFile. Type: " + ret.GetType().FullName);
             }
+        }
+
+        /// <summary>
+        /// wait for file. this method NOT use PropertyFilePathSetting
+        /// </summary>
+        /// <param name="pathValue">NOT use PropertyFilePathSetting</param>
+        /// <param name="waitTimeValue"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string WaitForFile(string pathValue, string waitTimeValue, Engine.AutomationEngineInstance engine)
+        {
+            var path = pathValue.ConvertToUserVariable(engine);
+            var waitTime = waitTimeValue.ConvertToUserVariableAsInteger("Wait Time", engine);
+            return WaitForFile(path, waitTime, engine);
+        }
+
+        /// <summary>
+        /// wait for file. this method use PropertyFilePathSetting
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="pathName">use PropertyFilePathSetting</param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string WaitForFile(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var path = command.ConvertToUserVariableAsFilePath(pathName, engine);
+            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
+            return WaitForFile(path, waitTime, engine);
         }
 
         /// <summary>
