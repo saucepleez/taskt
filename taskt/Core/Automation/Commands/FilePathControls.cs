@@ -538,10 +538,28 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
-        public static string WaitForFile(string path, Engine.AutomationEngineInstance engine)
+        private static string WaitForFile(string path, int waitTime, Engine.AutomationEngineInstance engine)
         {
+            var ret = WaitControls.WaitProcess(waitTime, "File Path", new Func<(bool, object)>(() =>
+            {
+                if (File.Exists(path))
+                {
+                    return (true, path);
+                }
+                else
+                {
+                    return (false, null);
+                }
+            }), engine);
 
-            return "";
+            if (ret is string returnPath)
+            {
+                return returnPath;
+            }
+            else
+            {
+                throw new Exception("Strange Value returned in WaitForFile. Type: " + ret.GetType().FullName);
+            }
         }
 
         /// <summary>
