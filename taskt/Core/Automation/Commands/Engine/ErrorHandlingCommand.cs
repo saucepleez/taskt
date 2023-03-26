@@ -1,70 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Error Handling")]
     [Attributes.ClassAttributes.Description("This command specifies what to do  after an error is encountered.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define how your script should behave when an error is encountered.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ErrorHandlingCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select an action to take in the event an error occurs")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Stop Processing")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Continue Processing")]
-        [Attributes.PropertyAttributes.InputSpecification("Select the action you want to take when you come across an error.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Stop Processing** to end the script if an error is encountered or **Continue Processing** to continue running the script")]
-        [Attributes.PropertyAttributes.Remarks("**If Command** allows you to specify and test if a line number encountered an error. In order to use that functionality, you must specify **Continue Processing**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Action to Take in the Event an Error Occurs")]
+        [PropertyUISelectionOption("Stop Processing")]
+        [PropertyUISelectionOption("Continue Processing")]
+        [PropertyDetailSampleUsage("**Stop Processing**", "End the Script if an Error is Encountered")]
+        [PropertyDetailSampleUsage("**Continue Processing**", "Continue Running the Script")]
+        [PropertyDetailSampleUsage("**{{{vAction}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Action")]
+        [Remarks("**If Command** allows you to specify and test if a line number encountered an error. In order to use that functionality, you must specify **Continue Processing**")]
+        [PropertyValidationRule("Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Action")]
         public string v_ErrorHandlingAction { get; set; }
 
         public ErrorHandlingCommand()
         {
-            this.CommandName = "ErrorHandlingCommand";
-            this.SelectionName = "Error Handling";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ErrorHandlingCommand";
+            //this.SelectionName = "Error Handling";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
+
+            var act = this.GetUISelectionValue(nameof(v_ErrorHandlingAction), engine);
+            switch (act)
+            {
+                case "stop processing":
+                    v_ErrorHandlingAction = "Stop Processing";
+                    break;
+                case "continue processing":
+                    v_ErrorHandlingAction = "Continue Processing";
+                    break;
+            }
             engine.ErrorHandler = this;
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ErrorHandlingAction", this));
-            var dropdown = CommandControls.CreateDefaultDropdownFor("v_ErrorHandlingAction", this);
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_ErrorHandlingAction", this, dropdown, editor));
-            RenderedControls.Add(dropdown);
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return RenderedControls;
-        }
+        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ErrorHandlingAction", this));
+        //    var dropdown = CommandControls.CreateDefaultDropdownFor("v_ErrorHandlingAction", this);
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_ErrorHandlingAction", this, dropdown, editor));
+        //    RenderedControls.Add(dropdown);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
-        }
+        //    return RenderedControls;
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            this.IsValid = true;
-            this.validationResult = "";
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
+        //}
 
-            if (String.IsNullOrEmpty(v_ErrorHandlingAction))
-            {
-                this.validationResult += "Error handling action is empty.\n";
-                this.IsValid = false;
-            }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    this.IsValid = true;
+        //    this.validationResult = "";
 
-            return this.IsValid;
-        }
+        //    if (String.IsNullOrEmpty(v_ErrorHandlingAction))
+        //    {
+        //        this.validationResult += "Error handling action is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }
