@@ -38,50 +38,7 @@ namespace taskt.Core.Automation.Commands
 
             var pauseLength = this.ConvertToUserVariableAsInteger(nameof(v_PauseLength), engine);
 
-            //var userPauseLength = v_PauseLength.ConvertToUserVariable(sender);
-            //var pauseLength = int.Parse(userPauseLength);
             System.Threading.Thread.Sleep(pauseLength);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_PauseLength", this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Wait for " + v_PauseLength + "ms]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    this.IsValid = true;
-        //    this.validationResult = "";
-
-        //    int pauseValue;
-
-        //    if (String.IsNullOrEmpty(v_PauseLength))
-        //    {
-        //        this.validationResult += "Time of pause is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        if (int.TryParse(v_PauseLength, out pauseValue))
-        //        {
-        //            if (pauseValue < 0)
-        //            {
-        //                this.validationResult += "Specify a value of 0 or more for Time of pause.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

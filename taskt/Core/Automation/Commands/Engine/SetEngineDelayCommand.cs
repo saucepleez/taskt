@@ -48,37 +48,5 @@ namespace taskt.Core.Automation.Commands
             
             return RenderedControls;
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Set Delay to " + v_EngineSpeed + "ms between commands]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    this.IsValid = true;
-        //    this.validationResult = "";
-
-        //    int speedValue;
-
-        //    if (String.IsNullOrEmpty(v_EngineSpeed))
-        //    {
-        //        this.validationResult += "Delay is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    else
-        //    {
-        //        if (int.TryParse(v_EngineSpeed, out speedValue))
-        //        {
-        //            if (speedValue < 0)
-        //            {
-        //                this.validationResult += "Specify a value of 0 or more for Delay.\n";
-        //                this.IsValid = false;
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

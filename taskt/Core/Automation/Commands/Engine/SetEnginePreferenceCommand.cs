@@ -35,14 +35,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_ParameterValue { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox PreferenceTypeCombobox;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private List<Control> ElementParameterControls;
-
         public SetEnginePreferenceCommand()
         {
             //this.CommandName = "SetEnginePreferenceCommand";
@@ -55,7 +47,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var preference = v_PreferenceType.ConvertToUserVariable(engine);
             var preference = this.GetUISelectionValue(nameof(v_PreferenceType), engine);
 
             var parameterValue = v_ParameterValue.ConvertToUserVariable(engine);
@@ -107,18 +98,10 @@ namespace taskt.Core.Automation.Commands
             {
                 case "Enable Automatic Calculations":
                 case "Disable Automatic Calculations":
-                    //foreach (var ctl in ElementParameterControls)
-                    //{
-                    //    ctl.Visible = false;
-                    //}
                     GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), false);
                     break;
 
                 default:
-                    //foreach (var ctl in ElementParameterControls)
-                    //{
-                    //    ctl.Visible = true;
-                    //}
                     GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), true);
                     break;
             }
@@ -142,36 +125,6 @@ namespace taskt.Core.Automation.Commands
                     return base.GetDisplayValue() + $" [ {v_PreferenceType} ]";
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var preference = CommandControls.CreateDefaultDropdownGroupFor("v_PreferenceType", this, editor);
-        //    RenderedControls.AddRange(preference);
-
-        //    PreferenceTypeCombobox = (ComboBox)preference.Where(t => t is ComboBox).FirstOrDefault();
-        //    PreferenceTypeCombobox.SelectedValueChanged += (sender, e) => PreferenceCombobox_SelectedChanged(sender, e);
-
-        //    ElementParameterControls = CommandControls.CreateDefaultInputGroupFor("v_ParameterValue", this, editor);
-        //    RenderedControls.AddRange(this.ElementParameterControls);
-
-        //    return RenderedControls;
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    this.IsValid = true;
-        //    this.validationResult = "";
-
-        //    if (String.IsNullOrEmpty(v_PreferenceType))
-        //    {
-        //        this.validationResult += "Parameter Type is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         //public override void ConvertToIntermediate(EngineSettings settings, List<ScriptVariable> variables)
         //{

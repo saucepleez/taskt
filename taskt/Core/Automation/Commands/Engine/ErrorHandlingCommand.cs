@@ -51,36 +51,5 @@ namespace taskt.Core.Automation.Commands
             }
             engine.ErrorHandler = this;
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_ErrorHandlingAction", this));
-        //    var dropdown = CommandControls.CreateDefaultDropdownFor("v_ErrorHandlingAction", this);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_ErrorHandlingAction", this, dropdown, editor));
-        //    RenderedControls.Add(dropdown);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Action: " + v_ErrorHandlingAction + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    this.IsValid = true;
-        //    this.validationResult = "";
-
-        //    if (String.IsNullOrEmpty(v_ErrorHandlingAction))
-        //    {
-        //        this.validationResult += "Error handling action is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

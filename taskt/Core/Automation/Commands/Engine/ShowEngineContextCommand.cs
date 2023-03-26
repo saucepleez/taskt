@@ -40,18 +40,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //if (engine.tasktEngineUI == null)
-            //{           
-            //    return;
-            //}
-
-            //v_AutoCloseAfter = v_AutoCloseAfter.ConvertToUserVariable(sender);
-            //int closeValue;
-            //if (!int.TryParse(v_AutoCloseAfter, out closeValue))
-            //{
-            //    closeValue = 10;
-            //}
-
             var closeValue = this.ConvertToUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
             //automatically close messageboxes for server requests
@@ -66,49 +54,5 @@ namespace taskt.Core.Automation.Commands
                 }
             ));
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-
-        //    //create auto close control set
-        //    var autocloseControlSet = CommandControls.CreateDefaultInputGroupFor("v_AutoCloseAfter", this, editor);
-        //    RenderedControls.AddRange(autocloseControlSet);
-
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue();
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    this.IsValid = true;
-        //    this.validationResult = "";
-
-        //    if (String.IsNullOrEmpty(v_AutoCloseAfter))
-        //    {
-        //        this.validationResult += "Close time is empty.\n";
-        //        this.IsValid = true;
-        //    }
-        //    else
-        //    {
-        //        int v;
-        //        if (!int.TryParse(v_AutoCloseAfter, out v))
-        //        {
-        //            if (v < 0)
-        //            {
-        //                this.validationResult += "Close time less than zero.\n";
-        //                this.IsValid = true;
-        //            }
-        //        }
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

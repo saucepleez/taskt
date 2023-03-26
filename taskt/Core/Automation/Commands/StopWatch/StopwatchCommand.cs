@@ -18,7 +18,6 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Stopwatch Instance Name")]
         [InputSpecification("StopWatch Instance Name", true)]
-        //[SampleUsage("**myStopwatch**, **{{{vStopWatch}}}**")]
         [PropertyDetailSampleUsage("**myStopWatch**", PropertyDetailSampleUsage.ValueType.Value, "StopWatch Instance")]
         [PropertyDetailSampleUsage("**{{{vStopWatch}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "StopWatch Instance")]
         [Remarks("")]
@@ -45,10 +44,6 @@ namespace taskt.Core.Automation.Commands
 
 
         [XmlAttribute]
-        //[PropertyDescription("Apply Result To Variable")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
@@ -58,20 +53,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("DateTime Format")]
         [InputSpecification("DateTime Format", true)]
-        //[SampleUsage("MM/dd/yy, hh:mm, etc.")]
         [PropertyDetailSampleUsage("**MM/dd/yy**", "Specify **MM/dd/yy** for DateTime Format. It is **Strongly Recommended** to **Disable Automatic Calculation** when using this format")]
+        [PropertyDetailSampleUsage("**hh:mm**", PropertyDetailSampleUsage.ValueType.Value, "Format")]
+        [PropertyDetailSampleUsage("**{{{vFormat}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Format")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("DateTime Format", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         public string v_ToStringFormat { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //public ComboBox StopWatchComboBox;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //public List<Control> MeasureControls;
 
         public StopwatchCommand()
         {
@@ -88,8 +76,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;   
             var instanceName = v_StopwatchName.ConvertToUserVariable(engine);
             
-
-            //var action = v_StopwatchAction.ConvertToUserVariable(sender);
             var action = this.GetUISelectionValue(nameof(v_StopwatchAction), engine);
             System.Diagnostics.Stopwatch stopwatch;
             switch (action)
@@ -135,29 +121,11 @@ namespace taskt.Core.Automation.Commands
 
                     elapsedTime.StoreInUserVariable(engine, v_userVariableName);
                     break;
-
-                //default:
-                //    throw new NotImplementedException("Stopwatch Action '" + action + "' not implemented");
             }
         }
 
         private void cmbStopWatchComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            //if (StopWatchComboBox.Text == "Measure Stopwatch")
-            //{
-            //    foreach (var ctrl in MeasureControls)
-            //    {
-            //        ctrl.Visible = true;
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (var ctrl in MeasureControls)
-            //    {
-            //        ctrl.Visible = false;
-            //    }
-            //}
-
             var selectedAction = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
             if (selectedAction == "Measure Stopwatch")
             {
@@ -170,78 +138,5 @@ namespace taskt.Core.Automation.Commands
                 GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), false);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctlStopwatchName = CommandControls.CreateDefaultDropdownGroupFor("v_StopwatchName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)ctlStopwatchName.Where(t => (t.Name == "v_StopwatchName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.StopWatch);
-        //    RenderedControls.AddRange(ctlStopwatchName);
-
-        //    //var StopWatchComboBoxLabel = CommandControls.CreateDefaultLabelFor("v_StopwatchAction", this);
-        //    //StopWatchComboBox = (ComboBox)CommandControls.CreateDropdownFor("v_StopwatchAction", this);
-        //    //StopWatchComboBox.DataSource = new List<string> { "Start Stopwatch", "Stop Stopwatch", "Restart Stopwatch", "Reset Stopwatch", "Measure Stopwatch" };
-        //    //StopWatchComboBox.SelectedIndexChanged += StopWatchComboBox_SelectedValueChanged;
-        //    //RenderedControls.Add(StopWatchComboBoxLabel);
-        //    //RenderedControls.Add(StopWatchComboBox);
-        //    var stopwatchActionCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_StopwatchAction", this, editor);
-        //    RenderedControls.AddRange(stopwatchActionCtrls);
-        //    StopWatchComboBox = (ComboBox)stopwatchActionCtrls.Find(t => t is ComboBox);
-        //    StopWatchComboBox.SelectedIndex = 0;
-        //    StopWatchComboBox.SelectedIndexChanged += (sender, e) => StopWatchComboBox_SelectedValueChanged(sender, e);
-
-        //    //create controls for user variable
-        //    MeasureControls = CommandControls.CreateDefaultDropdownGroupFor("v_userVariableName", this, editor);
-
-        //    //load variables for selection
-        //    var comboBox = (ComboBox)MeasureControls[2];
-        //    comboBox.AddVariableNames(editor);
-
-        //    MeasureControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ToStringFormat", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_StopwatchName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
-        //    }
-
-        //    foreach (var ctrl in MeasureControls)
-        //    {
-        //        ctrl.Visible = false;
-        //    }
-        //    RenderedControls.AddRange(MeasureControls);
-
-        //    return RenderedControls;
-        //}
-
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Action: " + v_StopwatchAction + ", Name: " + v_StopwatchName + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    this.IsValid = true;
-        //    this.validationResult = "";
-
-        //    if (String.IsNullOrEmpty(v_StopwatchName))
-        //    {
-        //        this.validationResult += "Instance name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(v_StopwatchAction))
-        //    {
-        //        this.validationResult += "Stopwach Action is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if ((v_StopwatchAction == "Measure Stopwatch") && String.IsNullOrEmpty(v_userVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

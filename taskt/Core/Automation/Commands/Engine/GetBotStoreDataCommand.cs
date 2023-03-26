@@ -33,7 +33,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Name of the Key to Retrieve")]
         [InputSpecification("Key", true)]
-        //[SampleUsage("**vSomeVariable**")]
         [PropertyDetailSampleUsage("**Key**", PropertyDetailSampleUsage.ValueType.Value, "Key")]
         [PropertyDetailSampleUsage("**{{{vKey}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Key")]
         [PropertyValidationRule("Key", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -50,10 +49,6 @@ namespace taskt.Core.Automation.Commands
         public string v_DataOption { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Select the variable to receive the output")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
@@ -73,7 +68,6 @@ namespace taskt.Core.Automation.Commands
 
             var keyName = v_KeyName.ConvertToUserVariable(engine);
 
-            //var dataOption = v_DataOption.ConvertToUserVariable(engine);
             var dataOption = this.GetUISelectionValue(nameof(v_DataOption), engine);
             BotStoreRequest.RequestType requestType;
             if (dataOption == "Retrieve Entire Record")
@@ -104,31 +98,6 @@ namespace taskt.Core.Automation.Commands
                 throw ex;
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_KeyName", this, editor));
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_DataOption", this));
-        //    var dropdown = CommandControls.CreateDefaultDropdownFor("v_DataOption", this);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_DataOption", this, dropdown, editor));
-        //    RenderedControls.Add(dropdown);
-
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Get Data from Key '" + v_KeyName + "' in tasktServer BotStore]";
-        //}
     }
 }
 
