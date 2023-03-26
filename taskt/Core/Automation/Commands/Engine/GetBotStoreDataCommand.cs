@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
         //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyIsOptional(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         public string v_applyToVariableName { get; set; }
 
         public GetBotStoreDataCommand()
