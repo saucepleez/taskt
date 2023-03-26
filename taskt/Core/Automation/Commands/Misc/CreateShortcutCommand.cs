@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -13,49 +7,50 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
     [Attributes.ClassAttributes.SubGruop("Other")]
+    [Attributes.ClassAttributes.CommandSettings("Create Shortcut")]
     [Attributes.ClassAttributes.Description("This command allow to create shortcut file")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create shortcut file")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateShortcutCommand : ScriptCommand
     {
         [XmlElement]
-        [PropertyDescription("Please specify Shortcut Target File, Folder, or URL")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Target File, Folder, or URL")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**C:\\temp\\target.txt** or **C:\\temp** or **http://example.com** or **{{{vPath}}** or **{{{vURL}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
+        [InputSpecification("File, Folder, or URL", true)]
+        [PropertyDetailSampleUsage("**C:\\temp\\target.txt", PropertyDetailSampleUsage.ValueType.Value, "Target File")]
+        [PropertyDetailSampleUsage("**C:\\temp\\", PropertyDetailSampleUsage.ValueType.Value, "Target Folder")]
+        [PropertyDetailSampleUsage("**http://example.com", PropertyDetailSampleUsage.ValueType.Value, "Target URL")]
+        [PropertyDetailSampleUsage("**{{{vPath}}}", PropertyDetailSampleUsage.ValueType.VariableValue, "Target File, Folder, or URL")]
         [PropertyValidationRule("Target", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_TargetPath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify saved Shortcut Path")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Saved Shortcut Path")]
+        [InputSpecification("Shortcut Path", true)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**C:\\temp\\shortcut.lnk** or **C:\\temp\\shortcut.url** or **{{{vShortcut}}}**")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [Remarks("")]
+        [PropertyDetailSampleUsage("**C:\\temp\\shortcut.lnk**", PropertyDetailSampleUsage.ValueType.Value, "Shortcut Path")]
+        [PropertyDetailSampleUsage("**C:\\temp\\shortcut.url**", PropertyDetailSampleUsage.ValueType.Value, "Shortcut Path")]
+        [PropertyDetailSampleUsage("**{{{vShortcut}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Shortcut Path")]
         [PropertyValidationRule("Shortcut", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_SavePath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify Shortcut Description")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
+        [PropertyDescription("Shortcut Description")]
+        [InputSpecification("Description", true)]
         [PropertyIsOptional(true)]
         public string v_Description { get; set; }
 
         public CreateShortcutCommand()
         {
-            this.CommandName = "CreateShortcutCommand";
-            this.SelectionName = "Create Shortcut";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateShortcutCommand";
+            //this.SelectionName = "Create Shortcut";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -65,16 +60,10 @@ namespace taskt.Core.Automation.Commands
             string targetPath = v_TargetPath.ConvertToUserVariable(engine);
             bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 
-            //string savePath = v_SavePath.ConvertToUserVariable(engine);
             string savePath;
 
             if (!isURL)
             {
-                //savePath = FilePathControls.formatFilePath(savePath, engine);
-                //if (!FilePathControls.hasExtension(savePath))
-                //{
-                //    savePath += ".lnk";
-                //}
                 if (FilePathControls.containsFileCounter(v_SavePath, engine))
                 {
                     savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "lnk");
@@ -100,11 +89,6 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //savePath = FilePathControls.formatFilePath(savePath, engine);
-                //if (!FilePathControls.hasExtension(savePath))
-                //{
-                //    savePath += ".url";
-                //}
                 if (FilePathControls.containsFileCounter(v_SavePath, engine))
                 {
                     savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "url");
@@ -122,21 +106,6 @@ namespace taskt.Core.Automation.Commands
                 };
                 writeText.RunCommand(engine);
             }
-        }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            var ctls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctls);
-
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Target: '" + v_TargetPath + "', Shortcut: '" + v_SavePath + "']";
         }
     }
 }

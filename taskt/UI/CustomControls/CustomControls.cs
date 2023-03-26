@@ -430,6 +430,16 @@ namespace taskt.UI
             {nameof(RESTCommand), "taskt.Properties.Resources.command_run_code"},
             {nameof(HTTPRequestCommand), "taskt.Properties.Resources.command_web"},
             {nameof(HTTPQueryResultCommand), "taskt.Properties.Resources.command_search"},
+            
+            // Application
+            {nameof(RunCSharpCodeCommand), "taskt.Properties.Resources.command_script"},
+            {nameof(RunBatchScriptFileCommand), "taskt.Properties.Resources.command_script"},
+            {nameof(StartApplicationCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(StopApplicationCommand), "taskt.Properties.Resources.command_stop_process"},
+            {nameof(LoadScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(UnloadScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
+            {nameof(RunScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
+            {nameof(StopCurrentScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
 
             // Color
             {nameof(CreateColorCommand), "taskt.Properties.Resources.command_function"},
@@ -704,13 +714,13 @@ namespace taskt.UI
             {nameof(NextLoopCommand), "taskt.Properties.Resources.command_nextloop"},
 
             // Misc
-            {nameof(ClipboardClearTextCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(ClipboardSetTextCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(ClipboardGetTextCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(ClearClipboardTextCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(SetClipboardTextCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(GetClipboardTextCommand), "taskt.Properties.Resources.command_files"},
             {nameof(CommentCommand), "taskt.Properties.Resources.command_comment"},
             {nameof(CreateShortcutCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(EncryptionCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(MessageBoxCommand), "taskt.Properties.Resources.command_comment"},
+            {nameof(EncryptDecryptTextCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ShowMessageCommand), "taskt.Properties.Resources.command_comment"},
             {nameof(PingCommand), "taskt.Properties.Resources.command_web"},
             {nameof(PlaySystemSoundCommand), "taskt.Properties.Resources.command_files"},
             {nameof(SMTPSendEmailCommand), "taskt.Properties.Resources.command_smtp"},
@@ -738,24 +748,12 @@ namespace taskt.UI
             {nameof(OutlookReplyToEmailsCommand), "taskt.Properties.Resources.command_smtp"},
             {nameof(OutlookEmailCommand), "taskt.Properties.Resources.command_smtp"},
 
-            // Program
-            {nameof(RunCustomCodeCommand), "taskt.Properties.Resources.command_script"},
-            {nameof(RunScriptCommand), "taskt.Properties.Resources.command_script"},
-            {nameof(StartProcessCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(StopProcessCommand), "taskt.Properties.Resources.command_stop_process"},
-
             // Regex
             {nameof(GetRegexMatchesCommand), "taskt.Properties.Resources.command_function"},
 
             // Remote
             {nameof(RemoteAPICommand), "taskt.Properties.Resources.command_remote"},
             {nameof(RemoteTaskCommand), "taskt.Properties.Resources.command_remote"},
-
-            // Script File
-            {nameof(LoadScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(UnloadScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
-            {nameof(RunScriptFileCommand), "taskt.Properties.Resources.command_start_process"},
-            {nameof(StopCurrentScriptFileCommand), "taskt.Properties.Resources.command_stop_process"},
 
             // System
             {nameof(GetEnvironmentVariableCommand), "taskt.Properties.Resources.command_system"},

@@ -5,7 +5,8 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Script File Commands")]
+    [Attributes.ClassAttributes.Group("Application/Script Commands")]
+    [Attributes.ClassAttributes.SubGruop("taskt Script File")]
     [Attributes.ClassAttributes.CommandSettings("Load Script File")]
     [Attributes.ClassAttributes.Description("This command pre-loads tasks for future execution.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load a task but not immediately execute it.")]

@@ -290,6 +290,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_33(doc);
             convertTo3_5_1_34(doc);
             convertTo3_5_1_35(doc);
+            convertTo3_5_1_36(doc);
 
             return doc;
         }
@@ -847,6 +848,50 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_36(XDocument doc)
+        {
+            // RunCustomCodeCommand -> RunCSharpCodeCommand
+            ChangeCommandName(doc, "RunCustomCodeCommand", "RunCSharpCodeCommand", "Run CSharp Code");
+
+            // RunPowershellCommand -> RunPowerShellScriptFileCommand
+            ChangeCommandName(doc, "RunPowershellCommand", "RunPowerShellScriptFileCommand", "Run PowerShell Script File");
+
+            // RunScriptCommand -> RunBatchScriptFileCommand
+            ChangeCommandName(doc, "RunScriptCommand", "RunBatchScriptFileCommand", "Run Batch Script File");
+
+            // StartProcessCommand -> StartApplicationCommand
+            ChangeCommandName(doc, "StartProcessCommand", "StartApplicationCommand", "Start Application");
+
+            // StopProgramCommand -> StopApplicationCommand
+            ChangeCommandName(doc, "StopProgramCommand", "StopApplicationCommand", "Stop Application");
+
+            // ClipboardClearTextCommand -> ClearClipboardTextCommand
+            ChangeCommandName(doc, "ClipboardClearTextCommand", "ClearClipboardTextCommand", "Clear Clipboard Text");
+
+            // ClipboardCommand -> GetClipboardTextCommand
+            ChangeCommandName(doc, "ClipboardCommand", "GetClipboardTextCommand", "Get Clipboard Text");
+
+            // ClipboardSetTextCommand -> SetClipboardTextCommand
+            ChangeCommandName(doc, "ClipboardSetTextCommand", "SetClipboardTextCommand", "Set Clipboard Text");
+
+            // CommentCommand (Display text only)
+            ChangeCommandName(doc, "CommentCommand", "CommentCommand", "Comment");
+
+            // EncryptionCommand -> EncryptTextCommand
+            ChangeCommandName(doc, "EncryptionCommand", "EncryptDecryptTextCommand", "Encrypt Decrypt Text");
+
+            // MessageBoxCommand -> ShowMessgeCommand
+            ChangeCommandName(doc, "MessageBoxCommand", "ShowMessageCommand", "Show Message");
+
+            // PingCommand (Display text only)
+            ChangeCommandName(doc, "PingCommand", "PingCommand", "Ping");
+
+            // SequenceCommand (Display text only)
+            ChangeCommandName(doc, "SequenceCommand", "SequenceCommand", "Sequence");
+
+            return doc;
+        }
+
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
@@ -869,6 +914,22 @@ namespace taskt.Core.Script
             {
                 changeFunc(cmd.Attribute(targetAttribute));
             }
+            return doc;
+        }
+
+        // not work yet
+        private static XDocument ChangeAttributeValue(XDocument doc, List<string> targetCommands, string targetAttribute, Action<XAttribute> changeFunc)
+        {
+            var tp = typeof(XElement);
+            var memberProperty = tp.GetProperty("CommandName");
+            var memberParamteter = Expression.Parameter(tp, "Attribute");
+
+            var propAccess = Expression.MakeMemberAccess(memberParamteter, memberProperty);
+
+            var toString = typeof(XAttribute).GetMethod("ToString");
+
+            //var x = Expression.Call()
+
             return doc;
         }
 
