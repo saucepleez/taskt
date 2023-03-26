@@ -28,18 +28,5 @@ namespace taskt.Core.Automation.Commands
         {
             //no execution required, used as a marker by the Automation Engine
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(new List<string>() { nameof(v_Comment) }, this, editor));
-            
-        //    return RenderedControls;
-        //}
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue();
-        //}
     }
 }
