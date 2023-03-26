@@ -719,7 +719,7 @@ namespace taskt.UI
             {nameof(GetClipboardTextCommand), "taskt.Properties.Resources.command_files"},
             {nameof(CommentCommand), "taskt.Properties.Resources.command_comment"},
             {nameof(CreateShortcutCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(EncryptTextCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(EncryptDecryptTextCommand), "taskt.Properties.Resources.command_input"},
             {nameof(ShowMessageCommand), "taskt.Properties.Resources.command_comment"},
             {nameof(PingCommand), "taskt.Properties.Resources.command_web"},
             {nameof(PlaySystemSoundCommand), "taskt.Properties.Resources.command_files"},
