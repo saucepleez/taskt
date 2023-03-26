@@ -551,7 +551,7 @@ namespace taskt.UI
             {nameof(ShowEngineContextCommand), "taskt.Properties.Resources.command_window"},
             {nameof(SetEnginePreferenceCommand), "taskt.Properties.Resources.command_window"},
             {nameof(StopwatchCommand), "taskt.Properties.Resources.command_stopwatch"},
-            {nameof(UploadDataCommand), "taskt.Properties.Resources.command_server"},   // upload bot store
+            {nameof(UploadBotStoreDataCommand), "taskt.Properties.Resources.command_server"},   // upload bot store
 
             // Error
             {nameof(CatchExceptionCommand), "taskt.Properties.Resources.command_try"},

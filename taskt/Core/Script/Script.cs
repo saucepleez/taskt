@@ -901,6 +901,9 @@ namespace taskt.Core.Script
             // PauseCommand -> PauseScriptCommand
             ChangeCommandName(doc, "PauseCommand", "PauseScriptCommand", "Pause Script");
 
+            // UploadDataCommand -> UploadBotStoreDataCommand
+            ChangeCommandName(doc, "PauseCommand", "UploadBotStoreDataCommand", "Upload BotStore Data");
+
             return doc;
         }
 

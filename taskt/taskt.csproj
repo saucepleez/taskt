@@ -676,7 +676,7 @@
     <Compile Include="Core\Automation\Commands\Image\ScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopCurrentScriptFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\UploadDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\UploadBotStoreDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\WaitForFileToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAddDocumentCommand.cs" />
