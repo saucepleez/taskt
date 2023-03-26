@@ -48,13 +48,13 @@ namespace taskt.Core.Automation.Commands
             var mail = v_MailName.GetMailKitEMailVariable(engine);
 
             string path;
-            if (FilePathControls.containsFileCounter(v_SavePath, engine))
+            if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
             {
-                path = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "eml");
+                path = FilePathControls.FormatFilePath_ContainsFileCounter(v_SavePath, engine, "eml");
             }
             else
             {
-                path = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "eml");
+                path = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "eml");
             }
 
             mail.WriteTo(path);

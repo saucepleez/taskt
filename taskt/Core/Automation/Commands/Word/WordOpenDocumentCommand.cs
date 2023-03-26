@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
 
             var wordInstance = v_InstanceName.GetWordInstance(engine);
 
-            string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "docx", "docm", "doc", "odt", "rtf" }, true);
+            string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "docx", "docm", "doc", "odt", "rtf" }, true);
             wordInstance.Documents.Open(vFilePath);
         }
     }

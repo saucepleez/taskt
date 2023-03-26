@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
 
             var errorPreference = this.GetUISelectionValue(nameof(v_ErrorPreference), engine);
 

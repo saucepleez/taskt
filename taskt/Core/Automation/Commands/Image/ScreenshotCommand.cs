@@ -66,13 +66,13 @@ namespace taskt.Core.Automation.Commands
             //        outputFile += ".png";
             //    }
             //}
-            if (FilePathControls.containsFileCounter(v_FilePath, engine))
+            if (FilePathControls.ContainsFileCounter(v_FilePath, engine))
             {
-                outputFile = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "png");
+                outputFile = FilePathControls.FormatFilePath_ContainsFileCounter(v_FilePath, engine, "png");
             }
             else
             {
-                outputFile = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "png");
+                outputFile = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "png");
             }
 
             image.Save(outputFile);

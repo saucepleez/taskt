@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //var startFile = v_taskPath.ConvertToUserVariable(sender);
-            string startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
 
             //create variable list
             var variableList = new List<Script.ScriptVariable>();
@@ -173,7 +173,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //var startFile = v_taskPath.ConvertToUserVariable(engine);
-            var startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            var startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
 
             // check file exists
             if (!System.IO.File.Exists(startFile))

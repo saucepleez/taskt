@@ -37,13 +37,13 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             string fileName;
-            if (FilePathControls.containsFileCounter(v_FileName, engine))
+            if (FilePathControls.ContainsFileCounter(v_FileName, engine))
             {
-                fileName = FilePathControls.formatFilePath_ContainsFileCounter(v_FileName, engine, "docx");
+                fileName = FilePathControls.FormatFilePath_ContainsFileCounter(v_FileName, engine, "docx");
             }
             else
             {
-                fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "docx");
+                fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "docx");
             }
 
             var wordInstance = v_InstanceName.GetWordInstance(engine);

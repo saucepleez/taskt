@@ -47,19 +47,19 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            bool isURL = FilePathControls.isURL(v_FilePath.ConvertToUserVariable(engine));
+            bool isURL = FilePathControls.IsURL(v_FilePath.ConvertToUserVariable(engine));
 
             string result;
             if (!isURL)
             {
                 string filePath;
-                if (FilePathControls.containsFileCounter(v_FilePath, engine))
+                if (FilePathControls.ContainsFileCounter(v_FilePath, engine))
                 {
-                    filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", true);
+                    filePath = FilePathControls.FormatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", true);
                 }
                 else
                 {
-                    filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt", true, true);
+                    filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "txt", true, true);
                 }
                 result = System.IO.File.ReadAllText(filePath);
             }

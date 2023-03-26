@@ -44,9 +44,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             string filePath;
-            if (!FilePathControls.isURL(v_FilePath))
+            if (!FilePathControls.IsURL(v_FilePath))
             {
-                 filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "json", true);
+                 filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "json", true);
             }
             else
             {

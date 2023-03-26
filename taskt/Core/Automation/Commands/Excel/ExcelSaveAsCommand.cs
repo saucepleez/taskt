@@ -55,13 +55,13 @@ namespace taskt.Core.Automation.Commands
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
             string fileName;
-            if (FilePathControls.containsFileCounter(v_FileName, engine))
+            if (FilePathControls.ContainsFileCounter(v_FileName, engine))
             {
-                fileName = FilePathControls.formatFilePath_ContainsFileCounter(v_FileName, engine, "xlsx");
+                fileName = FilePathControls.FormatFilePath_ContainsFileCounter(v_FileName, engine, "xlsx");
             }
             else
             {
-                fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
+                fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
             }
 
             Action saveAsProcess = () =>

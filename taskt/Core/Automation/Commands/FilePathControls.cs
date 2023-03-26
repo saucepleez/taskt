@@ -5,32 +5,17 @@ namespace taskt.Core.Automation.Commands
 {
     internal class FilePathControls
     {
-        public static bool hasFolderPath(string path)
+        public static bool HasFolderPath(string path)
         {
             return (path != System.IO.Path.GetFileName(path));
         }
 
-        public static bool hasExtension(string path)
+        public static bool HasExtension(string path)
         {
-            //string file = System.IO.Path.GetFileName(path);
-            //return (file != System.IO.Path.GetExtension(path));
             return (System.IO.Path.GetExtension(path).Length > 0);
         }
 
-        //public static string formatFilePath(string path, Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    if (hasFolderPath(path))
-        //    {
-        //        return path;
-        //    }
-        //    else
-        //    {
-        //        //return engine.engineSettings.;
-        //        return System.IO.Path.GetDirectoryName(engine.FileName) + "\\" + path;
-        //    }
-        //}
-
-        public static bool containsFileCounter(string path, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static bool ContainsFileCounter(string path, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             path = path ?? "";
 
@@ -51,52 +36,8 @@ namespace taskt.Core.Automation.Commands
             return false;
         }
 
-        //public static string formatFileCounter_NotExists(string path, Core.Automation.Engine.AutomationEngineInstance engine, string extension)
-        //{
-        //    var settings = engine.engineSettings;
-        //    string format = "";
-        //    string src = "";
-        //    if (path.Contains(settings.wrapVariableMarker("FileCounter.F0")))
-        //    {
-        //        src = settings.wrapVariableMarker("FileCounter.F0");
-        //        format = "0";
-        //    }
-        //    else if (path.Contains(settings.wrapVariableMarker("FileCounter.F00")))
-        //    {
-        //        src = settings.wrapVariableMarker("FileCounter.F00");
-        //        format = "00";
-        //    }
-        //    else if (path.Contains(settings.wrapVariableMarker("FileCounter.F000")))
-        //    {
-        //        src = settings.wrapVariableMarker("FileCounter.F000");
-        //        format = "000";
-        //    }
-        //    else
-        //    {
-        //        return path;
-        //    }
 
-        //    int cnt = 1;
-        //    while(true)
-        //    {
-        //        string trgPath = path.Replace(src, cnt.ToString(format));
-        //        trgPath = formatFilePath(trgPath.ConvertToUserVariable(engine), engine);
-        //        if (!hasExtension(trgPath))
-        //        {
-        //            trgPath += (extension.StartsWith(".") ? extension : "." + extension);
-        //        }
-
-        //        if (!System.IO.File.Exists(trgPath))
-        //        {
-        //            return trgPath;
-        //        }
-
-        //        cnt++;
-        //    }
-        //}
-
-
-        public static string formatFilePath_ContainsFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
+        public static string FormatFilePath_ContainsFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
         {
             vPath = vPath ?? "";
 
@@ -111,13 +52,13 @@ namespace taskt.Core.Automation.Commands
                 string replPath = vPath.Replace(f0, fileCount.ToString()).Replace(f00, fileCount.ToString("00")).Replace(f000, fileCount.ToString("000"));
                 string path = replPath.ConvertToUserVariable(engine);
 
-                if (!hasFolderPath(path))
+                if (!HasFolderPath(path))
                 {
                     path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(engine.FileName), path);
                 }
 
                 // extenstion
-                if (!hasExtension(path))
+                if (!HasExtension(path))
                 {
                     path = path.EndsWith(".") ? path + extension : path + "." + extension;
                 }
@@ -144,18 +85,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static string formatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        public static string FormatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
         {
             vPath = vPath ?? "";
             string path = vPath.ConvertToUserVariable(engine);
 
-            if (!hasFolderPath(path))
+            if (!HasFolderPath(path))
             {
                 path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(engine.FileName), path);
             }
 
             // no extension
-            if (!hasExtension(path) && allowNoExtensionFile)
+            if (!HasExtension(path) && allowNoExtensionFile)
             {
                 if (checkFileExistance)
                 {
@@ -171,7 +112,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            if (!hasExtension(path)) 
+            if (!HasExtension(path)) 
             {
                 if (checkFileExistance)
                 {
@@ -198,17 +139,17 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static string formatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        public static string FormatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
         {
-            return formatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
+            return FormatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
         }
 
-        public static bool isURL(string path)
+        public static bool IsURL(string path)
         {
             return (path.StartsWith("http:") || path.StartsWith("https:"));
         }
 
-        public static string formatFileFolderPath(string path, string format)
+        public static string FormatFileFolderPath(string path, string format)
         {
             switch (format.ToLower())
             {
@@ -241,7 +182,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static string getFormatHelp()
+        public static string GetFormatHelp()
         {
             string help =
                 @"File

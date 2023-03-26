@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
             //        }
             //    }
             //}
-            string filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "png", "jpg", "jpeg", "bmp", "gif" }, true);
+            string filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "png", "jpg", "jpeg", "bmp", "gif" }, true);
 
             var ocrEngine = new OneNoteOCRDll.OneNoteOCR();
             var arr = ocrEngine.OcrTexts(filePath).ToArray();

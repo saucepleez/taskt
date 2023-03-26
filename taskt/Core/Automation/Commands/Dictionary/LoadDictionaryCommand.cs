@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
             var vKeyColumn = v_KeyColumn.ConvertToUserVariable(sender);
             var vValueColumn = v_ValueColumn.ConvertToUserVariable(sender);
 
-            string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
+            string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
 
             //Query required from workbook using OLEDB
             //DataTableControls dataSetCommand = new DataTableControls();

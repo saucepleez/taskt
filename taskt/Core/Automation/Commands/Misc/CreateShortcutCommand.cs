@@ -64,13 +64,13 @@ namespace taskt.Core.Automation.Commands
 
             if (!isURL)
             {
-                if (FilePathControls.containsFileCounter(v_SavePath, engine))
+                if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
                 {
-                    savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "lnk");
+                    savePath = FilePathControls.FormatFilePath_ContainsFileCounter(v_SavePath, engine, "lnk");
                 }
                 else
                 {
-                    savePath = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
+                    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
                 }
 
                 string description = v_Description.ConvertToUserVariable(engine);
@@ -89,13 +89,13 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                if (FilePathControls.containsFileCounter(v_SavePath, engine))
+                if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
                 {
-                    savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "url");
+                    savePath = FilePathControls.FormatFilePath_ContainsFileCounter(v_SavePath, engine, "url");
                 }
                 else
                 {
-                    savePath = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "url");
+                    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "url");
                 }
 
                 string outputText = "[InternetShortcut]\nURL=" + targetPath;
