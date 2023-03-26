@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**1000**", PropertyDetailSampleUsage.ValueType.Value, "Delay")]
         [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Delay")]
         [PropertyValidationRule("Delay", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Delay")]
+        [PropertyDisplayText(true, "Delay", "ms")]
         public string v_EngineSpeed { get; set; }
 
         public SetEngineDelayCommand()

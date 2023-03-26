@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**8000**", PropertyDetailSampleUsage.ValueType.Value, "Pause")]
         [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Pause")]
         [PropertyValidationRule("Pause", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Pause")]
+        [PropertyDisplayText(true, "Pause", "ms")]
         public string v_PauseLength { get; set; }
 
         public PauseScriptCommand()
