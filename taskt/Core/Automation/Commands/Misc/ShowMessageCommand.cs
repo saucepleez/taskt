@@ -72,6 +72,7 @@ namespace taskt.Core.Automation.Commands
                 closeAfter = 10;
             }
 
+            // TODO: support OK/cancel etc buttons
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {
                 engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, closeAfter);
