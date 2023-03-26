@@ -5,16 +5,32 @@ namespace taskt.Core.Automation.Commands
 {
     internal class FilePathControls
     {
+        /// <summary>
+        /// check file path has folder path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool HasFolderPath(string path)
         {
             return (path != System.IO.Path.GetFileName(path));
         }
 
+        /// <summary>
+        /// check file path has extension
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool HasExtension(string path)
         {
             return (System.IO.Path.GetExtension(path).Length > 0);
         }
 
+        /// <summary>
+        /// check file path contains FileCounter variable
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         public static bool ContainsFileCounter(string path, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             path = path ?? "";
@@ -36,7 +52,14 @@ namespace taskt.Core.Automation.Commands
             return false;
         }
 
-
+        /// <summary>
+        /// convert file path that contains FileCounter variable
+        /// </summary>
+        /// <param name="vPath"></param>
+        /// <param name="engine"></param>
+        /// <param name="extension"></param>
+        /// <param name="useExistsFile"></param>
+        /// <returns></returns>
         public static string FormatFilePath_ContainsFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
         {
             vPath = vPath ?? "";
@@ -85,6 +108,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// convert file path that does NOT contains FileCounter variable
+        /// </summary>
+        /// <param name="vPath"></param>
+        /// <param name="engine"></param>
+        /// <param name="extensions"></param>
+        /// <param name="checkFileExistance"></param>
+        /// <param name="allowNoExtensionFile"></param>
+        /// <returns></returns>
         public static string FormatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
         {
             vPath = vPath ?? "";
@@ -139,16 +171,36 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// convert file path that does NOT contains FileCounter variable
+        /// </summary>
+        /// <param name="vPath"></param>
+        /// <param name="engine"></param>
+        /// <param name="extension"></param>
+        /// <param name="checkFileExistance"></param>
+        /// <param name="allowNoExtensionFile"></param>
+        /// <returns></returns>
         public static string FormatFilePath_NoFileCounter(string vPath, Automation.Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
         {
             return FormatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
         }
 
+        /// <summary>
+        /// check file path is URL
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool IsURL(string path)
         {
             return (path.StartsWith("http:") || path.StartsWith("https:"));
         }
 
+        /// <summary>
+        /// format file/folder path to specified format
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static string FormatFileFolderPath(string path, string format)
         {
             switch (format.ToLower())
@@ -182,6 +234,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get format information
+        /// </summary>
+        /// <returns></returns>
         public static string GetFormatHelp()
         {
             string help =
