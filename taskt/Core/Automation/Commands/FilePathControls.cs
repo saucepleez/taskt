@@ -27,6 +27,22 @@ namespace taskt.Core.Automation.Commands
         public static string v_FilePath { get; }
 
         /// <summary>
+        /// file does not exists behavior
+        /// </summary>
+        [PropertyDescription("When the File does Not Exists")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyDetailSampleUsage("**Ignore**", "Continue Script File")]
+        [PropertyDetailSampleUsage("**Error**", "Rise A Error")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "Error")]
+        [PropertyDisplayText(false, "")]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        public static string v_WhenFileDoesNotExists { get; }
+
+        /// <summary>
         /// for wait time
         /// </summary>
         [PropertyDescription("Wait Time for the File to Exist (sec)")]
