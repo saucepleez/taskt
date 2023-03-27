@@ -6,6 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Check File Exists")]
     [Attributes.ClassAttributes.Description("This command returns a existence of file paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a existence of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -41,12 +42,18 @@ namespace taskt.Core.Automation.Commands
         [Remarks("When the File Exists, Result is **TRUE**")]
         public string v_UserVariableName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        [PropertyFirstValue("0")]
+        [PropertyIsOptional(true, "0")]
+        public string v_WaitTime { get; set; }
+
         public CheckFileExistsCommand()
         {
-            this.CommandName = "CheckFileExistsCommand";
-            this.SelectionName = "Check File Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckFileExistsCommand";
+            //this.SelectionName = "Check File Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
@@ -54,10 +61,19 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             // var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
-            var targetFile = this.ConvertToUserVariableAsFilePath(nameof(v_TargetFileName), engine);
+            //var targetFile = this.ConvertToUserVariableAsFilePath(nameof(v_TargetFileName), engine);
 
-            System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
+            //System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
 
+            try
+            {
+                var ret = FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
+                (ret is string).StoreInUserVariable(engine, v_UserVariableName);
+            }
+            catch
+            {
+                false.StoreInUserVariable(engine, v_UserVariableName);
+            }
         }
     }
 }
