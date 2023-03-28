@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
 
             var waitForExit = this.GetUISelectionValue(nameof(v_WaitForExit), engine);
 
-            if (waitForExit == "Yes")
+            if (waitForExit == "yes")
             {
                 p.WaitForExit();
             }
