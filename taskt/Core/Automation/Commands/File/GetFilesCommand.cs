@@ -6,9 +6,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Get Files")]
     [Attributes.ClassAttributes.Description("This command returns a list of file paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a list of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class GetFilesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the path to the source folder.")]
+        [PropertyDescription("Path to the Source Folder")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [InputSpecification("Enter or Select the path to the folder.")]
@@ -30,70 +30,73 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the file name filter")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter or Select the file name filter.")]
-        [SampleUsage("**hello** or **{{{vFileName}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyIsOptional(true, "empty and search all files")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("File Name Filter")]
+        [InputSpecification("File Name Filter", true)]
+        //[SampleUsage("**hello** or **{{{vFileName}}}**")]
+        [PropertyDetailSampleUsage("**hello**", PropertyDetailSampleUsage.ValueType.Value, "File Name Filter")]
+        [PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "File Name Filter")]
+        [PropertyIsOptional(true, "Empty and Search All Files")]
+        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Name")]
         public string v_SearchFileName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the file name search method")]
-        [InputSpecification("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("File Name Search Method")]
         [PropertyUISelectionOption("Contains")]
         [PropertyUISelectionOption("Starts with")]
         [PropertyUISelectionOption("Ends with")]
         [PropertyUISelectionOption("Exact match")]
-        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Remarks("")]
         [PropertyIsOptional(true, "Contains")]
+        [PropertyDisplayText(true, "Search Method")]
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the extension")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter or Select the extension.")]
-        [SampleUsage("**txt** or **{{{vExtension}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyIsOptional(true, "empty and search all files")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Extension")]
+        [InputSpecification("Extention", true)]
+        //[SampleUsage("**txt** or **{{{vExtension}}}**")]
+        [PropertyDetailSampleUsage("**txt**", "Specify text file for Extension")]
+        [PropertyDetailSampleUsage("**{{{vExtension}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Extension")]
+        [PropertyIsOptional(true, "Empty and Search All Files")]
+        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
         public string v_SearchExtension { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Specify the variable to assign the file path list")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyIsVariablesList(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Specify the variable to assign the file path list")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
+        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
+        [PropertyDescription("List Variable Name to Store Result")]
         public string v_UserVariableName { get; set; }
 
         public GetFilesCommand()
         {
-            this.CommandName = "GetFilesCommand";
-            this.SelectionName = "Get Files";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetFilesCommand";
+            //this.SelectionName = "Get Files";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
+
             //apply variable logic
-            var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
+            var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(engine);
 
-            var searchFile = v_SearchFileName.ConvertToUserVariable(sender);
+            var searchFile = v_SearchFileName.ConvertToUserVariable(engine);
 
-            var ext = v_SearchExtension.ConvertToUserVariable(sender).ToLower();
+            var ext = v_SearchExtension.ConvertToUserVariable(engine).ToLower();
 
             // get all files
             List<string> filesList;
@@ -101,12 +104,8 @@ namespace taskt.Core.Automation.Commands
 
             if (!String.IsNullOrEmpty(searchFile))
             {
-                //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-                //if (String.IsNullOrEmpty(searchMethod))
-                //{
-                //    searchMethod = "Contains";
-                //}
-                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
+                //var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
+                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), engine);
                 switch (searchMethod)
                 {
                     case "contains":

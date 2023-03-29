@@ -7,6 +7,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Get File Info")]
     [Attributes.ClassAttributes.Description("This command returns a list of file paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a list of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -15,61 +16,67 @@ namespace taskt.Core.Automation.Commands
     public class GetFileInfoCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the file name")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Enter or Select the file name.")]
-        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vFileName}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "File")]
+        //[PropertyDescription("Please indicate the file name")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("Enter or Select the file name.")]
+        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vFileName}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "File")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_TargetFileName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please specify the information type.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("")]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Information Type.")]
         [PropertyUISelectionOption("File size")]
         [PropertyUISelectionOption("Readonly file")]
         [PropertyUISelectionOption("Hidden file")]
         [PropertyUISelectionOption("Creation time")]
         [PropertyUISelectionOption("Last write time")]
         [PropertyUISelectionOption("Last access time")]
-        [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
         public string v_InfoType { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Specify the variable to assign the result")]
-        [InputSpecification("")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsVariablesList(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Store")]
+        //[PropertyDescription("Specify the variable to assign the result")]
+        //[InputSpecification("")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsVariablesList(true)]
+        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Store")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_UserVariableName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
 
         public GetFileInfoCommand()
         {
-            this.CommandName = "GetFileInfoCommand";
-            this.SelectionName = "Get File Info";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "GetFileInfoCommand";
+            //this.SelectionName = "Get File Info";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
+            //var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
+            var targetFile = FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
+
             //var infoType = v_InfoType.ConvertToUserVariable(sender);
-            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
+            //var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
+            var infoType = this.GetUISelectionValue(nameof(v_InfoType), engine);
 
             string ret;
             var fileInfo = new System.IO.FileInfo(targetFile);
