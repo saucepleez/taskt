@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Wf File Name Same After the Change")]
+        [PropertyDescription("When File Name Same After the Change")]
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Error")]
         [PropertyDetailSampleUsage("**Ignore**", "Nothing to do")]
