@@ -33,7 +33,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("File Name Filter")]
         [InputSpecification("File Name Filter", true)]
-        //[SampleUsage("**hello** or **{{{vFileName}}}**")]
         [PropertyDetailSampleUsage("**hello**", PropertyDetailSampleUsage.ValueType.Value, "File Name Filter")]
         [PropertyDetailSampleUsage("**{{{vName}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "File Name Filter")]
         [PropertyIsOptional(true, "Empty and Search All Files")]
@@ -56,7 +55,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Extension")]
         [InputSpecification("Extention", true)]
-        //[SampleUsage("**txt** or **{{{vExtension}}}**")]
         [PropertyDetailSampleUsage("**txt**", "Specify text file for Extension")]
         [PropertyDetailSampleUsage("**{{{vExtension}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Extension")]
         [PropertyIsOptional(true, "Empty and Search All Files")]
@@ -65,16 +63,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchExtension { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Specify the variable to assign the file path list")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         [PropertyDescription("List Variable Name to Store Result")]
         public string v_UserVariableName { get; set; }
@@ -104,7 +92,6 @@ namespace taskt.Core.Automation.Commands
 
             if (!String.IsNullOrEmpty(searchFile))
             {
-                //var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
                 var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), engine);
                 switch (searchMethod)
                 {

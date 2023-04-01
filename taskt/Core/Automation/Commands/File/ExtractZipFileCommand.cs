@@ -20,16 +20,6 @@ namespace taskt.Core.Automation.Commands
     public class ExtractZipFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please enter the file path or location")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        //[SampleUsage(@"**C:\temp\myfile.zip** , **{{{vFilePath}}}** or **https://temp.com/myfile.zip**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "File")]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyFilePathSetting(true, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "zip")]
         public string v_FilePathOrigin { get; set; }
@@ -66,11 +56,6 @@ namespace taskt.Core.Automation.Commands
         public string v_Password { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Indicate the variable to receive a list of extracted file names")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyIsOptional(true)]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         [PropertyDescription("List Variable Name to Receive a List of Extracted File Names")]
         [PropertyIsOptional(true)]
@@ -94,7 +79,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get absolute variable path or URL to source file
-            //var vSourceFile = v_FilePathOrigin.ConvertToUserVariable(engine);
             var vSourceFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePathOrigin), engine);
 
             //track local file location
@@ -135,33 +119,18 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            // Check if file exists before proceeding
-            //if (!File.Exists(vLocalSourceFile))
-            //{
-            //    throw new FileNotFoundException($"Could not find file: {vLocalSourceFile}");
-            //}
-
             //get file path to destination files
             var vExtractionFolder = v_PathDestination.ConvertToUserVariable(engine);
 
             // If the directory doesn't exist, create it.
             if (!Directory.Exists(vExtractionFolder))
             {
-                //var vCreateDirectory = v_CreateDirectory.ConvertToUserVariable(engine);
-                //if (String.IsNullOrEmpty(vCreateDirectory))
-                //{
-                //    vCreateDirectory = "No";
-                //}
                 var isCreateDirectory = this.GetUISelectionValue(nameof(v_CreateDirectory), engine);
 
                 if (isCreateDirectory == "yes")
                 {
                     Directory.CreateDirectory(vExtractionFolder);
                 }
-                //else
-                //{
-                //    throw new Exception("No extraction folder: " + vExtractionFolder);
-                //}
             }
             
             try
@@ -201,7 +170,6 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(v_applyToVariableName))
                 {
-                    //engine.StoreComplexObjectInVariable(v_applyToVariableName, fileList);
                     fileList.StoreInUserVariable(engine, v_applyToVariableName);
                 }
             }

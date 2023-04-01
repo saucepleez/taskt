@@ -18,16 +18,6 @@ namespace taskt.Core.Automation.Commands
     public class FormatFilePathCommnad : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the File Path to Delete.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the file.")]
-        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "File")]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_SourceFilePath { get; set; }
@@ -47,15 +37,6 @@ namespace taskt.Core.Automation.Commands
         public string v_Format { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Variable Name to store Result.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
@@ -71,7 +52,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //string filePath = v_SourceFilePath.ConvertToUserVariable(engine);
             var filePath = this.ConvertToUserVariableAsFilePath(nameof(v_SourceFilePath), engine);
             string format = v_Format.ConvertToUserVariable(engine);
 

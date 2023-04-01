@@ -16,16 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class GetFileInfoCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the file name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("Enter or Select the file name.")]
-        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vFileName}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "File")]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_TargetFileName { get; set; }
@@ -44,14 +34,6 @@ namespace taskt.Core.Automation.Commands
         public string v_InfoType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Specify the variable to assign the result")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_UserVariableName { get; set; }
 
@@ -71,11 +53,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
             var targetFile = FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
 
-            //var infoType = v_InfoType.ConvertToUserVariable(sender);
-            //var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
             var infoType = this.GetUISelectionValue(nameof(v_InfoType), engine);
 
             string ret;

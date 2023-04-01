@@ -15,29 +15,11 @@ namespace taskt.Core.Automation.Commands
     public class CheckFileExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Specify the path of the file you want to check for existence")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the file.")]
-        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vFilePath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "File")]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_TargetFileName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Specify the variable to assign the result")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("Result is **TRUE** or **FALSE**")]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the File Exists, Result is **TRUE**")]
         public string v_UserVariableName { get; set; }
@@ -59,11 +41,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-
-            // var targetFile = v_TargetFileName.ConvertToUserVariable(sender);
-            //var targetFile = this.ConvertToUserVariableAsFilePath(nameof(v_TargetFileName), engine);
-
-            //System.IO.File.Exists(targetFile).StoreInUserVariable(engine, v_UserVariableName);
 
             try
             {

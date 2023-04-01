@@ -15,16 +15,6 @@ namespace taskt.Core.Automation.Commands
     public class DeleteFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the File Path to Delete.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the file.")]
-        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "File")]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_SourceFilePath { get; set; }
@@ -49,10 +39,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-
-            //var sourceFile = v_SourceFilePath.ConvertToUserVariable(engine);
-
-            //System.IO.File.Delete(sourceFile);
 
             try
             {
