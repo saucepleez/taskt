@@ -11,12 +11,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Extract Zip File")]
     [Attributes.ClassAttributes.Description("This command extracts files from a compressed file")]
     [Attributes.ClassAttributes.UsesDescription("")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExtractFileCommand : ScriptCommand
+    public class ExtractZipFileCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Please enter the file path or location")]
@@ -72,12 +73,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         public string v_applyToVariableName { get; set; }
 
-        public ExtractFileCommand()
+        public ExtractZipFileCommand()
         {
-            this.CommandName = "ExtractFileCommand";
-            this.SelectionName = "Extract File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExtractFileCommand";
+            //this.SelectionName = "Extract File";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

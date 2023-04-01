@@ -907,6 +907,9 @@ namespace taskt.Core.Script
             // Format File PathCommand -> FormatFilePathCommand
             ChangeCommandName(doc, "Format File PathCommand", "FormatFilePathCommand", "Format File Path");
 
+            // ExtractFileCommand -> ExtractZipFileCommand
+            ChangeCommandName(doc, "ExtractFileCommand", "ExtractZipFileCommand", "Extract Zip File");
+
             return doc;
         }
 

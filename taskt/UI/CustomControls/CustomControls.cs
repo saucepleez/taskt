@@ -612,7 +612,7 @@ namespace taskt.UI
             // File
             {nameof(CheckFileExistsCommand), "taskt.Properties.Resources.command_files"},
             {nameof(DeleteFileCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(ExtractFileCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(ExtractZipFileCommand), "taskt.Properties.Resources.command_files"},
             {nameof(FormatFilePathCommnad), "taskt.Properties.Resources.command_files"},
             {nameof(GetFileInfoCommand), "taskt.Properties.Resources.command_files"},
             {nameof(GetFilesCommand), "taskt.Properties.Resources.command_files"},
