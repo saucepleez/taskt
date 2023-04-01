@@ -524,7 +524,7 @@
     <Compile Include="Core\Automation\Commands\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSplitRangeByColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelWriteRowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\File\ExtractFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\ExtractZipFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowValueCommand.cs" />
