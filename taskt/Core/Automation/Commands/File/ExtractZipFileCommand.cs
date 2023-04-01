@@ -20,20 +20,22 @@ namespace taskt.Core.Automation.Commands
     public class ExtractZipFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please enter the file path or location")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [SampleUsage(@"**C:\temp\myfile.zip** , **{{{vFilePath}}}** or **https://temp.com/myfile.zip**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "File")]
+        //[PropertyDescription("Please enter the file path or location")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
+        //[SampleUsage(@"**C:\temp\myfile.zip** , **{{{vFilePath}}}** or **https://temp.com/myfile.zip**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "File")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyFilePathSetting(true, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "zip")]
         public string v_FilePathOrigin { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please indicate the extraction folder")]
+        [PropertyDescription("Extraction Folder")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
         [InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
@@ -46,17 +48,15 @@ namespace taskt.Core.Automation.Commands
         public string v_PathDestination { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Create folder if destination does not exist")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Create Folder When Destination Does not Exist")]
         [PropertyUISelectionOption("Yes")]
         [PropertyUISelectionOption("No")]
-        [InputSpecification("Specify whether the directory should be created if it does not already exist.")]
-        [SampleUsage("Select **Yes** or **No**")]
-        [Remarks("")]
         [PropertyIsOptional(true, "No")]
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Indicate the archive password")]
+        [PropertyDescription("Archive Password")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Enter archive files password.")]
         [SampleUsage(@"**mypass** or {{{vPass}}}")]
@@ -66,12 +66,20 @@ namespace taskt.Core.Automation.Commands
         public string v_Password { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Indicate the variable to receive a list of extracted file names")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyDescription("Indicate the variable to receive a list of extracted file names")]
+        //[InputSpecification("Select or provide a variable from the variable list")]
+        //[SampleUsage("**vSomeVariable**")]
+        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        //[PropertyIsOptional(true)]
+        [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
+        [PropertyDescription("List Variable Name to Receive a List of Extracted File Names")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
         public string v_applyToVariableName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
 
         public ExtractZipFileCommand()
         {
@@ -86,24 +94,17 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get absolute variable path or URL to source file
-            var vSourceFile = v_FilePathOrigin.ConvertToUserVariable(sender);
+            //var vSourceFile = v_FilePathOrigin.ConvertToUserVariable(engine);
+            var vSourceFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePathOrigin), engine);
+
             //track local file location
             string vLocalSourceFile = vSourceFile;
-            //get file path to destination files
-            var vExtractionFolder = v_PathDestination.ConvertToUserVariable(sender);
-            var vCreateDirectory = v_CreateDirectory.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(vCreateDirectory))
-            {
-                vCreateDirectory = "No";
-            }
-            //get optional password
-            var vPassword = v_Password.ConvertToUserVariable(sender);
+
             //auto-detect extension
             var vFileType = Path.GetExtension(vSourceFile);
-            //create tracking list
-            var fileList = new List<string>();
 
-            if (vSourceFile.StartsWith("http://") || vSourceFile.StartsWith("https://") || vSourceFile.StartsWith("www."))
+            //if (vSourceFile.StartsWith("http://") || vSourceFile.StartsWith("https://") || vSourceFile.StartsWith("www."))
+            if (FilePathControls.IsURL(vSourceFile))
             {
                 //create temp directory
                 var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);
@@ -135,29 +136,45 @@ namespace taskt.Core.Automation.Commands
             }
 
             // Check if file exists before proceeding
-            if (!File.Exists(vLocalSourceFile))
-            {
-                throw new FileNotFoundException($"Could not find file: {vLocalSourceFile}");
-            }
-    
+            //if (!File.Exists(vLocalSourceFile))
+            //{
+            //    throw new FileNotFoundException($"Could not find file: {vLocalSourceFile}");
+            //}
+
+            //get file path to destination files
+            var vExtractionFolder = v_PathDestination.ConvertToUserVariable(engine);
+
             // If the directory doesn't exist, create it.
             if (!Directory.Exists(vExtractionFolder))
             {
-                if (vCreateDirectory.ToLower() == "yes")
+                //var vCreateDirectory = v_CreateDirectory.ConvertToUserVariable(engine);
+                //if (String.IsNullOrEmpty(vCreateDirectory))
+                //{
+                //    vCreateDirectory = "No";
+                //}
+                var isCreateDirectory = this.GetUISelectionValue(nameof(v_CreateDirectory), engine);
+
+                if (isCreateDirectory == "yes")
                 {
                     Directory.CreateDirectory(vExtractionFolder);
                 }
-                else
-                {
-                    throw new Exception("No extraction folder: " + vExtractionFolder);
-                }
+                //else
+                //{
+                //    throw new Exception("No extraction folder: " + vExtractionFolder);
+                //}
             }
             
             try
             {
+                //create tracking list
+                var fileList = new List<string>();
+
                 using (Stream stream = File.OpenRead(vLocalSourceFile))
                 {
                     IReader reader;
+
+                    //get optional password
+                    var vPassword = v_Password.ConvertToUserVariable(engine);
 
                     //check if password is needed
                     if (string.IsNullOrEmpty(vPassword))
@@ -178,14 +195,14 @@ namespace taskt.Core.Automation.Commands
                             //Console.WriteLine(reader.Entry.Key);
                             reader.WriteEntryToDirectory(vExtractionFolder, new ExtractionOptions() { ExtractFullPath = true, Overwrite = true });
                             fileList.Add(vExtractionFolder + reader.Entry.Key.Replace("/", "\\"));
-
                         }
                     }
                 }
 
                 if (!string.IsNullOrEmpty(v_applyToVariableName))
                 {
-                    engine.StoreComplexObjectInVariable(v_applyToVariableName, fileList);
+                    //engine.StoreComplexObjectInVariable(v_applyToVariableName, fileList);
+                    fileList.StoreInUserVariable(engine, v_applyToVariableName);
                 }
             }
             catch (Exception)
