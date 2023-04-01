@@ -6,6 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For File")]
     [Attributes.ClassAttributes.Description("This command waits for a file to exist at a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to wait for a file to exist before proceeding.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
@@ -14,37 +15,41 @@ namespace taskt.Core.Automation.Commands
     public class WaitForFileToExistCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the directory of the file")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Enter or Select the path to the file.")]
-        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "File")]
+        //[PropertyDescription("Please indicate the directory of the file")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("Enter or Select the path to the file.")]
+        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "File")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_FileName { get; set; }
 
 
         [XmlAttribute]
-        [PropertyDescription("Indicate how many seconds to wait for the file to exist")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Specify how long to wait before an error will occur because the file is not found.")]
-        [SampleUsage("**10** or **20** or **{{{vWaitTime}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Wait", "s")]
+        //[PropertyDescription("Indicate how many seconds to wait for the file to exist")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Specify how long to wait before an error will occur because the file is not found.")]
+        //[SampleUsage("**10** or **20** or **{{{vWaitTime}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyDisplayText(true, "Wait", "s")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        [PropertyFirstValue("60")]
         public string v_WaitTime { get; set; }
 
         public WaitForFileToExistCommand()
         {
-            this.CommandName = "WaitForFileToExistCommand";
-            this.SelectionName = "Wait For File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WaitForFileToExistCommand";
+            //this.SelectionName = "Wait For File";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
