@@ -67,13 +67,6 @@ namespace taskt.Core.Automation.Commands
 
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls", "csv", "ods" }, true);
-            //// check file exists
-            //if (!System.IO.File.Exists(vFilePath))
-            //{
-            //    throw new Exception("File '" + v_FilePath+ "' does not exists, parsed '" + vFilePath + "'");
-            //}
-            //var vFilePath = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
             var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
             var pass = v_Password.ConvertToUserVariable(sender);
