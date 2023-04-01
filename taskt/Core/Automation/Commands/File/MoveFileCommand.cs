@@ -88,7 +88,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var sourceFile = FilePathControls.WaitForFile(nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
+            var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
             var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(engine);
 
