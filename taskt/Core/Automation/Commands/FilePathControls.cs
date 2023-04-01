@@ -63,13 +63,14 @@ namespace taskt.Core.Automation.Commands
         #region check methods
 
         /// <summary>
-        /// check file path has folder path
+        /// check file path is full path
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool HasFolderPath(string path)
+        public static bool IsFullPath(string path)
         {
-            return (path != Path.GetFileName(path));
+            //return (path != Path.GetFileName(path));
+            return !String.IsNullOrEmpty(Path.GetPathRoot(path));
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace taskt.Core.Automation.Commands
                 string replPath = vPath.Replace(f0, fileCount.ToString()).Replace(f00, fileCount.ToString("00")).Replace(f000, fileCount.ToString("000"));
                 string path = replPath.ConvertToUserVariable(engine);
 
-                if (!HasFolderPath(path))
+                if (!IsFullPath(path))
                 {
                     path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
                 }
@@ -219,7 +220,7 @@ namespace taskt.Core.Automation.Commands
             vPath = vPath ?? "";
             string path = vPath.ConvertToUserVariable(engine);
 
-            if (!HasFolderPath(path))
+            if (!IsFullPath(path))
             {
                 path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
             }
@@ -343,7 +344,7 @@ namespace taskt.Core.Automation.Commands
             {
                 // not URL
                 // check folder path
-                if (!HasFolderPath(checkPath))
+                if (!IsFullPath(checkPath))
                 {
                     beforeVariable = Path.Combine(Path.GetDirectoryName(engine.FileName), beforeVariable);
                 }
@@ -436,7 +437,7 @@ namespace taskt.Core.Automation.Commands
             {
                 // path is not URL
                 // when folder path not contains
-                if (!HasFolderPath(path))
+                if (!IsFullPath(path))
                 {
                     path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
                 }
