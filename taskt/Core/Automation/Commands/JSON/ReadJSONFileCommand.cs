@@ -16,20 +16,31 @@ namespace taskt.Core.Automation.Commands
     public class ReadJSONFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Path to the File")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [InputSpecification("Enter or Select the path to the text file.")]
-        [SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}** or **http://example.com/api/** or **{{{vURL}}}**")]
-        [Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Path")]
+        //[PropertyDescription("Path to the File")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[InputSpecification("Enter or Select the path to the text file.")]
+        //[SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}** or **http://example.com/api/** or **{{{vURL}}}**")]
+        //[Remarks("If file does not contain extensin, supplement txt automatically.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Path")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyDetailSampleUsage("**C:\\temp\\myfile.json**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
+        [PropertyDetailSampleUsage("**{{{vFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
+        [PropertyDetailSampleUsage("**http://example.com/api/**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
+        [PropertyDetailSampleUsage("**{{{vURL}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
+        [PropertyFilePathSetting(true, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "json,txt")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
         public string v_userVariableName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
 
         public ReadJSONFileCommand()
         {
@@ -43,15 +54,16 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string filePath;
-            if (!FilePathControls.isURL(v_FilePath))
-            {
-                 filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "json", true);
-            }
-            else
-            {
-                filePath = v_FilePath.ConvertToUserVariable(engine);
-            }
+            //string filePath;
+            //if (!FilePathControls.IsURL(v_FilePath))
+            //{
+            //     filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "json", true);
+            //}
+            //else
+            //{
+            //    filePath = v_FilePath.ConvertToUserVariable(engine);
+            //}
+            string filePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
             ScriptCommand readFile = new ReadTextFileCommand
             {

@@ -99,9 +99,9 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// window wait time
         /// </summary>
-        [PropertyDescription("Wait Time (sec)")]
+        [PropertyDescription("Wait Time for the Window to Exist (sec)")]
         [InputSpecification("Wait Time", true)]
-        [Remarks("")]
+        [Remarks("Specify how long to Wait before an Error will occur because the Window is Not Found.")]
         [PropertyDetailSampleUsage("**60**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
         [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
         [PropertyShowSampleUsageInDescription(true)]

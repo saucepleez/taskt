@@ -249,6 +249,51 @@ namespace taskt.Core
                     sb.AppendLine("<dt>Error Occurs When the Value is ...</dt><dd>" + ConvertMDToHTML(validationRules) + "</dd>");
                 }
 
+                // FilePath setting
+                // TODO: move to method
+                var filePathSetting = GetCustomAttributeWithVirtual<PropertyFilePathSetting>(prop, vPropList[count]);
+                if (filePathSetting != null)
+                {
+                    string fpDoc = "<dt>File Path Setting</dt><dd><ul>";
+                    fpDoc += "<li>Allow URL: " + (filePathSetting.allowURL ? "Yes" : "No") + "</li>";
+                    fpDoc += "<li>File Extension and Existance: ";
+                    switch (filePathSetting.supportExtension)
+                    {
+                        case PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension:
+                            fpDoc += "Extension <string>Not</string> Required, Existance <string>Not</string> Required";
+                            break;
+                        case PropertyFilePathSetting.ExtensionBehavior.RequiredExtension:
+                            fpDoc += "Extension Required, Existance <string>Not</string> Required";
+                            break;
+                        case PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists:
+                            fpDoc += "Extension Required, Existance Required";
+                            break;
+                    }
+                    fpDoc += "</li>";
+                    switch (filePathSetting.supportExtension)
+                    {
+                        case PropertyFilePathSetting.ExtensionBehavior.RequiredExtension:
+                        case PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists:
+                            fpDoc += "<li>Support Extensions: " + filePathSetting.extensions + "</li>";
+                            break;
+                    }
+                    fpDoc += "<li>FileCounter Variable Support: ";
+                    switch (filePathSetting.supportFileCounter)
+                    {
+                        case PropertyFilePathSetting.FileCounterBehavior.NoSupport:
+                            fpDoc += "No Support";
+                            break;
+                        case PropertyFilePathSetting.FileCounterBehavior.FirstNotExists:
+                            fpDoc += "Number **Not** Found First";
+                            break;
+                        case PropertyFilePathSetting.FileCounterBehavior.LastExists:
+                            fpDoc += "Number Last Found";
+                            break;
+                    }
+                    fpDoc += "</li></ul></dd>";
+                    sb.AppendLine(fpDoc);
+                }
+
                 var sampleUsage = GetSampleUsageText(prop, vPropList[count], settings);
                 sb.AppendLine("<dt>Sample Usage</dt><dd>" + ConvertMDToHTML(sampleUsage) + "</dd>");
 

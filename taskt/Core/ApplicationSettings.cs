@@ -196,6 +196,7 @@ namespace taskt.Core
         public bool ExportIntermediateXML { get; set; }
         public bool UseNewParser { get; set; }
         public bool IgnoreFirstVariableMarkerInOutputParameter { get; set; }
+        public int MaxFileCounter { get; set; }
         
         private static string InterStartVariableMaker = "{{{";
         private static string InterEndVariableMaker = "}}}";
@@ -267,6 +268,7 @@ namespace taskt.Core
             ExportIntermediateXML = true;
             UseNewParser = true;
             IgnoreFirstVariableMarkerInOutputParameter = true;
+            MaxFileCounter = 999;
         }
 
         public string[] KeyNameList()

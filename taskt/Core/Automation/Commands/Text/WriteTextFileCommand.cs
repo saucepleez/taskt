@@ -17,6 +17,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "txt")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
@@ -53,15 +54,16 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //convert variables
-            string filePath;
-            if (FilePathControls.containsFileCounter(v_FilePath, engine))
-            {
-                filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", false);
-            }
-            else
-            {
-                filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt");
-            }
+            //string filePath;
+            //if (FilePathControls.ContainsFileCounter(v_FilePath, engine))
+            //{
+            //    filePath = FilePathControls.FormatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", false);
+            //}
+            //else
+            //{
+            //    filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "txt");
+            //}
+            var filePath = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
 
             //var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
             var outputText = v_TextToWrite.ConvertToUserVariable(engine);

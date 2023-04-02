@@ -31,6 +31,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, suppliment png extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
+        [Attributes.PropertyAttributes.PropertyFilePathSetting(false, Attributes.PropertyAttributes.PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, Attributes.PropertyAttributes.PropertyFilePathSetting.FileCounterBehavior.FirstNotExists)]
         public string v_FilePath { get; set; }
         public ScreenshotCommand()
         {
@@ -52,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
             var image = User32Functions.CaptureWindow(targetWindowName);
 
-            string outputFile;
+            //string outputFile;
             //if (Core.FilePathControls.containsFileCounter(v_FilePath, engine))
             //{
             //     outputFile= Core.FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".png");
@@ -66,14 +67,16 @@ namespace taskt.Core.Automation.Commands
             //        outputFile += ".png";
             //    }
             //}
-            if (FilePathControls.containsFileCounter(v_FilePath, engine))
-            {
-                outputFile = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "png");
-            }
-            else
-            {
-                outputFile = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "png");
-            }
+            //if (FilePathControls.ContainsFileCounter(v_FilePath, engine))
+            //{
+            //    outputFile = FilePathControls.FormatFilePath_ContainsFileCounter(v_FilePath, engine, "png");
+            //}
+            //else
+            //{
+            //    outputFile = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "png");
+            //}
+
+            var outputFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
 
             image.Save(outputFile);
         }

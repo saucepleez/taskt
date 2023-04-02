@@ -29,14 +29,22 @@ namespace taskt.Core.Automation.Commands
         public string v_TargetPath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyDescription("Saved Shortcut Path")]
+        //[InputSpecification("Shortcut Path", true)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[PropertyDetailSampleUsage("**C:\\temp\\shortcut.lnk**", PropertyDetailSampleUsage.ValueType.Value, "Shortcut Path")]
+        //[PropertyDetailSampleUsage("**C:\\temp\\shortcut.url**", PropertyDetailSampleUsage.ValueType.Value, "Shortcut Path")]
+        //[PropertyDetailSampleUsage("**{{{vShortcut}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Shortcut Path")]
+        //[PropertyValidationRule("Shortcut", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
         [PropertyDescription("Saved Shortcut Path")]
         [InputSpecification("Shortcut Path", true)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         [PropertyDetailSampleUsage("**C:\\temp\\shortcut.lnk**", PropertyDetailSampleUsage.ValueType.Value, "Shortcut Path")]
         [PropertyDetailSampleUsage("**C:\\temp\\shortcut.url**", PropertyDetailSampleUsage.ValueType.Value, "Shortcut Path")]
         [PropertyDetailSampleUsage("**{{{vShortcut}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Shortcut Path")]
         [PropertyValidationRule("Shortcut", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk,url")]
         public string v_SavePath { get; set; }
 
         [XmlAttribute]
@@ -58,20 +66,19 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             string targetPath = v_TargetPath.ConvertToUserVariable(engine);
-            bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
+            //bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 
-            string savePath;
-
-            if (!isURL)
+            if (!FilePathControls.IsURL(targetPath))
             {
-                if (FilePathControls.containsFileCounter(v_SavePath, engine))
-                {
-                    savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "lnk");
-                }
-                else
-                {
-                    savePath = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
-                }
+                //if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
+                //{
+                //    savePath = FilePathControls.FormatFilePath_ContainsFileCounter(v_SavePath, engine, "lnk");
+                //}
+                //else
+                //{
+                //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
+                //}
+                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk"), engine);
 
                 string description = v_Description.ConvertToUserVariable(engine);
 
@@ -89,14 +96,15 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                if (FilePathControls.containsFileCounter(v_SavePath, engine))
-                {
-                    savePath = FilePathControls.formatFilePath_ContainsFileCounter(v_SavePath, engine, "url");
-                }
-                else
-                {
-                    savePath = FilePathControls.formatFilePath_NoFileCounter(v_SavePath, engine, "url");
-                }
+                //if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
+                //{
+                //    savePath = FilePathControls.FormatFilePath_ContainsFileCounter(v_SavePath, engine, "url");
+                //}
+                //else
+                //{
+                //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "url");
+                //}
+                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "url"), engine);
 
                 string outputText = "[InternetShortcut]\nURL=" + targetPath;
                 WriteTextFileCommand writeText = new WriteTextFileCommand

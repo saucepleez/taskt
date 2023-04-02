@@ -19,15 +19,13 @@ namespace taskt.Core.Automation.Commands
     public class RunPowerShellScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
         [PropertyDescription("Path to the Powershell Script File")]
-        [InputSpecification("Path", true)]
         [PropertyDetailSampleUsage("**C:\\temp\\myscript.ps1**", PropertyDetailSampleUsage.ValueType.Value, "Script File")]
         [PropertyDetailSampleUsage("**{{{vScriptPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Script File")]
         [Remarks("This command differs from **Start Process** because this command blocks execution until the script has completed. If you do not want to stop while the script executes, consider using **Start Process** instead.\nIf file does not contain extensin, supplement ps1 or bat extension.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Path")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "ps1")]
         public string v_ScriptPath { get; set; }
 
         [XmlAttribute]
@@ -61,6 +59,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_applyToVariableName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
+
         public RunPowerShellScriptFileCommand()
         {
             //this.CommandName = "RunPowershellCommand";
@@ -76,7 +78,8 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //define script path
-            string scriptPath = FilePathControls.formatFilePath_NoFileCounter(v_ScriptPath, engine, new List<string>() { "ps1", "bat" }, true);
+            //string scriptPath = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptPath, engine, new List<string>() { "ps1", "bat" }, true);
+            var scriptPath = FilePathControls.WaitForFile(this, nameof(v_ScriptPath), nameof(v_WaitForFile), engine);
 
             //get script text
             var psCommand = File.ReadAllText(scriptPath);

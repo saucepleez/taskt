@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             string filePath = v_SourceFolderPath.ConvertToUserVariable(engine);
             string format = v_Format.ConvertToUserVariable(engine);
 
-            string result = FilePathControls.formatFileFolderPath(filePath, format);
+            string result = FilePathControls.FormatFileFolderPath(filePath, format);
             result.StoreInUserVariable(engine, v_Result);
         }
 

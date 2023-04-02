@@ -291,6 +291,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_34(doc);
             convertTo3_5_1_35(doc);
             convertTo3_5_1_36(doc);
+            convertTo3_5_1_38(doc);
 
             return doc;
         }
@@ -888,6 +889,26 @@ namespace taskt.Core.Script
 
             // SequenceCommand (Display text only)
             ChangeCommandName(doc, "SequenceCommand", "SequenceCommand", "Sequence");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_38(XDocument doc)
+        {
+            // GetDataCommand -> GetBotStoreDataCommand
+            ChangeCommandName(doc, "GetDataCommand", "GetBotStoreDataCommand", "Get BotStore Data");
+
+            // PauseCommand -> PauseScriptCommand
+            ChangeCommandName(doc, "PauseCommand", "PauseScriptCommand", "Pause Script");
+
+            // UploadDataCommand -> UploadBotStoreDataCommand
+            ChangeCommandName(doc, "UploadDataCommand", "UploadBotStoreDataCommand", "Upload BotStore Data");
+
+            // Format File PathCommand -> FormatFilePathCommand
+            ChangeCommandName(doc, "Format File PathCommand", "FormatFilePathCommand", "Format File Path");
+
+            // ExtractFileCommand -> ExtractZipFileCommand
+            ChangeCommandName(doc, "ExtractFileCommand", "ExtractZipFileCommand", "Extract Zip File");
 
             return doc;
         }

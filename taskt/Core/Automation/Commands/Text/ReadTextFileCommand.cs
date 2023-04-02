@@ -18,6 +18,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_FilePath))]
+        [PropertyFilePathSetting(true, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "txt,log,json")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
@@ -33,6 +34,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_userVariableName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
 
         public ReadTextFileCommand()
         {
@@ -47,28 +51,42 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            bool isURL = FilePathControls.isURL(v_FilePath.ConvertToUserVariable(engine));
+            //bool isURL = FilePathControls.IsURL(v_FilePath.ConvertToUserVariable(engine));
 
+            //string result;
+            //if (!isURL)
+            //{
+            //    string filePath;
+            //    if (FilePathControls.ContainsFileCounter(v_FilePath, engine))
+            //    {
+            //        filePath = FilePathControls.FormatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", true);
+            //    }
+            //    else
+            //    {
+            //        filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "txt", true, true);
+            //    }
+            //    result = System.IO.File.ReadAllText(filePath);
+            //}
+            //else
+            //{
+            //    WebClient webClient = new WebClient();
+            //    webClient.Encoding = System.Text.Encoding.UTF8;
+            //    webClient.Headers.Add("user-agent", "request");
+            //    result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
+            //}
+
+            var filePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
             string result;
-            if (!isURL)
-            {
-                string filePath;
-                if (FilePathControls.containsFileCounter(v_FilePath, engine))
-                {
-                    filePath = FilePathControls.formatFilePath_ContainsFileCounter(v_FilePath, engine, "txt", true);
-                }
-                else
-                {
-                    filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, "txt", true, true);
-                }
-                result = System.IO.File.ReadAllText(filePath);
-            }
-            else
+            if (FilePathControls.IsURL(filePath))
             {
                 WebClient webClient = new WebClient();
                 webClient.Encoding = System.Text.Encoding.UTF8;
                 webClient.Headers.Add("user-agent", "request");
                 result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
+            }
+            else
+            {
+                result = System.IO.File.ReadAllText(filePath);
             }
 
             //var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);

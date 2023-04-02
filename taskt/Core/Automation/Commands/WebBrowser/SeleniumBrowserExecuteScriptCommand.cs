@@ -102,8 +102,9 @@ namespace taskt.Core.Automation.Commands
             }
             else if (codeType == "file")
             {
-                string scriptFiile = FilePathControls.formatFilePath_NoFileCounter(v_ScriptCode, engine, "js", true);
-                script = System.IO.File.ReadAllText(scriptFiile);
+                //string scriptFiile = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptCode, engine, "js", true);
+                var scriptFile = v_ScriptCode.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
+                script = System.IO.File.ReadAllText(scriptFile);
             }
 
             var args = v_Args.ConvertToUserVariable(sender);

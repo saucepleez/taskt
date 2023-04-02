@@ -524,7 +524,7 @@
     <Compile Include="Core\Automation\Commands\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSplitRangeByColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelWriteRowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\File\ExtractFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\ExtractZipFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowValueCommand.cs" />
@@ -586,7 +586,7 @@
     <Compile Include="Core\Automation\Commands\NLG\NLGSetParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserFindBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\GetDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\GetBotStoreDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ShowMessageCommand.cs" />
@@ -618,7 +618,7 @@
     <Compile Include="Core\Automation\Commands\System\LaunchRemoteDesktopCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\GetEnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\SystemActionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\StopwatchCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StopWatch\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\WaitForWindowCommand.cs" />
@@ -669,14 +669,14 @@
     <Compile Include="Core\Automation\Commands\Image\ImageRecognitionCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\MoveFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\OCRCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\PauseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\PauseScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\ReadTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\RenameFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopCurrentScriptFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\UploadDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\UploadBotStoreDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\WaitForFileToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAddDocumentCommand.cs" />

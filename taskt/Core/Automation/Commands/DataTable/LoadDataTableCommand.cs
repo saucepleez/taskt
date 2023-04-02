@@ -85,7 +85,8 @@ namespace taskt.Core.Automation.Commands
 
             //DataTableControls dataSetCommand = new DataTableControls();
 
-            string filePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
+            //string filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
+            var filePath = v_FilePath.ConvertToUserVariable(engine);
 
             DataTable requiredData = DataTableControls.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ConvertToUserVariable(sender)};IMEX=1""", "Select * From [" + v_SheetName.ConvertToUserVariable(sender) + "$]");
 

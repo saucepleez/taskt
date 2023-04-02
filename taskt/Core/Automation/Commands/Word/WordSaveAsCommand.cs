@@ -21,6 +21,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "docx")]
         public string v_FileName { get; set; }
 
         public WordSaveDocumentAsCommand()
@@ -36,15 +37,16 @@ namespace taskt.Core.Automation.Commands
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string fileName;
-            if (FilePathControls.containsFileCounter(v_FileName, engine))
-            {
-                fileName = FilePathControls.formatFilePath_ContainsFileCounter(v_FileName, engine, "docx");
-            }
-            else
-            {
-                fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "docx");
-            }
+            //string fileName;
+            //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
+            //{
+            //    fileName = FilePathControls.FormatFilePath_ContainsFileCounter(v_FileName, engine, "docx");
+            //}
+            //else
+            //{
+            //    fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "docx");
+            //}
+            string fileName = this.ConvertToUserVariableAsFilePath(nameof(v_FileName), engine);
 
             var wordInstance = v_InstanceName.GetWordInstance(engine);
 

@@ -1093,7 +1093,7 @@ namespace taskt.Core.Automation.User32
 
                 sw.Stop();
                 var pauseTime = sw.ElapsedMilliseconds;
-                var pauseCommand = new Core.Automation.Commands.PauseCommand
+                var pauseCommand = new Core.Automation.Commands.PauseScriptCommand
                 {
                     v_PauseLength = pauseTime.ToString()
                 };

@@ -22,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
         [PropertyDescription("Excel File Path to Save")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsm")]
         public string v_FileName { get; set; }
 
         [XmlAttribute]
@@ -54,15 +55,16 @@ namespace taskt.Core.Automation.Commands
 
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            string fileName;
-            if (FilePathControls.containsFileCounter(v_FileName, engine))
-            {
-                fileName = FilePathControls.formatFilePath_ContainsFileCounter(v_FileName, engine, "xlsx");
-            }
-            else
-            {
-                fileName = FilePathControls.formatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
-            }
+            //string fileName;
+            //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
+            //{
+            //    fileName = FilePathControls.FormatFilePath_ContainsFileCounter(v_FileName, engine, "xlsx");
+            //}
+            //else
+            //{
+            //    fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
+            //}
+            string fileName = this.ConvertToUserVariableAsFilePath(nameof(v_FileName), engine);
 
             Action saveAsProcess = () =>
             {

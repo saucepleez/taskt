@@ -21,16 +21,11 @@ namespace taskt.Core.Automation.Commands
     public class RunScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Script File")]
-        [InputSpecification("Script File", true)]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
+        [PropertyDescription("Path to the Script File")]
         [PropertyDetailSampleUsage("**C:\\temp\\myscript.xml**", PropertyDetailSampleUsage.ValueType.Value, "Script File")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Script File")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Script File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Script File")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xml")]
         public string v_taskPath { get; set; }
 
         [XmlAttribute]
@@ -57,6 +52,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyCustomUIHelper("Reload Variables", nameof(lnkReloadVariables_Click))]
         public DataTable v_VariableAssignments { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
 
         public RunScriptFileCommand()
         {
@@ -85,7 +84,8 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //var startFile = v_taskPath.ConvertToUserVariable(sender);
-            string startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);
 
             //create variable list
             var variableList = new List<Script.ScriptVariable>();
@@ -173,7 +173,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             //var startFile = v_taskPath.ConvertToUserVariable(engine);
-            var startFile = FilePathControls.formatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            //var startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            var startFile = this.ConvertToUserVariableAsFilePath(nameof(v_taskPath), engine);
 
             // check file exists
             if (!System.IO.File.Exists(startFile))

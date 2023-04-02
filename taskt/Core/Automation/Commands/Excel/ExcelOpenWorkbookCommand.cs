@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -22,6 +21,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsx,xlsm,xls,xlm,csv,ods")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
@@ -49,6 +49,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Error")]
         public string v_IfWorksheetExists { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
+
         public ExcelOpenWorkbookCommand()
         {
             //this.CommandName = "ExcelOpenWorkbookCommand";
@@ -63,12 +67,7 @@ namespace taskt.Core.Automation.Commands
 
             var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            string vFilePath = FilePathControls.formatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls", "csv", "ods" }, true);
-            // check file exists
-            if (!System.IO.File.Exists(vFilePath))
-            {
-                throw new Exception("File '" + v_FilePath+ "' does not exists, parsed '" + vFilePath + "'");
-            }
+            var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
             var pass = v_Password.ConvertToUserVariable(sender);
 

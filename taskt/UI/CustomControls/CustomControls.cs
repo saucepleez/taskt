@@ -545,13 +545,13 @@ namespace taskt.UI
 
             // Engine
             {nameof(ErrorHandlingCommand), "taskt.Properties.Resources.command_error"},
-            {nameof(GetDataCommand), "taskt.Properties.Resources.command_server"},  // get bot data
-            {nameof(PauseCommand), "taskt.Properties.Resources.command_pause"},
+            {nameof(GetBotStoreDataCommand), "taskt.Properties.Resources.command_server"},  // get bot data
+            {nameof(PauseScriptCommand), "taskt.Properties.Resources.command_pause"},
             {nameof(SetEngineDelayCommand), "taskt.Properties.Resources.command_pause"},
             {nameof(ShowEngineContextCommand), "taskt.Properties.Resources.command_window"},
             {nameof(SetEnginePreferenceCommand), "taskt.Properties.Resources.command_window"},
             {nameof(StopwatchCommand), "taskt.Properties.Resources.command_stopwatch"},
-            {nameof(UploadDataCommand), "taskt.Properties.Resources.command_server"},   // upload bot store
+            {nameof(UploadBotStoreDataCommand), "taskt.Properties.Resources.command_server"},   // upload bot store
 
             // Error
             {nameof(CatchExceptionCommand), "taskt.Properties.Resources.command_try"},
@@ -612,8 +612,8 @@ namespace taskt.UI
             // File
             {nameof(CheckFileExistsCommand), "taskt.Properties.Resources.command_files"},
             {nameof(DeleteFileCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(ExtractFileCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(FormatFilePathCommnad), "taskt.Properties.Resources.command_files"},
+            {nameof(ExtractZipFileCommand), "taskt.Properties.Resources.command_files"},
+            {nameof(FormatFilePathCommand), "taskt.Properties.Resources.command_files"},
             {nameof(GetFileInfoCommand), "taskt.Properties.Resources.command_files"},
             {nameof(GetFilesCommand), "taskt.Properties.Resources.command_files"},
             {nameof(MoveFileCommand), "taskt.Properties.Resources.command_files"},
@@ -719,7 +719,6 @@ namespace taskt.UI
             {nameof(GetClipboardTextCommand), "taskt.Properties.Resources.command_files"},
             {nameof(CommentCommand), "taskt.Properties.Resources.command_comment"},
             {nameof(CreateShortcutCommand), "taskt.Properties.Resources.command_files"},
-            {nameof(EncryptDecryptTextCommand), "taskt.Properties.Resources.command_input"},
             {nameof(ShowMessageCommand), "taskt.Properties.Resources.command_comment"},
             {nameof(PingCommand), "taskt.Properties.Resources.command_web"},
             {nameof(PlaySystemSoundCommand), "taskt.Properties.Resources.command_files"},
@@ -765,6 +764,7 @@ namespace taskt.UI
             {nameof(CheckTextCommand), "taskt.Properties.Resources.command_function"},
             {nameof(ConcatenateTextVariableCommand), "taskt.Properties.Resources.command_function"},
             {nameof(CreateTextVariableCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(EncryptDecryptTextCommand), "taskt.Properties.Resources.command_input"},
             {nameof(ExtractionTextCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetWordLengthCommand), "taskt.Properties.Resources.command_function"},
             {nameof(GetWordCountCommand), "taskt.Properties.Resources.command_function"},

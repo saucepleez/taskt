@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
@@ -496,6 +497,96 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
                 this.height = height;
             }
             this.allowNewLine = allowNewLine;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyFilePathSetting : Attribute
+    {
+        /// <summary>
+        /// when allowURL is true, path is URL, then supportExtension and supportFileCounter not work
+        /// when allowURL is false, path is URL, then an Error Occured
+        /// </summary>
+        public bool allowURL = false;
+
+        public ExtensionBehavior supportExtension = ExtensionBehavior.AllowNoExtension;
+        public FileCounterBehavior supportFileCounter = FileCounterBehavior.NoSupport;
+        
+        /// <summary>
+        /// comma separated like "txt,log"
+        /// </summary>
+        public string extensions = "";
+
+        public PropertyFilePathSetting()
+        {
+
+        }
+
+        public PropertyFilePathSetting(bool allowURL, ExtensionBehavior supportExtension, FileCounterBehavior supportFileCounter, string extensions = "")
+        {
+            this.supportFileCounter = supportFileCounter;
+            this.supportExtension = supportExtension;
+            this.allowURL = allowURL;
+            this.extensions = extensions;
+        }
+
+        public System.Collections.Generic.List<string> GetExtensions()
+        {
+            var items = extensions.Split(',');
+
+            var exts = new System.Collections.Generic.List<string>();
+            foreach(var item in items)
+            {
+                var i = item.Trim();
+
+                // remove first dot
+                if (i.StartsWith("."))
+                {
+                    i = i.Substring(1);
+                }
+
+                // not contains white-space, dot
+                if ((i.Length > 0) && (!i.Contains(' ')) && (!i.Contains('\t')) && (!i.Contains('\r')) && (!i.Contains('\n')) && (!i.Contains('.')))
+                {
+                    exts.Add(i);
+                }
+            }
+            return exts;
+        }
+
+        public enum ExtensionBehavior
+        {
+            /// <summary>
+            /// allow no extension, this behavior supports FileCounter
+            /// </summary>
+            AllowNoExtension,
+            /// <summary>
+            /// force add specified extension when not exits, this behavior supports FileCounter
+            /// </summary>
+            RequiredExtension,
+            /// <summary>
+            /// force add specified extensions when not exists, this behavior NOT supports FileCounter.<br />
+            /// when file does not exists, NO Error Occured and return first extension path
+            /// </summary>
+            RequiredExtensionAndExists
+        }
+
+        public enum FileCounterBehavior
+        {
+            /// <summary>
+            /// no support FileCounter
+            /// </summary>
+            NoSupport,
+            /// <summary>
+            /// search first non exists FileCounter value<br />
+            /// when not found, NO Error Occuerd and return last path
+            /// </summary>
+            FirstNotExists,
+            /// <summary>
+            /// search last exists FileCounter value<br />
+            /// when not found, NO Error Occuerd and return last path
+            /// </summary>
+            LastExists
         }
     }
     #endregion
