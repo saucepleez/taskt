@@ -22,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EMailPath))]
         [PropertyDescription("Path to Save the File")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "eml")]
         //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
         //[InputSpecification("")]
@@ -47,15 +48,16 @@ namespace taskt.Core.Automation.Commands
 
             var mail = v_MailName.GetMailKitEMailVariable(engine);
 
-            string path;
-            if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
-            {
-                path = FilePathControls.FormatFilePath_ContainsFileCounter(v_SavePath, engine, "eml");
-            }
-            else
-            {
-                path = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "eml");
-            }
+            //string path;
+            //if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
+            //{
+            //    path = FilePathControls.FormatFilePath_ContainsFileCounter(v_SavePath, engine, "eml");
+            //}
+            //else
+            //{
+            //    path = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "eml");
+            //}
+            var path = this.ConvertToUserVariableAsFilePath(nameof(v_SavePath), engine);
 
             mail.WriteTo(path);
         }
