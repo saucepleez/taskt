@@ -922,8 +922,17 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static void ChangeCommandName(IEnumerable<XElement> commands, string newName, string newSelectioName)
+        /// <summary>
+        /// change command name. target commands are searched by specified Func<>
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="newName"></param>
+        /// <param name="newSelectioName"></param>
+        /// <returns></returns>
+        private static XDocument ChangeCommandName(XDocument doc, Func<XElement, bool> searchFunc, string newName, string newSelectioName)
         {
+            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
             foreach (var cmd in commands)
             {
@@ -931,85 +940,121 @@ namespace taskt.Core.Script
                 cmd.SetAttributeValue(ns + "type", newName);
                 cmd.SetAttributeValue("SelectionName", newSelectioName);
             }
-        }
-
-        private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
-        {
-            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == targetName));
-            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            //foreach(var cmd in commandList)
-            //{
-            //    cmd.SetAttributeValue("CommandName", newName);
-            //    cmd.SetAttributeValue(ns + "type", newName);
-            //    cmd.SetAttributeValue("SelectionName", newSelectioName);
-            //}
-            ChangeCommandName(commandList, newName, newSelectioName);
             return doc;
         }
 
-        private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
+        /// <summary>
+        /// change command name. a target command is specified command name.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetName"></param>
+        /// <param name="newName"></param>
+        /// <param name="newSelectioName"></param>
+        /// <returns></returns>
+        private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
-            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == targetCommand));
-            foreach(var cmd in commandList)
+            //IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == targetName));
+            ////XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            ////foreach(var cmd in commandList)
+            ////{
+            ////    cmd.SetAttributeValue("CommandName", newName);
+            ////    cmd.SetAttributeValue(ns + "type", newName);
+            ////    cmd.SetAttributeValue("SelectionName", newSelectioName);
+            ////}
+            //ChangeCommandName(commandList, newName, newSelectioName);
+            //return doc;
+            return ChangeCommandName(doc, new Func<XElement, bool>(el =>
+            {
+                return ((string)el.Attribute("CommandName") == targetName);
+            }), newName, newSelectioName);
+        }
+
+        /// <summary>
+        /// change attribute value. target commands are searched by specified Func<>
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="changeFunc"></param>
+        /// <returns></returns>
+        private static XDocument ChangeAttributeValue(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, Action<XAttribute> changeFunc)
+        {
+            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand")
+                .Where(searchFunc);
+            foreach(var cmd in commands)
             {
                 changeFunc(cmd.Attribute(targetAttribute));
             }
             return doc;
         }
 
-        // not work yet
-        private static XDocument ChangeAttributeValue(XDocument doc, List<string> targetCommands, string targetAttribute, Action<XAttribute> changeFunc)
+        private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
         {
-            var tp = typeof(XElement);
-            var memberProperty = tp.GetProperty("CommandName");
-            var memberParamteter = Expression.Parameter(tp, "Attribute");
-
-            var propAccess = Expression.MakeMemberAccess(memberParamteter, memberProperty);
-
-            var toString = typeof(XAttribute).GetMethod("ToString");
-
-            //var x = Expression.Call()
-
-            return doc;
+            //IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == targetCommand));
+            //foreach(var cmd in commandList)
+            //{
+            //    changeFunc(cmd.Attribute(targetAttribute));
+            //}
+            //return doc;
+            return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
+            {
+                return ((string)el.Attribute("CommandName") == targetAttribute);
+            }), targetAttribute, changeFunc);
         }
 
-        // not work yet
-        private static XDocument ChangeCommandName(XDocument doc, List<string> targetNames, string newName, string newSelectioName)
-        {
-            var paramXElem = Expression.Parameter(typeof(XElement), "el");
+        //// not work yet
+        //private static XDocument ChangeAttributeValue(XDocument doc, List<string> targetCommands, string targetAttribute, Action<XAttribute> changeFunc)
+        //{
+        //    var tp = typeof(XElement);
+        //    var memberProperty = tp.GetProperty("CommandName");
+        //    var memberParamteter = Expression.Parameter(tp, "Attribute");
 
-            var attrMethod = typeof(XElement).GetMethod("Attribute");
+        //    var propAccess = Expression.MakeMemberAccess(memberParamteter, memberProperty);
 
-            var paramProp = Expression.Call(paramXElem, attrMethod, Expression.Constant("CommandName"));
+        //    var toString = typeof(XAttribute).GetMethod("ToString");
 
-            BinaryExpression bodies = null;
-            int index = 0;
-            foreach(var targetName in targetNames)
-            {
-                var body = Expression.Equal(paramProp, Expression.Constant(targetNames));
-                if (index == 0)
-                {
-                    bodies = body;
-                }
-                else
-                {
-                    bodies = Expression.Or(bodies, body);
-                }
-                index++;
-            }
-            var whereFunc = Expression.Lambda<Func<XElement, bool>>(bodies, paramXElem).Compile();
+        //    //var x = Expression.Call()
 
-            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
-               .Where(whereFunc);
+        //    return doc;
+        //}
 
-            foreach(var command in commandList)
-            {
+        //// not work yet
+        //private static XDocument ChangeCommandName(XDocument doc, List<string> targetNames, string newName, string newSelectioName)
+        //{
+        //    var paramXElem = Expression.Parameter(typeof(XElement), "el");
 
-            }
+        //    var attrMethod = typeof(XElement).GetMethod("Attribute");
 
-            return doc;
-        }
+        //    var paramProp = Expression.Call(paramXElem, attrMethod, Expression.Constant("CommandName"));
+
+        //    BinaryExpression bodies = null;
+        //    int index = 0;
+        //    foreach(var targetName in targetNames)
+        //    {
+        //        var body = Expression.Equal(paramProp, Expression.Constant(targetNames));
+        //        if (index == 0)
+        //        {
+        //            bodies = body;
+        //        }
+        //        else
+        //        {
+        //            bodies = Expression.Or(bodies, body);
+        //        }
+        //        index++;
+        //    }
+        //    var whereFunc = Expression.Lambda<Func<XElement, bool>>(bodies, paramXElem).Compile();
+
+        //    IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+        //       .Where(whereFunc);
+
+        //    foreach(var command in commandList)
+        //    {
+
+        //    }
+
+        //    return doc;
+        //}
     }
 }
