@@ -292,6 +292,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_35(doc);
             convertTo3_5_1_36(doc);
             convertTo3_5_1_38(doc);
+            convertTo3_5_1_39(doc);
 
             return doc;
         }
@@ -913,17 +914,37 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
+        private static XDocument convertTo3_5_1_39(XDocument doc)
         {
-            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == targetName));
+            // Format Folder PathCommand -> FormatFolderPathCommand
+            ChangeCommandName(doc, "Format Folder PathCommand", "FormatFolderPathCommand", "Format Folder Path");
+
+            return doc;
+        }
+
+        private static void ChangeCommandName(IEnumerable<XElement> commands, string newName, string newSelectioName)
+        {
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach(var cmd in commandList)
+            foreach (var cmd in commands)
             {
                 cmd.SetAttributeValue("CommandName", newName);
                 cmd.SetAttributeValue(ns + "type", newName);
                 cmd.SetAttributeValue("SelectionName", newSelectioName);
             }
+        }
+
+        private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
+        {
+            IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
+                .Where(el => ((string)el.Attribute("CommandName") == targetName));
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach(var cmd in commandList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", newName);
+            //    cmd.SetAttributeValue(ns + "type", newName);
+            //    cmd.SetAttributeValue("SelectionName", newSelectioName);
+            //}
+            ChangeCommandName(commandList, newName, newSelectioName);
             return doc;
         }
 
