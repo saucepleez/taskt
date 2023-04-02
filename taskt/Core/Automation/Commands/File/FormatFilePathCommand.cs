@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FormatFilePathCommnad : ScriptCommand
+    public class FormatFilePathCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
-        public FormatFilePathCommnad()
+        public FormatFilePathCommand()
         {
             //this.CommandName = "Format File PathCommand";
             //this.SelectionName = "Format File Path";
