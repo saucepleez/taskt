@@ -69,6 +69,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Value")]
         public static string v_ComboBox { get; }
 
+        /// <summary>
+        /// yes no combobox
+        /// </summary>
+        [PropertyDescription("Value")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        public static string v_YesNoComboBox { get; }
+
 
         /// <summary>
         /// show/hide Command parameter groups
