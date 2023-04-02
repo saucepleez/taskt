@@ -567,13 +567,21 @@ namespace taskt.Core.Automation.Commands
         {
             var ret = WaitControls.WaitProcess(waitTime, "File Path", new Func<(bool, object)>(() =>
             {
-                if (File.Exists(path))
+                if (IsURL(path))
                 {
+                    // if path is URL, don't check existance
                     return (true, path);
                 }
                 else
                 {
-                    return (false, null);
+                    if (File.Exists(path))
+                    {
+                        return (true, path);
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
                 }
             }), engine);
 
