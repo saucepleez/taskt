@@ -6,6 +6,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    ///  for file path methods
+    /// </summary>
     internal static class FilePathControls
     {
         #region VirtualProperty
