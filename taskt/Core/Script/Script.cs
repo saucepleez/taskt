@@ -902,7 +902,7 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "PauseCommand", "PauseScriptCommand", "Pause Script");
 
             // UploadDataCommand -> UploadBotStoreDataCommand
-            ChangeCommandName(doc, "PauseCommand", "UploadBotStoreDataCommand", "Upload BotStore Data");
+            ChangeCommandName(doc, "UploadDataCommand", "UploadBotStoreDataCommand", "Upload BotStore Data");
 
             // Format File PathCommand -> FormatFilePathCommand
             ChangeCommandName(doc, "Format File PathCommand", "FormatFilePathCommand", "Format File Path");
