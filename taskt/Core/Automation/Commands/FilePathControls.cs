@@ -27,6 +27,21 @@ namespace taskt.Core.Automation.Commands
         public static string v_FilePath { get; }
 
         /// <summary>
+        /// for file path (recommended use PropertyFilePathSetting attribute)
+        /// </summary>
+        [PropertyDescription("File Path")]
+        [InputSpecification("File Path", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "File")]
+        public static string v_NoSample_FilePath { get; }
+
+        /// <summary>
         /// file does not exists behavior
         /// </summary>
         [PropertyDescription("When the File does Not Exists")]
@@ -150,138 +165,138 @@ namespace taskt.Core.Automation.Commands
 
         #region convert methods
 
-        /// <summary>
-        /// convert file path that contains FileCounter variable
-        /// </summary>
-        /// <param name="vPath"></param>
-        /// <param name="engine"></param>
-        /// <param name="extension"></param>
-        /// <param name="useExistsFile"></param>
-        /// <returns></returns>
-        public static string FormatFilePath_ContainsFileCounter(string vPath, Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
-        {
-            vPath = vPath ?? "";
+        ///// <summary>
+        ///// convert file path that contains FileCounter variable
+        ///// </summary>
+        ///// <param name="vPath"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="extension"></param>
+        ///// <param name="useExistsFile"></param>
+        ///// <returns></returns>
+        //public static string FormatFilePath_ContainsFileCounter(string vPath, Engine.AutomationEngineInstance engine, string extension, bool useExistsFile = false)
+        //{
+        //    vPath = vPath ?? "";
 
-            string f0 = engine.engineSettings.wrapVariableMarker("FileCounter.F0");
-            string f00 = engine.engineSettings.wrapVariableMarker("FileCounter.F00");
-            string f000 = engine.engineSettings.wrapVariableMarker("FileCounter.F000");
+        //    string f0 = engine.engineSettings.wrapVariableMarker("FileCounter.F0");
+        //    string f00 = engine.engineSettings.wrapVariableMarker("FileCounter.F00");
+        //    string f000 = engine.engineSettings.wrapVariableMarker("FileCounter.F000");
 
-            int fileCount = 1;
+        //    int fileCount = 1;
 
-            while (true)
-            {
-                string replPath = vPath.Replace(f0, fileCount.ToString()).Replace(f00, fileCount.ToString("00")).Replace(f000, fileCount.ToString("000"));
-                string path = replPath.ConvertToUserVariable(engine);
+        //    while (true)
+        //    {
+        //        string replPath = vPath.Replace(f0, fileCount.ToString()).Replace(f00, fileCount.ToString("00")).Replace(f000, fileCount.ToString("000"));
+        //        string path = replPath.ConvertToUserVariable(engine);
 
-                if (!IsFullPath(path))
-                {
-                    path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
-                }
+        //        if (!IsFullPath(path))
+        //        {
+        //            path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
+        //        }
 
-                // extenstion
-                if (!HasExtension(path))
-                {
-                    path = path.EndsWith(".") ? path + extension : path + "." + extension;
-                }
+        //        // extenstion
+        //        if (!HasExtension(path))
+        //        {
+        //            path = path.EndsWith(".") ? path + extension : path + "." + extension;
+        //        }
 
-                // check existance
-                if (File.Exists(path))
-                {
-                    // use if exists
-                    if (useExistsFile)
-                    {
-                        return path;
-                    }
-                }
-                else
-                {
-                    // use if not exists
-                    if (!useExistsFile)
-                    {
-                        return path;
-                    }
-                }
+        //        // check existance
+        //        if (File.Exists(path))
+        //        {
+        //            // use if exists
+        //            if (useExistsFile)
+        //            {
+        //                return path;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // use if not exists
+        //            if (!useExistsFile)
+        //            {
+        //                return path;
+        //            }
+        //        }
 
-                fileCount++;    // next count
-            }
-        }
+        //        fileCount++;    // next count
+        //    }
+        //}
 
-        /// <summary>
-        /// convert file path that does NOT contains FileCounter variable
-        /// </summary>
-        /// <param name="vPath"></param>
-        /// <param name="engine"></param>
-        /// <param name="extensions"></param>
-        /// <param name="checkFileExistance"></param>
-        /// <param name="allowNoExtensionFile"></param>
-        /// <returns></returns>
-        public static string FormatFilePath_NoFileCounter(string vPath, Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
-        {
-            vPath = vPath ?? "";
-            string path = vPath.ConvertToUserVariable(engine);
+        ///// <summary>
+        ///// convert file path that does NOT contains FileCounter variable
+        ///// </summary>
+        ///// <param name="vPath"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="extensions"></param>
+        ///// <param name="checkFileExistance"></param>
+        ///// <param name="allowNoExtensionFile"></param>
+        ///// <returns></returns>
+        //public static string FormatFilePath_NoFileCounter(string vPath, Engine.AutomationEngineInstance engine, List<string> extensions, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        //{
+        //    vPath = vPath ?? "";
+        //    string path = vPath.ConvertToUserVariable(engine);
 
-            if (!IsFullPath(path))
-            {
-                path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
-            }
+        //    if (!IsFullPath(path))
+        //    {
+        //        path = Path.Combine(Path.GetDirectoryName(engine.FileName), path);
+        //    }
 
-            // no extension
-            if (!HasExtension(path) && allowNoExtensionFile)
-            {
-                if (checkFileExistance)
-                {
-                    // no extension & exists
-                    if (File.Exists(path))
-                    {
-                        return path;
-                    }
-                }
-                else
-                {
-                    return path;
-                }
-            }
+        //    // no extension
+        //    if (!HasExtension(path) && allowNoExtensionFile)
+        //    {
+        //        if (checkFileExistance)
+        //        {
+        //            // no extension & exists
+        //            if (File.Exists(path))
+        //            {
+        //                return path;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return path;
+        //        }
+        //    }
 
-            if (!HasExtension(path)) 
-            {
-                if (checkFileExistance)
-                {
-                    // add extension loop
-                    foreach(var extension in extensions)
-                    {
-                        string testPath = path.EndsWith(".") ? path + extension : path + "." + extension;
-                        if (File.Exists(testPath))
-                        {
-                            return testPath;
-                        }
-                    }
-                    // no exists
-                    return path.EndsWith(".") ? path + extensions[0] : path + "." + extensions[0];
-                }
-                else
-                {
-                    return path.EndsWith(".") ? path + extensions[0] : path + "." + extensions[0];
-                }
-            }
-            else
-            {
-                return path;
-            }
-        }
+        //    if (!HasExtension(path)) 
+        //    {
+        //        if (checkFileExistance)
+        //        {
+        //            // add extension loop
+        //            foreach(var extension in extensions)
+        //            {
+        //                string testPath = path.EndsWith(".") ? path + extension : path + "." + extension;
+        //                if (File.Exists(testPath))
+        //                {
+        //                    return testPath;
+        //                }
+        //            }
+        //            // no exists
+        //            return path.EndsWith(".") ? path + extensions[0] : path + "." + extensions[0];
+        //        }
+        //        else
+        //        {
+        //            return path.EndsWith(".") ? path + extensions[0] : path + "." + extensions[0];
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return path;
+        //    }
+        //}
 
-        /// <summary>
-        /// convert file path that does NOT contains FileCounter variable
-        /// </summary>
-        /// <param name="vPath"></param>
-        /// <param name="engine"></param>
-        /// <param name="extension"></param>
-        /// <param name="checkFileExistance"></param>
-        /// <param name="allowNoExtensionFile"></param>
-        /// <returns></returns>
-        public static string FormatFilePath_NoFileCounter(string vPath, Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
-        {
-            return FormatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
-        }
+        ///// <summary>
+        ///// convert file path that does NOT contains FileCounter variable
+        ///// </summary>
+        ///// <param name="vPath"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="extension"></param>
+        ///// <param name="checkFileExistance"></param>
+        ///// <param name="allowNoExtensionFile"></param>
+        ///// <returns></returns>
+        //public static string FormatFilePath_NoFileCounter(string vPath, Engine.AutomationEngineInstance engine, string extension, bool checkFileExistance = false, bool allowNoExtensionFile = false)
+        //{
+        //    return FormatFilePath_NoFileCounter(vPath, engine, new List<string>() { extension }, checkFileExistance, allowNoExtensionFile);
+        //}
 
         /// <summary>
         /// Get Before FileCounter Text, FileCounter Variable Name, After FileCounter Text
@@ -489,6 +504,26 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// convert to FilePath. this method use the specified PropertyFilePathSetting
+        /// </summary>
+        /// <param name="parameterValue"></param>
+        /// <param name="setting"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ConvertToUserVariableAsFilePath(this string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
+        {
+            if ((setting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
+                (setting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
+            {
+                return ConvertToUserVariableAsFilePath_SupportFileCounter(parameterValue, setting, engine);
+            }
+            else
+            {
+                return ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+            }
+        }
+
+        /// <summary>
         /// convert to FilePath. this method use PropertyFilePathSetting
         /// </summary>
         /// <param name="command"></param>
@@ -503,15 +538,16 @@ namespace taskt.Core.Automation.Commands
 
             var pathSetting = PropertyControls.GetCustomAttributeWithVirtual<PropertyFilePathSetting>(prop, vProp) ?? new PropertyFilePathSetting();
 
-            if ((pathSetting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
-                (pathSetting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
-            {
-                return ConvertToUserVariableAsFilePath_SupportFileCounter(parameterValue, pathSetting, engine);
-            }
-            else
-            {
-                return ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, pathSetting, engine);
-            }
+            //if ((pathSetting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
+            //    (pathSetting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
+            //{
+            //    return ConvertToUserVariableAsFilePath_SupportFileCounter(parameterValue, pathSetting, engine);
+            //}
+            //else
+            //{
+            //    return ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, pathSetting, engine);
+            //}
+            return ConvertToUserVariableAsFilePath(parameterValue, pathSetting, engine);
         }
 
         /// <summary>

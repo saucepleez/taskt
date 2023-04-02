@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -24,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyFilePathSetting(false, Attributes.PropertyAttributes.PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, Attributes.PropertyAttributes.PropertyFilePathSetting.FileCounterBehavior.NoSupport, "png,bmp,gif,jpg,jpeg")]
         public string v_FilePath { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Apply OCR Result To Variable")]
@@ -32,6 +34,11 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [Attributes.PropertyAttributes.PropertyIsVariablesList(true)]
         public string v_userVariableName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
+
         public OCRCommand()
         {
             this.DefaultPause = 0;
@@ -59,7 +66,8 @@ namespace taskt.Core.Automation.Commands
             //        }
             //    }
             //}
-            string filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "png", "jpg", "jpeg", "bmp", "gif" }, true);
+            //string filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "png", "jpg", "jpeg", "bmp", "gif" }, true);
+            var filePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
             var ocrEngine = new OneNoteOCRDll.OneNoteOCR();
             var arr = ocrEngine.OcrTexts(filePath).ToArray();
@@ -71,7 +79,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //apply to user variable
-            endResult.StoreInUserVariable(sender, v_userVariableName);
+            endResult.StoreInUserVariable(engine, v_userVariableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

@@ -17,16 +17,11 @@ namespace taskt.Core.Automation.Commands
     public class UnloadScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Script File to Pre-Load. Use 'Run Script File' with the same path to execute.")]
-        [InputSpecification("Script File", true)]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
+        [PropertyDescription("Path to the Script File to Pre-Load. Use 'Run Script File' with the same path to execute.")]
         [PropertyDetailSampleUsage("**C:\\temp\\myscript.xml**", PropertyDetailSampleUsage.ValueType.Value, "Script File")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Script File")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Script File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Scrpit File")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xml")]
         public string v_taskPath { get; set; }
 
         [XmlElement]
@@ -38,6 +33,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Continue if not found")]
         [PropertyDisplayText(false, "")]
         public string v_ErrorPreference { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
+
 
         public UnloadScriptFileCommand()
         {
@@ -52,7 +52,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);
 
             var errorPreference = this.GetUISelectionValue(nameof(v_ErrorPreference), engine);
 

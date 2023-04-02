@@ -16,17 +16,16 @@ namespace taskt.Core.Automation.Commands
     public class LoadScriptFileCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Script File. After, Use 'Run Script File' with the Same Path to Execute.")]
-        [InputSpecification("Script File", true)]
-        [Remarks("")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_NoSample_FilePath))]
+        [PropertyDescription("Path to the Script File. After, Use 'Run Script File' with the Same Path to Execute.")]
         [PropertyDetailSampleUsage("**C:\\temp\\myscript.xml**", PropertyDetailSampleUsage.ValueType.Value, "Script File")]
         [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Script File")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Script File", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Scrpit File")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xml")]
         public string v_taskPath { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
 
         public LoadScriptFileCommand()
         {
@@ -41,7 +40,8 @@ namespace taskt.Core.Automation.Commands
             //deserialize task
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
+            var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);
             
             Script.Script deserializedScript = Script.Script.DeserializeFile(startFile, engine.engineSettings);
 
