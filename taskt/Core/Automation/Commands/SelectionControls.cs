@@ -12,6 +12,17 @@ namespace taskt.Core.Automation.Commands
     internal static class SelectionControls
     {
         /// <summary>
+        /// yes no combobox
+        /// </summary>
+        [PropertyDescription("Value")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        public static string v_YesNoComboBox { get; }
+
+        /// <summary>
         /// private GetUISelectionValue method. This method supports check selection value, first value, case sensitive.  This method may use PropertyValidationRule, PropertyDisplayValue, PropertyDescription attributes.
         /// </summary>
         /// <param name="propInfo"></param>
@@ -147,6 +158,30 @@ namespace taskt.Core.Automation.Commands
         public static string GetUISelectionValue(this string text, string propertyName, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
             return new PropertyConvertTag(text, propertyName, "").GetUISelectionValue(command, engine);
+        }
+
+        /// <summary>
+        /// Get Yes/No item from Property Name. This method supports check selection value, first value, case sensitive.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static bool GetYesNoSelectionValue(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        {
+            var sel = command.GetUISelectionValue(propertyName, engine);
+            switch (sel)
+            {
+                case "yes":
+                case "true":
+                    return true;
+                case "no":
+                case "false":
+                    return false;
+                default:
+                    throw new Exception("Strange Yes/No Value. Value: '" + sel + "'");
+            }
         }
     }
 }
