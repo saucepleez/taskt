@@ -131,7 +131,16 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string ConvertToUserVariableAsFolderPath(this string value, Engine.AutomationEngineInstance engine)
         {
-            return ConvertToFullPath(value.ConvertToUserVariable(engine), engine);
+            var p = ConvertToFullPath(value.ConvertToUserVariable(engine), engine);
+            var invs = Path.GetInvalidPathChars();
+            if (p.IndexOfAny(invs) < 0)
+            {
+                return p;
+            }
+            else
+            {
+                throw new Exception("Folder Path contains Invalid chars. Path: '" + p + "'");
+            }
         }
 
         /// <summary>
@@ -143,7 +152,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string ConvertToUserVariableAsFolderPath(this ScriptCommand command, string parameterValue, Engine.AutomationEngineInstance engine)
         {
-            return ConvertToFullPath(command.ConvertToUserVariable(parameterValue, "Folder Path", engine), engine);
+            return command.ConvertToUserVariable(parameterValue, "Folder Path", engine).ConvertToUserVariableAsFolderPath(engine);
         }
     }
 }
