@@ -40,6 +40,8 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         //[PropertyDisplayText(true, "Wait Time", "s")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
+        [PropertyIsOptional(true, "60")]
+        [PropertyFirstValue("60")]
         public string v_WaitTime { get; set; }
 
         public WaitForFolderToExistCommand()
