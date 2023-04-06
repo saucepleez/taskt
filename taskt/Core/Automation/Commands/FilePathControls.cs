@@ -565,6 +565,27 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// convert to File Name
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string ConvertToUserVariableAsFileName(this string fileName, Engine.AutomationEngineInstance engine)
+        {
+            var fn = fileName.ConvertToUserVariable(engine);
+            var invs = Path.GetInvalidFileNameChars();
+            if (fn.IndexOfAny(invs) < 0)
+            {
+                return fn;
+            }
+            else
+            {
+                throw new Exception("File Name contains invalid chars. File: '" + fn + "'");
+            }
+        }
+
+        /// <summary>
         /// format file/folder path to specified format
         /// </summary>
         /// <param name="path"></param>

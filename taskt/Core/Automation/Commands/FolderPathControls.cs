@@ -154,5 +154,26 @@ namespace taskt.Core.Automation.Commands
         {
             return command.ConvertToUserVariable(parameterValue, "Folder Path", engine).ConvertToUserVariableAsFolderPath(engine);
         }
+
+        /// <summary>
+        /// convert to folder name
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string ConvertToUserVariableAsFolderName(this string folderName, Engine.AutomationEngineInstance engine)
+        {
+            var fn = folderName.ConvertToUserVariable(engine);
+            var invs = Path.GetInvalidFileNameChars();
+            if (fn.IndexOfAny(invs) < 0)
+            {
+                return fn;
+            }
+            else
+            {
+                throw new Exception("Folder Name contains invalid chars. Folder: '" + fn + "'");
+            }
+        }
     }
 }
