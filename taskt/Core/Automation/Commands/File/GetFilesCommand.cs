@@ -82,7 +82,8 @@ namespace taskt.Core.Automation.Commands
             //apply variable logic
             var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(engine);
 
-            var searchFile = v_SearchFileName.ConvertToUserVariable(engine);
+            //var searchFile = v_SearchFileName.ConvertToUserVariable(engine);
+            var searchFile = v_SearchFileName.ConvertToUserVariableAsFileName(engine);
 
             var ext = v_SearchExtension.ConvertToUserVariable(engine).ToLower();
 

@@ -61,7 +61,8 @@ namespace taskt.Core.Automation.Commands
             var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
             
             var currentFileName = Path.GetFileName(sourceFile);
-            var newFileName = v_NewName.ConvertToUserVariable(engine);
+            //var newFileName = v_NewName.ConvertToUserVariable(engine);
+            var newFileName = v_NewName.ConvertToUserVariableAsFileName(engine);
 
             //get source file name and info
             FileInfo sourceFileInfo = new FileInfo(sourceFile);
