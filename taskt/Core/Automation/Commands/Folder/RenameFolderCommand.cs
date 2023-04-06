@@ -71,7 +71,8 @@ namespace taskt.Core.Automation.Commands
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
             var currentFolderName = Path.GetFileName(sourceFolder);
 
-            var newFolderName = v_NewName.ConvertToUserVariable(engine);
+            //var newFolderName = v_NewName.ConvertToUserVariable(engine);
+            var newFolderName = v_NewName.ConvertToUserVariableAsFolderName(engine);
 
             //get source folder name and info
             DirectoryInfo sourceFolderInfo = new DirectoryInfo(sourceFolder);

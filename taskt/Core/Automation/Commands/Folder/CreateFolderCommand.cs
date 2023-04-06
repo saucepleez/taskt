@@ -72,8 +72,9 @@ namespace taskt.Core.Automation.Commands
             //apply variable logic
             //var destinationDirectory = v_DestinationDirectory.ConvertToUserVariable(sender);
             var destinationDirectory = FolderPathControls.WaitForFolder(this, nameof(v_DestinationDirectory), nameof(v_WaitForFolder), engine);
-            
-            var newFolder = v_NewFolderName.ConvertToUserVariable(engine);
+
+            //var newFolder = v_NewFolderName.ConvertToUserVariable(engine);
+            var newFolder = v_NewFolderName.ConvertToUserVariableAsFolderName(engine);
 
             var finalPath = System.IO.Path.Combine(destinationDirectory, newFolder);
             //if (System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
