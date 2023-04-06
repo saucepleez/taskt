@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                var _ = FolderPathControls.WaitForFolder(this, nameof(v_FolderName), nameof(v_WaitTime), engine);
+                FolderPathControls.WaitForFolder(this, nameof(v_FolderName), nameof(v_WaitTime), engine);
             }
             catch
             {

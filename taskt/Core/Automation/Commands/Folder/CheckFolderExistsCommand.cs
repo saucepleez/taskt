@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                var targetFolder = FolderPathControls.WaitForFolder(this, nameof(v_TargetFolderName), nameof(v_WaitForFolder), engine);
+                FolderPathControls.WaitForFolder(this, nameof(v_TargetFolderName), nameof(v_WaitForFolder), engine);
 
                 //System.IO.Directory.Exists(targetFolder).StoreInUserVariable(engine, v_UserVariableName);
                 true.StoreInUserVariable(engine, v_UserVariableName);
