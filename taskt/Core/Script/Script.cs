@@ -533,7 +533,7 @@ namespace taskt.Core.Script
 
             ChangeTableCellValue(doc, "UIAutomationCommand", "v_UIASearchParameters", "Enabled", new Action<XElement>(c =>
             {
-                switch(c.Value ?? "")
+                switch(c.Value.ToLower() ?? "")
                 {
                     case "true":
                     case "false":
@@ -669,7 +669,7 @@ namespace taskt.Core.Script
         }
         private static XDocument convertTo3_5_0_78(XDocument doc)
         {
-            // BeginIf Window Search Method
+            // BeginIf add Window Search Method cell parameter
             IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
                 .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
@@ -715,7 +715,7 @@ namespace taskt.Core.Script
                 }
             }
 
-            // BeginLoop Window Search Method
+            // BeginLoop add Window Search Method parameter
             IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
                 .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
             foreach (XElement cmd in getLoop)
@@ -764,31 +764,50 @@ namespace taskt.Core.Script
         private static XDocument fixUIAutomationGroupEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
-            IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationGetChidrenElementsInformationCommand") ||
-                            ((string)el.Attribute("CommandName") == "UIAutomationGetChildElementCommand") ||
-                            ((string)el.Attribute("CommandName") == "UIAutomationGetElementFromElementCommand")
-                );
-            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
-            foreach (var cmd in getList)
-            {
-                XElement tableParams = cmd.Element("v_SearchParameters").Element(ns + "diffgram").Element("DocumentElement");
-                var elems = tableParams.Elements();
-                foreach (XElement elem in elems)
-                {
-                    XElement elemEnabled = elem.Element("Enabled");
-                    switch (elemEnabled.Value.ToLower())
-                    {
-                        case "true":
-                        case "false":
-                            break;
+            //IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationGetChidrenElementsInformationCommand") ||
+            //                ((string)el.Attribute("CommandName") == "UIAutomationGetChildElementCommand") ||
+            //                ((string)el.Attribute("CommandName") == "UIAutomationGetElementFromElementCommand")
+            //    );
+            //XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            //foreach (var cmd in getList)
+            //{
+            //    XElement tableParams = cmd.Element("v_SearchParameters").Element(ns + "diffgram").Element("DocumentElement");
+            //    var elems = tableParams.Elements();
+            //    foreach (XElement elem in elems)
+            //    {
+            //        XElement elemEnabled = elem.Element("Enabled");
+            //        switch (elemEnabled.Value.ToLower())
+            //        {
+            //            case "true":
+            //            case "false":
+            //                break;
 
-                        default:
-                            elemEnabled.SetValue("False");
-                            break;
-                    }
+            //            default:
+            //                elemEnabled.SetValue("False");
+            //                break;
+            //        }
+            //    }
+            //}
+
+            ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
+            {
+                return (el.Attribute("CommandName").Value == "UIAutomationGetChidrenElementsInformationCommand") ||
+                            (el.Attribute("CommandName").Value == "UIAutomationGetChildElementCommand") ||
+                            (el.Attribute("CommandName").Value == "UIAutomationGetElementFromElementCommand");
+            }), "v_SearchParameters", "Enabled", new Action<XElement>(c =>
+            {
+                switch (c.Value.ToLower())
+                {
+                    case "true":
+                    case "false":
+                        break;
+                    default:
+                        c.SetValue("False");
+                        break;
                 }
-            }
+            }));
+
             return doc;
         }
 
