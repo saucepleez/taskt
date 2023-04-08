@@ -19,9 +19,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Data;
-using System.Linq.Expressions;
 using taskt.Core.Automation.Commands;
-using System.Web.ModelBinding;
 
 namespace taskt.Core.Script
 {
@@ -1172,7 +1170,7 @@ namespace taskt.Core.Script
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
         /// <returns></returns>
-        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement > changeFunc)
+        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc)
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
 
@@ -1206,6 +1204,58 @@ namespace taskt.Core.Script
                 return el.Attribute("CommandName").Value == commandName;
             }), tableParameterName, tableCellName, changeFunc);
             return doc;
+        }
+
+        /// <summary>
+        /// modify table
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="tableParameterName"></param>
+        /// <param name="modifyFunc"></param>
+        /// <returns></returns>
+        private static XDocument ModifyTable(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, Action<XElement, List<XElement>> modifyFunc)
+        {
+            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
+
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach (var cmd in commands)
+            {
+                XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
+                var rows = tableParams?.Elements().ToList() ?? null;
+                if (rows != null)
+                {
+                    modifyFunc(tableParams, rows);
+                }
+            }
+            return doc;
+        }
+
+        /// <summary>
+        /// add table row
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="rows"></param>
+        /// <param name="cols"></param>
+        private static void AddTableRow(XElement table, List<XElement> rows, Dictionary<string, string> cols)
+        {
+            XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
+
+            var row = rows[0];
+            var newElem = new XElement(row.Name);
+            newElem.Add(new XAttribute(diffNs + "id", row.Name + (rows.Count() + 1).ToString()));    // diffgr:id
+            newElem.Add(new XAttribute(msNs + "rowOrder", rows.Count().ToString()));   // msdata:rowOrder
+
+            foreach(var col in cols)
+            {
+                newElem.Add(new XElement(col.Key)
+                {
+                    Value = col.Value
+                });
+            }
+
+            table.Add(newElem);
         }
     }
 }
