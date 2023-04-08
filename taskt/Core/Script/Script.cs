@@ -1039,6 +1039,14 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        /// <summary>
+        /// change attribute value. target commands are specified argument
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="changeFunc"></param>
+        /// <returns></returns>
         private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
         {
             return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
