@@ -25,23 +25,25 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePathOrigin { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         [PropertyDescription("Extraction Folder")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
-        [SampleUsage(@"**C:\temp\** or **{{{vFilePath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        //[InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
+        //[SampleUsage(@"**C:\temp\** or **{{{vFilePath}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Extract Folder")]
         public string v_PathDestination { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
         [PropertyDescription("Create Folder When Destination Does not Exist")]
-        [PropertyUISelectionOption("Yes")]
-        [PropertyUISelectionOption("No")]
+        //[PropertyUISelectionOption("Yes")]
+        //[PropertyUISelectionOption("No")]
         [PropertyIsOptional(true, "No")]
         public string v_CreateDirectory { get; set; }
 
@@ -49,7 +51,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Archive Password")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Enter archive files password.")]
-        [SampleUsage(@"**mypass** or {{{vPass}}}")]
+        //[SampleUsage(@"**mypass** or {{{vPass}}}")]
+        [PropertyDetailSampleUsage("**mypass**", PropertyDetailSampleUsage.ValueType.Value, "Password")]
+        [PropertyDetailSampleUsage("**{{{vPass}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Password")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true)]
@@ -87,7 +91,6 @@ namespace taskt.Core.Automation.Commands
             //auto-detect extension
             var vFileType = Path.GetExtension(vSourceFile);
 
-            //if (vSourceFile.StartsWith("http://") || vSourceFile.StartsWith("https://") || vSourceFile.StartsWith("www."))
             if (FilePathControls.IsURL(vSourceFile))
             {
                 //create temp directory
@@ -113,21 +116,23 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 // Free not needed resources
-                if (webclient != null)
-                {
-                    webclient.Dispose();
-                }
+                webclient?.Dispose();
             }
 
             //get file path to destination files
-            var vExtractionFolder = v_PathDestination.ConvertToUserVariable(engine);
+            //var vExtractionFolder = v_PathDestination.ConvertToUserVariable(engine);
+            var vExtractionFolder = v_PathDestination.ConvertToUserVariableAsFolderPath(engine);
 
             // If the directory doesn't exist, create it.
             if (!Directory.Exists(vExtractionFolder))
             {
-                var isCreateDirectory = this.GetUISelectionValue(nameof(v_CreateDirectory), engine);
+                //var isCreateDirectory = this.GetUISelectionValue(nameof(v_CreateDirectory), engine);
 
-                if (isCreateDirectory == "yes")
+                //if (isCreateDirectory == "yes")
+                //{
+                //    Directory.CreateDirectory(vExtractionFolder);
+                //}
+                if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
                 {
                     Directory.CreateDirectory(vExtractionFolder);
                 }
@@ -173,9 +178,9 @@ namespace taskt.Core.Automation.Commands
                     fileList.StoreInUserVariable(engine, v_applyToVariableName);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw; 
+                throw new Exception("Zip Extraction Error. Message: " + ex.Message); 
             }
         }
     }
