@@ -1171,7 +1171,6 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
-        /// <param name="moreSearchFunc"></param>
         /// <returns></returns>
         private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement > changeFunc)
         {
