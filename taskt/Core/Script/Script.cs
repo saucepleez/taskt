@@ -953,17 +953,6 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
-            //IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == targetName));
-            ////XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            ////foreach(var cmd in commandList)
-            ////{
-            ////    cmd.SetAttributeValue("CommandName", newName);
-            ////    cmd.SetAttributeValue(ns + "type", newName);
-            ////    cmd.SetAttributeValue("SelectionName", newSelectioName);
-            ////}
-            //ChangeCommandName(commandList, newName, newSelectioName);
-            //return doc;
             return ChangeCommandName(doc, new Func<XElement, bool>(el =>
             {
                 return ((string)el.Attribute("CommandName") == targetName);
@@ -991,13 +980,6 @@ namespace taskt.Core.Script
 
         private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
         {
-            //IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == targetCommand));
-            //foreach(var cmd in commandList)
-            //{
-            //    changeFunc(cmd.Attribute(targetAttribute));
-            //}
-            //return doc;
             return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
                 return ((string)el.Attribute("CommandName") == targetAttribute);
