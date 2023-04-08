@@ -16,16 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class RenameFolderCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the path to the source folder")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the folder.")]
-        //[SampleUsage("**C:\\temp\\myFolder** or **{{{vTextFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Target Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Folder")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         public string v_SourceFolderPath { get; set; }
 
@@ -67,11 +57,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //apply variable logic
-            //var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(engine);
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
             var currentFolderName = Path.GetFileName(sourceFolder);
 
-            //var newFolderName = v_NewName.ConvertToUserVariable(engine);
             var newFolderName = v_NewName.ConvertToUserVariableAsFolderName(engine);
 
             //get source folder name and info
@@ -80,7 +68,6 @@ namespace taskt.Core.Automation.Commands
             //create destination
             var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
 
-            //var whenSame = this.GetUISelectionValue(nameof(v_IfFolderNameSame), "Folder Name Same", engine);
             var whenSame = this.GetUISelectionValue(nameof(v_IfFolderNameSame), engine);
             if (currentFolderName == newFolderName)
             {

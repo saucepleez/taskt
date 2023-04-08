@@ -85,10 +85,8 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //apply variable logic
-            //var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(engine);
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
-            //var searchFile = v_SearchFileName.ConvertToUserVariable(engine);
             var searchFile = v_SearchFileName.ConvertToUserVariableAsFileName(engine);
 
             var ext = v_SearchExtension.ConvertToUserVariable(engine).ToLower();

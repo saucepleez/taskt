@@ -25,16 +25,6 @@ namespace taskt.Core.Automation.Commands
         public string v_OperationType { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the path to the source folder")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the folder.")]
-        //[SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Target Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Target Folder")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         [PropertyDescription("Target Folder")]
         [PropertyValidationRule("Target Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -42,16 +32,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the folder to move/copy to")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the new path to the file.")]
-        //[SampleUsage("**C:\\temp\\newPath** or **{{{vTextFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Folder to Move/Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Move/Copy")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         [PropertyDescription("Destination Folder for Move/Copy")]
         [PropertyValidationRule("Destination Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
@@ -59,28 +39,12 @@ namespace taskt.Core.Automation.Commands
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Create folder if destination does not exist")]
-        //[PropertyUISelectionOption("Yes")]
-        //[PropertyUISelectionOption("No")]
-        //[InputSpecification("Specify whether the directory should be created if it does not already exist.")]
-        //[SampleUsage("Select **Yes** or **No**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsOptional(true, "No")]
         [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
         [PropertyDescription("Create Folder when the Destination Folder does not Exists")]
         [PropertyIsOptional(true, "No")]
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Delete folder if it already exists")]
-        //[PropertyUISelectionOption("Yes")]
-        //[PropertyUISelectionOption("No")]
-        //[InputSpecification("Specify whether the folder should be deleted first if it is already found to exist.")]
-        //[SampleUsage("Select **Yes** or **No**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsOptional(true, "No")]
         [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
         [PropertyDescription("Delete Folder when it already Exists")]
         [PropertyIsOptional(true, "No")]
@@ -162,12 +126,6 @@ namespace taskt.Core.Automation.Commands
 
             // Get the subdirectories for the specified directory.
             DirectoryInfo sDirInfo = new DirectoryInfo(sourceDirName);
-            //if (!dir.Exists)
-            //{
-            //    throw new DirectoryNotFoundException(
-            //        "Source directory does not exist or could not be found: "
-            //        + sourceDirName);
-            //}
             // Get the files in the directory and copy them to the new location.
             FileInfo[] files = sDirInfo.GetFiles();
             foreach (FileInfo file in files)

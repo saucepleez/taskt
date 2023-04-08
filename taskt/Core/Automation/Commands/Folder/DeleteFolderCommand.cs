@@ -16,16 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class DeleteFolderCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the path to the source folder")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the folder.")]
-        //[SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Folder Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Folder")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         public string v_SourceFolderPath { get; set; }
 
@@ -46,7 +36,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //apply variable logic
-            //var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
             //delete folder

@@ -16,28 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class CheckFolderExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Specify the path of the folder you want to check for existence")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the file.")]
-        //[SampleUsage("**C:\\temp\\myfolder** or **{{{vFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Folder")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         public string v_TargetFolderName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Specify the variable to assign the result")]
-        //[InputSpecification("")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("Result is **TRUE** or **FALSE**")]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
-        //[PropertyValidationRule("Resut", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [Remarks("When the Folder Exists, Result is **TRUE**")]
         public string v_UserVariableName { get; set; }
@@ -59,15 +41,10 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-
-            //var targetFile = v_TargetFolderName.ConvertToUserVariable(sender);
-            //var targetFolder = v_TargetFolderName.ConvertToUserVariableAsFolderPath(engine);
-
             try
             {
                 FolderPathControls.WaitForFolder(this, nameof(v_TargetFolderName), nameof(v_WaitForFolder), engine);
 
-                //System.IO.Directory.Exists(targetFolder).StoreInUserVariable(engine, v_UserVariableName);
                 true.StoreInUserVariable(engine, v_UserVariableName);
             }
             catch

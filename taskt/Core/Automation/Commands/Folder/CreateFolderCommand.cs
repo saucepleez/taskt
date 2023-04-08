@@ -28,26 +28,9 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         [PropertyDescription("Location where you want to Create the Folder")]
-        //[PropertyDescription("Please indicate the directory for the new folder")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the directory.")]
-        //[SampleUsage("**C:\\temp\\myfolder** or **{{{TextFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Directory Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Dictory")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Delete folder if it already exists")]
-        //[PropertyUISelectionOption("Yes")]
-        //[PropertyUISelectionOption("No")]
-        //[InputSpecification("Specify whether the folder should be deleted first if it is already found to exist.")]
-        //[SampleUsage("Select **Yes** or **No**")]
-        //[Remarks("")]
-        //[PropertyIsOptional(true, "No")]
         [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
         [PropertyDescription("Delete Folder When it already Exists")]
         [PropertyIsOptional(true, "No")]
@@ -70,21 +53,13 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //apply variable logic
-            //var destinationDirectory = v_DestinationDirectory.ConvertToUserVariable(sender);
             var destinationDirectory = FolderPathControls.WaitForFolder(this, nameof(v_DestinationDirectory), nameof(v_WaitForFolder), engine);
 
-            //var newFolder = v_NewFolderName.ConvertToUserVariable(engine);
             var newFolder = v_NewFolderName.ConvertToUserVariableAsFolderName(engine);
 
             var finalPath = System.IO.Path.Combine(destinationDirectory, newFolder);
-            //if (System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
             if (System.IO.Directory.Exists(finalPath)) { }
             {
-                //var deleteFolder = this.GetUISelectionValue(nameof(v_DeleteExisting), "Delete Existing", engine);
-                //if (deleteFolder == "yes")
-                //{
-                //    System.IO.Directory.Delete(finalPath, true);
-                //}
                 if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
                 {
                     System.IO.Directory.Delete(finalPath, true);

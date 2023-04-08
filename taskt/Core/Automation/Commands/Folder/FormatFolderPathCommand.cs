@@ -18,16 +18,6 @@ namespace taskt.Core.Automation.Commands
     public class FormatFolderPathCommnad : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the Folder Path to Delete.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the folder.")]
-        //[SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Folder Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Folder")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         public string v_SourceFolderPath { get; set; }
 
@@ -42,15 +32,6 @@ namespace taskt.Core.Automation.Commands
         public string v_Format { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify Variable Name to store Result.")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
@@ -66,7 +47,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (taskt.Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            //string filePath = v_SourceFolderPath.ConvertToUserVariable(engine);
             string folderPath = v_SourceFolderPath.ConvertToUserVariableAsFolderPath(engine);
 
             string format = v_Format.ConvertToUserVariable(engine);

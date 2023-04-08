@@ -17,16 +17,6 @@ namespace taskt.Core.Automation.Commands
     public class GetFoldersCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the path to the source folder")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the folder.")]
-        //[SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Folder")]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         public string v_SourceFolderPath { get; set; }
 
@@ -53,16 +43,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Specify the variable to assign the folder path list")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyIsVariablesList(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.List)]
-        //[PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Store")]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_UserVariableName { get; set; }
 
@@ -83,13 +63,11 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //apply variable logic
-            //var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(sender);
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
             //delete folder
             var directoriesList = System.IO.Directory.GetDirectories(sourceFolder).ToList();
 
-            //var searchFolder = v_SearchFolderName.ConvertToUserVariable(engine);
             var searchFolder = v_SearchFolderName.ConvertToUserVariableAsFolderName(engine);
             if (!String.IsNullOrEmpty(searchFolder))
             {
