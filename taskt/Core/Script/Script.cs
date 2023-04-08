@@ -1046,58 +1046,5 @@ namespace taskt.Core.Script
                 return ((string)el.Attribute("CommandName") == targetCommand);
             }), targetAttribute, changeFunc);
         }
-
-        //// not work yet
-        //private static XDocument ChangeAttributeValue(XDocument doc, List<string> targetCommands, string targetAttribute, Action<XAttribute> changeFunc)
-        //{
-        //    var tp = typeof(XElement);
-        //    var memberProperty = tp.GetProperty("CommandName");
-        //    var memberParamteter = Expression.Parameter(tp, "Attribute");
-
-        //    var propAccess = Expression.MakeMemberAccess(memberParamteter, memberProperty);
-
-        //    var toString = typeof(XAttribute).GetMethod("ToString");
-
-        //    //var x = Expression.Call()
-
-        //    return doc;
-        //}
-
-        //// not work yet
-        //private static XDocument ChangeCommandName(XDocument doc, List<string> targetNames, string newName, string newSelectioName)
-        //{
-        //    var paramXElem = Expression.Parameter(typeof(XElement), "el");
-
-        //    var attrMethod = typeof(XElement).GetMethod("Attribute");
-
-        //    var paramProp = Expression.Call(paramXElem, attrMethod, Expression.Constant("CommandName"));
-
-        //    BinaryExpression bodies = null;
-        //    int index = 0;
-        //    foreach(var targetName in targetNames)
-        //    {
-        //        var body = Expression.Equal(paramProp, Expression.Constant(targetNames));
-        //        if (index == 0)
-        //        {
-        //            bodies = body;
-        //        }
-        //        else
-        //        {
-        //            bodies = Expression.Or(bodies, body);
-        //        }
-        //        index++;
-        //    }
-        //    var whereFunc = Expression.Lambda<Func<XElement, bool>>(bodies, paramXElem).Compile();
-
-        //    IEnumerable<XElement> commandList = doc.Descendants("ScriptCommand")
-        //       .Where(whereFunc);
-
-        //    foreach(var command in commandList)
-        //    {
-
-        //    }
-
-        //    return doc;
-        //}
     }
 }
