@@ -300,37 +300,63 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_45(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
-            IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
-                    (string)el.Attribute("CommandName") == "ActivateWindowCommand" ||
-                    (string)el.Attribute("CommandName") == "CheckWindowNameExistsCommand" ||
-                    (string)el.Attribute("CommandName") == "CloseWindowCommand" ||
-                    (string)el.Attribute("CommandName") == "GetWindowNamesCommand" ||
-                    (string)el.Attribute("CommandName") == "GetWindowPositionCommand" ||
-                    (string)el.Attribute("CommandName") == "GetWindowStateCommand" ||
-                    (string)el.Attribute("CommandName") == "MoveWindowCommand" ||
-                    (string)el.Attribute("CommandName") == "ResizeWindowCommand" ||
-                    (string)el.Attribute("CommandName") == "SetWindowStateCommand" ||
-                    (string)el.Attribute("CommandName") == "WaitForWindowCommand" ||
-                    (string)el.Attribute("CommandName") == "SendAdvancedKeyStrokesCommand" ||
-                    (string)el.Attribute("CommandName") == "SendHotkeyCommand" ||
-                    (string)el.Attribute("CommandName") == "SendKeysCommand" ||
-                    (string)el.Attribute("CommandName") == "UIAutomationCommand"
-                )
-            );
-            foreach (var cmd in cmdWindowNames)
-            {
-                if (cmd.Attribute("v_SearchMethod") != null)
+            //IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
+            //        (string)el.Attribute("CommandName") == "ActivateWindowCommand" ||
+            //        (string)el.Attribute("CommandName") == "CheckWindowNameExistsCommand" ||
+            //        (string)el.Attribute("CommandName") == "CloseWindowCommand" ||
+            //        (string)el.Attribute("CommandName") == "GetWindowNamesCommand" ||
+            //        (string)el.Attribute("CommandName") == "GetWindowPositionCommand" ||
+            //        (string)el.Attribute("CommandName") == "GetWindowStateCommand" ||
+            //        (string)el.Attribute("CommandName") == "MoveWindowCommand" ||
+            //        (string)el.Attribute("CommandName") == "ResizeWindowCommand" ||
+            //        (string)el.Attribute("CommandName") == "SetWindowStateCommand" ||
+            //        (string)el.Attribute("CommandName") == "WaitForWindowCommand" ||
+            //        (string)el.Attribute("CommandName") == "SendAdvancedKeyStrokesCommand" ||
+            //        (string)el.Attribute("CommandName") == "SendHotkeyCommand" ||
+            //        (string)el.Attribute("CommandName") == "SendKeysCommand" ||
+            //        (string)el.Attribute("CommandName") == "UIAutomationCommand"
+            //    )
+            //);
+            //foreach (var cmd in cmdWindowNames)
+            //{
+            //    if (cmd.Attribute("v_SearchMethod") != null)
+            //    {
+            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+            //        {
+            //            cmd.SetAttributeValue("v_SearchMethod", "Starts with");
+            //        }
+            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
+            //        {
+            //            cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+            //        }
+            //    }
+            //}
+            ChangeAttributeValue(doc, new Func<XElement, bool>( el => {
+                return (string)el.Attribute("CommandName") == "ActivateWindowCommand" ||
+                        (string)el.Attribute("CommandName") == "CheckWindowNameExistsCommand" ||
+                        (string)el.Attribute("CommandName") == "CloseWindowCommand" ||
+                        (string)el.Attribute("CommandName") == "GetWindowNamesCommand" ||
+                        (string)el.Attribute("CommandName") == "GetWindowPositionCommand" ||
+                        (string)el.Attribute("CommandName") == "GetWindowStateCommand" ||
+                        (string)el.Attribute("CommandName") == "MoveWindowCommand" ||
+                        (string)el.Attribute("CommandName") == "ResizeWindowCommand" ||
+                        (string)el.Attribute("CommandName") == "SetWindowStateCommand" ||
+                        (string)el.Attribute("CommandName") == "WaitForWindowCommand" ||
+                        (string)el.Attribute("CommandName") == "SendAdvancedKeyStrokesCommand" ||
+                        (string)el.Attribute("CommandName") == "SendHotkeyCommand" ||
+                        (string)el.Attribute("CommandName") == "SendKeysCommand" ||
+                        (string)el.Attribute("CommandName") == "UIAutomationCommand";
+            }), "v_SearchMethod", new Action<XAttribute>( attr => {
+                switch (attr?.Value.ToLower() ?? "")
                 {
-                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
-                    {
-                        cmd.SetAttributeValue("v_SearchMethod", "Starts with");
-                    }
-                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
-                    {
-                        cmd.SetAttributeValue("v_SearchMethod", "Ends with");
-                    }
+                    case "start with":
+                        attr.Value = "Starts With";
+                        break;
+                    case "end with":
+                        attr.Value = "Ends With";
+                        break;
                 }
-            }
+            }));
 
             // ExcelCreateDataset -> LoadDataTable
             ChangeCommandName(doc, "ExcelCreateDatasetCommand", "LoadDataTableCommand", "Load DataTable");
@@ -388,26 +414,42 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_52(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
-            IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
-                    (string)el.Attribute("CommandName") == "GetFilesCommand" ||
-                    (string)el.Attribute("CommandName") == "GetFoldersCommand" ||
-                    (string)el.Attribute("CommandName") == "CheckStringCommand"
-                )
-            );
-            foreach (var cmd in cmdWindowNames)
+            //IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
+            //        (string)el.Attribute("CommandName") == "GetFilesCommand" ||
+            //        (string)el.Attribute("CommandName") == "GetFoldersCommand" ||
+            //        (string)el.Attribute("CommandName") == "CheckStringCommand"
+            //    )
+            //);
+            //foreach (var cmd in cmdWindowNames)
+            //{
+            //    if (cmd.Attribute("v_SearchMethod") != null)
+            //    {
+            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
+            //        {
+            //            cmd.SetAttributeValue("v_SearchMethod", "Starts with");
+            //        }
+            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
+            //        {
+            //            cmd.SetAttributeValue("v_SearchMethod", "Ends with");
+            //        }
+            //    }
+            //}
+            ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
-                if (cmd.Attribute("v_SearchMethod") != null)
+                return (string)el.Attribute("CommandName") == "GetFilesCommand" ||
+                        (string)el.Attribute("CommandName") == "GetFoldersCommand" ||
+                        (string)el.Attribute("CommandName") == "CheckStringCommand";
+            }), "v_SearchMethod", new Action<XAttribute>(attr => {
+                switch (attr?.Value.ToLower() ?? "")
                 {
-                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
-                    {
-                        cmd.SetAttributeValue("v_SearchMethod", "Starts with");
-                    }
-                    if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
-                    {
-                        cmd.SetAttributeValue("v_SearchMethod", "Ends with");
-                    }
+                    case "start with":
+                        attr.Value = "Starts With";
+                        break;
+                    case "end with":
+                        attr.Value = "Ends With";
+                        break;
                 }
-            }
+            }));
             return doc;
         }
         private static XDocument convertTo3_5_0_57(XDocument doc)
@@ -416,18 +458,22 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "CheckStringCommand", "CheckTextCommand", "Check Text");
 
             // ModifyVariableCommand -> ModifyTextCommand
-            IEnumerable<XElement> modifyTextList = doc.Descendants("ScriptCommand")
-                .Where(el => (
-                    ((string)el.Attribute("CommandName") == "ModifyVariableCommand") ||
-                    ((string)el.Attribute("CommandName") == "StringCaseCommand"))
-                );
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in modifyTextList)
-            {
-                cmd.SetAttributeValue("CommandName", "ModifyTextCommand");
-                cmd.SetAttributeValue(ns + "type", "ModifyTextCommand");
-                cmd.SetAttributeValue("SelectionName", "Modify Text");
-            }
+            //IEnumerable<XElement> modifyTextList = doc.Descendants("ScriptCommand")
+            //    .Where(el => (
+            //        ((string)el.Attribute("CommandName") == "ModifyVariableCommand") ||
+            //        ((string)el.Attribute("CommandName") == "StringCaseCommand"))
+            //    );
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in modifyTextList)
+            //{
+            //    cmd.SetAttributeValue("CommandName", "ModifyTextCommand");
+            //    cmd.SetAttributeValue(ns + "type", "ModifyTextCommand");
+            //    cmd.SetAttributeValue("SelectionName", "Modify Text");
+            //}
+            ChangeCommandName(doc, new Func<XElement, bool>( el => {
+                return ((string)el.Attribute("CommandName") == "ModifyVariableCommand") ||
+                        ((string)el.Attribute("CommandName") == "StringCaseCommand");
+            }), "ModifyTextCommand", "Modify Text");
 
             // RegExExtractorCommand -> RegExExtractionText
             ChangeCommandName(doc, "RegExExtractorCommand", "RegExExtractionTextCommand", "RegEx Extraction Text");
@@ -534,39 +580,54 @@ namespace taskt.Core.Script
         }
         private static XDocument convertTo3_5_0_74(XDocument doc)
         {
-            // BeginIf Value, Variable Compare -> Numeric Compare, Text Compare
-            IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
-            foreach (XElement cmd in getIf)
+            var changeFunc = new Action<XAttribute>(attr =>
             {
-                switch ((string)cmd.Attribute("v_IfActionType"))
+                switch (attr?.Value.ToLower() ?? "")
                 {
-                    case "Value":
-                        cmd.Attribute("v_IfActionType").Value = "Numeric Compare";
+                    case "value":
+                        attr.Value = "Numeric Compare";
                         break;
-
-                    case "Variable Compare":
-                        cmd.Attribute("v_IfActionType").Value = "Text Compare";
+                    case "variable compare":
+                        attr.Value = "Text Compare";
                         break;
                 }
-            }
+            });
+
+            // BeginIf Value, Variable Compare -> Numeric Compare, Text Compare
+            //IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
+            //foreach (XElement cmd in getIf)
+            //{
+            //    switch ((string)cmd.Attribute("v_IfActionType"))
+            //    {
+            //        case "Value":
+            //            cmd.Attribute("v_IfActionType").Value = "Numeric Compare";
+            //            break;
+
+            //        case "Variable Compare":
+            //            cmd.Attribute("v_IfActionType").Value = "Text Compare";
+            //            break;
+            //    }
+            //}
+            ChangeAttributeValue(doc, "BeginIfCommand", "v_IfActionType", changeFunc);
 
             // BeginLoop Value, Variable Compare -> Numeric Compare, Text Compare
-            IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
-            foreach (XElement cmd in getLoop)
-            {
-                switch ((string)cmd.Attribute("v_LoopActionType"))
-                {
-                    case "Value":
-                        cmd.Attribute("v_LoopActionType").Value = "Numeric Compare";
-                        break;
+            //IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            //foreach (XElement cmd in getLoop)
+            //{
+            //    switch ((string)cmd.Attribute("v_LoopActionType"))
+            //    {
+            //        case "Value":
+            //            cmd.Attribute("v_LoopActionType").Value = "Numeric Compare";
+            //            break;
 
-                    case "Variable Compare":
-                        cmd.Attribute("v_LoopActionType").Value = "Text Compare";
-                        break;
-                }
-            }
+            //        case "Variable Compare":
+            //            cmd.Attribute("v_LoopActionType").Value = "Text Compare";
+            //            break;
+            //    }
+            //}
+            ChangeAttributeValue(doc, "BeginLoopCommand", "v_LoopActionType", changeFunc);
 
             return doc;
         }
@@ -982,7 +1043,7 @@ namespace taskt.Core.Script
         {
             return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
-                return ((string)el.Attribute("CommandName") == targetAttribute);
+                return ((string)el.Attribute("CommandName") == targetCommand);
             }), targetAttribute, changeFunc);
         }
 
