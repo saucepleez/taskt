@@ -293,6 +293,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_36(doc);
             convertTo3_5_1_38(doc);
             convertTo3_5_1_39(doc);
+            fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
 
             return doc;
         }
@@ -1063,13 +1064,18 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument fixUIAutomationGroupEnableParameterValue_3_5_1_40(XDocument doc)
+        private static XDocument fixUIAutomationGroupEnableParameterValue_3_5_1_39(XDocument doc)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
-                return (el.Attribute("CommandName").Value == "UIAutomationGetChidrenElementsInformationCommand") ||
-                            (el.Attribute("CommandName").Value == "UIAutomationGetChildElementCommand") ||
-                            (el.Attribute("CommandName").Value == "UIAutomationGetElementFromElementCommand");
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "UIAutomationCheckElementExistCommand":
+                    case "UIAutomationWaitForElementExistCommand":
+                        return true;
+                    default:
+                        return false;
+                }
             }), "v_SearchParameters", "Enabled", new Action<XElement>(c =>
             {
                 switch (c.Value.ToLower())
