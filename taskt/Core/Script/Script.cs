@@ -332,20 +332,26 @@ namespace taskt.Core.Script
             //    }
             //}
             ChangeAttributeValue(doc, new Func<XElement, bool>( el => {
-                return el.Attribute("CommandName").Value == "ActivateWindowCommand" ||
-                        el.Attribute("CommandName").Value == "CheckWindowNameExistsCommand" ||
-                        el.Attribute("CommandName").Value == "CloseWindowCommand" ||
-                        el.Attribute("CommandName").Value == "GetWindowNamesCommand" ||
-                        el.Attribute("CommandName").Value == "GetWindowPositionCommand" ||
-                        el.Attribute("CommandName").Value == "GetWindowStateCommand" ||
-                        el.Attribute("CommandName").Value == "MoveWindowCommand" ||
-                        el.Attribute("CommandName").Value == "ResizeWindowCommand" ||
-                        el.Attribute("CommandName").Value == "SetWindowStateCommand" ||
-                        el.Attribute("CommandName").Value == "WaitForWindowCommand" ||
-                        el.Attribute("CommandName").Value == "SendAdvancedKeyStrokesCommand" ||
-                        el.Attribute("CommandName").Value == "SendHotkeyCommand" ||
-                        el.Attribute("CommandName").Value == "SendKeysCommand" ||
-                        el.Attribute("CommandName").Value == "UIAutomationCommand";
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "ActivateWindowCommand":
+                    case "CheckWindowNameExistsCommand":
+                    case "CloseWindowCommand":
+                    case "GetWindowNamesCommand":
+                    case "GetWindowPositionCommand":
+                    case "GetWindowStateCommand":
+                    case "MoveWindowCommand":
+                    case "ResizeWindowCommand":
+                    case "SetWindowStateCommand":
+                    case "WaitForWindowCommand":
+                    case "SendAdvancedKeyStrokesCommand":
+                    case "SendHotkeyCommand":
+                    case "SendKeysCommand":
+                    case "UIAutomationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
             }), "v_SearchMethod", new Action<XAttribute>( attr => {
                 switch (attr?.Value.ToLower() ?? "")
                 {
@@ -436,9 +442,15 @@ namespace taskt.Core.Script
             //}
             ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
-                return el.Attribute("CommandName").Value == "GetFilesCommand" ||
-                        el.Attribute("CommandName").Value == "GetFoldersCommand" ||
-                        el.Attribute("CommandName").Value == "CheckStringCommand";
+                switch(el.Attribute("CommandName").Value)
+                {
+                    case "GetFilesCommand":
+                    case "GetFoldersCommand":
+                    case "CheckStringCommand":
+                        return true;
+                    default:
+                        return false;
+                }
             }), "v_SearchMethod", new Action<XAttribute>(attr => {
                 switch (attr?.Value.ToLower() ?? "")
                 {
@@ -470,9 +482,16 @@ namespace taskt.Core.Script
             //    cmd.SetAttributeValue(ns + "type", "ModifyTextCommand");
             //    cmd.SetAttributeValue("SelectionName", "Modify Text");
             //}
-            ChangeCommandName(doc, new Func<XElement, bool>( el => {
-                return (el.Attribute("CommandName").Value == "ModifyVariableCommand") ||
-                        (el.Attribute("CommandName").Value == "StringCaseCommand");
+            ChangeCommandName(doc, new Func<XElement, bool>( el => 
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "ModifyVariableCommand":
+                    case "StringCaseCommand":
+                        return true;
+                    default:
+                        return false;
+                }
             }), "ModifyTextCommand", "Modify Text");
 
             // RegExExtractorCommand -> RegExExtractionText
@@ -792,9 +811,15 @@ namespace taskt.Core.Script
 
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
-                return (el.Attribute("CommandName").Value == "UIAutomationGetChidrenElementsInformationCommand") ||
-                            (el.Attribute("CommandName").Value == "UIAutomationGetChildElementCommand") ||
-                            (el.Attribute("CommandName").Value == "UIAutomationGetElementFromElementCommand");
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "UIAutomationGetChidrenElementsInformationCommand":
+                    case "UIAutomationGetChildElementCommand":
+                    case "UIAutomationGetElementFromElementCommand":
+                        return true;
+                    default:
+                        return false;
+                }
             }), "v_SearchParameters", "Enabled", new Action<XElement>(c =>
             {
                 switch (c.Value.ToLower())
@@ -1035,6 +1060,28 @@ namespace taskt.Core.Script
             // Format Folder PathCommand -> FormatFolderPathCommand
             ChangeCommandName(doc, "Format Folder PathCommand", "FormatFolderPathCommand", "Format Folder Path");
 
+            return doc;
+        }
+
+        private static XDocument fixUIAutomationGroupEnableParameterValue_3_5_1_40(XDocument doc)
+        {
+            ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
+            {
+                return (el.Attribute("CommandName").Value == "UIAutomationGetChidrenElementsInformationCommand") ||
+                            (el.Attribute("CommandName").Value == "UIAutomationGetChildElementCommand") ||
+                            (el.Attribute("CommandName").Value == "UIAutomationGetElementFromElementCommand");
+            }), "v_SearchParameters", "Enabled", new Action<XElement>(c =>
+            {
+                switch (c.Value.ToLower())
+                {
+                    case "true":
+                    case "false":
+                        break;
+                    default:
+                        c.SetValue("False");
+                        break;
+                }
+            }));
             return doc;
         }
 
