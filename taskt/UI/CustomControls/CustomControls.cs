@@ -645,7 +645,7 @@ namespace taskt.UI
 
             // Image
             {nameof(ImageRecognitionCommand), "taskt.Properties.Resources.command_camera"},
-            {nameof(OCRCommand), "taskt.Properties.Resources.command_camera"},
+            {nameof(ExecuteOCRCommand), "taskt.Properties.Resources.command_camera"},
             {nameof(ScreenshotCommand), "taskt.Properties.Resources.command_camera"},
 
             // Input

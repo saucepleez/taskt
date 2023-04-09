@@ -292,6 +292,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_38(doc);
             convertTo3_5_1_39(doc);
             fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
+            convertTo3_5_1_40(doc);
 
             return doc;
         }
@@ -1109,6 +1110,14 @@ namespace taskt.Core.Script
         {
             // Format Folder PathCommand -> FormatFolderPathCommand
             ChangeCommandName(doc, "Format Folder PathCommand", "FormatFolderPathCommand", "Format Folder Path");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_40(XDocument doc)
+        {
+            // OCRCommand -> ExecuteOCR
+            ChangeCommandName(doc, "OCRCommand", "ExecuteOCRCommand", "Execute OCR");
 
             return doc;
         }
