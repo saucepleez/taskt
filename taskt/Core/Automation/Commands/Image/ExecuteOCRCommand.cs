@@ -60,17 +60,24 @@ namespace taskt.Core.Automation.Commands
 
             var filePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
-            var ocrEngine = new OneNoteOCRDll.OneNoteOCR();
-            var arr = ocrEngine.OcrTexts(filePath).ToArray();
-
-            string endResult = "";
-            foreach (var text in arr)
+            try
             {
-                endResult += text.Text;
-            }
+                var ocrEngine = new OneNoteOCRDll.OneNoteOCR();
+                var arr = ocrEngine.OcrTexts(filePath).ToArray();
 
-            //apply to user variable
-            endResult.StoreInUserVariable(engine, v_userVariableName);
+                string endResult = "";
+                foreach (var text in arr)
+                {
+                    endResult += text.Text;
+                }
+
+                //apply to user variable
+                endResult.StoreInUserVariable(engine, v_userVariableName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("OCR Error. Message: " + ex.Message);
+            }
         }
 
         //public override List<Control> Render(frmCommandEditor editor)
