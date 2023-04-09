@@ -651,7 +651,7 @@ namespace taskt.UI
             // Input
             {nameof(ShowFileDialogCommand), "taskt.Properties.Resources.command_input"},
             {nameof(ShowFolderDialogCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(HTMLInputCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ShowHTMLInputDialogCommand), "taskt.Properties.Resources.command_input"},
             {nameof(UserInputCommand), "taskt.Properties.Resources.command_input"}, // prompt
             {nameof(SendAdvancedKeyStrokesCommand), "taskt.Properties.Resources.command_input"},
             {nameof(SendHotkeyCommand), "taskt.Properties.Resources.command_input"},

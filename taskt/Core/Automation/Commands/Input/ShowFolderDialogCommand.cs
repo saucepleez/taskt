@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Folder Dialog")]
+    [Attributes.ClassAttributes.CommandSettings("Show Folder Dialog")]
     [Attributes.ClassAttributes.Description("Show FolderBrowserDialog")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to select folder.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]

@@ -1128,6 +1128,9 @@ namespace taskt.Core.Script
             // FolderDialogCommand -> ShowFolderDialogCommand
             ChangeCommandName(doc, "FolderDialogCommand", "ShowFolderDialogCommand", "Show Folder Dialog");
 
+            // HTMLInputCommand -> ShowHTMLInputDialogCommand
+            ChangeCommandName(doc, "HTMLInputCommand", "ShowHTMLInputDialogCommand", "Show HTML Input Dialog");
+
             return doc;
         }
 
