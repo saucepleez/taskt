@@ -357,6 +357,7 @@
     <Compile Include="Core\Automation\Commands\JSON\CreateJSONVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\AddJSONObjectPropertyCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\SetJSONValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouseControls.cs" />
     <Compile Include="Core\Automation\Commands\List\ReplaceListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\GetAverageFromListCommand.cs" />
