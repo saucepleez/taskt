@@ -166,25 +166,7 @@ namespace taskt.Core.Automation.Commands
                 iteration++;
             }
 
-            //if (String.IsNullOrEmpty(v_xOffsetAdjustment))
-            //{
-            //    v_xOffsetAdjustment = "0";
-            //}
-            //if (String.IsNullOrEmpty(v_YOffsetAdjustment))
-            //{
-            //    v_YOffsetAdjustment = "0";
-            //}
-            //if (String.IsNullOrEmpty(v_MouseClick))
-            //{
-            //    v_MouseClick = "None";
-            //}
-            //if (String.IsNullOrEmpty(v_TimeoutSeconds))
-            //{
-            //    v_TimeoutSeconds = "30";
-            //}
-
             //begin search
-            //double timeoutSeconds = double.Parse(v_TimeoutSeconds.ConvertToUserVariable(sender));
             double timeoutSeconds = this.ConvertToUserVariableAsInteger(nameof(v_TimeoutSeconds), engine);
             DateTime timeoutDue = DateTime.Now.AddSeconds(timeoutSeconds);
 
@@ -265,8 +247,6 @@ namespace taskt.Core.Automation.Commands
                                     screenShotUpdate.FillRectangle(brush, Rectangle);
                                 }
 
-                                //int xOffset = int.Parse(v_xOffsetAdjustment.ConvertToUserVariable(sender));
-                                //int yOffset = int.Parse(v_YOffsetAdjustment.ConvertToUserVariable(sender));
                                 var xOffset = this.ConvertToUserVariableAsInteger(nameof(v_xOffsetAdjustment), engine);
                                 var yOffset = this.ConvertToUserVariableAsInteger(nameof(v_YOffsetAdjustment), engine);
                                 var mouseClick = this.GetUISelectionValue(nameof(v_MouseClick), engine);
@@ -347,8 +327,6 @@ namespace taskt.Core.Automation.Commands
                     {
                         if (imageCaptureForm.ShowDialog() == DialogResult.OK)
                         {
-                            //CommandItemControl inputBox = (CommandItemControl)sender;
-                            //UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
                             var targetPictureBox = (UIPictureBox)((CommandItemControl)sender).Tag;
 
                             targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
@@ -370,33 +348,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            //if (userAcceptance == DialogResult.Yes)
-            //{
-
-            //    using (UI.Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new UI.Forms.Supplement_Forms.frmImageCapture())
-            //    {
-            //        if (imageCaptureForm.ShowDialog() == DialogResult.OK)
-            //        {
-            //            CommandItemControl inputBox = (CommandItemControl)sender;
-            //            UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-            //            targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-            //            var convertedImage = Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
-            //            var convertedLength = convertedImage.Length;
-            //            targetPictureBox.EncodedImage = convertedImage;
-
-            //            // force set property value
-            //            //if (editor.selectedCommand.CommandName == "ImageRecognitionCommand")
-            //            //{
-            //            //    ((Core.Automation.Commands.ImageRecognitionCommand)editor.selectedCommand).v_ImageCapture = convertedImage;
-            //            //}
-
-            //            v_ImageCapture = convertedImage;
-
-            //            //imageCaptureForm.Show();
-            //        }
-            //    }
-            //}
-
             ShowAllForms();
 
             //if (minimizePreference)
@@ -409,15 +360,11 @@ namespace taskt.Core.Automation.Commands
         private void RunImageCapture(object sender, EventArgs e)
         {
             //get input control
-            //CommandItemControl inputBox = (CommandItemControl)sender;
-            //UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-            //string imageSource = targetPictureBox.EncodedImage;
             var imageSource = ((UIPictureBox)((CommandItemControl)sender).Tag).EncodedImage;
 
             // image is empty
             if (string.IsNullOrEmpty(imageSource))
             {
-                //MessageBox.Show("Please capture an image before attempting to test!");
                 using (var fm = new UI.Forms.Supplemental.frmDialog("Please capture an image before attempting to test!", "Image Recognition", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
@@ -440,7 +387,6 @@ namespace taskt.Core.Automation.Commands
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("Error: " + ex.ToString());
                 using (var fm = new UI.Forms.Supplemental.frmDialog("Error: " + ex.Message, "Image Recognition", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
@@ -487,24 +433,5 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Find On Screen]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_ImageCapture))
-        //    {
-        //        this.validationResult += "Search image is empty.\n";
-        //        this.IsValid = false;
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
     }
 }

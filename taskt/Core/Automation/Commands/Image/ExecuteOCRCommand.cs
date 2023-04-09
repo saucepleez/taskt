@@ -16,14 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class ExecuteOCRCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Select Image to OCR")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[InputSpecification("Enter or Select the path to the image file.")]
-        //[SampleUsage("**c:\\temp\\myimages.png** or **{{{vFileName}}}**")]
-        //[Remarks("")]
-        //[PropertyTextBoxSetting(1, false)]
-        //[PropertyShowSampleUsageInDescription(true)]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyDescription("Image File Path")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
@@ -33,11 +25,6 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Apply OCR Result To Variable")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyIsVariablesList(true)]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_userVariableName { get; set; }
 
@@ -79,45 +66,5 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("OCR Error. Message: " + ex.Message);
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    //RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return "OCR '" + v_FilePath + "' and apply result to '" + v_userVariableName + "'";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_FilePath))
-        //    {
-        //        this.validationResult += "File path is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(v_userVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

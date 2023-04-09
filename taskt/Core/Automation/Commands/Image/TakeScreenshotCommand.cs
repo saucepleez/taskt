@@ -19,12 +19,6 @@ namespace taskt.Core.Automation.Commands
     public class TakeScreenshotCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the Window name")]
-        //[InputSpecification("Input or Type the name of the window that you want to take a screenshot of.")]
-        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **Desktop** or **{{{vWindow}}}**")]
-        //[Remarks("")]
-        //[PropertyIsWindowNamesList(true, true, false, true)]
-        //[PropertyShowSampleUsageInDescription(true)]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         [PropertyIsWindowNamesList(true, true, false, true)]
         public string v_ScreenshotWindowName { get; set; }
@@ -34,12 +28,6 @@ namespace taskt.Core.Automation.Commands
         public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate the path to save the image")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        //[SampleUsage("**c:\\Temp\\image.png** or **{{{vPath}}}**")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyDescription("Image File Path")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
@@ -74,12 +62,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var targetWindowName = v_ScreenshotWindowName.ConvertToUserVariable(sender);
-            //if (targetWindowName == ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
-            //{
-            //    targetWindowName = User32Functions.GetActiveWindowTitle();
-            //}
-
             string targetWindowName;
             if (v_ScreenshotWindowName == "Desktop")
             {
@@ -108,47 +90,5 @@ namespace taskt.Core.Automation.Commands
             ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
             cmb.AddWindowNames();
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrl);
-
-        //    //create window name helper control
-        //    //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_ScreenshotWindowName", this));
-        //    //var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_ScreenshotWindowName", this).AddWindowNames(editor);
-        //    //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_ScreenshotWindowName", this, new Control[] { WindowNameControl }, editor));
-        //    //RenderedControls.Add(WindowNameControl);
-
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Target Window: '" + v_ScreenshotWindowName + "', File Path: '" + v_FilePath + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(v_ScreenshotWindowName))
-        //    {
-        //        this.validationResult += "Window name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(v_FilePath))
-        //    {
-        //        this.validationResult += "File path is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
