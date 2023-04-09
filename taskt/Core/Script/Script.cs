@@ -1125,6 +1125,9 @@ namespace taskt.Core.Script
             // FileDialogCommand -> ShowFileDialogCommand
             ChangeCommandName(doc, "FileDialogCommand", "ShowFileDialogCommand", "Show File Dialog");
 
+            // FolderDialogCommand -> ShowFolderDialogCommand
+            ChangeCommandName(doc, "FolderDialogCommand", "ShowFolderDialogCommand", "Show Folder Dialog");
+
             return doc;
         }
 
