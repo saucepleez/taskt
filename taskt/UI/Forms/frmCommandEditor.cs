@@ -28,6 +28,7 @@ using taskt.Core.Automation.Attributes;
 using System.IO;
 using taskt.Core;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms
 {
@@ -380,13 +381,16 @@ namespace taskt.UI.Forms
             {
                 if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
                 {
-                    var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
-                    var trgCtrl = flw_InputVariables.Controls.Find(prop.Name, false).FirstOrDefault();
-                    if ((varList != null) && (varList.isVariablesList))
+                    //var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
+                    var vProp = PropertyControls.GetVirtualProperty(prop);
+                    var varList = PropertyControls.GetCustomAttributeWithVirtual<Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList>(prop, vProp);
+                    //if ((varList != null) && (varList.isVariablesList))
+                    if (varList?.isVariablesList ?? false)
                     {
-                        if ((trgCtrl != null) && (trgCtrl is ComboBox))
+                        var trgCtrl = flw_InputVariables.Controls.Find(prop.Name, false).FirstOrDefault();
+                        if ((trgCtrl != null) && (trgCtrl is ComboBox cmb))
                         {
-                            CommandControls.AddVariableNames((ComboBox)trgCtrl, this);
+                            CommandControls.AddVariableNames(cmb, this);
                         }
                     }
                 }

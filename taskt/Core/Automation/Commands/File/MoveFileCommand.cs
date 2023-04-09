@@ -32,21 +32,14 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFilePath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Folder to Move/Copy to")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [InputSpecification("Enter or Select the new path to the file.")]
-        [SampleUsage("**C:\\temp\\new path\\** or **{{{vTextFolderPath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "To")]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        [PropertyDescription("Destination Folder Path to Move/Copy")]
+        [PropertyDisplayText(true, "Folder")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("When Destination Folder does not Exist")]
+        [PropertyDescription("Create Folder When Destination Folder does not Exist")]
         [PropertyUISelectionOption("Yes")]
         [PropertyUISelectionOption("No")]
         [Remarks("Specify whether the directory should be created if it does not already exist.")]
@@ -80,12 +73,11 @@ namespace taskt.Core.Automation.Commands
 
             var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
-            var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(engine);
+            var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
 
             if (!Directory.Exists(destinationFolder))
             {
-                var vCreateDirectory = this.GetUISelectionValue(nameof(v_CreateDirectory), engine);
-                if (vCreateDirectory == "yes")
+                if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
                 {
                     Directory.CreateDirectory(destinationFolder);
                 }
@@ -104,8 +96,7 @@ namespace taskt.Core.Automation.Commands
             // todo: check folder is same
 
             //delete if it already exists per user
-            var vDeleteExisting = this.GetUISelectionValue(nameof(v_DeleteExisting), engine);
-            if (vDeleteExisting == "yes")
+            if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
             {
                 File.Delete(destinationPath);
             }

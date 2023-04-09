@@ -17,16 +17,17 @@ namespace taskt.Core.Automation.Commands
     public class GetFilesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Path to the Source Folder")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [InputSpecification("Enter or Select the path to the folder.")]
-        [SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Folder")]
+        //[PropertyDescription("Path to the Source Folder")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
+        //[InputSpecification("Enter or Select the path to the folder.")]
+        //[SampleUsage("**C:\\temp\\myfolder** or **{{{vTextFolderPath}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Folder", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Folder")]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
@@ -67,6 +68,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("List Variable Name to Store Result")]
         public string v_UserVariableName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
+        public string v_WaitForFolder { get; set; }
+
         public GetFilesCommand()
         {
             //this.CommandName = "GetFilesCommand";
@@ -80,9 +85,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //apply variable logic
-            var sourceFolder = v_SourceFolderPath.ConvertToUserVariable(engine);
+            var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
-            var searchFile = v_SearchFileName.ConvertToUserVariable(engine);
+            var searchFile = v_SearchFileName.ConvertToUserVariableAsFileName(engine);
 
             var ext = v_SearchExtension.ConvertToUserVariable(engine).ToLower();
 

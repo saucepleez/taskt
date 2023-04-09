@@ -69,7 +69,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Value")]
         public static string v_ComboBox { get; }
 
-
         /// <summary>
         /// show/hide Command parameter groups
         /// </summary>

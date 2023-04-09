@@ -6,6 +6,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    ///  for file path methods
+    /// </summary>
     internal static class FilePathControls
     {
         #region VirtualProperty
@@ -512,14 +515,25 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string ConvertToUserVariableAsFilePath(this string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
         {
+            string p;
             if ((setting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
                 (setting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
             {
-                return ConvertToUserVariableAsFilePath_SupportFileCounter(parameterValue, setting, engine);
+                p = ConvertToUserVariableAsFilePath_SupportFileCounter(parameterValue, setting, engine);
             }
             else
             {
-                return ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+                p = ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+            }
+
+            var invs = Path.GetInvalidPathChars();
+            if (p.IndexOfAny(invs) < 0)
+            {
+                return p;
+            }
+            else
+            {
+                throw new Exception("File Path contains Invalid chars. Path: '" + p + "'");
             }
         }
 
@@ -548,6 +562,27 @@ namespace taskt.Core.Automation.Commands
             //    return ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, pathSetting, engine);
             //}
             return ConvertToUserVariableAsFilePath(parameterValue, pathSetting, engine);
+        }
+
+        /// <summary>
+        /// convert to File Name
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string ConvertToUserVariableAsFileName(this string fileName, Engine.AutomationEngineInstance engine)
+        {
+            var fn = fileName.ConvertToUserVariable(engine);
+            var invs = Path.GetInvalidFileNameChars();
+            if (fn.IndexOfAny(invs) < 0)
+            {
+                return fn;
+            }
+            else
+            {
+                throw new Exception("File Name contains invalid chars. File: '" + fn + "'");
+            }
         }
 
         /// <summary>
@@ -641,6 +676,12 @@ namespace taskt.Core.Automation.Commands
         public static string WaitForFile(string pathValue, string waitTimeValue, Engine.AutomationEngineInstance engine)
         {
             var path = pathValue.ConvertToUserVariable(engine);
+            var invs = Path.GetInvalidPathChars();
+            if (path.IndexOfAny(invs) >= 0)
+            {
+                throw new Exception("File Path contains Invalid chars. Path: '" + path + "'");
+            }
+
             var waitTime = waitTimeValue.ConvertToUserVariableAsInteger("Wait Time", engine);
             return WaitForFile(path, waitTime, engine);
         }
