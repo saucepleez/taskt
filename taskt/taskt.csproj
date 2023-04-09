@@ -623,7 +623,7 @@
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\WaitForWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\HTMLInputCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Input\ShowHTMLInputDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendAdvancedKeyStrokesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendKeysCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendMouseClickCommand.cs" />
