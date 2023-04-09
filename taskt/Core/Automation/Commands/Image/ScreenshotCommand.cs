@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        public string v_WaitForWindow { get; set; }
 
         public ScreenshotCommand()
         {
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                var targetWindowHandles = WindowNameControls.FindWindows(this, nameof(v_ScreenshotWindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+                var targetWindowHandles = WindowNameControls.FindWindows(this, nameof(v_ScreenshotWindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitForWindow), engine);
                 targetWindowName = WindowNameControls.GetWindowNameFromHandle(targetWindowHandles[0]);
             }
             
