@@ -515,7 +515,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\CheckFileExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\FolderDialogCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\FileDialogCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Input\ShowFileDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\List\ConvertListToJSONCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\UnloadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PingCommand.cs" />

@@ -1122,6 +1122,9 @@ namespace taskt.Core.Script
             // ScreenShotCommand -> TakeScreenshotCommand
             ChangeCommandName(doc, "ScreenshotCommand", "TakeScreenshotCommand", "Take Screenshot");
 
+            // FileDialogCommand -> ShowFileDialogCommand
+            ChangeCommandName(doc, "FileDialogCommand", "ShowFileDialogCommand", "Show File Dialog");
+
             return doc;
         }
 

@@ -649,7 +649,7 @@ namespace taskt.UI
             {nameof(TakeScreenshotCommand), "taskt.Properties.Resources.command_camera"},
 
             // Input
-            {nameof(FileDialogCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ShowFileDialogCommand), "taskt.Properties.Resources.command_input"},
             {nameof(FolderDialogCommand), "taskt.Properties.Resources.command_input"},
             {nameof(HTMLInputCommand), "taskt.Properties.Resources.command_input"},
             {nameof(UserInputCommand), "taskt.Properties.Resources.command_input"}, // prompt
