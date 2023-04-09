@@ -1,126 +1,154 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
-using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Image Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Take Screenshot")]
     [Attributes.ClassAttributes.Description("This command takes a screenshot and saves it to a location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to take and save a screenshot.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements User32 CaptureWindow to achieve automation")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ScreenshotCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name")]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to take a screenshot of.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **Desktop** or **{{{vWindow}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true, true, false, true)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDescription("Please Enter the Window name")]
+        //[InputSpecification("Input or Type the name of the window that you want to take a screenshot of.")]
+        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **Desktop** or **{{{vWindow}}}**")]
+        //[Remarks("")]
+        //[PropertyIsWindowNamesList(true, true, false, true)]
+        //[PropertyShowSampleUsageInDescription(true)]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        [PropertyIsWindowNamesList(true, true, false, true)]
         public string v_ScreenshotWindowName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to save the image")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.SampleUsage("**c:\\Temp\\image.png** or **{{{vPath}}}**")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.Remarks("If file does not contain extensin, suppliment png extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
-        [Attributes.PropertyAttributes.PropertyFilePathSetting(false, Attributes.PropertyAttributes.PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, Attributes.PropertyAttributes.PropertyFilePathSetting.FileCounterBehavior.FirstNotExists)]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        public string v_SearchMethod { get; set; }
+
+        [XmlAttribute]
+        //[PropertyDescription("Please indicate the path to save the image")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        //[SampleUsage("**c:\\Temp\\image.png** or **{{{vPath}}}**")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyDescription("Image File Path")]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyDetailSampleUsage("**C:\\temp\\myimages.png**", "File Path")]
+        [PropertyDetailSampleUsage("**{{{vFilePath}}}**", "File Path")]
+        [Remarks("If file does not contain extensin, suppliment png extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.FirstNotExists)]
         public string v_FilePath { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        public string v_MatchMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        public string v_TargetWindowIndex { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
         public ScreenshotCommand()
         {
-            this.CommandName = "ScreenshotCommand";
-            this.SelectionName = "Take Screenshot";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ScreenshotCommand";
+            //this.SelectionName = "Take Screenshot";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            Engine.AutomationEngineInstance engine = (Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetWindowName = v_ScreenshotWindowName.ConvertToUserVariable(sender);
-            if (targetWindowName == ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+            //var targetWindowName = v_ScreenshotWindowName.ConvertToUserVariable(sender);
+            //if (targetWindowName == ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+            //{
+            //    targetWindowName = User32Functions.GetActiveWindowTitle();
+            //}
+
+            string targetWindowName;
+            if (v_ScreenshotWindowName == "Desktop")
             {
-                targetWindowName = User32Functions.GetActiveWindowTitle();
+                targetWindowName = "Desktop";
             }
-
+            else
+            {
+                var targetWindowHandles = WindowNameControls.FindWindows(this, nameof(v_ScreenshotWindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+                targetWindowName = WindowNameControls.GetWindowNameFromHandle(targetWindowHandles[0]);
+            }
+            
             var image = User32Functions.CaptureWindow(targetWindowName);
-
-            //string outputFile;
-            //if (Core.FilePathControls.containsFileCounter(v_FilePath, engine))
-            //{
-            //     outputFile= Core.FilePathControls.formatFileCounter_NotExists(v_FilePath, engine, ".png");
-            //}
-            //else
-            //{
-            //    outputFile = v_FilePath.ConvertToUserVariable(sender);
-            //    outputFile = Core.FilePathControls.formatFilePath(outputFile, (Engine.AutomationEngineInstance)sender);
-            //    if (!Core.FilePathControls.hasExtension(outputFile))
-            //    {
-            //        outputFile += ".png";
-            //    }
-            //}
-            //if (FilePathControls.ContainsFileCounter(v_FilePath, engine))
-            //{
-            //    outputFile = FilePathControls.FormatFilePath_ContainsFileCounter(v_FilePath, engine, "png");
-            //}
-            //else
-            //{
-            //    outputFile = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "png");
-            //}
 
             var outputFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
 
             image.Save(outputFile);
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            base.Render(editor);
-
-            var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrl);
-
-            //create window name helper control
-            //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_ScreenshotWindowName", this));
-            //var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_ScreenshotWindowName", this).AddWindowNames(editor);
-            //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_ScreenshotWindowName", this, new Control[] { WindowNameControl }, editor));
-            //RenderedControls.Add(WindowNameControl);
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-
-            return RenderedControls;
+            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
-
-        public override string GetDisplayValue()
+        public override void Refresh(frmCommandEditor editor)
         {
-            return base.GetDisplayValue() + " [Target Window: '" + v_ScreenshotWindowName + "', File Path: '" + v_FilePath + "]";
+            base.Refresh();
+            ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
+            cmb.AddWindowNames();
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-            
-            if (String.IsNullOrEmpty(v_ScreenshotWindowName))
-            {
-                this.validationResult += "Window name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(v_FilePath))
-            {
-                this.validationResult += "File path is empty.\n";
-                this.IsValid = false;
-            }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            return this.IsValid;
-        }
+        //    var ctrl = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrl);
+
+        //    //create window name helper control
+        //    //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_ScreenshotWindowName", this));
+        //    //var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_ScreenshotWindowName", this).AddWindowNames(editor);
+        //    //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_ScreenshotWindowName", this, new Control[] { WindowNameControl }, editor));
+        //    //RenderedControls.Add(WindowNameControl);
+
+        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
+
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Target Window: '" + v_ScreenshotWindowName + "', File Path: '" + v_FilePath + "]";
+        //}
+
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
+
+        //    if (String.IsNullOrEmpty(v_ScreenshotWindowName))
+        //    {
+        //        this.validationResult += "Window name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(v_FilePath))
+        //    {
+        //        this.validationResult += "File path is empty.\n";
+        //        this.IsValid = false;
+        //    }
+
+        //    return this.IsValid;
+        //}
     }
 }
