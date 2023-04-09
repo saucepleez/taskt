@@ -25,6 +25,10 @@ namespace taskt.Core.Automation.Commands
         //[PropertyTextBoxSetting(1, false)]
         //[PropertyShowSampleUsageInDescription(true)]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyDescription("Image File Path")]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyDetailSampleUsage("**C:\\temp\\myimages.png**", "File Path")]
+        [PropertyDetailSampleUsage("**{{{vFilePath}}}**", "File Path")]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "png,bmp,gif,jpg,jpeg")]
         public string v_FilePath { get; set; }
 
