@@ -687,11 +687,24 @@ namespace taskt.Core.Script
         }
         private static XDocument convertTo3_5_0_78(XDocument doc)
         {
+            var modFunc = new Action<XElement, List<XElement>>((table, rows) =>
+            {
+                var isExists = rows.Any(r => r.Element("Parameter_x0020_Name").Value == "Search Method");
+                if (!isExists)
+                {
+                    AddTableRow(table, rows, new Dictionary<string, string>
+                    {
+                        { "Parameter_x0020_Name", "Search Method" },
+                        { "Parameter_x0020_Value", "Contains" },
+                    });
+                }
+            });
+
             // BeginIf add Window Search Method cell parameter
             //IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
             //    .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
-            XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
-            XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
+            //XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            //XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
             //foreach (XElement cmd in getIf)
             //{
             //    switch ((string)cmd.Attribute("v_IfActionType"))
@@ -750,62 +763,70 @@ namespace taskt.Core.Script
                 {
                     return false;
                 }
-            }), "v_IfActionParameterTable", new Action<XElement, List<XElement>>((table, rows) =>
-            {
-                var isExists = rows.Any(r => r.Element("Parameter_x0020_Name").Value == "Search Method");
-                if (!isExists)
-                {
-                    AddTableRow(table, rows, new Dictionary<string, string>
-                    {
-                        { "Parameter_x0020_Name", "Search Method" },
-                        { "Parameter_x0020_Value", "Contains" },
-                    });
-                }
-            }));
+            }), "v_IfActionParameterTable", modFunc);
 
             // BeginLoop add Window Search Method parameter
-            IEnumerable <XElement> getLoop = doc.Descendants("ScriptCommand")
-                .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
-            foreach (XElement cmd in getLoop)
+            //IEnumerable <XElement> getLoop = doc.Descendants("ScriptCommand")
+            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
+            //foreach (XElement cmd in getLoop)
+            //{
+            //    switch ((string)cmd.Attribute("v_LoopActionType"))
+            //    {
+            //        case "Window Name Exists":
+            //        case "Active Window Name Is":
+            //            XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
+            //            var elems = tableParams.Elements();
+            //            bool isExists = false;
+            //            foreach (XElement elem in elems)
+            //            {
+            //                if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
+            //                {
+            //                    isExists = true;
+            //                    break;
+            //                }
+            //            }
+            //            if (!isExists)
+            //            {
+            //                var elem = elems.ElementAt(0);
+            //                var newElem = new XElement(elem.Name);
+            //                newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
+            //                newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
+
+            //                // name
+            //                var nameElem = new XElement("Parameter_x0020_Name");
+            //                nameElem.Value = "Search Method";
+
+            //                // value
+            //                var valueElem = new XElement("Parameter_x0020_Value");
+            //                valueElem.Value = "Contains";
+
+            //                newElem.Add(nameElem);
+            //                newElem.Add(valueElem);
+
+            //                tableParams.Add(newElem);
+            //            }
+            //            break;
+            //    }
+            //}
+            ModifyTable(doc, new Func<XElement, bool>(el =>
             {
-                switch ((string)cmd.Attribute("v_LoopActionType"))
+                if (el.Attribute("CommandName").Value == "BeginLoopCommand")
                 {
-                    case "Window Name Exists":
-                    case "Active Window Name Is":
-                        XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
-                        var elems = tableParams.Elements();
-                        bool isExists = false;
-                        foreach (XElement elem in elems)
-                        {
-                            if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
-                            {
-                                isExists = true;
-                                break;
-                            }
-                        }
-                        if (!isExists)
-                        {
-                            var elem = elems.ElementAt(0);
-                            var newElem = new XElement(elem.Name);
-                            newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
-                            newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
-
-                            // name
-                            var nameElem = new XElement("Parameter_x0020_Name");
-                            nameElem.Value = "Search Method";
-
-                            // value
-                            var valueElem = new XElement("Parameter_x0020_Value");
-                            valueElem.Value = "Contains";
-
-                            newElem.Add(nameElem);
-                            newElem.Add(valueElem);
-
-                            tableParams.Add(newElem);
-                        }
-                        break;
+                    switch (el.Attribute("v_LoopActionType")?.Value.ToLower() ?? "")
+                    {
+                        case "window name exists":
+                        case "active window name is":
+                            return true;
+                        default:
+                            return false;
+                    }
                 }
-            }
+                else
+                {
+                    return false;
+                }
+            }), "v_LoopActionParameterTable", modFunc);
+
 
             return doc;
         }
