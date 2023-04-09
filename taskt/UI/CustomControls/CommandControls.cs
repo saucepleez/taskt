@@ -531,7 +531,7 @@ namespace taskt.UI.CustomControls
             var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
             if (attrIsWin?.isWindowNamesList ?? false)
             {
-                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowCurrentWindow, attrIsWin.allowDesktop));
+                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
             }
 
             // variable names list & instance name list
