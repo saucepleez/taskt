@@ -674,7 +674,7 @@
     <Compile Include="Core\Automation\Commands\Text\ReadTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\RenameFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunScriptFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Image\ScreenshotCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Image\TakeScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopCurrentScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\UploadBotStoreDataCommand.cs" />

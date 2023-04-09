@@ -1119,6 +1119,9 @@ namespace taskt.Core.Script
             // OCRCommand -> ExecuteOCR
             ChangeCommandName(doc, "OCRCommand", "ExecuteOCRCommand", "Execute OCR");
 
+            // ScreenShotCommand -> TakeScreenshotCommand
+            ChangeCommandName(doc, "ScreenshotCommand", "TakeScreenshotCommand", "Take Screenshot");
+
             return doc;
         }
 

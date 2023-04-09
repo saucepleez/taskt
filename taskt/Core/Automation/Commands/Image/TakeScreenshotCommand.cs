@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements User32 CaptureWindow to achieve automation")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ScreenshotCommand : ScriptCommand
+    public class TakeScreenshotCommand : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Please Enter the Window name")]
@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitForWindow { get; set; }
 
-        public ScreenshotCommand()
+        public TakeScreenshotCommand()
         {
             //this.CommandName = "ScreenshotCommand";
             //this.SelectionName = "Take Screenshot";
