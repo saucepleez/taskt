@@ -383,21 +383,32 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_47(XDocument doc)
         {
             // AddListItem.v_userVariableName, SetListIndex.v_userVariableName -> *.v_ListName
-            IEnumerable<XElement> cmdIndex = doc.Descendants("ScriptCommand")
-                .Where(el =>
-                    (el.Attribute("CommandName").Value == "AddListItemCommand") ||
-                    (el.Attribute("CommandName").Value == "SetListIndexCommand")
-            );
-            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in cmdIndex)
+            //IEnumerable<XElement> cmdIndex = doc.Descendants("ScriptCommand")
+            //    .Where(el =>
+            //        (el.Attribute("CommandName").Value == "AddListItemCommand") ||
+            //        (el.Attribute("CommandName").Value == "SetListIndexCommand")
+            //);
+            ////XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in cmdIndex)
+            //{
+            //    var listNameAttr = cmd.Attribute("v_userVariableName");
+            //    if (listNameAttr != null)
+            //    {
+            //        cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
+            //        listNameAttr.Remove();
+            //    }
+            //}
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
             {
-                var listNameAttr = cmd.Attribute("v_userVariableName");
-                if (listNameAttr != null)
+                switch (el.Attribute("CommandName").Value)
                 {
-                    cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
-                    listNameAttr.Remove();
+                    case "AddListItemCommand":
+                    case "SetListIndexCommand":
+                        return true;
+                    default:
+                        return false;
                 }
-            }
+            }), "v_userVariableName", "v_ListName");
 
             return doc;
         }
@@ -1348,6 +1359,52 @@ namespace taskt.Core.Script
             }
 
             table.Add(newElem);
+        }
+
+        /// <summary>
+        /// change attribute name. target command is specified Func<>
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="newAttribute"></param>
+        /// <returns></returns>
+        private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
+        {
+            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand")
+                .Where(searchFunc);
+
+            foreach(var cmd in commands)
+            {
+                var trgAttr = cmd.Attribute(targetAttribute);
+                var newAttr = cmd.Attribute(newAttribute);
+                if (trgAttr != null)
+                {
+                    if (newAttr == null)
+                    {
+                        cmd.SetAttributeValue(newAttribute, trgAttr.Value);
+                    }
+                    trgAttr.Remove();
+                }
+            }
+
+            return doc;
+        }
+
+        /// <summary>
+        /// change attribute name. target command is specified command name
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="newAttribute"></param>
+        /// <returns></returns>
+        private static XDocument ChangeAttributeName(XDocument doc, string targetCommand, string targetAttribute, string newAttribute)
+        {
+            return ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                return el.Attribute("CommandName").Value == targetAttribute;
+            }), targetAttribute, newAttribute);
         }
     }
 }
