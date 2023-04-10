@@ -1114,29 +1114,6 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_1_40(XDocument doc)
-        {
-            // OCRCommand -> ExecuteOCR
-            ChangeCommandName(doc, "OCRCommand", "ExecuteOCRCommand", "Execute OCR");
-
-            // ScreenShotCommand -> TakeScreenshotCommand
-            ChangeCommandName(doc, "ScreenshotCommand", "TakeScreenshotCommand", "Take Screenshot");
-
-            // FileDialogCommand -> ShowFileDialogCommand
-            ChangeCommandName(doc, "FileDialogCommand", "ShowFileDialogCommand", "Show File Dialog");
-
-            // FolderDialogCommand -> ShowFolderDialogCommand
-            ChangeCommandName(doc, "FolderDialogCommand", "ShowFolderDialogCommand", "Show Folder Dialog");
-
-            // HTMLInputCommand -> ShowHTMLInputDialogCommand
-            ChangeCommandName(doc, "HTMLInputCommand", "ShowHTMLInputDialogCommand", "Show HTML Input Dialog");
-
-            // SendHotkeyCommand -> EnterShortcutKeyCommand
-            ChangeCommandName(doc, "SendHotkeyCommand", "EnterShortcutKeyCommand", "Enter Shortcut Key");
-
-            return doc;
-        }
-
         private static XDocument fixUIAutomationGroupEnableParameterValue_3_5_1_39(XDocument doc)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
@@ -1161,6 +1138,29 @@ namespace taskt.Core.Script
                         break;
                 }
             }));
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_40(XDocument doc)
+        {
+            // OCRCommand -> ExecuteOCR
+            ChangeCommandName(doc, "OCRCommand", "ExecuteOCRCommand", "Execute OCR");
+
+            // ScreenShotCommand -> TakeScreenshotCommand
+            ChangeCommandName(doc, "ScreenshotCommand", "TakeScreenshotCommand", "Take Screenshot");
+
+            // FileDialogCommand -> ShowFileDialogCommand
+            ChangeCommandName(doc, "FileDialogCommand", "ShowFileDialogCommand", "Show File Dialog");
+
+            // FolderDialogCommand -> ShowFolderDialogCommand
+            ChangeCommandName(doc, "FolderDialogCommand", "ShowFolderDialogCommand", "Show Folder Dialog");
+
+            // HTMLInputCommand -> ShowHTMLInputDialogCommand
+            ChangeCommandName(doc, "HTMLInputCommand", "ShowHTMLInputDialogCommand", "Show HTML Input Dialog");
+
+            // SendHotkeyCommand -> EnterShortcutKeyCommand
+            ChangeCommandName(doc, "SendHotkeyCommand", "EnterShortcutKeyCommand", "Enter Shortcut Key");
+
             return doc;
         }
 
