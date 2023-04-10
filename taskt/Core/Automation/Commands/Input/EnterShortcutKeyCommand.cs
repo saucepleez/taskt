@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows.Forms.SendKeys' method to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SendHotkeyCommand : ScriptCommand
+    public class EnterShortcutKeyCommand : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Please Enter the Window name")]
@@ -101,6 +101,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitForWindow { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
+        public string v_WaitAfterKeyEnter { get; set; }
+
         //[XmlIgnore]
         //[NonSerialized]
         //private ComboBox parameterHotkey;
@@ -113,7 +117,7 @@ namespace taskt.Core.Automation.Commands
         //[NonSerialized]
         //private Label hotkeyLabel;
 
-        public SendHotkeyCommand()
+        public EnterShortcutKeyCommand()
         {
             //this.CommandName = "SendHotkeyCommand";
             //this.SelectionName = "Send Hotkey";
@@ -212,7 +216,8 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            System.Threading.Thread.Sleep(500);
+            var waitKeyEnter = this.ConvertToUserVariableAsInteger(nameof(v_WaitAfterKeyEnter), engine);
+            System.Threading.Thread.Sleep(waitKeyEnter);
         }
 
         private void cmbHotkey_SelectedIndexChanged(object sender, EventArgs e)

@@ -578,7 +578,7 @@
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\LoadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserTakeScreenshotCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendHotkeyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Input\EnterShortcutKeyCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\ThrowExceptionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\TryCommand.cs" />

@@ -1131,6 +1131,9 @@ namespace taskt.Core.Script
             // HTMLInputCommand -> ShowHTMLInputDialogCommand
             ChangeCommandName(doc, "HTMLInputCommand", "ShowHTMLInputDialogCommand", "Show HTML Input Dialog");
 
+            // SendHotkeyCommand -> EnterShortcutKeyCommand
+            ChangeCommandName(doc, "SendHotkeyCommand", "EnterShortcutKeyCommand", "Enter Shortcut Key");
+
             return doc;
         }
 
