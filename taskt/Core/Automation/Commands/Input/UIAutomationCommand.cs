@@ -513,7 +513,7 @@ namespace taskt.Core.Automation.Commands
                 var newPoint = requiredHandle.GetClickablePoint();
 
                 //send mousemove command
-                var newMouseMove = new SendMouseMoveCommand
+                var newMouseMove = new MoveMouseCommand
                 {
                     v_XMousePosition = (newPoint.X + xAdjustInt).ToString(),
                     v_YMousePosition = (newPoint.Y + yAdjustInt).ToString(),

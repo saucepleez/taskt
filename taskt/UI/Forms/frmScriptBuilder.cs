@@ -3660,7 +3660,7 @@ namespace taskt.UI.Forms
         {
 
             lastAntiIdleEvent = DateTime.Now;
-            var mouseMove = new Core.Automation.Commands.SendMouseMoveCommand();
+            var mouseMove = new Core.Automation.Commands.MoveMouseCommand();
             mouseMove.v_XMousePosition = (Cursor.Position.X + 1).ToString();
             mouseMove.v_YMousePosition = (Cursor.Position.Y + 1).ToString();
             Notify("Anti-Idle Triggered");

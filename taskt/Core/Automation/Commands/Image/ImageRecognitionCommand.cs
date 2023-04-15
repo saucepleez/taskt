@@ -252,7 +252,7 @@ namespace taskt.Core.Automation.Commands
                                 var mouseClick = this.GetUISelectionValue(nameof(v_MouseClick), engine);
 
                                 //move mouse to position
-                                var mouseMove = new SendMouseMoveCommand
+                                var mouseMove = new MoveMouseCommand
                                 {
                                     v_XMousePosition = (topLeftX + xOffset).ToString(),
                                     v_YMousePosition = (topLeftY + yOffset).ToString(),

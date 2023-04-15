@@ -81,9 +81,9 @@ namespace taskt.UI.Forms
                 foreach (Core.Automation.Commands.ScriptCommand cmd in commandList)
                 {
 
-                    if (cmd is Core.Automation.Commands.SendMouseMoveCommand)
+                    if (cmd is Core.Automation.Commands.MoveMouseCommand)
                     {
-                        var sendMouseCmd = (Core.Automation.Commands.SendMouseMoveCommand)cmd;
+                        var sendMouseCmd = (Core.Automation.Commands.MoveMouseCommand)cmd;
                         if (sendMouseCmd.v_MouseClick != "None")
                         {
                             outputList.Add(newSequence);

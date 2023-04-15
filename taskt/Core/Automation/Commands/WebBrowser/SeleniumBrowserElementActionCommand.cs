@@ -230,7 +230,7 @@ namespace taskt.Core.Automation.Commands
                                                        select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender));
 
                     var elementLocation = element.Location;
-                    SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand();
+                    MoveMouseCommand newMouseMove = new MoveMouseCommand();
                     var seleniumWindowPosition = seleniumInstance.Manage().Window.Position;
                     newMouseMove.v_XMousePosition = (seleniumWindowPosition.X + elementLocation.X + 30 + userXAdjust).ToString(); // added 30 for offset
                     newMouseMove.v_YMousePosition = (seleniumWindowPosition.Y + elementLocation.Y + 130 + userYAdjust).ToString(); //added 130 for offset

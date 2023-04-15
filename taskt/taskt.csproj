@@ -628,7 +628,7 @@
     <Compile Include="Core\Automation\Commands\Input\SendAdvancedKeyStrokesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\EnterKeysCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\ClickMouseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendMouseMoveCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Input\MoveMouseCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SequenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\ThickAppClickItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\ThickAppGetTextCommand.cs" />

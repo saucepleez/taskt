@@ -305,7 +305,7 @@ namespace taskt.Core.Automation.Commands
 
                 var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
 
-                SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand();
+                MoveMouseCommand newMouseMove = new MoveMouseCommand();
 
                 newMouseMove.v_XMousePosition = ((elementXposition + ieClientLocation.left + 10) + userXAdjust).ToString(); // + 10 gives extra padding
                 newMouseMove.v_YMousePosition = ((elementYposition + ieClientLocation.top + 90 + System.Windows.Forms.SystemInformation.CaptionHeight) + userYAdjust).ToString(); // +90 accounts for title bar height

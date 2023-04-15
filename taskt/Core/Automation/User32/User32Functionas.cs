@@ -962,7 +962,7 @@ namespace taskt.Core.Automation.User32
                 //define new mouse command
                 MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
 
-                var mouseMove = new Core.Automation.Commands.SendMouseMoveCommand
+                var mouseMove = new Core.Automation.Commands.MoveMouseCommand
                 {
                     v_XMousePosition = hookStruct.pt.x.ToString(),
                     v_YMousePosition = hookStruct.pt.y.ToString(),
