@@ -376,7 +376,8 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "AddToVariableCommand", "AddListItemCommand", "Add List Item");
 
             // SetVariableIndex -> SetListIndex
-            ChangeCommandName(doc, "SetVariableIndexCommand", "SetListIndexCommand", "Set List Index");
+            // stop v3.5.1.40
+            //ChangeCommandName(doc, "SetVariableIndexCommand", "SetListIndexCommand", "Set List Index");
 
             return doc;
         }
