@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
-using taskt.Core.Script;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -14,88 +9,111 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Send Mouse Move")]
     [Attributes.ClassAttributes.Description("Simulates mouse movements")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to simulate the movement of the mouse, additionally, this command also allows you to perform a click after movement has completed.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'SetCursorPos' function from user32.dll to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SendMouseMoveCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please enter the X position to move the mouse to")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[Attributes.PropertyAttributes.PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("X Position to Move the Mouse to")]
+        [InputSpecification("X Position", true)]
+        //[SampleUsage("**250** or **{{{vXPos}}}**")]
+        [PropertyDetailSampleUsage("**250**", PropertyDetailSampleUsage.ValueType.Value, "X Position")]
+        [PropertyDetailSampleUsage("**{{{vXPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "X Position")]
         [PropertyCustomUIHelper("Capture Mouse Position", nameof(lnkMouseCapture_Clicked))]
-        [InputSpecification("Input the new horizontal coordinate of the mouse, 0 starts at the left and goes to the right")]
-        [SampleUsage("**250** or **{{{vXPos}}}**")]
-        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("Input the new horizontal coordinate of the mouse, 0 starts at the left and goes to the right. This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
+        [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "X Position")]
         public string v_XMousePosition { get; set; }
+
         [XmlAttribute]
-        [PropertyDescription("Please enter the Y position to move the mouse to")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[Attributes.PropertyAttributes.PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Y Position to Move the Mouse to")]        
+        [InputSpecification("Y Position", true)]
+        [PropertyDetailSampleUsage("**250**", PropertyDetailSampleUsage.ValueType.Value, "Y Position")]
+        [PropertyDetailSampleUsage("**{{{vYPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Y Position")]
+        [Remarks("Input the new horizontal coordinate of the window, 0 starts at the left and goes down. This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         [PropertyCustomUIHelper("Capture Mouse Position", nameof(lnkMouseCapture_Clicked))]
-        [InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes down")]
-        [SampleUsage("**250** or **{{{vYPos}}}**")]
-        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Y Position")]
         public string v_YMousePosition { get; set; }
+
         [XmlAttribute]
-        [PropertyDescription("Please indicate mouse click type if required (defualt is None)")]
+        //[PropertyDescription("Please indicate mouse click type if required (defualt is None)")]
+        //[PropertyUISelectionOption("None")]
+        //[PropertyUISelectionOption("Left Click")]
+        //[PropertyUISelectionOption("Middle Click")]
+        //[PropertyUISelectionOption("Right Click")]
+        //[PropertyUISelectionOption("Left Down")]
+        //[PropertyUISelectionOption("Middle Down")]
+        //[PropertyUISelectionOption("Right Down")]
+        //[PropertyUISelectionOption("Left Up")]
+        //[PropertyUISelectionOption("Middle Up")]
+        //[PropertyUISelectionOption("Right Up")]
+        //[PropertyUISelectionOption("Double Left Click")]
+        //[InputSpecification("Indicate the type of click required")]
+        //[SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
+        //[Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
+        //[PropertyIsOptional(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_MouseClickType))]
         [PropertyUISelectionOption("None")]
-        [PropertyUISelectionOption("Left Click")]
-        [PropertyUISelectionOption("Middle Click")]
-        [PropertyUISelectionOption("Right Click")]
-        [PropertyUISelectionOption("Left Down")]
-        [PropertyUISelectionOption("Middle Down")]
-        [PropertyUISelectionOption("Right Down")]
-        [PropertyUISelectionOption("Left Up")]
-        [PropertyUISelectionOption("Middle Up")]
-        [PropertyUISelectionOption("Right Up")]
-        [PropertyUISelectionOption("Double Left Click")]
-        [InputSpecification("Indicate the type of click required")]
-        [SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
-        [Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
-        [PropertyIsOptional(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true, "None")]
+        [PropertyValidationRule("Click Type", PropertyValidationRule.ValidationRuleFlags.None)]
         public string v_MouseClick { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterMouseClick))]
+        public string v_WaitTimeAfterClick { get; set; }
 
         public SendMouseMoveCommand()
         {
-            this.CommandName = "SendMouseMoveCommand";
-            this.SelectionName = "Send Mouse Move";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-           
+            //this.CommandName = "SendMouseMoveCommand";
+            //this.SelectionName = "Send Mouse Move";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;  
         }
 
         public override void RunCommand(object sender)
         {
-  
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mouseX = v_XMousePosition.ConvertToUserVariable(sender);
-            var mouseY = v_YMousePosition.ConvertToUserVariable(sender);
+            //var mouseX = v_XMousePosition.ConvertToUserVariable(sender);
+            //var mouseY = v_YMousePosition.ConvertToUserVariable(sender);
+            var mouseX = this.ConvertToUserVariableAsInteger(nameof(v_XMousePosition), engine);
+            var mouseY = this.ConvertToUserVariableAsInteger(nameof(v_YMousePosition), engine);
 
             try
             {
-                var xLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseX)));
-                var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
+                //var xLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseX)));
+                //var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
 
-                User32Functions.SetCursorPosition(xLocation, yLocation);
+                //User32Functions.SetCursorPosition(xLocation, yLocation);
+                User32Functions.SetCursorPosition(mouseX, mouseY);
 
-                var click = v_MouseClick.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(click))
+                //var click = v_MouseClick.ConvertToUserVariable(sender);
+                //if (String.IsNullOrEmpty(click))
+                //{
+                //    click = "None";
+                //}
+                //if (click != "") 
+                //{
+                //    User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
+                //}
+
+                if (!String.IsNullOrEmpty(v_MouseClick))
                 {
-                    click = "None";
+                    var clickCommand = new ClickMouseCommand
+                    {
+                        v_MouseClick = v_MouseClick,
+                        v_WaitTimeAfterClick = v_WaitTimeAfterClick
+                    };
+                    clickCommand.RunCommand(engine);
                 }
-
-                if (click != "") 
-                {
-                    User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
-                }
-
             }
             catch (Exception ex)
             {
@@ -133,26 +151,26 @@ namespace taskt.Core.Automation.Commands
 
         //}
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Target Coordinates (" + v_XMousePosition + "," + v_YMousePosition + ") Click: " + v_MouseClick + "]";
-        }
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Target Coordinates (" + v_XMousePosition + "," + v_YMousePosition + ") Click: " + v_MouseClick + "]";
+        //}
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_XMousePosition))
-            {
-                this.validationResult += "X position is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_YMousePosition))
-            {
-                this.validationResult += "Y position is empty.\n";
-                this.IsValid = false;
-            }
-            return this.IsValid;
-        }
+        //    if (String.IsNullOrEmpty(this.v_XMousePosition))
+        //    {
+        //        this.validationResult += "X position is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_YMousePosition))
+        //    {
+        //        this.validationResult += "Y position is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    return this.IsValid;
+        //}
     }
 }
