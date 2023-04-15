@@ -531,7 +531,7 @@ namespace taskt.UI.CustomControls
             var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
             if (attrIsWin?.isWindowNamesList ?? false)
             {
-                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowCurrentWindow, attrIsWin.allowDesktop));
+                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
             }
 
             // variable names list & instance name list
@@ -1240,18 +1240,21 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static ComboBox AddWindowNames(this ComboBox cbo, Forms.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
-            if (cbo == null)
-                return null;
+            //if (cbo == null)
+            //    return null;
 
-            cbo.BeginUpdate();
+            //cbo.BeginUpdate();
 
-            cbo.Items.Clear();
+            //cbo.Items.Clear();
 
-            cbo.Items.AddRange(GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop).ToArray());
+            //cbo.Items.AddRange(GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop).ToArray());
 
-            cbo.EndUpdate();
+            //cbo.EndUpdate();
 
-            return cbo;
+            //return cbo;
+            return cbo.AddComoboBoxItems(editor, new Func<List<string>>( () => {
+                return GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop);
+            }));
         }
 
         /// <summary>
@@ -1262,18 +1265,23 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static ComboBox AddVariableNames(this ComboBox cbo, Forms.frmCommandEditor editor)
         {
-            if (cbo == null)
-                return null;
+            //if (cbo == null)
+            //    return null;
 
-            cbo.BeginUpdate();
+            //cbo.BeginUpdate();
 
-            cbo.Items.Clear();
+            //cbo.Items.Clear();
 
-            cbo.Items.AddRange(GetVariableNames(editor).ToArray());
+            //cbo.Items.AddRange(GetVariableNames(editor).ToArray());
 
-            cbo.EndUpdate();
+            //cbo.EndUpdate();
 
-            return cbo;
+            //return cbo;
+
+            return cbo.AddComoboBoxItems(editor, new Func<List<string>>(() =>
+            {
+                return GetVariableNames(editor);
+            }));
         }
 
         
@@ -1286,6 +1294,29 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static ComboBox AddInstanceNames(this ComboBox cbo, Forms.frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
         {
+            //if ((cbo == null) || (editor == null))
+            //{
+            //    return null;
+            //}
+
+            //cbo.BeginUpdate();
+
+            //cbo.Items.Clear();
+
+            //cbo.Items.AddRange(GetInstanceNames(editor, tp).ToArray());
+
+            //cbo.EndUpdate();
+
+            //return cbo;
+
+            return cbo.AddComoboBoxItems(editor, new Func<List<string>>(() =>
+            {
+                return GetInstanceNames(editor, tp);
+            }));
+        }
+
+        public static ComboBox AddComoboBoxItems(this ComboBox cbo, Forms.frmCommandEditor editor, Func<List<string>> itemsFunc)
+        {
             if ((cbo == null) || (editor == null))
             {
                 return null;
@@ -1295,7 +1326,7 @@ namespace taskt.UI.CustomControls
 
             cbo.Items.Clear();
 
-            cbo.Items.AddRange(GetInstanceNames(editor, tp).ToArray());
+            cbo.Items.AddRange(itemsFunc().ToArray());
 
             cbo.EndUpdate();
 

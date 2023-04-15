@@ -645,19 +645,19 @@ namespace taskt.UI
 
             // Image
             {nameof(ImageRecognitionCommand), "taskt.Properties.Resources.command_camera"},
-            {nameof(OCRCommand), "taskt.Properties.Resources.command_camera"},
-            {nameof(ScreenshotCommand), "taskt.Properties.Resources.command_camera"},
+            {nameof(ExecuteOCRCommand), "taskt.Properties.Resources.command_camera"},
+            {nameof(TakeScreenshotCommand), "taskt.Properties.Resources.command_camera"},
 
             // Input
-            {nameof(FileDialogCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(FolderDialogCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(HTMLInputCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ShowFileDialogCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ShowFolderDialogCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ShowHTMLInputDialogCommand), "taskt.Properties.Resources.command_input"},
             {nameof(UserInputCommand), "taskt.Properties.Resources.command_input"}, // prompt
             {nameof(SendAdvancedKeyStrokesCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(SendHotkeyCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(SendKeysCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(SendMouseMoveCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(SendMouseClickCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(EnterShortcutKeyCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(EnterKeysCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(MoveMouseCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ClickMouseCommand), "taskt.Properties.Resources.command_input"},
             {nameof(UIAutomationCommand), "taskt.Properties.Resources.command_input"},
             
             // JSON

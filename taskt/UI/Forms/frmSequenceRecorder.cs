@@ -81,9 +81,9 @@ namespace taskt.UI.Forms
                 foreach (Core.Automation.Commands.ScriptCommand cmd in commandList)
                 {
 
-                    if (cmd is Core.Automation.Commands.SendMouseMoveCommand)
+                    if (cmd is Core.Automation.Commands.MoveMouseCommand)
                     {
-                        var sendMouseCmd = (Core.Automation.Commands.SendMouseMoveCommand)cmd;
+                        var sendMouseCmd = (Core.Automation.Commands.MoveMouseCommand)cmd;
                         if (sendMouseCmd.v_MouseClick != "None")
                         {
                             outputList.Add(newSequence);
@@ -95,7 +95,7 @@ namespace taskt.UI.Forms
                             newSequence.v_scriptActions.Add(cmd);
                         }
                     }
-                    else if (cmd is SendKeysCommand)
+                    else if (cmd is EnterKeysCommand)
                     {
                         outputList.Add(newSequence);
                         newSequence = new Core.Automation.Commands.SequenceCommand();

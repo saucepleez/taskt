@@ -6,6 +6,7 @@ using taskt.Core.Automation.User32;
 using taskt.UI.Forms;
 using System.Windows.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -18,44 +19,44 @@ namespace taskt.Core.Automation.Commands
     public class SendAdvancedKeyStrokesCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
+        [PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
+        [SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsWindowNamesList(true)]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window name search method (Default is Contains)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
-        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [PropertyDescription("Optional - Window name search method (Default is Contains)")]
+        [InputSpecification("")]
+        [PropertyUISelectionOption("Contains")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
+        [PropertyUISelectionOption("Exact match")]
+        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true)]
         public string v_SearchMethod { get; set; }
 
-        [Attributes.PropertyAttributes.PropertyDescription("Set Keys and Parameters")]
-        [Attributes.PropertyAttributes.InputSpecification("Define the parameters for the actions.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("Select Valid Options from the dropdowns")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDescription("Set Keys and Parameters")]
+        [InputSpecification("Define the parameters for the actions.")]
+        [SampleUsage("n/a")]
+        [Remarks("Select Valid Options from the dropdowns")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
         public DataTable v_KeyActions { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Return all keys to 'UP' position after execution (Default is No)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Select either 'Yes' or 'No' as to a preference")]
-        [Attributes.PropertyAttributes.SampleUsage("**Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [PropertyDescription("Optional - Return all keys to 'UP' position after execution (Default is No)")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("Select either 'Yes' or 'No' as to a preference")]
+        [SampleUsage("**Yes** or **No**")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsOptional(true)]
         public string v_KeyUpDefault { get; set; }
 
         [XmlIgnore]
@@ -85,7 +86,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //activate anything except current window
-            if (targetWindow != ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
+            if (targetWindow != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
             {
                 ActivateWindowCommand activateWindow = new ActivateWindowCommand
                 {
@@ -96,7 +97,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //track all keys down
-            var keysDown = new List<System.Windows.Forms.Keys>();
+            var keysDown = new List<Keys>();
 
             //run each selected item
             foreach (DataRow rw in v_KeyActions.Rows)
@@ -110,7 +111,7 @@ namespace taskt.Core.Automation.Commands
                 //parse OEM key name
                 string oemKeyString = keyName.Split('[', ']')[1];
 
-                var oemKeyName = (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), oemKeyString);
+                var oemKeyName = (Keys)Enum.Parse(typeof(Keys), oemKeyString);
 
             
                 //"Key Press (Down + Up)", "Key Down", "Key Up"
@@ -163,31 +164,24 @@ namespace taskt.Core.Automation.Commands
                     User32Functions.KeyUp(key);
                 }
             }
-        
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
+            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
+            var WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
             RenderedControls.Add(WindowNameControl);
 
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
 
-            //KeystrokeGridHelper = new DataGridView();
-            //KeystrokeGridHelper.DataBindings.Add("DataSource", this, "v_KeyActions", false, DataSourceUpdateMode.OnPropertyChanged);
-            //KeystrokeGridHelper.AllowUserToDeleteRows = true;
-            //KeystrokeGridHelper.AutoGenerateColumns = false;
-            //KeystrokeGridHelper.Width = 500;
-            //KeystrokeGridHelper.Height = 140;
             KeystrokeGridHelper = CommandControls.CreateDefaultDataGridViewFor("v_KeyActions", this, true, true, false, 500, 140, false);
-            //KeystrokeGridHelper.CellClick += KeystrokeGridHelper_CellClick;
             KeystrokeGridHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
 
             DataGridViewComboBoxColumn propertyName = new DataGridViewComboBoxColumn();
-            propertyName.DataSource = Core.Common.GetAvailableKeys();
+            propertyName.DataSource = Common.GetAvailableKeys();
             propertyName.HeaderText = "Selected Key";
             propertyName.DataPropertyName = "Key";
             KeystrokeGridHelper.Columns.Add(propertyName);
@@ -197,10 +191,6 @@ namespace taskt.Core.Automation.Commands
             propertyValue.HeaderText = "Selected Action";
             propertyValue.DataPropertyName = "Action";
             KeystrokeGridHelper.Columns.Add(propertyValue);
-
-            //KeystrokeGridHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            //KeystrokeGridHelper.AllowUserToAddRows = true;
-            //KeystrokeGridHelper.AllowUserToDeleteRows = true;
 
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_KeyActions", this));
             RenderedControls.Add(KeystrokeGridHelper);
@@ -214,33 +204,11 @@ namespace taskt.Core.Automation.Commands
         {
             return base.GetDisplayValue() + " [Send To Window '" + v_WindowName + "']";
         }
-        //private void KeystrokeGridHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        if (KeystrokeGridHelper.CurrentCell.Value.ToString() == "")
-        //        {
-        //            SendKeys.Send("%{DOWN}");
-        //        }
-        //    }
-        //}
 
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            //if (KeystrokeGridHelper.IsCurrentCellDirty || KeystrokeGridHelper.IsCurrentRowDirty)
-            //{
-            //    KeystrokeGridHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            //    var newRow = v_KeyActions.NewRow();
-            //    v_KeyActions.Rows.Add(newRow);
-            //    for (var i = v_KeyActions.Rows.Count - 1; i >= 0; i--)
-            //    {
-            //        if (v_KeyActions.Rows[i][0].ToString() == "" && v_KeyActions.Rows[i][1].ToString() == "")
-            //        {
-            //            v_KeyActions.Rows[i].Delete();
-            //        }
-            //    }
-            //}
+
             DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_KeyActions)], v_KeyActions);
         }
 
@@ -270,7 +238,7 @@ namespace taskt.Core.Automation.Commands
 
             return this.IsValid;
         }
-        public override void ConvertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
+        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {
             var cnv = new Dictionary<string, string>();
             cnv.Add("v_WindowName", "convertToIntermediateWindowName");

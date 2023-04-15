@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
             //    ((InvokePattern)invokePtn).Invoke();
             //}
 
-            var mouseClick = new SendMouseMoveCommand()
+            var mouseClick = new MoveMouseCommand()
             {
                 v_MouseClick = click,
                 v_XMousePosition = (point.X + xAd).ToString(),

@@ -42,7 +42,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 mode = CreationMode.Edit;
 
-                SendKeysCommand firstKeystroke = (SendKeysCommand)keyCommands[0];
+                EnterKeysCommand firstKeystroke = (EnterKeysCommand)keyCommands[0];
                 cmbWindowName.Text = firstKeystroke.v_WindowName;
                 cmbSearchMethod.Text = firstKeystroke.v_SearchMethod;
                 txtWaitTime.Text = firstKeystroke.v_WaitTime;
@@ -50,7 +50,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 string keystrokes = "";
                 foreach(var cmd in keyCommands)
                 {
-                    SendKeysCommand c = (SendKeysCommand)cmd;
+                    EnterKeysCommand c = (EnterKeysCommand)cmd;
                     keystrokes += c.v_TextToSend + "\r\n";
                 }
                 txtTextToSend.Text = keystrokes.Substring(0, keystrokes.Length - 2);
@@ -151,7 +151,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             foreach (string s in sendTexts)
             {
                 commands.Add(
-                    new SendKeysCommand()
+                    new EnterKeysCommand()
                     {
                         v_WindowName = cmbWindowName.Text,
                         v_SearchMethod = cmbSearchMethod.Text,
@@ -239,20 +239,20 @@ namespace taskt.UI.Forms.Supplement_Forms
             
 
             ScriptCommand selectedCommand = (ScriptCommand)lstCommands.Items[startIndex].Tag;
-            if (!(selectedCommand is SendKeysCommand))
+            if (!(selectedCommand is EnterKeysCommand))
             {
                 return commands;
             }
 
             // search to top
-            SendKeysCommand tryFirstKeystroke = (SendKeysCommand)selectedCommand;
+            EnterKeysCommand tryFirstKeystroke = (EnterKeysCommand)selectedCommand;
             int idx = startIndex;
             while (idx >= 1)
             {
                 ScriptCommand cmd = (ScriptCommand)lstCommands.Items[idx-1].Tag;
-                if (cmd is SendKeysCommand)
+                if (cmd is EnterKeysCommand)
                 {
-                    SendKeysCommand currentSendKeys = (SendKeysCommand)cmd;
+                    EnterKeysCommand currentSendKeys = (EnterKeysCommand)cmd;
                     if (isSameWindowToBottom(currentSendKeys, tryFirstKeystroke,  appSettings))
                     {
                         tryFirstKeystroke = currentSendKeys;
@@ -276,9 +276,9 @@ namespace taskt.UI.Forms.Supplement_Forms
             while (idx < lastRow)
             {
                 ScriptCommand cmd = (ScriptCommand)lstCommands.Items[idx].Tag;
-                if (cmd is SendKeysCommand)
+                if (cmd is EnterKeysCommand)
                 {
-                    SendKeysCommand currentSendKeys = (SendKeysCommand)cmd;
+                    EnterKeysCommand currentSendKeys = (EnterKeysCommand)cmd;
                     if (isSameWindowToBottom(tryFirstKeystroke, currentSendKeys, appSettings))
                     {
                         commands.Add(currentSendKeys);
@@ -297,7 +297,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             return commands;
         }
 
-        private static bool isSameWindowToBottom(SendKeysCommand aboveCommand, SendKeysCommand bottomCommand, Core.ApplicationSettings appSettings)
+        private static bool isSameWindowToBottom(EnterKeysCommand aboveCommand, EnterKeysCommand bottomCommand, Core.ApplicationSettings appSettings)
         {
             if (aboveCommand.v_WindowName == bottomCommand.v_WindowName)
             {

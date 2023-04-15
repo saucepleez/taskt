@@ -292,6 +292,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_38(doc);
             convertTo3_5_1_39(doc);
             fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
+            convertTo3_5_1_40(doc);
 
             return doc;
         }
@@ -375,28 +376,40 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "AddToVariableCommand", "AddListItemCommand", "Add List Item");
 
             // SetVariableIndex -> SetListIndex
-            ChangeCommandName(doc, "SetVariableIndexCommand", "SetListIndexCommand", "Set List Index");
+            // stop v3.5.1.40
+            //ChangeCommandName(doc, "SetVariableIndexCommand", "SetListIndexCommand", "Set List Index");
 
             return doc;
         }
         private static XDocument convertTo3_5_0_47(XDocument doc)
         {
             // AddListItem.v_userVariableName, SetListIndex.v_userVariableName -> *.v_ListName
-            IEnumerable<XElement> cmdIndex = doc.Descendants("ScriptCommand")
-                .Where(el =>
-                    (el.Attribute("CommandName").Value == "AddListItemCommand") ||
-                    (el.Attribute("CommandName").Value == "SetListIndexCommand")
-            );
-            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in cmdIndex)
+            //IEnumerable<XElement> cmdIndex = doc.Descendants("ScriptCommand")
+            //    .Where(el =>
+            //        (el.Attribute("CommandName").Value == "AddListItemCommand") ||
+            //        (el.Attribute("CommandName").Value == "SetListIndexCommand")
+            //);
+            ////XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in cmdIndex)
+            //{
+            //    var listNameAttr = cmd.Attribute("v_userVariableName");
+            //    if (listNameAttr != null)
+            //    {
+            //        cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
+            //        listNameAttr.Remove();
+            //    }
+            //}
+            ChangeAttributeName(doc, new Func<XElement, bool>(el =>
             {
-                var listNameAttr = cmd.Attribute("v_userVariableName");
-                if (listNameAttr != null)
+                switch (el.Attribute("CommandName").Value)
                 {
-                    cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
-                    listNameAttr.Remove();
+                    case "AddListItemCommand":
+                    case "SetListIndexCommand":
+                        return true;
+                    default:
+                        return false;
                 }
-            }
+            }), "v_userVariableName", "v_ListName");
 
             return doc;
         }
@@ -1140,6 +1153,38 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_40(XDocument doc)
+        {
+            // OCRCommand -> ExecuteOCR
+            ChangeCommandName(doc, "OCRCommand", "ExecuteOCRCommand", "Execute OCR");
+
+            // ScreenShotCommand -> TakeScreenshotCommand
+            ChangeCommandName(doc, "ScreenshotCommand", "TakeScreenshotCommand", "Take Screenshot");
+
+            // FileDialogCommand -> ShowFileDialogCommand
+            ChangeCommandName(doc, "FileDialogCommand", "ShowFileDialogCommand", "Show File Dialog");
+
+            // FolderDialogCommand -> ShowFolderDialogCommand
+            ChangeCommandName(doc, "FolderDialogCommand", "ShowFolderDialogCommand", "Show Folder Dialog");
+
+            // HTMLInputCommand -> ShowHTMLInputDialogCommand
+            ChangeCommandName(doc, "HTMLInputCommand", "ShowHTMLInputDialogCommand", "Show HTML Input Dialog");
+
+            // SendHotkeyCommand -> EnterShortcutKeyCommand
+            ChangeCommandName(doc, "SendHotkeyCommand", "EnterShortcutKeyCommand", "Enter Shortcut Key");
+
+            // SendKeysCommand -> EnterKeysCommand
+            ChangeCommandName(doc, "SendKeysCommand", "EnterKeysCommand", "Enter Keys");
+
+            // SendMouseClickCommand -> ClickMouseCommand
+            ChangeCommandName(doc, "SendMouseClickCommand", "ClickMouseCommand", "Click Mouse");
+
+            // SendMouseMoveCommand -> MoveMouseCommand
+            ChangeCommandName(doc, "SendMouseMoveCommand", "MoveMouseCommand", "Move Mouse");
+
+            return doc;
+        }
+
         /// <summary>
         /// change command name. target commands are searched by specified Func<>
         /// </summary>
@@ -1324,6 +1369,52 @@ namespace taskt.Core.Script
             }
 
             table.Add(newElem);
+        }
+
+        /// <summary>
+        /// change attribute name. target command is specified Func<>
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="newAttribute"></param>
+        /// <returns></returns>
+        private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
+        {
+            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand")
+                .Where(searchFunc);
+
+            foreach(var cmd in commands)
+            {
+                var trgAttr = cmd.Attribute(targetAttribute);
+                var newAttr = cmd.Attribute(newAttribute);
+                if (trgAttr != null)
+                {
+                    if (newAttr == null)
+                    {
+                        cmd.SetAttributeValue(newAttribute, trgAttr.Value);
+                    }
+                    trgAttr.Remove();
+                }
+            }
+
+            return doc;
+        }
+
+        /// <summary>
+        /// change attribute name. target command is specified command name
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="newAttribute"></param>
+        /// <returns></returns>
+        private static XDocument ChangeAttributeName(XDocument doc, string targetCommand, string targetAttribute, string newAttribute)
+        {
+            return ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            {
+                return el.Attribute("CommandName").Value == targetAttribute;
+            }), targetAttribute, newAttribute);
         }
     }
 }
