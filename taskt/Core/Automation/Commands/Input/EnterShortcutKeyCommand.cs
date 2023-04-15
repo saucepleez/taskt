@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
-        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         public string v_MatchMethod { get; set; }
 
         [XmlAttribute]
@@ -218,6 +218,11 @@ namespace taskt.Core.Automation.Commands
 
             var waitKeyEnter = this.ConvertToUserVariableAsInteger(nameof(v_WaitAfterKeyEnter), engine);
             System.Threading.Thread.Sleep(waitKeyEnter);
+        }
+
+        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
         private void cmbHotkey_SelectedIndexChanged(object sender, EventArgs e)
