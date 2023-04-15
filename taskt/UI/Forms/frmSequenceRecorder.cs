@@ -95,7 +95,7 @@ namespace taskt.UI.Forms
                             newSequence.v_scriptActions.Add(cmd);
                         }
                     }
-                    else if (cmd is SendKeysCommand)
+                    else if (cmd is EnterKeysCommand)
                     {
                         outputList.Add(newSequence);
                         newSequence = new Core.Automation.Commands.SequenceCommand();

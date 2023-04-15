@@ -626,7 +626,7 @@
     <Compile Include="Core\Automation\Commands\Window\WaitForWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\ShowHTMLInputDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendAdvancedKeyStrokesCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendKeysCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Input\EnterKeysCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendMouseClickCommand.cs" />
     <Compile Include="Core\Automation\Commands\Input\SendMouseMoveCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SequenceCommand.cs" />

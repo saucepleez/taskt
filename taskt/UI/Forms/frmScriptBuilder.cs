@@ -2776,7 +2776,7 @@ namespace taskt.UI.Forms
                         insertCommentToolStripMenuItem.Visible = true;
                     }
 
-                    if ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag is Core.Automation.Commands.SendKeysCommand)
+                    if ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag is Core.Automation.Commands.EnterKeysCommand)
                     {
                         multiSendKeystrokesEditToolStripMenuItem.Visible = true;
                     }
