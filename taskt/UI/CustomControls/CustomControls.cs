@@ -657,7 +657,7 @@ namespace taskt.UI
             {nameof(EnterShortcutKeyCommand), "taskt.Properties.Resources.command_input"},
             {nameof(EnterKeysCommand), "taskt.Properties.Resources.command_input"},
             {nameof(SendMouseMoveCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(SendMouseClickCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(ClickMouseCommand), "taskt.Properties.Resources.command_input"},
             {nameof(UIAutomationCommand), "taskt.Properties.Resources.command_input"},
             
             // JSON

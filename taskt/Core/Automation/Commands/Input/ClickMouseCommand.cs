@@ -8,13 +8,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Send Mouse Click")]
+    [Attributes.ClassAttributes.CommandSettings("Click Mouse")]
     [Attributes.ClassAttributes.Description("Simulates mouse clicks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to simulate multiple types of mouse clicks.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'SetCursorPos' function from user32.dll to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SendMouseClickCommand : ScriptCommand
+    public class ClickMouseCommand : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Please indicate mouse click type")]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterMouseClick))]
         public string v_WaitTimeAfterClick { get; set; }
 
-        public SendMouseClickCommand()
+        public ClickMouseCommand()
         {
             //this.CommandName = "SendMouseClickCommand";
             //this.SelectionName = "Send Mouse Click";

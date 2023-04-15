@@ -1175,6 +1175,9 @@ namespace taskt.Core.Script
             // SendKeysCommand -> EnterKeysCommand
             ChangeCommandName(doc, "SendKeysCommand", "EnterKeysCommand", "Enter Keys");
 
+            // SendMouseClickCommand -> ClickMouseCommand
+            ChangeCommandName(doc, "SendMouseClickCommand", "ClickMouseCommand", "Click Mouse");
+
             return doc;
         }
 
