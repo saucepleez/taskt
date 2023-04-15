@@ -18,28 +18,10 @@ namespace taskt.Core.Automation.Commands
     public class EnterKeysCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the Window name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsWindowNamesList(true)]
-        //[PropertyShowSampleUsageInDescription(true)]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Window name search method")]
-        //[InputSpecification("")]
-        //[PropertyUISelectionOption("Contains")]
-        //[PropertyUISelectionOption("Starts with")]
-        //[PropertyUISelectionOption("Ends with")]
-        //[PropertyUISelectionOption("Exact match")]
-        //[SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        //[Remarks("")]
-        //[PropertyIsOptional(true, "Contains")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
 
@@ -81,19 +63,8 @@ namespace taskt.Core.Automation.Commands
         public string v_WaitForWindow { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please specify waiting time after keystrokes (ms)")]
-        //[InputSpecification("")]
-        //[SampleUsage("**500** or **{{{vWaitTime}}}")]
-        //[Remarks("If less than 100 is specified, it will be 100")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyIsOptional(true, "500")]
-        //[PropertyFirstValue("500")]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         public string v_WaitTime { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private TextBox InputText;
 
         public EnterKeysCommand()
         {
@@ -108,21 +79,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //string targetWindowName = v_WindowName.ConvertToUserVariable(sender);
-            //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(searchMethod))
-            //{
-            //    searchMethod = "Contains";
-            //}
-            //if (targetWindowName != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
-            //{
-            //    ActivateWindowCommand activateWindow = new ActivateWindowCommand
-            //    {
-            //        v_WindowName = targetWindowName,
-            //        v_SearchMethod = searchMethod
-            //    };
-            //    activateWindow.RunCommand(sender);
-            //}
             var targetWindow = v_WindowName.ConvertToUserVariable(engine);
             if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
             {
@@ -138,34 +94,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             var textToSend = v_TextToSend.ConvertToUserVariable(engine);
-            //string EncryptionOption = v_EncryptionOption.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(EncryptionOption))
-            //{
-            //    EncryptionOption = "Not Encrypted";
-            //}
-            //if (EncryptionOption == "Encrypted")
-            //{
-            //    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
-            //}
+
             var encryptOption = this.GetUISelectionValue(nameof(v_EncryptionOption), engine);
             if (encryptOption == "encrypted")
             {
                 textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
             }
-
-            //if (String.IsNullOrEmpty(v_WaitTime))
-            //{
-            //    v_WaitTime = "500";
-            //}
-            //int waitTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
-            //if (waitTime < 0)
-            //{
-            //    throw new Exception("Wait time is less than 0 ms.");
-            //}
-            //else if (waitTime < 100)
-            //{
-            //    waitTime = 100;
-            //}
 
             if (textToSend == "{WIN_KEY}")
             {
@@ -232,60 +166,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-        //    var WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
-        //    RenderedControls.Add(WindowNameControl);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-        //    //taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
-        //    //CommandItemControl encryptLink = CommandControls.CreateUIHelper();
-        //    //encryptLink.CommandDisplay = "Encrypt Text";
-        //    //encryptLink.Click += (sender, e) => lnkEncryptText_Click(sender, e);
-
-        //    var textInputGroup = CommandControls.CreateDefaultInputGroupFor("v_TextToSend", this, editor);
-        //    RenderedControls.AddRange(textInputGroup);
-
-        //    //InputText = (TextBox)textInputGroup[2];
-        //    InputText = (TextBox)textInputGroup.Find(t => t is TextBox);
-
-        //    //helperControl.ForeColor = Color.White;
-        //    //helperControl.CommandDisplay = "Encrypt Text";
-        //    //helperControl.Click += HelperControl_Click;
-        //    //RenderedControls.Add(helperControl);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_EncryptionOption", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WaitTime", this, editor));
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Send '" + v_TextToSend + "' to '" + v_WindowName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_WindowName))
-        //    {
-        //        this.validationResult += "Window name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {

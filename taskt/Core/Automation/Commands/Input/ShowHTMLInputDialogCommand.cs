@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -9185,10 +9181,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Error On Close")]
         public string v_ErrorOnClose { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //public TextBox HtmlInput;
-
         public ShowHTMLInputDialogCommand()
         {
             //this.CommandName = "HTMLInputCommand";
@@ -9216,11 +9208,6 @@ namespace taskt.Core.Automation.Commands
                     //sample for temp testing
                     var htmlInput = v_InputHTML.ConvertToUserVariable(sender);
 
-                    //var ErrorOnClose = v_ErrorOnClose.ConvertToUserVariable(sender);
-                    //if (String.IsNullOrEmpty(ErrorOnClose))
-                    //{
-                    //    ErrorOnClose = "Error On Close";
-                    //}
                     var errorOnClose = this.GetUISelectionValue(nameof(v_ErrorOnClose), engine);
 
                     var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
@@ -9243,31 +9230,6 @@ namespace taskt.Core.Automation.Commands
             ));
         }
 
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    CommandItemControl helperControl = new CommandItemControl();
-        //    helperControl.Padding = new Padding(10, 0, 0, 0);
-        //    helperControl.ForeColor = Color.AliceBlue;
-        //    helperControl.Font = new Font("Segoe UI Semilight", 10);
-        //    helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
-        //    helperControl.CommandDisplay = "Launch HTML Builder";
-        //    helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
-
-
-        //    HtmlInput = (TextBox)CommandControls.CreateDefaultInputFor("v_InputHTML", this, null);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_InputHTML", this));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_InputHTML", this, HtmlInput, editor));
-        //    RenderedControls.Add(helperControl);
-        //    RenderedControls.Add(HtmlInput);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ErrorOnClose", this, editor));
-
-        //    return RenderedControls;
-        //}
-
         private void ShowHTMLBuilder(object sender, EventArgs e)
         {
             using (var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder())
@@ -9281,23 +9243,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Show Form To User]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_InputHTML))
-        //    {
-        //        this.validationResult += "HTML is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }

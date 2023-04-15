@@ -21,7 +21,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("X Position to Move the Mouse to")]
         [InputSpecification("X Position", true)]
-        //[SampleUsage("**250** or **{{{vXPos}}}**")]
         [PropertyDetailSampleUsage("**250**", PropertyDetailSampleUsage.ValueType.Value, "X Position")]
         [PropertyDetailSampleUsage("**{{{vXPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "X Position")]
         [PropertyCustomUIHelper("Capture Mouse Position", nameof(lnkMouseCapture_Clicked))]
@@ -43,23 +42,6 @@ namespace taskt.Core.Automation.Commands
         public string v_YMousePosition { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please indicate mouse click type if required (defualt is None)")]
-        //[PropertyUISelectionOption("None")]
-        //[PropertyUISelectionOption("Left Click")]
-        //[PropertyUISelectionOption("Middle Click")]
-        //[PropertyUISelectionOption("Right Click")]
-        //[PropertyUISelectionOption("Left Down")]
-        //[PropertyUISelectionOption("Middle Down")]
-        //[PropertyUISelectionOption("Right Down")]
-        //[PropertyUISelectionOption("Left Up")]
-        //[PropertyUISelectionOption("Middle Up")]
-        //[PropertyUISelectionOption("Right Up")]
-        //[PropertyUISelectionOption("Double Left Click")]
-        //[InputSpecification("Indicate the type of click required")]
-        //[SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
-        //[Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
-        //[PropertyIsOptional(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_MouseClickType))]
         [PropertyIsOptional(true, "None")]
         [PropertyValidationRule("Click Type", PropertyValidationRule.ValidationRuleFlags.None)]
@@ -81,8 +63,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var mouseX = v_XMousePosition.ConvertToUserVariable(sender);
-            //var mouseY = v_YMousePosition.ConvertToUserVariable(sender);
             var mouseX = this.ConvertToUserVariableAsInteger(nameof(v_XMousePosition), engine);
             var mouseY = this.ConvertToUserVariableAsInteger(nameof(v_YMousePosition), engine);
 
@@ -93,16 +73,6 @@ namespace taskt.Core.Automation.Commands
 
                 //User32Functions.SetCursorPosition(xLocation, yLocation);
                 User32Functions.SetCursorPosition(mouseX, mouseY);
-
-                //var click = v_MouseClick.ConvertToUserVariable(sender);
-                //if (String.IsNullOrEmpty(click))
-                //{
-                //    click = "None";
-                //}
-                //if (click != "") 
-                //{
-                //    User32Functions.SendMouseClick(v_MouseClick, xLocation, yLocation);
-                //}
 
                 if (!String.IsNullOrEmpty(v_MouseClick))
                 {
@@ -133,43 +103,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_XMousePosition", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_YMousePosition", this, editor));
-
-        //    ////create window name helper control
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_MouseClick", this, editor));
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Target Coordinates (" + v_XMousePosition + "," + v_YMousePosition + ") Click: " + v_MouseClick + "]";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_XMousePosition))
-        //    {
-        //        this.validationResult += "X position is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_YMousePosition))
-        //    {
-        //        this.validationResult += "Y position is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    return this.IsValid;
-        //}
     }
 }

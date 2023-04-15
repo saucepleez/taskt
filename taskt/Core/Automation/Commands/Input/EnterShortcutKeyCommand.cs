@@ -18,28 +18,10 @@ namespace taskt.Core.Automation.Commands
     public class EnterShortcutKeyCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the Window name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsWindowNamesList(true)]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Window name search method (Default is Contains)")]
-        //[InputSpecification("")]
-        //[PropertyUISelectionOption("Contains")]
-        //[PropertyUISelectionOption("Starts with")]
-        //[PropertyUISelectionOption("Ends with")]
-        //[PropertyUISelectionOption("Exact match")]
-        //[SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        //[Remarks("")]
-        //[PropertyIsOptional(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
 
@@ -105,18 +87,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         public string v_WaitAfterKeyEnter { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private ComboBox parameterHotkey;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private Label hotkey2ndLabel;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private Label hotkeyLabel;
-
         public EnterShortcutKeyCommand()
         {
             //this.CommandName = "SendHotkeyCommand";
@@ -129,21 +99,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var targetWindow = v_WindowName.ConvertToUserVariable(sender);
-            //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(searchMethod))
-            //{
-            //    searchMethod = "Contains";
-            //}
-            //if (targetWindow != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
-            //{
-            //    ActivateWindowCommand activateWindow = new ActivateWindowCommand
-            //    {
-            //        v_WindowName = targetWindow,
-            //        v_SearchMethod = searchMethod
-            //    };
-            //    activateWindow.RunCommand(sender);
-            //}
+            // TODO: all EnterKeys
 
             // activate
             var activateWindow = new ActivateWindowCommand
@@ -155,8 +111,6 @@ namespace taskt.Core.Automation.Commands
                 v_WaitTime = v_WaitForWindow
             };
             activateWindow.RunCommand(engine);
-
-            //var hotkey = v_Hotkey.ConvertToUserVariable(sender);
 
             switch (this.GetUISelectionValue(nameof(v_Hotkey), engine))
             {
@@ -230,85 +184,11 @@ namespace taskt.Core.Automation.Commands
             //var searchedKey = parameterHotkey.Text;
             var searchedKey = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
 
-            //Dictionary<string, string> dic = (Dictionary<string, string>)hotkeyLabel.Tag;
             var dic = (Dictionary<string, string>)((Label)ControlsList["lbl_" + nameof(v_Hotkey)]).Tag;
 
             var hotkey2ndLabel = (Label)ControlsList["lbl2_" + nameof(v_Hotkey)];
             hotkey2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-        //    //var WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-        //    //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
-        //    //RenderedControls.Add(WindowNameControl);
-
-        //    //RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-        //    //var controls = CommandControls.CreateDefaultDropdownGroupFor("v_Hotkey", this, editor);
-        //    //var hotkey = controls[2] as ComboBox;
-
-        //    //hotkey.Items.Add("New");
-        //    //hotkey.Items.Add("New Window");
-        //    //hotkey.Items.Add("Open");
-        //    //hotkey.Items.Add("Print");
-        //    //hotkey.Items.Add("Save");
-        //    //hotkey.Items.Add("Save As");
-
-        //    //hotkey.Items.Add("Undo");
-        //    //hotkey.Items.Add("Cut");
-        //    //hotkey.Items.Add("Copy");
-        //    //hotkey.Items.Add("Paste");
-        //    //hotkey.Items.Add("Delete");
-        //    //hotkey.Items.Add("Search");
-        //    //hotkey.Items.Add("Find");
-        //    //hotkey.Items.Add("Find Next");
-        //    //hotkey.Items.Add("Find Previous");
-        //    //hotkey.Items.Add("Replace");
-        //    //hotkey.Items.Add("Go To");
-        //    //hotkey.Items.Add("Select All");
-
-        //    //RenderedControls.AddRange(controls);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    parameterHotkey = (ComboBox)ctrls.Where(t => t.Name == "v_Hotkey").FirstOrDefault();
-        //    parameterHotkey.SelectedIndexChanged += (sender, e) => hotkeyCombobox_SelectedIndexChanged(sender, e);
-
-        //    hotkey2ndLabel = (Label)ctrls.Where(t => t.Name == "lbl2_v_Hotkey").FirstOrDefault();
-        //    hotkeyLabel = (Label)ctrls.GetControlsByName("v_Hotkey", CommandControls.CommandControlType.Label)[0];
-
-        //    return RenderedControls;
-
-        //}
-
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Send '" + v_Hotkey + "' to '" + v_WindowName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_WindowName))
-        //    {
-        //        this.validationResult += "Window name is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_Hotkey))
-        //    {
-        //        this.validationResult += "Hotkey is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
 
         public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
         {

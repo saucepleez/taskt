@@ -60,13 +60,6 @@ namespace taskt.Core.Automation.Commands
         public string v_InitialDirectory { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive file name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsVariablesList(true)]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
@@ -87,26 +80,18 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            //var dialogType = v_DialogType.ConvertToUserVariable(sender);
-            
             var filter = v_Filter.ConvertToUserVariable(engine);
             if (!checkFileterProperty(filter))
             {
                 throw new Exception("Strange Filter Property. Value: '" + filter + "'");
             }
 
-            //var index = v_FilterIndex.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(index))
-            //{
-            //    index = "1";
-            //}
             var index = this.ConvertToUserVariableAsInteger(nameof(v_FilterIndex), engine);
             if (index < 1)
             {
                 throw new Exception("Strange FilterIndex Property: Value: " + index);
             }
 
-            //var directory = v_InitialDirectory.ConvertToUserVariable(sender);
             string directory;
             if (String.IsNullOrEmpty(v_InitialDirectory))
             {
@@ -116,8 +101,6 @@ namespace taskt.Core.Automation.Commands
             {
                 directory = this.ConvertToUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
             }
-            //int vIndex = 1;
-            //vIndex = int.Parse(index);
 
             object result = null;
             switch (this.GetUISelectionValue(nameof(v_DialogType), engine))
@@ -145,64 +128,7 @@ namespace taskt.Core.Automation.Commands
 
         private static bool checkFileterProperty(string filter)
         {
-            //var count = filter.Split('|').Length;
-            //if (count == 0)
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    return (count % 2 == 1);
-            //}
-            return (filter.Split('|').Length % 2 == 1);
+            return (filter.Split('|').Length % 2 == 0);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DialogType", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Filter", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilterIndex", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InitialDirectory", this, editor));
-
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    //var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_applyToVariableName", this, new Control[] { VariableNameControl }, editor));
-        //    //RenderedControls.Add(VariableNameControl);
-
-        //    RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Show " + v_DialogType + "FileDialog, Filter '" + v_Filter + "', Apply Result to Variable '" + v_applyToVariableName + "']";
-        //}
-
-        //public override bool IsValidate(frmCommandEditor editor)
-        //{
-        //    base.IsValidate(editor);
-
-        //    if (String.IsNullOrEmpty(this.v_DialogType))
-        //    {
-        //        this.validationResult += "Dialog type is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_Filter))
-        //    {
-        //        this.validationResult += "Filter is empty.\n";
-        //        this.IsValid = false;
-        //    }
-        //    if (String.IsNullOrEmpty(this.v_applyToVariableName))
-        //    {
-        //        this.validationResult += "Variable is empty.\n";
-        //        this.IsValid = false;
-        //    }
-
-        //    return this.IsValid;
-        //}
     }
 }
