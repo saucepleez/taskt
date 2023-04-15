@@ -1,80 +1,92 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Send Mouse Click")]
     [Attributes.ClassAttributes.Description("Simulates mouse clicks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to simulate multiple types of mouse clicks.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'SetCursorPos' function from user32.dll to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SendMouseClickCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate mouse click type")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Click")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Down")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Down")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Down")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Left Up")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Middle Up")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Right Up")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Double Left Click")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate the type of click required")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
-        [Attributes.PropertyAttributes.Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDescription("Please indicate mouse click type")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyUISelectionOption("Left Click")]
+        //[PropertyUISelectionOption("Middle Click")]
+        //[PropertyUISelectionOption("Right Click")]
+        //[PropertyUISelectionOption("Left Down")]
+        //[PropertyUISelectionOption("Middle Down")]
+        //[PropertyUISelectionOption("Right Down")]
+        //[PropertyUISelectionOption("Left Up")]
+        //[PropertyUISelectionOption("Middle Up")]
+        //[PropertyUISelectionOption("Right Up")]
+        //[PropertyUISelectionOption("Double Left Click")]
+        //[InputSpecification("Indicate the type of click required")]
+        //[SampleUsage("Select from **Left Click**, **Middle Click**, **Right Click**, **Double Left Click**, **Left Down**, **Middle Down**, **Right Down**, **Left Up**, **Middle Up**, **Right Up** ")]
+        //[Remarks("You can simulate custom click by using multiple mouse click commands in succession, adding **Pause Command** in between where required.")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_MouseClickType))]
         public string v_MouseClick { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterMouseClick))]
+        public string v_WaitTimeAfterClick { get; set; }
 
         public SendMouseClickCommand()
         {
-            this.CommandName = "SendMouseClickCommand";
-            this.SelectionName = "Send Mouse Click";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SendMouseClickCommand";
+            //this.SelectionName = "Send Mouse Click";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var mousePosition = System.Windows.Forms.Cursor.Position;
-            User32Functions.SendMouseClick(v_MouseClick, mousePosition.X, mousePosition.Y);
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //create window name helper control
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_MouseClick", this, editor));
+            var clickType = this.GetUISelectionValue(nameof(v_MouseClick), engine);
+
+            var mousePosition = Cursor.Position;
+            User32Functions.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
+
+            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTimeAfterClick), engine);
+            System.Threading.Thread.Sleep(waitTime);
+        }
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    //create window name helper control
+        //    RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_MouseClick", this, editor));
        
+        //    return RenderedControls;
+        //}
 
-            return RenderedControls;
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Click Type: " + v_MouseClick + "]";
+        //}
 
-        }
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Click Type: " + v_MouseClick + "]";
-        }
+        //    if (String.IsNullOrEmpty(this.v_MouseClick))
+        //    {
+        //        this.validationResult += "Mouse click type is empty.\n";
+        //        this.IsValid = false;
+        //    }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_MouseClick))
-            {
-                this.validationResult += "Mouse click type is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
     }
 }
