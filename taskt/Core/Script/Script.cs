@@ -1179,6 +1179,9 @@ namespace taskt.Core.Script
             // SendMouseClickCommand -> ClickMouseCommand
             ChangeCommandName(doc, "SendMouseClickCommand", "ClickMouseCommand", "Click Mouse");
 
+            // SendMouseMoveCommand -> MoveMouseCommand
+            ChangeCommandName(doc, "SendMouseMoveCommand", "MoveMouseCommand", "Move Mouse");
+
             return doc;
         }
 
