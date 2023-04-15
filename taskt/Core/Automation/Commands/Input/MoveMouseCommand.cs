@@ -61,7 +61,6 @@ namespace taskt.Core.Automation.Commands
         //[PropertyIsOptional(true)]
         //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_MouseClickType))]
-        [PropertyUISelectionOption("None")]
         [PropertyIsOptional(true, "None")]
         [PropertyValidationRule("Click Type", PropertyValidationRule.ValidationRuleFlags.None)]
         public string v_MouseClick { get; set; }
