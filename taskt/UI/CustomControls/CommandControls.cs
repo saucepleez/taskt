@@ -741,11 +741,11 @@ namespace taskt.UI.CustomControls
 
                 if (isOuter)
                 {
-                    methodInfo.Invoke(null, new object[] { dgv, table });
+                    methodInfo.Invoke(null, new object[] { table});
                 }
                 else
                 {
-                    methodInfo.Invoke(command, new object[] { dgv, table });
+                    methodInfo.Invoke(command, new object[] { table});
                 }
             }
 

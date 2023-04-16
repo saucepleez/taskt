@@ -99,6 +99,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
         [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewInitMethod(nameof(AutomationElementControls) + "+" + nameof(CreateEmptyParamters))]
         public static string v_SearchParameters { get; }
 
 
@@ -1269,6 +1270,7 @@ namespace taskt.Core.Automation.Commands
                 if (source is DataTable tbl)
                 {
                     updateFunc(tbl);
+                    RenderSearchParameterDataGridView(dgv);
                 }
             }
         }
@@ -1382,5 +1384,30 @@ namespace taskt.Core.Automation.Commands
             }
         }
         #endregion
+
+        public static void RenderSearchParameterDataGridView(DataGridView dgv)
+        {
+            DataGridViewRow r = null;
+            foreach(DataGridViewRow row in dgv.Rows)
+            {
+                if ((row.Cells[1].Value?.ToString() ?? "") == "ControlType")
+                {
+                    r = row;
+                    break;
+                }
+            }
+
+            if (r != null)
+            {
+                var cmb = new DataGridViewComboBoxCell();
+
+                var fields = typeof(ControlType).GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).Select(f => f.Name).ToList();
+
+                cmb.Items.Add("");
+                cmb.Items.AddRange(fields.ToArray());
+
+                r.Cells[2] = cmb;
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Automation;
+using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -46,6 +47,11 @@ namespace taskt.Core.Automation.Commands
             AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
 
             (elem != null).StoreInUserVariable(engine, v_Result);
+        }
+
+        public override void AfterShown()
+        {
+            AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
         }
     }
 }

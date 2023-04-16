@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -53,6 +54,11 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("AutomationElement not found");
             }
+        }
+
+        public override void AfterShown()
+        {
+            AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
         }
     }
 }
