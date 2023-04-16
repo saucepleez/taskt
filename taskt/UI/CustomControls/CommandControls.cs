@@ -615,7 +615,7 @@ namespace taskt.UI.CustomControls
 
         #region DataGridView
         /// <summary>
-        /// create DataGridView and binding property, this method use PropertyDataGridViewSetting, PropertyDataGridViewColumnSettings, PropertyDataGridViewCellEditEvent attribute.
+        /// create DataGridView and binding property, this method use PropertyDataGridViewSetting, PropertyDataGridViewColumnSettings, PropertyDataGridViewCellEditEvent, PropertyDataGridViewInitMethod attribute.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
@@ -636,11 +636,13 @@ namespace taskt.UI.CustomControls
             var columnSetting = GetCustomAttributesWithVirtual<PropertyDataGridViewColumnSettings>(propInfo, virtualPropertyInfo);
             // events
             var events = GetCustomAttributesWithVirtual<PropertyDataGridViewCellEditEvent>(propInfo, virtualPropertyInfo);
+            // init
+            var init = GetCustomAttributeWithVirtual<PropertyDataGridViewInitMethod>(propInfo, virtualPropertyInfo)?.methodName ?? "";
 
             return CreateDefaultDataGridViewFor(propertyName, command, dgvSetting.allowAddRow, dgvSetting.allowDeleteRow, dgvSetting.allowResizeRow,
                     dgvSetting.width, dgvSetting.height,
                     dgvSetting.autoGenerateColumns, dgvSetting.headerRowHeight,
-                    false, columnSetting, events);
+                    false, columnSetting, events, init);
         }
 
 
@@ -659,8 +661,9 @@ namespace taskt.UI.CustomControls
         /// <param name="allowSort"></param>
         /// <param name="columns"></param>
         /// <param name="events"></param>
+        /// <param name="initMethod"></param>
         /// <returns></returns>
-        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, ScriptCommand command, bool allowAddRows = true, bool allowDeleteRows = true, bool allowResizeRows = false, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1, bool allowSort = false, List<PropertyDataGridViewColumnSettings> columns = null, List<PropertyDataGridViewCellEditEvent> events = null)
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, ScriptCommand command, bool allowAddRows = true, bool allowDeleteRows = true, bool allowResizeRows = false, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1, bool allowSort = false, List<PropertyDataGridViewColumnSettings> columns = null, List<PropertyDataGridViewCellEditEvent> events = null, string initMethod = "")
         {
             var propInfo = command.GetProperty(propertyName);
 
@@ -727,6 +730,22 @@ namespace taskt.UI.CustomControls
                             dgv.CellBeginEdit += beginEditMethod;
                             break;
                     }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(initMethod))
+            {
+                (var methodInfo, var isOuter) = GetMethodInfo(initMethod, command);
+
+                var table = (DataTable)propInfo.GetValue(command);
+
+                if (isOuter)
+                {
+                    methodInfo.Invoke(null, new object[] { dgv, table });
+                }
+                else
+                {
+                    methodInfo.Invoke(command, new object[] { dgv, table });
                 }
             }
 
