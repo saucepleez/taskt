@@ -758,7 +758,14 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyDataGridViewInitMethod : Attribute
     {
+        /// <summary>
+        /// void f(DataTable)
+        /// </summary>
         public string methodName;
+        /// <summary>
+        /// init
+        /// </summary>
+        /// <param name="methodName">void f(DataTable)</param>
         public PropertyDataGridViewInitMethod(string methodName)
         {
             this.methodName = methodName;
