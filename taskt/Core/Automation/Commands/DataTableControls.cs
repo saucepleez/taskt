@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -382,7 +383,7 @@ namespace taskt.Core.Automation.Commands
             string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
 
             int columnIndex = 0;
-            switch(columnType)
+            switch (columnType)
             {
                 case "column name":
                     string targetColumnName = command.ConvertToUserVariable(columnName, "Column Name", engine);
