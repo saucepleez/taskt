@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.UI.HtmlControls;
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
@@ -752,6 +753,15 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         {
             CellClick,
             CellBeginEdit
+        }
+    }
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyDataGridViewInitMethod : Attribute
+    {
+        public string methodName;
+        public PropertyDataGridViewInitMethod(string methodName)
+        {
+            this.methodName = methodName;
         }
     }
     #endregion
