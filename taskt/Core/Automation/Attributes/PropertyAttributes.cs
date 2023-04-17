@@ -719,8 +719,20 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public string headerText = "";
         public bool readOnly = false;
         public DataGridViewColumnType type = DataGridViewColumnType.TextBox;
+        /// <summary>
+        /// separate '\n'
+        /// </summary>
         public string comboBoxItems = "";
         public string defaultValue = "";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <param name="headerText"></param>
+        /// <param name="readOnly"></param>
+        /// <param name="type"></param>
+        /// <param name="comboBoxItems">separate '\n'</param>
+        /// <param name="defaultValue"></param>
         public PropertyDataGridViewColumnSettings(string columnName, string headerText, bool readOnly = false, DataGridViewColumnType type = DataGridViewColumnType.TextBox, string comboBoxItems = "", string defaultValue = null)
         {
             this.columnName = columnName;
