@@ -56,32 +56,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_UserInputConfig { get; set; }
 
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView UserInputGridViewHelper;
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private CommandItemControl AddRowControl;
-
         public ShowUserInputDialogCommand()
         {
             //this.CommandName = "UserInputCommand";
             //this.SelectionName = "Prompt for Input";
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
-
-            //v_UserInputConfig = new DataTable();
-            //v_UserInputConfig.TableName = DateTime.Now.ToString("UserInputParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-            //v_UserInputConfig.Columns.Add("Type");
-            //v_UserInputConfig.Columns.Add("Label");
-            //v_UserInputConfig.Columns.Add("Size");
-            //v_UserInputConfig.Columns.Add("DefaultValue");
-            //v_UserInputConfig.Columns.Add("UserInput");
-            //v_UserInputConfig.Columns.Add("ApplyToVariable");
-
-            //this.v_InputHeader = "Please Provide Input";
-            //this.v_InputDirections = "Directions: Please fill in the following fields";
         }
 
         public override void RunCommand(object sender)
@@ -94,7 +74,6 @@ namespace taskt.Core.Automation.Commands
                 MessageBox.Show("UserInput Supported With UI Only", "UserInput Command", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
 
             //create clone of original
             var clonedCommand = Common.Clone(this);
@@ -122,7 +101,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-
             //invoke ui for data collection
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
                 {
@@ -136,27 +114,6 @@ namespace taskt.Core.Automation.Commands
                         //loop through each input and assign
                         for (int i = 0; i < userInputs.Count; i++)
                         {
-                            //get target variable
-                            //var targetVariable = v_UserInputConfig.Rows[i]["ApplyToVariable"] as string;
-
-
-                            ////if engine is expected to create variables, the user will not expect them to contain start/end markers
-                            ////ex. {vAge} should not be created, vAge should be created and then called by doing {vAge}
-                            //if ((!string.IsNullOrEmpty(targetVariable)) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
-                            //{
-                            //    //remove start markers
-                            //    if (targetVariable.StartsWith(engine.engineSettings.VariableStartMarker))
-                            //    {
-                            //        targetVariable = targetVariable.TrimStart(engine.engineSettings.VariableStartMarker.ToCharArray());
-                            //    }
-
-                            //    //remove end markers
-                            //    if (targetVariable.EndsWith(engine.engineSettings.VariableEndMarker))
-                            //    {
-                            //        targetVariable = targetVariable.TrimEnd(engine.engineSettings.VariableEndMarker.ToCharArray());
-                            //    }
-                            //}
-
                             var targetVariable = VariableNameControls.GetVariableName(v_UserInputConfig.Rows[i].Field<string>("ApplyToVariable") ?? "", engine);
                             
                             //store user data in variable
@@ -176,117 +133,6 @@ namespace taskt.Core.Automation.Commands
             newRow["Size"] = "500,100";
             v_UserInputConfig.Rows.Add(newRow);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //UserInputGridViewHelper = new DataGridView();
-        //    //UserInputGridViewHelper.DataBindings.Add("DataSource", this, "v_UserInputConfig", false, DataSourceUpdateMode.OnPropertyChanged);
-        //    //UserInputGridViewHelper = CommandControls.CreateDataGridView(this, "v_UserInputConfig", true, true, false, 400, 250, true, 2);
-        //    //UserInputGridViewHelper.CellClick += UserInputGridViewHelper_CellClick;
-
-        //    //var typefield = new DataGridViewComboBoxColumn();
-        //    //typefield.Items.Add("TextBox");
-        //    //typefield.Items.Add("CheckBox");
-        //    //typefield.Items.Add("ComboBox");
-        //    //typefield.HeaderText = "Input Type";
-        //    //typefield.DataPropertyName = "Type";
-        //    //UserInputGridViewHelper.Columns.Add(typefield);
-
-        //    //var field = new DataGridViewTextBoxColumn();
-        //    //field.HeaderText = "Input Label";
-        //    //field.DataPropertyName = "Label";
-        //    //UserInputGridViewHelper.Columns.Add(field);
-
-
-        //    //field = new DataGridViewTextBoxColumn();
-        //    //field.HeaderText = "Input Size (X,Y)";
-        //    //field.DataPropertyName = "Size";
-        //    //UserInputGridViewHelper.Columns.Add(field);
-
-        //    //field = new DataGridViewTextBoxColumn();
-        //    //field.HeaderText = "Default Value";
-        //    //field.DataPropertyName = "DefaultValue";
-        //    //UserInputGridViewHelper.Columns.Add(field);
-
-        //    //field = new DataGridViewTextBoxColumn();
-        //    //field.HeaderText = "Assigned Variable";
-        //    //field.DataPropertyName = "ApplyToVariable";
-        //    //UserInputGridViewHelper.Columns.Add(field);
-
-
-        //    //UserInputGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-        //    //UserInputGridViewHelper.AllowUserToAddRows = false;
-        //    //UserInputGridViewHelper.AllowUserToDeleteRows = false;
-
-
-        //    //AddRowControl = new CommandItemControl();
-        //    //AddRowControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-        //    //AddRowControl.ForeColor = Color.AliceBlue;
-        //    //AddRowControl.Font = new Font("Segoe UI Semilight", 10);
-        //    //AddRowControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
-        //    //AddRowControl.CommandDisplay = "Add Input Parameter";
-        //    //AddRowControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
-
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputHeader", this, editor));
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InputDirections", this, editor));
-        //    //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserInputConfig", this));
-        //    //RenderedControls.Add(AddRowControl);
-        //    //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserInputConfig", this, new Control[] { UserInputGridViewHelper }, editor));
-        //    //RenderedControls.Add(UserInputGridViewHelper);
-
-        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-        //    RenderedControls.AddRange(ctrls);
-
-        //    UserInputGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_UserInputConfig")).FirstOrDefault();
-        //    //UserInputGridViewHelper.CellClick += UserInputGridViewHelper_CellClick;
-        //    UserInputGridViewHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
-
-        //    return RenderedControls;
-
-        //}
-
-        //private void AddInputParameter(object sender, EventArgs e, frmCommandEditor editor)
-        //{
-        //    var newRow = v_UserInputConfig.NewRow();
-        //    newRow["Size"] = "500,100";
-        //    v_UserInputConfig.Rows.Add(newRow);
-        //}
-
-
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [" + v_InputHeader + "]";
-        //}
-
-
-        //private void UserInputGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (UserInputGridViewHelper.Rows.Count == 0)
-        //    {
-        //        return;
-        //    }
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        if (e.ColumnIndex == 0)
-        //        {
-        //            if (UserInputGridViewHelper.Rows[e.RowIndex].Cells[0].Value.ToString() == "")
-        //            {
-        //                SendKeys.Send("{F4}");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            UserInputGridViewHelper.BeginEdit(false);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        UserInputGridViewHelper.EndEdit();
-        //    }
-        //}
 
         public override bool IsValidate(frmCommandEditor editor)
         {
@@ -309,6 +155,5 @@ namespace taskt.Core.Automation.Commands
 
             return this.IsValid;
         }
-
     }
 }

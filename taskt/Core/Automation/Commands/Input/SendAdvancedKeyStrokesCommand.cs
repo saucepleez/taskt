@@ -21,27 +21,10 @@ namespace taskt.Core.Automation.Commands
     public class SendAdvancedKeyStrokesCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the Window name (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}})")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        //[SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsWindowNamesList(true)]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Optional - Window name search method (Default is Contains)")]
-        //[InputSpecification("")]
-        //[PropertyUISelectionOption("Contains")]
-        //[PropertyUISelectionOption("Starts with")]
-        //[PropertyUISelectionOption("Ends with")]
-        //[PropertyUISelectionOption("Exact match")]
-        //[SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsOptional(true)]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
 
@@ -89,11 +72,6 @@ namespace taskt.Core.Automation.Commands
             //this.SelectionName = "Send Advanced Keystrokes";
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
-            //this.v_KeyActions = new DataTable();
-            //this.v_KeyActions.Columns.Add("Key");
-            //this.v_KeyActions.Columns.Add("Action");
-            //this.v_KeyActions.TableName = "SendAdvancedKeyStrokesCommand" + DateTime.Now.ToString("MMddyy.hhmmss");
-            //v_KeyUpDefault = "Yes";
         }
 
         public override void RunCommand(object sender)
@@ -101,22 +79,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var targetWindow = v_WindowName.ConvertToUserVariable(sender);
-            //var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            //if (String.IsNullOrEmpty(searchMethod))
-            //{
-            //    searchMethod = "Contains";
-            //}
-
-            ////activate anything except current window
-            //if (targetWindow != ((Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword)
-            //{
-            //    ActivateWindowCommand activateWindow = new ActivateWindowCommand
-            //    {
-            //        v_WindowName = targetWindow,
-            //        v_SearchMethod = searchMethod
-            //    };
-            //    activateWindow.RunCommand(sender);
-            //}
 
             if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
             {
@@ -193,7 +155,6 @@ namespace taskt.Core.Automation.Commands
             }
 
             //return key to up position if requested
-            //if (v_KeyUpDefault.ConvertToUserVariable(sender) == "Yes")
             if (this.GetYesNoSelectionValue(nameof(v_KeyUpDefault), engine))
             {
                 foreach (var key in keysDown)
@@ -216,70 +177,10 @@ namespace taskt.Core.Automation.Commands
             column.DataSource = Common.GetAvailableKeys();
         }
 
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-        //    var WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
-        //    RenderedControls.Add(WindowNameControl);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-        //    KeystrokeGridHelper = CommandControls.CreateDefaultDataGridViewFor("v_KeyActions", this, true, true, false, 500, 140, false);
-        //    KeystrokeGridHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
-
-        //    DataGridViewComboBoxColumn propertyName = new DataGridViewComboBoxColumn();
-        //    propertyName.DataSource = Common.GetAvailableKeys();
-        //    propertyName.HeaderText = "Selected Key";
-        //    propertyName.DataPropertyName = "Key";
-        //    KeystrokeGridHelper.Columns.Add(propertyName);
-
-        //    DataGridViewComboBoxColumn propertyValue = new DataGridViewComboBoxColumn();
-        //    propertyValue.DataSource = new List<string> { "Key Press (Down + Up)", "Key Down", "Key Up" };
-        //    propertyValue.HeaderText = "Selected Action";
-        //    propertyValue.DataPropertyName = "Action";
-        //    KeystrokeGridHelper.Columns.Add(propertyValue);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_KeyActions", this));
-        //    RenderedControls.Add(KeystrokeGridHelper);
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_KeyUpDefault", this, editor));
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Send To Window '" + v_WindowName + "']";
-        //}
-
-        //public override void BeforeValidate()
-        //{
-        //    base.BeforeValidate();
-
-        //    DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_KeyActions)], v_KeyActions);
-        //}
-
         public override bool IsValidate(frmCommandEditor editor)
         {
             base.IsValidate(editor);
 
-            //for (int i = 0; i < v_KeyActions.Rows.Count; i++)
-            //{
-            //    var row = v_KeyActions.Rows[i];
-            //    if (String.IsNullOrEmpty(row["Key"].ToString()))
-            //    {
-            //        this.validationResult += "Selected Key #" + (i + 1) + " is empty.\n";
-            //        this.IsValid = false;
-            //    }
-            //    else if (String.IsNullOrEmpty(row["Action"].ToString()))
-            //    {
-            //        this.validationResult += "Selected Action #" + (i + 1) + " is empty.\n";
-            //        this.IsValid = false;
-            //    }
-            //}
             for (int i = 0; i < v_KeyActions.Rows.Count; i++)
             {
                 var row = v_KeyActions.Rows[i];
