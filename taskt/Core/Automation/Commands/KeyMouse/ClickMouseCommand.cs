@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Key/Mouse Commands")]
+    [Attributes.ClassAttributes.SubGruop("Mouse")]
     [Attributes.ClassAttributes.CommandSettings("Click Mouse")]
     [Attributes.ClassAttributes.Description("Simulates mouse clicks.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to simulate multiple types of mouse clicks.")]
