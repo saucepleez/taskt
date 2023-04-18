@@ -8,7 +8,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Group("Key/Mouse Commands")]
     [Attributes.ClassAttributes.CommandSettings("Enter Shortcut Key")]
     [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]

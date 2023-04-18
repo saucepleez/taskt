@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Group("Key/Mouse Commands")]
     [Attributes.ClassAttributes.CommandSettings("Move Mouse")]
     [Attributes.ClassAttributes.Description("Simulates mouse movements")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to simulate the movement of the mouse, additionally, this command also allows you to perform a click after movement has completed.")]

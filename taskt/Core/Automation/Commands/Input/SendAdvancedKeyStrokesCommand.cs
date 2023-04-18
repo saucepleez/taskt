@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Group("Key/Mouse Commands")]
     [Attributes.ClassAttributes.CommandSettings("Send Advanced Keystrokes")]
     [Attributes.ClassAttributes.Description("Sends advanced keystrokes to a targeted window")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send advanced keystroke inputs to a window.")]
