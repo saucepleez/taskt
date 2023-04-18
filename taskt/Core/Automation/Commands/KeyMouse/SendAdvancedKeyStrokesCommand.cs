@@ -63,10 +63,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         public string v_WaitAfterKeyEnter { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView KeystrokeGridHelper;
-
         public SendAdvancedKeyStrokesCommand()
         {
             //this.CommandName = "SendAdvancedKeyStrokesCommand";
