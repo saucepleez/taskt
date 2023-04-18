@@ -293,6 +293,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_39(doc);
             fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
             convertTo3_5_1_40(doc);
+            convertTo3_5_1_41(doc);
 
             return doc;
         }
@@ -1181,6 +1182,14 @@ namespace taskt.Core.Script
 
             // SendMouseMoveCommand -> MoveMouseCommand
             ChangeCommandName(doc, "SendMouseMoveCommand", "MoveMouseCommand", "Move Mouse");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_41(XDocument doc)
+        {
+            // UserInputCommand -> ShowUserInputDialogCommand
+            ChangeCommandName(doc, "UserInputCommand", "ShowUserInputDialogCommand", "Show User Input Dialog");
 
             return doc;
         }

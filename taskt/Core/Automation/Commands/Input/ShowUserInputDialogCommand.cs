@@ -9,13 +9,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Input Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Prompt for Input")]
+    [Attributes.ClassAttributes.CommandSettings("Show User Input Dialog")]
     [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows.Forms.SendKeys' method to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UserInputCommand : ScriptCommand
+    public class ShowUserInputDialogCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
         //[NonSerialized]
         //private CommandItemControl AddRowControl;
 
-        public UserInputCommand()
+        public ShowUserInputDialogCommand()
         {
             //this.CommandName = "UserInputCommand";
             //this.SelectionName = "Prompt for Input";
