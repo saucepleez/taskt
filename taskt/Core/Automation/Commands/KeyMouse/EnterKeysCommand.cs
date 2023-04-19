@@ -167,24 +167,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        //{
-        //    var cnv = new Dictionary<string, string>
-        //    {
-        //        { nameof(v_WindowName), "convertToIntermediateWindowName" },
-        //        { nameof(v_TextToSend), "convertToIntermediateVariableParser" }
-        //    };
-        //    ConvertToIntermediate(settings, cnv, variables);
-        //}
-
-        //public override void ConvertToRaw(EngineSettings settings)
-        //{
-        //    var cnv = new Dictionary<string, string>
-        //    {
-        //        { nameof(v_WindowName), "convertToRawWindowName" }
-        //    };
-        //    ConvertToRaw(settings, cnv);
-        //}
     }
 }
