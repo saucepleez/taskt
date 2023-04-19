@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Linq;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -86,6 +85,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// create environment variable list and result examples
+        /// </summary>
+        /// <returns></returns>
         private List<string> CreateEnviromnentVariablesList()
         {
             var ret = new List<string>();
