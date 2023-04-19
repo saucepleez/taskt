@@ -682,6 +682,23 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.isVariablesList = opt;
         }
     }
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyComboBoxItemMethod : Attribute
+    {
+        /// <summary>
+        /// List&gt;string&lt; f()
+        /// </summary>
+        public string methodName;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="methodName">List&gt;string&lt; f()</param>
+        public PropertyComboBoxItemMethod(string methodName)
+        {
+            this.methodName = methodName;
+        }
+    }
     #endregion
 
     #region for DataGridView
