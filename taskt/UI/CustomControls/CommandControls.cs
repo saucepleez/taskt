@@ -125,7 +125,8 @@ namespace taskt.UI.CustomControls
                 var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
                 var attrIsVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
                 var attrInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
-                if ((attrUIOpt.Count > 0) || (attrIsWin != null) || (attrIsVar != null) || (attrInstance != null))
+                var attrCmbItem = GetCustomAttributeWithVirtual<PropertyComboBoxItemMethod>(propInfo, virtualPropInfo);
+                if ((attrUIOpt.Count > 0) || (attrIsWin != null) || (attrIsVar != null) || (attrInstance != null) || (attrCmbItem != null))
                 {
                     return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                 }
@@ -510,7 +511,7 @@ namespace taskt.UI.CustomControls
 
         #region combobox
         /// <summary>
-        /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyParameterDirection, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
+        /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyComboBoxItemMethod, PropertyParameterDirection, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="command"></param>
@@ -555,6 +556,23 @@ namespace taskt.UI.CustomControls
                         uiOptions.AddRange(GetInstanceNames(editor, attrIsInstance.instanceType));
                     }
                 }
+            }
+
+            // item method
+            var attrItemMethod = GetCustomAttributeWithVirtual<PropertyComboBoxItemMethod>(propInfo, virtualPropInfo);
+            if ((attrItemMethod?.methodName ?? "") != "")
+            {
+                (var methodInfo, var isOuter) = GetMethodInfo(attrItemMethod.methodName, command);
+                List<string> items;
+                if (isOuter)
+                {
+                    items = (List<string>)methodInfo.Invoke(null, new object[] { });
+                }
+                else
+                {
+                    items = (List<string>)methodInfo.Invoke(command, new object[] { });
+                }
+                uiOptions.AddRange(items);
             }
 
             // ui options
