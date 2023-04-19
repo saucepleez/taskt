@@ -61,6 +61,11 @@ namespace taskt.UI.CustomControls
 
             foreach (var propertyName in propartiesName)
             {
+                //var flowPanel = new Panel();
+                //var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
+                //flowPanel.Controls.AddRange(ctrls);
+                //controlList.Add(flowPanel);
+
                 controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
             }
 
