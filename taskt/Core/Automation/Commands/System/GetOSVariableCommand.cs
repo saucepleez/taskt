@@ -4,7 +4,6 @@ using System.Management;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Linq;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -25,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
         [PropertySelectionChangeEvent(nameof(cmbVariableNameComboBox_SelectedValueChanged))]
+        [PropertyComboBoxItemMethod(nameof(CreateOSVariableList))]
         [PropertySecondaryLabel(true)]
         [SampleUsage("**BootDevide** or **Name**")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -93,30 +93,55 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        /// <summary>
+        /// create os variable list and result examples
+        /// </summary>
+        /// <returns></returns>
+        private List<string> CreateOSVariableList()
         {
-            base.Render(editor);
+            var ret = new List<string>();
 
-            // TODO: support new attribute for combobox
             osVariables = new Dictionary<string, string>();
-
-            ComboBox cmb = (ComboBox)ControlsList[nameof(v_OSVariableName)];
 
             ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
             ManagementObjectCollection results = searcher.Get();
-            cmb.BeginUpdate();
             foreach (ManagementObject result in results)
             {
                 foreach (PropertyData prop in result.Properties)
                 {
-                    cmb.Items.Add(prop.Name);
+                    ret.Add(prop.Name);
                     osVariables.Add(prop.Name, prop.Value?.ToString() ?? "");
                 }
             }
-            cmb.EndUpdate();
 
-            return RenderedControls;
+            return ret;
         }
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    // TODO: support new attribute for combobox
+        //    osVariables = new Dictionary<string, string>();
+
+        //    ComboBox cmb = (ComboBox)ControlsList[nameof(v_OSVariableName)];
+
+        //    ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+        //    ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
+        //    ManagementObjectCollection results = searcher.Get();
+        //    cmb.BeginUpdate();
+        //    foreach (ManagementObject result in results)
+        //    {
+        //        foreach (PropertyData prop in result.Properties)
+        //        {
+        //            cmb.Items.Add(prop.Name);
+        //            osVariables.Add(prop.Name, prop.Value?.ToString() ?? "");
+        //        }
+        //    }
+        //    cmb.EndUpdate();
+
+        //    return RenderedControls;
+        //}
     }
 }
