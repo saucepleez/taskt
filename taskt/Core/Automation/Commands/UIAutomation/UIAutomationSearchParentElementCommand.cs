@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Parent Element")]
+    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.CommandSettings("Search Parent Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Parent Element from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent Element from AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetParentElementCommand : ScriptCommand
+    public class UIAutomationSearchParentElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("AutomationElement Variable Name to Store Parent AutomationElement")]
         public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationGetParentElementCommand()
+        public UIAutomationSearchParentElementCommand()
         {
             //this.CommandName = "UIAutomationGetParentElementCommand";
             //this.SelectionName = "Get Parent Element";

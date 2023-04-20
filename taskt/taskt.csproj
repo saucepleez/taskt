@@ -480,7 +480,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSetTextToElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromTableElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetParentElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchParentElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchChildElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromWindowCommand.cs" />

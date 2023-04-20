@@ -1209,6 +1209,9 @@ namespace taskt.Core.Script
             // UIAutomationGetElementFromWindowCommand -> UIAutomationSearchElementFromWindowCommand
             ChangeCommandName(doc, "UIAutomationGetElementFromWindowCommand", "UIAutomationSearchElementFromWindowCommand", "Search Element From Window");
 
+            // UIAutomationGetParentElementCommand -> UIAutomationSearchParentElementCommand
+            ChangeCommandName(doc, "UIAutomationGetParentElementCommand", "UIAutomationSearchParentElementCommand", "Search Parent Element");
+
             return doc;
         }
 
