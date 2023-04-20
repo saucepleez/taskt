@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Get")]
     [Attributes.ClassAttributes.CommandSettings("Get Parent Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Parent Element from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent Element from AutomationElement.")]
