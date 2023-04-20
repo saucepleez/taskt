@@ -1191,6 +1191,24 @@ namespace taskt.Core.Script
             // UserInputCommand -> ShowUserInputDialogCommand
             ChangeCommandName(doc, "UserInputCommand", "ShowUserInputDialogCommand", "Show User Input Dialog");
 
+            // UIAutomationGetChildElementCommand -> UIAutomationSearchChildElementCommand
+            ChangeCommandName(doc, "UIAutomationGetChildElementCommand", "UIAutomationSearchChildElementCommand", "Search Child Element");
+
+            // UIAutomationGetElementFromElementByXPathCommand -> UIAutomationSearchElementFromElementByXPathCommand
+            ChangeCommandName(doc, "UIAutomationGetElementFromElementByXPathCommand", "UIAutomationSearchElementFromElementByXPathCommand", "Search Element From Element By XPath");
+
+            // UIAutomationGetElementFromElementCommand -> UIAutomationSearchElementFromElementCommand
+            ChangeCommandName(doc, "UIAutomationGetElementFromElementCommand", "UIAutomationSearchElementFromElementCommand", "Search Element From Element");
+
+            // UIAutomationGetElementFromTableElementCommand -> UIAutomationSearchElementFromTableElementCommand
+            ChangeCommandName(doc, "UIAutomationGetElementFromTableElementCommand", "UIAutomationSearchElementFromTableElementCommand", "Search Element From Table Element");
+
+            // UIAutomationGetElementFromWindowByXPathCommand -> UIAutomationSearchElementFromWindowByXPathCommand
+            ChangeCommandName(doc, "UIAutomationGetElementFromWindowByXPathCommand", "UIAutomationSearchElementFromWindowByXPathCommand", "Search Element From Window By XPath");
+
+            // UIAutomationGetElementFromWindowCommand -> UIAutomationSearchElementFromWindowCommand
+            ChangeCommandName(doc, "UIAutomationGetElementFromWindowCommand", "UIAutomationSearchElementFromWindowCommand", "Search Element From Window");
+
             return doc;
         }
 
