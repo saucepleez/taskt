@@ -1736,6 +1736,7 @@ namespace taskt.UI.CustomControls
         }
 
         #region search control methods
+        // TODO: move to PropertyControl
         public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
         {
             List<Control> ret = new List<Control>();
