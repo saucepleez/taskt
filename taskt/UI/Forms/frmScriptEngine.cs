@@ -401,8 +401,8 @@ namespace taskt.UI.Forms
 
         }
 
-        public delegate List<string> ShowInputDelegate(Core.Automation.Commands.UserInputCommand inputs);
-        public List<string> ShowInput(Core.Automation.Commands.UserInputCommand inputs)
+        public delegate List<string> ShowInputDelegate(Core.Automation.Commands.ShowUserInputDialogCommand inputs);
+        public List<string> ShowInput(Core.Automation.Commands.ShowUserInputDialogCommand inputs)
         {
             if (InvokeRequired)
             {

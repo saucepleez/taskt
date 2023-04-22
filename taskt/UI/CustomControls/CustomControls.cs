@@ -652,7 +652,7 @@ namespace taskt.UI
             {nameof(ShowFileDialogCommand), "taskt.Properties.Resources.command_input"},
             {nameof(ShowFolderDialogCommand), "taskt.Properties.Resources.command_input"},
             {nameof(ShowHTMLInputDialogCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(UserInputCommand), "taskt.Properties.Resources.command_input"}, // prompt
+            {nameof(ShowUserInputDialogCommand), "taskt.Properties.Resources.command_input"}, // prompt
             {nameof(SendAdvancedKeyStrokesCommand), "taskt.Properties.Resources.command_input"},
             {nameof(EnterShortcutKeyCommand), "taskt.Properties.Resources.command_input"},
             {nameof(EnterKeysCommand), "taskt.Properties.Resources.command_input"},
@@ -726,9 +726,9 @@ namespace taskt.UI
             {nameof(SequenceCommand), "taskt.Properties.Resources.command_sequence"},
 
             // NLG
-            {nameof(NLGCreateInstanceCommand), "taskt.Properties.Resources.command_nlg"},
-            {nameof(NLGGeneratePhraseCommand), "taskt.Properties.Resources.command_nlg"},
-            {nameof(NLGSetParameterCommand), "taskt.Properties.Resources.command_nlg"},
+            {nameof(NLGCreateNLGInstanceCommand), "taskt.Properties.Resources.command_nlg"},
+            {nameof(NLGGenerateNLGPhraseCommand), "taskt.Properties.Resources.command_nlg"},
+            {nameof(NLGSetNLGParameterCommand), "taskt.Properties.Resources.command_nlg"},
 
             // Numeric
             {nameof(CreateNumericalVariableCommand), "taskt.Properties.Resources.command_function"},
@@ -781,15 +781,15 @@ namespace taskt.UI
             {nameof(UIAutomationCheckElementExistByXPathCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationClickElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationExpandCollapseItemsInElementCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationGetChildElementCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchChildElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationGetChildrenElementsInformationCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationGetElementFromElementCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationGetElementFromElementByXPathCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationGetElementFromTableElementCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationGetElementFromWindowCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationGetElementFromWindowByXPathCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchElementFromElementCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchElementFromElementByXPathCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchElementFromTableElementCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchElementFromWindowCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchElementFromWindowByXPathCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationGetElementTreeXMLFromElementCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationGetParentElementCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchParentElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationGetSelectedStateFromElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationGetSelectionItemsFromElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationGetTextFromElementCommand), "taskt.Properties.Resources.command_window"},

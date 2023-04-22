@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.UI.HtmlControls;
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
@@ -681,6 +682,23 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.isVariablesList = opt;
         }
     }
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyComboBoxItemMethod : Attribute
+    {
+        /// <summary>
+        /// List&gt;string&lt; f()
+        /// </summary>
+        public string methodName;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="methodName">List&gt;string&lt; f()</param>
+        public PropertyComboBoxItemMethod(string methodName)
+        {
+            this.methodName = methodName;
+        }
+    }
     #endregion
 
     #region for DataGridView
@@ -718,8 +736,20 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public string headerText = "";
         public bool readOnly = false;
         public DataGridViewColumnType type = DataGridViewColumnType.TextBox;
+        /// <summary>
+        /// separate '\n'
+        /// </summary>
         public string comboBoxItems = "";
         public string defaultValue = "";
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <param name="headerText"></param>
+        /// <param name="readOnly"></param>
+        /// <param name="type"></param>
+        /// <param name="comboBoxItems">separate '\n'</param>
+        /// <param name="defaultValue"></param>
         public PropertyDataGridViewColumnSettings(string columnName, string headerText, bool readOnly = false, DataGridViewColumnType type = DataGridViewColumnType.TextBox, string comboBoxItems = "", string defaultValue = null)
         {
             this.columnName = columnName;
@@ -752,6 +782,22 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         {
             CellClick,
             CellBeginEdit
+        }
+    }
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class PropertyDataGridViewInitMethod : Attribute
+    {
+        /// <summary>
+        /// void f(DataTable)
+        /// </summary>
+        public string methodName;
+        /// <summary>
+        /// init
+        /// </summary>
+        /// <param name="methodName">void f(DataTable)</param>
+        public PropertyDataGridViewInitMethod(string methodName)
+        {
+            this.methodName = methodName;
         }
     }
     #endregion

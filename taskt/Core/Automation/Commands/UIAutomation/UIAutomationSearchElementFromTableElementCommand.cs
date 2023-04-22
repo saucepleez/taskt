@@ -9,12 +9,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.CommandSettings("Get Element From Table Element")]
+    [Attributes.ClassAttributes.CommandSettings("Search Element From Table Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Element from Table AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Element from Table AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetElementFromTableElementCommand : ScriptCommand
+    public class UIAutomationSearchElementFromTableElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationGetElementFromTableElementCommand()
+        public UIAutomationSearchElementFromTableElementCommand()
         {
             //this.CommandName = "UIAutomationGetElementFromTableElementCommand";
             //this.SelectionName = "Get Element From Table Element";

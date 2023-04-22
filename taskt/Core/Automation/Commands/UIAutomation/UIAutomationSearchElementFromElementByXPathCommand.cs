@@ -12,12 +12,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.CommandSettings("Get Element From Element By XPath")]
+    [Attributes.ClassAttributes.CommandSettings("Search Element From Element By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. XPath does not support to use parent and sibling for root element.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetElementFromElementByXPathCommand : ScriptCommand
+    public class UIAutomationSearchElementFromElementByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         //[NonSerialized]
         //private TextBox XPathTextBox;
 
-        public UIAutomationGetElementFromElementByXPathCommand()
+        public UIAutomationSearchElementFromElementByXPathCommand()
         {
             //this.CommandName = "UIAutomationGetElementFromElementByXPathCommand";
             //this.SelectionName = "Get Element From Element By XPath";

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.User32;
@@ -8,7 +7,8 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Group("Key/Mouse Commands")]
+    [Attributes.ClassAttributes.SubGruop("Key")]
     [Attributes.ClassAttributes.CommandSettings("Enter Keys")]
     [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]
@@ -38,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{WIN_KEY+R}**", "Specify **Windows Key** and **R** for Enter Keys")]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateVariableParser), "")]
         [PropertyDisplayText(true, "Text")]
         public string v_TextToSend { get; set; }
 
@@ -165,25 +166,6 @@ namespace taskt.Core.Automation.Commands
                     InputText.Text = fm.Result;
                 }
             }
-        }
-
-        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        {
-            var cnv = new Dictionary<string, string>
-            {
-                { nameof(v_WindowName), "convertToIntermediateWindowName" },
-                { nameof(v_TextToSend), "convertToIntermediateVariableParser" }
-            };
-            ConvertToIntermediate(settings, cnv, variables);
-        }
-
-        public override void ConvertToRaw(EngineSettings settings)
-        {
-            var cnv = new Dictionary<string, string>
-            {
-                { nameof(v_WindowName), "convertToRawWindowName" }
-            };
-            ConvertToRaw(settings, cnv);
         }
     }
 }

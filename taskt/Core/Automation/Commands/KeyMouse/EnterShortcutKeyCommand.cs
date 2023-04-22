@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Group("Key/Mouse Commands")]
+    [Attributes.ClassAttributes.SubGruop("Key")]
     [Attributes.ClassAttributes.CommandSettings("Enter Shortcut Key")]
     [Attributes.ClassAttributes.Description("Sends keystrokes to a targeted window")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send keystroke inputs to a window.")]
@@ -99,79 +99,76 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            // TODO: all EnterKeys
-
-            // activate
-            var activateWindow = new ActivateWindowCommand
-            {
-                v_WindowName = v_WindowName,
-                v_SearchMethod = v_SearchMethod,
-                v_MatchMethod = v_MatchMethod,
-                v_TargetWindowIndex = v_TargetWindowIndex,
-                v_WaitTime = v_WaitForWindow
-            };
-            activateWindow.RunCommand(engine);
-
+            string sendKey = "";
             switch (this.GetUISelectionValue(nameof(v_Hotkey), engine))
             {
                 case "new":
-                    User32Functions.KeyDownKeyUp(new []{ Keys.ControlKey, Keys.N});                 
+                    sendKey = "^n";
                     break;
                 case "new window":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.ShiftKey, Keys.N });
+                    sendKey = "^n";
                     break;
                 case "open":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.O });
+                    sendKey = "^o";
                     break;
                 case "print":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.P });
+                    sendKey = "^p";
                     break;
                 case "save":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.S });
+                    sendKey = "^s";
                     break;
                 case "save as":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.ShiftKey, Keys.S });
+                    sendKey = "^+s";
                     break;
                 case "undo":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.Z });
+                    sendKey = "^z";
                     break;
                 case "cut":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.X });
+                    sendKey = "^x";
                     break;
                 case "copy":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.C });
+                    sendKey = "^c";
                     break;
                 case "paste":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.V });
+                    sendKey = "^v";
                     break;
                 case "delete":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.Delete });
+                    sendKey = "{DEL}";
                     break;
                 case "search":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.E });
+                    sendKey = "^e";
                     break;
                 case "find":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.F });
+                    sendKey = "^f";
                     break;
                 case "find next":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.F3 });
+                    sendKey = "{F3}";
                     break;
                 case "find previous":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ShiftKey, Keys.F3 });
+                    sendKey = "+{F3}";
                     break;
                 case "replace":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.H });
+                    sendKey = "^h";
                     break;
                 case "go to":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.G });
+                    sendKey = "^g";
                     break;
                 case "select all":
-                    User32Functions.KeyDownKeyUp(new[] { Keys.ControlKey, Keys.A });
+                    sendKey = "^a";
                     break;
             }
 
-            var waitKeyEnter = this.ConvertToUserVariableAsInteger(nameof(v_WaitAfterKeyEnter), engine);
-            System.Threading.Thread.Sleep(waitKeyEnter);
+            var enterKeysCommand = new EnterKeysCommand
+            {
+                v_WindowName = v_WindowName,
+                v_SearchMethod = v_SearchMethod,
+                v_TextToSend = sendKey,
+                v_MatchMethod = v_MatchMethod,
+                v_TargetWindowIndex = v_TargetWindowIndex,
+                v_WaitForWindow = v_WaitForWindow,
+                v_WaitTime = v_WaitAfterKeyEnter
+            };
+            enterKeysCommand.RunCommand(engine);
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
@@ -188,20 +185,6 @@ namespace taskt.Core.Automation.Commands
 
             var hotkey2ndLabel = (Label)ControlsList["lbl2_" + nameof(v_Hotkey)];
             hotkey2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
-        }
-
-        public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_WindowName", "convertToIntermediateWindowName");
-            ConvertToIntermediate(settings, cnv, variables);
-        }
-
-        public override void ConvertToRaw(EngineSettings settings)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_WindowName", "convertToRawWindowName");
-            ConvertToRaw(settings, cnv);
         }
     }
 }

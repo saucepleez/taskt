@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -9,12 +10,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.CommandSettings("Get Child Element")]
+    [Attributes.ClassAttributes.CommandSettings("Search Child Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get Child Element from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child Element from AutomationElement. Search only for Child Elements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetChildElementCommand : ScriptCommand
+    public class UIAutomationSearchChildElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
@@ -43,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("AutomationElemnet Variable Name to Store Child Element")]
         public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationGetChildElementCommand()
+        public UIAutomationSearchChildElementCommand()
         {
             //this.CommandName = "UIAutomationGetChildElementCommand";
             //this.SelectionName = "Get Child Element";
@@ -67,6 +68,11 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("AutomationElement not found");
             }
+        }
+
+        public override void AfterShown()
+        {
+            AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
         }
     }
 }

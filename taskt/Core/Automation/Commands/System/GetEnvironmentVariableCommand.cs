@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Linq;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -25,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
         [PropertySelectionChangeEvent(nameof(cmbVariableNameComboBox_SelectedValueChanged))]
+        [PropertyComboBoxItemMethod(nameof(CreateEnviromnentVariablesList))]
         [SampleUsage("**HOME_PATH** or **TMP** or **PATH**")]
         [PropertyShowSampleUsageInDescription(true)]
         public string v_EnvVariableName { get; set; }
@@ -85,26 +85,47 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        /// <summary>
+        /// create environment variable list and result examples
+        /// </summary>
+        /// <returns></returns>
+        private List<string> CreateEnviromnentVariablesList()
         {
-            base.Render(editor);
+            var ret = new List<string>();
 
             // dynamic get env value name & value
             envVariableValues = new Dictionary<string, string>();
-            ComboBox cmb = (ComboBox)ControlsList[nameof(v_EnvVariableName)];
-            cmb.BeginUpdate();
             foreach (System.Collections.DictionaryEntry env in Environment.GetEnvironmentVariables())
             {
                 var envVariableKey = env.Key.ToString();
                 var envVariableValue = env.Value.ToString();
-                cmb.Items.Add(envVariableKey);
-
                 envVariableValues.Add(envVariableKey, envVariableValue);
+                ret.Add(envVariableKey);
             }
-            cmb.EndUpdate();
 
-            return RenderedControls;
+            return ret;
         }
+
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    // dynamic get env value name & value
+        //    envVariableValues = new Dictionary<string, string>();
+        //    ComboBox cmb = (ComboBox)ControlsList[nameof(v_EnvVariableName)];
+        //    cmb.BeginUpdate();
+        //    foreach (System.Collections.DictionaryEntry env in Environment.GetEnvironmentVariables())
+        //    {
+        //        var envVariableKey = env.Key.ToString();
+        //        var envVariableValue = env.Value.ToString();
+        //        cmb.Items.Add(envVariableKey);
+
+        //        envVariableValues.Add(envVariableKey, envVariableValue);
+        //    }
+        //    cmb.EndUpdate();
+
+        //    return RenderedControls;
+        //}
     }
 
 }

@@ -6,7 +6,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Input Commands")]
+    [Attributes.ClassAttributes.Group("Dialog/Message Commands")]
     [Attributes.ClassAttributes.CommandSettings("Show HTML Input Dialog")]
     [Attributes.ClassAttributes.Description("Allows the entry of data into a web-enabled form")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want a fancy data collection.")]
@@ -22,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("Launch HTML Builder", nameof(ShowHTMLBuilder))]
         [PropertyValidationRule("HTML", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(false, "")]
+        // TODO: more shorter!
         [PropertyFirstValue(
 @"<!DOCTYPE html>
 <html lang=\""en\"" xmlns=\""http://www.w3.org/1999/xhtml\"">

@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Data;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -53,6 +54,11 @@ namespace taskt.Core.Automation.Commands
                 result += "Index: " + i + ", Name: " + elem.Current.Name + ", LocalizedControlType: " + elem.Current.LocalizedControlType + ", ControlType: " + AutomationElementControls.GetControlTypeText(elem.Current.ControlType) + "\n";
             }
             result.Trim().StoreInUserVariable(engine, v_ResultVariable);
+        }
+
+        public override void AfterShown()
+        {
+            AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
         }
     }
 }

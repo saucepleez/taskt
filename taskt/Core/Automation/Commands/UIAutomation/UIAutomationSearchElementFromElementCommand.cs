@@ -2,23 +2,25 @@
 using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Automation;
-using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
+
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.CommandSettings("Check Element Exist")]
-    [Attributes.ClassAttributes.Description("This command allows you to to check AutomationElement existence.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check AutomationElement existence")]
+    [Attributes.ClassAttributes.CommandSettings("Search Element From Element")]
+    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. Search for Descendants Elements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationCheckElementExistCommand : ScriptCommand
+    public class UIAutomationSearchElementFromElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyDescription("AutomationElement Variable Name to Search")]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
@@ -26,14 +28,13 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
-        [Remarks("When the Element exists, Result value is **True**")]
-        public string v_Result { get; set; }
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationCheckElementExistCommand()
+        public UIAutomationSearchElementFromElementCommand()
         {
-            //this.CommandName = "UIAutomationCheckElementExistCommand";
-            //this.SelectionName = "Check Element Exist";
+            //this.CommandName = "UIAutomationGetElementFromElementCommand";
+            //this.SelectionName = "Get Element From Element";
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
@@ -45,8 +46,14 @@ namespace taskt.Core.Automation.Commands
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
             AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
-
-            (elem != null).StoreInUserVariable(engine, v_Result);
+            if (elem != null)
+            {
+                elem.StoreInUserVariable(engine, v_AutomationElementVariable);
+            }
+            else
+            {
+                throw new Exception("AutomationElement not found");
+            }
         }
 
         public override void AfterShown()

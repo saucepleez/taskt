@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Data;
-using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -10,30 +8,26 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.CommandSettings("Get Element From Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. Search for Descendants Elements.")]
+    [Attributes.ClassAttributes.CommandSettings("Search Parent Element")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Parent Element from AutomationElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent Element from AutomationElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetElementFromElementCommand : ScriptCommand
+    public class UIAutomationSearchParentElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
-        [PropertyDescription("AutomationElement Variable Name to Search")]
         public string v_TargetElement { get; set; }
-
-        [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
-        public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        [PropertyDescription("AutomationElement Variable Name to Store Parent AutomationElement")]
         public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationGetElementFromElementCommand()
+        public UIAutomationSearchParentElementCommand()
         {
-            //this.CommandName = "UIAutomationGetElementFromElementCommand";
-            //this.SelectionName = "Get Element From Element";
+            //this.CommandName = "UIAutomationGetParentElementCommand";
+            //this.SelectionName = "Get Parent Element";
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
@@ -44,10 +38,10 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
-            if (elem != null)
+            var parent = AutomationElementControls.GetParentElement(rootElement);
+            if (parent != null)
             {
-                elem.StoreInUserVariable(engine, v_AutomationElementVariable);
+                parent.StoreInUserVariable(engine, v_AutomationElementVariable);
             }
             else
             {

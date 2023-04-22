@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -176,7 +177,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static DataTable GetDataTableVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static DataTable GetDataTableVariable(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is DataTable table)
@@ -198,7 +199,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="columnName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
             var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
             var table = targetTable.GetDataTableVariable(engine);
@@ -215,7 +216,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (DataTable table, int rowIndex) GetDataTableVariableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex) GetDataTableVariableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
         {
             var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
             var table = targetTable.GetDataTableVariable(engine);
@@ -251,7 +252,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="rowName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int rowIndex, int columnIndex) GetDataTableVariableAndRowColumnIndeies(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex, int columnIndex) GetDataTableVariableAndRowColumnIndeies(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
             (var table, var rowIndex) = command.GetDataTableVariableAndRowIndex(tableName, rowName, engine);
             (_, var columnIndex) = command.GetDataTableVariableAndColumnIndex(tableName, columnTypeName, columnName, engine);
@@ -260,13 +261,13 @@ namespace taskt.Core.Automation.Commands
         }
 
 
-        public static void StoreInUserVariable(this DataTable value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this DataTable value, Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
         }
 
 
-        public static System.Data.DataTable CreateDataTable(string connection, string query)
+        public static DataTable CreateDataTable(string connection, string query)
         {
             //create vars
             var dataTable = new DataTable();
@@ -292,10 +293,23 @@ namespace taskt.Core.Automation.Commands
             return dataTable;
         }
 
+        /// <summary>
+        /// check column name exists
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
         private static bool IsColumnExists(DataTable table, string columnName)
         {
             return table.Columns.Contains(columnName);
         }
+
+        /// <summary>
+        /// check column index exists
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="columnIndex"></param>
+        /// <returns></returns>
         private static bool IsColumnExists(DataTable table, int columnIndex)
         {
             if (columnIndex >= 0)
@@ -309,7 +323,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static string GetColumnName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// get DataTable column name from value specified by argument
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="columnName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static string GetColumnName(DataTable table, string columnName, Engine.AutomationEngineInstance engine)
         {
             string col = columnName.ConvertToUserVariable(engine);
             if (IsColumnExists(table, col))
@@ -322,7 +344,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static int GetColumnIndex(DataTable table, string columnIndex, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// get column index from value specified by argument
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="columnIndex"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static int GetColumnIndex(DataTable table, string columnIndex, Engine.AutomationEngineInstance engine)
         {
             int index = new PropertyConvertTag(columnIndex, "Column Index").ConvertToUserVariableAsInteger(engine);
             if (index < 0)
@@ -339,12 +369,21 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static int GetColumnIndex(this ScriptCommand command, DataTable table, string columnTypeName, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// get column name or Index from value specified by arguments
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="table"></param>
+        /// <param name="columnTypeName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static int GetColumnIndex(this ScriptCommand command, DataTable table, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
             string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
 
             int columnIndex = 0;
-            switch(columnType)
+            switch (columnType)
             {
                 case "column name":
                     string targetColumnName = command.ConvertToUserVariable(columnName, "Column Name", engine);
@@ -359,7 +398,15 @@ namespace taskt.Core.Automation.Commands
             return columnIndex;
         }
 
-        private static int GetColumnIndexFromName(DataTable table, string columnName, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// get column index from name
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="columnName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static int GetColumnIndexFromName(DataTable table, string columnName, Engine.AutomationEngineInstance engine)
         {
             string col = GetColumnName(table, columnName, engine);
             for (int i = table.Columns.Count - 1; i >= 0; i--)
@@ -451,7 +498,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine">if not null, expand variables in ValueColumn values</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Automation.Engine.AutomationEngineInstance engine = null)
+        public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", Engine.AutomationEngineInstance engine = null)
         {
             if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
             {
@@ -501,7 +548,7 @@ namespace taskt.Core.Automation.Commands
                 var key = row.Field<string>(parameterColumnName) ?? "";
                 if (key == parameterName)
                 {
-                    row.SetField<string>(valueColumnName, newValue);
+                    row.SetField(valueColumnName, newValue);
                     return true;
                 }
             }
