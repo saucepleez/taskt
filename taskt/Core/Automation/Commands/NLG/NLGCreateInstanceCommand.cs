@@ -16,14 +16,6 @@ namespace taskt.Core.Automation.Commands
     public class NLGCreateInstanceCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create NLG Instance** command")]
-        //[SampleUsage("**nlgDefaultInstance** or **myInstance**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create NLG Instance** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.NLG)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyVirtualProperty(nameof(NLGControls), nameof(NLGControls.v_InstanceName))]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
@@ -50,27 +42,5 @@ namespace taskt.Core.Automation.Commands
 
             engine.AddAppInstance(vInstance, p);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.NLG);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
-        //    }
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }

@@ -16,18 +16,10 @@ namespace taskt.Core.Automation.Commands
     public class NLGGeneratePhraseCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please Enter the instance name")]
-        //[InputSpecification("Enter the unique instance name that was specified in the **Create NLG Instance** command")]
-        //[SampleUsage("**nlgDefaultInstance** or **myInstance**")]
-        //[Remarks("Failure to enter the correct instance name or failure to first call **Create NLG Instance** command will cause an error")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[PropertyInstanceType(PropertyInstanceType.InstanceType.NLG)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyVirtualProperty(nameof(NLGControls), nameof(NLGControls.v_InstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Select Variable to Receive Output")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
@@ -52,33 +44,5 @@ namespace taskt.Core.Automation.Commands
             String phraseOutput = realiser.realiseSentence(p);
             phraseOutput.StoreInUserVariable(sender, v_applyToVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-        //    {
-        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
-        //    }
-
-        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.NLG);
-        //    RenderedControls.AddRange(instanceCtrls);
-        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-        //    //apply to variable name
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    var applyToVariableControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, applyToVariableControl, editor));
-        //    RenderedControls.Add(applyToVariableControl);
-
-        //    return RenderedControls;
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Apply to '" + v_applyToVariableName +  "', Instance Name: '" + v_InstanceName + "']";
-        //}
     }
 }
