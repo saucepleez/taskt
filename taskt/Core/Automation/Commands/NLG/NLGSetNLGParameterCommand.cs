@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define NLG parameters")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class NLGSetParameterCommand : ScriptCommand
+    public class NLGSetNLGParameterCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NLGControls), nameof(NLGControls.v_InstanceName))]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Parameter Value")]
         public string v_Parameter { get; set; }
 
-        public NLGSetParameterCommand()
+        public NLGSetNLGParameterCommand()
         {
             //this.CommandName = "NLGSetParameterCommand";
             //this.SelectionName = "Set NLG Parameter";

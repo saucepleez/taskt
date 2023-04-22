@@ -585,8 +585,8 @@
     <Compile Include="Core\Automation\Commands\Error\TryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\ShowEngineContextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\NLG\NLGGeneratePhraseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\NLG\NLGSetParameterCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLG\NLGGenerateNLGPhraseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLG\NLGSetNLGParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserFindBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\GetBotStoreDataCommand.cs" />
@@ -594,7 +594,7 @@
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowMessageCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ParseJSONArray.cs" />
-    <Compile Include="Core\Automation\Commands\NLG\NLGCreateInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLG\NLGCreateNLGInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\API\RESTCommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCloseCommand.cs" />

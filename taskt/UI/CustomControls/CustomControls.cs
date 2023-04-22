@@ -726,9 +726,9 @@ namespace taskt.UI
             {nameof(SequenceCommand), "taskt.Properties.Resources.command_sequence"},
 
             // NLG
-            {nameof(NLGCreateInstanceCommand), "taskt.Properties.Resources.command_nlg"},
-            {nameof(NLGGeneratePhraseCommand), "taskt.Properties.Resources.command_nlg"},
-            {nameof(NLGSetParameterCommand), "taskt.Properties.Resources.command_nlg"},
+            {nameof(NLGCreateNLGInstanceCommand), "taskt.Properties.Resources.command_nlg"},
+            {nameof(NLGGenerateNLGPhraseCommand), "taskt.Properties.Resources.command_nlg"},
+            {nameof(NLGSetNLGParameterCommand), "taskt.Properties.Resources.command_nlg"},
 
             // Numeric
             {nameof(CreateNumericalVariableCommand), "taskt.Properties.Resources.command_function"},

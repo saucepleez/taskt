@@ -1212,6 +1212,15 @@ namespace taskt.Core.Script
             // UIAutomationGetParentElementCommand -> UIAutomationSearchParentElementCommand
             ChangeCommandName(doc, "UIAutomationGetParentElementCommand", "UIAutomationSearchParentElementCommand", "Search Parent Element");
 
+            // NLGCreateInstanceCommand -> NLGCreateNLGInstanceCommand
+            ChangeCommandName(doc, "NLGCreateInstanceCommand", "NLGCreateNLGInstanceCommand", "Create NLG Instance");
+
+            // NLGGeneratePhraseCommand -> NLGGenerateNLGPhraseCommand
+            ChangeCommandName(doc, "NLGGeneratePhraseCommand", "NLGGenerateNLGPhraseCommand", "Generate NLG Phrase");
+
+            // NLGSetParameterCommand -> NLGSetNLGParameterCommand
+            ChangeCommandName(doc, "NLGSetParameterCommand", "NLGSetNLGParameterCommand", "Set NLG Parameter");
+
             return doc;
         }
 
