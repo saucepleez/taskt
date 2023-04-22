@@ -369,6 +369,7 @@
     <Compile Include="Core\Automation\Commands\ListControls.cs" />
     <Compile Include="Core\Automation\Commands\List\GetListIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PlaySystemSoundCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLGControls.cs" />
     <Compile Include="Core\Automation\Commands\NumberControls.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />

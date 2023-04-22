@@ -1,98 +1,94 @@
 ﻿using SimpleNLG;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.Linq;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("NLG Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Set NLG Parameter")]
     [Attributes.ClassAttributes.Description("This command allows you to define a NLG parameter")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define NLG parameters")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class NLGSetParameterCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create NLG Instance** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**nlgDefaultInstance** or **myInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create NLG Instance** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG)]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create NLG Instance** command")]
+        //[SampleUsage("**nlgDefaultInstance** or **myInstance**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create NLG Instance** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.NLG)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyVirtualProperty(nameof(NLGControls), nameof(NLGControls.v_InstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the NLG Parameter Type")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create NLG Instance** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**nlgDefaultInstance** or **myInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create NLG Instance** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Subject")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Verb")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Set Object")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Complement")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Modifier")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Pre-Modifier")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Front Modifier")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Add Post Modifier")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("NLG Parameter Type")]
+        [PropertyUISelectionOption("Set Subject")]
+        [PropertyUISelectionOption("Set Verb")]
+        [PropertyUISelectionOption("Set Object")]
+        [PropertyUISelectionOption("Add Complement")]
+        [PropertyUISelectionOption("Add Modifier")]
+        [PropertyUISelectionOption("Add Pre-Modifier")]
+        [PropertyUISelectionOption("Add Front Modifier")]
+        [PropertyUISelectionOption("Add Post Modifier")]
+        [PropertyValidationRule("Parameter Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Paramter Type")]
         public string v_ParameterType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please define the input")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the value that should be associated to the parameter")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_OneLineTextBox))]
+        [PropertyDescription("Parameter Value")]
+        [InputSpecification("Parameter Value")]
+        [PropertyDisplayText(true, "Parameter Value")]
         public string v_Parameter { get; set; }
 
         public NLGSetParameterCommand()
         {
-            this.CommandName = "NLGSetParameterCommand";
-            this.SelectionName = "Set NLG Parameter";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_InstanceName = "";
+            //this.CommandName = "NLGSetParameterCommand";
+            //this.SelectionName = "Set NLG Parameter";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
+            //this.v_InstanceName = "";
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
             var p = (SPhraseSpec)engine.GetAppInstance(vInstance);
 
             var userInput = v_Parameter.ConvertToUserVariable(sender);
 
-
-            switch (v_ParameterType)
+            switch (this.GetUISelectionValue(nameof(v_ParameterType), engine))
             {
-                case "Set Subject":
+                case "set subject":
                     p.setSubject(userInput);
                     break;
-                case "Set Object":
+                case "set object":
                     p.setObject(userInput);
                     break;
-                case "Set Verb":
+                case "set verb":
                     p.setVerb(userInput);
                     break;
-                case "Add Complement":
+                case "add complement":
                     p.addComplement(userInput);
                     break;
-                case "Add Modifier":
+                case "add modifier":
                     p.addModifier(userInput);             
                     break;
-                case "Add Front Modifier":
+                case "add front modifier":
                     p.addFrontModifier(userInput);
                     break;
-                case "Add Post Modifier":
+                case "add post modifier":
                     p.addPostModifier(userInput);
                     break;
-                case "Add Pre-Modifier":
+                case "add pre-modifier":
                     p.addPreModifier(userInput);
-                    break;
-                default:
                     break;
             }
 
@@ -101,31 +97,30 @@ namespace taskt.Core.Automation.Commands
 
             //add to app instance to track
             engine.AddAppInstance(vInstance, p);
-
-
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-            {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
-            }
-
-            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
-            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.NLG);
-            RenderedControls.AddRange(instanceCtrls);
-            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ParameterType", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Parameter", this, editor));
-
-            return RenderedControls;
         }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [" + v_ParameterType + ": '" + v_Parameter + "', Instance Name: '" + v_InstanceName + "']";
-        }
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
+
+        //    if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+        //    {
+        //        this.v_InstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
+        //    }
+
+        //    var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+        //    CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.NLG);
+        //    RenderedControls.AddRange(instanceCtrls);
+        //    //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_ParameterType", this, editor));
+        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Parameter", this, editor));
+
+        //    return RenderedControls;
+        //}
+
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [" + v_ParameterType + ": '" + v_Parameter + "', Instance Name: '" + v_InstanceName + "']";
+        //}
     }
 }
