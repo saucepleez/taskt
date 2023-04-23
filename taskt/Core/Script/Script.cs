@@ -1227,8 +1227,8 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_42(XDocument doc)
         {
-            // HTTPQueryResultCommand -> HTMLGetHTMLTextByXPath
-            ChangeCommandName(doc, "HTTPQueryResultCommand", "HTMLGetHTMLTextByXPath", "Get HTML Text By XPath");
+            // HTTPRequestQueryCommand -> HTMLGetHTMLTextByXPath
+            ChangeCommandName(doc, "HTTPRequestQueryCommand", "HTMLGetHTMLTextByXPath", "Get HTML Text By XPath");
 
             // HTTPRequestCommand -> HTTPSendHTTPRequestCommand
             ChangeCommandName(doc, "HTTPRequestCommand", "HTTPSendHTTPRequestCommand", "Send HTTP Request");
