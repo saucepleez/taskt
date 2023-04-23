@@ -667,7 +667,7 @@
     <Compile Include="Core\Automation\Commands\If\EndIfCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\ErrorHandlingCommand.cs" />
     <Compile Include="Core\Automation\Commands\API\ExecuteDLLCommand.cs" />
-    <Compile Include="Core\Automation\Commands\API\HTMLGetHTMLTextByXPath.cs" />
+    <Compile Include="Core\Automation\Commands\Data\HTMLGetHTMLTextByXPath.cs" />
     <Compile Include="Core\Automation\Commands\API\HTTPRequestCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ImageRecognitionCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\MoveFileCommand.cs" />

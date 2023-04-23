@@ -5,7 +5,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("API Commands")]
+    [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.CommandSettings("Get HTML Text By XPath")]
     [Attributes.ClassAttributes.Description("This command processes an HTML source object")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to parse and extract data from a successful **HTTP Request Command**")]
