@@ -427,8 +427,8 @@ namespace taskt.UI
         {
             // API
             {nameof(ExecuteDLLCommand), "taskt.Properties.Resources.command_run_code"},
-            {nameof(RESTCommand), "taskt.Properties.Resources.command_run_code"},
-            {nameof(HTTPRequestCommand), "taskt.Properties.Resources.command_web"},
+            {nameof(HTTPExecuteRESTAPICommand), "taskt.Properties.Resources.command_run_code"},
+            {nameof(HTTPSendHTTPRequestCommand), "taskt.Properties.Resources.command_web"},
             {nameof(HTMLGetHTMLTextByXPath), "taskt.Properties.Resources.command_search"},
             
             // Application

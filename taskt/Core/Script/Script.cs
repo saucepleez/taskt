@@ -1230,6 +1230,12 @@ namespace taskt.Core.Script
             // HTTPQueryResultCommand -> HTMLGetHTMLTextByXPath
             ChangeCommandName(doc, "HTTPQueryResultCommand", "HTMLGetHTMLTextByXPath", "Get HTML Text By XPath");
 
+            // HTTPRequestCommand -> HTTPSendHTTPRequestCommand
+            ChangeCommandName(doc, "HTTPRequestCommand", "HTTPSendHTTPRequestCommand", "Send HTTP Request");
+
+            // RESTCommand -> HTTPExecuteRESTAPICommand
+            ChangeCommandName(doc, "RESTCommand", "HTTPExecuteRESTAPICommand", "Execute REST API");
+
             return doc;
         }
 

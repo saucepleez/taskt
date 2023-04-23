@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'MessageBox' and invokes VariableCommand to find variable data.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class RESTCommand : ScriptCommand
+    public class HTTPExecuteRESTAPICommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -88,7 +88,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Format")]
         public string v_RequestFormat { get; set; }
 
-        public RESTCommand()
+        public HTTPExecuteRESTAPICommand()
         {
             //this.CommandName = "RESTCommand";
             //this.SelectionName = "Execute REST API";

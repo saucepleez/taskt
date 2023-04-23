@@ -8,13 +8,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("API Commands")]
-    [Attributes.ClassAttributes.CommandSettings("HTTP Request")]
+    [Attributes.ClassAttributes.CommandSettings("Send HTTP Request")]
     [Attributes.ClassAttributes.Description("This command downloads the HTML source of a web page for parsing")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to retrieve HTML of a web page without using browser automation.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements System.Web to achieve automation")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class HTTPRequestCommand : ScriptCommand
+    public class HTTPSendHTTPRequestCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_userVariableName { get; set; }
 
-        public HTTPRequestCommand()
+        public HTTPSendHTTPRequestCommand()
         {
             //this.CommandName = "HTTPRequestCommand";
             //this.SelectionName = "HTTP Request";

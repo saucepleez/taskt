@@ -595,7 +595,7 @@
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowMessageCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ParseJSONArray.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGCreateNLGInstanceCommand.cs" />
-    <Compile Include="Core\Automation\Commands\API\RESTCommand.cs" />
+    <Compile Include="Core\Automation\Commands\API\HTTPExecuteRESTAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseCommand.cs" />
@@ -668,7 +668,7 @@
     <Compile Include="Core\Automation\Commands\Engine\ErrorHandlingCommand.cs" />
     <Compile Include="Core\Automation\Commands\API\ExecuteDLLCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\HTMLGetHTMLTextByXPath.cs" />
-    <Compile Include="Core\Automation\Commands\API\HTTPRequestCommand.cs" />
+    <Compile Include="Core\Automation\Commands\API\HTTPSendHTTPRequestCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ImageRecognitionCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\MoveFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ExecuteOCRCommand.cs" />
