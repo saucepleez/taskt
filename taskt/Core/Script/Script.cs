@@ -294,6 +294,7 @@ namespace taskt.Core.Script
             fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
             convertTo3_5_1_40(doc);
             convertTo3_5_1_41(doc);
+            convertTo3_5_1_42(doc);
 
             return doc;
         }
@@ -1220,6 +1221,14 @@ namespace taskt.Core.Script
 
             // NLGSetParameterCommand -> NLGSetNLGParameterCommand
             ChangeCommandName(doc, "NLGSetParameterCommand", "NLGSetNLGParameterCommand", "Set NLG Parameter");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_42(XDocument doc)
+        {
+            // HTTPQueryResultCommand -> HTMLGetHTMLTextByXPath
+            ChangeCommandName(doc, "HTTPQueryResultCommand", "HTMLGetHTMLTextByXPath", "Get HTML Text By XPath");
 
             return doc;
         }

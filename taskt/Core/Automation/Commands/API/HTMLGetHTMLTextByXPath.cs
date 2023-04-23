@@ -6,16 +6,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("API Commands")]
-    [Attributes.ClassAttributes.CommandSettings("HTTP Result Query")]
+    [Attributes.ClassAttributes.CommandSettings("Get HTML Text By XPath")]
     [Attributes.ClassAttributes.Description("This command processes an HTML source object")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to parse and extract data from a successful **HTTP Request Command**")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class HTTPQueryResultCommand : ScriptCommand
+    public class HTMLGetHTMLTextByXPath : ScriptCommand
     {
-        // todo: change command name
-
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
         [PropertyDescription("HTML")]
@@ -42,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         public string v_applyToVariableName { get; set; }
 
 
-        public HTTPQueryResultCommand()
+        public HTMLGetHTMLTextByXPath()
         {
             //this.CommandName = "HTTPRequestQueryCommand";
             //this.SelectionName = "HTTP Result Query";

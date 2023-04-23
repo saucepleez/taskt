@@ -429,7 +429,7 @@ namespace taskt.UI
             {nameof(ExecuteDLLCommand), "taskt.Properties.Resources.command_run_code"},
             {nameof(RESTCommand), "taskt.Properties.Resources.command_run_code"},
             {nameof(HTTPRequestCommand), "taskt.Properties.Resources.command_web"},
-            {nameof(HTTPQueryResultCommand), "taskt.Properties.Resources.command_search"},
+            {nameof(HTMLGetHTMLTextByXPath), "taskt.Properties.Resources.command_search"},
             
             // Application
             {nameof(RunCSharpCodeCommand), "taskt.Properties.Resources.command_script"},
