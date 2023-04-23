@@ -302,37 +302,6 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_45(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
-            //IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
-            //        (string)el.Attribute("CommandName") == "ActivateWindowCommand" ||
-            //        (string)el.Attribute("CommandName") == "CheckWindowNameExistsCommand" ||
-            //        (string)el.Attribute("CommandName") == "CloseWindowCommand" ||
-            //        (string)el.Attribute("CommandName") == "GetWindowNamesCommand" ||
-            //        (string)el.Attribute("CommandName") == "GetWindowPositionCommand" ||
-            //        (string)el.Attribute("CommandName") == "GetWindowStateCommand" ||
-            //        (string)el.Attribute("CommandName") == "MoveWindowCommand" ||
-            //        (string)el.Attribute("CommandName") == "ResizeWindowCommand" ||
-            //        (string)el.Attribute("CommandName") == "SetWindowStateCommand" ||
-            //        (string)el.Attribute("CommandName") == "WaitForWindowCommand" ||
-            //        (string)el.Attribute("CommandName") == "SendAdvancedKeyStrokesCommand" ||
-            //        (string)el.Attribute("CommandName") == "SendHotkeyCommand" ||
-            //        (string)el.Attribute("CommandName") == "SendKeysCommand" ||
-            //        (string)el.Attribute("CommandName") == "UIAutomationCommand"
-            //    )
-            //);
-            //foreach (var cmd in cmdWindowNames)
-            //{
-            //    if (cmd.Attribute("v_SearchMethod") != null)
-            //    {
-            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
-            //        {
-            //            cmd.SetAttributeValue("v_SearchMethod", "Starts with");
-            //        }
-            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
-            //        {
-            //            cmd.SetAttributeValue("v_SearchMethod", "Ends with");
-            //        }
-            //    }
-            //}
             ChangeAttributeValue(doc, new Func<XElement, bool>( el => {
                 switch (el.Attribute("CommandName").Value)
                 {
@@ -386,21 +355,6 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_47(XDocument doc)
         {
             // AddListItem.v_userVariableName, SetListIndex.v_userVariableName -> *.v_ListName
-            //IEnumerable<XElement> cmdIndex = doc.Descendants("ScriptCommand")
-            //    .Where(el =>
-            //        (el.Attribute("CommandName").Value == "AddListItemCommand") ||
-            //        (el.Attribute("CommandName").Value == "SetListIndexCommand")
-            //);
-            ////XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            //foreach (var cmd in cmdIndex)
-            //{
-            //    var listNameAttr = cmd.Attribute("v_userVariableName");
-            //    if (listNameAttr != null)
-            //    {
-            //        cmd.SetAttributeValue("v_ListName", listNameAttr.Value);
-            //        listNameAttr.Remove();
-            //    }
-            //}
             ChangeAttributeName(doc, new Func<XElement, bool>(el =>
             {
                 switch (el.Attribute("CommandName").Value)
@@ -434,26 +388,6 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_0_52(XDocument doc)
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
-            //IEnumerable<XElement> cmdWindowNames = doc.Descendants("ScriptCommand").Where(el => (
-            //        (string)el.Attribute("CommandName") == "GetFilesCommand" ||
-            //        (string)el.Attribute("CommandName") == "GetFoldersCommand" ||
-            //        (string)el.Attribute("CommandName") == "CheckStringCommand"
-            //    )
-            //);
-            //foreach (var cmd in cmdWindowNames)
-            //{
-            //    if (cmd.Attribute("v_SearchMethod") != null)
-            //    {
-            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "start with")
-            //        {
-            //            cmd.SetAttributeValue("v_SearchMethod", "Starts with");
-            //        }
-            //        if (((string)cmd.Attribute("v_SearchMethod")).ToLower() == "end with")
-            //        {
-            //            cmd.SetAttributeValue("v_SearchMethod", "Ends with");
-            //        }
-            //    }
-            //}
             ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
                 switch(el.Attribute("CommandName").Value)
@@ -484,18 +418,6 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "CheckStringCommand", "CheckTextCommand", "Check Text");
 
             // ModifyVariableCommand -> ModifyTextCommand
-            //IEnumerable<XElement> modifyTextList = doc.Descendants("ScriptCommand")
-            //    .Where(el => (
-            //        ((string)el.Attribute("CommandName") == "ModifyVariableCommand") ||
-            //        ((string)el.Attribute("CommandName") == "StringCaseCommand"))
-            //    );
-            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            //foreach (var cmd in modifyTextList)
-            //{
-            //    cmd.SetAttributeValue("CommandName", "ModifyTextCommand");
-            //    cmd.SetAttributeValue(ns + "type", "ModifyTextCommand");
-            //    cmd.SetAttributeValue("SelectionName", "Modify Text");
-            //}
             ChangeCommandName(doc, new Func<XElement, bool>( el => 
             {
                 switch (el.Attribute("CommandName").Value)
@@ -541,29 +463,6 @@ namespace taskt.Core.Script
         private static XDocument fixUIAutomationCommandEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
-            //IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationCommand"));
-            //XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
-            //foreach (var cmd in getList)
-            //{
-            //    XElement tableParams = cmd.Element("v_UIASearchParameters").Element(ns + "diffgram").Element("DocumentElement");
-            //    var elems = tableParams.Elements();
-            //    foreach (XElement elem in elems)
-            //    {
-            //        XElement elemEnabled = elem.Element("Enabled");
-            //        switch (elemEnabled.Value.ToLower())
-            //        {
-            //            case "true":
-            //            case "false":
-            //                break;
-
-            //            default:
-            //                elemEnabled.SetValue("False");
-            //                break;
-            //        }
-            //    }
-            //}
-
             ChangeTableCellValue(doc, "UIAutomationCommand", "v_UIASearchParameters", "Enabled", new Action<XElement>(c =>
             {
                 switch(c.Value.ToLower() ?? "")
@@ -591,25 +490,6 @@ namespace taskt.Core.Script
             });
 
             // BeginIf Selenium -> WebBrowser
-            //IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
-            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
-            //foreach(XElement cmd in getIf)
-            //{
-            //    if ((string)cmd.Attribute("v_IfActionType") == "Web Element Exists")
-            //    {
-            //        XElement tableParams = cmd.Element("v_IfActionParameterTable").Element(ns + "diffgram").Element("DocumentElement");
-            //        var elems = tableParams.Elements();
-            //        foreach(XElement elem in elems)
-            //        {
-            //            if (elem.Element("Parameter_x0020_Name").Value == "Selenium Instance Name")
-            //            {
-            //                elem.Element("Parameter_x0020_Name").Value = "WebBrowser Instance Name";
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return (
@@ -619,24 +499,6 @@ namespace taskt.Core.Script
             }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc);
 
             // BeginLoop Selenium -> WebBrowser
-            //IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
-            //foreach (XElement cmd in getLoop)
-            //{
-            //    if ((string)cmd.Attribute("v_LoopActionType") == "Web Element Exists")
-            //    {
-            //        XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(ns + "diffgram").Element("DocumentElement");
-            //        var elems = tableParams.Elements();
-            //        foreach (XElement elem in elems)
-            //        {
-            //            if (elem.Element("Parameter_x0020_Name").Value == "Selenium Instance Name")
-            //            {
-            //                elem.Element("Parameter_x0020_Name").Value = "WebBrowser Instance Name";
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return (
@@ -647,6 +509,7 @@ namespace taskt.Core.Script
 
             return doc;
         }
+
         private static XDocument convertTo3_5_0_74(XDocument doc)
         {
             var changeFunc = new Action<XAttribute>(attr =>
@@ -663,39 +526,9 @@ namespace taskt.Core.Script
             });
 
             // BeginIf Value, Variable Compare -> Numeric Compare, Text Compare
-            //IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
-            //foreach (XElement cmd in getIf)
-            //{
-            //    switch ((string)cmd.Attribute("v_IfActionType"))
-            //    {
-            //        case "Value":
-            //            cmd.Attribute("v_IfActionType").Value = "Numeric Compare";
-            //            break;
-
-            //        case "Variable Compare":
-            //            cmd.Attribute("v_IfActionType").Value = "Text Compare";
-            //            break;
-            //    }
-            //}
             ChangeAttributeValue(doc, "BeginIfCommand", "v_IfActionType", changeFunc);
 
             // BeginLoop Value, Variable Compare -> Numeric Compare, Text Compare
-            //IEnumerable<XElement> getLoop = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
-            //foreach (XElement cmd in getLoop)
-            //{
-            //    switch ((string)cmd.Attribute("v_LoopActionType"))
-            //    {
-            //        case "Value":
-            //            cmd.Attribute("v_LoopActionType").Value = "Numeric Compare";
-            //            break;
-
-            //        case "Variable Compare":
-            //            cmd.Attribute("v_LoopActionType").Value = "Text Compare";
-            //            break;
-            //    }
-            //}
             ChangeAttributeValue(doc, "BeginLoopCommand", "v_LoopActionType", changeFunc);
 
             return doc;
@@ -716,51 +549,6 @@ namespace taskt.Core.Script
             });
 
             // BeginIf add Window Search Method cell parameter
-            //IEnumerable<XElement> getIf = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginIfCommand"));
-            //XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
-            //XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
-            //foreach (XElement cmd in getIf)
-            //{
-            //    switch ((string)cmd.Attribute("v_IfActionType"))
-            //    {
-            //        case "Window Name Exists":
-            //        case "Active Window Name Is":
-            //            XElement tableParams = cmd.Element("v_IfActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
-            //            var elems = tableParams.Elements();
-            //            bool isExists = false;
-            //            foreach (XElement elem in elems)
-            //            {
-            //                if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
-            //                {
-            //                    isExists = true;
-            //                    break;
-            //                }
-            //            }
-            //            if (!isExists)
-            //            {
-            //                var elem = elems.ElementAt(0);
-            //                var newElem = new XElement(elem.Name);
-            //                newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
-            //                newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
-
-            //                // name
-            //                var nameElem = new XElement("Parameter_x0020_Name");
-            //                nameElem.Value = "Search Method";
-
-            //                // value
-            //                var valueElem = new XElement("Parameter_x0020_Value");
-            //                valueElem.Value = "Contains";
-
-            //                newElem.Add(nameElem);
-            //                newElem.Add(valueElem);
-
-            //                tableParams.Add(newElem);
-            //            }
-            //            break;
-            //    }
-            //}
-
             ModifyTable(doc, new Func<XElement, bool>(el =>
             {
                 if (el.Attribute("CommandName").Value == "BeginIfCommand")
@@ -781,48 +569,6 @@ namespace taskt.Core.Script
             }), "v_IfActionParameterTable", modFunc);
 
             // BeginLoop add Window Search Method parameter
-            //IEnumerable <XElement> getLoop = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "BeginLoopCommand"));
-            //foreach (XElement cmd in getLoop)
-            //{
-            //    switch ((string)cmd.Attribute("v_LoopActionType"))
-            //    {
-            //        case "Window Name Exists":
-            //        case "Active Window Name Is":
-            //            XElement tableParams = cmd.Element("v_LoopActionParameterTable").Element(diffNs + "diffgram").Element("DocumentElement");
-            //            var elems = tableParams.Elements();
-            //            bool isExists = false;
-            //            foreach (XElement elem in elems)
-            //            {
-            //                if (elem.Element("Parameter_x0020_Name").Value == "Search Method")
-            //                {
-            //                    isExists = true;
-            //                    break;
-            //                }
-            //            }
-            //            if (!isExists)
-            //            {
-            //                var elem = elems.ElementAt(0);
-            //                var newElem = new XElement(elem.Name);
-            //                newElem.Add(new XAttribute(diffNs + "id", elem.Name + (elems.Count() + 1).ToString()));    // diffgr:id
-            //                newElem.Add(new XAttribute(msNs + "rowOrder", elems.Count().ToString()));   // msdata:rowOrder
-
-            //                // name
-            //                var nameElem = new XElement("Parameter_x0020_Name");
-            //                nameElem.Value = "Search Method";
-
-            //                // value
-            //                var valueElem = new XElement("Parameter_x0020_Value");
-            //                valueElem.Value = "Contains";
-
-            //                newElem.Add(nameElem);
-            //                newElem.Add(valueElem);
-
-            //                tableParams.Add(newElem);
-            //            }
-            //            break;
-            //    }
-            //}
             ModifyTable(doc, new Func<XElement, bool>(el =>
             {
                 if (el.Attribute("CommandName").Value == "BeginLoopCommand")
@@ -848,32 +594,6 @@ namespace taskt.Core.Script
         private static XDocument fixUIAutomationGroupEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
-            //IEnumerable<XElement> getList = doc.Descendants("ScriptCommand")
-            //    .Where(el => ((string)el.Attribute("CommandName") == "UIAutomationGetChidrenElementsInformationCommand") ||
-            //                ((string)el.Attribute("CommandName") == "UIAutomationGetChildElementCommand") ||
-            //                ((string)el.Attribute("CommandName") == "UIAutomationGetElementFromElementCommand")
-            //    );
-            //XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
-            //foreach (var cmd in getList)
-            //{
-            //    XElement tableParams = cmd.Element("v_SearchParameters").Element(ns + "diffgram").Element("DocumentElement");
-            //    var elems = tableParams.Elements();
-            //    foreach (XElement elem in elems)
-            //    {
-            //        XElement elemEnabled = elem.Element("Enabled");
-            //        switch (elemEnabled.Value.ToLower())
-            //        {
-            //            case "true":
-            //            case "false":
-            //                break;
-
-            //            default:
-            //                elemEnabled.SetValue("False");
-            //                break;
-            //        }
-            //    }
-            //}
-
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 switch (el.Attribute("CommandName").Value)
@@ -913,8 +633,10 @@ namespace taskt.Core.Script
         {
             // Parse Json -> Get JSON Value List
             ChangeCommandName(doc, "ParseJsonCommand", "GetJSONValueListCommand", "Get JSON Value List");
+
             // Parse Json Model -> Get Multi JSON Value List
             ChangeCommandName(doc, "ParseJsonModelCommand", "GetMultiJSONValueListCommand", "Get Multi JSON Value List");
+
             return doc;
         }
 
