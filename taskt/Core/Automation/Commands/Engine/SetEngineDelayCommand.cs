@@ -44,6 +44,7 @@ namespace taskt.Core.Automation.Commands
 
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_EngineSpeed", this, editor));
 
+            // TODO: suppor keyword
             this.v_EngineSpeed = editor.appSettings.EngineSettings.DelayBetweenCommands.ToString();
             
             return RenderedControls;
