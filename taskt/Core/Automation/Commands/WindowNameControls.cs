@@ -302,36 +302,7 @@ namespace taskt.Core.Automation.Commands
             // not found
             throw new Exception("Window Name '" + windowName + "' not found");
         }
-        
-        //public static List<IntPtr> FindWindowsHandles(string windowName, string searchMethod, Engine.AutomationEngineInstance engine)
-        //{
-        //    List<IntPtr> ret = new List<IntPtr>();
-
-        //    if (windowName == engine.engineSettings.CurrentWindowKeyword)
-        //    {
-        //        windowName = GetCurrentWindowName();
-        //    }
-
-        //    var windows = GetAllWindows();
-        //    var method = GetWindowNameCompareMethod(searchMethod);
-        //    foreach (var win in windows)
-        //    {
-        //        if (method(win.Value, windowName))
-        //        {
-        //            ret.Add(win.Key);
-        //        }
-        //    }
-        //    if (ret.Count > 0)
-        //    {
-        //        return ret;
-        //    }
-        //    else
-        //    {
-        //        // not found
-        //        throw new Exception("Window Name '" + windowName + "' not found");
-        //    }
-        //}
-
+    
         public static List<string> GetAllWindowTitles()
         {
             return new List<string>(GetAllWindows().Values);
@@ -355,12 +326,6 @@ namespace taskt.Core.Automation.Commands
         {
             return User32.User32Functions.GetWindowTitle(handle);
         }
-
-        //public static void ActivateWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    IntPtr hwnd = FindWindowHandle(windowName, searchMethod, engine);
-        //    ActivateWindow(hwnd);
-        //}
 
         public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
