@@ -55,10 +55,6 @@ namespace taskt.Core.Automation.Commands
         public string v_MethodName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select the variable to receive the result")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
@@ -75,10 +71,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_MethodParameters { get; set; }
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //private DataGridView ParametersGridViewHelper;
 
         public ExecuteDLLCommand()
         {
@@ -250,20 +242,7 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            //if (ParametersGridViewHelper.IsCurrentCellDirty || ParametersGridViewHelper.IsCurrentRowDirty)
-            //{
-            //    ParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            //    var newRow = v_MethodParameters.NewRow();
-            //    v_MethodParameters.Rows.Add(newRow);
-            //    for (var i = v_MethodParameters.Rows.Count - 1; i >= 0; i--)
-            //    {
-            //        if (v_MethodParameters.Rows[i][0].ToString() == "" && v_MethodParameters.Rows[i][1].ToString() == "")
-            //        {
-            //            v_MethodParameters.Rows[i].Delete();
-            //        }
-            //    }
-            //}
-
+            
             DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_MethodParameters)], v_MethodParameters);
         }
 
@@ -380,48 +359,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    ParametersGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_MethodParameters", this, true, true, true, -1, 135);
-        //    ParametersGridViewHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
-
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ClassName", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MethodName", this, editor));
-
-        //    //create control for variable name
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-        //    var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl , editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
-        //    RenderedControls.AddRange(CommandControls.CreateCustomUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
-        //    RenderedControls.Add(ParametersGridViewHelper);
-
-        //    return RenderedControls;
-        //}
-
-
-        //public void ParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        ParametersGridViewHelper.BeginEdit(false);
-        //    }
-        //    else
-        //    {
-        //        ParametersGridViewHelper.EndEdit();
-        //    }
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Call Method '" + v_MethodName + "' in '" + v_ClassName + "']";
-        //}
     }
 }

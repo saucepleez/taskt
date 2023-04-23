@@ -20,7 +20,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("URL")]
         [InputSpecification("URL", true)]
-        //[SampleUsage("http://mycompany.com/news or {vURL}")]
         [PropertyDetailSampleUsage("**http://mycompany.com/news**", PropertyDetailSampleUsage.ValueType.Value, "URL")]
         [PropertyDetailSampleUsage("**{{{vURL}}}", PropertyDetailSampleUsage.ValueType.VariableValue, "URL")]
         [Remarks("")]
@@ -31,25 +30,11 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
         [PropertyDescription("Execute Request as the currently logged on user?")]
-        //[PropertyUISelectionOption("Yes")]
-        //[PropertyUISelectionOption("No")]
-        //[InputSpecification("Sets currently logged on user authentication information for the request.")]
-        //[SampleUsage("Select 'Yes' or 'No'")]
-        //[Remarks("")]
         public string v_WebRequestCredentials { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Apply Result To Variable")]
-        //[InputSpecification("Select or provide a variable from the variable list")]
-        //[SampleUsage("**vSomeVariable**")]
-        //[Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_userVariableName { get; set; }
-
-
-        //[XmlIgnore]
-        //[NonSerialized]
-        //public ComboBox VariableNameControl;
 
         public HTTPRequestCommand()
         {
@@ -81,29 +66,5 @@ namespace taskt.Core.Automation.Commands
 
             strResponse.StoreInUserVariable(sender, v_userVariableName);
         }
-
-        //public override List<Control> Render(frmCommandEditor editor)
-        //{
-        //    base.Render(editor);
-
-        //    //create inputs for request url
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_WebRequestURL", this, editor));
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_WebRequestCredentials", this, editor));
-
-        //    //create window name helper control
-        //    RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-        //    VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-        //    RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
-        //    RenderedControls.Add(VariableNameControl);
-
-        //    return RenderedControls;
-
-        //}
-
-        //public override string GetDisplayValue()
-        //{
-        //    return base.GetDisplayValue() + " [Target URL: '" + v_WebRequestURL + "' and apply result to '" + v_userVariableName + "']";
-        //}
-
     }
 }
