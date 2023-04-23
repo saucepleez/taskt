@@ -20,6 +20,12 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyDescription("Folder Move to the Recycle Bin")]
+        [PropertyIsOptional(true, "No")]
+        public string v_MoveToRecycleBin { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
         public string v_WaitForFolder { get; set; }
 
@@ -39,7 +45,14 @@ namespace taskt.Core.Automation.Commands
             var sourceFolder = FolderPathControls.WaitForFolder(this, nameof(v_SourceFolderPath), nameof(v_WaitForFolder), engine);
 
             //delete folder
-            System.IO.Directory.Delete(sourceFolder, true);
+            if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+            {
+                Shell32.MoveToRecycleBin(sourceFolder);
+            }
+            else
+            {
+                System.IO.Directory.Delete(sourceFolder, true);
+            }
         }
     }
 }

@@ -33,7 +33,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        // TODO: support recycle bin
         public DeleteFileCommand()
         {
             //this.CommandName = "DeleteFileCommand";
