@@ -142,7 +142,18 @@ namespace taskt.Core.Automation.Commands
             var client = new RestClient(targetURL);
 
             //methods
-            Method method = (Method)Enum.Parse(typeof(Method), targetMethod);
+            //Method method = (Method)Enum.Parse(typeof(Method), targetMethod);
+            Method method = Method.Get;
+            switch (targetMethod.ToLower())
+            {
+                case "get":
+                    method = Method.Get;
+                    break;
+                case "post":
+                    method = Method.Post;
+                    break;
+            }
+            
             
             //rest request
             var request = new RestRequest(targetEndpoint, method);
@@ -209,9 +220,11 @@ namespace taskt.Core.Automation.Commands
                 var paramType = rw.Field<string>("Parameter Type").ConvertToUserVariable(sender);
                 var contentType = rw.Field<string>("Content Type").ConvertToUserVariable(sender);
 
-                var param = new Parameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
+                //var param = new Parameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
 
-                request.Parameters.Add(param);
+                //request.Parameters.Add(param);
+
+                request.AddParameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
             }
 
             var requestFormat = v_RequestFormat.ConvertToUserVariable(sender);
@@ -223,7 +236,7 @@ namespace taskt.Core.Automation.Commands
      
             
             //execute client request
-            IRestResponse response = client.Execute(request);
+            RestResponse response = client.Execute(request);
             var content = response.Content;
 
             //add service response for tracking

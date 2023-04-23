@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Engine
         public string FileName { get; set; }
         public Core.Server.Task taskModel { get; set; }
         public bool serverExecution { get; set; }
-        public List<IRestResponse> ServiceResponses { get; set; }
+        public List<RestResponse> ServiceResponses { get; set; }
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Engine
             }
       
             AppInstances = new Dictionary<string, object>();
-            ServiceResponses = new List<IRestResponse>();
+            ServiceResponses = new List<RestResponse>();
             DataTables = new List<DataTable>();
 
             //this value can be later overriden by script

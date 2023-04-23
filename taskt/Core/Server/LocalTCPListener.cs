@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RestSharp;
 
 namespace taskt.Core.Server
 {
@@ -474,7 +475,8 @@ namespace taskt.Core.Server
 
             var client = new RestSharp.RestClient(endpoint);
             var request = new RestSharp.RestRequest();
-            request.Method = RestSharp.Method.POST;
+            //request.Method = RestSharp.Method.POST;
+            request.Method = Method.Post;
             request.AddHeader("Content-Type", "text/plain");
 
             if (listenerSettings.RequireListenerAuthenticationKey)
@@ -570,7 +572,7 @@ namespace taskt.Core.Server
             request.Timeout = int.Parse(timeout);
 
 
-            RestSharp.IRestResponse resp = client.Execute(request);
+            var resp = client.Execute(request);
 
             string content;
             if (resp.ErrorMessage is null)
