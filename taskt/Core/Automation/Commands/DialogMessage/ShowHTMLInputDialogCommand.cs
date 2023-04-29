@@ -22,7 +22,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("Launch HTML Builder", nameof(ShowHTMLBuilder))]
         [PropertyValidationRule("HTML", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(false, "")]
-        // TODO: more shorter!
         [PropertyFirstValue(
 @"<!DOCTYPE html>
 <html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
