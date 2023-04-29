@@ -361,6 +361,7 @@ namespace taskt.UI.Forms
                 // flow
                 if (item is FlowLayoutPanel flp)
                 {
+                    //flp.SuspendLayout();
                     foreach(Control c in flp.Controls)
                     {
                         c.Width = this.Width - 70;
