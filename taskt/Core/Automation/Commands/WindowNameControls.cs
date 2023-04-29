@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using taskt.UI.CustomControls;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Linq;
+using System.Drawing;
+using System.ComponentModel;
 using System.Windows.Forms;
+using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -112,6 +117,200 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
+        #region enum, struct
+        public enum WindowState
+        {
+            [Description("Minimizes a window, even if the thread that owns the window is not responding. This flag should only be used when minimizing windows from a different thread.")]
+            SW_FORCEMINIMIZE = 11,
+            [Description("Hides the window and activates another window.")]
+            SW_HIDE = 0,
+            [Description("Maximizes the specified window.")]
+            SW_MAXIMIZE = 3,
+            [Description("Minimizes the specified window and activates the next top-level window in the Z order.")]
+            SW_MINIMIZE = 6,
+            [Description("Activates and displays the window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when restoring a minimized window.")]
+            SW_RESTORE = 9,
+            [Description("Activates the window and displays it in its current size and position.")]
+            SW_SHOW = 5,
+            [Description("Sets the show state based on the SW_ value specified in the STARTUPINFO structure passed to the CreateProcess function by the program that started the application.")]
+            SW_SHOWDEFAULT = 10,
+            [Description("Activates the window and displays it as a maximized window.")]
+            SW_SHOWMAXIMIZED = 3,
+            [Description("Activates the window and displays it as a minimized window.")]
+            SW_SHOWMINIMIZED = 2,
+            [Description("Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not activated.")]
+            SW_SHOWMINNOACTIVE = 7,
+            [Description("Displays the window in its current size and position. This value is similar to SW_SHOW, except that the window is not activated.")]
+            SW_SHOWNA = 8,
+            [Description("Displays a window in its most recent size and position. This value is similar to SW_SHOWNORMAL, except that the window is not activated.")]
+            SW_SHOWNOACTIVATE = 4,
+            [Description("Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.")]
+            SW_SHOWNORMAL = 1,
+        }
+
+        public struct RECT
+        {
+            public int left, top, right, bottom;
+        }
+
+        public struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public int showCmd;
+            Point ptMinPosition;
+            Point ptMaxPosition;
+            RECT rcNormalPosition;
+            RECT rcDevice;
+        }
+        #endregion
+
+        #region win api
+
+        private static List<(IntPtr, string)> windowTitles;
+
+        private delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
+
+        [DllImport("user32.dll")]
+        private static extern int EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
+
+        [DllImport("user32.dll")]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextLengthW(IntPtr hWnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetWindowTextW(IntPtr hWnd, StringBuilder text, int count);
+
+        [DllImport("user32.dll")]
+        private static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        public static extern bool IsIconic(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("User32.dll", EntryPoint = "SetForegroundWindow")]
+        private static extern IntPtr SetForegroundWindowNative(IntPtr hWnd);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        private static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindowAsync(IntPtr hWnd, WindowState nCmdShow);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetDesktopWindow();
+
+        public static List<(IntPtr, string)> GetAllWindowNamesAndHandles()
+        {
+            windowTitles = new List<(IntPtr, string)>();
+
+            EnumWindows(new EnumWindowsDelegate(EnumerateWindow), IntPtr.Zero);
+
+            return new List<(IntPtr, string)>(windowTitles);
+        }
+
+        private static bool EnumerateWindow(IntPtr hWnd, IntPtr lParam)
+        {
+            int titleLengthA = GetWindowTextLengthW(hWnd);
+            if (IsWindowVisible(hWnd) && (titleLengthA > 0))
+            {
+                StringBuilder title = new StringBuilder(titleLengthA + 1);
+                GetWindowTextW(hWnd, title, title.Capacity);
+
+                windowTitles.Add((hWnd, title.ToString()));
+            }
+            return true;
+        }
+
+        public static string GetWindowTitle(IntPtr hWnd)
+        {
+            int titleLengthA = GetWindowTextLengthW(hWnd);
+            StringBuilder title = new StringBuilder(titleLengthA + 1);
+            GetWindowTextW(hWnd, title, title.Capacity);
+            return title.ToString();
+        }
+
+        public static IntPtr GetActiveWindowHandle()
+        {
+            return GetForegroundWindow();
+        }
+
+        public static void SetWindowState(IntPtr hWnd, WindowState windowState)
+        {
+            ShowWindow(hWnd, (int)windowState);
+        }
+
+        public static void SetForegroundWindow(IntPtr hWnd)
+        {
+            SetForegroundWindowNative(hWnd);
+        }
+
+        public static RECT GetWindowPosition(IntPtr hWnd)
+        {
+            RECT clientArea = new RECT();
+            GetWindowRect(hWnd, out clientArea);
+            return clientArea;
+        }
+
+        public static int GetWindowState(IntPtr hWnd)
+        {
+            var wInfo = new WINDOWPLACEMENT();
+            GetWindowPlacement(hWnd, ref wInfo);
+            return wInfo.showCmd;
+        }
+
+        public static void CloseWindow(IntPtr hWnd)
+        {
+            const UInt32 WM_CLOSE = 0x0010;
+            SendMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+        }
+        public static void SetWindowPosition(IntPtr hWnd, int newXPosition, int newYPosition)
+        {
+            const short SWP_NOSIZE = 1;
+            const short SWP_NOZORDER = 0X4;
+            const int SWP_SHOWWINDOW = 0x0040;
+
+            SetWindowPos(hWnd, 0, newXPosition, newYPosition, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+        }
+        public static void SetWindowSize(IntPtr hWnd, int newXSize, int newYSize)
+        {
+            const short SWP_NOZORDER = 0X4;
+            const int SWP_SHOWWINDOW = 0x0040;
+
+            GetWindowRect(hWnd, out RECT windowRect);
+
+            SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_SHOWWINDOW);
+        }
+
+        public static void ShowIconicWindow(IntPtr hWind)
+        {
+            ShowWindowAsync(hWind, WindowState.SW_SHOWNORMAL);
+        }
+
+        public static string GetActiveWindowTitle()
+        {
+            var whnd = GetActiveWindowHandle();
+            return GetWindowTitle(whnd);
+        }
+        #endregion
+
         #region Func<>
 
         /// <summary>
@@ -150,27 +349,27 @@ namespace taskt.Core.Automation.Commands
         /// <param name="index"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static Func<List<IntPtr>, List<IntPtr>> GetWindowMatchMethod(string matchType, int index)
+        private static Func<List<(IntPtr, string)>, List<(IntPtr, string)>> GetWindowMatchMethod(string matchType, int index)
         {
-            Func<List<IntPtr>, List<IntPtr>> ret;
+            Func<List<(IntPtr, string)>, List<(IntPtr, string)>> ret;
             switch(matchType.ToLower())
             {
                 case "first":
                     ret = (lst) =>
                     {
-                        return (lst.Count > 0 ? new List<IntPtr>() { lst[0] } : throw new Exception("No Matched Windows exists."));
+                        return (lst.Count > 0 ? new List<(IntPtr, string)>() { lst[0] } : throw new Exception("No Matched Windows exists."));
                     };
                     break;
                 case "last":
                     ret = (lst) =>
                     {
-                        return (lst.Count > 0 ? new List<IntPtr>() { lst[lst.Count - 1] } : throw new Exception("No Matched Windows exists."));
+                        return (lst.Count > 0 ? new List<(IntPtr, string)>() { lst[lst.Count - 1] } : throw new Exception("No Matched Windows exists."));
                     };
                     break;
                 case "all":
                     ret = (lst) =>
                     {
-                        return (lst.Count > 0 ? new List<IntPtr>(lst) : throw new Exception("No Matched Windows exists."));
+                        return (lst.Count > 0 ? new List<(IntPtr, string)>(lst) : throw new Exception("No Matched Windows exists."));
                     };
                     break;
                 case "index":
@@ -187,7 +386,7 @@ namespace taskt.Core.Automation.Commands
                         }
                         if (index >= 0 && index < count)
                         {
-                            return new List<IntPtr>() { lst[index] };
+                            return new List<(IntPtr, string)>() { lst[index] };
                         }
                         else
                         {
@@ -210,22 +409,26 @@ namespace taskt.Core.Automation.Commands
         /// <param name="index"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static Func<List<IntPtr>> GetWindowSearchMethod(string window, string searchMethod, string matchType, int index, Engine.AutomationEngineInstance engine)
+        private static Func<List<(IntPtr, string)>> GetWindowSearchMethod(string window, string searchMethod, string matchType, int index, Engine.AutomationEngineInstance engine)
         {
             if (window == engine.engineSettings.CurrentWindowKeyword)
             {
                 // current window
-                return new Func<List<IntPtr>>(() =>
+
+                var whnd = GetActiveWindowHandle();
+                var title = GetWindowTitle(whnd);
+
+                return new Func<List<(IntPtr, string)>>(() =>
                 {
-                    return new List<IntPtr>() { GetCurrentWindowHandle() };
+                    return new List<(IntPtr, string)>() { (whnd, title) };
                 });
             }
             else if (window == engine.engineSettings.AllWindowsKeyword)
             {
                 // all windows & match-type
-                return new Func<List<IntPtr>>(() =>
+                return new Func<List<(IntPtr, string)>>(() =>
                 {
-                    var matchedWindows = GetAllWindowHandles();
+                    var matchedWindows = GetAllWindowNamesAndHandles();
                     var matchFunc = GetWindowMatchMethod(matchType, index);
                     return matchFunc(matchedWindows);
                 });
@@ -233,17 +436,12 @@ namespace taskt.Core.Automation.Commands
             else
             {
                 // matched windows
-                return new Func<List<IntPtr>>(() => {
-                    var matchedWindows = new List<IntPtr>();
-                    var wins = GetAllWindows();
+                return new Func<List<(IntPtr, string)>>(() => {
+                    var wins = GetAllWindowNamesAndHandles();
                     var searchFunc = GetWindowNameCompareMethod(searchMethod);
-                    foreach (var key in wins.Keys)
-                    {
-                        if (searchFunc(wins[key], window))
-                        {
-                            matchedWindows.Add(key);
-                        }
-                    }
+
+                    var matchedWindows = wins.Where(w => searchFunc(w.Item2, window)).ToList();
+
                     var matchFunc = GetWindowMatchMethod(matchType, index);
                     return matchFunc(matchedWindows);
                 });
@@ -255,112 +453,91 @@ namespace taskt.Core.Automation.Commands
         #region methods
 
         /// <summary>
-        /// get all window names and handles
-        /// </summary>
-        /// <returns></returns>
-        private static Dictionary<IntPtr, string> GetAllWindows()
-        {
-            return User32.User32Functions.GetWindowNames();
-        }
-
-        /// <summary>
         /// get current window name
         /// </summary>
         /// <returns></returns>
         public static string GetCurrentWindowName()
         {
-            return User32.User32Functions.GetActiveWindowTitle();
-        }
-
-        /// <summary>
-        /// get current window handle
-        /// </summary>
-        /// <returns></returns>
-        public static IntPtr GetCurrentWindowHandle()
-        {
-            return User32.User32Functions.GetActiveWindow();
+            var whnd = GetActiveWindowHandle();
+            return GetWindowTitle(whnd);
         }
 
         public static IntPtr FindWindowHandle(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                return User32.User32Functions.GetActiveWindow();
+                return GetActiveWindowHandle();
             }
             else
             {
-                var windows = GetAllWindows();
+                var wins = GetAllWindowNamesAndHandles();
                 var method = GetWindowNameCompareMethod(searchMethod);
-                foreach(var win in windows)
+
+                try
                 {
-                    if (method(win.Value, windowName))
-                    {
-                        return win.Key;
-                    }
+                    var whnd = wins.Where(w => method(w.Item2, windowName)).First();
+                    return whnd.Item1;
+                }
+                catch
+                {
+                    // not found
+                    throw new Exception("Window Name '" + windowName + "' not found");
                 }
             }
-            // not found
-            throw new Exception("Window Name '" + windowName + "' not found");
         }
-        
-        //public static List<IntPtr> FindWindowsHandles(string windowName, string searchMethod, Engine.AutomationEngineInstance engine)
-        //{
-        //    List<IntPtr> ret = new List<IntPtr>();
-
-        //    if (windowName == engine.engineSettings.CurrentWindowKeyword)
-        //    {
-        //        windowName = GetCurrentWindowName();
-        //    }
-
-        //    var windows = GetAllWindows();
-        //    var method = GetWindowNameCompareMethod(searchMethod);
-        //    foreach (var win in windows)
-        //    {
-        //        if (method(win.Value, windowName))
-        //        {
-        //            ret.Add(win.Key);
-        //        }
-        //    }
-        //    if (ret.Count > 0)
-        //    {
-        //        return ret;
-        //    }
-        //    else
-        //    {
-        //        // not found
-        //        throw new Exception("Window Name '" + windowName + "' not found");
-        //    }
-        //}
-
+    
         public static List<string> GetAllWindowTitles()
         {
-            return new List<string>(GetAllWindows().Values);
+            return GetAllWindowNamesAndHandles().Select(w => w.Item2).ToList();
         }
 
         public static List<IntPtr> GetAllWindowHandles()
         {
-            return new List<IntPtr>(GetAllWindows().Keys);
+            return GetAllWindowNamesAndHandles().Select(w => w.Item1).ToList();
         }
 
         public static void ActivateWindow(IntPtr handle)
         {
-            if (User32.User32Functions.IsIconic(handle))
+            if (IsIconic(handle))
             {
-                User32.User32Functions.SetWindowState(handle, User32.User32Functions.WindowState.SW_SHOWNORMAL);
+                SetWindowState(handle, WindowState.SW_SHOWNORMAL);
             }
-            User32.User32Functions.SetForegroundWindow(handle);
+            SetForegroundWindow(handle);
         }
-
-        public static string GetWindowNameFromHandle(IntPtr handle)
+        
+        public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
         {
-            return User32.User32Functions.GetWindowTitle(handle);
-        }
+            IntPtr hWnd;
+            if (windowName == "Desktop")
+            {
+                hWnd = GetDesktopWindow();
+            }
+            else
+            {
+                //hWnd = FindWindow(windowName);
+                var wins = FindWindows(windowName, "", "", 0, 60, engine);
+                hWnd = wins[0].Item1;
 
-        //public static void ActivateWindow(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    IntPtr hwnd = FindWindowHandle(windowName, searchMethod, engine);
-        //    ActivateWindow(hwnd);
-        //}
+                SetWindowState(hWnd, WindowState.SW_RESTORE);
+                SetForegroundWindow(hWnd);
+            }
+
+            var rect = new RECT();
+
+            //sleep to allow repaint
+            System.Threading.Thread.Sleep(500);
+
+            GetWindowRect(hWnd, out rect);
+            var bounds = new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+            var screenshot = new Bitmap(bounds.Width, bounds.Height);
+
+            using (var graphics = Graphics.FromImage(screenshot))
+            {
+                graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+            }
+
+            return screenshot;
+        }
 
         public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
@@ -370,18 +547,19 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                var windows = GetAllWindows();
+                var wins = GetAllWindowNamesAndHandles();
                 var method = GetWindowNameCompareMethod(searchMethod);
-                foreach (var win in windows)
+                try
                 {
-                    if (method(win.Value, windowName))
-                    {
-                        return win.Value;
-                    }
+                    var win = wins.Where(w => method(w.Item2, windowName)).First();
+                    return win.Item2;
+                }
+                catch
+                {
+                    // not found
+                    throw new Exception("Window Name '" + windowName + "' not found");
                 }
             }
-            // not found
-            throw new Exception("Window Name '" + windowName + "' not found");
         }
 
         /// <summary>
@@ -427,7 +605,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static List<IntPtr> FindWindows(string window, string searchMethod, string matchType, int index, int waitTime, Engine.AutomationEngineInstance engine)
+        private static List<(IntPtr, string)> FindWindows(string window, string searchMethod, string matchType, int index, int waitTime, Engine.AutomationEngineInstance engine)
         {
             var searchFunc = GetWindowSearchMethod(window, searchMethod, matchType, index, engine);
 
@@ -453,7 +631,7 @@ namespace taskt.Core.Automation.Commands
 
             var obj = WaitControls.WaitProcess(waitTime, "Window", waitFunc, engine);
 
-            if (obj is List<IntPtr> lst)
+            if (obj is List<(IntPtr, string)> lst)
             {
                 return lst;
             }
@@ -474,7 +652,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="waitName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<IntPtr> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine)
+        public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine)
         {
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
             var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
@@ -494,7 +672,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="waitName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static List<IntPtr> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine)
+        public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine)
         {
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
             var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
@@ -535,28 +713,6 @@ namespace taskt.Core.Automation.Commands
             string item = matchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
             GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
         }
-
-        //public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
-        //{
-        //    string currentText = cmb.Text;
-
-        //    cmb.BeginUpdate();
-        //    cmb.Items.Clear();
-
-        //    var winList = GetAllWindowTitles();
-
-        //    foreach(var title in winList)
-        //    {
-        //        cmb.Items.Add(title);
-        //    }
-
-        //    cmb.EndUpdate();
-
-        //    if (winList.Contains(currentText))
-        //    {
-        //        cmb.Text = currentText;
-        //    }
-        //}
 
         #endregion
     }

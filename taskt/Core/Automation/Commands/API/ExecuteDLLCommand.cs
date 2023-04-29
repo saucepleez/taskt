@@ -6,75 +6,83 @@ using System.Data;
 using System.Reflection;
 using Newtonsoft.Json;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("API Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Execute DLL")]
     [Attributes.ClassAttributes.Description("This command processes an HTML source object")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to parse and extract data from a successful **HTTP Request Command**")]
-    [Attributes.ClassAttributes.ImplementationDescription("TBD")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExecuteDLLCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please indicate the path to the DLL file")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Enter or Select the path to the DLL File")]
-        [SampleUsage("C:\\temp\\myfile.dll or {vDLLFilePath}")]
-        [Remarks("")]
-        //[Attributes.PropertyAttributes.PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer)]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyDescription("Path to the DLL file")]
+        [InputSpecification("File Path", true)]
+        //[SampleUsage("C:\\temp\\myfile.dll or {vDLLFilePath}")]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyDetailSampleUsage("**C:\\temp\\myfile.dll**", PropertyDetailSampleUsage.ValueType.Value, "File Path")]
+        [PropertyDetailSampleUsage("**{{{vDLLFilePath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Path")]
         [PropertyCustomUIHelper("Launch DLL Explorer", nameof(lnkShowDLLExplorer_Clicked))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "dll")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the name of the class that contains the method to be invoked")]
-        [InputSpecification("Provide the parent class name in the DLL.")]
-        [SampleUsage("Namespace should be included, myNamespace.myClass*")]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Name of the Class that contains the Method to be Invoked")]
+        [InputSpecification("Class Name", true)]
+        //[SampleUsage("Namespace should be included, myNamespace.myClass*")]
+        [PropertyDetailSampleUsage("**myNamespace.myClass**", PropertyDetailSampleUsage.ValueType.Value, "Class Name")]
+        [PropertyDetailSampleUsage("**{{{vClass}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Class Name")]
+        [PropertyValidationRule("Class Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Class Name")]
         public string v_ClassName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the name of the method in the class to invoke")]
-        [InputSpecification("Provide the method name in the DLL to be invoked.")]
-        [SampleUsage("**GetSomething**")]
-        [Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Name of the Method in the class to Invoke")]
+        [InputSpecification("Method Name", true)]
+        //[SampleUsage("**GetSomething**")]
+        [PropertyDetailSampleUsage("**MyMethod**", PropertyDetailSampleUsage.ValueType.Value, "Method Name")]
+        [PropertyDetailSampleUsage("**{{{vMethod}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Method Name")]
+        [PropertyValidationRule("Method Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Method Name")]
         public string v_MethodName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select the variable to receive the result")]
-        [InputSpecification("Select or provide a variable from the variable list")]
-        [SampleUsage("**vSomeVariable**")]
-        [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_applyToVariableName { get; set; }
 
-        [PropertyDescription("Please indicate the parameters (if required)")]
-        [InputSpecification("Select the 'Generate Parameters' button once you have indicated a file, class, and method.")]
+        [XmlElement]
+        [PropertyDescription("Method Parameters")]
+        [InputSpecification("Parameters", true)]
         [SampleUsage("")]
         [Remarks("")]
-        //[Attributes.PropertyAttributes.PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters)]
         [PropertyCustomUIHelper("Generate DLL Parameter", nameof(lnkGenerateDLLParameters_Clicked))]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(true, true, true, 400, 250)]
+        [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", false)]
+        [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
+        [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_MethodParameters { get; set; }
-
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ParametersGridViewHelper;
 
         public ExecuteDLLCommand()
         {
-            this.CommandName = "ExecuteDLLCommand";
-            this.SelectionName = "Execute DLL";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExecuteDLLCommand";
+            //this.SelectionName = "Execute DLL";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
-            this.v_MethodParameters = new DataTable();
-            this.v_MethodParameters.Columns.Add("Parameter Name");
-            this.v_MethodParameters.Columns.Add("Parameter Value");
-            this.v_MethodParameters.TableName = DateTime.Now.ToString("MethodParameterTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
+            //this.v_MethodParameters = new DataTable();
+            //this.v_MethodParameters.Columns.Add("Parameter Name");
+            //this.v_MethodParameters.Columns.Add("Parameter Value");
+            //this.v_MethodParameters.TableName = DateTime.Now.ToString("MethodParameterTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
             //ParametersGridViewHelper = new DataGridView();
             //ParametersGridViewHelper.AllowUserToAddRows = true;
@@ -229,71 +237,13 @@ namespace taskt.Core.Automation.Commands
     
             //store result in variable
             result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
-
-        }
-
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            ParametersGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_MethodParameters", this, true, true, true, -1, 135);
-            ParametersGridViewHelper.CellClick += DataTableControls.AllEditableDataGridView_CellClick;
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ClassName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_MethodName", this, editor));
-
-            //create control for variable name
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_applyToVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_applyToVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_applyToVariableName", this, VariableNameControl , editor));
-            RenderedControls.Add(VariableNameControl);
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_MethodParameters", this));
-            RenderedControls.AddRange(CommandControls.CreateCustomUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_MethodParameters", this, ParametersGridViewHelper, editor));
-            RenderedControls.Add(ParametersGridViewHelper);
-
-            return RenderedControls;
-        }
-
-
-        //public void ParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        ParametersGridViewHelper.BeginEdit(false);
-        //    }
-        //    else
-        //    {
-        //        ParametersGridViewHelper.EndEdit();
-        //    }
-        //}
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Call Method '" + v_MethodName + "' in '" + v_ClassName + "']";
         }
 
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (ParametersGridViewHelper.IsCurrentCellDirty || ParametersGridViewHelper.IsCurrentRowDirty)
-            {
-                ParametersGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_MethodParameters.NewRow();
-                v_MethodParameters.Rows.Add(newRow);
-                for (var i = v_MethodParameters.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_MethodParameters.Rows[i][0].ToString() == "" && v_MethodParameters.Rows[i][1].ToString() == "")
-                    {
-                        v_MethodParameters.Rows[i].Delete();
-                    }
-                }
-            }
-
-            // not work yet this code
-            //DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_MethodParameters)], v_MethodParameters);
+            
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_MethodParameters)], v_MethodParameters);
         }
 
         private void lnkGenerateDLLParameters_Clicked(object sender, EventArgs e)
@@ -409,6 +359,5 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
     }
 }

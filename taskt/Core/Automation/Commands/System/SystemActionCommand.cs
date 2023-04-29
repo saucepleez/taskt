@@ -48,10 +48,12 @@ namespace taskt.Core.Automation.Commands
                     System.Diagnostics.Process.Start("shutdown", "/r /t 0");
                     break;
                 case "logoff":
-                    User32.User32Functions.WindowsLogOff();
+                    //User32.User32Functions.WindowsLogOff();
+                    SystemControls.WindowsLogOff();
                     break;
                 case "lock screen":
-                    User32.User32Functions.LockWorkStation();
+                    //User32.User32Functions.LockWorkStation();
+                    SystemControls.UserLock();
                     break;
             }
         }

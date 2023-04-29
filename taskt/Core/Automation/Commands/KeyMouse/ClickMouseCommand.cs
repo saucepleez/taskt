@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -40,7 +39,8 @@ namespace taskt.Core.Automation.Commands
             var clickType = this.GetUISelectionValue(nameof(v_MouseClick), engine);
 
             var mousePosition = Cursor.Position;
-            User32Functions.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
+            //User32Functions.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
+            KeyMouseControls.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
 
             var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTimeAfterClick), engine);
             System.Threading.Thread.Sleep(waitTime);

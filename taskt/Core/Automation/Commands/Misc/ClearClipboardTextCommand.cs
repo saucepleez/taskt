@@ -1,5 +1,4 @@
 ﻿using System;
-using taskt.Core.Automation.User32;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -24,7 +23,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            User32Functions.SetClipboardText("");
+            //User32Functions.SetClipboardText("");
+            ClipboardControls.SetClipboardText("");
         }
     }
 }

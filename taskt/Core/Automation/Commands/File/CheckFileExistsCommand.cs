@@ -44,8 +44,8 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                var ret = FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
-                (ret is string).StoreInUserVariable(engine, v_UserVariableName);
+                FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
+                true.StoreInUserVariable(engine, v_UserVariableName);
             }
             catch
             {

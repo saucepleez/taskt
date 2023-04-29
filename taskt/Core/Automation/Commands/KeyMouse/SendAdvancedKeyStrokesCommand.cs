@@ -113,8 +113,10 @@ namespace taskt.Core.Automation.Commands
                 {
                     case "Key Press (Down + Up)":
                         //simulate press
-                        User32Functions.KeyDown(oemKeyName);
-                        User32Functions.KeyUp(oemKeyName);
+                        //User32Functions.KeyDown(oemKeyName);
+                        //User32Functions.KeyUp(oemKeyName);
+                        KeyMouseControls.KeyDown(oemKeyName);
+                        KeyMouseControls.KeyUp(oemKeyName);
                         
                         //key returned to UP position so remove if we added it to the keys down list
                         if (keysDown.Contains(oemKeyName))
@@ -124,7 +126,8 @@ namespace taskt.Core.Automation.Commands
                         break;
                     case "Key Down":
                         //simulate down
-                        User32Functions.KeyDown(oemKeyName);
+                        //User32Functions.KeyDown(oemKeyName);
+                        KeyMouseControls.KeyDown(oemKeyName);
 
                         //track via keys down list
                         if (!keysDown.Contains(oemKeyName))
@@ -135,7 +138,8 @@ namespace taskt.Core.Automation.Commands
                         break;
                     case "Key Up":
                         //simulate up
-                        User32Functions.KeyUp(oemKeyName);
+                        //User32Functions.KeyUp(oemKeyName);
+                        KeyMouseControls.KeyUp(oemKeyName);
 
                         //remove from key down
                         if (keysDown.Contains(oemKeyName))
@@ -156,7 +160,8 @@ namespace taskt.Core.Automation.Commands
             {
                 foreach (var key in keysDown)
                 {
-                    User32Functions.KeyUp(key);
+                    //User32Functions.KeyUp(key);
+                    KeyMouseControls.KeyUp(key);
                 }
             }
         }

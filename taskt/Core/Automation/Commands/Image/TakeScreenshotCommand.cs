@@ -69,11 +69,12 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                var targetWindowHandles = WindowNameControls.FindWindows(this, nameof(v_ScreenshotWindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitForWindow), engine);
-                targetWindowName = WindowNameControls.GetWindowNameFromHandle(targetWindowHandles[0]);
+                var wins = WindowNameControls.FindWindows(this, nameof(v_ScreenshotWindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitForWindow), engine);
+                targetWindowName = wins[0].Item2;
             }
-            
-            var image = User32Functions.CaptureWindow(targetWindowName);
+
+            //var image = User32Functions.CaptureWindow(targetWindowName);
+            var image = WindowNameControls.CaptureWindow(targetWindowName, engine);
 
             var outputFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
 

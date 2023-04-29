@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Linq;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -63,13 +64,8 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                var lst = new List<string>();
-                var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
-                foreach (var whnd in handles)
-                {
-                    lst.Add(WindowNameControls.GetWindowNameFromHandle(whnd));
-                }
-                lst.StoreInUserVariable(engine, v_UserVariableName);
+                var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
+                wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
             }
             catch (Exception ex)
             {

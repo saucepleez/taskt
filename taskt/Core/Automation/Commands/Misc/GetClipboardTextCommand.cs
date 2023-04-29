@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -31,7 +30,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            User32Functions.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
+            //User32Functions.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
+            ClipboardControls.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
         }
     }
 }

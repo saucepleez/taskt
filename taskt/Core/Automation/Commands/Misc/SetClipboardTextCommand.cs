@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -36,7 +35,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             var input = v_InputValue.ConvertToUserVariable(engine);
-            User32Functions.SetClipboardText(input);
+            //User32Functions.SetClipboardText(input);
+            ClipboardControls.SetClipboardText(input);
         }
     }
 }

@@ -63,7 +63,8 @@ namespace taskt.UI.Forms.Supplemental
             {
                 IntPtr hWnd = WindowNameControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
                 WindowNameControls.ActivateWindow(hWnd);
-                User32Functions.SetWindowPosition(hWnd, 0, 0);
+                //User32Functions.SetWindowPosition(hWnd, 0, 0);
+                WindowNameControls.SetWindowPosition(hWnd, 0, 0);
 
                 //start global hook and wait for left mouse down event
                 User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);

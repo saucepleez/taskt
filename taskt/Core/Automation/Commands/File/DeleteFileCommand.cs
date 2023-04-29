@@ -24,10 +24,15 @@ namespace taskt.Core.Automation.Commands
         public string v_WhenFileDoesNotExists { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyDescription("File Move to the Recycle Bin")]
+        [PropertyIsOptional(true, "No")]
+        public string v_MoveToRecycleBin { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        // TODO: support recycle bin
         public DeleteFileCommand()
         {
             //this.CommandName = "DeleteFileCommand";
@@ -43,7 +48,15 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 var targetFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
-                System.IO.File.Delete(targetFile);
+
+                if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                {
+                    Shell32.MoveToRecycleBin(targetFile);
+                }
+                else
+                {
+                    System.IO.File.Delete(targetFile);
+                }
             }
             catch
             {
