@@ -41,273 +41,6 @@ namespace taskt.Core.Automation.User32
             return ExitWindowsEx(0, 0);
         }
 
-        //[DllImport("User32.dll", EntryPoint = "FindWindow")]
-        //public static extern IntPtr FindWindowNative(string className, string windowName);
-        //public static IntPtr FindWindow(string windowName)
-        //{
-        //    if (windowName.Contains("Windows Explorer -"))
-        //    {
-        //        var windowLocationName = windowName.Split('-')[1].Trim();
-
-        //        SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
-
-        //        foreach (SHDocVw.InternetExplorer window in shellWindows)
-        //        {
-                    
-        //            if (window.LocationName.Contains(windowLocationName))
-        //            {
-        //                return new IntPtr(window.HWND);
-        //            }
-        //        }
-
-        //        return IntPtr.Zero;
-
-        //    }
-        //    else
-        //    {
-        //        //try to find exact window name
-        //        IntPtr hWnd = FindWindowNative(null, windowName);
-        //        if (hWnd == IntPtr.Zero)
-        //        {
-        //            //potentially wait for some additional initialization
-        //            System.Threading.Thread.Sleep(1000);
-        //            hWnd = FindWindowNative(null, windowName);
-        //        }
-
-        //        //if exact window was not found, try partial match
-        //        if (hWnd == IntPtr.Zero)
-        //        {
-        //            var potentialWindow = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).FirstOrDefault();
-        //            if (potentialWindow != null)
-        //                hWnd = potentialWindow.MainWindowHandle;
-        //        }
-        //        //return hwnd
-        //        return hWnd;
-        //    }
-        //}
-
-        //public static List<IntPtr> FindWindowsGreedy(string windowName)
-        //{
-        //    List<IntPtr> ret = new List<IntPtr>();
-        //    if (windowName.Contains("Windows Explorer -"))
-        //    {
-        //        var windowLocationName = windowName.Split('-')[1].Trim();
-
-        //        SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
-
-        //        foreach (SHDocVw.InternetExplorer window in shellWindows)
-        //        {
-        //            if (window.LocationName.Contains(windowLocationName))
-        //            {
-        //                ret.Add((IntPtr)window.HWND);
-        //            }
-        //        }
-        //        return ret;
-        //    }
-        //    else
-        //    {
-        //        //try to find exact window name
-        //        IntPtr hWnd = FindWindowNative(null, windowName);
-
-        //        if (hWnd == IntPtr.Zero)
-        //        {
-        //            //potentially wait for some additional initialization
-        //            System.Threading.Thread.Sleep(1000);
-        //            hWnd = FindWindowNative(null, windowName);
-        //            if (hWnd != IntPtr.Zero)
-        //            {
-        //                ret.Add(hWnd);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ret.Add(hWnd);
-        //        }
-        //        //if exact window was not found, try partial match
-        //        var potentialWindows = System.Diagnostics.Process.GetProcesses().Where(prc => prc.MainWindowTitle.Contains(windowName)).ToList();
-        //        foreach (var potentialWindow in potentialWindows)
-        //        {
-        //            ret.Add(potentialWindow.MainWindowHandle);
-        //        }
-        //        //return hwnd
-        //        return ret;
-        //    }
-        //}
-        //public static List<IntPtr> FindTargetWindows(string windowName, bool findCurrentWindow = false, bool greedy = false)
-        //{
-        //    //create list of hwnds to target
-        //    List<IntPtr> targetWindows = new List<IntPtr>();
-        //    if (windowName == "All Windows")
-        //    {
-        //        //target each available window
-        //        foreach (var prc in System.Diagnostics.Process.GetProcesses())
-        //        {
-        //            targetWindows.Add(prc.MainWindowHandle);
-        //        }
-        //    }
-        //    else if (!greedy)
-        //    {
-        //        //target current or specific window
-        //        IntPtr hwnd;
-        //        if (findCurrentWindow)
-        //        {
-        //            //get active window
-        //            hwnd = User32Functions.GetActiveWindow();
-        //        }
-        //        else
-        //        {
-        //            //find window by name
-        //            hwnd = User32Functions.FindWindow(windowName);
-        //        }
-
-        //        //check if hwnd was found
-        //        if (hwnd == IntPtr.Zero)
-        //        {
-        //            //throw
-        //            throw new Exception("Window not found");
-        //        }
-        //        else
-        //        {
-        //            //add to list
-        //            targetWindows.Add(hwnd);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        //target current or specific window                
-        //        if (findCurrentWindow)
-        //        {
-        //            //get active window
-        //            IntPtr hwnd;
-        //            hwnd = User32Functions.GetActiveWindow();
-        //            if (hwnd == IntPtr.Zero)
-        //            {
-        //                throw new Exception("Window not found");
-        //            }
-        //            else
-        //            {
-        //                targetWindows.Add(hwnd);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            //find window by name
-        //            var hWnds = User32Functions.FindWindowsGreedy(windowName);
-        //            if (hWnds.Count == 0)
-        //            {
-        //                throw new Exception("Window not found");
-        //            }
-        //            else
-        //            {
-        //                targetWindows.AddRange(hWnds);
-        //            }
-        //        }
-        //    }
-
-        //    return targetWindows;
-        //}
-
-        //private delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
-
-        //[DllImport("user32.dll")]
-        //private static extern int EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
-
-        //[DllImport("user32.dll")]
-        //private static extern bool IsWindowVisible(IntPtr hWnd);
-
-        //[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        //private static extern int GetWindowTextLengthW(IntPtr hWnd);
-
-        //[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        //private static extern int GetWindowTextW(IntPtr hWnd, StringBuilder text, int count);
-
-        //[DllImport("user32.dll")]
-        //private static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
-
-        //public static Dictionary<IntPtr, string> GetWindowNames()
-        //{
-        //    windowTitles = new Dictionary<IntPtr, string>();
-
-        //    EnumWindows(new EnumWindowsDelegate(EnumerateWindow), IntPtr.Zero);
-
-        //    return new Dictionary<IntPtr, string>(windowTitles);
-        //}
-
-        //private static bool EnumerateWindow(IntPtr hWnd, IntPtr lParam)
-        //{
-        //    int titleLengthA = GetWindowTextLengthW(hWnd);
-        //    if (IsWindowVisible(hWnd) && (titleLengthA > 0))
-        //    {
-        //        StringBuilder title = new StringBuilder(titleLengthA + 1);
-        //        GetWindowTextW(hWnd, title, title.Capacity);
-
-        //        //int processId;
-        //        //GetWindowThreadProcessId(hWnd, out processId);
-        //        //Process p = Process.GetProcessById(processId);
-
-        //        //Console.WriteLine(hWnd.ToString() + " : " + title.ToString() + " : " + p.MainWindowTitle + " :=> " + p.MainWindowHandle);
-
-        //        windowTitles.Add(hWnd, title.ToString());
-        //    }
-        //    return true;
-        //}
-
-        //public static string GetWindowTitle(IntPtr hWnd)
-        //{
-        //    int titleLengthA = GetWindowTextLengthW(hWnd);
-        //    StringBuilder title = new StringBuilder(titleLengthA + 1);
-        //    GetWindowTextW(hWnd, title, title.Capacity);
-        //    return title.ToString();
-        //}
-
-
-        //[DllImport("user32.dll", EntryPoint = "FindWindowEx")]
-        //public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
-
-        //[DllImport("User32.dll", EntryPoint = "SetForegroundWindow")]
-        //private static extern IntPtr SetForegroundWindowNative(IntPtr hWnd);
-
-        //public static void SetForegroundWindow(IntPtr hWnd)
-        //{
-        //    SetForegroundWindowNative(hWnd);
-        //}
-
-        //[DllImport("user32.dll")]
-        //private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-        //public static void SetWindowState(IntPtr hWnd, WindowState windowState)
-        //{
-        //    ShowWindow(hWnd, (int)windowState);
-        //}
-        //public enum WindowState
-        //{
-        //    [Description("Minimizes a window, even if the thread that owns the window is not responding. This flag should only be used when minimizing windows from a different thread.")]
-        //    SW_FORCEMINIMIZE = 11,
-        //    [Description("Hides the window and activates another window.")]
-        //    SW_HIDE = 0,
-        //    [Description("Maximizes the specified window.")]
-        //    SW_MAXIMIZE = 3,
-        //    [Description("Minimizes the specified window and activates the next top-level window in the Z order.")]
-        //    SW_MINIMIZE = 6,
-        //    [Description("Activates and displays the window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when restoring a minimized window.")]
-        //    SW_RESTORE = 9,
-        //    [Description("Activates the window and displays it in its current size and position.")]
-        //    SW_SHOW = 5,
-        //    [Description("Sets the show state based on the SW_ value specified in the STARTUPINFO structure passed to the CreateProcess function by the program that started the application.")]
-        //    SW_SHOWDEFAULT = 10,
-        //    [Description("Activates the window and displays it as a maximized window.")]
-        //    SW_SHOWMAXIMIZED = 3,
-        //    [Description("Activates the window and displays it as a minimized window.")]
-        //    SW_SHOWMINIMIZED = 2,
-        //    [Description("Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not activated.")]
-        //    SW_SHOWMINNOACTIVE = 7,
-        //    [Description("Displays the window in its current size and position. This value is similar to SW_SHOW, except that the window is not activated.")]
-        //    SW_SHOWNA = 8,
-        //    [Description("Displays a window in its most recent size and position. This value is similar to SW_SHOWNORMAL, except that the window is not activated.")]
-        //    SW_SHOWNOACTIVATE = 4,
-        //    [Description("Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.")]
-        //    SW_SHOWNORMAL = 1,
-        //}
-
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
         private static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
         public static void SetWindowPosition(IntPtr hWnd, int newXPosition, int newYPosition)
@@ -318,23 +51,6 @@ namespace taskt.Core.Automation.User32
 
             SetWindowPos(hWnd, 0, newXPosition, newYPosition, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
         }
-        //public static void SetWindowSize(IntPtr hWnd, int newXSize, int newYSize)
-        //{
-        //    const short SWP_NOZORDER = 0X4;
-        //    const int SWP_SHOWWINDOW = 0x0040;
-
-        //    GetWindowRect(hWnd, out RECT windowRect);
-
-        //    SetWindowPos(hWnd, 0, windowRect.left, windowRect.top, newXSize, newYSize, SWP_NOZORDER | SWP_SHOWWINDOW);
-        //}
-
-        //[DllImport("user32.dll", CharSet = CharSet.Auto)]
-        //private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
-        //public static void CloseWindow(IntPtr hWnd)
-        //{
-        //    const UInt32 WM_CLOSE = 0x0010;
-        //    SendMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-        //}
 
         [DllImport("user32.dll")]
         static extern bool SetCursorPos(int x, int y);
@@ -342,34 +58,6 @@ namespace taskt.Core.Automation.User32
         {
             SetCursorPos(newXPosition, newYPosition);
         }
-
-        //[DllImport("user32.dll")]
-        //static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-        //public static string GetActiveWindowTitle()
-        //{
-        //    const int nChars = 256;
-        //    StringBuilder Buff = new StringBuilder(nChars);
-        //    IntPtr handle = GetForegroundWindow();
-
-        //    if (GetWindowText(handle, Buff, nChars) > 0)
-        //    {
-        //        return Buff.ToString();
-        //    }
-        //    return "";
-        //}
-
-        //public static string GetWindowTitle(IntPtr hWnd)
-        //{
-        //    const int nChars = 256;
-        //    StringBuilder Buff = new StringBuilder(nChars);
-        //    IntPtr handle = GetForegroundWindow();
-
-        //    if (GetWindowText(hWnd, Buff, nChars) > 0)
-        //    {
-        //        return Buff.ToString();
-        //    }
-        //    return "";
-        //}
 
         [DllImport("user32.dll")]
         private static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
@@ -468,38 +156,13 @@ namespace taskt.Core.Automation.User32
 
         [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
         static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-        //public static RECT GetWindowPosition(IntPtr hWnd)
-        //{
-        //    RECT clientArea = new RECT();
-        //    GetWindowRect(hWnd, out clientArea);
-        //    return clientArea;
-        //}
+      
         public struct RECT
         {
             public int left, top, right, bottom;
         }
 
-        //[DllImport("user32.dll", SetLastError = true)]
-        //[return: MarshalAs(UnmanagedType.Bool)]
-        //public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
-
-        //public struct WINDOWPLACEMENT
-        //{
-        //    public int length;
-        //    public int flags;
-        //    public int showCmd;
-        //    Point ptMinPosition;
-        //    Point ptMaxPosition;
-        //    RECT rcNormalPosition;
-        //    RECT rcDevice;
-        //}
-
-        //[DllImport("user32.dll")]
-        //public static extern bool IsIconic(IntPtr hWnd);
-
-        //[DllImport("user32.dll")]
-        //public static extern bool ShowWindowAsync(IntPtr hWnd, WindowState nCmdShow);
-
+        
         [DllImport("user32.dll")]
         static extern IntPtr GetClipboardData(uint uFormat);
         [DllImport("user32.dll")]
@@ -546,78 +209,11 @@ namespace taskt.Core.Automation.User32
             return data;
         }
 
-        //[DllImport("user32.dll")]
-        //private static extern IntPtr GetForegroundWindow();
-
-        //public static IntPtr GetActiveWindow()
-        //{
-        //    return GetForegroundWindow();
-        //}
-
-        //[DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        //private static extern IntPtr GetDesktopWindow();
-
         private delegate bool EnumWindowProc(IntPtr hwnd, IntPtr lParam);
 
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);
-
-        //public static Bitmap CaptureWindow(string windowName)
-        //{
-        //    IntPtr hWnd;
-        //    if (windowName == "Desktop")
-        //    {
-        //        hWnd = GetDesktopWindow();
-        //    }
-        //    else
-        //    {
-        //        hWnd = FindWindow(windowName);
-        //        SetWindowState(hWnd, WindowState.SW_RESTORE);
-        //        SetForegroundWindow(hWnd);
-        //    }
-
-        //    var rect = new RECT();
-
-        //    //sleep to allow repaint
-        //    System.Threading.Thread.Sleep(500);
-
-        //    GetWindowRect(hWnd, out rect);
-        //    var bounds = new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
-        //    var screenshot = new Bitmap(bounds.Width, bounds.Height);
-
-        //    using (var graphics = Graphics.FromImage(screenshot))
-        //    {
-        //        graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
-        //    }
-
-        //    return screenshot;
-        //}
-
-        //public struct CursorPoint
-        //{
-        //    public int X;
-        //    public int Y;
-        //}
-
-        //[System.Runtime.InteropServices.DllImport("user32.dll")]
-        //public static extern bool GetPhysicalCursorPos(ref CursorPoint lpPoint);
-
-        //public static System.Windows.Point GetPhysicalPosition(System.Windows.Point point)
-        //{
-        //    var p = new CursorPoint()
-        //    {
-        //        X = (int)point.X,
-        //        Y = (int)point.Y
-        //    };
-        //    GetPhysicalCursorPos(ref p);
-        //    return new System.Windows.Point()
-        //    {
-        //        X = p.X,
-        //        Y = p.Y
-        //    };
-        //}
-
+        private static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);     
 
         public class GlobalHook
         {
