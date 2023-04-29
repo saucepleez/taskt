@@ -328,19 +328,23 @@ namespace taskt.Core.Automation.Engine
                 }
                 else if (parentCommand is Core.Automation.Commands.SequenceCommand)
                 {
+                    // todo: execute runcommand
                     parentCommand.RunCommand(this, command);
                 }
                 else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
                 {
+                    // todo: execute runcommand
                     IsCancellationPending = true;
                     return;
                 }
                 else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
                 {
+                    // todo: execute runcommand
                     CurrentLoopCancelled = true;
                 }
                 else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
                 {
+                    // todo: execute runcommand
                     CurrentLoopContinuing = true;
                 }
                 //else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
