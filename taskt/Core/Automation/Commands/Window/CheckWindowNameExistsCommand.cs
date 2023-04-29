@@ -37,6 +37,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
+
         public CheckWindowNameExistsCommand()
         {
             //this.CommandName = "CheckWindowNameExistsCommand";
@@ -49,16 +57,25 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            try
-            {
-                var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
+            //try
+            //{
+            //    var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
 
-                (handles.Count > 0).StoreInUserVariable(engine, v_UserVariableName);
-            }
-            catch
-            {
-                false.StoreInUserVariable(engine, v_UserVariableName);
-            }
+            //    (handles.Count > 0).StoreInUserVariable(engine, v_UserVariableName);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_UserVariableName);
+            //}
+            WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine,
+                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+                {
+                    (wins.Count > 0).StoreInUserVariable(engine, v_UserVariableName);
+                }), nameof(v_NameResult), nameof(v_HandleResult), new Action<Exception>(ex =>
+                {
+                    false.StoreInUserVariable(engine, v_UserVariableName);
+                })
+            );
         }
 
         public override void Refresh(frmCommandEditor editor)

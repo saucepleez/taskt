@@ -753,19 +753,30 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
-        public static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
+        /// <summary>
+        /// general window action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="matchType"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="nameResultName"></param>
+        /// <param name="handleResultName"></param>
+        /// <param name="errorFunc"></param>
+        private static void WindowAction(ScriptCommand command, string matchType, Func<List<(IntPtr, string)>> searchFunc, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
         {
             try
             {
-                var wins = FindWindows(command, windowName, compareMethodName, matchTypeName, indexName, waitName, engine);
+                var wins = searchFunc();
                 actionFunc(wins);
 
-                var matchType = command.GetUISelectionValue(matchTypeName, engine);
+                matchType = matchType.ToLower();
 
                 if (!string.IsNullOrEmpty(nameResultName))
                 {
                     var nameResult = command.GetRawPropertyString(nameResultName, "Window Name Result");
-                    if (!string.IsNullOrEmpty (nameResult))
+                    if (!string.IsNullOrEmpty(nameResult))
                     {
                         if (matchType == "all")
                         {
@@ -793,9 +804,9 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                if (errorFunc != null)
+                if (errorFunc == null)
                 {
                     throw ex;
                 }
@@ -804,6 +815,100 @@ namespace taskt.Core.Automation.Commands
                     errorFunc(ex);
                 }
             }
+        }
+
+        /// <summary>
+        /// general window action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="compareMethodName"></param>
+        /// <param name="matchTypeName"></param>
+        /// <param name="indexName"></param>
+        /// <param name="waitName"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="nameResultName"></param>
+        /// <param name="handleResultName"></param>
+        /// <param name="errorFunc"></param>
+        public static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
+        {
+            //try
+            //{
+            //    var wins = FindWindows(command, windowName, compareMethodName, matchTypeName, indexName, waitName, engine);
+            //    actionFunc(wins);
+
+            //    var matchType = command.GetUISelectionValue(matchTypeName, engine);
+
+            //    if (!string.IsNullOrEmpty(nameResultName))
+            //    {
+            //        var nameResult = command.GetRawPropertyString(nameResultName, "Window Name Result");
+            //        if (!string.IsNullOrEmpty (nameResult))
+            //        {
+            //            if (matchType == "all")
+            //            {
+            //                wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, nameResult);
+            //            }
+            //            else
+            //            {
+            //                wins[0].Item2.StoreInUserVariable(engine, nameResult);
+            //            }
+            //        }
+            //    }
+            //    if (!string.IsNullOrEmpty(handleResultName))
+            //    {
+            //        var handleResult = command.GetRawPropertyString(handleResultName, "Window Handle Result");
+            //        if (!string.IsNullOrEmpty(handleResult))
+            //        {
+            //            if (matchType == "all")
+            //            {
+            //                wins.Select(w => w.Item1.ToString()).ToList().StoreInUserVariable(engine, handleResult);
+            //            }
+            //            else
+            //            {
+            //                wins[0].Item1.ToString().StoreInUserVariable(engine, handleResult);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    if (errorFunc != null)
+            //    {
+            //        throw ex;
+            //    }
+            //    else
+            //    {
+            //        errorFunc(ex);
+            //    }
+            //}
+
+            var matchType = command.GetUISelectionValue(matchTypeName, engine);
+
+            WindowAction(command, matchType, new Func<List<(IntPtr, string)>>(() =>
+            {
+                return FindWindows(command, windowName, compareMethodName, matchTypeName, indexName, waitName, engine);
+            }), engine, actionFunc, nameResultName, handleResultName, errorFunc);
+        }
+
+        /// <summary>
+        /// general window action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="compareMethodName"></param>
+        /// <param name="waitName"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="nameResultName"></param>
+        /// <param name="handleResultName"></param>
+        /// <param name="errorFunc"></param>
+        public static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
+        {
+            WindowAction(command, "all", new Func<List<(IntPtr, string)>>(() =>
+            {
+                return FindWindows(command, windowName, compareMethodName, waitName, engine);
+            }), engine, actionFunc, nameResultName, handleResultName, errorFunc);
         }
         #endregion
 
