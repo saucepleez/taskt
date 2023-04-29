@@ -40,9 +40,23 @@ namespace taskt.UI.CustomControls
             var props = command.GetParameterProperties(renderComment);
             var controlList = new List<Control>();
 
+            int count = 0;
             foreach(var prop in props)
             {
-                controlList.AddRange(CreateInferenceDefaultControlGroupFor(prop, command, editor));
+                FlowLayoutPanel flowPanel = new FlowLayoutPanel
+                {
+                    Name = "group_" + prop.Name,
+                    FlowDirection = FlowDirection.TopDown,
+                    WrapContents = false,
+                    AutoSize = true,
+                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                    BackColor = (count % 2 == 0) ? Color.FromArgb(59, 59, 59) : Color.FromArgb(80, 80, 80),
+                };
+                var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
+                flowPanel.Controls.AddRange(ctrls.ToArray());
+
+                controlList.Add(flowPanel);
+                count++;
             }
 
             return controlList;
@@ -59,14 +73,26 @@ namespace taskt.UI.CustomControls
         {
             var controlList = new List<Control>();
 
+            int count = 0;
             foreach (var propertyName in propartiesName)
             {
-                //var flowPanel = new Panel();
-                //var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
-                //flowPanel.Controls.AddRange(ctrls);
-                //controlList.Add(flowPanel);
+                FlowLayoutPanel flowPanel = new FlowLayoutPanel
+                {
+                    Name = "group_" + propertyName,
+                    FlowDirection = FlowDirection.TopDown,
+                    WrapContents = false,
+                    AutoSize = true,
+                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                    BackColor = (count % 2 == 0) ? Color.FromArgb(59, 59, 59) : Color.FromArgb(80, 80, 80),
+                };
 
-                controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
+                var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
+                flowPanel.Controls.AddRange(ctrls);
+
+                controlList.Add(flowPanel);
+
+                //controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
+                count++;
             }
 
             return controlList;

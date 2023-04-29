@@ -138,8 +138,7 @@ namespace taskt.UI.Forms
                 //copy original properties
                 CopyPropertiesTo(originalCommand, selectedCommand);
 
-                //update bindings
-                foreach (Control c in flw_InputVariables.Controls)
+                Action<Control> readValueFunc = new Action<Control>(c =>
                 {
                     foreach (Binding b in c.DataBindings)
                     {
@@ -147,15 +146,47 @@ namespace taskt.UI.Forms
                     }
 
                     //helper for box
-                    if (c is UIPictureBox)
+                    if (c is UIPictureBox pic)
                     {
-                        var typedControl = (UIPictureBox)c;
+                        //var typedControl = (UIPictureBox)c;
 
                         var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
 
                         if (!string.IsNullOrEmpty(cmd.v_ImageCapture))
                         {
-                            typedControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
+                            pic.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
+                        }
+                    }
+                });
+
+                //update bindings
+                foreach (Control ctrl in flw_InputVariables.Controls)
+                {
+                    //foreach (Binding b in c.DataBindings)
+                    //{
+                    //    b.ReadValue();
+                    //}
+
+                    ////helper for box
+                    //if (c is UIPictureBox)
+                    //{
+                    //    var typedControl = (UIPictureBox)c;
+
+                    //    var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
+
+                    //    if (!string.IsNullOrEmpty(cmd.v_ImageCapture))
+                    //    {
+                    //        typedControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
+                    //    }
+                    //}
+
+                    readValueFunc(ctrl);
+
+                    if (ctrl is FlowLayoutPanel flp)
+                    {
+                        foreach(Control c in flp.Controls)
+                        {
+                            readValueFunc(c);
                         }
                     }
                 }
@@ -260,6 +291,12 @@ namespace taskt.UI.Forms
             foreach (var ctrl in userSelectedCommand.UIControls)
             {
                 flw_InputVariables.Controls.Add(ctrl);
+
+                // DBG
+                //if (ctrl is FlowLayoutPanel flp)
+                //{
+                //    flp.Dock = DockStyle.Fill;
+                //}
             }
 
             flw_InputVariables.ResumeLayout();
@@ -335,10 +372,20 @@ namespace taskt.UI.Forms
             foreach (Control item in flw_InputVariables.Controls)
             {
                 item.Width = this.Width - 70;
+
+                // DBG
+                if (item is FlowLayoutPanel flp)
+                {
+                    foreach(Control c in flp.Controls)
+                    {
+                        c.Width = this.Width - 70;
+                    }
+                }
             }
             flw_InputVariables.ResumeLayout();
 
-            selectedCommand.AfterShown();
+            // when resize, selectedCommand has null
+            selectedCommand?.AfterShown();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
