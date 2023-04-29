@@ -30,12 +30,12 @@ namespace taskt.UI.CustomControls
         private static List<Color> paramColors = new List<Color>
         {
             Color.FromArgb(59, 59, 59),
-            Color.FromArgb(59, 59, 80),
-            Color.FromArgb(59, 80, 59),
-            Color.FromArgb(59, 80, 80),
             Color.FromArgb(80, 59, 59),
-            Color.FromArgb(80, 59, 80),
+            Color.FromArgb(59, 80, 59),
+            Color.FromArgb(59, 59, 80),
             Color.FromArgb(80, 80, 59),
+            Color.FromArgb(80, 59, 80),
+            Color.FromArgb(59, 80, 80),
             Color.FromArgb(80, 80, 80),
         };
 
