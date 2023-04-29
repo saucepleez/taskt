@@ -104,26 +104,32 @@ namespace taskt.Core.Automation.Commands
 
             if (textToSend == "{WIN_KEY}")
             {
-                User32Functions.KeyDown(Keys.LWin);
-                User32Functions.KeyUp(Keys.LWin);
+                //User32Functions.KeyDown(Keys.LWin);
+                //User32Functions.KeyUp(Keys.LWin);
+                KeyMouseControls.KeyDown(Keys.LWin);
+                KeyMouseControls.KeyUp(Keys.LWin);
             }
             else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
             {
-                User32Functions.KeyDown(Keys.LWin);
+                //User32Functions.KeyDown(Keys.LWin);
+                KeyMouseControls.KeyDown(Keys.LWin);
                 var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
 
                 foreach (var c in remainingText)
                 {
                     Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                    User32Functions.KeyDown(key);
+                    //User32Functions.KeyDown(key);
+                    KeyMouseControls.KeyDown(key);
                 }
 
-                User32Functions.KeyUp(Keys.LWin);
+                //User32Functions.KeyUp(Keys.LWin);
+                KeyMouseControls.KeyUp(Keys.LWin);
 
                 foreach (var c in remainingText)
                 {
                     Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                    User32Functions.KeyUp(key);
+                    //User32Functions.KeyUp(key);
+                    KeyMouseControls.KeyUp(key);
                 }
             }
             else

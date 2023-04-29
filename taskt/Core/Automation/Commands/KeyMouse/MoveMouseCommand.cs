@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -73,7 +72,8 @@ namespace taskt.Core.Automation.Commands
                 //var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
 
                 //User32Functions.SetCursorPosition(xLocation, yLocation);
-                User32Functions.SetCursorPosition(mouseX, mouseY);
+                //User32Functions.SetCursorPosition(mouseX, mouseY);
+                KeyMouseControls.SetCursorPosition(mouseY, mouseX);
 
                 if (!String.IsNullOrEmpty(v_MouseClick))
                 {
