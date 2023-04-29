@@ -29,6 +29,7 @@ using System.IO;
 using taskt.Core;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Commands;
+using System.Configuration;
 
 namespace taskt.UI.Forms
 {
@@ -222,21 +223,60 @@ namespace taskt.UI.Forms
             frmCommandEditor_Resize(null, null);
         }
 
+        private void FocusFirstEditableControl()
+        {
+            Control targetControl = null;
+            foreach(Control ctrl in flw_InputVariables.Controls)
+            {
+                if (ctrl is FlowLayoutPanel flp)
+                {
+                    foreach(Control c in flp.Controls)
+                    {
+                        if ((c is TextBox) || (c is ComboBox) || (c is DataGridView))
+                        {
+                            targetControl = c;
+                            break;
+                        }
+                    }
+                    if (targetControl != null)
+                    {
+                        break;
+                    }
+                }
+                else if((ctrl is TextBox) || (ctrl is ComboBox) || (ctrl is DataGridView))
+                {
+                    targetControl = ctrl;
+                    break;
+                }
+            }
+            if (targetControl != null)
+            {
+                targetControl.Focus();
+                if (targetControl is TextBox txt)
+                {
+                    txt.SelectionStart = txt.Text.Length;
+                    txt.SelectionLength = 0;
+                }
+            }
+        }
+
         private void frmCommandEditor_Shown(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.Sizable;
 
             //focus first TextBox, ComboBox, DataGridView
-            var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
-            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
+            //var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
+            //var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
 
-            firstFocus.Focus();
-            if (firstFocus is TextBox)
-            {
-                var trg = (TextBox)firstFocus;
-                trg.SelectionStart = trg.Text.Length;
-                trg.SelectionLength = 0;
-            }
+            //firstFocus.Focus();
+            //if (firstFocus is TextBox)
+            //{
+            //    var trg = (TextBox)firstFocus;
+            //    trg.SelectionStart = trg.Text.Length;
+            //    trg.SelectionLength = 0;
+            //}
+
+            FocusFirstEditableControl();
 
             if (this.creationMode == CreationMode.Edit)
             {
@@ -291,25 +331,20 @@ namespace taskt.UI.Forms
             foreach (var ctrl in userSelectedCommand.UIControls)
             {
                 flw_InputVariables.Controls.Add(ctrl);
-
-                // DBG
-                //if (ctrl is FlowLayoutPanel flp)
-                //{
-                //    flp.Dock = DockStyle.Fill;
-                //}
             }
 
             flw_InputVariables.ResumeLayout();
 
             //focus first TextBox
-            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
-            firstFocus.Focus();
-            if (firstFocus is TextBox)
-            {
-                var trg = (TextBox)firstFocus;
-                trg.SelectionStart = trg.Text.Length;
-                trg.SelectionLength = 0;
-            }
+            //var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
+            //firstFocus.Focus();
+            //if (firstFocus is TextBox)
+            //{
+            //    var trg = (TextBox)firstFocus;
+            //    trg.SelectionStart = trg.Text.Length;
+            //    trg.SelectionLength = 0;
+            //}
+            FocusFirstEditableControl();
 
             // resize
             frmCommandEditor_Resize(null, null);
