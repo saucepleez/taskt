@@ -440,14 +440,6 @@ namespace taskt.Core.Automation.Commands
                     var wins = GetAllWindowNamesAndHandles();
                     var searchFunc = GetWindowNameCompareMethod(searchMethod);
 
-                    //var matchedWindows = new List<(IntPtr, string)>();
-                    //foreach (var win in wins)
-                    //{
-                    //    if (searchFunc(win.Item2, window))
-                    //    {
-                    //        matchedWindows.Add(win);
-                    //    }
-                    //}
                     var matchedWindows = wins.Where(w => searchFunc(w.Item2, window)).ToList();
 
                     var matchFunc = GetWindowMatchMethod(matchType, index);
@@ -460,53 +452,24 @@ namespace taskt.Core.Automation.Commands
 
         #region methods
 
-        ///// <summary>
-        ///// get all window names and handles
-        ///// </summary>
-        ///// <returns></returns>
-        //private static Dictionary<IntPtr, string> GetAllWindows()
-        //{
-        //    return User32.User32Functions.GetWindowNames();
-        //}
-
         /// <summary>
         /// get current window name
         /// </summary>
         /// <returns></returns>
         public static string GetCurrentWindowName()
         {
-            //return User32.User32Functions.GetActiveWindowTitle();
             var whnd = GetActiveWindowHandle();
             return GetWindowTitle(whnd);
         }
-
-        ///// <summary>
-        ///// get current window handle
-        ///// </summary>
-        ///// <returns></returns>
-        //public static IntPtr GetCurrentWindowHandle()
-        //{
-        //    return User32.User32Functions.GetActiveWindow();
-        //}
 
         public static IntPtr FindWindowHandle(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                //return User32.User32Functions.GetActiveWindow();
                 return GetActiveWindowHandle();
             }
             else
             {
-                //var windows = GetAllWindows();
-                //var method = GetWindowNameCompareMethod(searchMethod);
-                //foreach(var win in windows)
-                //{
-                //    if (method(win.Value, windowName))
-                //    {
-                //        return win.Key;
-                //    }
-                //}
                 var wins = GetAllWindowNamesAndHandles();
                 var method = GetWindowNameCompareMethod(searchMethod);
 
@@ -525,28 +488,22 @@ namespace taskt.Core.Automation.Commands
     
         public static List<string> GetAllWindowTitles()
         {
-            //return new List<string>(GetAllWindows().Values);
             return GetAllWindowNamesAndHandles().Select(w => w.Item2).ToList();
         }
 
         public static List<IntPtr> GetAllWindowHandles()
         {
-            //return new List<IntPtr>(GetAllWindows().Keys);
             return GetAllWindowNamesAndHandles().Select(w => w.Item1).ToList();
         }
 
         public static void ActivateWindow(IntPtr handle)
         {
-            //if (User32.User32Functions.IsIconic(handle))
             if (IsIconic(handle))
             {
-                //User32.User32Functions.SetWindowState(handle, User32.User32Functions.WindowState.SW_SHOWNORMAL);
                 SetWindowState(handle, WindowState.SW_SHOWNORMAL);
             }
-            //User32.User32Functions.SetForegroundWindow(handle);
             SetForegroundWindow(handle);
         }
-
         
         public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
         {
@@ -582,11 +539,6 @@ namespace taskt.Core.Automation.Commands
             return screenshot;
         }
 
-        //public static string GetWindowNameFromHandle(IntPtr handle)
-        //{
-        //    return User32.User32Functions.GetWindowTitle(handle);
-        //}
-
         public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
@@ -595,16 +547,8 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                //var windows = GetAllWindows();
                 var wins = GetAllWindowNamesAndHandles();
                 var method = GetWindowNameCompareMethod(searchMethod);
-                //foreach (var win in windows)
-                //{
-                //    if (method(win.Value, windowName))
-                //    {
-                //        return win.Value;
-                //    }
-                //}
                 try
                 {
                     var win = wins.Where(w => method(w.Item2, windowName)).First();
@@ -769,28 +713,6 @@ namespace taskt.Core.Automation.Commands
             string item = matchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
             GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
         }
-
-        //public static void UpdateWindowTitleCombobox(System.Windows.Forms.ComboBox cmb)
-        //{
-        //    string currentText = cmb.Text;
-
-        //    cmb.BeginUpdate();
-        //    cmb.Items.Clear();
-
-        //    var winList = GetAllWindowTitles();
-
-        //    foreach(var title in winList)
-        //    {
-        //        cmb.Items.Add(title);
-        //    }
-
-        //    cmb.EndUpdate();
-
-        //    if (winList.Contains(currentText))
-        //    {
-        //        cmb.Text = currentText;
-        //    }
-        //}
 
         #endregion
     }
