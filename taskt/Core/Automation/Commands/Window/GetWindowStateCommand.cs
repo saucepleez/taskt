@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -57,12 +56,18 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-            var hWnd = handles[0];
+            var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            var whnd = wins[0].Item1;
 
-            User32Functions.WINDOWPLACEMENT wInfo = new User32Functions.WINDOWPLACEMENT();
-            User32Functions.GetWindowPlacement(hWnd, ref wInfo);
-            wInfo.showCmd.ToString().StoreInUserVariable(engine, v_UserVariableName);
+            //User32Functions.WINDOWPLACEMENT wInfo = new User32Functions.WINDOWPLACEMENT();
+            //User32Functions.GetWindowPlacement(whnd, ref wInfo);
+            //var wInfo = new WindowNameControls.WINDOWPLACEMENT();
+            //WindowNameControls.GetWindowPlacement(whnd, ref wInfo);
+
+            //wInfo.showCmd.ToString().StoreInUserVariable(engine, v_UserVariableName);
+
+            var state = WindowNameControls.GetWindowState(whnd);
+            state.ToString().StoreInUserVariable(engine, v_UserVariableName);
         }
 
         public override void Refresh(frmCommandEditor editor)

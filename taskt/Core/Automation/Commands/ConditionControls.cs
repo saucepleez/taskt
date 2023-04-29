@@ -371,7 +371,8 @@ namespace taskt.Core.Automation.Commands
 
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                windowName = User32.User32Functions.GetActiveWindowTitle();
+                //windowName = User32.User32Functions.GetActiveWindowTitle();
+                windowName = WindowNameControls.GetActiveWindowTitle();
             }
 
             UIAutomationCommand newUIACommand = new UIAutomationCommand();

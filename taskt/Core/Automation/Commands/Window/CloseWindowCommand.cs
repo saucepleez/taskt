@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -52,11 +51,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Automation.Engine.AutomationEngineInstance)sender;
 
-            var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
 
-            foreach(var whnd in handles)
+            foreach(var win in wins)
             {
-                User32Functions.CloseWindow(whnd);
+                //User32Functions.CloseWindow(win.Item1);
+                WindowNameControls.CloseWindow(win.Item1);
             }
         }
 

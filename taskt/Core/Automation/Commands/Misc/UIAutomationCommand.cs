@@ -422,7 +422,8 @@ namespace taskt.Core.Automation.Commands
 
             if (variableWindowName == engine.engineSettings.CurrentWindowKeyword)
             {
-                variableWindowName = User32Functions.GetActiveWindowTitle();
+                //variableWindowName = User32Functions.GetActiveWindowTitle();
+                variableWindowName = WindowNameControls.GetActiveWindowTitle();
             }
             else
             {
@@ -442,7 +443,8 @@ namespace taskt.Core.Automation.Commands
                     };
                     activateWindow.RunCommand(sender);
                     System.Threading.Thread.Sleep(500); // wait a bit
-                    variableWindowName = User32Functions.GetActiveWindowTitle();
+                    //variableWindowName = User32Functions.GetActiveWindowTitle();
+                    variableWindowName = WindowNameControls.GetActiveWindowTitle();
                 }
             }
 

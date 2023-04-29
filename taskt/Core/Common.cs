@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using taskt.Core.Automation.Commands;
 using taskt.Core.IO;
 
 namespace taskt.Core
@@ -171,7 +172,7 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.Automation.User32.User32Functions.GetActiveWindowTitle() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = WindowNameControls.GetActiveWindowTitle() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.Location", VariableValue = System.Reflection.Assembly.GetEntryAssembly().Location });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine });

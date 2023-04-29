@@ -303,7 +303,8 @@ namespace taskt.Core.Automation.Commands
                                                    where rw.Field<string>("Parameter Name") == "Y Adjustment"
                                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
+                //var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
+                var ieClientLocation = WindowNameControls.GetWindowPosition(new IntPtr(browserInstance.HWND));
 
                 MoveMouseCommand newMouseMove = new MoveMouseCommand();
 

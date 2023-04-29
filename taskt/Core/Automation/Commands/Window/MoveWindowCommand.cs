@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -86,13 +85,14 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
 
-            foreach(var whnd in handles)
+            foreach(var win in wins)
             {
-                User32Functions.RECT pos = User32Functions.GetWindowPosition(whnd);
+                //User32Functions.RECT pos = User32Functions.GetWindowPosition(win);
+                var pos = WindowNameControls.GetWindowPosition(win.Item1);
 
-                var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);
+                var variableXPosition = v_XWindowPosition.ConvertToUserVariable(engine);
                 int xPos;
                 if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
                 {
@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.Commands
                     xPos = v_XWindowPosition.ConvertToUserVariableAsInteger("X Position", engine);
                 }
 
-                var variableYPosition = v_YWindowPosition.ConvertToUserVariable(sender);
+                var variableYPosition = v_YWindowPosition.ConvertToUserVariable(engine);
                 int yPos;
                 if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
                 {
@@ -122,7 +122,8 @@ namespace taskt.Core.Automation.Commands
                     yPos = v_YWindowPosition.ConvertToUserVariableAsInteger("Y Position", engine);
                 }
 
-                User32Functions.SetWindowPosition(whnd, xPos, yPos);
+                //User32Functions.SetWindowPosition(win, xPos, yPos);
+                WindowNameControls.SetWindowPosition(win.Item1, xPos, yPos);
             }
         }
 
