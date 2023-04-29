@@ -115,6 +115,40 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("60")]
         public static string v_WaitTime { get; }
 
+        /// <summary>
+        /// window name result
+        /// </summary>
+        [PropertyDescription("Variable Name to Store Window Name Result")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vWin**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vWin}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("When Match Method is **All**, data type is LIST, otherwise it is BASIC")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("Window Name Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public static string v_WindowNameResult { get; }
+
+        /// <summary>
+        /// window handle result
+        /// </summary>
+        [PropertyDescription("Variable Name to Store Window Handle Result")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vHandle**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vHandle}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("When Match Method is **All**, data type is LIST, otherwise it is BASIC")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public static string v_WindowHandleResult { get; }
+
         #endregion
 
         #region enum, struct
