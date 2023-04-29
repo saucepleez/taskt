@@ -27,6 +27,18 @@ namespace taskt.UI.CustomControls
             SecondLabel
         }
 
+        private static List<Color> paramColors = new List<Color>
+        {
+            Color.FromArgb(59, 59, 59),
+            Color.FromArgb(59, 59, 80),
+            Color.FromArgb(59, 80, 59),
+            Color.FromArgb(59, 80, 80),
+            Color.FromArgb(80, 59, 59),
+            Color.FromArgb(80, 59, 80),
+            Color.FromArgb(80, 80, 59),
+            Color.FromArgb(80, 80, 80),
+        };
+
         #region create multi group for
         /// <summary>
         /// create Controls for Render. This method automatically creates all properties controls except "v_Comment". This method supports all attributes.
@@ -50,7 +62,7 @@ namespace taskt.UI.CustomControls
                     WrapContents = false,
                     AutoSize = true,
                     Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                    BackColor = (count % 2 == 0) ? Color.FromArgb(59, 59, 59) : Color.FromArgb(80, 80, 80),
+                    BackColor = paramColors[count % 8],
                 };
                 var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
                 flowPanel.Controls.AddRange(ctrls.ToArray());
@@ -83,7 +95,7 @@ namespace taskt.UI.CustomControls
                     WrapContents = false,
                     AutoSize = true,
                     Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                    BackColor = (count % 2 == 0) ? Color.FromArgb(59, 59, 59) : Color.FromArgb(80, 80, 80),
+                    BackColor = paramColors[count % 8],
                 };
 
                 var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
