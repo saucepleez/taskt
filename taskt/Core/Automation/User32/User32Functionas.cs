@@ -23,18 +23,18 @@ namespace taskt.Core.Automation.User32
 {
     public static class User32Functions
     {
-        private static Dictionary<IntPtr, string> windowTitles = null;
+        //private static Dictionary<IntPtr, string> windowTitles = null;
 
-        [DllImport("user32.dll")]
-        public static extern bool LockWorkStation();
+        //[DllImport("user32.dll")]
+        //public static extern bool LockWorkStation();
 
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
+        //[DllImport("user32.dll", SetLastError = true)]
+        //static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
 
-        public static bool WindowsLogOff()
-        {
-            return ExitWindowsEx(0, 0);
-        }
+        //public static bool WindowsLogOff()
+        //{
+        //    return ExitWindowsEx(0, 0);
+        //}
 
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
         private static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
