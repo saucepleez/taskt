@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
 
                 //User32Functions.SetCursorPosition(xLocation, yLocation);
                 //User32Functions.SetCursorPosition(mouseX, mouseY);
-                KeyMouseControls.SetCursorPosition(mouseY, mouseX);
+                KeyMouseControls.SetCursorPosition(mouseX, mouseY);
 
                 if (!String.IsNullOrEmpty(v_MouseClick))
                 {
