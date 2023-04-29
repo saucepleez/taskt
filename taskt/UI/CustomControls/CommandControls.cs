@@ -1797,14 +1797,23 @@ namespace taskt.UI.CustomControls
         {
             List<Control> ret = new List<Control>();
 
-            int index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
-            int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
-
-            for (int i = index; i < last; i++)
+            int index;
+            index = ctrls.FindIndex(t => (t.Name == "group_" + parameterName));
+            if (index >= 0)
             {
-                ret.Add(ctrls[i]);
+                ret.Add(ctrls[index]);
             }
+            else
+            {
+                index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
+                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
 
+                for (int i = index; i < last; i++)
+                {
+                    ret.Add(ctrls[i]);
+                }
+            }
+            
             return ret;
         }
 
