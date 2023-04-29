@@ -343,16 +343,16 @@ namespace taskt.Core.Automation.Engine
                 {
                     CurrentLoopContinuing = true;
                 }
-                else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
-                {
-                    //get variable
-                    var setEngineCommand = (Core.Automation.Commands.SetEngineDelayCommand)parentCommand;                    
-                    var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
-                    var delay = int.Parse(engineDelay);
+                //else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
+                //{
+                //    //get variable
+                //    var setEngineCommand = (Core.Automation.Commands.SetEngineDelayCommand)parentCommand;                    
+                //    var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
+                //    var delay = int.Parse(engineDelay);
 
-                    //update delay setting
-                    this.engineSettings.DelayBetweenCommands = delay;
-                }
+                //    //update delay setting
+                //    this.engineSettings.DelayBetweenCommands = delay;
+                //}
                 else
                 {
                     //sleep required time

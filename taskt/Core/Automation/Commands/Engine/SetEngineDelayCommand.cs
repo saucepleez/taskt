@@ -36,7 +36,13 @@ namespace taskt.Core.Automation.Commands
             //this.v_EngineSpeed = "";
         }
 
-        // TODO: add Run method
+        public override void RunCommand(object sender)
+        {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
+            var delay = this.ConvertToUserVariableAsInteger(nameof(v_EngineSpeed), engine);
+            engine.engineSettings.DelayBetweenCommands = delay;
+        }
 
         public override List<Control> Render(frmCommandEditor editor)
         {
@@ -44,7 +50,7 @@ namespace taskt.Core.Automation.Commands
 
             //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_EngineSpeed", this, editor));
 
-            // TODO: suppor keyword
+            // TODO: support keyword
             this.v_EngineSpeed = editor.appSettings.EngineSettings.DelayBetweenCommands.ToString();
             
             return RenderedControls;
