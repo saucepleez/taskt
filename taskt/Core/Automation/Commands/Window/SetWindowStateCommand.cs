@@ -63,16 +63,13 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var windowState = this.GetUISelectionValue(nameof(v_WindowState), engine);
-            //User32Functions.WindowState state = User32Functions.WindowState.SW_RESTORE;
             var state = WindowNameControls.WindowState.SW_RESTORE;
             switch (windowState.ToLower())
             {
                 case "maximize":
-                    //state = User32Functions.WindowState.SW_MAXIMIZE;
                     state = WindowNameControls.WindowState.SW_MAXIMIZE;
                     break;
                 case "minimize":
-                    //state = User32Functions.WindowState.SW_MINIMIZE;
                     state = WindowNameControls.WindowState.SW_MINIMIZE;
                     break;
             }
@@ -80,11 +77,6 @@ namespace taskt.Core.Automation.Commands
             var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
             foreach (var win in wins)
             {
-                //if (User32Functions.IsIconic(win) && (state != User32Functions.WindowState.SW_MINIMIZE))
-                //{
-                //    User32Functions.ShowWindowAsync(win, state);
-                //}
-                //User32Functions.SetWindowState(win, state);
                 var whnd = win.Item1;
                 if (WindowNameControls.IsIconic(whnd) && (state != WindowNameControls.WindowState.SW_MINIMIZE))
                 {

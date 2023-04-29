@@ -89,7 +89,6 @@ namespace taskt.Core.Automation.Commands
 
             foreach(var win in wins)
             {
-                //User32Functions.RECT pos = User32Functions.GetWindowPosition(win);
                 var pos = WindowNameControls.GetWindowPosition(win.Item1);
 
                 var variableXPosition = v_XWindowPosition.ConvertToUserVariable(engine);
@@ -122,7 +121,6 @@ namespace taskt.Core.Automation.Commands
                     yPos = v_YWindowPosition.ConvertToUserVariableAsInteger("Y Position", engine);
                 }
 
-                //User32Functions.SetWindowPosition(win, xPos, yPos);
                 WindowNameControls.SetWindowPosition(win.Item1, xPos, yPos);
             }
         }

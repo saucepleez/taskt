@@ -82,7 +82,6 @@ namespace taskt.Core.Automation.Commands
 
             foreach (var win in wins)
             {
-                //User32Functions.SetWindowSize(whnd, width, height);
                 WindowNameControls.SetWindowSize(win.Item1, width, height);
             }
         }

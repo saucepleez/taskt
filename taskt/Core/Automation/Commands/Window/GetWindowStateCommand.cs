@@ -59,13 +59,6 @@ namespace taskt.Core.Automation.Commands
             var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
             var whnd = wins[0].Item1;
 
-            //User32Functions.WINDOWPLACEMENT wInfo = new User32Functions.WINDOWPLACEMENT();
-            //User32Functions.GetWindowPlacement(whnd, ref wInfo);
-            //var wInfo = new WindowNameControls.WINDOWPLACEMENT();
-            //WindowNameControls.GetWindowPlacement(whnd, ref wInfo);
-
-            //wInfo.showCmd.ToString().StoreInUserVariable(engine, v_UserVariableName);
-
             var state = WindowNameControls.GetWindowState(whnd);
             state.ToString().StoreInUserVariable(engine, v_UserVariableName);
         }

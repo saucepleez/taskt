@@ -64,13 +64,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                //var lst = new List<string>();
                 var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
-                //foreach (var whnd in handles)
-                //{
-                //    lst.Add(WindowNameControls.GetWindowNameFromHandle(whnd));
-                //}
-                //lst.StoreInUserVariable(engine, v_UserVariableName);
                 wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
             }
             catch (Exception ex)
