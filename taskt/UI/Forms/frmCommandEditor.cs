@@ -11,25 +11,14 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using SHDocVw;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using taskt.Core.Automation.Attributes;
-using System.IO;
-using taskt.Core;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Commands;
-using System.Configuration;
 
 namespace taskt.UI.Forms
 {
