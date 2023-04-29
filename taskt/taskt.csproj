@@ -300,6 +300,7 @@
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
     <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
     <Compile Include="Core\Automation\Commands\BooleanControls.cs" />
+    <Compile Include="Core\Automation\Commands\ClipboardControls.cs" />
     <Compile Include="Core\Automation\Commands\ColorControls.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\FormatColorCommand.cs" />
