@@ -53,14 +53,15 @@ namespace taskt.Core.Automation.Commands
             return props.Where(p =>
             {
                 var vp = p.GetCustomAttribute<PropertyVirtualProperty>();
-                if (vp != null)
-                {
-                    return (vp.className == vProp.className) && (vp.propertyName == vProp.propertyName);
-                }
-                else
-                {
-                    return false;
-                }
+                //if (vp != null)
+                //{
+                //    return vp.Equals(vProp);
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+                return vp?.Equals(vProp) ?? false;
             }).FirstOrDefault();
         }
 
