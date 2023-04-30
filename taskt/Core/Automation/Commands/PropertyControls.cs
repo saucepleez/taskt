@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get ProppertyInfo that has PropertyVirtualProperty specified by argument
+        /// get PropertyInfo that has PropertyVirtualProperty specified by argument
         /// </summary>
         /// <param name="command"></param>
         /// <param name="vProp"></param>
@@ -62,6 +62,20 @@ namespace taskt.Core.Automation.Commands
                 //    return false;
                 //}
                 return vp?.Equals(vProp) ?? false;
+            }).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// get PropertyInfo that has PropertyVirtualProperty specified by argument
+        /// </summary>
+        /// <param name="props"></param>
+        /// <param name="vProp"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetProperty(this List<PropertyInfo> props, PropertyVirtualProperty vProp)
+        {
+            return props.Where(p =>
+            {
+                return p.GetCustomAttribute<PropertyVirtualProperty>()?.Equals(vProp) ?? false;
             }).FirstOrDefault();
         }
 

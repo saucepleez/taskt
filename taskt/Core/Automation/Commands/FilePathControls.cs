@@ -609,10 +609,16 @@ namespace taskt.Core.Automation.Commands
         /// <param name="errorFunc"></param>
         public static void FileAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<string> actionFunc, Action<Exception> errorFunc = null)
         {
-            var filePath = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePath)))?.Name ??
-                            command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_NoSample_FilePath)))?.Name ?? "";
-            var waitTime = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_WaitTime)))?.Name ?? "";
-            var pathResult = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePathResult)))?.Name ?? "";
+            //var filePath = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePath)))?.Name ??
+            //                command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_NoSample_FilePath)))?.Name ?? "";
+            //var waitTime = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_WaitTime)))?.Name ?? "";
+            //var pathResult = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePathResult)))?.Name ?? "";
+
+            var props = command.GetParameterProperties();
+            var filePath = props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePath)))?.Name ??
+                            props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_NoSample_FilePath)))?.Name ?? "";
+            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_WaitTime)))?.Name ?? "";
+            var pathResult = props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePathResult)))?.Name ?? "";
 
             FileAction(command, filePath, waitTime, engine, actionFunc, pathResult, errorFunc);
         }
