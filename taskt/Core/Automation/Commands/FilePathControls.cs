@@ -561,7 +561,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// general file action
+        /// general file action. This method search target file before execute actionFunc, and try store Found File Path after execute actionFunc.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="pathName"></param>
@@ -601,7 +601,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// general file action. This method specifies the parameter from the value of PropertyVirtualProperty
+        /// general file action. This method search target file before execute actionFunc, and try store Found File Path after execute actionFunc. This method specifies the parameter from the value of PropertyVirtualProperty
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
