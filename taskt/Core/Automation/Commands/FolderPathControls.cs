@@ -137,10 +137,10 @@ namespace taskt.Core.Automation.Commands
                 var path = WaitForFolder(command, pathName, waitTimeName, engine);
                 actionFunc(path);
 
-                if (string.IsNullOrEmpty(pathResultName))
+                if (!string.IsNullOrEmpty(pathResultName))
                 {
                     var pathResult = command.GetRawPropertyString(pathResultName, "Folder Path Result");
-                    if (string.IsNullOrEmpty(pathResult))
+                    if (!string.IsNullOrEmpty(pathResult))
                     {
                         path.StoreInUserVariable(engine, pathResult);
                     }
