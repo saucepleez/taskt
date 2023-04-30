@@ -67,11 +67,21 @@ namespace taskt.Core.Automation.Commands
             //{
             //    false.StoreInUserVariable(engine, v_UserVariableName);
             //}
-            WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine,
+            //WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine,
+            //    new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+            //    {
+            //        (wins.Count > 0).StoreInUserVariable(engine, v_UserVariableName);
+            //    }), nameof(v_NameResult), nameof(v_HandleResult), new Action<Exception>(ex =>
+            //    {
+            //        false.StoreInUserVariable(engine, v_UserVariableName);
+            //    })
+            //);
+            WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
                     (wins.Count > 0).StoreInUserVariable(engine, v_UserVariableName);
-                }), nameof(v_NameResult), nameof(v_HandleResult), new Action<Exception>(ex =>
+                }),
+                new Action<Exception>(ex =>
                 {
                     false.StoreInUserVariable(engine, v_UserVariableName);
                 })

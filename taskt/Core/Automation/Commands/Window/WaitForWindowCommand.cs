@@ -30,9 +30,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_LengthToWait { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        public ComboBox WindowNameControl;
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
+
+        //[XmlIgnore]
+        //[NonSerialized]
+        //public ComboBox WindowNameControl;
 
         public WaitForWindowCommand()
         {
@@ -46,20 +54,29 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            try
-            {
-                WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_LengthToWait), engine);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //try
+            //{
+            //    WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_LengthToWait), engine);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+
+            WindowNameControls.WindowAction(this, engine,
+                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+                {
+                    // nothing to do
+                })
+            );
         }
 
         public override void Refresh(frmCommandEditor editor)
         {
             base.Refresh();
-            WindowNameControl.AddWindowNames();
+            //WindowNameControl.AddWindowNames();
+            var cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
+            cmb.AddWindowNames();
         }
     }
 }

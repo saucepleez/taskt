@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Security.Principal;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -44,6 +45,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
+
         public GetWindowStateCommand()
         {
             //this.CommandName = "GetWindowStateCommand";
@@ -56,11 +65,21 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-            var whnd = wins[0].Item1;
+            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            //var whnd = wins[0].Item1;
 
-            var state = WindowNameControls.GetWindowState(whnd);
-            state.ToString().StoreInUserVariable(engine, v_UserVariableName);
+            //var state = WindowNameControls.GetWindowState(whnd);
+            //state.ToString().StoreInUserVariable(engine, v_UserVariableName);
+
+            WindowNameControls.WindowAction(this, engine,
+                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+                {
+                    var whnd = wins[0].Item1;
+
+                    var state = WindowNameControls.GetWindowState(whnd);
+                    state.ToString().StoreInUserVariable(engine, v_UserVariableName);
+                })
+            );
         }
 
         public override void Refresh(frmCommandEditor editor)

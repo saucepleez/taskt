@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Security.Principal;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -67,14 +68,24 @@ namespace taskt.Core.Automation.Commands
             //}
 
             //WindowNameControls.StoreWindowNamesAndHandles(wins, v_NameResult, v_HandleResult, engine);
-            WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine,
+            //WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine,
+            //    new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+            //    {
+            //        foreach(var win in wins)
+            //        {
+            //            WindowNameControls.ActivateWindow(win.Item1);
+            //        }
+            //    }), nameof(v_NameResult), nameof(v_HandleResult)
+            //);
+            WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
-                    foreach(var win in wins)
+                    foreach (var win in wins)
                     {
                         WindowNameControls.ActivateWindow(win.Item1);
                     }
-                }), nameof(v_NameResult), nameof(v_HandleResult));
+                })
+            );
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)

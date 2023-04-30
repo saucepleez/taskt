@@ -63,6 +63,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
+
         public ResizeWindowCommand()
         {
             //this.CommandName = "ResizeWindowCommand";
@@ -75,15 +83,26 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var width = this.ConvertToUserVariableAsInteger(nameof(v_XWindowSize), engine);
-            var height = this.ConvertToUserVariableAsInteger(nameof(v_YWindowSize), engine);
+            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
 
-            var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            //var width = this.ConvertToUserVariableAsInteger(nameof(v_XWindowSize), engine);
+            //var height = this.ConvertToUserVariableAsInteger(nameof(v_YWindowSize), engine);
+            //foreach (var win in wins)
+            //{
+            //    WindowNameControls.SetWindowSize(win.Item1, width, height);
+            //}
 
-            foreach (var win in wins)
-            {
-                WindowNameControls.SetWindowSize(win.Item1, width, height);
-            }
+            WindowNameControls.WindowAction(this, engine,
+                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+                {
+                    var width = this.ConvertToUserVariableAsInteger(nameof(v_XWindowSize), engine);
+                    var height = this.ConvertToUserVariableAsInteger(nameof(v_YWindowSize), engine);
+                    foreach (var win in wins)
+                    {
+                        WindowNameControls.SetWindowSize(win.Item1, width, height);
+                    }
+                })
+            );
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
