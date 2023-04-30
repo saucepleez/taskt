@@ -27,6 +27,7 @@ namespace taskt.UI.CustomControls
             SecondLabel
         }
 
+        // todo: add colorful setting parameter
         private static List<Color> paramColors = new List<Color>
         {
             Color.FromArgb(70, 70, 70),
