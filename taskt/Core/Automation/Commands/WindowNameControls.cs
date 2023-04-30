@@ -715,44 +715,6 @@ namespace taskt.Core.Automation.Commands
             return FindWindows(window, compareMethod, "All", 60, waitTime, engine);
         }
 
-        ///// <summary>
-        ///// store window name and window handle to varialbe
-        ///// </summary>
-        ///// <param name="win"></param>
-        ///// <param name="windowVariable"></param>
-        ///// <param name="handleVariable"></param>
-        ///// <param name="engine"></param>
-        //public static void StoreWindowNameAndHandle((IntPtr, string) win, string windowVariable, string handleVariable, Engine.AutomationEngineInstance engine)
-        //{
-        //    if (!string.IsNullOrEmpty(windowVariable))
-        //    {
-        //        win.Item2.StoreInUserVariable(engine, windowVariable);
-        //    }
-        //    if (!string.IsNullOrEmpty(handleVariable))
-        //    {
-        //        win.Item1.ToString().StoreInUserVariable(engine, handleVariable);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// store window names and window handles to LIST variable
-        ///// </summary>
-        ///// <param name="wins"></param>
-        ///// <param name="windowVariable"></param>
-        ///// <param name="handleVariable"></param>
-        ///// <param name="engine"></param>
-        //public static void StoreWindowNamesAndHandles(List<(IntPtr, string)> wins, string windowVariable, string handleVariable, Engine.AutomationEngineInstance engine)
-        //{
-        //    if (!string.IsNullOrEmpty(windowVariable))
-        //    {
-        //        wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, windowVariable);
-        //    }
-        //    if (!string.IsNullOrEmpty(handleVariable))
-        //    {
-        //        wins.Select(w => w.Item1.ToString()).ToList().StoreInUserVariable(engine, handleVariable);
-        //    }
-        //}
-
         /// <summary>
         /// general window action
         /// </summary>
@@ -833,56 +795,6 @@ namespace taskt.Core.Automation.Commands
         /// <param name="errorFunc"></param>
         private static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
         {
-            //try
-            //{
-            //    var wins = FindWindows(command, windowName, compareMethodName, matchTypeName, indexName, waitName, engine);
-            //    actionFunc(wins);
-
-            //    var matchType = command.GetUISelectionValue(matchTypeName, engine);
-
-            //    if (!string.IsNullOrEmpty(nameResultName))
-            //    {
-            //        var nameResult = command.GetRawPropertyString(nameResultName, "Window Name Result");
-            //        if (!string.IsNullOrEmpty (nameResult))
-            //        {
-            //            if (matchType == "all")
-            //            {
-            //                wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, nameResult);
-            //            }
-            //            else
-            //            {
-            //                wins[0].Item2.StoreInUserVariable(engine, nameResult);
-            //            }
-            //        }
-            //    }
-            //    if (!string.IsNullOrEmpty(handleResultName))
-            //    {
-            //        var handleResult = command.GetRawPropertyString(handleResultName, "Window Handle Result");
-            //        if (!string.IsNullOrEmpty(handleResult))
-            //        {
-            //            if (matchType == "all")
-            //            {
-            //                wins.Select(w => w.Item1.ToString()).ToList().StoreInUserVariable(engine, handleResult);
-            //            }
-            //            else
-            //            {
-            //                wins[0].Item1.ToString().StoreInUserVariable(engine, handleResult);
-            //            }
-            //        }
-            //    }
-            //}
-            //catch(Exception ex)
-            //{
-            //    if (errorFunc != null)
-            //    {
-            //        throw ex;
-            //    }
-            //    else
-            //    {
-            //        errorFunc(ex);
-            //    }
-            //}
-
             var matchType = command.GetUISelectionValue(matchTypeName, engine);
 
             WindowAction(command, matchType, new Func<List<(IntPtr, string)>>(() =>
