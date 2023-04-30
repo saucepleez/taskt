@@ -716,7 +716,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// general window action
+        /// general window action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="matchType"></param>
@@ -780,7 +780,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// general window action
+        /// general window action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="windowName"></param>
@@ -804,7 +804,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// general window action
+        /// general window action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="windowName"></param>
@@ -824,7 +824,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// window general action. This method specifies the parameter from the value of PropertyVirtualProperty
+        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter from the value of PropertyVirtualProperty
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>

@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// general folder action
+        /// general folder action. This method search target folder before execute actionFunc, and try store Found Folder Path after execute actionFunc. 
         /// </summary>
         /// <param name="command"></param>
         /// <param name="pathName"></param>
@@ -160,7 +160,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// general folder action. This method specifies the parameter from the value of PropertyVirtualProperty 
+        /// general folder action. This method search target folder before execute actionFunc, and try store Found Folder Path after execute actionFunc. This method specifies the parameter from the value of PropertyVirtualProperty.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
