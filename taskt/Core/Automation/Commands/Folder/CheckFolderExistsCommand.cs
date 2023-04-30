@@ -30,6 +30,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("0")]
         public string v_WaitForFolder { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPathResult))]
+        public string v_ResultPath { get; set; }
+
         public CheckFolderExistsCommand()
         {
             //this.CommandName = "CheckFolderExistsCommand";
@@ -41,16 +45,27 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            try
-            {
-                FolderPathControls.WaitForFolder(this, nameof(v_TargetFolderName), nameof(v_WaitForFolder), engine);
+            //try
+            //{
+            //    FolderPathControls.WaitForFolder(this, nameof(v_TargetFolderName), nameof(v_WaitForFolder), engine);
 
-                true.StoreInUserVariable(engine, v_UserVariableName);
-            }
-            catch
-            {
-                false.StoreInUserVariable(engine, v_UserVariableName);
-            }
+            //    true.StoreInUserVariable(engine, v_UserVariableName);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_UserVariableName);
+            //}
+
+            FolderPathControls.FolderAction(this, engine,
+                new Action<string>(path =>
+                {
+                    true.StoreInUserVariable(engine, v_UserVariableName);
+                }),
+                new Action<Exception>(ex =>
+                {
+                    false.StoreInUserVariable(engine, v_UserVariableName);
+                })
+            );
         }
     }
 }

@@ -50,6 +50,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
+
         public GetWindowNamesCommand()
         {
             //this.CommandName = "GetWindowNamesCommand";
@@ -62,23 +70,59 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            try
-            {
-                var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
-                wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
-            }
-            catch (Exception ex)
-            {
-                var whenNotFound = this.GetUISelectionValue(nameof(v_WhenWindowNotFound), engine);
-                switch(whenNotFound)
+            //try
+            //{
+            //    var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
+            //    wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
+            //}
+            //catch (Exception ex)
+            //{
+            //    var whenNotFound = this.GetUISelectionValue(nameof(v_WhenWindowNotFound), engine);
+            //    switch(whenNotFound)
+            //    {
+            //        case "ignore":
+            //            new List<string>().StoreInUserVariable(engine, v_UserVariableName);
+            //            break;
+            //        case "error":
+            //            throw ex;
+            //    }
+            //}
+            //WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine,
+            //    new Action<List<(IntPtr, string)>>(wins =>
+            //    {
+            //        wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
+            //    }), nameof(v_NameResult), nameof(v_HandleResult),
+            //    new Action<Exception>(ex =>
+            //    {
+            //        var whenNotFound = this.GetUISelectionValue(nameof(v_WhenWindowNotFound), engine);
+            //        switch (whenNotFound)
+            //        {
+            //            case "ignore":
+            //                new List<string>().StoreInUserVariable(engine, v_UserVariableName);
+            //                break;
+            //            case "error":
+            //                throw ex;
+            //        }
+            //    })
+            //);
+            WindowNameControls.WindowAction(this, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    case "ignore":
-                        new List<string>().StoreInUserVariable(engine, v_UserVariableName);
-                        break;
-                    case "error":
-                        throw ex;
-                }
-            }
+                    wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
+                }), 
+                new Action<Exception>(ex =>
+                {
+                    var whenNotFound = this.GetUISelectionValue(nameof(v_WhenWindowNotFound), engine);
+                    switch (whenNotFound)
+                    {
+                        case "ignore":
+                            new List<string>().StoreInUserVariable(engine, v_UserVariableName);
+                            break;
+                        case "error":
+                            throw ex;
+                    }
+                })
+            );
         }
 
         public override void Refresh(frmCommandEditor editor)

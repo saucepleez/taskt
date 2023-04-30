@@ -59,6 +59,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //[PropertyDescription("Variable Name to Store File Path Before Action")]
+        //public string v_BeforeFilePathResult { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //[PropertyDescription("Variable Name to Store File Path After Action")]
+        //public string v_AfterFilePathResult { get; set; }
+
+        // todo: only copy file operation
+
         public MoveFileCommand()
         {
             //this.CommandName = "MoveFileCommand";

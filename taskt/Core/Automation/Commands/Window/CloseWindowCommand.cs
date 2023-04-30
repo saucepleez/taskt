@@ -39,6 +39,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
+
         public CloseWindowCommand()
         {
             //this.CommandName = "CloseWindowCommand";
@@ -51,13 +59,31 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Automation.Engine.AutomationEngineInstance)sender;
 
-            var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
 
-            foreach(var win in wins)
-            {
-                //User32Functions.CloseWindow(win.Item1);
-                WindowNameControls.CloseWindow(win.Item1);
-            }
+            //foreach(var win in wins)
+            //{
+            //    WindowNameControls.CloseWindow(win.Item1);
+            //}
+
+            //WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine,
+            //    new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+            //    {
+            //        foreach (var win in wins)
+            //        {
+            //            WindowNameControls.CloseWindow(win.Item1);
+            //        }
+            //    }), nameof(v_NameResult), nameof(v_HandleResult)
+            //);
+            WindowNameControls.WindowAction(this, engine,
+                    new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+                {
+                    foreach (var win in wins)
+                    {
+                        WindowNameControls.CloseWindow(win.Item1);
+                    }
+                })
+            );
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)

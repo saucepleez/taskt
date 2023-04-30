@@ -23,6 +23,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.className = className;
             this.propertyName = propertyName;
         }
+
+        public bool Equals(PropertyVirtualProperty other)
+        {
+            return (this.className == other.className) && (this.propertyName == other.propertyName);
+        }
     }
     #endregion
 

@@ -50,6 +50,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
+
         public SetWindowStateCommand()
         {
             //this.CommandName = "SetWindowStateCommand";
@@ -62,28 +70,55 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var windowState = this.GetUISelectionValue(nameof(v_WindowState), engine);
-            var state = WindowNameControls.WindowState.SW_RESTORE;
-            switch (windowState.ToLower())
-            {
-                case "maximize":
-                    state = WindowNameControls.WindowState.SW_MAXIMIZE;
-                    break;
-                case "minimize":
-                    state = WindowNameControls.WindowState.SW_MINIMIZE;
-                    break;
-            }
+            //var windowState = this.GetUISelectionValue(nameof(v_WindowState), engine);
+            //var state = WindowNameControls.WindowState.SW_RESTORE;
+            //switch (windowState.ToLower())
+            //{
+            //    case "maximize":
+            //        state = WindowNameControls.WindowState.SW_MAXIMIZE;
+            //        break;
+            //    case "minimize":
+            //        state = WindowNameControls.WindowState.SW_MINIMIZE;
+            //        break;
+            //}
 
-            var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-            foreach (var win in wins)
-            {
-                var whnd = win.Item1;
-                if (WindowNameControls.IsIconic(whnd) && (state != WindowNameControls.WindowState.SW_MINIMIZE))
+            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
+            //foreach (var win in wins)
+            //{
+            //    var whnd = win.Item1;
+            //    if (WindowNameControls.IsIconic(whnd) && (state != WindowNameControls.WindowState.SW_MINIMIZE))
+            //    {
+            //        WindowNameControls.ShowIconicWindow(whnd);
+            //    }
+            //    WindowNameControls.SetWindowState(whnd, state);
+            //}
+
+            WindowNameControls.WindowAction(this, engine,
+                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
-                    WindowNameControls.ShowIconicWindow(whnd);
-                }
-                WindowNameControls.SetWindowState(whnd, state);
-            }   
+                    var windowState = this.GetUISelectionValue(nameof(v_WindowState), engine);
+                    var state = WindowNameControls.WindowState.SW_RESTORE;
+                    switch (windowState.ToLower())
+                    {
+                        case "maximize":
+                            state = WindowNameControls.WindowState.SW_MAXIMIZE;
+                            break;
+                        case "minimize":
+                            state = WindowNameControls.WindowState.SW_MINIMIZE;
+                            break;
+                    }
+
+                    foreach (var win in wins)
+                    {
+                        var whnd = win.Item1;
+                        if (WindowNameControls.IsIconic(whnd) && (state != WindowNameControls.WindowState.SW_MINIMIZE))
+                        {
+                            WindowNameControls.ShowIconicWindow(whnd);
+                        }
+                        WindowNameControls.SetWindowState(whnd, state);
+                    }
+                })
+            );
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)

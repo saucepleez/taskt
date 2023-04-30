@@ -27,6 +27,19 @@ namespace taskt.UI.CustomControls
             SecondLabel
         }
 
+        // todo: add colorful setting parameter
+        private static List<Color> paramColors = new List<Color>
+        {
+            Color.FromArgb(70, 70, 70),
+            Color.FromArgb(80, 59, 59),
+            Color.FromArgb(59, 80, 59),
+            Color.FromArgb(59, 59, 80),
+            Color.FromArgb(80, 80, 59),
+            Color.FromArgb(80, 59, 80),
+            Color.FromArgb(59, 80, 80),
+            Color.FromArgb(80, 80, 80),
+        };
+
         #region create multi group for
         /// <summary>
         /// create Controls for Render. This method automatically creates all properties controls except "v_Comment". This method supports all attributes.
@@ -40,9 +53,23 @@ namespace taskt.UI.CustomControls
             var props = command.GetParameterProperties(renderComment);
             var controlList = new List<Control>();
 
+            int count = 0;
             foreach(var prop in props)
             {
-                controlList.AddRange(CreateInferenceDefaultControlGroupFor(prop, command, editor));
+                FlowLayoutPanel flowPanel = new FlowLayoutPanel
+                {
+                    Name = "group_" + prop.Name,
+                    FlowDirection = FlowDirection.TopDown,
+                    WrapContents = false,
+                    AutoSize = true,
+                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                    BackColor = paramColors[count % 8],
+                };
+                var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
+                flowPanel.Controls.AddRange(ctrls.ToArray());
+
+                controlList.Add(flowPanel);
+                count++;
             }
 
             return controlList;
@@ -59,14 +86,26 @@ namespace taskt.UI.CustomControls
         {
             var controlList = new List<Control>();
 
+            int count = 0;
             foreach (var propertyName in propartiesName)
             {
-                //var flowPanel = new Panel();
-                //var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
-                //flowPanel.Controls.AddRange(ctrls);
-                //controlList.Add(flowPanel);
+                FlowLayoutPanel flowPanel = new FlowLayoutPanel
+                {
+                    Name = "group_" + propertyName,
+                    FlowDirection = FlowDirection.TopDown,
+                    WrapContents = false,
+                    AutoSize = true,
+                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                    BackColor = paramColors[count % 8],
+                };
 
-                controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
+                var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
+                flowPanel.Controls.AddRange(ctrls);
+
+                controlList.Add(flowPanel);
+
+                //controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
+                count++;
             }
 
             return controlList;
@@ -1771,14 +1810,23 @@ namespace taskt.UI.CustomControls
         {
             List<Control> ret = new List<Control>();
 
-            int index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
-            int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
-
-            for (int i = index; i < last; i++)
+            int index;
+            index = ctrls.FindIndex(t => (t.Name == "group_" + parameterName));
+            if (index >= 0)
             {
-                ret.Add(ctrls[i]);
+                ret.Add(ctrls[index]);
             }
+            else
+            {
+                index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
+                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
 
+                for (int i = index; i < last; i++)
+                {
+                    ret.Add(ctrls[i]);
+                }
+            }
+            
             return ret;
         }
 

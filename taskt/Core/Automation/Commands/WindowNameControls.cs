@@ -115,6 +115,40 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("60")]
         public static string v_WaitTime { get; }
 
+        /// <summary>
+        /// window name result
+        /// </summary>
+        [PropertyDescription("Variable Name to Store Window Name Result")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vWin**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vWin}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("When Match Method is **All**, data type is LIST, otherwise it is BASIC")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("Window Name Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public static string v_WindowNameResult { get; }
+
+        /// <summary>
+        /// window handle result
+        /// </summary>
+        [PropertyDescription("Variable Name to Store Window Handle Result")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vHandle**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vHandle}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("When Match Method is **All**, data type is LIST, otherwise it is BASIC")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public static string v_WindowHandleResult { get; }
+
         #endregion
 
         #region enum, struct
@@ -681,6 +715,153 @@ namespace taskt.Core.Automation.Commands
             return FindWindows(window, compareMethod, "All", 60, waitTime, engine);
         }
 
+        /// <summary>
+        /// general window action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="matchType"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="nameResultName"></param>
+        /// <param name="handleResultName"></param>
+        /// <param name="errorFunc"></param>
+        private static void WindowAction(ScriptCommand command, string matchType, Func<List<(IntPtr, string)>> searchFunc, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
+        {
+            try
+            {
+                var wins = searchFunc();
+                actionFunc(wins);
+
+                matchType = matchType.ToLower();
+
+                if (!string.IsNullOrEmpty(nameResultName))
+                {
+                    var nameResult = command.GetRawPropertyString(nameResultName, "Window Name Result");
+                    if (!string.IsNullOrEmpty(nameResult))
+                    {
+                        if (matchType == "all")
+                        {
+                            wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, nameResult);
+                        }
+                        else
+                        {
+                            wins[0].Item2.StoreInUserVariable(engine, nameResult);
+                        }
+                    }
+                }
+                if (!string.IsNullOrEmpty(handleResultName))
+                {
+                    var handleResult = command.GetRawPropertyString(handleResultName, "Window Handle Result");
+                    if (!string.IsNullOrEmpty(handleResult))
+                    {
+                        if (matchType == "all")
+                        {
+                            wins.Select(w => w.Item1.ToString()).ToList().StoreInUserVariable(engine, handleResult);
+                        }
+                        else
+                        {
+                            wins[0].Item1.ToString().StoreInUserVariable(engine, handleResult);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (errorFunc == null)
+                {
+                    throw ex;
+                }
+                else
+                {
+                    errorFunc(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// general window action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="compareMethodName"></param>
+        /// <param name="matchTypeName"></param>
+        /// <param name="indexName"></param>
+        /// <param name="waitName"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="nameResultName"></param>
+        /// <param name="handleResultName"></param>
+        /// <param name="errorFunc"></param>
+        private static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
+        {
+            var matchType = command.GetUISelectionValue(matchTypeName, engine);
+
+            WindowAction(command, matchType, new Func<List<(IntPtr, string)>>(() =>
+            {
+                return FindWindows(command, windowName, compareMethodName, matchTypeName, indexName, waitName, engine);
+            }), engine, actionFunc, nameResultName, handleResultName, errorFunc);
+        }
+
+        /// <summary>
+        /// general window action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="compareMethodName"></param>
+        /// <param name="waitName"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="nameResultName"></param>
+        /// <param name="handleResultName"></param>
+        /// <param name="errorFunc"></param>
+        private static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
+        {
+            WindowAction(command, "all", new Func<List<(IntPtr, string)>>(() =>
+            {
+                return FindWindows(command, windowName, compareMethodName, waitName, engine);
+            }), engine, actionFunc, nameResultName, handleResultName, errorFunc);
+        }
+
+        /// <summary>
+        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter from the value of PropertyVirtualProperty
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void WindowAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
+        {
+            //var windowName = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowName)))?.Name ?? "";
+            //var compareMethod = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_CompareMethod)))?.Name ?? "";
+            //var waitTime = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
+            //var nameResult = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowNameResult)))?.Name ?? "";
+            //var handleResult = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowHandleResult)))?.Name ?? "";
+
+            //var matchType = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod)))?.Name ??
+            //                    command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
+            //var index = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_TargetWindowIndex)))?.Name ?? "";
+
+            var props = command.GetParameterProperties();
+            var windowName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowName)))?.Name ?? "";
+            var compareMethod = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_CompareMethod)))?.Name ?? "";
+            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
+            var nameResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowNameResult)))?.Name ?? "";
+            var handleResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowHandleResult)))?.Name ?? "";
+
+            var matchType = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod)))?.Name ??
+                                props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
+            var index = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_TargetWindowIndex)))?.Name ?? "";
+
+            if (matchType == "")
+            {
+                WindowAction(command, windowName, compareMethod, waitTime, engine, actionFunc, nameResult, handleResult, errorFunc);
+            }
+            else
+            {
+                WindowAction(command, windowName, compareMethod, matchType, index, waitTime, engine, actionFunc, nameResult, handleResult, errorFunc);
+            }
+        }
         #endregion
 
         #region Events

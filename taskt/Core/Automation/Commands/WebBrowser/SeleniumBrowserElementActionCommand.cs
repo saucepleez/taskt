@@ -625,7 +625,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    ElementParameterControls.Add(ctrls[i]);
             //}
-            ElementParameterControls = ctrls.GetControlGroup("v_WebActionParameterTable");
+            ElementParameterControls = ctrls.GetControlGroup(nameof(v_WebActionParameterTable));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)
             {

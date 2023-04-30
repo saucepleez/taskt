@@ -76,6 +76,22 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Wait", "s")]
         public static string v_WaitTime { get; }
 
+        /// <summary>
+        /// file path result
+        /// </summary>
+        [PropertyDescription("Variable Name to Store File Path")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vPath**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("File Path Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public static string v_FilePathResult { get; }
         #endregion
 
         #region check methods
@@ -542,6 +558,69 @@ namespace taskt.Core.Automation.Commands
             var path = command.ConvertToUserVariableAsFilePath(pathName, engine);
             var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
             return WaitForFile(path, waitTime, engine);
+        }
+
+        /// <summary>
+        /// general file action. This method search target file before execute actionFunc, and try store Found File Path after execute actionFunc.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="pathName"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="pathResultName"></param>
+        /// <param name="errorFunc"></param>
+        private static void FileAction(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine, Action<string> actionFunc, string pathResultName = "", Action<Exception> errorFunc = null)
+        {
+            try
+            {
+                var path = WaitForFile(command, pathName, waitTimeName, engine);
+
+                actionFunc(path);
+
+                if (!string.IsNullOrEmpty(pathResultName))
+                {
+                    var pathResult = command.GetRawPropertyString(pathResultName, "Path Result");
+                    if (!string.IsNullOrEmpty(pathResult))
+                    {
+                        path.StoreInUserVariable(engine, pathResult);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                if (errorFunc != null)
+                {
+                    errorFunc(ex);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        /// <summary>
+        /// general file action. This method search target file before execute actionFunc, and try store Found File Path after execute actionFunc. This method specifies the parameter from the value of PropertyVirtualProperty
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void FileAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<string> actionFunc, Action<Exception> errorFunc = null)
+        {
+            //var filePath = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePath)))?.Name ??
+            //                command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_NoSample_FilePath)))?.Name ?? "";
+            //var waitTime = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_WaitTime)))?.Name ?? "";
+            //var pathResult = command.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePathResult)))?.Name ?? "";
+
+            var props = command.GetParameterProperties();
+            var filePath = props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePath)))?.Name ??
+                            props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_NoSample_FilePath)))?.Name ?? "";
+            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_WaitTime)))?.Name ?? "";
+            var pathResult = props.GetProperty(new PropertyVirtualProperty(nameof(FilePathControls), nameof(v_FilePathResult)))?.Name ?? "";
+
+            FileAction(command, filePath, waitTime, engine, actionFunc, pathResult, errorFunc);
         }
         #endregion
 
