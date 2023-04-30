@@ -25,6 +25,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("60")]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPathResult))]
+        public string v_ResultPath { get; set; }
+
         public WaitForFolderToExistCommand()
         {
             //this.CommandName = "WaitForFolderToExistCommand";
@@ -37,14 +41,20 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            try
-            {
-                FolderPathControls.WaitForFolder(this, nameof(v_FolderName), nameof(v_WaitTime), engine);
-            }
-            catch
-            {
-                throw new Exception("Folder was Not Found in time!");
-            }
+            //try
+            //{
+            //    FolderPathControls.WaitForFolder(this, nameof(v_FolderName), nameof(v_WaitTime), engine);
+            //}
+            //catch
+            //{
+            //    throw new Exception("Folder was Not Found in time!");
+            //}
+            FolderPathControls.FolderAction(this, engine,
+                new Action<string>(path =>
+                {
+                    // nothing to do
+                })
+            );
         }
     }
 }

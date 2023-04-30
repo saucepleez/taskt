@@ -54,6 +54,9 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store File Path After Rename")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
         public string v_AfterFilePathResult { get; set; }
 
         public RenameFileCommand()
