@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -41,6 +42,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        public string v_ResultPath { get; set; }
+
         public GetFileInfoCommand()
         {
             //this.CommandName = "GetFileInfoCommand";
@@ -53,37 +58,69 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetFile = FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
+            //var targetFile = FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
+            //var fileInfo = new System.IO.FileInfo(targetFile);
 
-            var infoType = this.GetUISelectionValue(nameof(v_InfoType), engine);
+            //var infoType = this.GetUISelectionValue(nameof(v_InfoType), engine);
+            //string ret = "";
+            //switch (infoType)
+            //{
+            //    case "file size":
+            //        ret = fileInfo.Length.ToString();
+            //        break;
+            //    case "readonly file":
+            //        ret = fileInfo.IsReadOnly ? "TRUE" : "FALSE";
+            //        break;
+            //    case "hidden file":
+            //        ret = (((System.IO.FileAttributes)fileInfo.Attributes & System.IO.FileAttributes.Hidden) == System.IO.FileAttributes.Hidden) ? "TRUE": "FALSE";
+            //        break;
+            //    case "creation time":
+            //        ret = fileInfo.CreationTime.ToString();
+            //        break;
+            //    case "last write time":
+            //        ret = fileInfo.LastWriteTime.ToString();
+            //        break;
+            //    case "last access time":
+            //        ret = fileInfo.LastAccessTime.ToString();
+            //        break;
+            //    //default:
+            //    //    throw new Exception(infoType + " is not support.");
+            //}
 
-            string ret;
-            var fileInfo = new System.IO.FileInfo(targetFile);
-            switch (infoType)
-            {
-                case "file size":
-                    ret = fileInfo.Length.ToString();
-                    break;
-                case "readonly file":
-                    ret = fileInfo.IsReadOnly ? "TRUE" : "FALSE";
-                    break;
-                case "hidden file":
-                    ret = (((System.IO.FileAttributes)fileInfo.Attributes & System.IO.FileAttributes.Hidden) == System.IO.FileAttributes.Hidden) ? "TRUE": "FALSE";
-                    break;
-                case "creation time":
-                    ret = fileInfo.CreationTime.ToString();
-                    break;
-                case "last write time":
-                    ret = fileInfo.LastWriteTime.ToString();
-                    break;
-                case "last access time":
-                    ret = fileInfo.LastAccessTime.ToString();
-                    break;
-                default:
-                    throw new Exception(infoType + " is not support.");
-            }
+            //ret.StoreInUserVariable(engine, v_UserVariableName);
 
-            ret.StoreInUserVariable(sender, v_UserVariableName);
+            FilePathControls.FileAction(this, engine,
+                new Action<string>(path =>
+                {
+                    var fileInfo = new System.IO.FileInfo(path);
+
+                    var infoType = this.GetUISelectionValue(nameof(v_InfoType), engine);
+                    string ret = "";
+                    switch (infoType)
+                    {
+                        case "file size":
+                            ret = fileInfo.Length.ToString();
+                            break;
+                        case "readonly file":
+                            ret = fileInfo.IsReadOnly ? "TRUE" : "FALSE";
+                            break;
+                        case "hidden file":
+                            ret = ((fileInfo.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden) ? "TRUE" : "FALSE";
+                            break;
+                        case "creation time":
+                            ret = fileInfo.CreationTime.ToString();
+                            break;
+                        case "last write time":
+                            ret = fileInfo.LastWriteTime.ToString();
+                            break;
+                        case "last access time":
+                            ret = fileInfo.LastAccessTime.ToString();
+                            break;
+                    }
+
+                    ret.StoreInUserVariable(engine, v_UserVariableName);
+                })
+            );
         }
 
         public override void AddInstance(InstanceCounter counter)

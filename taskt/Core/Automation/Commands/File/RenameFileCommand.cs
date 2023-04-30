@@ -45,6 +45,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        [PropertyDescription("Variable Name to Store File Path Before Rename")]
+        public string v_BeforeFilePathResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        [PropertyDescription("Variable Name to Store File Path After Rename")]
+        public string v_AfterFilePathResult { get; set; }
+
         public RenameFileCommand()
         {
             //this.CommandName = "RenameFileCommand";
@@ -57,33 +67,68 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //apply variable logic
-            var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
+            ////apply variable logic
+            //var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
             
-            var currentFileName = Path.GetFileName(sourceFile);
-            var newFileName = v_NewName.ConvertToUserVariableAsFileName(engine);
+            //var currentFileName = Path.GetFileName(sourceFile);
+            //var newFileName = v_NewName.ConvertToUserVariableAsFileName(engine);
 
-            //get source file name and info
-            FileInfo sourceFileInfo = new FileInfo(sourceFile);
+            ////get source file name and info
+            //FileInfo sourceFileInfo = new FileInfo(sourceFile);
 
-            //create destination
-            var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
+            ////create destination
+            //var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
 
-            var whenSame = this.GetUISelectionValue(nameof(v_IfFileNameSame), engine);
-            if (currentFileName == newFileName)
-            {
-                switch (whenSame)
+            //var whenSame = this.GetUISelectionValue(nameof(v_IfFileNameSame), engine);
+            //if (currentFileName == newFileName)
+            //{
+            //    switch (whenSame)
+            //    {
+            //        case "ignore":
+            //            return;
+
+            //        case "error":
+            //            throw new Exception("File Name before and after the changes is same. Name '" + newFileName + "'");
+            //    }
+            //}
+
+            ////rename file
+            //File.Move(sourceFile, destinationPath);
+
+            FilePathControls.FileAction(this, engine,
+                new Action<string>(sourceFile =>
                 {
-                    case "ignore":
-                        return;
+                    var currentFileName = Path.GetFileName(sourceFile);
+                    var newFileName = v_NewName.ConvertToUserVariableAsFileName(engine);
 
-                    case "error":
-                        throw new Exception("File Name before and after the changes is same. Name '" + newFileName + "'");
-                }
-            }
+                    //get source file name and info
+                    FileInfo sourceFileInfo = new FileInfo(sourceFile);
 
-            //rename file
-            File.Move(sourceFile, destinationPath);
+                    //create destination
+                    var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
+
+                    var whenSame = this.GetUISelectionValue(nameof(v_IfFileNameSame), engine);
+                    if (currentFileName == newFileName)
+                    {
+                        switch (whenSame)
+                        {
+                            case "ignore":
+                                return;
+
+                            case "error":
+                                throw new Exception("File Name before and after the changes is same. Name '" + newFileName + "'");
+                        }
+                    }
+
+                    //rename file
+                    File.Move(sourceFile, destinationPath);
+
+                    if (!string.IsNullOrEmpty(v_AfterFilePathResult))
+                    {
+                        destinationPath.StoreInUserVariable(engine, v_AfterFilePathResult);
+                    }
+                })
+            );
         }
     }
 }

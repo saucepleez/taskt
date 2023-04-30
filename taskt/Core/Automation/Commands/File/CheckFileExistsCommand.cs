@@ -30,6 +30,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        public string v_ResultPath { get; set; }
+
         public CheckFileExistsCommand()
         {
             //this.CommandName = "CheckFileExistsCommand";
@@ -42,15 +46,25 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            try
-            {
-                FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
-                true.StoreInUserVariable(engine, v_UserVariableName);
-            }
-            catch
-            {
-                false.StoreInUserVariable(engine, v_UserVariableName);
-            }
+            //try
+            //{
+            //    FilePathControls.WaitForFile(this, nameof(v_TargetFileName), nameof(v_WaitTime), engine);
+            //    true.StoreInUserVariable(engine, v_UserVariableName);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_UserVariableName);
+            //}
+            FilePathControls.FileAction(this, engine,
+                new Action<string>(path =>
+                {
+                    true.StoreInUserVariable(engine, v_UserVariableName);
+                }),
+                new Action<Exception>(ex =>
+                {
+                    false.StoreInUserVariable(engine, v_UserVariableName);
+                })
+            );
         }
     }
 }

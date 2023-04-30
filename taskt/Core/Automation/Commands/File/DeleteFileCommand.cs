@@ -33,6 +33,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        public string v_ResultPath { get; set; }
+
         public DeleteFileCommand()
         {
             //this.CommandName = "DeleteFileCommand";
@@ -45,26 +49,47 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            try
-            {
-                var targetFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
+            //try
+            //{
+            //    var targetFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
-                if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+            //    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+            //    {
+            //        Shell32.MoveToRecycleBin(targetFile);
+            //    }
+            //    else
+            //    {
+            //        System.IO.File.Delete(targetFile);
+            //    }
+            //}
+            //catch
+            //{
+            //    if (this.GetUISelectionValue(nameof(v_WhenFileDoesNotExists), engine) == "error")
+            //    {
+            //        throw new Exception("File does Not Exists. File Path: '" + v_SourceFilePath + "'");
+            //    }
+            //}
+
+            FilePathControls.FileAction(this, engine,
+                new Action<string>(path =>
                 {
-                    Shell32.MoveToRecycleBin(targetFile);
-                }
-                else
+                    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                    {
+                        Shell32.MoveToRecycleBin(path);
+                    }
+                    else
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }),
+                new Action<Exception>(ex =>
                 {
-                    System.IO.File.Delete(targetFile);
-                }
-            }
-            catch
-            {
-                if (this.GetUISelectionValue(nameof(v_WhenFileDoesNotExists), engine) == "error")
-                {
-                    throw new Exception("File does Not Exists. File Path: '" + v_SourceFilePath + "'");
-                }
-            }
+                    if (this.GetUISelectionValue(nameof(v_WhenFileDoesNotExists), engine) == "error")
+                    {
+                        throw new Exception("File does Not Exists. File Path: '" + v_SourceFilePath + "'");
+                    }
+                })
+            );
         }
     }
 }
