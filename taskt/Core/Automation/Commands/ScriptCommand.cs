@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Xml.Serialization;
 using System.Drawing;
 using System.Collections.Generic;
@@ -549,12 +548,17 @@ namespace taskt.Core.Automation.Commands
         #region RunCommand
         public virtual void RunCommand(object sender)
         {
+            //RunCommand((AutomationEngineInstance)sender);
             System.Threading.Thread.Sleep(DefaultPause);
         }
         public virtual void RunCommand(object sender, Script.ScriptAction command)
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
+        //public virtual void RunCommand(AutomationEngineInstance engine)
+        //{
+        //    System.Threading.Thread.Sleep(DefaultPause);
+        //}
         #endregion
 
         #region GetDisplayValue
