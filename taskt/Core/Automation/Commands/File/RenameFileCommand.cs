@@ -51,7 +51,8 @@ namespace taskt.Core.Automation.Commands
         public string v_BeforeFilePathResult { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store File Path After Rename")]
         public string v_AfterFilePathResult { get; set; }
 
