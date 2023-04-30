@@ -43,6 +43,23 @@ namespace taskt.Core.Automation.Commands
         public static string v_WaitTime { get; }
 
         /// <summary>
+        /// folder path result
+        /// </summary>
+        [PropertyDescription("Variable Name to Store Folder Path")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vPath**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vPath}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyIsOptional(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("Folder Path Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public static string v_FolderPathResult { get; }
+
+        /// <summary>
         /// Wait For Folder
         /// </summary>
         /// <param name="path"></param>
@@ -83,7 +100,6 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string WaitForFolder(string pathValue, string waitTimeValue, Engine.AutomationEngineInstance engine)
         {
-            //var path = pathValue.ConvertToUserVariable(engine);
             var path = pathValue.ConvertToUserVariableAsFolderPath(engine);
             var waitTime = waitTimeValue.ConvertToUserVariableAsInteger("Wait Time", engine);
             return WaitForFolder(path, waitTime, engine);
@@ -99,10 +115,66 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string WaitForFolder(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            //var path = command.ConvertToUserVariable(nameof(pathName), "Folder Path", engine);
             var path = command.ConvertToUserVariableAsFolderPath(pathName, engine);
             var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
             return WaitForFolder(path, waitTime, engine);
+        }
+
+        /// <summary>
+        /// general folder action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="pathName"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="pathResultName"></param>
+        /// <param name="errorFunc"></param>
+        public static void FolderAction(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine, Action<string> actionFunc, string pathResultName = "", Action<Exception> errorFunc = null)
+        {
+            try
+            {
+                var path = WaitForFolder(command, pathName, waitTimeName, engine);
+                actionFunc(path);
+
+                if (string.IsNullOrEmpty(pathResultName))
+                {
+                    var pathResult = command.GetRawPropertyString(pathResultName, "Folder Path Result");
+                    if (string.IsNullOrEmpty(pathResult))
+                    {
+                        path.StoreInUserVariable(engine, pathResult);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                if (errorFunc != null)
+                {
+                    errorFunc(ex);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        /// <summary>
+        /// general folder action. This method specifies the parameter from the value of PropertyVirtualProperty 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void FolderAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<string> actionFunc,  Action<Exception> errorFunc = null)
+        {
+            var props = command.GetParameterProperties();
+
+            var folderPath = props.GetProperty(new PropertyVirtualProperty(nameof(FolderPathControls), nameof(v_FolderPath)))?.Name ?? "";
+            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(FolderPathControls), nameof(v_WaitTime)))?.Name ?? "";
+            var folderResult = props.GetProperty(new PropertyVirtualProperty(nameof(FolderPathControls), nameof(v_FolderPathResult)))?.Name ?? "";
+
+            FolderAction(command, folderPath, waitTime, engine, actionFunc, folderResult, errorFunc);
         }
 
         /// <summary>
