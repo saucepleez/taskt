@@ -42,6 +42,29 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// get ProppertyInfo that has PropertyVirtualProperty specified by argument
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="vProp"></param>
+        /// <returns></returns>
+        public static PropertyInfo GetProperty(this ScriptCommand command, PropertyVirtualProperty vProp)
+        {
+            var props = GetParameterProperties(command);
+            return props.Where(p =>
+            {
+                var vp = p.GetCustomAttribute<PropertyVirtualProperty>();
+                if (vp != null)
+                {
+                    return (vp.className == vProp.className) && (vp.propertyName == vProp.propertyName);
+                }
+                else
+                {
+                    return false;
+                }
+            }).FirstOrDefault();
+        }
+
+        /// <summary>
         /// get PropertyInfo and VirtualPropertyInfo specified property name as argument
         /// </summary>
         /// <param name="command"></param>
