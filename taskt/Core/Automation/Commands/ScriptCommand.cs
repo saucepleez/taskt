@@ -588,6 +588,13 @@ namespace taskt.Core.Automation.Commands
                 foreach (Control control in RenderedControls)
                 {
                     ControlsList.Add(control.Name, control);
+                    if (control is FlowLayoutPanel flp)
+                    {
+                        foreach (Control c in flp.Controls)
+                        {
+                            ControlsList.Add(c.Name, c);
+                        }
+                    }
                 }
 
                 return RenderedControls;
