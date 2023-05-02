@@ -978,6 +978,25 @@ namespace taskt.Core.Script
                 cmd.Attribute("v_OperationType").Remove();
             }
 
+            // reset (release)
+            commands = null;
+            moveCommands = null;
+            copyCommands = null;
+
+            // Move/Copy Folder command -> Move Folder, Copy Folder command
+            commands = doc.Descendants("ScriptCommand").Where(el => {
+                return (el.Attribute("CommandName").Value == "MoveFolderCommand") &&
+                    (el.Attribute("v_OperationType") != null);
+            });
+            moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy folder")).ToList();
+            copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy folder")).ToList();
+            ChangeCommandName(moveCommands, "MoveFolderCommand", "Move Folder");
+            ChangeCommandName(copyCommands, "CopyFolderCommand", "Copy Folder");
+            foreach (var cmd in commands)
+            {
+                cmd.Attribute("v_OperationType").Remove();
+            }
+
             return doc;
         }
 

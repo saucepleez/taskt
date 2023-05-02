@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Folder Operation Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Move/Copy Folder")]
-    [Attributes.ClassAttributes.Description("This command moves a folder to a specified destination")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to move a folder to a new destination.")]
+    [Attributes.ClassAttributes.CommandSettings("Copy Folder")]
+    [Attributes.ClassAttributes.Description("This command copies a folder to a specified destination")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to copy a folder to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MoveFolderCommand : ScriptCommand
+    public class CopyFolderCommand : ScriptCommand
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -58,15 +58,15 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPathResult))]
-        [PropertyDescription("Variable Name to Store Folder Path After Move")]
+        [PropertyDescription("Variable Name to Store Folder Path After Copy")]
         public string v_ResultPath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        [PropertyDescription("Variable Name to Store Folder Path After Move")]
+        [PropertyDescription("Variable Name to Store Folder Path After Copy")]
         public string v_AfterFilePathResult { get; set; }
 
-        public MoveFolderCommand()
+        public CopyFolderCommand()
         {
             //this.CommandName = "MoveFolderCommand";
             //this.SelectionName = "Move/Copy Folder";
@@ -106,7 +106,7 @@ namespace taskt.Core.Automation.Commands
             //    }
             //}
 
-            //Directory.Move(sourceFolder, finalPath);
+            //DirectoryCopy(sourceFolder, finalPath, true);
 
             //if (!string.IsNullOrEmpty(v_AfterFilePathResult))
             //{
@@ -141,7 +141,7 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
 
-                    Directory.Move(path, finalPath);
+                    DirectoryCopy(path, finalPath, true);
 
                     if (!string.IsNullOrEmpty(v_AfterFilePathResult))
                     {
@@ -149,55 +149,45 @@ namespace taskt.Core.Automation.Commands
                     }
                 })
             );
-
-            //switch (this.GetUISelectionValue(nameof(v_OperationType), engine))
-            //{
-            //    case "move folder":
-            //        Directory.Move(sourceFolder, finalPath);
-            //        break;
-            //    case "copy folder":
-            //        DirectoryCopy(sourceFolder, finalPath, true);
-            //        break;
-            //}
         }
 
-        //private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
-        //{
-        //    // If the destination directory doesn't exist, create it.
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            // If the destination directory doesn't exist, create it.
 
-        //    //Directory.GetParent(destDirName);
-        //    if (!Directory.GetParent(destDirName).Exists)
-        //    {
-        //        throw new DirectoryNotFoundException(
-        //            "Destination directory does not exist or could not be found: "
-        //            + Directory.GetParent(destDirName));
-        //    }
+            //Directory.GetParent(destDirName);
+            if (!Directory.GetParent(destDirName).Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Destination directory does not exist or could not be found: "
+                    + Directory.GetParent(destDirName));
+            }
 
-        //    if (!Directory.Exists(destDirName))
-        //    {
-        //        Directory.CreateDirectory(destDirName);
-        //    }
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
 
-        //    // Get the subdirectories for the specified directory.
-        //    DirectoryInfo sDirInfo = new DirectoryInfo(sourceDirName);
-        //    // Get the files in the directory and copy them to the new location.
-        //    FileInfo[] files = sDirInfo.GetFiles();
-        //    foreach (FileInfo file in files)
-        //    {
-        //        string temppath = Path.Combine(destDirName, file.Name);
-        //        file.CopyTo(temppath, false);
-        //    }
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo sDirInfo = new DirectoryInfo(sourceDirName);
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = sDirInfo.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
 
-        //    // If copying subdirectories, copy them and their contents to new location.
-        //    if (copySubDirs)
-        //    {
-        //        DirectoryInfo[] subDirs = sDirInfo.GetDirectories();
-        //        foreach (DirectoryInfo subdir in subDirs)
-        //        {
-        //            string temppath = Path.Combine(destDirName, subdir.Name);
-        //            DirectoryCopy(subdir.FullName, temppath, copySubDirs);
-        //        }
-        //    }
-        //}
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                DirectoryInfo[] subDirs = sDirInfo.GetDirectories();
+                foreach (DirectoryInfo subdir in subDirs)
+                {
+                    string temppath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                }
+            }
+        }
     }
 }
