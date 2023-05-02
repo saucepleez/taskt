@@ -48,15 +48,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        //[PropertyDescription("Variable Name to Store File Path Before Action")]
-        //public string v_BeforeFilePathResult { get; set; }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        [PropertyDescription("Variable Name to Store File Path Before Copy")]
+        public string v_BeforeFilePathResult { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        //[PropertyDescription("Variable Name to Store File Path After Action")]
-        //public string v_AfterFilePathResult { get; set; }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        [PropertyDescription("Variable Name to Store File Path After Copy")]
+        public string v_AfterFilePathResult { get; set; }
 
         public CopyFileCommand()
         {
@@ -66,37 +66,77 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
+            //var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
-            var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
+            //var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
 
-            if (!Directory.Exists(destinationFolder))
-            {
-                if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+            //if (!Directory.Exists(destinationFolder))
+            //{
+            //    if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+            //    {
+            //        Directory.CreateDirectory(destinationFolder);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("destination folder does not exists: " + destinationFolder);
+            //    }
+            //}
+
+            ////get source file name and info
+            //FileInfo sourceFileInfo = new FileInfo(sourceFile);
+
+            ////create destination
+            //var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
+
+            //// todo: check folder is same
+
+            ////delete if it already exists per user
+            //if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+            //{
+            //    File.Delete(destinationPath);
+            //}
+
+            //File.Copy(sourceFile, destinationPath);
+
+            FilePathControls.FileAction(this, engine,
+                new Action<string>(path =>
                 {
-                    Directory.CreateDirectory(destinationFolder);
-                }
-                else
-                {
-                    throw new Exception("destination folder does not exists: " + destinationFolder);
-                }
-            }
+                    var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
 
-            //get source file name and info
-            FileInfo sourceFileInfo = new FileInfo(sourceFile);
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                        {
+                            Directory.CreateDirectory(destinationFolder);
+                        }
+                        else
+                        {
+                            throw new Exception("destination folder does not exists: " + destinationFolder);
+                        }
+                    }
 
-            //create destination
-            var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
+                    //get source file name and info
+                    FileInfo sourceFileInfo = new FileInfo(path);
 
-            // todo: check folder is same
+                    //create destination
+                    var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
 
-            //delete if it already exists per user
-            if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
-            {
-                File.Delete(destinationPath);
-            }
+                    // todo: check folder is same
 
-            File.Copy(sourceFile, destinationPath);
+                    //delete if it already exists per user
+                    if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                    {
+                        File.Delete(destinationPath);
+                    }
+
+                    File.Copy(path, destinationPath);
+
+                    if (!string.IsNullOrEmpty(v_AfterFilePathResult))
+                    {
+                        destinationPath.StoreInUserVariable(engine, v_AfterFilePathResult);
+                    }
+                })
+            );
         }
     }
 }
