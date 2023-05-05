@@ -337,16 +337,16 @@ namespace taskt.Core.Automation.Engine
                     IsCancellationPending = true;
                     return;
                 }
-                else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
-                {
-                    // todo: execute runcommand
-                    CurrentLoopCancelled = true;
-                }
-                else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
-                {
-                    // todo: execute runcommand
-                    CurrentLoopContinuing = true;
-                }
+                //else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
+                //{
+                //    // todo: execute runcommand
+                //    CurrentLoopCancelled = true;
+                //}
+                //else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
+                //{
+                //    // todo: execute runcommand
+                //    CurrentLoopContinuing = true;
+                //}
                 //else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
                 //{
                 //    //get variable
