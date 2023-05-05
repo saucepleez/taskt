@@ -331,12 +331,12 @@ namespace taskt.Core.Automation.Engine
                     // todo: execute runcommand
                     parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
-                {
-                    // todo: execute runcommand
-                    IsCancellationPending = true;
-                    return;
-                }
+                //else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
+                //{
+                //    // todo: execute runcommand
+                //    IsCancellationPending = true;
+                //    return;
+                //}
                 //else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
                 //{
                 //    CurrentLoopCancelled = true;
@@ -362,6 +362,11 @@ namespace taskt.Core.Automation.Engine
                  
                     //run the command
                     parentCommand.RunCommand(this);
+                }
+
+                if (IsCancellationPending)
+                {
+                    return;
                 }
             }
             catch (Exception ex)

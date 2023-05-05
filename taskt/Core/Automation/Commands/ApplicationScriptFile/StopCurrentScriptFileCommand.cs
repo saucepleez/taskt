@@ -25,7 +25,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
+            var engine = (Engine.AutomationEngineInstance)sender;
+            engine.IsCancellationPending = true;
         }
     }
 }
