@@ -22,14 +22,37 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("New File Name (with Extension)")]
-        [InputSpecification("Specify the New File Name including the Extension.")]
-        [PropertyDetailSampleUsage("**newfile.txt**", PropertyDetailSampleUsage.ValueType.Value, "File Name")]
+        [PropertyDescription("New File Name")]
+        [InputSpecification("New File Name", true)]
+        [PropertyDetailSampleUsage("**newfile**", PropertyDetailSampleUsage.ValueType.Value, "File Name")]
         [PropertyDetailSampleUsage("**{{{vNewFileName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "File Name")]
-        [Remarks("Changing the file extension will not automatically convert files.")]
         [PropertyValidationRule("New FileName", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New FileName")]
         public string v_NewName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyUISelectionOption("Auto")]
+        [PropertyUISelectionOption("Force Combine New Extension")]
+        [PropertyUISelectionOption("Contains New File Name")]
+        [PropertyUISelectionOption("Use Before Rename Path")]
+        [PropertyDetailSampleUsage("**Auto**", "If the New File Name does not contain an Extension and Not specified New Extension, it will automatically be given the extension of the path before the Rename.")]
+        [PropertyDetailSampleUsage("Force Combine New Extension", "Forces combining the specified extensions with the New Extension")]
+        [PropertyDetailSampleUsage("Contains New File Name", "Determine that New File Name contains the Extension and Do NOT add the Extension to the New File Name")]
+        [PropertyDetailSampleUsage("Use Before Rename Path", "Forces before Rename File Path extensions to be combined")]
+        [PropertyIsOptional(true, "Auto")]
+        public string v_ExtentionOption { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("New File Extention")]
+        [InputSpecification("New File Extention", true)]
+        [PropertyDetailSampleUsage("**txt**", PropertyDetailSampleUsage.ValueType.Value, "Extension")]
+        [PropertyDetailSampleUsage("**{{{vExtension}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Extension")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("New Extension", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_NewExtention { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
@@ -104,6 +127,39 @@ namespace taskt.Core.Automation.Commands
                 {
                     var currentFileName = Path.GetFileName(sourceFile);
                     var newFileName = v_NewName.ConvertToUserVariableAsFileName(engine);
+
+                    var newExtension = v_NewExtention.ConvertToUserVariable(engine);
+                    if (!newExtension.StartsWith("."))
+                    {
+                        newExtension = "." + newExtension;
+                    }
+
+                    var newFileOption = this.GetUISelectionValue(nameof(v_ExtentionOption), engine);
+                    switch (newFileOption)
+                    {
+                        case "auto":
+                            if (!Path.HasExtension(newFileName))
+                            {
+                                if (newExtension == ".")
+                                {
+                                    newFileName += Path.GetExtension(currentFileName);
+                                }
+                                else
+                                {
+                                    newFileName += newExtension;
+                                }
+                            }
+                            break;
+                        case "force combine new extension":
+                            newFileName += newExtension;
+                            break;
+                        case "contains new file name":
+                            // nothing to do
+                            break;
+                        case "use before rename path":
+                            newFileName += Path.GetExtension(currentFileName);
+                            break;
+                    }
 
                     //get source file name and info
                     FileInfo sourceFileInfo = new FileInfo(sourceFile);
