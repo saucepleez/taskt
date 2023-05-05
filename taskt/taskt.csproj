@@ -346,8 +346,10 @@
     <Compile Include="Core\Automation\Commands\DisplayTextControls.cs" />
     <Compile Include="Core\Automation\Commands\EMailControls.cs" />
     <Compile Include="Core\Automation\Commands\File\FormatFilePathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\CopyFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\FolderPathControls.cs" />
     <Compile Include="Core\Automation\Commands\Folder\FormatFolderPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\CopyFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\GeneralPropertyControls.cs" />
     <Compile Include="Core\Automation\Commands\InstanceCounterControls.cs" />

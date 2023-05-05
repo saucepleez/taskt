@@ -7,25 +7,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Move File")]
+    [Attributes.ClassAttributes.CommandSettings("Copy File")]
     [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command to move a file to a new destination.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command to copy a file to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    // TODO: change to file action command
-    public class MoveFileCommand : ScriptCommand
+    public class CopyFileCommand : ScriptCommand
     {
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        //[PropertyDescription("File Operation")]
-        //[PropertyUISelectionOption("Move File")]
-        //[PropertyUISelectionOption("Copy File")]
-        //[Remarks("Specify whether you intend to move the file or copy the file.  Moving will remove the file from the original path while Copying will not.")]
-        //[PropertyIsOptional(true, "Move File")]
-        //[PropertyDisplayText(true, "Operation")]
-        //public string v_OperationType { get; set; }
-
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
@@ -61,69 +50,53 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        [PropertyDescription("Variable Name to Store File Path Before Move")]
+        [PropertyDescription("Variable Name to Store File Path Before Copy")]
         public string v_BeforeFilePathResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
-        [PropertyDescription("Variable Name to Store File Path After Move")]
+        [PropertyDescription("Variable Name to Store File Path After Copy")]
         public string v_AfterFilePathResult { get; set; }
 
-        public MoveFileCommand()
+        public CopyFileCommand()
         {
-            //this.CommandName = "MoveFileCommand";
-            //this.SelectionName = "Move/Copy File";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-       //     var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
+            //var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
-       //     var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
+            //var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
 
-       //     if (!Directory.Exists(destinationFolder))
-       //     {
-       //         if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
-       //         {
-       //             Directory.CreateDirectory(destinationFolder);
-       //         }
-       //         else
-       //         {
-       //             throw new Exception("destination folder does not exists: " + destinationFolder);
-       //         }
-       //     }
-
-       //     get source file name and info
-       //     FileInfo sourceFileInfo = new FileInfo(sourceFile);
-
-       //     create destination
-       //     var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
-
-       // todo: check folder is same
-
-       //delete if it already exists per user
-       //     if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
-       //     {
-       //         File.Delete(destinationPath);
-       //     }
-
-            //File.Move(sourceFile, destinationPath);
-
-            //var vOperationType = this.GetUISelectionValue(nameof(v_OperationType), engine);
-            //switch (vOperationType) 
+            //if (!Directory.Exists(destinationFolder))
             //{
-            //    case "move file":
-            //        File.Move(sourceFile, destinationPath);
-            //        break;
-
-            //    case "copy file":
-            //        File.Copy(sourceFile, destinationPath);
-            //        break;
+            //    if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+            //    {
+            //        Directory.CreateDirectory(destinationFolder);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("destination folder does not exists: " + destinationFolder);
+            //    }
             //}
+
+            ////get source file name and info
+            //FileInfo sourceFileInfo = new FileInfo(sourceFile);
+
+            ////create destination
+            //var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
+
+            //// todo: check folder is same
+
+            ////delete if it already exists per user
+            //if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+            //{
+            //    File.Delete(destinationPath);
+            //}
+
+            //File.Copy(sourceFile, destinationPath);
 
             FilePathControls.FileAction(this, engine,
                 new Action<string>(path =>
@@ -156,7 +129,7 @@ namespace taskt.Core.Automation.Commands
                         File.Delete(destinationPath);
                     }
 
-                    File.Move(path, destinationPath);
+                    File.Copy(path, destinationPath);
 
                     if (!string.IsNullOrEmpty(v_AfterFilePathResult))
                     {

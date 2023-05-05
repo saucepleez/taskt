@@ -295,6 +295,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_40(doc);
             convertTo3_5_1_41(doc);
             convertTo3_5_1_42(doc);
+            convertTo3_5_1_44(doc);
 
             return doc;
         }
@@ -961,6 +962,61 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_44(XDocument doc)
+        {
+            // Move/Copy File command -> Move File, Copy File command
+            var commands = doc.Descendants("ScriptCommand").Where(el => {
+                return (el.Attribute("CommandName").Value == "MoveFileCommand") &&
+                    (el.Attribute("v_OperationType") != null);
+            });
+            var moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy file")).ToList();
+            var copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy file")).ToList();
+            ChangeCommandName(moveCommands, "MoveFileCommand", "Move File");
+            ChangeCommandName(copyCommands, "CopyFileCommand", "Copy File");
+            foreach(var cmd in commands)
+            {
+                cmd.Attribute("v_OperationType").Remove();
+            }
+
+            // reset (release)
+            commands = null;
+            moveCommands = null;
+            copyCommands = null;
+
+            // Move/Copy Folder command -> Move Folder, Copy Folder command
+            commands = doc.Descendants("ScriptCommand").Where(el => {
+                return (el.Attribute("CommandName").Value == "MoveFolderCommand") &&
+                    (el.Attribute("v_OperationType") != null);
+            });
+            moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy folder")).ToList();
+            copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy folder")).ToList();
+            ChangeCommandName(moveCommands, "MoveFolderCommand", "Move Folder");
+            ChangeCommandName(copyCommands, "CopyFolderCommand", "Copy Folder");
+            foreach (var cmd in commands)
+            {
+                cmd.Attribute("v_OperationType").Remove();
+            }
+
+            return doc;
+        }
+
+        /// <summary>
+        /// change command name to specified commands
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="newName"></param>
+        /// <param name="newSelectioName"></param>
+        private static void ChangeCommandName(IEnumerable<XElement> commands, string newName, string newSelectioName)
+        {
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            foreach (var cmd in commands)
+            {
+                cmd.SetAttributeValue("CommandName", newName);
+                cmd.SetAttributeValue(ns + "type", newName);
+                cmd.SetAttributeValue("SelectionName", newSelectioName);
+            }
+        }
+
         /// <summary>
         /// change command name. target commands are searched by specified Func<>
         /// </summary>
@@ -972,13 +1028,14 @@ namespace taskt.Core.Script
         private static XDocument ChangeCommandName(XDocument doc, Func<XElement, bool> searchFunc, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
-            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            foreach (var cmd in commands)
-            {
-                cmd.SetAttributeValue("CommandName", newName);
-                cmd.SetAttributeValue(ns + "type", newName);
-                cmd.SetAttributeValue("SelectionName", newSelectioName);
-            }
+            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+            //foreach (var cmd in commands)
+            //{
+            //    cmd.SetAttributeValue("CommandName", newName);
+            //    cmd.SetAttributeValue(ns + "type", newName);
+            //    cmd.SetAttributeValue("SelectionName", newSelectioName);
+            //}
+            ChangeCommandName(commands, newName, newSelectioName);
             return doc;
         }
 
