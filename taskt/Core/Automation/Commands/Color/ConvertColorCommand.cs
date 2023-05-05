@@ -184,9 +184,12 @@ namespace taskt.Core.Automation.Commands
         private void cmbFormatSelectionChange(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)sender;
-            var labelDic = (Dictionary<string, string>)(ControlsList["lbl_" + nameof(v_Format)].Tag);
 
-            Label lbl = (Label)ControlsList["lbl2_" + nameof(v_Format)];
+            //var labelDic = (Dictionary<string, string>)(ControlsList["lbl_" + nameof(v_Format)].Tag);
+            //Label lbl = (Label)ControlsList["lbl2_" + nameof(v_Format)];
+
+            var labelDic = ControlsList.Get2ndLabelText(nameof(v_Format));
+            var lbl = ControlsList.GetPropertyControl2ndLabel(nameof(v_Format));
 
             var searchKey = cmb.SelectedItem.ToString();
             if (labelDic.ContainsKey(searchKey))
@@ -202,7 +205,7 @@ namespace taskt.Core.Automation.Commands
         public override void AddInstance(InstanceCounter counter)
         {
             var co = (string.IsNullOrEmpty(v_Color)) ? "" : v_Color;
-            counter.addInstance(co, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);
+            counter.addInstance(co, new PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);
 
             var format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
             var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
@@ -211,12 +214,12 @@ namespace taskt.Core.Automation.Commands
                 case "hsl":
                 case "cmyk":
                 case "rgba dictioanry":
-                    var dicProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true);
+                    var dicProp = new PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true);
                     counter.addInstance(ins, dicProp, false);
                     counter.addInstance(ins, dicProp, true);
                     break;
                 case "rgba datatable":
-                    var dtProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true);
+                    var dtProp = new PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true);
                     counter.addInstance(ins, dtProp, false);
                     counter.addInstance(ins, dtProp, true);
                     break;
@@ -226,7 +229,7 @@ namespace taskt.Core.Automation.Commands
         public override void RemoveInstance(InstanceCounter counter)
         {
             var co = (string.IsNullOrEmpty(v_Color)) ? "" : v_Color;
-            counter.removeInstance(co, new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);
+            counter.removeInstance(co, new PropertyInstanceType(PropertyInstanceType.InstanceType.Color, true), true);
 
             var format = (string.IsNullOrEmpty(v_Format) ? "" : v_Format.ToLower());
             var ins = (string.IsNullOrEmpty(v_Result) ? "" : v_Result);
@@ -235,12 +238,12 @@ namespace taskt.Core.Automation.Commands
                 case "hsl":
                 case "cmyk":
                 case "rgba dictioanry":
-                    var dicProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true);
+                    var dicProp = new PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary, true);
                     counter.removeInstance(ins, dicProp, false);
                     counter.removeInstance(ins, dicProp, true);
                     break;
                 case "rgba datatable":
-                    var dtProp = new Automation.Attributes.PropertyAttributes.PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true);
+                    var dtProp = new PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable, true);
                     counter.removeInstance(ins, dtProp, false);
                     counter.removeInstance(ins, dtProp, true);
                     break;
