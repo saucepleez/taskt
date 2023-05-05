@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
         public const string Label2ndPrefix = "lbl2_";
         public const string HelperInfix = "_helper_";
         public const string CustomHelperInfix = "_customhelper_";
+        public const string GroupPrefix = "group_";
 
         #region Property methods
         /// <summary>
@@ -197,7 +198,7 @@ namespace taskt.Core.Automation.Commands
             List<Control> ret = new List<Control>();
 
             int index;
-            index = ctrls.FindIndex(t => (t.Name == "group_" + parameterName));
+            index = ctrls.FindIndex(t => (t.Name == GroupPrefix + parameterName));
             if (index >= 0)
             {
                 ret.Add(ctrls[index]);
@@ -289,6 +290,23 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             return (body, label, label2nd);
+        }
+
+        public static Dictionary<string, string> Get2ndLabelText(this Dictionary<string, Control> controls, string propertyName)
+        {
+            return controls.GetPropertyControlLabel(propertyName).Get2ndLabelTexts();
+        }
+
+        public static Dictionary<string, string> Get2ndLabelTexts(this Label lbl)
+        {
+            if (lbl.Tag is Dictionary<string, string> dic)
+            {
+                return dic;
+            }
+            else
+            {
+                throw new Exception(lbl.Name + " does not has Dictionary item for 2nd-Label");
+            }
         }
         #endregion
     }

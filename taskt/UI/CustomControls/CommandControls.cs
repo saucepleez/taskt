@@ -49,7 +49,7 @@ namespace taskt.UI.CustomControls
             {
                 FlowLayoutPanel flowPanel = new FlowLayoutPanel
                 {
-                    Name = "group_" + prop.Name,
+                    Name = GroupPrefix + prop.Name,
                     FlowDirection = FlowDirection.TopDown,
                     WrapContents = false,
                     AutoSize = true,
@@ -82,7 +82,7 @@ namespace taskt.UI.CustomControls
             {
                 FlowLayoutPanel flowPanel = new FlowLayoutPanel
                 {
-                    Name = "group_" + propertyName,
+                    Name = GroupPrefix + propertyName,
                     FlowDirection = FlowDirection.TopDown,
                     WrapContents = false,
                     AutoSize = true,
