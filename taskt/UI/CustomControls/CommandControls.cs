@@ -308,7 +308,7 @@ namespace taskt.UI.CustomControls
             if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
-                label2.Name = "lbl2_" + propertyName;
+                label2.Name = Label2ndPrefix + propertyName;
                 controlList.Add(label2);
             }
 
@@ -341,7 +341,7 @@ namespace taskt.UI.CustomControls
                 if (attrInto.secondLabelName != "")
                 {
                     var field = tp.GetField(attrInto.secondLabelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as 2nd-Label does not Exists. Name: '" + attrInto.bodyName + "'");
-                    var label2nd = controlList.Where(c => (c.Name == "lbl2_" + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
+                    var label2nd = controlList.Where(c => (c.Name == Label2ndPrefix + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
                     field.SetValue(command, label2nd);
                 }
             }
@@ -418,7 +418,7 @@ namespace taskt.UI.CustomControls
             var inputLabel = CreateSimpleLabel();
 
             inputLabel.Text = labelText;
-            inputLabel.Name = "lbl_" + propertyName;
+            inputLabel.Name = LabelPrefix + propertyName;
 
             if (additionalParams != null)
             {
@@ -902,7 +902,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + "_helper_" + num, targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + HelperInfix + num, targetControl);
             uiHelper.HelperType = setting.additionalHelper;
             switch (setting.additionalHelper)
             {
@@ -944,7 +944,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + "_customhelper_" + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + CustomHelperInfix + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
             uiHelper.CommandDisplay = setting.labelText;
             (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
 
@@ -1787,19 +1787,19 @@ namespace taskt.UI.CustomControls
                     break;
 
                 case CommandControlType.Label:
-                    ret.Add(ctrls.Where(c => (c.Name == "lbl_" + parameterName)).FirstOrDefault());
+                    ret.Add(ctrls.Where(c => (c.Name == LabelPrefix + parameterName)).FirstOrDefault());
                     break;
 
                 case CommandControlType.SecondLabel:
-                    ret.Add(ctrls.Where(c => (c.Name == "lbl2_" + parameterName)).FirstOrDefault());
+                    ret.Add(ctrls.Where(c => (c.Name == Label2ndPrefix + parameterName)).FirstOrDefault());
                     break;
 
                 case CommandControlType.Helpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_helper_"))).ToArray());
+                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + HelperInfix))).ToArray());
                     break;
 
                 case CommandControlType.CunstomHelpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_customhelper_"))).ToArray());
+                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + CustomHelperInfix))).ToArray());
                     break;
             }
 
@@ -1818,8 +1818,8 @@ namespace taskt.UI.CustomControls
             }
             else
             {
-                index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
-                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
+                index = ctrls.FindIndex(t => (t.Name == LabelPrefix + parameterName));
+                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == LabelPrefix + nextParameterName));
 
                 for (int i = index; i < last; i++)
                 {
@@ -1843,24 +1843,24 @@ namespace taskt.UI.CustomControls
         }
         public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string propertyName)
         {
-            if (controls.ContainsKey("lbl_" + propertyName))
+            if (controls.ContainsKey(LabelPrefix + propertyName))
             {
-                return (Label)controls["lbl_" + propertyName];
+                return (Label)controls[LabelPrefix + propertyName];
             }
             else
             {
-                throw new Exception("Label 'lbl_" + propertyName + "' does not exists.");
+                throw new Exception("Label '" + LabelPrefix + propertyName + "' does not exists.");
             }
         }
         public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string propertyName)
         {
-            if (controls.ContainsKey("lbl2_" + propertyName))
+            if (controls.ContainsKey(Label2ndPrefix + propertyName))
             {
-                return (Label)controls["lbl2_" + propertyName];
+                return (Label)controls[Label2ndPrefix + propertyName];
             }
             else
             {
-                throw new Exception("2nd Label 'lbl2_" + propertyName + "' does not exists.");
+                throw new Exception("2nd Label '" + Label2ndPrefix + propertyName + "' does not exists.");
             }
         }
         public static (Control body, Label label, Label label2nd) GetAllPropertyControl(this Dictionary<string, Control> controls, string propertyName, bool throwWhenLabelNotExists = true, bool throwWhen2ndLabelNotExists = false)

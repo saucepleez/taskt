@@ -11,6 +11,11 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class PropertyControls
     {
+        public const string LabelPrefix = "lbl_";
+        public const string Label2ndPrefix = "lbl2_";
+        public const string HelperInfix = "_helper_";
+        public const string CustomHelperInfix = "_customhelper_";
+
         /// <summary>
         /// get parameters property info
         /// </summary>
