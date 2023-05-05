@@ -1000,6 +1000,17 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_45(XDocument doc)
+        {
+            // FormatFilePathCommand -> ExtractionFilePathCommand
+            ChangeCommandName(doc, "FormatFilePathCommand", "ExtractionFilePathCommand", "Extraction File Path");
+
+            // FormatFolderPathCommnad -> ExtractionFolderPathCommand
+            ChangeCommandName(doc, "FormatFolderPathCommnad", "ExtractionFolderPathCommand", "Extraction Folder Path");
+
+            return doc;
+        }
+
         /// <summary>
         /// change command name to specified commands
         /// </summary>

@@ -9,13 +9,13 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Format File Path")]
-    [Attributes.ClassAttributes.Description("This command allows you to format file path.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to format file path.")]
+    [Attributes.ClassAttributes.CommandSettings("Extraction File Path")]
+    [Attributes.ClassAttributes.Description("This command allows you to extract from file path.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract from file path.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FormatFilePathCommand : ScriptCommand
+    public class ExtractionFilePathCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
-        public FormatFilePathCommand()
+        public ExtractionFilePathCommand()
         {
             //this.CommandName = "Format File PathCommand";
             //this.SelectionName = "Format File Path";
