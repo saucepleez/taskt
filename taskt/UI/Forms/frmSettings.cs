@@ -190,55 +190,55 @@ namespace taskt.UI.Forms
 
         private void btnUpdateCheck_Click(object sender, EventArgs e)
         {
-            var updater = new Core.Update.ApplicationUpdate();
-            var manifest = new Core.Update.UpdateManifest();
-            try
-            {
-                manifest = updater.GetManifest();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error getting manifest: " + ex.ToString());
-                return;
-            }
+            //var updater = new Core.Update.ApplicationUpdate();
+            //var manifest = new Core.Update.UpdateManifest();
+            //try
+            //{
+            //    manifest = updater.GetManifest();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error getting manifest: " + ex.ToString());
+            //    return;
+            //}
 
 
-            if (manifest.RemoteVersionNewer)
-            {
-                Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
-                if (frmUpdate.ShowDialog() == DialogResult.OK)
-                {
+            //if (manifest.IsRemoteVersionNewer)
+            //{
+            //    Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
+            //    if (frmUpdate.ShowDialog() == DialogResult.OK)
+            //    {
 
-                    //move update exe to root folder for execution
-                    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
-                    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+            //        //move update exe to root folder for execution
+            //        var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
+            //        var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
 
 
-                    if (!System.IO.File.Exists(updaterExecutionResources))
-                    {
-                        MessageBox.Show("taskt-updater.exe not found in resources directory!");
-                        return;
-                    }
-                    else
-                    {
-                        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
-                    }
+            //        if (!System.IO.File.Exists(updaterExecutionResources))
+            //        {
+            //            MessageBox.Show("taskt-updater.exe not found in resources directory!");
+            //            return;
+            //        }
+            //        else
+            //        {
+            //            System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
+            //        }
 
-                    var updateProcess = new System.Diagnostics.Process();
-                    updateProcess.StartInfo.FileName = updaterExecutableDestination;
-                    updateProcess.StartInfo.Arguments = manifest.PackageURL;
+            //        var updateProcess = new System.Diagnostics.Process();
+            //        updateProcess.StartInfo.FileName = updaterExecutableDestination;
+            //        updateProcess.StartInfo.Arguments = manifest.PackageURL;
 
-                    updateProcess.Start();
-                    Application.Exit();
+            //        updateProcess.Start();
+            //        Application.Exit();
 
-                }
+            //    }
 
-            }
-            else
-            {
-                MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
-            }
-
+            //}
+            //else
+            //{
+            //    MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
+            //}
+            taskt.Core.Update.ApplicationUpdate.ShowUpdateResultSync(newAppSettings.ClientSettings.SkipBetaVersionUpdate);
         }
 
         private void tmrGetSocketStatus_Tick(object sender, EventArgs e)

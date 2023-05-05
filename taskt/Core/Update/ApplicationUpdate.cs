@@ -6,64 +6,69 @@ using Newtonsoft.Json;
 
 namespace taskt.Core.Update
 {
-    public class ApplicationUpdate
+    public static class ApplicationUpdate
     {
-        public UpdateManifest GetManifest()
+        private static bool SkipBeta = false;
+
+        /// <summary>
+        /// convert json text to UpdateManifest
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        private static UpdateManifest ConvertToUpdateManifest(string json)
         {
-            //create web client
-            WebClient webClient = new WebClient();
-            string manifestData;
-
-            //get manifest
-            try
-            {
-                manifestData = webClient.DownloadString(MyURLs.LatestJSONURL);           
-            }
-            catch (Exception)
-            {
-                //unable to get the manifest
-                throw;
-            }
-
             //initialize config
-            UpdateManifest manifestConfig = new UpdateManifest();
-
             try
             {
-                manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestData);
+                return JsonConvert.DeserializeObject<UpdateManifest>(json);
             }
             catch (Exception)
             {
                 //bad json received
                 throw;
             }
+        }
 
-            //create versions
-            manifestConfig.RemoteVersionProper = new Version(manifestConfig.RemoteVersion);
-            manifestConfig.LocalVersionProper = new Version(System.Windows.Forms.Application.ProductVersion);
+        /// <summary>
+        /// check Update available
+        /// </summary>
+        /// <param name="manifest"></param>
+        /// <returns></returns>
+        private static UpdateManifest CheckUpdateAvailable(UpdateManifest manifest)
+        {
+            manifest.LocalVersionProper = new Version(Application.ProductVersion);
 
-            //determine comparison
-            int versionCompare = manifestConfig.LocalVersionProper.CompareTo(manifestConfig.RemoteVersionProper);
-
-            if (versionCompare < 0)
+            var remote = new Version(manifest.RemoteVersion);
+            var beta = new Version(manifest.RemoteBetaVersion);
+            if (SkipBeta)
             {
-                manifestConfig.RemoteVersionNewer = true;
+                manifest.RemoteVersionProper = remote;
             }
             else
             {
-                manifestConfig.RemoteVersionNewer = false;
+                manifest.RemoteVersionProper = remote.CompareTo(beta) > 0 ? remote : beta;
             }
 
-            return manifestConfig;
+            manifest.IsRemoteVersionNewer = (manifest.RemoteVersionProper.CompareTo(manifest.LocalVersionProper) > 0);
+
+            return manifest;
         }
 
-        public static void ShowUpdateResult(bool skipBeta, bool silent = true)
+        /// <summary>
+        /// update process Sync
+        /// </summary>
+        /// <param name="skipBeta"></param>
+        /// <param name="silent"></param>
+        public static void ShowUpdateResultSync(bool skipBeta, bool silent = true)
         {
-            ApplicationUpdate updater = new ApplicationUpdate();
-            var manifest = new UpdateManifest();
+            ApplicationUpdate.SkipBeta = skipBeta;
+
+            UpdateManifest manifest;
             try
             {
-                manifest = updater.GetManifest();
+                WebClient webClient = new WebClient();
+                var manifestString = webClient.DownloadString(MyURLs.LatestJSONURL);
+                manifest = ConvertToUpdateManifest(manifestString);
             }
             catch (Exception ex)
             {
@@ -77,20 +82,9 @@ namespace taskt.Core.Update
                 return;
             }
 
-            bool startUpdate = false;
-            if (manifest.RemoteVersionNewer)
-            {
-                if (!manifest.Beta)
-                {
-                    startUpdate = true;
-                }
-                else if (manifest.Beta && !skipBeta)
-                {
-                    startUpdate = true;
-                }
-            }
+            CheckUpdateAvailable(manifest);
 
-            if (startUpdate)
+            if (manifest.IsRemoteVersionNewer)
             {
                 ShowUpdateForm(manifest);
             }
@@ -106,17 +100,21 @@ namespace taskt.Core.Update
             }
         }
 
-        public static void ShowUpdateResultAsync()
+        /// <summary>
+        /// update process Async
+        /// </summary>
+        public static void ShowUpdateResultAsync(bool skipBeta)
         {
-            WebClient wc = new WebClient
-            {
-                Encoding = Encoding.UTF8
-            };
+            ApplicationUpdate.SkipBeta = skipBeta;
 
             //get manifest
             try
             {
-                wc.DownloadStringCompleted += CompleteDownloadUpdateInformation;
+                WebClient wc = new WebClient
+                {
+                    Encoding = Encoding.UTF8,
+                };
+                wc.DownloadStringCompleted += CompleteDownloadUpdateManifest;
                 wc.DownloadStringAsync(new Uri(MyURLs.LatestJSONURL));
             }
             catch (Exception)
@@ -126,35 +124,23 @@ namespace taskt.Core.Update
             }
         }
 
-        private static void CompleteDownloadUpdateInformation(object sender, DownloadStringCompletedEventArgs e)
+        /// <summary>
+        /// event when updateManifest download finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void CompleteDownloadUpdateManifest(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
                 string manifestString = e.Result;
 
-                //initialize config
-                UpdateManifest manifestConfig = new UpdateManifest();
+                var manifestConfig = ConvertToUpdateManifest(manifestString);
 
-                manifestConfig = JsonConvert.DeserializeObject<UpdateManifest>(manifestString);
-                //create versions
-                manifestConfig.RemoteVersionProper = new Version(manifestConfig.RemoteVersion);
-                manifestConfig.LocalVersionProper = new Version(System.Windows.Forms.Application.ProductVersion);
+                CheckUpdateAvailable(manifestConfig);
 
-                //determine comparison
-                int versionCompare = manifestConfig.LocalVersionProper.CompareTo(manifestConfig.RemoteVersionProper);
-
-                if (versionCompare < 0)
+                if (manifestConfig.IsRemoteVersionNewer)
                 {
-                    manifestConfig.RemoteVersionNewer = true;
-                }
-                else
-                {
-                    manifestConfig.RemoteVersionNewer = false;
-                }
-
-                if (manifestConfig.RemoteVersionNewer && !manifestConfig.Beta)
-                {
-                    // show new version message
                     ShowUpdateForm(manifestConfig);
                 }
             }
@@ -166,6 +152,10 @@ namespace taskt.Core.Update
             }
         }
 
+        /// <summary>
+        /// show update form
+        /// </summary>
+        /// <param name="manifestConfig"></param>
         private static void ShowUpdateForm(UpdateManifest manifestConfig)
         {
             using (var frmUpdate = new taskt.UI.Forms.Supplement_Forms.frmUpdate(manifestConfig))
@@ -175,11 +165,9 @@ namespace taskt.Core.Update
 
                     //move update exe to root folder for execution
                     var updaterExecutionResources = System.IO.Path.Combine(Application.StartupPath, "Resources", "taskt-updater.exe");
-                    //var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
 
                     if (!System.IO.File.Exists(updaterExecutionResources))
                     {
-                        //MessageBox.Show("taskt-updater.exe not found in Resources folder!");
                         using (var fm = new taskt.UI.Forms.Supplemental.frmDialog("taskt-updater.exe not found in Resources folder!", "Error", taskt.UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                         {
                             fm.ShowDialog();

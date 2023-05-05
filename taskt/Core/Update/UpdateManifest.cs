@@ -12,7 +12,7 @@ namespace taskt.Core.Update
         public string PackageURL2 { get; set; }
 
         //helpers
-        public bool RemoteVersionNewer { get; set; }
+        public bool IsRemoteVersionNewer { get; set; }
         public Version RemoteVersionProper { get; set; }
         public Version LocalVersionProper { get; set; }
     }

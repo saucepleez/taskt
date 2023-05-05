@@ -299,7 +299,7 @@ namespace taskt.UI.Forms
             // check update
             if ((appSettings.ClientSettings.CheckForUpdateAtStartup) && (this.parentBuilder == null))
             {
-                taskt.Core.Update.ApplicationUpdate.ShowUpdateResultAsync();
+                taskt.Core.Update.ApplicationUpdate.ShowUpdateResultAsync(appSettings.ClientSettings.SkipBetaVersionUpdate);
             }
         }
         
