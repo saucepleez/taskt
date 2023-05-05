@@ -1776,131 +1776,131 @@ namespace taskt.UI.CustomControls
 
         #region search control methods
         // TODO: move to PropertyControl
-        public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
-        {
-            List<Control> ret = new List<Control>();
+        //public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
+        //{
+        //    List<Control> ret = new List<Control>();
 
-            switch (t)
-            {
-                case CommandControlType.Body:
-                    ret.Add(ctrls.Where(c => (c.Name == parameterName)).FirstOrDefault());
-                    break;
+        //    switch (t)
+        //    {
+        //        case CommandControlType.Body:
+        //            ret.Add(ctrls.Where(c => (c.Name == parameterName)).FirstOrDefault());
+        //            break;
 
-                case CommandControlType.Label:
-                    ret.Add(ctrls.Where(c => (c.Name == LabelPrefix + parameterName)).FirstOrDefault());
-                    break;
+        //        case CommandControlType.Label:
+        //            ret.Add(ctrls.Where(c => (c.Name == LabelPrefix + parameterName)).FirstOrDefault());
+        //            break;
 
-                case CommandControlType.SecondLabel:
-                    ret.Add(ctrls.Where(c => (c.Name == Label2ndPrefix + parameterName)).FirstOrDefault());
-                    break;
+        //        case CommandControlType.SecondLabel:
+        //            ret.Add(ctrls.Where(c => (c.Name == Label2ndPrefix + parameterName)).FirstOrDefault());
+        //            break;
 
-                case CommandControlType.Helpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + HelperInfix))).ToArray());
-                    break;
+        //        case CommandControlType.Helpers:
+        //            ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + HelperInfix))).ToArray());
+        //            break;
 
-                case CommandControlType.CunstomHelpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + CustomHelperInfix))).ToArray());
-                    break;
-            }
+        //        case CommandControlType.CunstomHelpers:
+        //            ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + CustomHelperInfix))).ToArray());
+        //            break;
+        //    }
 
-            return ret;
-        }
+        //    return ret;
+        //}
 
-        public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
-        {
-            List<Control> ret = new List<Control>();
+        //public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
+        //{
+        //    List<Control> ret = new List<Control>();
 
-            int index;
-            index = ctrls.FindIndex(t => (t.Name == "group_" + parameterName));
-            if (index >= 0)
-            {
-                ret.Add(ctrls[index]);
-            }
-            else
-            {
-                index = ctrls.FindIndex(t => (t.Name == LabelPrefix + parameterName));
-                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == LabelPrefix + nextParameterName));
+        //    int index;
+        //    index = ctrls.FindIndex(t => (t.Name == "group_" + parameterName));
+        //    if (index >= 0)
+        //    {
+        //        ret.Add(ctrls[index]);
+        //    }
+        //    else
+        //    {
+        //        index = ctrls.FindIndex(t => (t.Name == LabelPrefix + parameterName));
+        //        int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == LabelPrefix + nextParameterName));
 
-                for (int i = index; i < last; i++)
-                {
-                    ret.Add(ctrls[i]);
-                }
-            }
+        //        for (int i = index; i < last; i++)
+        //        {
+        //            ret.Add(ctrls[i]);
+        //        }
+        //    }
             
-            return ret;
-        }
+        //    return ret;
+        //}
 
-        public static Control GetPropertyControl(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey(propertyName))
-            {
-                return controls[propertyName];
-            }
-            else
-            {
-                throw new Exception("Control '" + propertyName + "' does not exists.");
-            }
-        }
-        public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey(LabelPrefix + propertyName))
-            {
-                return (Label)controls[LabelPrefix + propertyName];
-            }
-            else
-            {
-                throw new Exception("Label '" + LabelPrefix + propertyName + "' does not exists.");
-            }
-        }
-        public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey(Label2ndPrefix + propertyName))
-            {
-                return (Label)controls[Label2ndPrefix + propertyName];
-            }
-            else
-            {
-                throw new Exception("2nd Label '" + Label2ndPrefix + propertyName + "' does not exists.");
-            }
-        }
-        public static (Control body, Label label, Label label2nd) GetAllPropertyControl(this Dictionary<string, Control> controls, string propertyName, bool throwWhenLabelNotExists = true, bool throwWhen2ndLabelNotExists = false)
-        {
-            Control body = controls.GetPropertyControl(propertyName);
+        //public static Control GetPropertyControl(this Dictionary<string, Control> controls, string propertyName)
+        //{
+        //    if (controls.ContainsKey(propertyName))
+        //    {
+        //        return controls[propertyName];
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Control '" + propertyName + "' does not exists.");
+        //    }
+        //}
+        //public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string propertyName)
+        //{
+        //    if (controls.ContainsKey(LabelPrefix + propertyName))
+        //    {
+        //        return (Label)controls[LabelPrefix + propertyName];
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Label '" + LabelPrefix + propertyName + "' does not exists.");
+        //    }
+        //}
+        //public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string propertyName)
+        //{
+        //    if (controls.ContainsKey(Label2ndPrefix + propertyName))
+        //    {
+        //        return (Label)controls[Label2ndPrefix + propertyName];
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("2nd Label '" + Label2ndPrefix + propertyName + "' does not exists.");
+        //    }
+        //}
+        //public static (Control body, Label label, Label label2nd) GetAllPropertyControl(this Dictionary<string, Control> controls, string propertyName, bool throwWhenLabelNotExists = true, bool throwWhen2ndLabelNotExists = false)
+        //{
+        //    Control body = controls.GetPropertyControl(propertyName);
 
-            Label label;
-            try
-            {
-                label = controls.GetPropertyControlLabel(propertyName);
-            }
-            catch (Exception ex)
-            {
-                if (throwWhenLabelNotExists)
-                {
-                    throw ex;
-                }
-                else
-                {
-                    label = null;
-                }
-            }
-            Label label2nd;
-            try
-            {
-                label2nd = controls.GetPropertyControl2ndLabel(propertyName);
-            }
-            catch (Exception ex)
-            {
-                if (throwWhen2ndLabelNotExists)
-                {
-                    throw ex;
-                }
-                else
-                {
-                    label2nd = null;
-                }
-            }
-            return (body, label, label2nd);
-        }
+        //    Label label;
+        //    try
+        //    {
+        //        label = controls.GetPropertyControlLabel(propertyName);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (throwWhenLabelNotExists)
+        //        {
+        //            throw ex;
+        //        }
+        //        else
+        //        {
+        //            label = null;
+        //        }
+        //    }
+        //    Label label2nd;
+        //    try
+        //    {
+        //        label2nd = controls.GetPropertyControl2ndLabel(propertyName);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (throwWhen2ndLabelNotExists)
+        //        {
+        //            throw ex;
+        //        }
+        //        else
+        //        {
+        //            label2nd = null;
+        //        }
+        //    }
+        //    return (body, label, label2nd);
+        //}
         #endregion
     }
 }
