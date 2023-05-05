@@ -108,8 +108,10 @@ namespace taskt.Core
 
         public static void ShowUpdateResultAsync()
         {
-            WebClient wc = new WebClient();
-            wc.Encoding = Encoding.UTF8;
+            WebClient wc = new WebClient
+            {
+                Encoding = Encoding.UTF8
+            };
 
             //get manifest
             try
