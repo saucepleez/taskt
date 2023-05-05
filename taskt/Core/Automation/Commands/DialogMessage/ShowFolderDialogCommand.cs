@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -30,16 +31,32 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            object result = null;
+            //object result = null;
+            //engine.tasktEngineUI.Invoke(new Action(() =>
+            //    {
+            //        result = engine.tasktEngineUI.ShowFolderDialog();
+            //    }
+            //));
+            //if (result != null)
+            //{
+            //    result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+            //}
             engine.tasktEngineUI.Invoke(new Action(() =>
-                {
-                    result = engine.tasktEngineUI.ShowFolderDialog();
-                }
-            ));
-            if (result != null)
             {
-                result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
-            }
+                using (var dialog = new FolderBrowserDialog())
+                {
+                    string result;
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        result = dialog.SelectedPath;
+                    }
+                    else
+                    {
+                        result = "";
+                    }
+                    result.StoreInUserVariable(engine, v_applyToVariableName);
+                }
+            }));
         }
     }
 }
