@@ -119,7 +119,7 @@ namespace taskt.Core.Update
                 wc.DownloadStringCompleted += CompleteDownloadUpdateInformation;
                 wc.DownloadStringAsync(new Uri(MyURLs.LatestJSONURL));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // silent! ;-)
                 //throw new Exception("Fail check update : " + ex.Message);
@@ -158,7 +158,7 @@ namespace taskt.Core.Update
                     ShowUpdateForm(manifestConfig);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // silent! ;-)
                 //bad json received
