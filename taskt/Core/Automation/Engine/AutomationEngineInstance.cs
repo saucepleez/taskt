@@ -333,7 +333,6 @@ namespace taskt.Core.Automation.Engine
                 }
                 //else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
                 //{
-                //    // todo: execute runcommand
                 //    IsCancellationPending = true;
                 //    return;
                 //}

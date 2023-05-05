@@ -59,7 +59,7 @@ namespace taskt.UI.CustomControls
                     {
                         if (ctrl is FlowLayoutPanel flp)
                         {
-                            foreach(Control c in flp.Controls)
+                            foreach (Control c in flp.Controls)
                             {
                                 if (c.Name == "v_Comment")
                                 {
