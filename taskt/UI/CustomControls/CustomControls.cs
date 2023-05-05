@@ -445,7 +445,7 @@ namespace taskt.UI
             {nameof(CreateColorCommand), "taskt.Properties.Resources.command_function"},
             {nameof(CreateColorFromExcelColorCommand), "taskt.Properties.Resources.command_function"},
             {nameof(CreateColorFromHexCommand), "taskt.Properties.Resources.command_function"},
-            {nameof(FormatColorCommand), "taskt.Properties.Resources.command_function"},
+            {nameof(ConvertColorCommand), "taskt.Properties.Resources.command_function"},
 
             // Data
             {nameof(DateCalculationCommand), "taskt.Properties.Resources.command_function"},

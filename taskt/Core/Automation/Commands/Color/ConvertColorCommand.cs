@@ -11,13 +11,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Color Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Format Color")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Format Color Value.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Format Color Value.")]
+    [Attributes.ClassAttributes.CommandSettings("Convert Color")]
+    [Attributes.ClassAttributes.Description("This command allows you to get convert Color Value.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get convert Color Value.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FormatColorCommand : ScriptCommand
+    public class ConvertColorCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyDescription("Color Variable Name")]
@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
-        public FormatColorCommand()
+        public ConvertColorCommand()
         {
             //this.CommandName = "FormatColorCommand";
             //this.SelectionName = "Format Color";

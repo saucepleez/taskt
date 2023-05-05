@@ -303,7 +303,7 @@
     <Compile Include="Core\Automation\Commands\ClipboardControls.cs" />
     <Compile Include="Core\Automation\Commands\ColorControls.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Color\FormatColorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\ConvertColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormHexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\ConditionControls.cs" />

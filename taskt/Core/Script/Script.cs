@@ -296,6 +296,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_41(doc);
             convertTo3_5_1_42(doc);
             convertTo3_5_1_44(doc);
+            convertTo3_5_1_45(doc);
 
             return doc;
         }
@@ -1007,6 +1008,9 @@ namespace taskt.Core.Script
 
             // FormatFolderPathCommnad -> ExtractionFolderPathCommand
             ChangeCommandName(doc, "FormatFolderPathCommnad", "ExtractionFolderPathCommand", "Extraction Folder Path");
+
+            // FormatColorCommand -> ConvertColorCommand
+            ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
 
             return doc;
         }
