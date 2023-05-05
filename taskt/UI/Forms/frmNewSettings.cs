@@ -1151,7 +1151,7 @@ namespace taskt.UI.Forms
             //        fm.ShowDialog();
             //    }
             //}
-            taskt.Core.ApplicationUpdate.ShowUpdateResult(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
+            Core.Update.ApplicationUpdate.ShowUpdateResult(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
         }
         #endregion
 

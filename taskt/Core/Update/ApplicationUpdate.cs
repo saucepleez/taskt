@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
-namespace taskt.Core
+namespace taskt.Core.Update
 {
     public class ApplicationUpdate
     {
@@ -59,8 +59,8 @@ namespace taskt.Core
 
         public static void ShowUpdateResult(bool skipBeta, bool silent = true)
         {
-            taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
-            Core.UpdateManifest manifest = new Core.UpdateManifest();
+            ApplicationUpdate updater = new ApplicationUpdate();
+            var manifest = new UpdateManifest();
             try
             {
                 manifest = updater.GetManifest();
@@ -198,20 +198,5 @@ namespace taskt.Core
                 }
             }
         }
-    }
-
-    public class UpdateManifest
-    {
-        //from manifest
-        public string RemoteVersion { get; set; }
-        public string RemoteBetaVersion { get; set; }
-        public bool Beta { get; set; }
-        public string PackageURL { get; set; }
-        public string PackageURL2 { get; set; }
-
-        //helpers
-        public bool RemoteVersionNewer { get; set; }
-        public Version RemoteVersionProper { get; set; }
-        public Version LocalVersionProper { get; set; }
     }
 }

@@ -11,19 +11,11 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebSocket4Net;
 
 namespace taskt.UI.Forms
 {
@@ -198,8 +190,8 @@ namespace taskt.UI.Forms
 
         private void btnUpdateCheck_Click(object sender, EventArgs e)
         {
-            taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
-            Core.UpdateManifest manifest = new Core.UpdateManifest();
+            var updater = new Core.Update.ApplicationUpdate();
+            var manifest = new Core.Update.UpdateManifest();
             try
             {
                 manifest = updater.GetManifest();
