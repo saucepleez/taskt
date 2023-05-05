@@ -38,11 +38,13 @@
             this.lblRemote = new System.Windows.Forms.Label();
             this.lblLocal = new System.Windows.Forms.Label();
             this.lblXPosition = new System.Windows.Forms.Label();
+            this.btnShowUpdateDetails = new taskt.UI.CustomControls.UIPictureButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).BeginInit();
             this.panelBody.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnShowUpdateDetails)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -110,6 +112,7 @@
             // panelBody
             // 
             this.panelBody.BackColor = System.Drawing.Color.DimGray;
+            this.panelBody.Controls.Add(this.btnShowUpdateDetails);
             this.panelBody.Controls.Add(this.lblText);
             this.panelBody.Controls.Add(this.lblRemote);
             this.panelBody.Controls.Add(this.lblLocal);
@@ -169,6 +172,23 @@
             this.lblXPosition.TabIndex = 21;
             this.lblXPosition.Text = "Great News!";
             // 
+            // btnShowUpdateDetails
+            // 
+            this.btnShowUpdateDetails.BackColor = System.Drawing.Color.Transparent;
+            this.btnShowUpdateDetails.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnShowUpdateDetails.DisplayText = "Show Details";
+            this.btnShowUpdateDetails.DisplayTextBrush = System.Drawing.Color.White;
+            this.btnShowUpdateDetails.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
+            this.btnShowUpdateDetails.Image = global::taskt.Properties.Resources.logo;
+            this.btnShowUpdateDetails.IsMouseOver = false;
+            this.btnShowUpdateDetails.Location = new System.Drawing.Point(288, 117);
+            this.btnShowUpdateDetails.Name = "btnShowUpdateDetails";
+            this.btnShowUpdateDetails.Size = new System.Drawing.Size(75, 48);
+            this.btnShowUpdateDetails.TabIndex = 25;
+            this.btnShowUpdateDetails.TabStop = false;
+            this.btnShowUpdateDetails.Text = "Show Details";
+            this.btnShowUpdateDetails.Click += new System.EventHandler(this.btnShowUpdateDetails_Click);
+            // 
             // frmUpdate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -188,6 +208,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.panelBody.ResumeLayout(false);
             this.panelBody.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnShowUpdateDetails)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -202,5 +223,6 @@
         private System.Windows.Forms.Label lblRemote;
         private System.Windows.Forms.Label lblLocal;
         private System.Windows.Forms.Label lblXPosition;
+        private CustomControls.UIPictureButton btnShowUpdateDetails;
     }
 }
