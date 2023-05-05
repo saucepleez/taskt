@@ -13,16 +13,8 @@
 //limitations under the License.
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
-using taskt.Core;
 using taskt.Core.Automation.Engine;
 using static taskt.Core.Automation.User32.User32Functions;
 
@@ -33,18 +25,30 @@ namespace taskt.UI.Forms
         //all variables used by this form
         #region Form Variables
         public Core.EngineSettings engineSettings;
+
         public string filePath { get; set; }
+
         public string xmlData { get; set; }
+
         public Core.Server.Task remoteTask { get; set; }
+
         public bool serverExecution { get; set; }
+
         public frmScriptBuilder callBackForm { get; set; }
+
         private bool advancedDebug { get; set; }
+
         public AutomationEngineInstance engineInstance { get; set; }
+
         private List<Core.Script.ScriptVariable> Variables { get; set; }
+
         private Dictionary<string, Core.Script.Script> PreloadedTasks { get; set; }
+
         public bool CloseWhenDone = false;
-        #endregion
+
         public string Result { get; set; }
+        #endregion
+
         //events and methods
         #region Form Events/Methods
         public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false, Dictionary<string, Core.Script.Script> preloadedTasks = null)
@@ -102,10 +106,8 @@ namespace taskt.UI.Forms
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
-
-
-
         }
+
         public frmScriptEngine()
         {
             InitializeComponent();
@@ -147,10 +149,8 @@ namespace taskt.UI.Forms
             //add hooks for hot key cancellation
             GlobalHook.HookStopped += new EventHandler(OnHookStopped);
             GlobalHook.StartEngineCancellationHook(engineSettings.CancellationKey);
-
-
-
         }
+
         private void frmProcessingStatus_Load(object sender, EventArgs e)
         {
             //move engine form to bottom right and bring to front
@@ -178,11 +178,7 @@ namespace taskt.UI.Forms
             {
                 engineInstance.ExecuteScriptXML(xmlData);
             }
-
-
         }
-
-
 
         /// <summary>
         /// Triggers the automation engine to stop based on a hooked key press
@@ -194,9 +190,7 @@ namespace taskt.UI.Forms
             uiBtnCancel_Click(null, null);
             GlobalHook.HookStopped -= new EventHandler(OnHookStopped);
             engineInstance.CancelScript();
-
         }
-
         #endregion
 
         //engine event handlers
@@ -210,6 +204,7 @@ namespace taskt.UI.Forms
         {
             AddStatus(e.ProgressUpdate);
         }
+
         /// <summary>
         /// Handles Script Finished Event raised by Automation Engine
         /// </summary>
@@ -217,7 +212,6 @@ namespace taskt.UI.Forms
         /// <param name="e"></param>
         private void Engine_ScriptFinishedEvent(object sender, ScriptFinishedEventArgs e)
         {
-
             switch (e.Result)
             {
                 case ScriptFinishedEventArgs.ScriptFinishedResult.Successful:
@@ -237,9 +231,7 @@ namespace taskt.UI.Forms
                     break;
             }
 
-
             Result = engineInstance.TasktResult;
-
 
             AddStatus("Total Execution Time: " + e.ExecutionTime.ToString());
 
@@ -247,7 +239,6 @@ namespace taskt.UI.Forms
             {
                 engineInstance.tasktEngineUI.Invoke((Action)delegate () { this.Close(); });
             }
-
         }
 
         private void EngineInstance_LineNumberChangedEvent(object sender, LineNumberChangedEventArgs e)
@@ -280,11 +271,9 @@ namespace taskt.UI.Forms
                 lblAction.Text = text + "..";
                 lstSteppingCommands.Items.Add(DateTime.Now.ToString("MM/dd/yy hh:mm:ss.fff") + " | " + text + "..");
                 lstSteppingCommands.SelectedIndex = lstSteppingCommands.Items.Count - 1;
-
-
             }
-
         }
+
         /// <summary>
         /// Delegate for updating UI after Automation Engine finishes
         /// </summary>
@@ -304,7 +293,6 @@ namespace taskt.UI.Forms
             }
             else
             {
-
                 //set main logo text
                 lblMainLogo.Text = mainLogoText;
 
@@ -312,7 +300,6 @@ namespace taskt.UI.Forms
                 uiBtnPause.Visible = false;
                 uiBtnCancel.DisplayText = "Close";
                 uiBtnCancel.Visible = true;
-
 
                 if ((!advancedDebug) && (mainLogoText.Contains("(error)")))
                 {
@@ -334,15 +321,18 @@ namespace taskt.UI.Forms
 
                 //reset debug line
                 if (callBackForm != null)
+                {
                     callBackForm.DebugLine = 0;
-
+                }
+                    
                 //begin auto close
                 if ((engineSettings.AutoCloseDebugWindow) || (serverExecution))
+                {
                     tmrNotify.Enabled = true;
-
+                }
             }
-
         }
+
         /// <summary>
         /// Delegate for showing message box
         /// </summary>
@@ -363,8 +353,8 @@ namespace taskt.UI.Forms
                 var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter);
                 confirmationForm.ShowDialog();
             }
-
         }
+
         /// <summary>
         /// Delegate for showing engine context form
         /// </summary>
@@ -385,7 +375,6 @@ namespace taskt.UI.Forms
                 var contextForm = new UI.Forms.Supplement_Forms.frmEngineContextViewer(context, closeAfter);
                 contextForm.ShowDialog();
             }
-
         }
 
         // TODO: is it possible to move to LaunchRemoteDesktopCommand or other class file
@@ -398,7 +387,6 @@ namespace taskt.UI.Forms
 
             var remoteDesktopForm = new UI.Forms.Supplemental.frmRemoteDesktopViewer(machineName, userName, password, width, height, false, false);
             remoteDesktopForm.Show();
-
         }
 
         public delegate List<string> ShowInputDelegate(Core.Automation.Commands.ShowUserInputDialogCommand inputs);
@@ -443,12 +431,9 @@ namespace taskt.UI.Forms
                 {
                     return null;
                 }
-
-
-
             }
-
         }
+
         public delegate List<Core.Script.ScriptVariable> ShowHTMLInputDelegate(string htmlTemplate);
         public List<Core.Script.ScriptVariable> ShowHTMLInput(string htmlTemplate)
         {
@@ -462,7 +447,6 @@ namespace taskt.UI.Forms
             {
                 var inputForm = new Supplemental.frmHTMLDisplayForm();
                 inputForm.TemplateHTML = htmlTemplate;
-
 
                 var dialogResult = inputForm.ShowDialog();
 
@@ -478,11 +462,7 @@ namespace taskt.UI.Forms
                 {
                     return null;
                 }
-
-
-
             }
-
         }
 
         public delegate string ShowOpenFileDialogDelegate(string filter, int index, string directory);
@@ -580,7 +560,6 @@ namespace taskt.UI.Forms
                 {
                     callBackForm.DebugLine = lineNumber;
                 }
-
             }
         }
         #endregion
@@ -623,8 +602,6 @@ namespace taskt.UI.Forms
 
         private void uiBtnPause_Click(object sender, EventArgs e)
         {
-
-
             if (uiBtnPause.DisplayText == "Pause")
             {
                 lstSteppingCommands.Items.Add("[User Requested Pause]");
@@ -649,15 +626,11 @@ namespace taskt.UI.Forms
             lblMainLogo.Show();
             lstSteppingCommands.Visible = !lstSteppingCommands.Visible;
         }
+
         private void lstSteppingCommands_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             MessageBox.Show(lstSteppingCommands.SelectedItem.ToString(), "Item Status");
         }
         #endregion UI Elements
-
-
     }
-
-
-
 }
