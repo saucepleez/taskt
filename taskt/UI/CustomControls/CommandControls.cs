@@ -18,15 +18,6 @@ namespace taskt.UI.CustomControls
     {
         public static frmCommandEditor CurrentEditor { get; set; }
 
-        public enum CommandControlType
-        {
-            Body,
-            Label,
-            Helpers,
-            CunstomHelpers,
-            SecondLabel
-        }
-
         // todo: add colorful setting parameter
         private static List<Color> paramColors = new List<Color>
         {
