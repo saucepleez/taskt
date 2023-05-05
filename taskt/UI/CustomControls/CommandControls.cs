@@ -1903,8 +1903,4 @@ namespace taskt.UI.CustomControls
         }
         #endregion
     }
-
-
-
-    
 }
