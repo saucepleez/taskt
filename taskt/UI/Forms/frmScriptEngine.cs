@@ -350,8 +350,10 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter);
-                confirmationForm.ShowDialog();
+                using (var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter))
+                {
+                    confirmationForm.ShowDialog();
+                }
             }
         }
 
@@ -372,8 +374,10 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var contextForm = new UI.Forms.Supplement_Forms.frmEngineContextViewer(context, closeAfter);
-                contextForm.ShowDialog();
+                using (var contextForm = new UI.Forms.Supplement_Forms.frmEngineContextViewer(context, closeAfter))
+                {
+                    contextForm.ShowDialog();
+                }
             }
         }
 
@@ -400,36 +404,34 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var inputForm = new Supplemental.frmUserInput();
-                inputForm.InputCommand = inputs;
-
-
-                var dialogResult = inputForm.ShowDialog();
-
-                if (dialogResult == DialogResult.OK)
+                using (var inputForm = new Supplemental.frmUserInput())
                 {
+                    inputForm.InputCommand = inputs;
 
-                    var responses = new List<string>();
-                    foreach (var ctrl in inputForm.InputControls)
+                    var dialogResult = inputForm.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
                     {
-                        if (ctrl is CheckBox)
+                        var responses = new List<string>();
+                        foreach (var ctrl in inputForm.InputControls)
                         {
-                            var checkboxCtrl = (CheckBox)ctrl;
-                            responses.Add(checkboxCtrl.Checked.ToString());
-                        }
-                        else
-                        {
-                            responses.Add(ctrl.Text);
+                            if (ctrl is CheckBox)
+                            {
+                                var checkboxCtrl = (CheckBox)ctrl;
+                                responses.Add(checkboxCtrl.Checked.ToString());
+                            }
+                            else
+                            {
+                                responses.Add(ctrl.Text);
+                            }
                         }
 
-
+                        return responses;
                     }
-
-                    return responses;
-                }
-                else
-                {
-                    return null;
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
@@ -445,106 +447,108 @@ namespace taskt.UI.Forms
             }
             else
             {
-                var inputForm = new Supplemental.frmHTMLDisplayForm();
-                inputForm.TemplateHTML = htmlTemplate;
-
-                var dialogResult = inputForm.ShowDialog();
-
-                if (inputForm.Result == DialogResult.OK)
+                using (var inputForm = new Supplemental.frmHTMLDisplayForm())
                 {
-                    var variables = inputForm.GetVariablesFromHTML("input");
+                    inputForm.TemplateHTML = htmlTemplate;
 
-                    variables.AddRange(inputForm.GetVariablesFromHTML("select"));
+                    var dialogResult = inputForm.ShowDialog();
 
-                    return variables;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        public delegate string ShowOpenFileDialogDelegate(string filter, int index, string directory);
-        public string ShowOpenFileDialog(string filter, int index, string directory)
-        {
-            if (InvokeRequired)
-            {
-                var d = new ShowOpenFileDialogDelegate(ShowOpenFileDialog);
-                Invoke(d, new object[] { filter, index, directory });
-                return null;
-            }
-            else
-            {
-                using (var dialog = new OpenFileDialog())
-                {
-                    dialog.Filter = filter;
-                    dialog.FilterIndex = index;
-                    dialog.InitialDirectory = directory;
-                    if (dialog.ShowDialog() == DialogResult.OK)
+                    if (inputForm.Result == DialogResult.OK)
                     {
-                        return dialog.FileName;
+                        var variables = inputForm.GetVariablesFromHTML("input");
+
+                        variables.AddRange(inputForm.GetVariablesFromHTML("select"));
+
+                        return variables;
                     }
                     else
                     {
-                        return "";
+                        return null;
                     }
                 }
             }
         }
 
-        public delegate string ShowSaveFileDialogDelegate(string filter, int index, string directory);
-        public string ShowSaveFileDialog(string filter, int index, string directory)
-        {
-            if (InvokeRequired)
-            {
-                var d = new ShowSaveFileDialogDelegate(ShowSaveFileDialog);
-                Invoke(d, new object[] { filter, index, directory });
-                return null;
-            }
-            else
-            {
-                using (var dialog = new SaveFileDialog())
-                {
-                    dialog.Filter = filter;
-                    dialog.FilterIndex = index;
-                    dialog.InitialDirectory = directory;
-                    if (dialog.ShowDialog() == DialogResult.OK)
-                    {
-                        return dialog.FileName;
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-            }
-        }
+        //public delegate string ShowOpenFileDialogDelegate(string filter, int index, string directory);
+        //public string ShowOpenFileDialog(string filter, int index, string directory)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        var d = new ShowOpenFileDialogDelegate(ShowOpenFileDialog);
+        //        Invoke(d, new object[] { filter, index, directory });
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        using (var dialog = new OpenFileDialog())
+        //        {
+        //            dialog.Filter = filter;
+        //            dialog.FilterIndex = index;
+        //            dialog.InitialDirectory = directory;
+        //            if (dialog.ShowDialog() == DialogResult.OK)
+        //            {
+        //                return dialog.FileName;
+        //            }
+        //            else
+        //            {
+        //                return "";
+        //            }
+        //        }
+        //    }
+        //}
 
-        public delegate string ShowFolderDialogDelegate();
-        public string ShowFolderDialog()
-        {
-            if (InvokeRequired)
-            {
-                var d = new ShowFolderDialogDelegate(ShowFolderDialog);
-                Invoke(d, new object[] {  });
-                return null;
-            }
-            else
-            {
-                using (var dialog = new FolderBrowserDialog())
-                {
-                    if (dialog.ShowDialog() == DialogResult.OK)
-                    {
-                        return dialog.SelectedPath;
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-            }
-        }
+        //public delegate string ShowSaveFileDialogDelegate(string filter, int index, string directory);
+        //public string ShowSaveFileDialog(string filter, int index, string directory)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        var d = new ShowSaveFileDialogDelegate(ShowSaveFileDialog);
+        //        Invoke(d, new object[] { filter, index, directory });
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        using (var dialog = new SaveFileDialog())
+        //        {
+        //            dialog.Filter = filter;
+        //            dialog.FilterIndex = index;
+        //            dialog.InitialDirectory = directory;
+        //            if (dialog.ShowDialog() == DialogResult.OK)
+        //            {
+        //                return dialog.FileName;
+        //            }
+        //            else
+        //            {
+        //                return "";
+        //            }
+        //        }
+        //    }
+        //}
+
+        //public delegate string ShowFolderDialogDelegate();
+        //public string ShowFolderDialog()
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        var d = new ShowFolderDialogDelegate(ShowFolderDialog);
+        //        Invoke(d, new object[] {  });
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        using (var dialog = new FolderBrowserDialog())
+        //        {
+        //            if (dialog.ShowDialog() == DialogResult.OK)
+        //            {
+        //                return dialog.SelectedPath;
+        //            }
+        //            else
+        //            {
+        //                return "";
+        //            }
+        //        }
+        //    }
+        //}
 
         public delegate void SetLineNumber(int lineNumber);
         public void UpdateLineNumber(int lineNumber)
