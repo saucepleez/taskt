@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Windows.Automation;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search")]
@@ -24,6 +24,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("AutomationElement Variable Name to Store Parent AutomationElement")]
         public string v_AutomationElementVariable { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
         public UIAutomationSearchParentElementCommand()
         {
             //this.CommandName = "UIAutomationGetParentElementCommand";
@@ -38,14 +42,38 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            var parent = AutomationElementControls.GetParentElement(rootElement);
-            if (parent != null)
+            //var parent = AutomationElementControls.GetParentElement(rootElement);
+            //if (parent != null)
+            //{
+            //    parent.StoreInUserVariable(engine, v_AutomationElementVariable);
+            //}
+            //else
+            //{
+            //    throw new Exception("AutomationElement not found");
+            //}
+
+            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), engine);
+            object ret = WaitControls.WaitProcess(waitTime, "Parent Element",
+                new Func<(bool, object)>(() =>
+                {
+                    try
+                    {
+                        var root = AutomationElementControls.GetParentElement(rootElement);
+                        return (true, root);
+                    }
+                    catch
+                    {
+                        return (false, null);
+                    }
+                }), engine
+            );
+            if (ret is AutomationElement parent)
             {
                 parent.StoreInUserVariable(engine, v_AutomationElementVariable);
             }
             else
             {
-                throw new Exception("AutomationElement not found");
+                throw new Exception("Parent AutomationElement not Found");
             }
         }
     }

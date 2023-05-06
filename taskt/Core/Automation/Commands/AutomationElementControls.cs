@@ -16,6 +16,20 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class AutomationElementControls
     {
+        #region fields
+
+        /// <summary>
+        /// AutomationElement type for Reflection
+        /// </summary>
+        private static Type TypeOfAutomationElement = typeof(AutomationElement);
+
+        /// <summary>
+        /// ControlType type for Reflection
+        /// </summary>
+        private static Type TypeOfControlType = typeof(ControlType);
+        #endregion
+
+        #region VirtualProperties
         /// <summary>
         /// input AutomationElement property
         /// </summary>
@@ -102,8 +116,23 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewInitMethod(nameof(AutomationElementControls) + "+" + nameof(CreateEmptyParamters))]
         public static string v_SearchParameters { get; }
 
+        /// <summary>
+        /// AutomationElement wait time
+        /// </summary>
+        [PropertyDescription("Wait Time for the AutomationElement to Exist (sec)")]
+        [InputSpecification("Wait Time", true)]
+        [Remarks("Specify how long to Wait before an Error will occur because the AutomationElement is Not Found.")]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "10")]
+        [PropertyFirstValue("10")]
+        public static string v_WaitTime { get; }
+        #endregion
 
-        public static AutomationElement GetFromWindowName(string windowName, Automation.Engine.AutomationEngineInstance engine)
+
+        public static AutomationElement GetFromWindowName(string windowName, Engine.AutomationEngineInstance engine)
         {
             var windowSearchConditions = new AndCondition(
                     new PropertyCondition(AutomationElement.NameProperty, windowName),
@@ -181,7 +210,7 @@ namespace taskt.Core.Automation.Commands
             table.Rows.Add(false, "ProcessID", "");
         }
 
-        private static void parseInspectToolResult(string result, DataTable table, System.Windows.Forms.ComboBox windowNames = null)
+        private static void parseInspectToolResult(string result, DataTable table, ComboBox windowNames = null)
         {
             string[] results = result.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
@@ -258,7 +287,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void InspectToolParserClicked(DataTable table, System.Windows.Forms.ComboBox windowNames = null)
+        public static void InspectToolParserClicked(DataTable table, ComboBox windowNames = null)
         {
             using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
             {
@@ -274,7 +303,7 @@ namespace taskt.Core.Automation.Commands
             var spt = value.Split(' ');
             return spt[0].Replace("UIA_", "").Replace("ControlTypeId", "");
         }
-        private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, System.Windows.Forms.ComboBox cmb)
+        private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, ComboBox cmb)
         {
             if (ancestors.Count > 0)
             {
@@ -567,80 +596,56 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// create AutomationElement search condition
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyValue"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
-            string propName = propertyName + "Property";
+            var conditionProp = (AutomationProperty)TypeOfAutomationElement.GetField(propertyName + "Property")?.GetValue(null) ??
+                                    throw new Exception("Property '" + propertyName + "' does not Exists");
 
             switch (propertyName)
             {
-                case "AcceleratorKey":
-                    return new PropertyCondition(AutomationElement.AcceleratorKeyProperty, propertyValue);
-                case "AccessKey":
-                    return new PropertyCondition(AutomationElement.AccessKeyProperty, propertyValue);
-                case "AutomationId":
-                    return new PropertyCondition(AutomationElement.AutomationIdProperty, propertyValue);
-                case "ClassName":
-                    return new PropertyCondition(AutomationElement.ClassNameProperty, propertyValue);
                 case "ControlType":
-                    return new PropertyCondition(AutomationElement.ControlTypeProperty, GetControlType((string)propertyValue));
-                case "FrameworkId":
-                    return new PropertyCondition(AutomationElement.FrameworkIdProperty, propertyValue);
-                case "HasKeyboardFocus":
-                    return new PropertyCondition(AutomationElement.HasKeyboardFocusProperty, propertyValue);
-                case "HelpText":
-                    return new PropertyCondition(AutomationElement.HelpTextProperty, propertyValue);
-                case "IsContentElement":
-                    return new PropertyCondition(AutomationElement.IsContentElementProperty, propertyValue);
-                case "IsControlElement":
-                    return new PropertyCondition(AutomationElement.IsControlElementProperty, propertyValue);
-                case "IsEnabled":
-                    return new PropertyCondition(AutomationElement.IsEnabledProperty, propertyValue);
-                case "IsKeyboardFocusable":
-                    return new PropertyCondition(AutomationElement.IsKeyboardFocusableProperty, propertyValue);
-                case "IsOffscreen":
-                    return new PropertyCondition(AutomationElement.IsOffscreenProperty, propertyValue);
-                case "IsPassword":
-                    return new PropertyCondition(AutomationElement.IsPasswordProperty, propertyValue);
-                case "IsRequiredForForm":
-                    return new PropertyCondition(AutomationElement.IsRequiredForFormProperty, propertyValue);
-                case "ItemStatus":
-                    return new PropertyCondition(AutomationElement.ItemStatusProperty, propertyValue);
-                case "ItemType":
-                    return new PropertyCondition(AutomationElement.ItemTypeProperty, propertyValue);
-                case "LocalizedControlType":
-                    return new PropertyCondition(AutomationElement.LocalizedControlTypeProperty, propertyValue);
-                case "Name":
-                    return new PropertyCondition(AutomationElement.NameProperty, propertyValue);
-                case "NativeWindowHandle":
-                    return new PropertyCondition(AutomationElement.NativeWindowHandleProperty, propertyValue);
-                case "ProcessID":
-                    return new PropertyCondition(AutomationElement.ProcessIdProperty, propertyValue);
+                    var controlValue = TypeOfControlType.GetField(propertyValue.ToString())?.GetValue(null) ?? throw new Exception("ControlType '" + propertyValue.ToString() + "' does not Exists");
+                    return new PropertyCondition(conditionProp, controlValue);
+
                 default:
-                    throw new NotImplementedException("Property Type '" + propertyName + "' not implemented");
+                    return new PropertyCondition(conditionProp, propertyValue);
             }
         }
 
-        private static Condition CreateSearchCondition(DataTable table, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
-        {  
-            //create search params
-            var searchParams = from rw in table.AsEnumerable()
-                                where rw.Field<string>("Enabled") == "True"
-                                select rw;
-
-            if (searchParams.Count() == 0)
-            {
-                return null;
-            }
-
+        /// <summary>
+        /// create AutomationElement search condition from DataTable
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static Condition CreateSearchCondition(DataTable table, Engine.AutomationEngineInstance engine)
+        {
             //create and populate condition list
             var conditionList = new List<Condition>();
-            foreach (var param in searchParams)
+            foreach(DataRow row in table.Rows)
             {
-                var parameterName = (string)param["ParameterName"];
-                var parameterValue = (string)param["ParameterValue"];
+                var isEnabled = row.Field<string>("Enabled") ?? "false";
+                if (bool.TryParse(isEnabled, out bool res))
+                {
+                    if (!res)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
 
-                parameterName = parameterName.ConvertToUserVariable(engine);
-                parameterValue = parameterValue.ConvertToUserVariable(engine);
+                var parameterName = row.Field<string>("ParameterName") ?? "";
+                var parameterValue = row.Field<string>("ParameterValue") ?? ""; ;
 
                 PropertyCondition propCondition;
                 if (bool.TryParse(parameterValue, out bool bValue))
@@ -654,53 +659,53 @@ namespace taskt.Core.Automation.Commands
                 conditionList.Add(propCondition);
             }
 
-            //concatenate or take first condition
-            Condition searchConditions;
-            if (conditionList.Count > 1)
+            switch (conditionList.Count)
             {
-                searchConditions = new AndCondition(conditionList.ToArray());
-
+                case 0:
+                    return null;    // no conditions
+                    
+                case 1:
+                    return conditionList[0];    // 1 condition
+                    
+                default:
+                    return new AndCondition(conditionList.ToArray());   // 2+ conditions
             }
-            else
-            {
-                searchConditions = conditionList[0];
-            }
-
-            return searchConditions;
         }
 
-        public static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// Search GUI Element by specified conditions DataTable
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="conditionTable"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
-            var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions);
-            if (element == null)
-            {
-                // more deep search
-                element = rootElement.FindFirst(TreeScope.Subtree, searchConditions);
-                if (element == null)
-                {
-                    element = DeepSearchGUIElement(rootElement, searchConditions);
-                }
-            }
+            var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
+                            rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
+                            DeepSearchGUIElement(rootElement, searchConditions);
+
             // if element not found, don't throw exception here
             return element;
         }
 
+        /// <summary>
+        /// Deep Search GUI Element by Specified Condition
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="searchCondition"></param>
+        /// <returns></returns>
         private static AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
 
             // format conditions
             PropertyCondition[] conditions;
-            if (searchCondition is AndCondition)
+            if (searchCondition is AndCondition andConds)
             {
-                Condition[] conds = ((AndCondition)searchCondition).GetConditions();
-                conditions = new PropertyCondition[conds.Length];
-                for (int i = 0; i < conds.Length; i++)
-                {
-                    conditions[i] = (PropertyCondition)conds[i];
-                }
+                conditions = andConds.GetConditions().Cast<PropertyCondition>().ToArray();
             }
             else
             {
@@ -712,6 +717,13 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
+        /// <summary>
+        /// Search GUI Element used by TreeWalker
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="searchConditions"></param>
+        /// <param name="walker"></param>
+        /// <returns></returns>
         private static AutomationElement WalkerSearch(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
@@ -719,15 +731,7 @@ namespace taskt.Core.Automation.Commands
 
             while (node != null)
             {
-                bool result = true;
-                foreach (PropertyCondition condition in searchConditions)
-                {
-                    if (node.GetCurrentPropertyValue(condition.Property) != condition.Value)
-                    {
-                        result = false;
-                        break;
-                    }
-                }
+                var result = searchConditions.All(c => node.GetCurrentPropertyValue(c.Property) == c.Value);
                 if (result)
                 {
                     ret = node;
@@ -751,7 +755,7 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
-        public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
+        public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
@@ -920,7 +924,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic, Automation.Engine.AutomationEngineInstance engine)
+        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic, Engine.AutomationEngineInstance engine)
         {
             AutomationElement window = GetFromWindowName(windowName, engine);
             var ret = GetElementXml(window, out elemsDic);
@@ -1037,7 +1041,7 @@ namespace taskt.Core.Automation.Commands
             return node;
         }
 
-        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName, Automation.Engine.AutomationEngineInstance engine, out XElement xml)
+        public static TreeNode GetElementTreeNode(string windowName, Engine.AutomationEngineInstance engine, out XElement xml)
         {
             AutomationElement root = GetFromWindowName(windowName, engine);
 
@@ -1051,7 +1055,7 @@ namespace taskt.Core.Automation.Commands
             return tree;
         }
 
-        private static void GetChildElementTreeNode(System.Windows.Forms.TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker)
+        private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
             while(node != null)
@@ -1071,9 +1075,9 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static System.Windows.Forms.TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
+        private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
         {
-            System.Windows.Forms.TreeNode node = new System.Windows.Forms.TreeNode();
+            TreeNode node = new TreeNode();
             node.Text = "\"" + element.Current.Name + "\" " + element.Current.LocalizedControlType;
             node.Tag = element;
             return node;
@@ -1237,7 +1241,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="e"></param>
         public static void lnkGUIInspectTool_UsedByXPath_Click(object sender, EventArgs e)
         {
-            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -1282,7 +1286,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="e"></param>
         public static void lnkGUIInspectTool_UsedByInspectResult_Click(object sender, EventArgs e)
         {
-            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -1326,9 +1330,9 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void GUIInspectTool_UsedByXPath_Clicked(System.Windows.Forms.TextBox txtXPath)
+        public static void GUIInspectTool_UsedByXPath_Clicked(TextBox txtXPath)
         {
-            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using(var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -1338,7 +1342,7 @@ namespace taskt.Core.Automation.Commands
         }
         public static void GUIInspectTool_UsedByInspectResult_Clicked(DataTable searchParams)
         {
-            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
