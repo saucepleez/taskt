@@ -345,93 +345,6 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static ControlType GetControlType(string controlTypeName)
-        {
-            switch (controlTypeName.ToLower())
-            {
-                case "button":
-                    return ControlType.Button;
-                case "calender":
-                    return ControlType.Calendar;
-                case "checkbox":
-                    return ControlType.CheckBox;
-                case "combobox":
-                    return ControlType.ComboBox;
-                case "custom":
-                    return ControlType.Custom;
-                case "datagrid":
-                    return ControlType.DataGrid;
-                case "dataitem":
-                    return ControlType.DataItem;
-                case "document":
-                    return ControlType.Document;
-                case "edit":
-                    return ControlType.Edit;
-                case "group":
-                    return ControlType.Group;
-                case "header":
-                    return ControlType.Header;
-                case "headeritem":
-                    return ControlType.HeaderItem;
-                case "hyperlink":
-                    return ControlType.Hyperlink;
-                case "image":
-                    return ControlType.Image;
-                case "list":
-                    return ControlType.List;
-                case "listitem":
-                    return ControlType.ListItem;
-                case "menu":
-                    return ControlType.Menu;
-                case "menubar":
-                    return ControlType.MenuBar;
-                case "menuitem":
-                    return ControlType.MenuItem;
-                case "pane":
-                    return ControlType.Pane;
-                case "progressbar":
-                    return ControlType.ProgressBar;
-                case "radiobutton":
-                    return ControlType.RadioButton;
-                case "scrollbar":
-                    return ControlType.ScrollBar;
-                case "separator":
-                    return ControlType.Separator;
-                case "slider":
-                    return ControlType.Slider;
-                case "spinner":
-                    return ControlType.Spinner;
-                case "splitbutton":
-                    return ControlType.SplitButton;
-                case "statusbar":
-                    return ControlType.StatusBar;
-                case "tab":
-                    return ControlType.Tab;
-                case "tabitem":
-                    return ControlType.TabItem;
-                case "table":
-                    return ControlType.Table;
-                case "text":
-                    return ControlType.Text;
-                case "thumb":
-                    return ControlType.Thumb;
-                case "titlebar":
-                    return ControlType.TitleBar;
-                case "toolbar":
-                    return ControlType.ToolBar;
-                case "tooltip":
-                    return ControlType.ToolTip;
-                case "tree":
-                    return ControlType.Tree;
-                case "treeitem":
-                    return ControlType.TreeItem;
-                case "window":
-                    return ControlType.Window;
-                default:
-                    throw new Exception("Strange ControlType '" + controlTypeName + "'");
-            }
-        }
-
         public static string GetControlTypeText(ControlType control)
         {
             if (control == ControlType.Button)
@@ -596,6 +509,8 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        #region GUI Search by conditions
+
         /// <summary>
         /// create AutomationElement search condition
         /// </summary>
@@ -673,25 +588,6 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// Search GUI Element by specified conditions DataTable
-        /// </summary>
-        /// <param name="rootElement"></param>
-        /// <param name="conditionTable"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
-        {
-            Condition searchConditions = CreateSearchCondition(conditionTable, engine);
-
-            var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
-                            rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
-                            DeepSearchGUIElement(rootElement, searchConditions);
-
-            // if element not found, don't throw exception here
-            return element;
-        }
-
-        /// <summary>
         /// Deep Search GUI Element by Specified Condition
         /// </summary>
         /// <param name="rootElement"></param>
@@ -754,6 +650,28 @@ namespace taskt.Core.Automation.Commands
 
             return ret;
         }
+
+        /// <summary>
+        /// Search GUI Element by specified conditions DataTable
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="conditionTable"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
+        {
+            Condition searchConditions = CreateSearchCondition(conditionTable, engine);
+
+            var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
+                            rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
+                            DeepSearchGUIElement(rootElement, searchConditions);
+
+            // if element not found, don't throw exception here
+            return element;
+        }
+
+        #endregion
+
 
         public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
