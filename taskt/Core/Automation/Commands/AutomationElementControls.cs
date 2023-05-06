@@ -131,6 +131,27 @@ namespace taskt.Core.Automation.Commands
         public static string v_WaitTime { get; }
         #endregion
 
+        #region variable methods
+
+        public static AutomationElement GetAutomationElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
+        {
+            Script.ScriptVariable v = variableName.GetRawVariable(engine);
+            if (v.VariableValue is AutomationElement)
+            {
+                return (AutomationElement)v.VariableValue;
+            }
+            else
+            {
+                throw new Exception("Variable " + variableName + " is not AutomationElement");
+            }
+        }
+
+        public static void StoreInUserVariable(this System.Windows.Automation.AutomationElement value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+        }
+        #endregion
+
 
         public static AutomationElement GetFromWindowName(string windowName, Engine.AutomationEngineInstance engine)
         {
@@ -671,6 +692,16 @@ namespace taskt.Core.Automation.Commands
             // if element not found, don't throw exception here
             return element;
         }
+
+        //public static AutomationElement SearchGUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
+        //    var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_SearchParameters)))?.Name ?? "";
+        //    var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime)));
+
+        //    var table = conditionName.GetDataTableVariable(engine);
+
+        //}
 
         #endregion
 
