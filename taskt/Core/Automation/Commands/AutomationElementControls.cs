@@ -605,8 +605,10 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                conditions = new PropertyCondition[1];
-                conditions[0] = (PropertyCondition)searchCondition;
+                conditions = new PropertyCondition[1]
+                {
+                    (PropertyCondition)searchCondition
+                };
             }
 
             var ret = WalkerSearch(rootElement, conditions, walker);
