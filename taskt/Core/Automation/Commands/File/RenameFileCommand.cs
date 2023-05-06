@@ -36,11 +36,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Force Combine New Extension")]
         [PropertyUISelectionOption("Contains New File Name")]
         [PropertyUISelectionOption("Use Before Rename Path")]
-        [PropertyDetailSampleUsage("**Auto**", "If the New File Name does not contain an Extension and Not specified New Extension, it will automatically be given the extension of the path before the Rename.")]
-        [PropertyDetailSampleUsage("Force Combine New Extension", "Forces combining the specified extensions with the New Extension")]
-        [PropertyDetailSampleUsage("Contains New File Name", "Determine that New File Name contains the Extension and Do NOT add the Extension to the New File Name")]
-        [PropertyDetailSampleUsage("Use Before Rename Path", "Forces before Rename File Path extensions to be combined")]
+        [PropertyAddtionalParameterInfo("Auto", "If the New File Name does not contain an Extension and Not specified New Extension, it will automatically be given the extension of the path before the Rename.")]
+        [PropertyAddtionalParameterInfo("Force Combine New Extension", "Forces combining the specified extensions with the New Extension")]
+        [PropertyAddtionalParameterInfo("Contains New File Name", "Determine that New File Name contains the Extension and Do NOT add the Extension to the New File Name")]
+        [PropertyAddtionalParameterInfo("Use Before Rename Path", "Forces before Rename File Path extensions to be combined")]
+        [PropertySecondaryLabel(true)]
         [PropertyIsOptional(true, "Auto")]
+        [PropertySelectionChangeEvent(nameof(cmbExtensionOption_SelectionChange))]
         public string v_ExtentionOption { get; set; }
 
         [XmlAttribute]
@@ -189,6 +191,12 @@ namespace taskt.Core.Automation.Commands
                     }
                 })
             );
+        }
+
+        private void cmbExtensionOption_SelectionChange(object sender, EventArgs e)
+        {
+            var cmb = (System.Windows.Forms.ComboBox)sender;
+            ControlsList.SecondLabelProcess(nameof(v_ExtentionOption), nameof(v_ExtentionOption), cmb.SelectedItem.ToString());
         }
     }
 }
