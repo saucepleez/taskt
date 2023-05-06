@@ -188,18 +188,20 @@ namespace taskt.Core.Automation.Commands
             //var labelDic = (Dictionary<string, string>)(ControlsList["lbl_" + nameof(v_Format)].Tag);
             //Label lbl = (Label)ControlsList["lbl2_" + nameof(v_Format)];
 
-            var labelDic = ControlsList.Get2ndLabelText(nameof(v_Format));
-            var lbl = ControlsList.GetPropertyControl2ndLabel(nameof(v_Format));
+            //var labelDic = ControlsList.Get2ndLabelText(nameof(v_Format));
+            //var lbl = ControlsList.GetPropertyControl2ndLabel(nameof(v_Format));
 
-            var searchKey = cmb.SelectedItem.ToString();
-            if (labelDic.ContainsKey(searchKey))
-            {
-                lbl.Text = labelDic[searchKey];
-            }
-            else
-            {
-                lbl.Text = "";
-            }
+            //var searchKey = cmb.SelectedItem.ToString();
+            //if (labelDic.ContainsKey(searchKey))
+            //{
+            //    lbl.Text = labelDic[searchKey];
+            //}
+            //else
+            //{
+            //    lbl.Text = "";
+            //}
+
+            ControlsList.SecondLabelProcess(nameof(v_Format), nameof(v_Format), cmb.SelectedItem.ToString());
         }
 
         public override void AddInstance(InstanceCounter counter)

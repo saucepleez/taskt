@@ -308,6 +308,14 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception(lbl.Name + " does not has Dictionary item for 2nd-Label");
             }
         }
+
+        public static void SecondLabelProcess(this Dictionary<string, Control> controls, string labelTextName, string label2ndName, string key)
+        {
+            var dic = controls.Get2ndLabelText(labelTextName);
+            var lbl = controls.GetPropertyControl2ndLabel(label2ndName);
+
+            lbl.Text = dic.ContainsKey(key) ? dic[key] : "";
+        }
         #endregion
     }
 }
