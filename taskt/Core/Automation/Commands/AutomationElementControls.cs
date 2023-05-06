@@ -133,6 +133,13 @@ namespace taskt.Core.Automation.Commands
 
         #region variable methods
 
+        /// <summary>
+        /// get AutomationElement from Specified variable name
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static AutomationElement GetAutomationElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
@@ -144,6 +151,20 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("Variable " + variableName + " is not AutomationElement");
             }
+        }
+
+        /// <summary>
+        /// get AutomationElement from specified parameter name
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement CovnertToUserVariableAsAutomationElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(parameterName);
+            var value = prop?.GetValue(command)?.ToString() ?? "";
+            return GetAutomationElementVariable(value, engine);
         }
 
         public static void StoreInUserVariable(this AutomationElement value, Engine.AutomationEngineInstance sender, string targetVariable)
@@ -693,15 +714,60 @@ namespace taskt.Core.Automation.Commands
             return element;
         }
 
-        //public static AutomationElement SearchGUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
-        //{
-        //    var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
-        //    var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_SearchParameters)))?.Name ?? "";
-        //    var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime)));
+        /// <summary>
+        /// Search GUI Element from specified parameter names
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="elementName"></param>
+        /// <param name="conditionName"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var elem = command.CovnertToUserVariableAsAutomationElement(elementName, engine);
+            var table = command.ConvertToUserVariableAsDataTable(conditionName, engine);
+            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
 
-        //    var table = conditionName.GetDataTableVariable(engine);
+            var ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
+                new Func<(bool, object)>(() =>
+                {
+                    var e = SearchGUIElement(elem, table, engine);
+                    if (e != null)
+                    {
+                        return (true, e);
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }), engine
+            );
+            if (ret is AutomationElement foundElem)
+            {
+                return foundElem;
+            }
+            else
+            {
+                throw new Exception("AutomationElement Not Found");
+            }
+        }
 
-        //}
+        /// <summary>
+        /// Search GUI Element. this method use VirtualProperty to get parameter names
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement SearchGUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        {
+            var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
+            var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_SearchParameters)))?.Name ?? "";
+            var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime))).Name ?? "";
+
+            return SearchGUIElement(command, elementName, conditionName, waitTimeName, engine);
+        }
 
         #endregion
 
