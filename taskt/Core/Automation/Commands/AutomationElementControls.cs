@@ -882,21 +882,6 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
-        //public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
-        //{
-        //    AutomationElement window = GetWindowElement(targetElement);
-
-        //    XElement root = CreateXmlElement(window);
-
-        //    elemsDic = new Dictionary<string, AutomationElement>();
-        //    elemsDic.Add(window.GetHashCode().ToString(), window);
-
-        //    TreeWalker walker = TreeWalker.RawViewWalker;
-
-        //    GetChildNodeFromElement(root, window, elemsDic, walker);
-
-        //    return root;
-        //}
         public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
         {
             XElement root = CreateXmlElement(targetElement);
