@@ -18,6 +18,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**500**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
         [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
         [Remarks("When the Wait Time is less than **100** is specified, it will be **100**")]
+        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "500")]
         [PropertyFirstValue("500")]
         [PropertyTextBoxSetting(1, false)]
@@ -55,11 +56,44 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**500**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
         [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
         [Remarks("When the Wait Time is less than **100** is specified, it will be **100**")]
+        [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "500")]
         [PropertyFirstValue("500")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         public static string v_WaitTimeAfterMouseClick { get; }
+
+        /// <summary>
+        /// offset x
+        /// </summary>
+        [PropertyDescription("Offset X Coordinate")]
+        [InputSpecification("Offset X", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Offset X")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Offset X")]
+        [PropertyDetailSampleUsage("**{{{vXOffset}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Offset X")]
+        [Remarks("This will move the mouse X pixels to the right of the location of the target")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        [PropertyDisplayText(true, "Offset X")]
+        public static string v_xOffsetAdjustment { get; }
+
+        /// <summary>
+        /// offset y
+        /// </summary>
+        [PropertyDescription("Offset Y Coordinate")]
+        [InputSpecification("Offset Y")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Offset Y")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Offset Y")]
+        [PropertyDetailSampleUsage("**{{{vYOffset}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Offset Y")]
+        [Remarks("This will move the mouse Y pixels down from the top of the location of the target")]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        [PropertyDisplayText(true, "Offset Y")]
+        public static string v_YOffsetAdjustment { get; }
         #endregion
 
         #region enum, struct, const
