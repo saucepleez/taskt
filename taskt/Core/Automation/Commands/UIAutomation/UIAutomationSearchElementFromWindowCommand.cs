@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using System.Windows.Automation;
 
 namespace taskt.Core.Automation.Commands
 {

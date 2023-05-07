@@ -44,7 +44,8 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
+            //XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
+            (var xml, _) = AutomationElementControls.GetElementXml(rootElement);
 
             string xpath = v_SearchXPath.ConvertToUserVariable(engine);
             if (!xpath.StartsWith("."))

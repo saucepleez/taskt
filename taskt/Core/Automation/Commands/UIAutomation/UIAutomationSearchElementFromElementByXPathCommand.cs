@@ -50,9 +50,9 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            Dictionary<string, AutomationElement> dic;
-
-            XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
+            //Dictionary<string, AutomationElement> dic;
+            //XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
+            (var xml, var dic) = AutomationElementControls.GetElementXml(rootElement);
 
             string xpath = v_SearchXPath.ConvertToUserVariable(engine);
             if (!xpath.StartsWith("."))

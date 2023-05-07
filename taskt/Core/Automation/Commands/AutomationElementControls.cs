@@ -27,6 +27,15 @@ namespace taskt.Core.Automation.Commands
         /// ControlType type for Reflection
         /// </summary>
         private static Type TypeOfControlType = typeof(ControlType);
+
+        private static string[] TargetControlTypes = new string[]
+        {
+            "AcceleratorKey", "AccessKey", "AutomationId", "ClassName",
+            "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
+            "IsControlElement", "IsEnabled", "IsKeyboardFocusable", "IsOffscreen",
+            "IsPassword", "IsRequiredForForm", "ItemStatus", "ItemType",
+            "LocalizedControlType", "Name", "NativeWindowHandle", "ProcessID",
+        };
         #endregion
 
         #region VirtualProperties
@@ -167,6 +176,28 @@ namespace taskt.Core.Automation.Commands
             return GetAutomationElementVariable(value, engine);
         }
 
+        /// <summary>
+        /// convert variable to string as XPath
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ConvertToUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
+        {
+            var p = value.ConvertToUserVariable(engine);
+            if (!p.StartsWith("."))
+            {
+                p = "." + p;
+            }
+            return p;
+        }
+
+        /// <summary>
+        /// store AutomationElement
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="sender"></param>
+        /// <param name="targetVariable"></param>
         public static void StoreInUserVariable(this AutomationElement value, Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
@@ -345,6 +376,7 @@ namespace taskt.Core.Automation.Commands
             var spt = value.Split(' ');
             return spt[0].Replace("UIA_", "").Replace("ControlTypeId", "");
         }
+
         private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, ComboBox cmb)
         {
             if (ancestors.Count > 0)
@@ -389,166 +421,167 @@ namespace taskt.Core.Automation.Commands
 
         public static string GetControlTypeText(ControlType control)
         {
-            if (control == ControlType.Button)
-            {
-                return "Button";
-            }
-            else if (control == ControlType.Calendar)
-            {
-                return "Calender";
-            }
-            else if (control == ControlType.CheckBox)
-            {
-                return "CheckBox";
-            }
-            else if (control == ControlType.ComboBox)
-            {
-                return "ComboBox";
-            }
-            else if (control == ControlType.Custom)
-            {
-                return "Custom";
-            }
-            else if (control == ControlType.DataGrid)
-            {
-                return "DataGrid";
-            }
-            else if (control == ControlType.DataItem)
-            {
-                return "DataItem";
-            }
-            else if (control == ControlType.Document)
-            {
-                return "Document";
-            }
-            else if (control == ControlType.Edit)
-            {
-                return "Edit";
-            }
-            else if (control == ControlType.Group)
-            {
-                return "Group";
-            }
-            else if (control == ControlType.Header)
-            {
-                return "Header";
-            }
-            else if (control == ControlType.HeaderItem)
-            {
-                return "HeaderItem";
-            }
-            else if (control == ControlType.Hyperlink)
-            {
-                return "Hyperlink";
-            }
-            else if (control == ControlType.Image)
-            {
-                return "Image";
-            }
-            else if (control == ControlType.List)
-            {
-                return "List";
-            }
-            else if (control == ControlType.ListItem)
-            {
-                return "ListItem";
-            }
-            else if (control == ControlType.Menu)
-            {
-                return "Menu";
-            }
-            else if (control == ControlType.MenuBar)
-            {
-                return "MenuBar";
-            }
-            else if (control == ControlType.MenuItem)
-            {
-                return "MenuItem";
-            }
-            else if (control == ControlType.Pane)
-            {
-                return "Pane";
-            }
-            else if (control == ControlType.ProgressBar)
-            {
-                return "ProgressBar";
-            }
-            else if (control == ControlType.RadioButton)
-            {
-                return "RadioButton";
-            }
-            else if (control == ControlType.ScrollBar)
-            {
-                return "ScrollBar";
-            }
-            else if (control == ControlType.Separator)
-            {
-                return "Separator";
-            }
-            else if (control == ControlType.Slider)
-            {
-                return "Slider";
-            }
-            else if (control == ControlType.Spinner)
-            {
-                return "Spinner";
-            }
-            else if (control == ControlType.SplitButton)
-            {
-                return "SplitButton";
-            }
-            else if (control == ControlType.StatusBar)
-            {
-                return "StatusBar";
-            }
-            else if (control == ControlType.Tab)
-            {
-                return "Tab";
-            }
-            else if (control == ControlType.TabItem)
-            {
-                return "TabItem";
-            }
-            else if (control == ControlType.Table)
-            {
-                return "Table";
-            }
-            else if (control == ControlType.Text)
-            {
-                return "Text";
-            }
-            else if (control == ControlType.Thumb)
-            {
-                return "Thumb";
-            }
-            else if (control == ControlType.TitleBar)
-            {
-                return "TitleBar";
-            }
-            else if (control == ControlType.ToolBar)
-            {
-                return "ToolBar";
-            }
-            else if (control == ControlType.ToolTip)
-            {
-                return "ToolTip";
-            }
-            else if (control == ControlType.Tree)
-            {
-                return "Tree";
-            }
-            else if (control == ControlType.TreeItem)
-            {
-                return "TreeItem";
-            }
-            else if (control == ControlType.Window)
-            {
-                return "Window";
-            }
-            else
-            {
-                throw new Exception("Strange ControlType");
-            }
+            return control.ToString();
+            //if (control == ControlType.Button)
+            //{
+            //    return "Button";
+            //}
+            //else if (control == ControlType.Calendar)
+            //{
+            //    return "Calender";
+            //}
+            //else if (control == ControlType.CheckBox)
+            //{
+            //    return "CheckBox";
+            //}
+            //else if (control == ControlType.ComboBox)
+            //{
+            //    return "ComboBox";
+            //}
+            //else if (control == ControlType.Custom)
+            //{
+            //    return "Custom";
+            //}
+            //else if (control == ControlType.DataGrid)
+            //{
+            //    return "DataGrid";
+            //}
+            //else if (control == ControlType.DataItem)
+            //{
+            //    return "DataItem";
+            //}
+            //else if (control == ControlType.Document)
+            //{
+            //    return "Document";
+            //}
+            //else if (control == ControlType.Edit)
+            //{
+            //    return "Edit";
+            //}
+            //else if (control == ControlType.Group)
+            //{
+            //    return "Group";
+            //}
+            //else if (control == ControlType.Header)
+            //{
+            //    return "Header";
+            //}
+            //else if (control == ControlType.HeaderItem)
+            //{
+            //    return "HeaderItem";
+            //}
+            //else if (control == ControlType.Hyperlink)
+            //{
+            //    return "Hyperlink";
+            //}
+            //else if (control == ControlType.Image)
+            //{
+            //    return "Image";
+            //}
+            //else if (control == ControlType.List)
+            //{
+            //    return "List";
+            //}
+            //else if (control == ControlType.ListItem)
+            //{
+            //    return "ListItem";
+            //}
+            //else if (control == ControlType.Menu)
+            //{
+            //    return "Menu";
+            //}
+            //else if (control == ControlType.MenuBar)
+            //{
+            //    return "MenuBar";
+            //}
+            //else if (control == ControlType.MenuItem)
+            //{
+            //    return "MenuItem";
+            //}
+            //else if (control == ControlType.Pane)
+            //{
+            //    return "Pane";
+            //}
+            //else if (control == ControlType.ProgressBar)
+            //{
+            //    return "ProgressBar";
+            //}
+            //else if (control == ControlType.RadioButton)
+            //{
+            //    return "RadioButton";
+            //}
+            //else if (control == ControlType.ScrollBar)
+            //{
+            //    return "ScrollBar";
+            //}
+            //else if (control == ControlType.Separator)
+            //{
+            //    return "Separator";
+            //}
+            //else if (control == ControlType.Slider)
+            //{
+            //    return "Slider";
+            //}
+            //else if (control == ControlType.Spinner)
+            //{
+            //    return "Spinner";
+            //}
+            //else if (control == ControlType.SplitButton)
+            //{
+            //    return "SplitButton";
+            //}
+            //else if (control == ControlType.StatusBar)
+            //{
+            //    return "StatusBar";
+            //}
+            //else if (control == ControlType.Tab)
+            //{
+            //    return "Tab";
+            //}
+            //else if (control == ControlType.TabItem)
+            //{
+            //    return "TabItem";
+            //}
+            //else if (control == ControlType.Table)
+            //{
+            //    return "Table";
+            //}
+            //else if (control == ControlType.Text)
+            //{
+            //    return "Text";
+            //}
+            //else if (control == ControlType.Thumb)
+            //{
+            //    return "Thumb";
+            //}
+            //else if (control == ControlType.TitleBar)
+            //{
+            //    return "TitleBar";
+            //}
+            //else if (control == ControlType.ToolBar)
+            //{
+            //    return "ToolBar";
+            //}
+            //else if (control == ControlType.ToolTip)
+            //{
+            //    return "ToolTip";
+            //}
+            //else if (control == ControlType.Tree)
+            //{
+            //    return "Tree";
+            //}
+            //else if (control == ControlType.TreeItem)
+            //{
+            //    return "TreeItem";
+            //}
+            //else if (control == ControlType.Window)
+            //{
+            //    return "Window";
+            //}
+            //else
+            //{
+            //    throw new Exception("Strange ControlType");
+            //}
         }
 
         #region GUI Search by conditions
@@ -771,6 +804,46 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
+        #region Winodow Search Methods
+
+        /// <summary>
+        /// get window AutomationElement. this method use PropertyVirtualProperty
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="resultName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, string resultName, Engine.AutomationEngineInstance engine)
+        {
+            var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+
+            AutomationElement ret = null;
+
+            WindowNameControls.WindowAction(command, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
+                {
+                    ret = AutomationElement.FromHandle(wins[0].Item1);
+                    ret.StoreInUserVariable(engine, resultValue);
+                })
+            );
+
+            return ret;
+        }
+
+        /// <summary>
+        /// get window AutomationElement
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        {
+            var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_OutputAutomationElementName)))?.Name ?? "";
+
+            return GetWindowAutomationElement(command, resultName, engine);
+        }
+        #endregion
+
 
         public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
@@ -941,39 +1014,59 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic, Engine.AutomationEngineInstance engine)
-        {
-            AutomationElement window = GetFromWindowName(windowName, engine);
-            var ret = GetElementXml(window, out elemsDic);
-            return ret;
-        }
+        #region create XElement methods
 
-        public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
+        public static (XElement, Dictionary<string, AutomationElement>) GetElementXml(AutomationElement targetElement)
         {
             XElement root = CreateXmlElement(targetElement);
 
-            elemsDic = new Dictionary<string, AutomationElement>();
-            elemsDic.Add(targetElement.GetHashCode().ToString(), targetElement);
-
-            TreeWalker walker = TreeWalker.RawViewWalker;
-
-            GetChildNodeFromElement(root, targetElement, elemsDic, walker);
-
-            return root;
-        }
-
-        private static AutomationElement GetWindowElement(AutomationElement targetElement)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
-
-            AutomationElement node = targetElement;
-            while(GetControlTypeText(node.Current.ControlType) != "Window")
+            var dic = new Dictionary<string, AutomationElement>()
             {
-                node = walker.GetParent(node);
-            }
+                { root.GetHashCode().ToString(), targetElement }
+            };
 
-            return node;
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            GetChildNodeFromElement(root, targetElement, dic, walker);
+
+            return (root, dic);
         }
+
+        //public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic, Engine.AutomationEngineInstance engine)
+        //{
+        //    AutomationElement window = GetFromWindowName(windowName, engine);
+        //    var ret = GetElementXml(window, out elemsDic);
+        //    return ret;
+        //}
+
+        //public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
+        //{
+        //    XElement root = CreateXmlElement(targetElement);
+
+        //    elemsDic = new Dictionary<string, AutomationElement>()
+        //    {
+        //        {targetElement.GetHashCode().ToString(), targetElement },
+        //    };
+
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
+
+        //    GetChildNodeFromElement(root, targetElement, elemsDic, walker);
+
+        //    return root;
+        //}
+
+        //private static AutomationElement GetWindowElement(AutomationElement targetElement)
+        //{
+        //    TreeWalker walker = TreeWalker.RawViewWalker;
+
+        //    AutomationElement node = targetElement;
+        //    while(GetControlTypeText(node.Current.ControlType) != "Window")
+        //    {
+        //        node = walker.GetParent(node);
+        //    }
+
+        //    return node;
+        //}
 
         private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<string, AutomationElement> elemsDic, TreeWalker walker)
         {
@@ -1009,39 +1102,49 @@ namespace taskt.Core.Automation.Commands
         private static XElement CreateXmlElement(AutomationElement targetElement, string hash = "")
         {
             XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
-            node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
-            node.SetAttributeValue("AccessKey", targetElement.Current.AccessKey);
-            node.SetAttributeValue("AutomationId", targetElement.Current.AutomationId);
-            node.SetAttributeValue("ClassName", targetElement.Current.ClassName);
-            node.SetAttributeValue("FrameworkId", targetElement.Current.FrameworkId);
-            node.SetAttributeValue("HasKeyboardFocus", targetElement.Current.HasKeyboardFocus);
-            node.SetAttributeValue("HelpText", targetElement.Current.HelpText);
-            node.SetAttributeValue("IsContentElement", targetElement.Current.IsContentElement);
-            node.SetAttributeValue("IsControlElement", targetElement.Current.IsControlElement);
-            node.SetAttributeValue("IsEnabled", targetElement.Current.IsEnabled);
-            node.SetAttributeValue("IsKeyboardFocusable", targetElement.Current.IsKeyboardFocusable);
-            node.SetAttributeValue("IsOffscreen", targetElement.Current.IsOffscreen);
-            node.SetAttributeValue("IsPassword", targetElement.Current.IsPassword);
-            node.SetAttributeValue("IsRequiredForForm", targetElement.Current.IsRequiredForForm);
-            node.SetAttributeValue("ItemStatus", targetElement.Current.ItemStatus);
-            node.SetAttributeValue("ItemType", targetElement.Current.ItemType);
-            node.SetAttributeValue("LocalizedControlType", targetElement.Current.LocalizedControlType);
-            node.SetAttributeValue("Name", targetElement.Current.Name);
-            node.SetAttributeValue("NativeWindowHandle", targetElement.Current.NativeWindowHandle);
-            node.SetAttributeValue("ProcessID", targetElement.Current.ProcessId);
 
-            if (hash == "") 
+            var tp = targetElement.Current.GetType();
+
+            foreach(var t in TargetControlTypes)
             {
-                node.SetAttributeValue("Hash", targetElement.GetHashCode());
+                node.SetAttributeValue(t, tp.GetField(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
             }
-            else
-            {
-                node.SetAttributeValue("Hash", hash);
-            }
+
+            //node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
+            //node.SetAttributeValue("AccessKey", targetElement.Current.AccessKey);
+            //node.SetAttributeValue("AutomationId", targetElement.Current.AutomationId);
+            //node.SetAttributeValue("ClassName", targetElement.Current.ClassName);
+            //node.SetAttributeValue("FrameworkId", targetElement.Current.FrameworkId);
+            //node.SetAttributeValue("HasKeyboardFocus", targetElement.Current.HasKeyboardFocus);
+            //node.SetAttributeValue("HelpText", targetElement.Current.HelpText);
+            //node.SetAttributeValue("IsContentElement", targetElement.Current.IsContentElement);
+            //node.SetAttributeValue("IsControlElement", targetElement.Current.IsControlElement);
+            //node.SetAttributeValue("IsEnabled", targetElement.Current.IsEnabled);
+            //node.SetAttributeValue("IsKeyboardFocusable", targetElement.Current.IsKeyboardFocusable);
+            //node.SetAttributeValue("IsOffscreen", targetElement.Current.IsOffscreen);
+            //node.SetAttributeValue("IsPassword", targetElement.Current.IsPassword);
+            //node.SetAttributeValue("IsRequiredForForm", targetElement.Current.IsRequiredForForm);
+            //node.SetAttributeValue("ItemStatus", targetElement.Current.ItemStatus);
+            //node.SetAttributeValue("ItemType", targetElement.Current.ItemType);
+            //node.SetAttributeValue("LocalizedControlType", targetElement.Current.LocalizedControlType);
+            //node.SetAttributeValue("Name", targetElement.Current.Name);
+            //node.SetAttributeValue("NativeWindowHandle", targetElement.Current.NativeWindowHandle);
+            //node.SetAttributeValue("ProcessID", targetElement.Current.ProcessId);
+
+            //if (hash == "") 
+            //{
+            //    node.SetAttributeValue("Hash", targetElement.GetHashCode());
+            //}
+            //else
+            //{
+            //    node.SetAttributeValue("Hash", hash);
+            //}
+
+            node.SetAttributeValue("Hash", (hash == "") ? targetElement.GetHashCode().ToString() : hash);
             
-
             return node;
         }
+        #endregion
 
         public static TreeNode GetElementTreeNode(string windowName, Engine.AutomationEngineInstance engine, out XElement xml)
         {
@@ -1076,6 +1179,7 @@ namespace taskt.Core.Automation.Commands
                 node = walker.GetNextSibling(node);
             }
         }
+        
 
         private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
         {

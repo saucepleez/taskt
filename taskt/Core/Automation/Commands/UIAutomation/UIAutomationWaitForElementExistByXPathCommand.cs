@@ -63,7 +63,8 @@ namespace taskt.Core.Automation.Commands
             bool elementFound = false;
             while (!elementFound)
             {
-                XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
+                //XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
+                (var xml, _) = AutomationElementControls.GetElementXml(rootElement);
                 XElement resElem = xml.XPathSelectElement(xpath);
                 if (resElem != null)
                 {

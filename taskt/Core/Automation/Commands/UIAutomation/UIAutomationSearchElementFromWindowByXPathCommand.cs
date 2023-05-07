@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Windows.Automation;
 using System.Xml.Linq;
@@ -7,6 +6,7 @@ using System.Xml.XPath;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.Forms;
 using System.Windows.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -91,23 +91,22 @@ namespace taskt.Core.Automation.Commands
             //}
 
             //var winElem = AutomationElementControls.GetFromWindowName()
-            var winElem = AutomationElementControls.GetWindowAutomationElement;
 
-            Dictionary<string, AutomationElement> dic;
-            XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
+            // window automationElement is dummy
+            var winElem = AutomationElementControls.GetWindowAutomationElement(this, VariableNameControls.GetInnerVariableName(0, engine), engine);
 
-            string xpath = v_SearchXPath.ConvertToUserVariable(engine);
-            if (!xpath.StartsWith("."))
-            {
-                xpath = "." + xpath;
-            }
+            //Dictionary<string, AutomationElement> dic;
+            //XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
+            (var xml, var dic) = AutomationElementControls.GetElementXml(winElem);
 
-            XElement resElem = xml.XPathSelectElement(xpath);
+            //string xpath = v_SearchXPath.ConvertToUserVariable(engine);
+            //if (!xpath.StartsWith("."))
+            //{
+            //    xpath = "." + xpath;
+            //}
+            var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
 
-            if (resElem == null)
-            {
-                throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
-            }
+            XElement resElem = xml.XPathSelectElement(xpath) ?? throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
 
             AutomationElement res = dic[resElem.Attribute("Hash").Value];
             res.StoreInUserVariable(engine, v_AutomationElementVariable);
