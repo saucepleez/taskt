@@ -47,8 +47,7 @@ namespace taskt.Core.Automation.Commands
             var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
             var state = v_ItemsState.GetUISelectionValue("v_ItemsState", this, engine);
 
-            object exColPtn;
-            if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out exColPtn))
+            if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))
             {
                 switch (state)
                 {

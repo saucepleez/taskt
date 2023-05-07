@@ -77,8 +77,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            object scrollPtn;
-            if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
+            if (!targetElement.TryGetCurrentPattern(ScrollPattern.Pattern, out object scrollPtn))
             {
                 if (targetElement.Current.ControlType == ControlType.ScrollBar)
                 {

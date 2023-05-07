@@ -45,8 +45,7 @@ namespace taskt.Core.Automation.Commands
 
             string textValue = v_TextVariable.ConvertToUserVariable(sender);
 
-            object textPtn;
-            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out textPtn))
+            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object textPtn))
             {
                 ((ValuePattern)textPtn).SetValue(textValue);
             }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Automation;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;

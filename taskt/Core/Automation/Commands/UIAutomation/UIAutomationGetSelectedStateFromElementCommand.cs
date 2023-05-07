@@ -39,9 +39,8 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            object patternObj;
             bool checkState;
-            if (targetElement.TryGetCurrentPattern(TogglePattern.Pattern, out patternObj))
+            if (targetElement.TryGetCurrentPattern(TogglePattern.Pattern, out object patternObj))
             {
                 checkState = (((TogglePattern)patternObj).Current.ToggleState == ToggleState.On);
             }
