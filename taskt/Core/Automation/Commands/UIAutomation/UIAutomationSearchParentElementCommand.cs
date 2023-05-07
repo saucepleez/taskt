@@ -42,16 +42,6 @@ namespace taskt.Core.Automation.Commands
 
             var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            //var parent = AutomationElementControls.GetParentElement(rootElement);
-            //if (parent != null)
-            //{
-            //    parent.StoreInUserVariable(engine, v_AutomationElementVariable);
-            //}
-            //else
-            //{
-            //    throw new Exception("AutomationElement not found");
-            //}
-
             var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), engine);
             object ret = WaitControls.WaitProcess(waitTime, "Parent Element",
                 new Func<(bool, object)>(() =>

@@ -18,30 +18,10 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSearchElementFromWindowByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
-        //[PropertyDescription("Please specify Window Name")]
-        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        //[InputSpecification("")]
-        //[SampleUsage("**{{{vElement}}}**")]
-        //[Remarks("")]
-        //[PropertyShowSampleUsageInDescription(true)]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsWindowNamesList(true)]
-        //[PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        //[PropertyDisplayText(true, "Window Name")]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        //[PropertyDescription("Please select Window name search method")]
-        //[InputSpecification("")]
-        //[PropertyUISelectionOption("Contains")]
-        //[PropertyUISelectionOption("Starts with")]
-        //[PropertyUISelectionOption("Ends with")]
-        //[PropertyUISelectionOption("Exact match")]
-        //[SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        //[Remarks("")]
-        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        //[PropertyIsOptional(true, "Contains")]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
 
@@ -83,15 +63,6 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
-
-            //(var xml, var dic) = AutomationElementControls.GetElementXml(winElem);
-
-            //var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
-
-            //XElement resElem = xml.XPathSelectElement(xpath) ?? throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
-
-            //AutomationElement res = dic[resElem.Attribute("Hash").Value];
-            //res.StoreInUserVariable(engine, v_AutomationElementVariable);
 
             var elem = AutomationElementControls.SearchGUIElementByXPath(this, winElem, nameof(v_SearchXPath), nameof(v_ElementWaitTime), engine);
             elem.StoreInUserVariable(engine, v_AutomationElementVariable);

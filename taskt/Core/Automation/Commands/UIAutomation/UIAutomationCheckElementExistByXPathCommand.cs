@@ -46,20 +46,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
-
-            ////XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
-            //(var xml, _) = AutomationElementControls.GetElementXml(rootElement);
-
-            //string xpath = v_SearchXPath.ConvertToUserVariable(engine);
-            //if (!xpath.StartsWith("."))
-            //{
-            //    xpath = "." + xpath;
-            //}
-
-            //XElement resElem = xml.XPathSelectElement(xpath);
-            //(resElem != null).StoreInUserVariable(engine, v_Result);
-
             try
             {
                 AutomationElementControls.SearchGUIElementByXPath(this, engine);

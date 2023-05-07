@@ -47,12 +47,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
-
-            //AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
-
-            //(elem != null).StoreInUserVariable(engine, v_Result);
-
             try
             {
                 AutomationElementControls.SearchGUIElement(this, engine);

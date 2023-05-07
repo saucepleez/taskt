@@ -48,28 +48,6 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
-
-            ////Dictionary<string, AutomationElement> dic;
-            ////XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
-            //(var xml, var dic) = AutomationElementControls.GetElementXml(rootElement);
-
-            //string xpath = v_SearchXPath.ConvertToUserVariable(engine);
-            //if (!xpath.StartsWith("."))
-            //{
-            //    xpath = "." + xpath;
-            //}
-
-            //XElement resElem = xml.XPathSelectElement(xpath);
-
-            //if (resElem == null)
-            //{
-            //    throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
-            //}
-
-            //AutomationElement res = dic[resElem.Attribute("Hash").Value];
-            //res.StoreInUserVariable(engine, v_AutomationElementVariable);
-
             var elem = AutomationElementControls.SearchGUIElementByXPath(this, engine);
             elem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
