@@ -1050,21 +1050,21 @@ namespace taskt.Core
             }
         }
 
-        public static Script.ScriptVariable GetInnerVariable(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            return GetInnerVariableName(index, engine).GetRawVariable(engine);
-        }
+        //public static Script.ScriptVariable GetInnerVariable(int index, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    return GetInnerVariableName(index, engine).GetRawVariable(engine);
+        //}
 
-        public static void SetInnerVariable(object value, int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = GetInnerVariableName(index, engine).GetRawVariable(engine);
-            v.VariableValue = value;
-        }
+        //public static void SetInnerVariable(object value, int index, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    Script.ScriptVariable v = GetInnerVariableName(index, engine).GetRawVariable(engine);
+        //    v.VariableValue = value;
+        //}
 
-        public static string GetInnerVariableName(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            return engine.engineSettings.wrapVariableMarker("__INNER_" + index.ToString());
-        }
+        //public static string GetInnerVariableName(int index, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    return engine.engineSettings.wrapVariableMarker("__INNER_" + index.ToString());
+        //}
 
         private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {

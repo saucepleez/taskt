@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Windows.Automation;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.Forms;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -19,29 +21,31 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSearchElementFromWindowByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyDescription("Please specify Window Name")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("")]
-        [SampleUsage("**{{{vElement}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsWindowNamesList(true)]
-        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "Window Name")]
+        //[PropertyDescription("Please specify Window Name")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("")]
+        //[SampleUsage("**{{{vElement}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsWindowNamesList(true)]
+        //[PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        //[PropertyDisplayText(true, "Window Name")]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Please select Window name search method")]
-        [InputSpecification("")]
-        [PropertyUISelectionOption("Contains")]
-        [PropertyUISelectionOption("Starts with")]
-        [PropertyUISelectionOption("Ends with")]
-        [PropertyUISelectionOption("Exact match")]
-        [SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyIsOptional(true, "Contains")]
+        //[PropertyDescription("Please select Window name search method")]
+        //[InputSpecification("")]
+        //[PropertyUISelectionOption("Contains")]
+        //[PropertyUISelectionOption("Starts with")]
+        //[PropertyUISelectionOption("Ends with")]
+        //[PropertyUISelectionOption("Exact match")]
+        //[SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
+        //[Remarks("")]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //[PropertyIsOptional(true, "Contains")]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
 
         [XmlElement]
@@ -51,6 +55,19 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        public string v_MatchMethod { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        public string v_TargetWindowIndex { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        public string v_WindowWaitTime { get; set; }
 
         public UIAutomationSearchElementFromWindowByXPathCommand()
         {
@@ -64,14 +81,17 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
-            string windowName = WindowNameControls.GetMatchedWindowName(v_WindowName, searchMethod, engine);
-            var rootElement = AutomationElementControls.GetFromWindowName(windowName, engine);
+            //string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
+            //string windowName = WindowNameControls.GetMatchedWindowName(v_WindowName, searchMethod, engine);
+            //var rootElement = AutomationElementControls.GetFromWindowName(windowName, engine);
 
-            if (rootElement == null)
-            {
-                throw new Exception("Window Name '" + v_WindowName + "' not found");
-            }
+            //if (rootElement == null)
+            //{
+            //    throw new Exception("Window Name '" + v_WindowName + "' not found");
+            //}
+
+            //var winElem = AutomationElementControls.GetFromWindowName()
+            var winElem = AutomationElementControls.GetWindowAutomationElement;
 
             Dictionary<string, AutomationElement> dic;
             XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
@@ -91,6 +111,18 @@ namespace taskt.Core.Automation.Commands
 
             AutomationElement res = dic[resElem.Attribute("Hash").Value];
             res.StoreInUserVariable(engine, v_AutomationElementVariable);
+        }
+
+        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        }
+
+        public override void Refresh(frmCommandEditor editor)
+        {
+            base.Refresh();
+            var cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
+            cmb.AddWindowNames();
         }
     }
 }

@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
                     //    formattedString = parsedDate.ToString(formatting);
                     //}
 
-                    var inner0 = ExtensionMethods.GetInnerVariableName(0, engine);
+                    var inner0 = VariableNameControls.GetInnerVariableName(0, engine);
 
                     var dateTimeFromText = new CreateDateTimeFromTextCommand()
                     {

@@ -44,11 +44,11 @@ namespace taskt.Core.Automation.Commands
             {
                 v_DataTableName = this.v_DataTableName,
                 v_DataRowIndex = this.v_DataRowIndex,
-                v_OutputVariableName = ExtensionMethods.GetInnerVariableName(0, engine)
+                v_OutputVariableName = VariableNameControls.GetInnerVariableName(0, engine)
             };
             dicCommand.RunCommand(engine);
 
-            Dictionary<string, string> tDic = (Dictionary<string, string>)ExtensionMethods.GetInnerVariable(0, engine).VariableValue;
+            Dictionary<string, string> tDic = (Dictionary<string, string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(tDic);
             json.StoreInUserVariable(engine, v_OutputVariableName);
         }

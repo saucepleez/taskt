@@ -85,13 +85,15 @@ namespace taskt.Core.Automation.Commands
             //var windowElement = AutomationElementControls.GetFromWindowName(windowName, engine);
             //windowElement.StoreInUserVariable(engine, v_AutomationElementVariable);
 
-            WindowNameControls.WindowAction(this, engine,
-                new Action<List<(IntPtr, string)>>(wins =>
-                {
-                    var windowElement = AutomationElement.FromHandle(wins[0].Item1);
-                    windowElement.StoreInUserVariable(engine, v_AutomationElementVariable);
-                })
-            );
+            //WindowNameControls.WindowAction(this, engine,
+            //    new Action<List<(IntPtr, string)>>(wins =>
+            //    {
+            //        var windowElement = AutomationElement.FromHandle(wins[0].Item1);
+            //        windowElement.StoreInUserVariable(engine, v_AutomationElementVariable);
+            //    })
+            //);
+
+            AutomationElementControls.GetWindowAutomationElement(this, engine);
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
