@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Windows.Automation;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using taskt.UI.Forms;
 using System.Windows.Forms;
@@ -69,6 +66,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WindowWaitTime { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        public string v_ElementWaitTime { get; set; }
+
         public UIAutomationSearchElementFromWindowByXPathCommand()
         {
             //this.CommandName = "UIAutomationGetElementFromWindowByXPathCommand";
@@ -81,35 +82,19 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            //string searchMethod = v_SearchMethod.GetUISelectionValue("v_SearchMethod", this, engine);
-            //string windowName = WindowNameControls.GetMatchedWindowName(v_WindowName, searchMethod, engine);
-            //var rootElement = AutomationElementControls.GetFromWindowName(windowName, engine);
+            var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
 
-            //if (rootElement == null)
-            //{
-            //    throw new Exception("Window Name '" + v_WindowName + "' not found");
-            //}
+            //(var xml, var dic) = AutomationElementControls.GetElementXml(winElem);
 
-            //var winElem = AutomationElementControls.GetFromWindowName()
+            //var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
 
-            // window automationElement is dummy
-            var winElem = AutomationElementControls.GetWindowAutomationElement(this, VariableNameControls.GetInnerVariableName(0, engine), engine);
+            //XElement resElem = xml.XPathSelectElement(xpath) ?? throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
 
-            //Dictionary<string, AutomationElement> dic;
-            //XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
-            (var xml, var dic) = AutomationElementControls.GetElementXml(winElem);
+            //AutomationElement res = dic[resElem.Attribute("Hash").Value];
+            //res.StoreInUserVariable(engine, v_AutomationElementVariable);
 
-            //string xpath = v_SearchXPath.ConvertToUserVariable(engine);
-            //if (!xpath.StartsWith("."))
-            //{
-            //    xpath = "." + xpath;
-            //}
-            var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
-
-            XElement resElem = xml.XPathSelectElement(xpath) ?? throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
-
-            AutomationElement res = dic[resElem.Attribute("Hash").Value];
-            res.StoreInUserVariable(engine, v_AutomationElementVariable);
+            var elem = AutomationElementControls.SearchGUIElementByXPath(this, winElem, nameof(v_SearchXPath), nameof(v_ElementWaitTime), engine);
+            elem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)

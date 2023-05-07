@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using System.Xml.Linq;
-using System.Xml.XPath;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -30,6 +28,12 @@ namespace taskt.Core.Automation.Commands
         [Remarks("When the Element exists, Result value is **True**")]
         public string v_Result { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        public string v_WaitTime { get; set; }
+
         public UIAutomationCheckElementExistByXPathCommand()
         {
             //this.CommandName = "UIAutomationCheckElementExistByXPathCommand";
@@ -42,19 +46,29 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
+            //var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            //XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
-            (var xml, _) = AutomationElementControls.GetElementXml(rootElement);
+            ////XElement xml = AutomationElementControls.GetElementXml(rootElement, out _);
+            //(var xml, _) = AutomationElementControls.GetElementXml(rootElement);
 
-            string xpath = v_SearchXPath.ConvertToUserVariable(engine);
-            if (!xpath.StartsWith("."))
+            //string xpath = v_SearchXPath.ConvertToUserVariable(engine);
+            //if (!xpath.StartsWith("."))
+            //{
+            //    xpath = "." + xpath;
+            //}
+
+            //XElement resElem = xml.XPathSelectElement(xpath);
+            //(resElem != null).StoreInUserVariable(engine, v_Result);
+
+            try
             {
-                xpath = "." + xpath;
+                AutomationElementControls.SearchGUIElementByXPath(this, engine);
+                true.StoreInUserVariable(engine, v_Result);
             }
-
-            XElement resElem = xml.XPathSelectElement(xpath);
-            (resElem != null).StoreInUserVariable(engine, v_Result);
+            catch
+            {
+                false.StoreInUserVariable(engine, v_Result);
+            }
         }
     }
 }

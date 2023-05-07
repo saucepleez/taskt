@@ -152,9 +152,9 @@ namespace taskt.Core.Automation.Commands
         public static AutomationElement GetAutomationElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is AutomationElement)
+            if (v.VariableValue is AutomationElement e)
             {
-                return (AutomationElement)v.VariableValue;
+                return e;
             }
             else
             {
@@ -190,6 +190,20 @@ namespace taskt.Core.Automation.Commands
                 p = "." + p;
             }
             return p;
+        }
+
+        /// <summary>
+        /// convert variable to string as XPath
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ConvertToUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(parameterName);
+            var value = prop?.GetValue(command)?.ToString() ?? "";
+            return ConvertToUserVariableAsXPath(value, engine);
         }
 
         /// <summary>
@@ -421,7 +435,9 @@ namespace taskt.Core.Automation.Commands
 
         public static string GetControlTypeText(ControlType control)
         {
-            return control.ToString();
+            var fullName = control.ProgrammaticName;
+            return fullName.Substring(fullName.LastIndexOf('.') + 1);
+            //return control.ToString();
             //if (control == ControlType.Button)
             //{
             //    return "Button";
@@ -810,20 +826,23 @@ namespace taskt.Core.Automation.Commands
         /// get window AutomationElement. this method use PropertyVirtualProperty
         /// </summary>
         /// <param name="command"></param>
-        /// <param name="resultName"></param>
         /// <param name="engine"></param>
+        /// <param name="resultName"></param>
         /// <returns></returns>
-        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, string resultName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, Engine.AutomationEngineInstance engine, string resultName = "")
         {
-            var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
-
             AutomationElement ret = null;
 
             WindowNameControls.WindowAction(command, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     ret = AutomationElement.FromHandle(wins[0].Item1);
-                    ret.StoreInUserVariable(engine, resultValue);
+
+                    if (!string.IsNullOrEmpty(resultName))
+                    {
+                        var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+                        ret.StoreInUserVariable(engine, resultValue);
+                    }
                 })
             );
 
@@ -840,7 +859,7 @@ namespace taskt.Core.Automation.Commands
         {
             var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_OutputAutomationElementName)))?.Name ?? "";
 
-            return GetWindowAutomationElement(command, resultName, engine);
+            return GetWindowAutomationElement(command, engine, resultName);
         }
         #endregion
 
@@ -1144,6 +1163,67 @@ namespace taskt.Core.Automation.Commands
             
             return node;
         }
+        #endregion
+
+        #region AutomationElement XPath search methods
+
+        private static AutomationElement SearchGUIElementByXPath(AutomationElement rootElement, string xpath, int waitTime, Engine.AutomationEngineInstance engine)
+        {
+            object ret;
+            ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
+                new Func<(bool, object)>(() =>
+                {
+                    (var xml, var dic) = GetElementXml(rootElement);
+
+                    var e = xml.XPathSelectElement(xpath) ?? null;
+                    
+                    if (e != null)
+                    {
+                        return (true, dic[e.Attribute("Hash").Value]);
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }), engine
+            );
+
+            if (ret is AutomationElement elem)
+            {
+                return elem;
+            }
+            else
+            {
+                throw new Exception("AutomationElement not Found");
+            }
+        }
+
+        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, AutomationElement elem, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
+            var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+            return SearchGUIElementByXPath(elem, xpath, wait, engine);
+        }
+
+        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var element = command.CovnertToUserVariableAsAutomationElement(rootElementName, engine);
+            var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
+            var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+            return SearchGUIElementByXPath(element, xpath, wait, engine);
+        }
+
+        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        {
+            var elemName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
+            var xpathName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_XPath)))?.Name ?? "";
+            var waitTimeName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime)))?.Name ?? "";
+
+            return SearchGUIElementByXPath(command, elemName, xpathName, waitTimeName, engine);
+        }
+
         #endregion
 
         public static TreeNode GetElementTreeNode(string windowName, Engine.AutomationEngineInstance engine, out XElement xml)

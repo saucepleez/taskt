@@ -138,9 +138,14 @@ namespace taskt.Core.Automation.Commands
         /// <param name="index"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string GetInnerVariableName(int index, Engine.AutomationEngineInstance engine)
+        public static string GetInnerVariableName(int index, Engine.AutomationEngineInstance engine, bool wrapped = true)
         {
-            return GetWrappedVariableName(InnerVariablePrefix + index.ToString(), engine);
+            var varName = InnerVariablePrefix + index.ToString();
+            if (wrapped)
+            {
+                varName = GetWrappedVariableName(varName, engine);
+            }
+            return varName;
         }
         #endregion
     }

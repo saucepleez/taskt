@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using System.Xml.Linq;
-using System.Xml.XPath;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -32,6 +28,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
         //[XmlIgnore]
         //[NonSerialized]
         //private TextBox XPathTextBox;
@@ -48,27 +48,30 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
+            //var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
 
-            //Dictionary<string, AutomationElement> dic;
-            //XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
-            (var xml, var dic) = AutomationElementControls.GetElementXml(rootElement);
+            ////Dictionary<string, AutomationElement> dic;
+            ////XElement xml = AutomationElementControls.GetElementXml(rootElement, out dic);
+            //(var xml, var dic) = AutomationElementControls.GetElementXml(rootElement);
 
-            string xpath = v_SearchXPath.ConvertToUserVariable(engine);
-            if (!xpath.StartsWith("."))
-            {
-                xpath = "." + xpath;
-            }
+            //string xpath = v_SearchXPath.ConvertToUserVariable(engine);
+            //if (!xpath.StartsWith("."))
+            //{
+            //    xpath = "." + xpath;
+            //}
 
-            XElement resElem = xml.XPathSelectElement(xpath);
+            //XElement resElem = xml.XPathSelectElement(xpath);
 
-            if (resElem == null)
-            {
-                throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
-            }
+            //if (resElem == null)
+            //{
+            //    throw new Exception("AutomationElement not found XPath: " + v_SearchXPath);
+            //}
 
-            AutomationElement res = dic[resElem.Attribute("Hash").Value];
-            res.StoreInUserVariable(engine, v_AutomationElementVariable);
+            //AutomationElement res = dic[resElem.Attribute("Hash").Value];
+            //res.StoreInUserVariable(engine, v_AutomationElementVariable);
+
+            var elem = AutomationElementControls.SearchGUIElementByXPath(this, engine);
+            elem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
     }
 }
