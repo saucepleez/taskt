@@ -929,7 +929,13 @@ namespace taskt.Core.Automation.Commands
 
             foreach(var t in TargetControlTypes)
             {
-                node.SetAttributeValue(t, tp.GetField(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
+                node.SetAttributeValue(t, tp.GetProperty(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
+
+                // DBG
+                //var a = tp.GetProperty(t);
+                //var b = a.GetValue(targetElement.Current);
+                //var c = b?.ToString() ?? "";
+                //Console.WriteLine(tp.GetField(t + "Property").GetValue(targetElement.Current)?.ToString() ?? "");
             }
 
             //node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
