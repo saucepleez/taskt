@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        [PropertyDescription("Destination Folder Path to Move/Copy")]
+        [PropertyDescription("Destination Folder Path to Move")]
         [PropertyDisplayText(true, "Folder")]
         public string v_DestinationDirectory { get; set; }
 
