@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         [PropertyDisplayText(true, "Offset X")]
-        public static string v_xOffsetAdjustment { get; }
+        public static string v_XOffsetAdjustment { get; }
 
         /// <summary>
         /// offset y
