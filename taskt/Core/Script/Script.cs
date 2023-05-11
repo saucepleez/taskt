@@ -1012,6 +1012,43 @@ namespace taskt.Core.Script
             // FormatColorCommand -> ConvertColorCommand
             ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
 
+            // UIAutomationClickElementCommand clickType, xOffset, yOffset parameters
+            var commands = doc.Descendants("ScriptCommand").Where(el =>
+            {
+                return ((el.Attribute("CommandName").Value == "UIAutomationClickElementCommand") &&
+                            (el.Attribute("v_ClickType") == null));
+            });
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach (var cmd in commands)
+            {
+                string clickType = "";
+                string xOffset = "";
+                string yOffset = "";
+                XElement tableParams = cmd.Element("v_ActionParameters").Element(ns + "diffgram").Element("DocumentElement");
+                var table = tableParams?.Elements() ?? new List<XElement>();
+                foreach (XElement row in table)
+                {
+                    var n = row.Element("ParameterName").Value;
+                    var v = row.Element("ParameterValue").Value;
+                    switch (n)
+                    {
+                        case "Click Type":
+                            clickType = v;
+                            break;
+                        case "X Adjustment":
+                            xOffset = v;
+                            break;
+                        case "Y Adjustment":
+                            yOffset = v;
+                            break;
+                    }
+                }
+                cmd.SetAttributeValue("v_ClickType", clickType);
+                cmd.SetAttributeValue("v_XOffset", xOffset);
+                cmd.SetAttributeValue("v_YOffset", yOffset);
+                cmd.Element("v_ActionParameters").Remove();
+            }
+
             return doc;
         }
 
