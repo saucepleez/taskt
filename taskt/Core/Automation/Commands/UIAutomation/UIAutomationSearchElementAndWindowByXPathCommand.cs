@@ -64,7 +64,10 @@ namespace taskt.Core.Automation.Commands
 
             var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
 
-            var elem = AutomationElementControls.SearchGUIElementByXPath(this, winElem, nameof(v_SearchXPath), nameof(v_ElementWaitTime), engine);
+            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_ElementWaitTime), engine);
+            var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
+
+            var elem = AutomationElementControls.SearchGUIElementByXPath(winElem, xpath, waitTime, engine);
             elem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 

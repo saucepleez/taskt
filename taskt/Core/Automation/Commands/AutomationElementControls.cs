@@ -573,7 +573,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="conditionTable"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
+        private static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
@@ -586,25 +586,20 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// Search GUI Element from specified parameter names
+        /// Search GUI Element from specified arguments
         /// </summary>
-        /// <param name="command"></param>
-        /// <param name="elementName"></param>
-        /// <param name="conditionName"></param>
-        /// <param name="waitTimeName"></param>
+        /// <param name="elem"></param>
+        /// <param name="conditionTable"></param>
+        /// <param name="waitTime"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement SearchGUIElement(AutomationElement elem, DataTable conditionTable, int waitTime, Engine.AutomationEngineInstance engine)
         {
-            var elem = command.CovnertToUserVariableAsAutomationElement(elementName, engine);
-            var table = command.ConvertToUserVariableAsDataTable(conditionName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
-
             var ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
                 new Func<(bool, object)>(() =>
                 {
-                    var e = SearchGUIElement(elem, table, engine);
+                    var e = SearchGUIElement(elem, conditionTable, engine);
                     if (e != null)
                     {
                         return (true, e);
@@ -623,6 +618,25 @@ namespace taskt.Core.Automation.Commands
             {
                 throw new Exception("AutomationElement Not Found");
             }
+        }
+
+        /// <summary>
+        /// Search GUI Element from specified parameter names
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="elementName"></param>
+        /// <param name="conditionName"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var elem = command.CovnertToUserVariableAsAutomationElement(elementName, engine);
+            var table = command.ConvertToUserVariableAsDataTable(conditionName, engine);
+            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+            return SearchGUIElement(elem, table, waitTime, engine);
         }
 
         /// <summary>
@@ -990,7 +1004,7 @@ namespace taskt.Core.Automation.Commands
 
         #region AutomationElement XPath search methods
 
-        private static AutomationElement SearchGUIElementByXPath(AutomationElement rootElement, string xpath, int waitTime, Engine.AutomationEngineInstance engine)
+        public static AutomationElement SearchGUIElementByXPath(AutomationElement rootElement, string xpath, int waitTime, Engine.AutomationEngineInstance engine)
         {
             object ret;
             ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
@@ -1021,13 +1035,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, AutomationElement elem, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
-        {
-            var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
-            var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+        //public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, AutomationElement elem, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
+        //    var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
 
-            return SearchGUIElementByXPath(elem, xpath, wait, engine);
-        }
+        //    return SearchGUIElementByXPath(elem, xpath, wait, engine);
+        //}
 
         public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
