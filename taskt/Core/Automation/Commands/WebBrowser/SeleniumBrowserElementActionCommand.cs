@@ -610,12 +610,46 @@ namespace taskt.Core.Automation.Commands
             //ElementsGridViewHelper = (DataGridView)ctrls.Where(t => (t.Name == "v_WebActionParameterTable")).FirstOrDefault();
             //ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
             //ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
-            ElementsGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_WebActionParameterTable")[0];
-            
+            //ElementsGridViewHelper = (DataGridView)ctrls.GetControlsByName("v_WebActionParameterTable")[0];
+            foreach(var ctrl in ctrls)
+            {
+                if (ctrl is FlowLayoutPanel flp)
+                {
+                    foreach(Control c in flp.Controls)
+                    {
+                        if (c.Name == nameof(v_WebActionParameterTable))
+                        {
+                            ElementsGridViewHelper = (DataGridView)c;
+                        }
+                    }
+                }
+                else if (ctrl.Name == nameof(v_WebActionParameterTable))
+                {
+                    ElementsGridViewHelper = (DataGridView)ctrl;
+                }
+            }
+
 
             //ElementActionDropdown = (ComboBox)ctrls.Where(t => (t.Name == "v_SeleniumElementAction")).FirstOrDefault();
             //ElementActionDropdown.SelectionChangeCommitted += seleniumAction_SelectionChangeCommitted;
-            ElementActionDropdown = (ComboBox)ctrls.GetControlsByName("v_SeleniumElementAction")[0];
+            //ElementActionDropdown = (ComboBox)ctrls.GetControlsByName("v_SeleniumElementAction")[0];
+            foreach (var ctrl in ctrls)
+            {
+                if (ctrl is FlowLayoutPanel flp)
+                {
+                    foreach (Control c in flp.Controls)
+                    {
+                        if (c.Name == nameof(v_SeleniumElementAction))
+                        {
+                            ElementActionDropdown = (ComboBox)c;
+                        }
+                    }
+                }
+                else if (ctrl.Name == nameof(v_SeleniumElementAction))
+                {
+                    ElementActionDropdown = (ComboBox)ctrl;
+                }
+            }
 
             //seleniumAction_SelectionChangeCommitted(null, null);
 

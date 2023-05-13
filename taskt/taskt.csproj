@@ -295,7 +295,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ApplicationUpdate.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementAndWindowCommand.cs" />
+    <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
     <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
@@ -303,7 +304,7 @@
     <Compile Include="Core\Automation\Commands\ClipboardControls.cs" />
     <Compile Include="Core\Automation\Commands\ColorControls.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Color\FormatColorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\ConvertColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorFormHexCommand.cs" />
     <Compile Include="Core\Automation\Commands\Color\CreateColorCommand.cs" />
     <Compile Include="Core\Automation\Commands\ConditionControls.cs" />
@@ -345,10 +346,10 @@
     <Compile Include="Core\Automation\Commands\Dictionary\ReplaceDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\DisplayTextControls.cs" />
     <Compile Include="Core\Automation\Commands\EMailControls.cs" />
-    <Compile Include="Core\Automation\Commands\File\FormatFilePathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\ExtractionFilePathCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\CopyFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\FolderPathControls.cs" />
-    <Compile Include="Core\Automation\Commands\Folder\FormatFolderPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\ExtractionFolderPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\CopyFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\GeneralPropertyControls.cs" />
@@ -476,7 +477,7 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationClickElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildrenElementsInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForElementExistByXPathCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromWindowByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementAndWindowByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromTableElementCommand.cs" />
@@ -732,11 +733,13 @@
     <Compile Include="Core\Automation\User32\User32Functionas.cs" />
     <Compile Include="Core\Script\Script.cs" />
     <Compile Include="Core\MyURLs.cs" />
+    <Compile Include="Core\Update\UpdateManifest.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomControls\AutomationCommand.cs" />
     <Compile Include="UI\CustomControls\CommandControls.cs" />
     <Compile Include="UI\CustomControls\CommandGroupControl.cs">
       <SubType>UserControl</SubType>

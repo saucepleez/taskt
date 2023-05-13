@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Search Element")]
     [Attributes.ClassAttributes.CommandSettings("Search Element From Element")]
     [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. Search for Descendants Elements.")]
@@ -31,6 +29,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
         public UIAutomationSearchElementFromElementCommand()
         {
             //this.CommandName = "UIAutomationGetElementFromElementCommand";
@@ -43,17 +45,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
-
-            AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
-            if (elem != null)
-            {
-                elem.StoreInUserVariable(engine, v_AutomationElementVariable);
-            }
-            else
-            {
-                throw new Exception("AutomationElement not found");
-            }
+            var elem = AutomationElementControls.SearchGUIElement(this, engine);
+            elem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 
         public override void AfterShown()

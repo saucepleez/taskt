@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -65,8 +64,9 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            (var body, var lblValueType, var lbl2ndValueType) = this.ControlsList.GetAllPropertyControl(nameof(v_ValueType));
-            ComboBox cmbValueType = (ComboBox)body;
+            //(var body, var lblValueType, var lbl2ndValueType) = this.ControlsList.GetAllPropertyControl(nameof(v_ValueType));
+            //ComboBox cmbValueType = (ComboBox)body;
+            (var cmbValueType, var lblValueType, var lbl2ndValueType) = ControlsList.GetAllPropertyControl<ComboBox>(nameof(v_ValueType));
 
             string searchedKey = cmbValueType.SelectedItem.ToString();
             Dictionary<string, string> dic = (Dictionary<string, string>)lblValueType.Tag;

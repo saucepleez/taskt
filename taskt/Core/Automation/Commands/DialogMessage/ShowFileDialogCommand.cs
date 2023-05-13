@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -102,28 +103,87 @@ namespace taskt.Core.Automation.Commands
                 directory = this.ConvertToUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
             }
 
-            object result = null;
+            Type tp = null;
             switch (this.GetUISelectionValue(nameof(v_DialogType), engine))
             {
                 case "open":
-                    engine.tasktEngineUI.Invoke(new Action(() =>
-                    {
-                        result = engine.tasktEngineUI.ShowOpenFileDialog(filter, index, directory);
-                    }
-                    ));
+                    //engine.tasktEngineUI.Invoke(new Action(() =>
+                    //{
+                    //    result = engine.tasktEngineUI.ShowOpenFileDialog(filter, index, directory);
+                    //}
+                    //));
+                    //engine.tasktEngineUI.Invoke(new Action(() =>
+                    //{
+                    //    using (var dialog = new OpenFileDialog())
+                    //    {
+                    //        dialog.Filter = filter;
+                    //        dialog.FilterIndex = index;
+                    //        dialog.InitialDirectory = directory;
+                    //        if (dialog.ShowDialog() == DialogResult.OK)
+                    //        {
+                    //            result = dialog.FileName;
+                    //        }
+                    //        else
+                    //        {
+                    //            result = "";
+                    //        }
+                    //    }
+                    //}));
+                    tp = typeof(OpenFileDialog);
                     break;
                 case "save":
-                    engine.tasktEngineUI.Invoke(new Action(() =>
-                    {
-                        result = engine.tasktEngineUI.ShowSaveFileDialog(filter, index, directory);
-                    }
-                    ));
+                    //engine.tasktEngineUI.Invoke(new Action(() =>
+                    //{
+                    //    result = engine.tasktEngineUI.ShowSaveFileDialog(filter, index, directory);
+                    //}
+                    //));
+                    //engine.tasktEngineUI.Invoke(new Action(() =>
+                    //{
+                    //    using (var dialog = new SaveFileDialog())
+                    //    {
+                    //        dialog.Filter = filter;
+                    //        dialog.FilterIndex = index;
+                    //        dialog.InitialDirectory = directory;
+                    //        if (dialog.ShowDialog() == DialogResult.OK)
+                    //        {
+                    //            result = dialog.FileName;
+                    //        }
+                    //        else
+                    //        {
+                    //            result = "";
+                    //        }
+                    //    }
+                    //}));
+                    tp = typeof(SaveFileDialog);
                     break;
             }
-            if (result != null)
+
+            engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                result.ToString().StoreInUserVariable(engine, v_applyToVariableName);
-            }
+                using (var dialog = (FileDialog)Activator.CreateInstance(tp))
+                {
+                    dialog.Filter = filter;
+                    dialog.FilterIndex = index;
+                    dialog.InitialDirectory = directory;
+
+                    string result = "";
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        result = dialog.FileName;
+                    }
+                    else
+                    {
+                        result = "";
+                    }
+
+                    //result = result.Replace("\\", "\\\\");
+
+                    result.StoreInUserVariable(engine, v_applyToVariableName);
+                    //DBG
+                    //Console.WriteLine("####" + result);
+                    //Console.WriteLine("####" + v_applyToVariableName.GetRawVariable(engine).VariableValue.ToString());
+                }
+            }));
         }
 
         private static bool checkFileterProperty(string filter)

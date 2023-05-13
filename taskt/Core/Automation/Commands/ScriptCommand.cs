@@ -569,11 +569,11 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region Render, Refresh, etc
-        public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
-        {
-            RenderedControls = new List<Control>();
-            return RenderedControls;
-        }
+        //public virtual List<Control> Render(UI.Forms.frmCommandEditor editor, object sender)
+        //{
+        //    RenderedControls = new List<Control>();
+        //    return RenderedControls;
+        //}
 
         public virtual List<Control> Render(UI.Forms.frmCommandEditor editor)
         {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Automation;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -9,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Search Element")]
     [Attributes.ClassAttributes.CommandSettings("Check Element Exist")]
     [Attributes.ClassAttributes.Description("This command allows you to to check AutomationElement existence.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check AutomationElement existence")]
@@ -30,6 +29,12 @@ namespace taskt.Core.Automation.Commands
         [Remarks("When the Element exists, Result value is **True**")]
         public string v_Result { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        public string v_WaitTime { get; set; }
+
         public UIAutomationCheckElementExistCommand()
         {
             //this.CommandName = "UIAutomationCheckElementExistCommand";
@@ -42,11 +47,15 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
-
-            AutomationElement elem = AutomationElementControls.SearchGUIElement(rootElement, v_SearchParameters, engine);
-
-            (elem != null).StoreInUserVariable(engine, v_Result);
+            try
+            {
+                AutomationElementControls.SearchGUIElement(this, engine);
+                true.StoreInUserVariable(engine, v_Result);
+            }
+            catch
+            {
+                false.StoreInUserVariable(engine, v_Result);
+            }
         }
 
         public override void AfterShown()

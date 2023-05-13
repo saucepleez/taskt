@@ -49,11 +49,11 @@ namespace taskt.Core.Automation.Commands
                 v_DataTableName = this.v_DataTableName,
                 v_ColumnType = this.v_ColumnType,
                 v_DataColumnIndex = this.v_DataColumnIndex,
-                v_OutputVariableName = ExtensionMethods.GetInnerVariableName(0, engine)
+                v_OutputVariableName = VariableNameControls.GetInnerVariableName(0, engine)
             };
             listCommand.RunCommand(engine);
 
-            List<string> myList = (List<string>)ExtensionMethods.GetInnerVariable(0, engine).VariableValue;
+            List<string> myList = (List<string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
 
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(myList);
             json.StoreInUserVariable(engine, v_OutputVariableName);

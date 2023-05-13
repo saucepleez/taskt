@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.NetworkInformation;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -51,9 +52,23 @@ namespace taskt.Core.Automation.Commands
             string hstname = v_HostName.ConvertToUserVariable(engine);
 
             PingReply pingresult = ping.Send(hstname);
-            var pingReply = Common.ConvertObjectToJson(pingresult);
+            var pingReply = ConvertObjectToJson(pingresult);
 
             pingReply.StoreInUserVariable(engine, v_userVariableName);
+        }
+
+        private static string ConvertObjectToJson(object obj)
+        {
+            //set json settings
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Error = (serializer, err) =>
+            {
+                err.ErrorContext.Handled = true;
+            };
+
+            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+
+            return JsonConvert.SerializeObject(obj, settings);
         }
     }
 }

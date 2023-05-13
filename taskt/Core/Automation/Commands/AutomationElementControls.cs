@@ -16,6 +16,29 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class AutomationElementControls
     {
+        #region fields
+
+        /// <summary>
+        /// AutomationElement type for Reflection
+        /// </summary>
+        private static Type TypeOfAutomationElement = typeof(AutomationElement);
+
+        /// <summary>
+        /// ControlType type for Reflection
+        /// </summary>
+        private static Type TypeOfControlType = typeof(ControlType);
+
+        private static string[] TargetControlTypes = new string[]
+        {
+            "AcceleratorKey", "AccessKey", "AutomationId", "ClassName",
+            "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
+            "IsControlElement", "IsEnabled", "IsKeyboardFocusable", "IsOffscreen",
+            "IsPassword", "IsRequiredForForm", "ItemStatus", "ItemType",
+            "LocalizedControlType", "Name", "NativeWindowHandle", "ProcessID",
+        };
+        #endregion
+
+        #region VirtualProperties
         /// <summary>
         /// input AutomationElement property
         /// </summary>
@@ -102,8 +125,101 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewInitMethod(nameof(AutomationElementControls) + "+" + nameof(CreateEmptyParamters))]
         public static string v_SearchParameters { get; }
 
+        /// <summary>
+        /// AutomationElement wait time
+        /// </summary>
+        [PropertyDescription("Wait Time for the AutomationElement to Exist (sec)")]
+        [InputSpecification("Wait Time", true)]
+        [Remarks("Specify how long to Wait before an Error will occur because the AutomationElement is Not Found.")]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "10")]
+        [PropertyFirstValue("10")]
+        public static string v_WaitTime { get; }
+        #endregion
 
-        public static AutomationElement GetFromWindowName(string windowName, Automation.Engine.AutomationEngineInstance engine)
+        #region variable methods
+
+        /// <summary>
+        /// get AutomationElement from Specified variable name
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static AutomationElement GetAutomationElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
+        {
+            Script.ScriptVariable v = variableName.GetRawVariable(engine);
+            if (v.VariableValue is AutomationElement e)
+            {
+                return e;
+            }
+            else
+            {
+                throw new Exception("Variable " + variableName + " is not AutomationElement");
+            }
+        }
+
+        /// <summary>
+        /// get AutomationElement from specified parameter name
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement CovnertToUserVariableAsAutomationElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(parameterName);
+            var value = prop?.GetValue(command)?.ToString() ?? "";
+            return GetAutomationElementVariable(value, engine);
+        }
+
+        /// <summary>
+        /// convert variable to string as XPath
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ConvertToUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
+        {
+            var p = value.ConvertToUserVariable(engine);
+            if (!p.StartsWith("."))
+            {
+                p = "." + p;
+            }
+            return p;
+        }
+
+        /// <summary>
+        /// convert variable to string as XPath
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ConvertToUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(parameterName);
+            var value = prop?.GetValue(command)?.ToString() ?? "";
+            return ConvertToUserVariableAsXPath(value, engine);
+        }
+
+        /// <summary>
+        /// store AutomationElement
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="sender"></param>
+        /// <param name="targetVariable"></param>
+        public static void StoreInUserVariable(this AutomationElement value, Engine.AutomationEngineInstance sender, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+        }
+        #endregion
+
+
+        public static AutomationElement GetFromWindowName(string windowName, Engine.AutomationEngineInstance engine)
         {
             var windowSearchConditions = new AndCondition(
                     new PropertyCondition(AutomationElement.NameProperty, windowName),
@@ -158,30 +274,13 @@ namespace taskt.Core.Automation.Commands
         public static void CreateEmptyParamters(DataTable table)
         {
             table.Rows.Clear();
-            table.Rows.Add(false, "AcceleratorKey", "");
-            table.Rows.Add(false, "AccessKey", "");
-            table.Rows.Add(false, "AutomationId", "");
-            table.Rows.Add(false, "ControlType", "");
-            table.Rows.Add(false, "ClassName", "");
-            table.Rows.Add(false, "FrameworkId", "");
-            table.Rows.Add(false, "HasKeyboardFocus", "");
-            table.Rows.Add(false, "HelpText", "");
-            table.Rows.Add(false, "IsContentElement", "");
-            table.Rows.Add(false, "IsControlElement", "");
-            table.Rows.Add(false, "IsEnabled", "");
-            table.Rows.Add(false, "IsKeyboardFocusable", "");
-            table.Rows.Add(false, "IsOffscreen", "");
-            table.Rows.Add(false, "IsPassword", "");
-            table.Rows.Add(false, "IsRequiredForForm", "");
-            table.Rows.Add(false, "ItemStatus", "");
-            table.Rows.Add(false, "ItemType", "");
-            table.Rows.Add(false, "LocalizedControlType", "");
-            table.Rows.Add(false, "Name", "");
-            table.Rows.Add(false, "NativeWindowHandle", "");
-            table.Rows.Add(false, "ProcessID", "");
+            foreach(var n in TargetControlTypes)
+            {
+                table.Rows.Add(false, n, "");
+            }
         }
 
-        private static void parseInspectToolResult(string result, DataTable table, System.Windows.Forms.ComboBox windowNames = null)
+        private static void parseInspectToolResult(string result, DataTable table, ComboBox windowNames = null)
         {
             string[] results = result.Split(new[] { "\r\n" }, StringSplitOptions.None);
 
@@ -258,7 +357,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void InspectToolParserClicked(DataTable table, System.Windows.Forms.ComboBox windowNames = null)
+        public static void InspectToolParserClicked(DataTable table, ComboBox windowNames = null)
         {
             using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
             {
@@ -274,7 +373,8 @@ namespace taskt.Core.Automation.Commands
             var spt = value.Split(' ');
             return spt[0].Replace("UIA_", "").Replace("ControlTypeId", "");
         }
-        private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, System.Windows.Forms.ComboBox cmb)
+
+        private static void setComboBoxWindowNameFromInspectAncestors(List<string> ancestors, ComboBox cmb)
         {
             if (ancestors.Count > 0)
             {
@@ -316,331 +416,64 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static ControlType GetControlType(string controlTypeName)
-        {
-            switch (controlTypeName.ToLower())
-            {
-                case "button":
-                    return ControlType.Button;
-                case "calender":
-                    return ControlType.Calendar;
-                case "checkbox":
-                    return ControlType.CheckBox;
-                case "combobox":
-                    return ControlType.ComboBox;
-                case "custom":
-                    return ControlType.Custom;
-                case "datagrid":
-                    return ControlType.DataGrid;
-                case "dataitem":
-                    return ControlType.DataItem;
-                case "document":
-                    return ControlType.Document;
-                case "edit":
-                    return ControlType.Edit;
-                case "group":
-                    return ControlType.Group;
-                case "header":
-                    return ControlType.Header;
-                case "headeritem":
-                    return ControlType.HeaderItem;
-                case "hyperlink":
-                    return ControlType.Hyperlink;
-                case "image":
-                    return ControlType.Image;
-                case "list":
-                    return ControlType.List;
-                case "listitem":
-                    return ControlType.ListItem;
-                case "menu":
-                    return ControlType.Menu;
-                case "menubar":
-                    return ControlType.MenuBar;
-                case "menuitem":
-                    return ControlType.MenuItem;
-                case "pane":
-                    return ControlType.Pane;
-                case "progressbar":
-                    return ControlType.ProgressBar;
-                case "radiobutton":
-                    return ControlType.RadioButton;
-                case "scrollbar":
-                    return ControlType.ScrollBar;
-                case "separator":
-                    return ControlType.Separator;
-                case "slider":
-                    return ControlType.Slider;
-                case "spinner":
-                    return ControlType.Spinner;
-                case "splitbutton":
-                    return ControlType.SplitButton;
-                case "statusbar":
-                    return ControlType.StatusBar;
-                case "tab":
-                    return ControlType.Tab;
-                case "tabitem":
-                    return ControlType.TabItem;
-                case "table":
-                    return ControlType.Table;
-                case "text":
-                    return ControlType.Text;
-                case "thumb":
-                    return ControlType.Thumb;
-                case "titlebar":
-                    return ControlType.TitleBar;
-                case "toolbar":
-                    return ControlType.ToolBar;
-                case "tooltip":
-                    return ControlType.ToolTip;
-                case "tree":
-                    return ControlType.Tree;
-                case "treeitem":
-                    return ControlType.TreeItem;
-                case "window":
-                    return ControlType.Window;
-                default:
-                    throw new Exception("Strange ControlType '" + controlTypeName + "'");
-            }
-        }
-
         public static string GetControlTypeText(ControlType control)
         {
-            if (control == ControlType.Button)
-            {
-                return "Button";
-            }
-            else if (control == ControlType.Calendar)
-            {
-                return "Calender";
-            }
-            else if (control == ControlType.CheckBox)
-            {
-                return "CheckBox";
-            }
-            else if (control == ControlType.ComboBox)
-            {
-                return "ComboBox";
-            }
-            else if (control == ControlType.Custom)
-            {
-                return "Custom";
-            }
-            else if (control == ControlType.DataGrid)
-            {
-                return "DataGrid";
-            }
-            else if (control == ControlType.DataItem)
-            {
-                return "DataItem";
-            }
-            else if (control == ControlType.Document)
-            {
-                return "Document";
-            }
-            else if (control == ControlType.Edit)
-            {
-                return "Edit";
-            }
-            else if (control == ControlType.Group)
-            {
-                return "Group";
-            }
-            else if (control == ControlType.Header)
-            {
-                return "Header";
-            }
-            else if (control == ControlType.HeaderItem)
-            {
-                return "HeaderItem";
-            }
-            else if (control == ControlType.Hyperlink)
-            {
-                return "Hyperlink";
-            }
-            else if (control == ControlType.Image)
-            {
-                return "Image";
-            }
-            else if (control == ControlType.List)
-            {
-                return "List";
-            }
-            else if (control == ControlType.ListItem)
-            {
-                return "ListItem";
-            }
-            else if (control == ControlType.Menu)
-            {
-                return "Menu";
-            }
-            else if (control == ControlType.MenuBar)
-            {
-                return "MenuBar";
-            }
-            else if (control == ControlType.MenuItem)
-            {
-                return "MenuItem";
-            }
-            else if (control == ControlType.Pane)
-            {
-                return "Pane";
-            }
-            else if (control == ControlType.ProgressBar)
-            {
-                return "ProgressBar";
-            }
-            else if (control == ControlType.RadioButton)
-            {
-                return "RadioButton";
-            }
-            else if (control == ControlType.ScrollBar)
-            {
-                return "ScrollBar";
-            }
-            else if (control == ControlType.Separator)
-            {
-                return "Separator";
-            }
-            else if (control == ControlType.Slider)
-            {
-                return "Slider";
-            }
-            else if (control == ControlType.Spinner)
-            {
-                return "Spinner";
-            }
-            else if (control == ControlType.SplitButton)
-            {
-                return "SplitButton";
-            }
-            else if (control == ControlType.StatusBar)
-            {
-                return "StatusBar";
-            }
-            else if (control == ControlType.Tab)
-            {
-                return "Tab";
-            }
-            else if (control == ControlType.TabItem)
-            {
-                return "TabItem";
-            }
-            else if (control == ControlType.Table)
-            {
-                return "Table";
-            }
-            else if (control == ControlType.Text)
-            {
-                return "Text";
-            }
-            else if (control == ControlType.Thumb)
-            {
-                return "Thumb";
-            }
-            else if (control == ControlType.TitleBar)
-            {
-                return "TitleBar";
-            }
-            else if (control == ControlType.ToolBar)
-            {
-                return "ToolBar";
-            }
-            else if (control == ControlType.ToolTip)
-            {
-                return "ToolTip";
-            }
-            else if (control == ControlType.Tree)
-            {
-                return "Tree";
-            }
-            else if (control == ControlType.TreeItem)
-            {
-                return "TreeItem";
-            }
-            else if (control == ControlType.Window)
-            {
-                return "Window";
-            }
-            else
-            {
-                throw new Exception("Strange ControlType");
-            }
+            var fullName = control.ProgrammaticName;
+            return fullName.Substring(fullName.LastIndexOf('.') + 1);
         }
 
+        #region GUI Search by conditions
+
+        /// <summary>
+        /// create AutomationElement search condition
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyValue"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
-            string propName = propertyName + "Property";
+            var conditionProp = (AutomationProperty)TypeOfAutomationElement.GetField(propertyName + "Property")?.GetValue(null) ??
+                                    throw new Exception("Property '" + propertyName + "' does not Exists");
 
             switch (propertyName)
             {
-                case "AcceleratorKey":
-                    return new PropertyCondition(AutomationElement.AcceleratorKeyProperty, propertyValue);
-                case "AccessKey":
-                    return new PropertyCondition(AutomationElement.AccessKeyProperty, propertyValue);
-                case "AutomationId":
-                    return new PropertyCondition(AutomationElement.AutomationIdProperty, propertyValue);
-                case "ClassName":
-                    return new PropertyCondition(AutomationElement.ClassNameProperty, propertyValue);
                 case "ControlType":
-                    return new PropertyCondition(AutomationElement.ControlTypeProperty, GetControlType((string)propertyValue));
-                case "FrameworkId":
-                    return new PropertyCondition(AutomationElement.FrameworkIdProperty, propertyValue);
-                case "HasKeyboardFocus":
-                    return new PropertyCondition(AutomationElement.HasKeyboardFocusProperty, propertyValue);
-                case "HelpText":
-                    return new PropertyCondition(AutomationElement.HelpTextProperty, propertyValue);
-                case "IsContentElement":
-                    return new PropertyCondition(AutomationElement.IsContentElementProperty, propertyValue);
-                case "IsControlElement":
-                    return new PropertyCondition(AutomationElement.IsControlElementProperty, propertyValue);
-                case "IsEnabled":
-                    return new PropertyCondition(AutomationElement.IsEnabledProperty, propertyValue);
-                case "IsKeyboardFocusable":
-                    return new PropertyCondition(AutomationElement.IsKeyboardFocusableProperty, propertyValue);
-                case "IsOffscreen":
-                    return new PropertyCondition(AutomationElement.IsOffscreenProperty, propertyValue);
-                case "IsPassword":
-                    return new PropertyCondition(AutomationElement.IsPasswordProperty, propertyValue);
-                case "IsRequiredForForm":
-                    return new PropertyCondition(AutomationElement.IsRequiredForFormProperty, propertyValue);
-                case "ItemStatus":
-                    return new PropertyCondition(AutomationElement.ItemStatusProperty, propertyValue);
-                case "ItemType":
-                    return new PropertyCondition(AutomationElement.ItemTypeProperty, propertyValue);
-                case "LocalizedControlType":
-                    return new PropertyCondition(AutomationElement.LocalizedControlTypeProperty, propertyValue);
-                case "Name":
-                    return new PropertyCondition(AutomationElement.NameProperty, propertyValue);
-                case "NativeWindowHandle":
-                    return new PropertyCondition(AutomationElement.NativeWindowHandleProperty, propertyValue);
-                case "ProcessID":
-                    return new PropertyCondition(AutomationElement.ProcessIdProperty, propertyValue);
+                    var controlValue = TypeOfControlType.GetField(propertyValue.ToString())?.GetValue(null) ?? throw new Exception("ControlType '" + propertyValue.ToString() + "' does not Exists");
+                    return new PropertyCondition(conditionProp, controlValue);
+
                 default:
-                    throw new NotImplementedException("Property Type '" + propertyName + "' not implemented");
+                    return new PropertyCondition(conditionProp, propertyValue);
             }
         }
 
-        private static Condition CreateSearchCondition(DataTable table, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
-        {  
-            //create search params
-            var searchParams = from rw in table.AsEnumerable()
-                                where rw.Field<string>("Enabled") == "True"
-                                select rw;
-
-            if (searchParams.Count() == 0)
-            {
-                return null;
-            }
-
+        /// <summary>
+        /// create AutomationElement search condition from DataTable
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static Condition CreateSearchCondition(DataTable table, Engine.AutomationEngineInstance engine)
+        {
             //create and populate condition list
             var conditionList = new List<Condition>();
-            foreach (var param in searchParams)
+            foreach(DataRow row in table.Rows)
             {
-                var parameterName = (string)param["ParameterName"];
-                var parameterValue = (string)param["ParameterValue"];
+                var isEnabled = row.Field<string>("Enabled") ?? "false";
+                if (bool.TryParse(isEnabled, out bool res))
+                {
+                    if (!res)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
 
-                parameterName = parameterName.ConvertToUserVariable(engine);
-                parameterValue = parameterValue.ConvertToUserVariable(engine);
+                var parameterName = row.Field<string>("ParameterName") ?? "";
+                var parameterValue = row.Field<string>("ParameterValue") ?? ""; ;
 
                 PropertyCondition propCondition;
                 if (bool.TryParse(parameterValue, out bool bValue))
@@ -654,64 +487,54 @@ namespace taskt.Core.Automation.Commands
                 conditionList.Add(propCondition);
             }
 
-            //concatenate or take first condition
-            Condition searchConditions;
-            if (conditionList.Count > 1)
+            switch (conditionList.Count)
             {
-                searchConditions = new AndCondition(conditionList.ToArray());
-
+                case 0:
+                    return null;    // no conditions
+                    
+                case 1:
+                    return conditionList[0];    // 1 condition
+                    
+                default:
+                    return new AndCondition(conditionList.ToArray());   // 2+ conditions
             }
-            else
-            {
-                searchConditions = conditionList[0];
-            }
-
-            return searchConditions;
         }
 
-        public static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Condition searchConditions = CreateSearchCondition(conditionTable, engine);
-
-            var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions);
-            if (element == null)
-            {
-                // more deep search
-                element = rootElement.FindFirst(TreeScope.Subtree, searchConditions);
-                if (element == null)
-                {
-                    element = DeepSearchGUIElement(rootElement, searchConditions);
-                }
-            }
-            // if element not found, don't throw exception here
-            return element;
-        }
-
+        /// <summary>
+        /// Deep Search GUI Element by Specified Condition
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="searchCondition"></param>
+        /// <returns></returns>
         private static AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
 
             // format conditions
             PropertyCondition[] conditions;
-            if (searchCondition is AndCondition)
+            if (searchCondition is AndCondition andConds)
             {
-                Condition[] conds = ((AndCondition)searchCondition).GetConditions();
-                conditions = new PropertyCondition[conds.Length];
-                for (int i = 0; i < conds.Length; i++)
-                {
-                    conditions[i] = (PropertyCondition)conds[i];
-                }
+                conditions = andConds.GetConditions().Cast<PropertyCondition>().ToArray();
             }
             else
             {
-                conditions = new PropertyCondition[1];
-                conditions[0] = (PropertyCondition)searchCondition;
+                conditions = new PropertyCondition[1]
+                {
+                    (PropertyCondition)searchCondition
+                };
             }
 
             var ret = WalkerSearch(rootElement, conditions, walker);
             return ret;
         }
 
+        /// <summary>
+        /// Search GUI Element used by TreeWalker
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="searchConditions"></param>
+        /// <param name="walker"></param>
+        /// <returns></returns>
         private static AutomationElement WalkerSearch(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
@@ -719,15 +542,7 @@ namespace taskt.Core.Automation.Commands
 
             while (node != null)
             {
-                bool result = true;
-                foreach (PropertyCondition condition in searchConditions)
-                {
-                    if (node.GetCurrentPropertyValue(condition.Property) != condition.Value)
-                    {
-                        result = false;
-                        break;
-                    }
-                }
+                var result = searchConditions.All(c => node.GetCurrentPropertyValue(c.Property) == c.Value);
                 if (result)
                 {
                     ret = node;
@@ -751,7 +566,142 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
-        public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, taskt.Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// Search GUI Element by specified conditions DataTable
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="conditionTable"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
+        {
+            Condition searchConditions = CreateSearchCondition(conditionTable, engine);
+
+            var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
+                            rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
+                            DeepSearchGUIElement(rootElement, searchConditions);
+
+            // if element not found, don't throw exception here
+            return element;
+        }
+
+        /// <summary>
+        /// Search GUI Element from specified arguments
+        /// </summary>
+        /// <param name="elem"></param>
+        /// <param name="conditionTable"></param>
+        /// <param name="waitTime"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static AutomationElement SearchGUIElement(AutomationElement elem, DataTable conditionTable, int waitTime, Engine.AutomationEngineInstance engine)
+        {
+            var ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
+                new Func<(bool, object)>(() =>
+                {
+                    var e = SearchGUIElement(elem, conditionTable, engine);
+                    if (e != null)
+                    {
+                        return (true, e);
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }), engine
+            );
+            if (ret is AutomationElement foundElem)
+            {
+                return foundElem;
+            }
+            else
+            {
+                throw new Exception("AutomationElement Not Found");
+            }
+        }
+
+        /// <summary>
+        /// Search GUI Element from specified parameter names
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="elementName"></param>
+        /// <param name="conditionName"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var elem = command.CovnertToUserVariableAsAutomationElement(elementName, engine);
+            var table = command.ConvertToUserVariableAsDataTable(conditionName, engine);
+            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+            return SearchGUIElement(elem, table, waitTime, engine);
+        }
+
+        /// <summary>
+        /// Search GUI Element. this method use VirtualProperty to get parameter names
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement SearchGUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        {
+            var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
+            var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_SearchParameters)))?.Name ?? "";
+            var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime))).Name ?? "";
+
+            return SearchGUIElement(command, elementName, conditionName, waitTimeName, engine);
+        }
+
+        #endregion
+
+        #region Winodow Search Methods
+
+        /// <summary>
+        /// get window AutomationElement. this method use PropertyVirtualProperty
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="resultName"></param>
+        /// <returns></returns>
+        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, Engine.AutomationEngineInstance engine, string resultName = "")
+        {
+            AutomationElement ret = null;
+
+            WindowNameControls.WindowAction(command, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
+                {
+                    ret = AutomationElement.FromHandle(wins[0].Item1);
+
+                    if (!string.IsNullOrEmpty(resultName))
+                    {
+                        var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+                        ret.StoreInUserVariable(engine, resultValue);
+                    }
+                })
+            );
+
+            return ret;
+        }
+
+        /// <summary>
+        /// get window AutomationElement
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        {
+            var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_OutputAutomationElementName)))?.Name ?? "";
+
+            return GetWindowAutomationElement(command, engine, resultName);
+        }
+        #endregion
+
+        #region search element node
+
+        public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
@@ -789,6 +739,12 @@ namespace taskt.Core.Automation.Commands
             return elems;
         }
 
+        /// <summary>
+        /// get parent element
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static AutomationElement GetParentElement(AutomationElement targetElement)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
@@ -804,6 +760,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get window name from AutomationElement
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <returns></returns>
         public static string GetWindowName(AutomationElement targetElement)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
@@ -813,13 +774,68 @@ namespace taskt.Core.Automation.Commands
                 return targetElement.Current.Name;
             }
 
-            var parent = walker.GetParent(targetElement);
-            while(parent.Current.ControlType != ControlType.Window)
+            try
             {
+                var parent = walker.GetParent(targetElement);
+                while (parent.Current.ControlType != ControlType.Window)
+                {
+                    parent = walker.GetParent(parent);
+                }
+                return parent.Current.Name;
+            }
+            catch
+            {
+                // try other method
+                var windowNames = WindowNameControls.GetAllWindowTitles();
+                if ((targetElement.Current.NativeWindowHandle != 0) && (windowNames.Contains(targetElement.Current.Name)))
+                {
+                    return targetElement.Current.Name;
+                }
+
+                try
+                {
+                    var parent = walker.GetParent(targetElement);
+                    while((parent.Current.NativeWindowHandle == 0) || (!windowNames.Contains(parent.Current.Name)))
+                    {
+                        parent = walker.GetParent(parent);
+                    }
+                    return parent.Current.Name;
+                }
+                catch
+                {
+                    throw new Exception("Fail Get Window Name from AutomationElement");
+                }
+            }
+        }
+
+        /// <summary>
+        /// get window handle from AutomationElement
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <returns></returns>
+        public static int GetWindowHandle(AutomationElement targetElement)
+        {
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            var hnd = targetElement.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
+            if(hnd != AutomationElement.NotSupported)
+            {
+                return (int)hnd;
+            }
+
+            var parent = walker.GetParent(targetElement);
+            while (true)
+            {
+                hnd = parent.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
+                if (hnd != AutomationElement.NotSupported)
+                {
+                    return (int)hnd;
+                }
                 parent = walker.GetParent(parent);
             }
-            return parent.Current.Name;
         }
+
+        #endregion
 
         public static string GetTextValue(AutomationElement targetElement)
         {
@@ -920,53 +936,22 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static XElement GetElementXml(string windowName, out Dictionary<string, AutomationElement> elemsDic, Automation.Engine.AutomationEngineInstance engine)
-        {
-            AutomationElement window = GetFromWindowName(windowName, engine);
-            var ret = GetElementXml(window, out elemsDic);
-            return ret;
-        }
+        #region create XElement methods
 
-        //public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
-        //{
-        //    AutomationElement window = GetWindowElement(targetElement);
-
-        //    XElement root = CreateXmlElement(window);
-
-        //    elemsDic = new Dictionary<string, AutomationElement>();
-        //    elemsDic.Add(window.GetHashCode().ToString(), window);
-
-        //    TreeWalker walker = TreeWalker.RawViewWalker;
-
-        //    GetChildNodeFromElement(root, window, elemsDic, walker);
-
-        //    return root;
-        //}
-        public static XElement GetElementXml(AutomationElement targetElement, out Dictionary<string, AutomationElement> elemsDic)
+        public static (XElement, Dictionary<string, AutomationElement>) GetElementXml(AutomationElement targetElement)
         {
             XElement root = CreateXmlElement(targetElement);
 
-            elemsDic = new Dictionary<string, AutomationElement>();
-            elemsDic.Add(targetElement.GetHashCode().ToString(), targetElement);
-
-            TreeWalker walker = TreeWalker.RawViewWalker;
-
-            GetChildNodeFromElement(root, targetElement, elemsDic, walker);
-
-            return root;
-        }
-
-        private static AutomationElement GetWindowElement(AutomationElement targetElement)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
-
-            AutomationElement node = targetElement;
-            while(GetControlTypeText(node.Current.ControlType) != "Window")
+            var dic = new Dictionary<string, AutomationElement>()
             {
-                node = walker.GetParent(node);
-            }
+                { root.GetHashCode().ToString(), targetElement }
+            };
 
-            return node;
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            GetChildNodeFromElement(root, targetElement, dic, walker);
+
+            return (root, dic);
         }
 
         private static XElement GetChildNodeFromElement(XElement rootNode, AutomationElement rootElement, Dictionary<string, AutomationElement> elemsDic, TreeWalker walker)
@@ -1003,41 +988,82 @@ namespace taskt.Core.Automation.Commands
         private static XElement CreateXmlElement(AutomationElement targetElement, string hash = "")
         {
             XElement node = new XElement(GetControlTypeText(targetElement.Current.ControlType));
-            node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
-            node.SetAttributeValue("AccessKey", targetElement.Current.AccessKey);
-            node.SetAttributeValue("AutomationId", targetElement.Current.AutomationId);
-            node.SetAttributeValue("ClassName", targetElement.Current.ClassName);
-            node.SetAttributeValue("FrameworkId", targetElement.Current.FrameworkId);
-            node.SetAttributeValue("HasKeyboardFocus", targetElement.Current.HasKeyboardFocus);
-            node.SetAttributeValue("HelpText", targetElement.Current.HelpText);
-            node.SetAttributeValue("IsContentElement", targetElement.Current.IsContentElement);
-            node.SetAttributeValue("IsControlElement", targetElement.Current.IsControlElement);
-            node.SetAttributeValue("IsEnabled", targetElement.Current.IsEnabled);
-            node.SetAttributeValue("IsKeyboardFocusable", targetElement.Current.IsKeyboardFocusable);
-            node.SetAttributeValue("IsOffscreen", targetElement.Current.IsOffscreen);
-            node.SetAttributeValue("IsPassword", targetElement.Current.IsPassword);
-            node.SetAttributeValue("IsRequiredForForm", targetElement.Current.IsRequiredForForm);
-            node.SetAttributeValue("ItemStatus", targetElement.Current.ItemStatus);
-            node.SetAttributeValue("ItemType", targetElement.Current.ItemType);
-            node.SetAttributeValue("LocalizedControlType", targetElement.Current.LocalizedControlType);
-            node.SetAttributeValue("Name", targetElement.Current.Name);
-            node.SetAttributeValue("NativeWindowHandle", targetElement.Current.NativeWindowHandle);
-            node.SetAttributeValue("ProcessID", targetElement.Current.ProcessId);
 
-            if (hash == "") 
+            var tp = targetElement.Current.GetType();
+
+            foreach(var t in TargetControlTypes)
             {
-                node.SetAttributeValue("Hash", targetElement.GetHashCode());
+                node.SetAttributeValue(t, tp.GetProperty(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
+            }
+
+            node.SetAttributeValue("Hash", (hash == "") ? targetElement.GetHashCode().ToString() : hash);
+            
+            return node;
+        }
+        #endregion
+
+        #region AutomationElement XPath search methods
+
+        public static AutomationElement SearchGUIElementByXPath(AutomationElement rootElement, string xpath, int waitTime, Engine.AutomationEngineInstance engine)
+        {
+            object ret;
+            ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
+                new Func<(bool, object)>(() =>
+                {
+                    (var xml, var dic) = GetElementXml(rootElement);
+
+                    var e = xml.XPathSelectElement(xpath) ?? null;
+                    
+                    if (e != null)
+                    {
+                        return (true, dic[e.Attribute("Hash").Value]);
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }), engine
+            );
+
+            if (ret is AutomationElement elem)
+            {
+                return elem;
             }
             else
             {
-                node.SetAttributeValue("Hash", hash);
+                throw new Exception("AutomationElement not Found");
             }
-            
-
-            return node;
         }
 
-        public static System.Windows.Forms.TreeNode GetElementTreeNode(string windowName, Automation.Engine.AutomationEngineInstance engine, out XElement xml)
+        //public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, AutomationElement elem, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
+        //    var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+        //    return SearchGUIElementByXPath(elem, xpath, wait, engine);
+        //}
+
+        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var element = command.CovnertToUserVariableAsAutomationElement(rootElementName, engine);
+            var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
+            var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+            return SearchGUIElementByXPath(element, xpath, wait, engine);
+        }
+
+        public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        {
+            var elemName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
+            var xpathName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_XPath)))?.Name ?? "";
+            var waitTimeName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime)))?.Name ?? "";
+
+            return SearchGUIElementByXPath(command, elemName, xpathName, waitTimeName, engine);
+        }
+
+        #endregion
+
+        public static TreeNode GetElementTreeNode(string windowName, Engine.AutomationEngineInstance engine, out XElement xml)
         {
             AutomationElement root = GetFromWindowName(windowName, engine);
 
@@ -1051,7 +1077,7 @@ namespace taskt.Core.Automation.Commands
             return tree;
         }
 
-        private static void GetChildElementTreeNode(System.Windows.Forms.TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker)
+        private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
             while(node != null)
@@ -1070,10 +1096,11 @@ namespace taskt.Core.Automation.Commands
                 node = walker.GetNextSibling(node);
             }
         }
+        
 
-        private static System.Windows.Forms.TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
+        private static TreeNode CreateTreeNodeFromAutomationElement(AutomationElement element)
         {
-            System.Windows.Forms.TreeNode node = new System.Windows.Forms.TreeNode();
+            TreeNode node = new TreeNode();
             node.Text = "\"" + element.Current.Name + "\" " + element.Current.LocalizedControlType;
             node.Tag = element;
             return node;
@@ -1237,7 +1264,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="e"></param>
         public static void lnkGUIInspectTool_UsedByXPath_Click(object sender, EventArgs e)
         {
-            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -1282,7 +1309,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="e"></param>
         public static void lnkGUIInspectTool_UsedByInspectResult_Click(object sender, EventArgs e)
         {
-            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -1326,9 +1353,9 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void GUIInspectTool_UsedByXPath_Clicked(System.Windows.Forms.TextBox txtXPath)
+        public static void GUIInspectTool_UsedByXPath_Clicked(TextBox txtXPath)
         {
-            using(var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using(var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -1338,7 +1365,7 @@ namespace taskt.Core.Automation.Commands
         }
         public static void GUIInspectTool_UsedByInspectResult_Clicked(DataTable searchParams)
         {
-            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
                 if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {

@@ -1099,59 +1099,7 @@ namespace taskt.UI.Forms
         #region Update Events
         private void btnCheckUpdate_Click(object sender, EventArgs e)
         {
-            //taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
-            //Core.UpdateManifest manifest = new Core.UpdateManifest();
-            //try
-            //{
-            //    manifest = updater.GetManifest();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Error getting manifest: " + ex.ToString());
-            //    return;
-            //}
-
-            //if (manifest.RemoteVersionNewer)
-            //{
-            //    //Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
-            //    //if (frmUpdate.ShowDialog() == DialogResult.OK)
-            //    //{
-
-            //    //    //move update exe to root folder for execution
-            //    //    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
-            //    //    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
-
-            //    //    if (!System.IO.File.Exists(updaterExecutionResources))
-            //    //    {
-            //    //        MessageBox.Show("taskt-updater.exe not found in resources directory!");
-            //    //        return;
-            //    //    }
-            //    //    else
-            //    //    {
-            //    //        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
-            //    //    }
-
-            //    //    var updateProcess = new System.Diagnostics.Process();
-            //    //    updateProcess.StartInfo.FileName = updaterExecutableDestination;
-            //    //    updateProcess.StartInfo.Arguments = manifest.PackageURL;
-
-            //    //    updateProcess.Start();
-            //    //    Application.Exit();
-            //    //}
-            //    using (var fm = new Supplement_Forms.frmUpdate(manifest))
-            //    {
-            //        fm.ShowDialog();
-            //    }
-            //}
-            //else
-            //{
-            //    //MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
-            //    using (var fm = new Supplemental.frmDialog("taskt is currently up-to-date!", "No Updates Available", Supplemental.frmDialog.DialogType.OkOnly, 0))
-            //    {
-            //        fm.ShowDialog();
-            //    }
-            //}
-            taskt.Core.ApplicationUpdate.ShowUpdateResult(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
+            Core.Update.ApplicationUpdate.ShowUpdateResultSync(newAppSettings.ClientSettings.SkipBetaVersionUpdate, false);
         }
         #endregion
 

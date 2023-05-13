@@ -191,6 +191,27 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// get DataTable variable from parameter name
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static DataTable ConvertToUserVariableAsDataTable(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(parameterName);
+            var value = prop?.GetValue(command) ?? null;
+            if (value is DataTable tbl)
+            {
+                return tbl;
+            }
+            else
+            {
+                throw new Exception("Property '" + parameterName + "' is not DataTable");
+            }
+        }
+
+        /// <summary>
         /// get DataTable variable and Column Index from variable name property and column properies
         /// </summary>
         /// <param name="command"></param>

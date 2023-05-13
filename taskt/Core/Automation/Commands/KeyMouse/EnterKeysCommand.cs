@@ -22,10 +22,6 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
-
-        [XmlAttribute]
         [PropertyDescription("Text or Keys to Send.")]
         [PropertyCustomUIHelper("Keys Builder", nameof(lnkKeysBulider_Click))]
         [PropertyCustomUIHelper("Encrypt Text", nameof(lnkEncryptText_Click))]
@@ -49,6 +45,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Encrypted")]
         [PropertyIsOptional(true, "Not Encrypted")]
         public string v_EncryptionOption { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]

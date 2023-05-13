@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
     [Attributes.ClassAttributes.CommandSettings("Copy File")]
-    [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
+    [Attributes.ClassAttributes.Description("This command copies a file to a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to copy a file to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
-        [PropertyDescription("Destination Folder Path to Move/Copy")]
+        [PropertyDescription("Destination Folder Path to Copy")]
         [PropertyDisplayText(true, "Folder")]
         public string v_DestinationDirectory { get; set; }
 

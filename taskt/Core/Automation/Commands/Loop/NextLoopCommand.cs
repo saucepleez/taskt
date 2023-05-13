@@ -21,6 +21,13 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
+
+        public override void RunCommand(object sender)
+        {
+            var engine = (Engine.AutomationEngineInstance)sender;
+            engine.CurrentLoopContinuing = true;
+        }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

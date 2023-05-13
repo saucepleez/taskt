@@ -992,11 +992,6 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, value, sender, false);
         }
 
-        public static void StoreInUserVariable(this System.Windows.Automation.AutomationElement value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, sender, false);
-        }
-
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
@@ -1055,34 +1050,21 @@ namespace taskt.Core
             }
         }
 
-        public static System.Windows.Automation.AutomationElement GetAutomationElementVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is System.Windows.Automation.AutomationElement)
-            {
-                return (System.Windows.Automation.AutomationElement)v.VariableValue;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not AutomationElement");
-            }
-        }
+        //public static Script.ScriptVariable GetInnerVariable(int index, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    return GetInnerVariableName(index, engine).GetRawVariable(engine);
+        //}
 
-        public static Script.ScriptVariable GetInnerVariable(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            return GetInnerVariableName(index, engine).GetRawVariable(engine);
-        }
+        //public static void SetInnerVariable(object value, int index, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    Script.ScriptVariable v = GetInnerVariableName(index, engine).GetRawVariable(engine);
+        //    v.VariableValue = value;
+        //}
 
-        public static void SetInnerVariable(object value, int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            Script.ScriptVariable v = GetInnerVariableName(index, engine).GetRawVariable(engine);
-            v.VariableValue = value;
-        }
-
-        public static string GetInnerVariableName(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        {
-            return engine.engineSettings.wrapVariableMarker("__INNER_" + index.ToString());
-        }
+        //public static string GetInnerVariableName(int index, Core.Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    return engine.engineSettings.wrapVariableMarker("__INNER_" + index.ToString());
+        //}
 
         private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {

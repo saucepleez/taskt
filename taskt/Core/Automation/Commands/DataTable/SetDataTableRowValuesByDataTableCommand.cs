@@ -61,9 +61,9 @@ namespace taskt.Core.Automation.Commands
             new GetDataTableColumnListCommand
             {
                 v_DataTableName = this.v_DataTableName,
-                v_OutputList = ExtensionMethods.GetInnerVariableName(0, engine)
+                v_OutputList = VariableNameControls.GetInnerVariableName(0, engine)
             }.RunCommand(engine);
-            var columns = (List<string>)ExtensionMethods.GetInnerVariable(0, engine).VariableValue;
+            var columns = (List<string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
 
             if (ifNotColumnExists == "error")
             {

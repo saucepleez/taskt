@@ -18,15 +18,6 @@ namespace taskt.UI.CustomControls
     {
         public static frmCommandEditor CurrentEditor { get; set; }
 
-        public enum CommandControlType
-        {
-            Body,
-            Label,
-            Helpers,
-            CunstomHelpers,
-            SecondLabel
-        }
-
         // todo: add colorful setting parameter
         private static List<Color> paramColors = new List<Color>
         {
@@ -58,7 +49,7 @@ namespace taskt.UI.CustomControls
             {
                 FlowLayoutPanel flowPanel = new FlowLayoutPanel
                 {
-                    Name = "group_" + prop.Name,
+                    Name = GroupPrefix + prop.Name,
                     FlowDirection = FlowDirection.TopDown,
                     WrapContents = false,
                     AutoSize = true,
@@ -91,7 +82,7 @@ namespace taskt.UI.CustomControls
             {
                 FlowLayoutPanel flowPanel = new FlowLayoutPanel
                 {
-                    Name = "group_" + propertyName,
+                    Name = GroupPrefix + propertyName,
                     FlowDirection = FlowDirection.TopDown,
                     WrapContents = false,
                     AutoSize = true,
@@ -308,7 +299,7 @@ namespace taskt.UI.CustomControls
             if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
-                label2.Name = "lbl2_" + propertyName;
+                label2.Name = Label2ndPrefix + propertyName;
                 controlList.Add(label2);
             }
 
@@ -341,7 +332,7 @@ namespace taskt.UI.CustomControls
                 if (attrInto.secondLabelName != "")
                 {
                     var field = tp.GetField(attrInto.secondLabelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as 2nd-Label does not Exists. Name: '" + attrInto.bodyName + "'");
-                    var label2nd = controlList.Where(c => (c.Name == "lbl2_" + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
+                    var label2nd = controlList.Where(c => (c.Name == Label2ndPrefix + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
                     field.SetValue(command, label2nd);
                 }
             }
@@ -418,7 +409,7 @@ namespace taskt.UI.CustomControls
             var inputLabel = CreateSimpleLabel();
 
             inputLabel.Text = labelText;
-            inputLabel.Name = "lbl_" + propertyName;
+            inputLabel.Name = LabelPrefix + propertyName;
 
             if (additionalParams != null)
             {
@@ -902,7 +893,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + "_helper_" + num, targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + HelperInfix + num, targetControl);
             uiHelper.HelperType = setting.additionalHelper;
             switch (setting.additionalHelper)
             {
@@ -944,7 +935,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + "_customhelper_" + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + CustomHelperInfix + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
             uiHelper.CommandDisplay = setting.labelText;
             (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
 
@@ -1772,271 +1763,6 @@ namespace taskt.UI.CustomControls
 
             return commandList;
 
-        }
-
-        #region search control methods
-        // TODO: move to PropertyControl
-        public static List<Control> GetControlsByName(this List<Control> ctrls, string parameterName, CommandControlType t = CommandControlType.Body)
-        {
-            List<Control> ret = new List<Control>();
-
-            switch (t)
-            {
-                case CommandControlType.Body:
-                    ret.Add(ctrls.Where(c => (c.Name == parameterName)).FirstOrDefault());
-                    break;
-
-                case CommandControlType.Label:
-                    ret.Add(ctrls.Where(c => (c.Name == "lbl_" + parameterName)).FirstOrDefault());
-                    break;
-
-                case CommandControlType.SecondLabel:
-                    ret.Add(ctrls.Where(c => (c.Name == "lbl2_" + parameterName)).FirstOrDefault());
-                    break;
-
-                case CommandControlType.Helpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_helper_"))).ToArray());
-                    break;
-
-                case CommandControlType.CunstomHelpers:
-                    ret.AddRange(ctrls.Where(c => (c.Name.StartsWith(parameterName + "_customhelper_"))).ToArray());
-                    break;
-            }
-
-            return ret;
-        }
-
-        public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
-        {
-            List<Control> ret = new List<Control>();
-
-            int index;
-            index = ctrls.FindIndex(t => (t.Name == "group_" + parameterName));
-            if (index >= 0)
-            {
-                ret.Add(ctrls[index]);
-            }
-            else
-            {
-                index = ctrls.FindIndex(t => (t.Name == "lbl_" + parameterName));
-                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == "lbl_" + nextParameterName));
-
-                for (int i = index; i < last; i++)
-                {
-                    ret.Add(ctrls[i]);
-                }
-            }
-            
-            return ret;
-        }
-
-        public static Control GetPropertyControl(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey(propertyName))
-            {
-                return controls[propertyName];
-            }
-            else
-            {
-                throw new Exception("Control '" + propertyName + "' does not exists.");
-            }
-        }
-        public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey("lbl_" + propertyName))
-            {
-                return (Label)controls["lbl_" + propertyName];
-            }
-            else
-            {
-                throw new Exception("Label 'lbl_" + propertyName + "' does not exists.");
-            }
-        }
-        public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string propertyName)
-        {
-            if (controls.ContainsKey("lbl2_" + propertyName))
-            {
-                return (Label)controls["lbl2_" + propertyName];
-            }
-            else
-            {
-                throw new Exception("2nd Label 'lbl2_" + propertyName + "' does not exists.");
-            }
-        }
-        public static (Control body, Label label, Label label2nd) GetAllPropertyControl(this Dictionary<string, Control> controls, string propertyName, bool throwWhenLabelNotExists = true, bool throwWhen2ndLabelNotExists = false)
-        {
-            Control body = controls.GetPropertyControl(propertyName);
-
-            Label label;
-            try
-            {
-                label = controls.GetPropertyControlLabel(propertyName);
-            }
-            catch (Exception ex)
-            {
-                if (throwWhenLabelNotExists)
-                {
-                    throw ex;
-                }
-                else
-                {
-                    label = null;
-                }
-            }
-            Label label2nd;
-            try
-            {
-                label2nd = controls.GetPropertyControl2ndLabel(propertyName);
-            }
-            catch (Exception ex)
-            {
-                if (throwWhen2ndLabelNotExists)
-                {
-                    throw ex;
-                }
-                else
-                {
-                    label2nd = null;
-                }
-            }
-            return (body, label, label2nd);
-        }
-        #endregion
-    }
-
-
-
-    public class AutomationCommand
-    {
-        public Type CommandClass { get; set; }
-        public string FullName { get; set; }
-        public string ShortName { get; set; }
-        public string DisplayGroup { get; set; }
-        public string DisplaySubGroup { get; set; }
-        public ScriptCommand Command { get; set; }
-        public List<Control> UIControls { get; set; }
-        public void RenderUIComponents(frmCommandEditor editorForm)
-        {
-            if (Command == null)
-            {
-                throw new InvalidOperationException("Command cannot be null!");
-            }
-
-            UIControls = new List<Control>();
-            if (Command.CustomRendering)
-            {
-
-                var renderedControls = Command.Render(editorForm);
-
-                if (renderedControls.Count == 0)
-                {
-                    var label = new Label();
-                    var theme = editorForm.Theme.ErrorLabel;
-                    //label.ForeColor = Color.Red;
-                    //label.AutoSize = true;
-                    //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
-                    label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-                    label.AutoSize = true;
-                    label.ForeColor = theme.FontColor;
-                    label.BackColor = theme.BackColor;
-                    label.Text = "No Controls are defined for rendering!  If you intend to override with custom controls, you must handle the Render() method of this command!  If you do not wish to override with your own custom controls then set 'CustomRendering' to False.";
-                    UIControls.Add(label);
-                }
-                else
-                {
-                    foreach (var ctrl in renderedControls)
-                    {
-                        UIControls.Add(ctrl);
-                    }
-
-                    //generate comment command if user did not generate it
-                    var commentControlExists = renderedControls.Any(f => f.Name == "v_Comment");
-
-                    if (!commentControlExists)
-                    {
-                        UIControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", Command));
-                        UIControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", Command, 100, 300));
-                    }
-
-                }
-
-
-            }
-            else
-            {
-
-                var label = new Label();
-                var theme = editorForm.Theme.ErrorLabel;
-                //label.ForeColor = Color.Red;
-                //label.AutoSize = true;
-                //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
-                label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-                label.AutoSize = true;
-                label.ForeColor = theme.FontColor;
-                label.BackColor = theme.BackColor;
-                label.Text = "Command not enabled for custom rendering!";
-                UIControls.Add(label);
-            }
-        }
-        public void Bind(frmCommandEditor editor)
-        {
-            //preference to preload is false
-            //if (UIControls is null)
-            //{
-            this.RenderUIComponents(editor);
-            //}
-
-            foreach (var ctrl in UIControls)
-            {
-
-                if (ctrl.DataBindings.Count > 0)
-                {
-                    var newBindingList = new List<Binding>();
-                    foreach (Binding binding in ctrl.DataBindings)
-                    {
-                        newBindingList.Add(new Binding(binding.PropertyName, Command, binding.BindingMemberInfo.BindingField, false, DataSourceUpdateMode.OnPropertyChanged));
-                    }
-
-                    ctrl.DataBindings.Clear();
-
-                    foreach (var newBinding in newBindingList)
-                    {
-                        ctrl.DataBindings.Add(newBinding);
-                    }
-                }
-
-                if (ctrl is CommandItemControl)
-                {
-                    var control = (CommandItemControl)ctrl;
-                    switch (control.HelperType)
-                    {
-                        case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
-                            control.DataSource = editor.scriptVariables;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                //if (ctrl is UIPictureBox)
-                //{
-
-                //    var typedControl = (UIPictureBox)InputControl;
-
-                //}
-
-                //Todo: helper for loading variables, move to attribute
-                if ((ctrl.Name == "v_userVariableName") && (ctrl is ComboBox))
-                {
-                    var variableCbo = (ComboBox)ctrl;
-                    variableCbo.Items.Clear();
-                    foreach (var var in editor.scriptVariables)
-                    {
-                        variableCbo.Items.Add(var.VariableName);
-                    }
-                }
-
-            }
         }
     }
 }

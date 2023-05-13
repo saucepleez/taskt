@@ -11,22 +11,16 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
 using taskt.Core.Automation.Commands;
 using taskt.Core.IO;
 
@@ -567,19 +561,19 @@ namespace taskt.Core
             return keyDescriptionList;
         }
 
-        public static string ConvertObjectToJson(object obj)
-        {
-            //set json settings
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.Error = (serializer, err) =>
-            {
-                err.ErrorContext.Handled = true;
-            };
+        //public static string ConvertObjectToJson(object obj)
+        //{
+        //    //set json settings
+        //    JsonSerializerSettings settings = new JsonSerializerSettings();
+        //    settings.Error = (serializer, err) =>
+        //    {
+        //        err.ErrorContext.Handled = true;
+        //    };
 
-            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+        //    settings.Formatting = Newtonsoft.Json.Formatting.Indented;
 
-            return JsonConvert.SerializeObject(obj, settings);
-        }
+        //    return JsonConvert.SerializeObject(obj, settings);
+        //}
 
     }
 }

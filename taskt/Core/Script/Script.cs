@@ -296,6 +296,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_41(doc);
             convertTo3_5_1_42(doc);
             convertTo3_5_1_44(doc);
+            convertTo3_5_1_45(doc);
 
             return doc;
         }
@@ -995,6 +996,74 @@ namespace taskt.Core.Script
             foreach (var cmd in commands)
             {
                 cmd.Attribute("v_OperationType").Remove();
+            }
+
+            // UIAutomationSearchElementFromWindowByXPathCommand -> UIAutomationSearchElementAndWindowByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromWindowByXPathCommand", "UIAutomationSearchElementAndWindowByXPathCommand", "Search Element And Window By XPath");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_45(XDocument doc)
+        {
+            // FormatFilePathCommand -> ExtractionFilePathCommand
+            ChangeCommandName(doc, "FormatFilePathCommand", "ExtractionFilePathCommand", "Extraction File Path");
+
+            // FormatFolderPathCommnad -> ExtractionFolderPathCommand
+            ChangeCommandName(doc, "FormatFolderPathCommnad", "ExtractionFolderPathCommand", "Extraction Folder Path");
+
+            // FormatColorCommand -> ConvertColorCommand
+            ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
+
+            // UIAutomationClickElementCommand clickType, xOffset, yOffset parameters to attributes
+            var commands = doc.Descendants("ScriptCommand").Where(el =>
+            {
+                return ((el.Attribute("CommandName").Value == "UIAutomationClickElementCommand") &&
+                            (el.Attribute("v_ClickType") == null));
+            });
+            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            foreach (var cmd in commands)
+            {
+                string clickType = "";
+                string xOffset = "";
+                string yOffset = "";
+                XElement tableParams = cmd.Element("v_ActionParameters").Element(ns + "diffgram").Element("DocumentElement");
+                var table = tableParams?.Elements() ?? new List<XElement>();
+                foreach (XElement row in table)
+                {
+                    var n = row.Element("ParameterName").Value;
+                    var v = row.Element("ParameterValue").Value;
+                    switch (n)
+                    {
+                        case "Click Type":
+                            clickType = v;
+                            break;
+                        case "X Adjustment":
+                            xOffset = v;
+                            break;
+                        case "Y Adjustment":
+                            yOffset = v;
+                            break;
+                    }
+                }
+                cmd.SetAttributeValue("v_ClickType", clickType);
+                cmd.SetAttributeValue("v_XOffset", xOffset);
+                cmd.SetAttributeValue("v_YOffset", yOffset);
+                cmd.Element("v_ActionParameters").Remove();
+            }
+
+            commands = null;    // release
+
+            // UIAutomationSearchElementAndWindowByXPathCommand v_SearchXPath to attributes
+            commands = doc.Descendants("ScriptCommand").Where(el => (el.Attribute("CommandName").Value == "UIAutomationSearchElementAndWindowByXPathCommand"));
+            foreach (var cmd in commands)
+            {
+                var xpath = cmd.Element("v_SearchXPath");
+                if (xpath != null)
+                {
+                    cmd.SetAttributeValue("v_SearchXPath", xpath.Value);
+                    xpath.Remove();
+                }
             }
 
             return doc;

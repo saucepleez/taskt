@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.SubGruop("Element Action")]
     [Attributes.ClassAttributes.CommandSettings("Expand Collapse Items In Element")]
     [Attributes.ClassAttributes.Description("This command allows you to Expand or Collapse Items in AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Expand or Collapse Items in AutomationElement.")]
@@ -47,8 +47,7 @@ namespace taskt.Core.Automation.Commands
             var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
             var state = v_ItemsState.GetUISelectionValue("v_ItemsState", this, engine);
 
-            object exColPtn;
-            if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out exColPtn))
+            if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))
             {
                 switch (state)
                 {
