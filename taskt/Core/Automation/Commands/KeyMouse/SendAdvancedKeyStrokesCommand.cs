@@ -25,10 +25,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
-
         [PropertyDescription("Keys and Action Type")]
         [InputSpecification("")]
         [SampleUsage("")]
@@ -45,6 +41,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Return all keys to 'UP' position after execution")]
         [PropertyIsOptional(true, "No")]
         public string v_KeyUpDefault { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
