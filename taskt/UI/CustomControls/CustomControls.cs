@@ -787,7 +787,7 @@ namespace taskt.UI
             {nameof(UIAutomationSearchElementFromElementByXPathCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationSearchElementFromTableElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationSearchElementFromWindowCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationSearchElementFromWindowByXPathCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationSearchElementAndWindowByXPathCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationGetElementTreeXMLFromElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationSearchParentElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationGetSelectedStateFromElementCommand), "taskt.Properties.Resources.command_window"},

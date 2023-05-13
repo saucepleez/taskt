@@ -998,6 +998,9 @@ namespace taskt.Core.Script
                 cmd.Attribute("v_OperationType").Remove();
             }
 
+            // UIAutomationSearchElementFromWindowByXPathCommand -> UIAutomationSearchElementAndWindowByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromWindowByXPathCommand", "UIAutomationSearchElementAndWindowByXPathCommand", "Search Element And Window By XPath");
+
             return doc;
         }
 

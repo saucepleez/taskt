@@ -9,13 +9,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.CommandSettings("Search Element From Window By XPath")]
+    [Attributes.ClassAttributes.SubGruop("Search Element & Window")]
+    [Attributes.ClassAttributes.CommandSettings("Search Element And Window By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from Window Name using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from Window Name. XPath does not support to use parent and sibling for root element.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchElementFromWindowByXPathCommand : ScriptCommand
+    public class UIAutomationSearchElementAndWindowByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
         public string v_ElementWaitTime { get; set; }
 
-        public UIAutomationSearchElementFromWindowByXPathCommand()
+        public UIAutomationSearchElementAndWindowByXPathCommand()
         {
             //this.CommandName = "UIAutomationGetElementFromWindowByXPathCommand";
             //this.SelectionName = "Get Element From Window By XPath";
