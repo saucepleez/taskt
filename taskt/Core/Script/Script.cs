@@ -1015,7 +1015,7 @@ namespace taskt.Core.Script
             // FormatColorCommand -> ConvertColorCommand
             ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
 
-            // UIAutomationClickElementCommand clickType, xOffset, yOffset parameters
+            // UIAutomationClickElementCommand clickType, xOffset, yOffset parameters to attributes
             var commands = doc.Descendants("ScriptCommand").Where(el =>
             {
                 return ((el.Attribute("CommandName").Value == "UIAutomationClickElementCommand") &&
