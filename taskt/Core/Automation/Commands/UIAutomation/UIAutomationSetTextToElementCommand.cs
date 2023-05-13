@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Action")]
+    [Attributes.ClassAttributes.SubGruop("Element Action")]
     [Attributes.ClassAttributes.CommandSettings("Set Text To Element")]
     [Attributes.ClassAttributes.Description("This command allows you to set Text Value from AutomationElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to set Text Value from AutomationElement.")]

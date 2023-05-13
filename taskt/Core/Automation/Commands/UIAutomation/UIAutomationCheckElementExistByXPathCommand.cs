@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Search Element")]
     [Attributes.ClassAttributes.CommandSettings("Check Element Exist By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to check AutomationElement existence.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check AutomationElement existence.")]

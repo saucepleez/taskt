@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Search Element")]
     [Attributes.ClassAttributes.CommandSettings("Wait For Element Exist")]
     [Attributes.ClassAttributes.Description("This command allows you to Wait until the AutomationElement exists.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the AutomationElement exists.")]
