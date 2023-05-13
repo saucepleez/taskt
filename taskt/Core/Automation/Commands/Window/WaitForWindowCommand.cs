@@ -75,8 +75,7 @@ namespace taskt.Core.Automation.Commands
         {
             base.Refresh();
             //WindowNameControl.AddWindowNames();
-            var cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
-            cmb.AddWindowNames();
+            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
         }
     }
 }

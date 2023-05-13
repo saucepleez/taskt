@@ -171,8 +171,7 @@ namespace taskt.Core.Automation.Commands
         public override void Refresh(frmCommandEditor editor)
         {
             base.Refresh();
-            ComboBox cmb = (ComboBox)ControlsList[nameof(v_MatchMethod)];
-            cmb.AddWindowNames();
+            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
