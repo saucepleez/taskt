@@ -274,27 +274,10 @@ namespace taskt.Core.Automation.Commands
         public static void CreateEmptyParamters(DataTable table)
         {
             table.Rows.Clear();
-            table.Rows.Add(false, "AcceleratorKey", "");
-            table.Rows.Add(false, "AccessKey", "");
-            table.Rows.Add(false, "AutomationId", "");
-            table.Rows.Add(false, "ControlType", "");
-            table.Rows.Add(false, "ClassName", "");
-            table.Rows.Add(false, "FrameworkId", "");
-            table.Rows.Add(false, "HasKeyboardFocus", "");
-            table.Rows.Add(false, "HelpText", "");
-            table.Rows.Add(false, "IsContentElement", "");
-            table.Rows.Add(false, "IsControlElement", "");
-            table.Rows.Add(false, "IsEnabled", "");
-            table.Rows.Add(false, "IsKeyboardFocusable", "");
-            table.Rows.Add(false, "IsOffscreen", "");
-            table.Rows.Add(false, "IsPassword", "");
-            table.Rows.Add(false, "IsRequiredForForm", "");
-            table.Rows.Add(false, "ItemStatus", "");
-            table.Rows.Add(false, "ItemType", "");
-            table.Rows.Add(false, "LocalizedControlType", "");
-            table.Rows.Add(false, "Name", "");
-            table.Rows.Add(false, "NativeWindowHandle", "");
-            table.Rows.Add(false, "ProcessID", "");
+            foreach(var n in TargetControlTypes)
+            {
+                table.Rows.Add(false, n, "");
+            }
         }
 
         private static void parseInspectToolResult(string result, DataTable table, ComboBox windowNames = null)
@@ -997,43 +980,7 @@ namespace taskt.Core.Automation.Commands
             foreach(var t in TargetControlTypes)
             {
                 node.SetAttributeValue(t, tp.GetProperty(t)?.GetValue(targetElement.Current)?.ToString() ?? "");
-
-                // DBG
-                //var a = tp.GetProperty(t);
-                //var b = a.GetValue(targetElement.Current);
-                //var c = b?.ToString() ?? "";
-                //Console.WriteLine(tp.GetField(t + "Property").GetValue(targetElement.Current)?.ToString() ?? "");
             }
-
-            //node.SetAttributeValue("AcceleratorKey", targetElement.Current.AcceleratorKey);
-            //node.SetAttributeValue("AccessKey", targetElement.Current.AccessKey);
-            //node.SetAttributeValue("AutomationId", targetElement.Current.AutomationId);
-            //node.SetAttributeValue("ClassName", targetElement.Current.ClassName);
-            //node.SetAttributeValue("FrameworkId", targetElement.Current.FrameworkId);
-            //node.SetAttributeValue("HasKeyboardFocus", targetElement.Current.HasKeyboardFocus);
-            //node.SetAttributeValue("HelpText", targetElement.Current.HelpText);
-            //node.SetAttributeValue("IsContentElement", targetElement.Current.IsContentElement);
-            //node.SetAttributeValue("IsControlElement", targetElement.Current.IsControlElement);
-            //node.SetAttributeValue("IsEnabled", targetElement.Current.IsEnabled);
-            //node.SetAttributeValue("IsKeyboardFocusable", targetElement.Current.IsKeyboardFocusable);
-            //node.SetAttributeValue("IsOffscreen", targetElement.Current.IsOffscreen);
-            //node.SetAttributeValue("IsPassword", targetElement.Current.IsPassword);
-            //node.SetAttributeValue("IsRequiredForForm", targetElement.Current.IsRequiredForForm);
-            //node.SetAttributeValue("ItemStatus", targetElement.Current.ItemStatus);
-            //node.SetAttributeValue("ItemType", targetElement.Current.ItemType);
-            //node.SetAttributeValue("LocalizedControlType", targetElement.Current.LocalizedControlType);
-            //node.SetAttributeValue("Name", targetElement.Current.Name);
-            //node.SetAttributeValue("NativeWindowHandle", targetElement.Current.NativeWindowHandle);
-            //node.SetAttributeValue("ProcessID", targetElement.Current.ProcessId);
-
-            //if (hash == "") 
-            //{
-            //    node.SetAttributeValue("Hash", targetElement.GetHashCode());
-            //}
-            //else
-            //{
-            //    node.SetAttributeValue("Hash", hash);
-            //}
 
             node.SetAttributeValue("Hash", (hash == "") ? targetElement.GetHashCode().ToString() : hash);
             
