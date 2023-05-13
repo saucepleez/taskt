@@ -21,10 +21,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
-
         [XmlElement]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
@@ -32,6 +28,10 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
         public string v_AutomationElementVariable { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
