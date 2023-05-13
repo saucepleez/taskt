@@ -702,6 +702,7 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
+        #region search element node
 
         public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
@@ -741,6 +742,12 @@ namespace taskt.Core.Automation.Commands
             return elems;
         }
 
+        /// <summary>
+        /// get parent element
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static AutomationElement GetParentElement(AutomationElement targetElement)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
@@ -756,6 +763,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get window name from AutomationElement
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <returns></returns>
         public static string GetWindowName(AutomationElement targetElement)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
@@ -765,13 +777,68 @@ namespace taskt.Core.Automation.Commands
                 return targetElement.Current.Name;
             }
 
-            var parent = walker.GetParent(targetElement);
-            while(parent.Current.ControlType != ControlType.Window)
+            try
             {
+                var parent = walker.GetParent(targetElement);
+                while (parent.Current.ControlType != ControlType.Window)
+                {
+                    parent = walker.GetParent(parent);
+                }
+                return parent.Current.Name;
+            }
+            catch
+            {
+                // try other method
+                var windowNames = WindowNameControls.GetAllWindowTitles();
+                if ((targetElement.Current.NativeWindowHandle != 0) && (windowNames.Contains(targetElement.Current.Name)))
+                {
+                    return targetElement.Current.Name;
+                }
+
+                try
+                {
+                    var parent = walker.GetParent(targetElement);
+                    while((parent.Current.NativeWindowHandle == 0) || (!windowNames.Contains(parent.Current.Name)))
+                    {
+                        parent = walker.GetParent(parent);
+                    }
+                    return parent.Current.Name;
+                }
+                catch
+                {
+                    throw new Exception("Fail Get Window Name from AutomationElement");
+                }
+            }
+        }
+
+        /// <summary>
+        /// get window handle from AutomationElement
+        /// </summary>
+        /// <param name="targetElement"></param>
+        /// <returns></returns>
+        public static int GetWindowHandle(AutomationElement targetElement)
+        {
+            TreeWalker walker = TreeWalker.RawViewWalker;
+
+            var hnd = targetElement.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
+            if(hnd != AutomationElement.NotSupported)
+            {
+                return (int)hnd;
+            }
+
+            var parent = walker.GetParent(targetElement);
+            while (true)
+            {
+                hnd = parent.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
+                if (hnd != AutomationElement.NotSupported)
+                {
+                    return (int)hnd;
+                }
                 parent = walker.GetParent(parent);
             }
-            return parent.Current.Name;
         }
+
+        #endregion
 
         public static string GetTextValue(AutomationElement targetElement)
         {
