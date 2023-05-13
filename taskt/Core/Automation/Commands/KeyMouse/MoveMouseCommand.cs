@@ -99,8 +99,10 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_XMousePosition = frmShowCursorPos.xPos.ToString();
                     v_YMousePosition = frmShowCursorPos.yPos.ToString();
-                    ((TextBox)ControlsList[nameof(v_XMousePosition)]).Text = v_XMousePosition;
-                    ((TextBox)ControlsList[nameof(v_YMousePosition)]).Text = v_YMousePosition;
+                    //((TextBox)ControlsList[nameof(v_XMousePosition)]).Text = v_XMousePosition;
+                    //((TextBox)ControlsList[nameof(v_YMousePosition)]).Text = v_YMousePosition;
+                    ControlsList.GetPropertyControl<TextBox>(nameof(v_XMousePosition)).Text = v_XMousePosition;
+                    ControlsList.GetPropertyControl<TextBox>(nameof(v_YMousePosition)).Text = v_YMousePosition;
                 }
             }
         }

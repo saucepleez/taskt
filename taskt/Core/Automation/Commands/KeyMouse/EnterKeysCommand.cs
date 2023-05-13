@@ -148,7 +148,8 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkEncryptText_Click(object sender, EventArgs e)
         {
-            var InputText = (TextBox)ControlsList[nameof(v_TextToSend)];
+            //var InputText = (TextBox)ControlsList[nameof(v_TextToSend)];
+            var InputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
 
             if (string.IsNullOrEmpty(InputText.Text))
             {
@@ -168,7 +169,8 @@ namespace taskt.Core.Automation.Commands
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    var InputText = (TextBox)ControlsList[nameof(v_TextToSend)];
+                    //var InputText = (TextBox)ControlsList[nameof(v_TextToSend)];
+                    var InputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
                     InputText.Text = fm.Result;
                 }
             }

@@ -173,7 +173,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void AfterShown()
         {
-            var dgv = (DataGridView)ControlsList[nameof(v_KeyActions)];
+            //var dgv = (DataGridView)ControlsList[nameof(v_KeyActions)];
+            var dgv = ControlsList.GetPropertyControl<DataGridView>(nameof(v_KeyActions));
 
             var column = (DataGridViewComboBoxColumn)dgv.Columns[0];
             column.DataSource = Common.GetAvailableKeys();
