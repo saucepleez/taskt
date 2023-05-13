@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Folder Operation Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Move/Copy Folder")]
+    [Attributes.ClassAttributes.CommandSettings("Move Folder")]
     [Attributes.ClassAttributes.Description("This command moves a folder to a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to move a folder to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
