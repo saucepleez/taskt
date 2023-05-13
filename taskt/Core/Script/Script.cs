@@ -1052,6 +1052,20 @@ namespace taskt.Core.Script
                 cmd.Element("v_ActionParameters").Remove();
             }
 
+            commands = null;    // release
+
+            // UIAutomationSearchElementAndWindowByXPathCommand v_SearchXPath to attributes
+            commands = doc.Descendants("ScriptCommand").Where(el => (el.Attribute("CommandName").Value == "UIAutomationSearchElementAndWindowByXPathCommand"));
+            foreach (var cmd in commands)
+            {
+                var xpath = cmd.Element("v_SearchXPath");
+                if (xpath != null)
+                {
+                    cmd.SetAttributeValue("v_SearchXPath", xpath.Value);
+                    xpath.Remove();
+                }
+            }
+
             return doc;
         }
 
