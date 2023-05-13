@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -88,8 +87,9 @@ namespace taskt.Core.Automation.Commands
         public override void Refresh(frmCommandEditor editor)
         {
             base.Refresh();
-            ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
-            cmb.AddWindowNames();
+            //ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
+            //cmb.AddWindowNames();
+            ControlsList.GetPropertyControl<ComboBox>(nameof(v_ScreenshotWindowName)).AddWindowNames();
         }
     }
 }

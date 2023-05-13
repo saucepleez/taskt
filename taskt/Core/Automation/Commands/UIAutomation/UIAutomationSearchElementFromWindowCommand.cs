@@ -65,8 +65,9 @@ namespace taskt.Core.Automation.Commands
         public override void Refresh(frmCommandEditor editor)
         {
             base.Refresh();
-            var cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
-            cmb.AddWindowNames();
+            //var cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
+            //cmb.AddWindowNames();
+            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
         }
     }
 }
