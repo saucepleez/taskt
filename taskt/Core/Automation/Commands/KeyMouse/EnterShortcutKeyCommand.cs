@@ -181,10 +181,12 @@ namespace taskt.Core.Automation.Commands
             //var searchedKey = parameterHotkey.Text;
             var searchedKey = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
 
-            var dic = (Dictionary<string, string>)((Label)ControlsList["lbl_" + nameof(v_Hotkey)]).Tag;
+            //var dic = (Dictionary<string, string>)((Label)ControlsList["lbl_" + nameof(v_Hotkey)]).Tag;
 
-            var hotkey2ndLabel = (Label)ControlsList["lbl2_" + nameof(v_Hotkey)];
-            hotkey2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
+            //var hotkey2ndLabel = (Label)ControlsList["lbl2_" + nameof(v_Hotkey)];
+            //hotkey2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
+
+            ControlsList.SecondLabelProcess(nameof(v_Hotkey), nameof(v_Hotkey), searchedKey);
         }
     }
 }

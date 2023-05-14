@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -24,10 +23,6 @@ namespace taskt.Core.Automation.Commands
         public string v_ScreenshotWindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
-
-        [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
         [PropertyDescription("Image File Path")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
@@ -36,6 +31,10 @@ namespace taskt.Core.Automation.Commands
         [Remarks("If file does not contain extensin, suppliment png extension.\nIf file does not contain folder path, file will be saved in the same folder as script file.\nIf file path contains FileCounter variable, it will be replaced by a number that will become the name of a non-existent file.")]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.FirstNotExists)]
         public string v_FilePath { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
@@ -88,8 +87,9 @@ namespace taskt.Core.Automation.Commands
         public override void Refresh(frmCommandEditor editor)
         {
             base.Refresh();
-            ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
-            cmb.AddWindowNames();
+            //ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
+            //cmb.AddWindowNames();
+            ControlsList.GetPropertyControl<ComboBox>(nameof(v_ScreenshotWindowName)).AddWindowNames();
         }
     }
 }

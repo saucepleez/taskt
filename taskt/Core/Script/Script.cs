@@ -297,6 +297,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_42(doc);
             convertTo3_5_1_44(doc);
             convertTo3_5_1_45(doc);
+            convertTo3_5_1_46(doc);
 
             return doc;
         }
@@ -1065,6 +1066,14 @@ namespace taskt.Core.Script
                     xpath.Remove();
                 }
             }
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_46(XDocument doc)
+        {
+            // MoveFolderCommand change dipslay command name
+            ChangeCommandName(doc, "MoveFolderCommand", "MoveFolderCommand", "Move Folder");
 
             return doc;
         }

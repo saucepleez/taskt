@@ -876,10 +876,11 @@ namespace taskt.Core.Automation.Commands
 
             var winList = GetAllWindowTitles();
 
-            foreach (var title in winList)
-            {
-                cmb.Items.Add(title);
-            }
+            //foreach (var title in winList)
+            //{
+            //    cmb.Items.Add(title);
+            //}
+            cmb.Items.AddRange(winList.ToArray());
 
             cmb.EndUpdate();
 
