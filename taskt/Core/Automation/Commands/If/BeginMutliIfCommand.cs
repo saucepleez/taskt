@@ -30,6 +30,10 @@ namespace taskt.Core.Automation.Commands
         private DataGridView IfConditionHelper;
 
         [XmlIgnore]
+        [NonSerialized]
+        private ApplicationSettings appSetting;
+
+        [XmlIgnore]
         private List<Script.ScriptVariable> ScriptVariables { get; set; }
 
         public BeginMultiIfCommand()
@@ -120,7 +124,8 @@ namespace taskt.Core.Automation.Commands
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_IfConditionsTable", this, editor);
-            IfConditionHelper = controls[2] as DataGridView;
+            //IfConditionHelper = controls[2] as DataGridView;
+            IfConditionHelper = (DataGridView)(controls.Where(c => (c is DataGridView)).FirstOrDefault());
 
             //handle helper click
             //var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
@@ -141,6 +146,8 @@ namespace taskt.Core.Automation.Commands
             IfConditionHelper.AllowUserToAddRows = false;
             IfConditionHelper.AllowUserToDeleteRows = true;
             IfConditionHelper.CellContentClick += IfConditionHelper_CellContentClick;
+
+            this.appSetting = editor.appSettings;
 
             return RenderedControls;
         }
@@ -169,6 +176,7 @@ namespace taskt.Core.Automation.Commands
                     editor.originalCommand = ifCommand;
                     editor.creationMode = frmCommandEditor.CreationMode.Edit;
                     editor.scriptVariables = ScriptVariables;
+                    editor.appSettings = this.appSetting;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {
@@ -198,6 +206,7 @@ namespace taskt.Core.Automation.Commands
 
             frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
             editor.selectedCommand = new BeginIfCommand();
+            editor.appSettings = this.appSetting;
             var res = editor.ShowDialog();
 
             if (res == DialogResult.OK)
