@@ -62,13 +62,36 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
+            //var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
 
-            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_ElementWaitTime), engine);
-            var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
+            //var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_ElementWaitTime), engine);
+            //var xpath = v_SearchXPath.ConvertToUserVariableAsXPath(engine);
 
-            var elem = AutomationElementControls.SearchGUIElementByXPath(winElem, xpath, waitTime, engine);
-            elem.StoreInUserVariable(engine, v_AutomationElementVariable);
+            //var elem = AutomationElementControls.SearchGUIElementByXPath(winElem, xpath, waitTime, engine);
+
+            //elem.StoreInUserVariable(engine, v_AutomationElementVariable);
+
+            var varName = VariableNameControls.GetInnerVariableName(0, engine, false);
+
+            var winSearch = new UIAutomationSearchElementFromWindowCommand()
+            {
+                v_WindowName = this.v_WindowName,
+                v_SearchMethod = this.v_SearchMethod,
+                v_MatchMethod = this.v_MatchMethod,
+                v_TargetWindowIndex = this.v_TargetWindowIndex,
+                v_WindowWaitTime = this.v_WindowWaitTime,
+                v_AutomationElementVariable = varName
+            };
+            winSearch.RunCommand(engine);
+
+            var searchElem = new UIAutomationSearchElementFromElementByXPathCommand()
+            {
+                v_TargetElement = VariableNameControls.GetWrappedVariableName(varName, engine),
+                v_SearchXPath = this.v_SearchXPath,
+                v_AutomationElementVariable = this.v_AutomationElementVariable,
+                v_WaitTime = this.v_ElementWaitTime
+            };
+            searchElem.RunCommand(engine);
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
