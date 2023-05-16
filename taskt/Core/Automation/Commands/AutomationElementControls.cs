@@ -676,7 +676,9 @@ namespace taskt.Core.Automation.Commands
 
                     if (!string.IsNullOrEmpty(resultName))
                     {
-                        var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+                        //var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+                        var resultValue = command.GetRawPropertyString(resultName, "Result");
+
                         ret.StoreInUserVariable(engine, resultValue);
                     }
                 })
