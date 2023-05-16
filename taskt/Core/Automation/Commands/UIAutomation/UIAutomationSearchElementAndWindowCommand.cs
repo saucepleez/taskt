@@ -59,13 +59,35 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
+            //var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
 
-            var waitTile = this.ConvertToUserVariableAsInteger(nameof(v_ElementWaitTime), engine);
+            //var waitTile = this.ConvertToUserVariableAsInteger(nameof(v_ElementWaitTime), engine);
 
-            var elem = AutomationElementControls.SearchGUIElement(winElem, v_SearchParameters, waitTile, engine);
+            //var elem = AutomationElementControls.SearchGUIElement(winElem, v_SearchParameters, waitTile, engine);
 
-            elem.StoreInUserVariable(engine, v_AutomationElementVariable);
+            //elem.StoreInUserVariable(engine, v_AutomationElementVariable);
+
+            var varName = VariableNameControls.GetInnerVariableName(0, engine, false);
+
+            var winSearch = new UIAutomationSearchElementFromWindowCommand()
+            {
+                v_WindowName = this.v_WindowName,
+                v_SearchMethod = this.v_SearchMethod,
+                v_MatchMethod = this.v_MatchMethod,
+                v_TargetWindowIndex = this.v_TargetWindowIndex,
+                v_WindowWaitTime = this.v_WindowWaitTime,
+                v_AutomationElementVariable = varName
+            };
+            winSearch.RunCommand(engine);
+
+            var searchElem = new UIAutomationSearchElementFromElementCommand()
+            {
+                v_TargetElement = varName,
+                v_SearchParameters = this.v_SearchParameters,
+                v_AutomationElementVariable = this.v_AutomationElementVariable,
+                v_WaitTime = this.v_ElementWaitTime
+            };
+            searchElem.RunCommand(engine);
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
