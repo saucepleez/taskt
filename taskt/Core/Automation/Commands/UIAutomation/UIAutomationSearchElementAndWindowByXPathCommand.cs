@@ -86,7 +86,7 @@ namespace taskt.Core.Automation.Commands
 
             var searchElem = new UIAutomationSearchElementFromElementByXPathCommand()
             {
-                v_TargetElement = VariableNameControls.GetWrappedVariableName(varName, engine),
+                v_TargetElement = varName,
                 v_SearchXPath = this.v_SearchXPath,
                 v_AutomationElementVariable = this.v_AutomationElementVariable,
                 v_WaitTime = this.v_ElementWaitTime
