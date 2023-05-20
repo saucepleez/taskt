@@ -100,5 +100,11 @@ namespace taskt.Core.Automation.Commands
             base.Refresh();
             ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
         }
+
+        public override void AfterShown()
+        {
+            //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
+            AutomationElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+        }
     }
 }
