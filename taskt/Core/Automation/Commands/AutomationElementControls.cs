@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
 
         private static string[] TargetControlTypes = new string[]
         {
-            "AcceleratorKey", "AccessKey", "AutomationId", "ClassName",
+            "AcceleratorKey", "AccessKey", "AutomationId", "ClassName", "ControlType",
             "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
             "IsControlElement", "IsEnabled", "IsKeyboardFocusable", "IsOffscreen",
             "IsPassword", "IsRequiredForForm", "ItemStatus", "ItemType",
