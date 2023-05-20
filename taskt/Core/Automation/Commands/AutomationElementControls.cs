@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
 
         private static string[] TargetControlTypes = new string[]
         {
-            "AcceleratorKey", "AccessKey", "AutomationId", "ClassName",
+            "AcceleratorKey", "AccessKey", "AutomationId", "ClassName", "ControlType",
             "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
             "IsControlElement", "IsEnabled", "IsKeyboardFocusable", "IsOffscreen",
             "IsPassword", "IsRequiredForForm", "ItemStatus", "ItemType",
@@ -676,7 +676,9 @@ namespace taskt.Core.Automation.Commands
 
                     if (!string.IsNullOrEmpty(resultName))
                     {
-                        var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+                        //var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
+                        var resultValue = command.GetRawPropertyString(resultName, "Result");
+
                         ret.StoreInUserVariable(engine, resultValue);
                     }
                 })

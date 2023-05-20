@@ -178,7 +178,7 @@ namespace taskt.Core.Update
                     var updateProcess = new System.Diagnostics.Process();
                     updateProcess.StartInfo.FileName = updaterExecutionResources;
 
-                    var zipURL = manifestConfig.PackageURL2.Replace("%release_url%", MyURLs.GitReleaseURL).Replace("%version%", manifestConfig.RemoteVersion);
+                    var zipURL = manifestConfig.PackageURL2.Replace("%release_url%", MyURLs.GitReleaseURL).Replace("%version%", manifestConfig.RemoteVersionProper.ToString());
                     updateProcess.StartInfo.Arguments = "/d " + zipURL;
 
                     updateProcess.Start();

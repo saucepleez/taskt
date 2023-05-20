@@ -2,20 +2,13 @@
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using taskt.Core.Automation.User32;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Text;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true. The following actions will repeat continuously until that statement becomes false")]
@@ -23,7 +16,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
     public class BeginMultiLoopCommand : ScriptCommand
     {
-
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Multiple Loop Conditions - All Must Be True")]
         //[Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder)]
@@ -36,6 +28,10 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         private DataGridView LoopConditionHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private ApplicationSettings appSettings;
 
         [XmlIgnore]
         private List<Script.ScriptVariable> ScriptVariables { get; set; }
@@ -51,9 +47,7 @@ namespace taskt.Core.Automation.Commands
             v_LoopConditionsTable.TableName = DateTime.Now.ToString("MultiLoopConditionTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
             v_LoopConditionsTable.Columns.Add("Statement");
             v_LoopConditionsTable.Columns.Add("CommandData");
-
         }
-
 
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
@@ -88,9 +82,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 isTrueStatement = DetermineMultiStatementTruth(sender);
             }
-
         }
-
 
         private bool DetermineMultiStatementTruth(object sender)
         {
@@ -122,7 +114,8 @@ namespace taskt.Core.Automation.Commands
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_LoopConditionsTable", this, editor);
-            LoopConditionHelper = controls[2] as DataGridView;
+            //LoopConditionHelper = controls[2] as DataGridView;
+            LoopConditionHelper = (DataGridView)(controls.Where(c => (c is DataGridView)).FirstOrDefault());
 
             //handle helper click
             //var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
@@ -144,6 +137,7 @@ namespace taskt.Core.Automation.Commands
             LoopConditionHelper.AllowUserToDeleteRows = true;
             LoopConditionHelper.CellContentClick += LoopConditionHelper_CellContentClick;
 
+            this.appSettings = editor.appSettings;
 
             return RenderedControls;
         }
@@ -172,6 +166,7 @@ namespace taskt.Core.Automation.Commands
                     editor.originalCommand = loopCommand;
                     editor.creationMode = frmCommandEditor.CreationMode.Edit;
                     editor.scriptVariables = ScriptVariables;
+                    editor.appSettings = this.appSettings;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {
@@ -182,8 +177,6 @@ namespace taskt.Core.Automation.Commands
                         selectedRow["Statement"] = displayText;
                         selectedRow["CommandData"] = serializedData;
                     }
-
-
                 }
                 else if (buttonSelected.Value.ToString() == "Delete")
                 {
@@ -194,18 +187,16 @@ namespace taskt.Core.Automation.Commands
                 {
                     throw new NotImplementedException("Requested Action is not implemented.");
                 }
-
             }
-
         }
 
         private void CreateLoopCondition(object sender, EventArgs e)
         {
-
             var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
 
             frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
             editor.selectedCommand = new BeginLoopCommand();
+            editor.appSettings = this.appSettings;
             var res = editor.ShowDialog();
 
             if (res == DialogResult.OK)
@@ -217,14 +208,11 @@ namespace taskt.Core.Automation.Commands
 
                 //add to list
                 v_LoopConditionsTable.Rows.Add(displayText, serializedData);
-
             }
-
         }
 
         public override string GetDisplayValue()
         {
-
             if (v_LoopConditionsTable.Rows.Count == 0)
             {
                 return "Loop <Not Configured>";
@@ -234,7 +222,6 @@ namespace taskt.Core.Automation.Commands
                 var statements = v_LoopConditionsTable.AsEnumerable().Select(f => f.Field<string>("Statement")).ToList();
                 return string.Join(" && ", statements);
             }
-
         }
     }
 }

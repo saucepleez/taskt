@@ -247,7 +247,12 @@ namespace taskt.UI.Forms
         private void frmCommandEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
             // set Size, Position
-            ((frmScriptBuilder)this.Owner).setCommandEditorSizeAndPosition(this);
+            if (this.Owner is frmScriptBuilder f)
+            {
+                f.setCommandEditorSizeAndPosition(this);
+            }
+
+            //((frmScriptBuilder)this.Owner).setCommandEditorSizeAndPosition(this);
         }
 
         #endregion Form Events

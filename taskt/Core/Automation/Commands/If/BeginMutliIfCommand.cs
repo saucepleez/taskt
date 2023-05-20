@@ -2,20 +2,13 @@
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using taskt.Core.Automation.User32;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Text;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("If Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to evaluate a logical statement to determine if the statement is true.")]
@@ -23,7 +16,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
     public class BeginMultiIfCommand : ScriptCommand
     {
-
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Multiple If Conditions - All Must Be True")]
         //[Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder)]
@@ -36,6 +28,10 @@ namespace taskt.Core.Automation.Commands
         [XmlIgnore]
         [NonSerialized]
         private DataGridView IfConditionHelper;
+
+        [XmlIgnore]
+        [NonSerialized]
+        private ApplicationSettings appSetting;
 
         [XmlIgnore]
         private List<Script.ScriptVariable> ScriptVariables { get; set; }
@@ -51,13 +47,12 @@ namespace taskt.Core.Automation.Commands
             v_IfConditionsTable.TableName = DateTime.Now.ToString("MultiIfConditionTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
             v_IfConditionsTable.Columns.Add("Statement");
             v_IfConditionsTable.Columns.Add("CommandData");
-
         }
 
        
         public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             bool isTrueStatement = true;
             foreach (DataRow rw in v_IfConditionsTable.Rows)
@@ -118,13 +113,8 @@ namespace taskt.Core.Automation.Commands
 
                 engine.ExecuteCommand(parentCommand.AdditionalScriptCommands[i]);
             }
-
-
-
-
-          
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
@@ -134,7 +124,8 @@ namespace taskt.Core.Automation.Commands
 
             //create controls
             var controls = CommandControls.CreateDataGridViewGroupFor("v_IfConditionsTable", this, editor);
-            IfConditionHelper = controls[2] as DataGridView;
+            //IfConditionHelper = controls[2] as DataGridView;
+            IfConditionHelper = (DataGridView)(controls.Where(c => (c is DataGridView)).FirstOrDefault());
 
             //handle helper click
             //var helper = controls[1] as taskt.UI.CustomControls.CommandItemControl;
@@ -156,6 +147,7 @@ namespace taskt.Core.Automation.Commands
             IfConditionHelper.AllowUserToDeleteRows = true;
             IfConditionHelper.CellContentClick += IfConditionHelper_CellContentClick;
 
+            this.appSetting = editor.appSettings;
 
             return RenderedControls;
         }
@@ -184,6 +176,7 @@ namespace taskt.Core.Automation.Commands
                     editor.originalCommand = ifCommand;
                     editor.creationMode = frmCommandEditor.CreationMode.Edit;
                     editor.scriptVariables = ScriptVariables;
+                    editor.appSettings = this.appSetting;
 
                     if (editor.ShowDialog() == DialogResult.OK)
                     {
@@ -194,8 +187,6 @@ namespace taskt.Core.Automation.Commands
                         selectedRow["Statement"] = displayText;
                         selectedRow["CommandData"] = serializedData;
                     }
-
-
                 }
                 else if (buttonSelected.Value.ToString() == "Delete")
                 {
@@ -206,18 +197,16 @@ namespace taskt.Core.Automation.Commands
                 {
                     throw new NotImplementedException("Requested Action is not implemented.");
                 }
-
             }
-  
         }
 
         private void CreateIfCondition(object sender, EventArgs e)
         {
-
             var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
 
             frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
             editor.selectedCommand = new BeginIfCommand();
+            editor.appSettings = this.appSetting;
             var res = editor.ShowDialog();
 
             if (res == DialogResult.OK)
@@ -229,14 +218,11 @@ namespace taskt.Core.Automation.Commands
 
                 //add to list
                 v_IfConditionsTable.Rows.Add(displayText, serializedData);
-             
             }
-
         }
 
         public override string GetDisplayValue()
         {
-
             if (v_IfConditionsTable.Rows.Count == 0)
             {
                 return "If <Not Configured>";
@@ -246,7 +232,6 @@ namespace taskt.Core.Automation.Commands
                 var statements = v_IfConditionsTable.AsEnumerable().Select(f => f.Field<string>("Statement")).ToList();
                 return string.Join(" && ", statements);
             }
-           
         }
     }
 }
