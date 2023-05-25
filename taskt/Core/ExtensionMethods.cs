@@ -63,20 +63,6 @@ namespace taskt.Core
             '\n', '\r', '\t'
         };
 
-        public static DateTime ConvertToUserVariableAsDateTime(this string str, string parameterName, object sender)
-        {
-            string convertedText = str.ConvertToUserVariable(sender);
-            DateTime v;
-            if (DateTime.TryParse(convertedText, out v))
-            {
-                return v;
-            }
-            else
-            {
-                throw new Exception(parameterName + " '" + str + "' is not a DateTime.");
-            }
-        }
-
         public static string GetRawPropertyString(this ScriptCommand command, string propertyName, string propertyDescription)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
@@ -326,6 +312,7 @@ namespace taskt.Core
             }
             return ExpandVariableNormal(variableName, variables, out result);
         }
+
         private static bool ExpandVariableNormal(string variableName, List<Core.Script.ScriptVariable> variables, out string result)
         {
             foreach(var trg in variables)
@@ -339,6 +326,7 @@ namespace taskt.Core
             result = null;
             return false;
         }
+
         private static bool ExpandVariableScriptVariable(string variableName, List<Core.Script.ScriptVariable> variables, out Core.Script.ScriptVariable result)
         {
             foreach (var trg in variables)
