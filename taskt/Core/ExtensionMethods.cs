@@ -642,7 +642,6 @@ namespace taskt.Core
                 return str;
             }
 
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var variableList = engine.VariableList;
@@ -651,7 +650,6 @@ namespace taskt.Core
             var searchList = new List<Core.Script.ScriptVariable>();
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
-
 
             //custom variable markers
             var startVariableMarker = engine.engineSettings.VariableStartMarker;
@@ -685,10 +683,7 @@ namespace taskt.Core
                             complexJsonVariable = complexJsonVariable.Replace("^" + potentialSubVariable + "^", matchingVar.GetDisplayValue());
                             continue;
                         }
-
                     }
-
-
 
                     // => がついていたらそこで JSON のセレクターを何かする
                     //split by json select token pointer
@@ -737,7 +732,6 @@ namespace taskt.Core
                                     str = str.Replace(startVariableMarker + potentialVariable + endVariableMarker, match.ToString());
                                     continue;
                                 }
-
                             }
                         }
                     }
@@ -820,10 +814,7 @@ namespace taskt.Core
                                 cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnName).ToString();
                             }
 
-
                             str = str.Replace(searchVariable, cellItem);
-
-
                         }
                         else if (potentialVariable.Split('.').Length == 2) // This handles vVariable.count 
                         {
@@ -845,7 +836,6 @@ namespace taskt.Core
                         {
 
                         }
-
                     }
                 }
 
@@ -881,12 +871,8 @@ namespace taskt.Core
                             str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnRequired];
                         }
                     }
-
                 }
-
-
             }
-
 
             if (!engine.AutoCalculateVariables)
             {
@@ -931,9 +917,8 @@ namespace taskt.Core
                     return str;
                 }
             }
-
-
         }
+
         /// <summary>
         /// Stores value of the string to a user-defined variable.
         /// </summary>
@@ -1079,7 +1064,6 @@ namespace taskt.Core
                 return false;
             }
         }
-
     }
 }
 
