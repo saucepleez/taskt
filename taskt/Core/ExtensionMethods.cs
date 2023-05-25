@@ -1,15 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Reflection;
-using System.Threading.Tasks;
-using taskt.Core.Automation;
 using taskt.Core.Automation.Commands;
-using System.Reflection.Emit;
 
 namespace taskt.Core
 {
@@ -99,10 +94,6 @@ namespace taskt.Core
 
         public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
         {
-            //var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
-            //string propValue = propInfo.GetValue(command)?.ToString() ?? "";
-
-            //return propValue.ConvertToUserVariable(engine);
             return GetRawPropertyString(command, propertyName, propertyDescription).ConvertToUserVariable(engine);
         }
 
@@ -121,6 +112,7 @@ namespace taskt.Core
                 return str.ConvertToUserVariable_Official(sender);
             }
         }
+
         public static string ConvertToUserVariable_Unofficial(this String str, object sender)
         {
             if (str == null)
@@ -961,12 +953,6 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreInUserVariable(this String str, object sender, string targetVariable)
         {
-            //Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
-            //{
-            //    v_userVariableName = targetVariable,
-            //    v_Input = str
-            //};
-            //newVariableCommand.RunCommand(sender);
             StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, true);
         }
 
@@ -977,13 +963,6 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreRawDataInUserVariable(this String str, object sender, string targetVariable)
         {
-            //Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
-            //{
-            //    v_userVariableName = targetVariable,
-            //    v_Input = str,
-            //    v_ReplaceInputVariables = "No"            
-            //};
-            //newVariableCommand.RunCommand(sender);
             StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
         }
 
@@ -1049,22 +1028,6 @@ namespace taskt.Core
                 return searchedVaiable;
             }
         }
-
-        //public static Script.ScriptVariable GetInnerVariable(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    return GetInnerVariableName(index, engine).GetRawVariable(engine);
-        //}
-
-        //public static void SetInnerVariable(object value, int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    Script.ScriptVariable v = GetInnerVariableName(index, engine).GetRawVariable(engine);
-        //    v.VariableValue = value;
-        //}
-
-        //public static string GetInnerVariableName(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    return engine.engineSettings.wrapVariableMarker("__INNER_" + index.ToString());
-        //}
 
         private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
