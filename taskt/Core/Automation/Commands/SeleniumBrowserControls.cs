@@ -131,8 +131,53 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public static string v_AttributeName { get; }
 
+        /// <summary>
+        /// element wait time
+        /// </summary>
+        [PropertyDescription("Wait Time for the WebElement to Exist (sec)")]
+        [InputSpecification("Wait Time", true)]
+        [Remarks("Specify how long to Wait before an Error will occur because the WebElement is Not Found.")]
+        [PropertyDetailSampleUsage("**120**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
+        [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyIsOptional(true, "120")]
+        [PropertyFirstValue("120")]
+        public static string v_WaitTime { get; }
+
         #region methods
 
+        #region convert store methods
+
+        /// <summary>
+        /// expand user variable as WebElement
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static IWebElement ConvertToUserVariableAsWebElement(this string str, string parameterName, Engine.AutomationEngineInstance engine)
+        {
+            var v = str.GetRawVariable(engine);
+            if (v.VariableValue is IWebElement e)
+            {
+                return e;
+            }
+            else
+            {
+                throw new Exception(parameterName + " '" + str + "' is not a WebElement.");
+            }
+        }
+
+        public static void StoreInUserVariable(this IWebElement value, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
+        }
+
+        #endregion
+
+        #region instance methods
         /// <summary>
         /// get WebBrowser Instance
         /// </summary>
@@ -154,6 +199,205 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Instance Name '" + instanceName + "' is not WebBrowser Instance. Parsed Value: '" + vInstance + "'");
             }
         }
+        #endregion
+
+        #region search element methods
+
+        /// <summary>
+        /// get web element search method by specified search method
+        /// </summary>
+        /// <param name="searchMethod"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static Func<IWebDriver, string, object> GetWebElementSearchMethod(string searchMethod)
+        {
+            switch (searchMethod.ToLower())
+            {
+                case "find element by xpath":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElement(By.XPath(parameter));
+                    });
+
+                case "find element by id":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElement(By.Id(parameter));
+                    });
+
+                case "find element by name":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElement(By.Name(parameter));
+                    });
+
+                case "find element by tag name":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElement(By.TagName(parameter));
+                    });
+
+                case "find element by class name":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElement(By.ClassName(parameter));
+                    });
+
+                case "find element by css selector":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElement(By.CssSelector(parameter));
+                    });
+
+                case "find element by link text":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElement(By.LinkText(parameter));
+                    });
+
+                case "find elements by xpath":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElements(By.XPath(parameter));
+                    });
+
+                case "find elements by id":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElements(By.Id(parameter));
+                    });
+
+                case "find elements by name":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElements(By.Name(parameter));
+                    });
+
+                case "find elements by tag name":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElements(By.TagName(parameter));
+                    });
+
+                case "find elements by class name":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElements(By.ClassName(parameter));
+                    });
+
+                case "find elements by css selector":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElements(By.CssSelector(parameter));
+                    });
+
+                case "find elements by link text":
+                    return new Func<IWebDriver, string, object>((webDriver, parameter) =>
+                    {
+                        return webDriver.FindElements(By.LinkText(parameter));
+                    });
+
+                default:
+                    throw new Exception("Strange Search Method '" + searchMethod + "'");
+            }
+        }
+
+        /// <summary>
+        /// get instance and searched an element
+        /// </summary>
+        /// <param name="seleniumInstance"></param>
+        /// <param name="searchMethod"></param>
+        /// <param name="searchParameter"></param>
+        /// <param name="index"></param>
+        /// <param name="waitTime"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static (IWebDriver, IWebElement) GetSeleniumBrowserInstanceAndElement(IWebDriver seleniumInstance, string searchMethod, string searchParameter, int index, int waitTime, Engine.AutomationEngineInstance engine)
+        {
+            var searchFunc = GetWebElementSearchMethod(searchMethod);
+
+            var ret = WaitControls.WaitProcess(waitTime, "WebElement", new Func<(bool, object)>(() =>
+            {
+                try
+                {
+                    var t = searchFunc(seleniumInstance, searchParameter);
+                    if (t is IWebElement elem)
+                    {
+                        return (true, elem);
+                    }
+                    else if (t is ReadOnlyCollection<IWebElement> elems)
+                    {
+                        if (index < 0)
+                        {
+                            index += elems.Count;
+                        }
+                        if ((index >= 0) && (index < elems.Count))
+                        {
+                            return (true, elems[index]);
+                        }
+                        else
+                        {
+                            return (false, null);
+                        }
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }
+                catch
+                {
+                    return (false, null);
+                }
+            }), engine);
+
+            if (ret is IWebElement e)
+            {
+                return (seleniumInstance, e);
+            }
+            else
+            {
+                throw new Exception("WebElement Not Found.");
+            }
+        }
+
+        /// <summary>
+        /// get instance and searched an element
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="instanceParameterName"></param>
+        /// <param name="searchMethodName"></param>
+        /// <param name="searchParameterName"></param>
+        /// <param name="elementIndexName"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static (IWebDriver, IWebElement) GetSeleniumBrowserInstanceAndElement(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, string elementIndexName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var instanceName = command.ConvertToUserVariable(instanceParameterName, "WebBrowser Instance Name", engine);
+            var seleniumInstance = instanceName.GetSeleniumBrowserInstance(engine);
+
+            var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
+            var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
+
+            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+            var indexString = command.GetRawPropertyString(elementIndexName, "Index");
+            int index;
+            if (string.IsNullOrEmpty(indexString))
+            {
+                index = 0;
+            }
+            else
+            {
+                index = command.ConvertToUserVariableAsInteger(elementIndexName, engine);
+            }
+
+            return GetSeleniumBrowserInstanceAndElement(seleniumInstance, searchMethod, searchParameter, index, waitTime, engine);
+        }
+
+        #endregion
 
         /// <summary>
         /// get WebBrowser Instance and Searched One Element
@@ -350,6 +594,7 @@ namespace taskt.Core.Automation.Commands
             return element;
         }
 
+
         /// <summary>
         /// get element attribute
         /// </summary>
@@ -413,27 +658,6 @@ namespace taskt.Core.Automation.Commands
         public static void SearchMethodComboBox_SelectionChangeCommitted(Dictionary<string, Control> controlsList, ComboBox searchMethodComboBox, string indexParameterName)
         {
             string item = searchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
-            //if (item.StartsWith("find elements"))
-            //{
-            //    foreach (var ctrl in controlsList)
-            //    {
-            //        if (ctrl.Key.Contains(indexParameterName))
-            //        {
-            //            ctrl.Value.Visible = true;
-            //        }
-            //    }
-            //    //GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, true);
-            //}
-            //else
-            //{
-            //    foreach (var ctrl in controlsList)
-            //    {
-            //        if (ctrl.Key.Contains(indexParameterName))
-            //        {
-            //            ctrl.Value.Visible = false;
-            //        }
-            //    }
-            //}
             GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, item.StartsWith("find elements"));
         }
 
