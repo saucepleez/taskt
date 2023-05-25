@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using OpenQA.Selenium;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -72,6 +73,10 @@ namespace taskt.Core.Automation.Commands
             else if (rawValue is AutomationElement)
             {
                 result = "AUTOMATIONELEMENT";
+            }
+            else if (rawValue is IWebElement)
+            {
+                result = "WEBELEMENT";
             }
             else if (rawValue is string)
             {
