@@ -8,13 +8,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
-    [Attributes.ClassAttributes.CommandSettings("Get Elements Value As Dictionary")]
+    [Attributes.ClassAttributes.CommandSettings("Get WebElements Value As Dictionary")]
     [Attributes.ClassAttributes.Description("This command allows you to get a Attribute value for WegElements As Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a Attribute value for WegElements As Dictionary.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SeleniumBrowserGetElementsValueAsDictionaryCommand : ScriptCommand
+    public class SeleniumBrowserGetWebElementsValueAsDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public SeleniumBrowserGetElementsValueAsDictionaryCommand()
+        public SeleniumBrowserGetWebElementsValueAsDictionaryCommand()
         {
             //this.CommandName = "SeleniumBrowserGetElementsValueAsDictionaryCommand";
             //this.SelectionName = "Get Elements Value As Dictionary";

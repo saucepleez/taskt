@@ -1078,6 +1078,32 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        public static XDocument convertTo3_5_1_48(XDocument doc)
+        {
+            // SeleniumBrowserGetAnElementValuesAsDataTableCommand -> SeleniumBrowserGetAnWebElementValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "SeleniumBrowserGetAnWebElementValuesAsDataTableCommand", "Get An WebElement Values As DataTable");
+
+            // SeleniumBrowserGetAnElementValuesAsDictionaryCommand -> SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnElementValuesAsDictionaryCommand", "SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand", "Get An WebElement Values As Dictionary");
+
+            // SeleniumBrowserGetAnElementValuesAsListCommand -> SeleniumBrowserGetAnWebElementValuesAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnElementValuesAsListCommand", "SeleniumBrowserGetAnWebElementValuesAsListCommand", "Get An WebElement Values As List");
+
+            // SeleniumBrowserGetElementsValueAsDataTableCommand -> SeleniumBrowserGetWebElementsValueAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetElementsValueAsDataTableCommand", "SeleniumBrowserGetWebElementsValueAsDataTableCommand", "Get WebElements Value As DataTable");
+
+            // SeleniumBrowserGetElementsValueAsDictionaryCommand -> SeleniumBrowserGetWebElementsValueAsDictionaryCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetElementsValueAsDictionaryCommand", "SeleniumBrowserGetWebElementsValueAsDictionaryCommand", "Get WebElements Value As Dictionary");
+
+            // SeleniumBrowserGetElementsValueAsListCommand -> SeleniumBrowserGetWebElementsValueAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetElementsValueAsListCommand", "SeleniumBrowserGetWebElementsValueAsListCommand", "Get WebElements Value As List");
+
+            // SeleniumBrowserGetElementsValuesAsDataTableCommand -> SeleniumBrowserGetWebElementsValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetElementsValuesAsDataTableCommand", "SeleniumBrowserGetWebElementsValuesAsDataTableCommand", "Get WebElements Values As DataTable");
+
+            return doc;
+        }
+
         /// <summary>
         /// change command name to specified commands
         /// </summary>

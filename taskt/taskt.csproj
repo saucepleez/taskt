@@ -296,7 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementAndWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
@@ -503,13 +503,13 @@
     <Compile Include="Core\Automation\Commands\Variable\GetVariableIndexCommand.cs" />
     <Compile Include="Core\Automation\Commands\WaitControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValuesAsDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnElementValuesAsDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnElementValuesAsListCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValueAsDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnElementValuesAsDictionaryCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValueAsDictionaryCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetElementsValueAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnWebElementValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnWebElementValuesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowNameControls.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
