@@ -298,6 +298,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_44(doc);
             convertTo3_5_1_45(doc);
             convertTo3_5_1_46(doc);
+            convertTo3_5_1_48(doc);
 
             return doc;
         }
