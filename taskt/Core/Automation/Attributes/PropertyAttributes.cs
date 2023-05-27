@@ -328,7 +328,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             AutomationElement,
             Color,
             MailKitEMail,
-            MailKitEMailList
+            MailKitEMailList,
+            WebElement
         }
     }
 
