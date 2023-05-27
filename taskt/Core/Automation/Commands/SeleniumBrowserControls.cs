@@ -145,6 +145,37 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("120")]
         public static string v_WaitTime { get; }
 
+        /// <summary>
+        /// input WebElement property
+        /// </summary>
+        [PropertyDescription("WebElement Variable Name")]
+        [InputSpecification("WebElement Variable Name", true)]
+        [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Element")]
+        public static string v_InputWebElementName { get; }
+
+        /// <summary>
+        /// output WebElement property
+        /// </summary>
+        [PropertyDescription("WebElement Variable Name")]
+        [InputSpecification("WebElement Variable Name", true)]
+        [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WebElement, true)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Element")]
+        public static string v_OutputWebElementName { get; }
+
         #region methods
 
         #region convert store methods
@@ -201,7 +232,7 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
-        #region search element methods
+        #region search element(s) methods
 
         /// <summary>
         /// get web element search method by specified search method
@@ -395,6 +426,84 @@ namespace taskt.Core.Automation.Commands
             }
 
             return GetSeleniumBrowserInstanceAndElement(seleniumInstance, searchMethod, searchParameter, index, waitTime, engine);
+        }
+
+        /// <summary>
+        /// get instance and searched elements
+        /// </summary>
+        /// <param name="seleniumInstance"></param>
+        /// <param name="searchMethod"></param>
+        /// <param name="searchParameter"></param>
+        /// <param name="waitTime"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static (IWebDriver, List<IWebElement>) GetSeleniumBrowserInstanceAndElements(IWebDriver seleniumInstance, string searchMethod, string searchParameter, int waitTime, Engine.AutomationEngineInstance engine)
+        {
+            var searchFunc = GetWebElementSearchMethod(searchMethod);
+
+            var ret = WaitControls.WaitProcess(waitTime, "WebElement", new Func<(bool, object)>(() =>
+            {
+                try
+                {
+                    var t = searchFunc(seleniumInstance, searchParameter);
+                    if (t is IWebElement elem)
+                    {
+                        return (true, new List<IWebElement>() { elem });
+                    }
+                    else if (t is ReadOnlyCollection<IWebElement> elems)
+                    {
+                        if (elems.Count > 0)
+                        {
+                            return (true, elems.ToList());
+                        }
+                        else
+                        {
+                            return (false, null);
+                        }
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }
+                catch
+                {
+                    return (false, null);
+                }
+            }), engine);
+
+            if (ret is List<IWebElement> e)
+            {
+                return (seleniumInstance, e);
+            }
+            else
+            {
+                throw new Exception("WebElement(s) Not Found.");
+            }
+        }
+
+        /// <summary>
+        /// get instance and searched elements
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="instanceParameterName"></param>
+        /// <param name="searchMethodName"></param>
+        /// <param name="searchParameterName"></param>
+        /// <param name="waitTimeName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static (IWebDriver, List<IWebElement>) GetSeleniumBrowserInstanceAndElements(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        {
+            var instanceName = command.ConvertToUserVariable(instanceParameterName, "WebBrowser Instance Name", engine);
+            var seleniumInstance = instanceName.GetSeleniumBrowserInstance(engine);
+
+            var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
+            var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
+
+            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+
+            return GetSeleniumBrowserInstanceAndElements(seleniumInstance, searchMethod, searchParameter, waitTime, engine);
         }
 
         #endregion
