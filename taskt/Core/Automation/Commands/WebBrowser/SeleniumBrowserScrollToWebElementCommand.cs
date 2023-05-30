@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("WebElement Action")]
-    [Attributes.ClassAttributes.CommandSettings("Clear Text In WebElement")]
+    [Attributes.ClassAttributes.CommandSettings("Scroll To WebElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Scroll to WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Scroll to WebElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
@@ -48,7 +48,11 @@ namespace taskt.Core.Automation.Commands
             {
                 string scroll = string.Format("window.scroll(0, {0})", elem.Location.Y);
                 IJavaScriptExecutor js = seleniumInstance as IJavaScriptExecutor;
-                js.ExecuteScript(scroll);
+                js.ExecuteScript(scroll);           
+
+                // Debug
+                //Console.WriteLine("JSJS");
+                //Console.WriteLine(scroll);
             }
             catch
             {

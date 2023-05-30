@@ -45,6 +45,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_WhenSetNotSupported { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyDescription("Try Scroll To the WebElement")]
+        [PropertyIsOptional(false, "No")]
+        public string v_ScrollToElement { get; set; }
+
         public SeleniumBrowserSetTextToWebElementCommand()
         {
         }
@@ -52,6 +58,16 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
+
+            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            {
+                var scroll = new SeleniumBrowserScrollToWebElementCommand
+                {
+                    v_WebElement = this.v_WebElement,
+                    v_WhenFailScroll = "ignore"
+                };
+                scroll.RunCommand(engine);
+            }
 
             var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
 
