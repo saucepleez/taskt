@@ -297,6 +297,7 @@
   <ItemGroup>
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementAndWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckWebElementExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClickWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserScrollToWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAttributeFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSetTextToWebElementCommand.cs" />
