@@ -47,8 +47,9 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 string scroll = string.Format("window.scroll(0, {0})", elem.Location.Y);
-                IJavaScriptExecutor js = seleniumInstance as IJavaScriptExecutor;
-                js.ExecuteScript(scroll);           
+                //IJavaScriptExecutor js = seleniumInstance as IJavaScriptExecutor;
+                //js.ExecuteScript(scroll);
+                SeleniumBrowserControls.ExcecuteScript(seleniumInstance, scroll);
 
                 // Debug
                 //Console.WriteLine("JSJS");

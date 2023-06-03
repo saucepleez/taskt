@@ -857,6 +857,16 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
+        #region JS execute
+        
+        public static object ExcecuteScript(IWebDriver seleniumInstance, string script)
+        {
+            var js = seleniumInstance as IJavaScriptExecutor;
+            return js.ExecuteScript(script);
+        }
+
+        #endregion
+
         #endregion
 
         #region events
