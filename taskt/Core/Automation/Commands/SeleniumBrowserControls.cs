@@ -176,6 +176,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Element")]
         public static string v_OutputWebElementName { get; }
 
+        /// <summary>
+        /// scroll to element
+        /// </summary>
+        [PropertyDescription("Scroll to WebElement")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [PropertyIsOptional(true, "No")]
+        public static string v_ScrollToElement { get; }
+
         #region methods
 
         #region convert store methods
@@ -853,6 +865,11 @@ namespace taskt.Core.Automation.Commands
         {
             string item = searchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
             GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, item.StartsWith("find elements"));
+        }
+
+        public static void ScrollToWebElement_SelectionChange(ComboBox scrollParameter, Dictionary<string, Control> controlsList, string instanceParameterName)
+        {
+            GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, instanceParameterName, ((scrollParameter.SelectedItem?.ToString().ToLower() ?? "") != "no"));
         }
 
         #endregion

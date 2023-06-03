@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -46,10 +47,14 @@ namespace taskt.Core.Automation.Commands
         public string v_WhenSetNotSupported { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
-        [PropertyDescription("Try Scroll To the WebElement")]
-        [PropertyIsOptional(false, "No")]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        [PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
         public string v_ScrollToElement { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        [PropertyIsOptional(true)]
+        public string v_InstanceName { get; set; }
 
         public SeleniumBrowserSetTextToWebElementCommand()
         {
@@ -63,6 +68,7 @@ namespace taskt.Core.Automation.Commands
             {
                 var scroll = new SeleniumBrowserScrollToWebElementCommand
                 {
+                    v_InstanceName = this.v_InstanceName,
                     v_WebElement = this.v_WebElement,
                     v_WhenFailScroll = "ignore"
                 };
@@ -99,6 +105,11 @@ namespace taskt.Core.Automation.Commands
                     throw new Exception("Fail Setting Text. TagName: '" + elem.TagName + "'");
                 }
             }
+        }
+
+        private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
+        {
+            SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
         }
     }
 }
