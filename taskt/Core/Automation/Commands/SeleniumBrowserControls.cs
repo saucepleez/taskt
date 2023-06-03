@@ -857,8 +857,17 @@ namespace taskt.Core.Automation.Commands
 
         #endregion
 
+        #region tag methods
+
+        public static bool CheckTagName(this IWebElement elem, string tagName)
+        {
+            return (elem.TagName.ToLower() == tagName.ToLower());
+        }
+
+        #endregion
+
         #region JS execute
-        
+
         public static object ExcecuteScript(IWebDriver seleniumInstance, string script)
         {
             var js = seleniumInstance as IJavaScriptExecutor;
