@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -41,6 +42,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_WhenNoAttribute { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        [PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
+        public string v_ScrollToElement { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        [PropertyIsOptional(true)]
+        public string v_InstanceName { get; set; }
+
         public SeleniumBrowserGetAttributeFromWebElementCommand()
         {
         }
@@ -48,6 +59,17 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
+
+            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            {
+                var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
+                {
+                    v_InstanceName = this.v_InstanceName,
+                    v_WebElement = this.v_WebElement,
+                    v_WhenFailScroll = "ignore"
+                };
+                scrollCommand.RunCommand(engine);
+            }
 
             var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
 
@@ -70,6 +92,11 @@ namespace taskt.Core.Automation.Commands
                     "".StoreInUserVariable(engine, v_Result);
                 }
             }
+        }
+
+        private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
+        {
+            SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -46,6 +47,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        [PropertySelectionChangeEvent(nameof(cmbScrollToElement_SelectionChange))]
         public string v_ScrollToElement { get; set; }
 
         [XmlAttribute]
@@ -107,6 +109,11 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             lst.StoreInUserVariable(engine, v_Result);
+        }
+
+        private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)
+        {
+            SeleniumBrowserControls.ScrollToWebElement_SelectionChange((ComboBox)sender, ControlsList, nameof(v_InstanceName));
         }
     }
 }

@@ -23,6 +23,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_Result { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        public string v_ScrollToElement { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        [PropertyIsOptional(true)]
+        public string v_InstanceName { get; set; }
+
         public SeleniumBrowserGetHTMLFromWebElementCommand()
         {
         }
@@ -35,7 +44,9 @@ namespace taskt.Core.Automation.Commands
             {
                 v_WebElement = this.v_WebElement,
                 v_AttributeName = "outerHTML",
-                v_Result = this.v_Result
+                v_Result = this.v_Result,
+                v_ScrollToElement = this.v_ScrollToElement,
+                v_InstanceName = this.v_InstanceName,
             };
             getAttribute.RunCommand(engine);
         }
