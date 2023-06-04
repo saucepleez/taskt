@@ -24,7 +24,8 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Attribute Name")]
-        [PropertyDetailSampleUsage("**class**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
+        [PropertyDetailSampleUsage("**textContent**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
+        [PropertyDetailSampleUsage("**value**", PropertyDetailSampleUsage.ValueType.Value, "Attribute")]
         [PropertyDetailSampleUsage("**{{{vAttribute}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Attribute")]
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Attribute")]
@@ -43,6 +44,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_WhenNoAttribute { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_ScrollToElement))]
+        public string v_ScrollToElement { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
+        [PropertyIsOptional(true)]
+        public string v_InstanceName { get; set; }
+
         public SeleniumBrowserGetOptionsFromWebElementCommand()
         {
         }
@@ -52,6 +62,17 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+
+            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            {
+                var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
+                {
+                    v_InstanceName = this.v_InstanceName,
+                    v_WebElement = this.v_WebElement,
+                    v_WhenFailScroll = "ignore"
+                };
+                scrollCommand.RunCommand(engine);
+            }
 
             if (!elem.CheckTagName("select"))
             {
