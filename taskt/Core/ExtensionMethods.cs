@@ -1,15 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Reflection;
-using System.Threading.Tasks;
-using taskt.Core.Automation;
 using taskt.Core.Automation.Commands;
-using System.Reflection.Emit;
 
 namespace taskt.Core
 {
@@ -68,20 +63,6 @@ namespace taskt.Core
             '\n', '\r', '\t'
         };
 
-        public static DateTime ConvertToUserVariableAsDateTime(this string str, string parameterName, object sender)
-        {
-            string convertedText = str.ConvertToUserVariable(sender);
-            DateTime v;
-            if (DateTime.TryParse(convertedText, out v))
-            {
-                return v;
-            }
-            else
-            {
-                throw new Exception(parameterName + " '" + str + "' is not a DateTime.");
-            }
-        }
-
         public static string GetRawPropertyString(this ScriptCommand command, string propertyName, string propertyDescription)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
@@ -99,10 +80,6 @@ namespace taskt.Core
 
         public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
         {
-            //var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
-            //string propValue = propInfo.GetValue(command)?.ToString() ?? "";
-
-            //return propValue.ConvertToUserVariable(engine);
             return GetRawPropertyString(command, propertyName, propertyDescription).ConvertToUserVariable(engine);
         }
 
@@ -121,6 +98,7 @@ namespace taskt.Core
                 return str.ConvertToUserVariable_Official(sender);
             }
         }
+
         public static string ConvertToUserVariable_Unofficial(this String str, object sender)
         {
             if (str == null)
@@ -334,6 +312,7 @@ namespace taskt.Core
             }
             return ExpandVariableNormal(variableName, variables, out result);
         }
+
         private static bool ExpandVariableNormal(string variableName, List<Core.Script.ScriptVariable> variables, out string result)
         {
             foreach(var trg in variables)
@@ -347,6 +326,7 @@ namespace taskt.Core
             result = null;
             return false;
         }
+
         private static bool ExpandVariableScriptVariable(string variableName, List<Core.Script.ScriptVariable> variables, out Core.Script.ScriptVariable result)
         {
             foreach (var trg in variables)
@@ -662,7 +642,6 @@ namespace taskt.Core
                 return str;
             }
 
-
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var variableList = engine.VariableList;
@@ -671,7 +650,6 @@ namespace taskt.Core
             var searchList = new List<Core.Script.ScriptVariable>();
             searchList.AddRange(variableList);
             searchList.AddRange(systemVariables);
-
 
             //custom variable markers
             var startVariableMarker = engine.engineSettings.VariableStartMarker;
@@ -705,10 +683,7 @@ namespace taskt.Core
                             complexJsonVariable = complexJsonVariable.Replace("^" + potentialSubVariable + "^", matchingVar.GetDisplayValue());
                             continue;
                         }
-
                     }
-
-
 
                     // => がついていたらそこで JSON のセレクターを何かする
                     //split by json select token pointer
@@ -757,7 +732,6 @@ namespace taskt.Core
                                     str = str.Replace(startVariableMarker + potentialVariable + endVariableMarker, match.ToString());
                                     continue;
                                 }
-
                             }
                         }
                     }
@@ -840,10 +814,7 @@ namespace taskt.Core
                                 cellItem = dt.Rows[varCheck.CurrentPosition].Field<object>(columnName).ToString();
                             }
 
-
                             str = str.Replace(searchVariable, cellItem);
-
-
                         }
                         else if (potentialVariable.Split('.').Length == 2) // This handles vVariable.count 
                         {
@@ -865,7 +836,6 @@ namespace taskt.Core
                         {
 
                         }
-
                     }
                 }
 
@@ -901,12 +871,8 @@ namespace taskt.Core
                             str = (string)dataTable.Rows[datasetVariable.CurrentPosition][columnRequired];
                         }
                     }
-
                 }
-
-
             }
-
 
             if (!engine.AutoCalculateVariables)
             {
@@ -951,9 +917,8 @@ namespace taskt.Core
                     return str;
                 }
             }
-
-
         }
+
         /// <summary>
         /// Stores value of the string to a user-defined variable.
         /// </summary>
@@ -961,12 +926,6 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreInUserVariable(this String str, object sender, string targetVariable)
         {
-            //Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
-            //{
-            //    v_userVariableName = targetVariable,
-            //    v_Input = str
-            //};
-            //newVariableCommand.RunCommand(sender);
             StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, true);
         }
 
@@ -977,13 +936,6 @@ namespace taskt.Core
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
         public static void StoreRawDataInUserVariable(this String str, object sender, string targetVariable)
         {
-            //Core.Automation.Commands.VariableCommand newVariableCommand = new Core.Automation.Commands.VariableCommand
-            //{
-            //    v_userVariableName = targetVariable,
-            //    v_Input = str,
-            //    v_ReplaceInputVariables = "No"            
-            //};
-            //newVariableCommand.RunCommand(sender);
             StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
         }
 
@@ -1050,22 +1002,6 @@ namespace taskt.Core
             }
         }
 
-        //public static Script.ScriptVariable GetInnerVariable(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    return GetInnerVariableName(index, engine).GetRawVariable(engine);
-        //}
-
-        //public static void SetInnerVariable(object value, int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    Script.ScriptVariable v = GetInnerVariableName(index, engine).GetRawVariable(engine);
-        //    v.VariableValue = value;
-        //}
-
-        //public static string GetInnerVariableName(int index, Core.Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    return engine.engineSettings.wrapVariableMarker("__INNER_" + index.ToString());
-        //}
-
         private static Script.ScriptVariable lookupVariable(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             //search for the variable
@@ -1128,7 +1064,6 @@ namespace taskt.Core
                 return false;
             }
         }
-
     }
 }
 

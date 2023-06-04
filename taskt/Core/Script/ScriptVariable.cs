@@ -3,6 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
+using OpenQA.Selenium;
 
 namespace taskt.Core.Script
 {
@@ -72,6 +73,10 @@ namespace taskt.Core.Script
             else if (VariableValue is List<MimeKit.MimeMessage> list)
             {
                 return GetDisplayValue(list, requiredProperty);
+            }
+            else if (VariableValue is IWebElement webElem)
+            {
+                return GetDisplayValue(webElem, requiredProperty);
             }
             else
             {
@@ -321,6 +326,19 @@ namespace taskt.Core.Script
                     return "MAILKIT_EMAILLIST";
                 default:
                     return "Index: " + CurrentPosition + ", " + GetDisplayValue(mails[CurrentPosition], "");
+            }
+        }
+
+        private string GetDisplayValue(IWebElement elem, string requiredProperty)
+        {
+            switch(requiredProperty)
+            {
+                case "type":
+                case "Type":
+                case "TYPE":
+                    return "WEBELEMENT";
+                default:
+                    return elem.ToString();
             }
         }
     }

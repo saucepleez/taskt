@@ -59,6 +59,28 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Variable " + variableName + " is not DateTime");
             }
         }
+
+        /// <summary>
+        /// expand user variable as DateTime
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static DateTime ConvertToUserVariableAsDateTime(this string str, string parameterName, object sender)
+        {
+            string convertedText = str.ConvertToUserVariable(sender);
+            if (DateTime.TryParse(convertedText, out DateTime v))
+            {
+                return v;
+            }
+            else
+            {
+                throw new Exception(parameterName + " '" + str + "' is not a DateTime.");
+            }
+        }
+
         public static void StoreInUserVariable(this DateTime value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
