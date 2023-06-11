@@ -207,6 +207,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        public override void AfterShown()
+        {
+            var cmb = PropertyControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_SeleniumElementAction));
+            var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
+            actionParameterProcess(dgv, v_WebActionParameterTable, cmb.SelectedItem?.ToString() ?? "");
+        }
+
         private void cmbSearchType_SelectionChangeCommited(object sender, EventArgs e)
         {
             var searchType = ((ComboBox)sender).SelectedItem?.ToString().ToLower() ?? "";
@@ -216,6 +223,8 @@ namespace taskt.Core.Automation.Commands
         private void cmbSeleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
             var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
+
+            //actionParameterProcess(dgv, v_WebActionParameterTable, (ComboBox)sender);
 
             v_WebActionParameterTable.Clear();
 
@@ -243,12 +252,12 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "select option":
-                    v_WebActionParameterTable.Rows.Add("Selection Type");
+                    v_WebActionParameterTable.Rows.Add(new string[] { "Selection Type", "Select By Value" });
                     v_WebActionParameterTable.Rows.Add("Selection Parameter");
                     break;
 
                 case "click webelement":
-                    v_WebActionParameterTable.Rows.Add("Click Type");
+                    v_WebActionParameterTable.Rows.Add(new string[] { "Click Type", "Invoke Click" });
                     v_WebActionParameterTable.Rows.Add("X Offset");
                     v_WebActionParameterTable.Rows.Add("Y Offset");
                     break;
@@ -262,21 +271,72 @@ namespace taskt.Core.Automation.Commands
             }
             dgv.DataSource = v_WebActionParameterTable;
 
-            switch (actionType)
+            actionParameterProcess(dgv, v_WebActionParameterTable, actionType);
+
+            //switch (actionType)
+            //{
+            //    case "set text":
+            //        var clearBefore = new DataGridViewComboBoxCell();
+            //        clearBefore.Items.AddRange(new string[] { "", "Yes", "No" });
+            //        var encrypted = new DataGridViewComboBoxCell();
+            //        encrypted.Items.AddRange(new string[] { "", "Yes", "No" });
+            //        //dgv.Rows[1].Cells[1].Value = "";
+            //        dgv.Rows[1].Cells[1] = clearBefore;
+            //        //dgv.Rows[2].Cells[1].Value = "";
+            //        dgv.Rows[2].Cells[1] = encrypted;
+            //        break;
+            //    case "select option":
+            //        var selectionType = new DataGridViewComboBoxCell();
+            //        selectionType.Items.AddRange(new string[] { 
+            //            "Select By Index",
+            //            "Select By Text",
+            //            "Select By Value",
+            //            "Deselect By Index",
+            //            "Deselect By Text",
+            //            "Deselect By Value",
+            //            "Deselect All",
+            //        });
+            //        //dgv.Rows[0].Cells[1].Value = "Select By Value";
+            //        dgv.Rows[0].Cells[1] = selectionType;
+            //        break;
+            //    case "click webelement":
+            //        var clickType = new DataGridViewComboBoxCell();
+            //        clickType.Items.AddRange(new string[]
+            //        {
+            //            "Left Click",
+            //            "Middle Click",
+            //            "Right Click",
+            //            "Left Down",
+            //            "Middle Down",
+            //            "Right Down",
+            //            "Left Up",
+            //            "Middle Up",
+            //            "Right Up",
+            //            "Double Left Click",
+            //            "None",
+            //            "Invoke Click",
+            //        });
+            //        //dgv.Rows[0].Cells[1].Value = "Invoke Click";
+            //        dgv.Rows[0].Cells[1] = clickType;
+            //        break;
+            //}
+        }
+
+        private static void actionParameterProcess(DataGridView dgv, DataTable table, string actionType)
+        {
+            switch (actionType.ToLower())
             {
                 case "set text":
                     var clearBefore = new DataGridViewComboBoxCell();
                     clearBefore.Items.AddRange(new string[] { "", "Yes", "No" });
                     var encrypted = new DataGridViewComboBoxCell();
                     encrypted.Items.AddRange(new string[] { "", "Yes", "No" });
-                    dgv.Rows[1].Cells[1].Value = "";
                     dgv.Rows[1].Cells[1] = clearBefore;
-                    dgv.Rows[2].Cells[1].Value = "";
                     dgv.Rows[2].Cells[1] = encrypted;
                     break;
                 case "select option":
                     var selectionType = new DataGridViewComboBoxCell();
-                    selectionType.Items.AddRange(new string[] { 
+                    selectionType.Items.AddRange(new string[] {
                         "Select By Index",
                         "Select By Text",
                         "Select By Value",
@@ -285,7 +345,6 @@ namespace taskt.Core.Automation.Commands
                         "Deselect By Value",
                         "Deselect All",
                     });
-                    dgv.Rows[0].Cells[1].Value = "Select By Value";
                     dgv.Rows[0].Cells[1] = selectionType;
                     break;
                 case "click webelement":
@@ -305,7 +364,6 @@ namespace taskt.Core.Automation.Commands
                         "None",
                         "Invoke Click",
                     });
-                    dgv.Rows[0].Cells[1].Value = "Invoke Click";
                     dgv.Rows[0].Cells[1] = clickType;
                     break;
             }
