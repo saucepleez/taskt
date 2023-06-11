@@ -548,11 +548,6 @@ namespace taskt.Core.Script
                 var isExists = rows.Any(r => r.Element("Parameter_x0020_Name").Value == "Search Method");
                 if (!isExists)
                 {
-                    //AddTableRow(table, rows, new Dictionary<string, string>
-                    //{
-                    //    { "Parameter_x0020_Name", "Search Method" },
-                    //    { "Parameter_x0020_Value", "Contains" },
-                    //});
                     var addRow = new Dictionary<string, string>
                     {
                         { "Parameter_x0020_Name", "Search Method" },
@@ -1493,33 +1488,6 @@ namespace taskt.Core.Script
             }), tableParameterName, modifyFunc);
             return doc;
         }
-
-        ///// <summary>
-        ///// add table row
-        ///// </summary>
-        ///// <param name="table"></param>
-        ///// <param name="rows"></param>
-        ///// <param name="cols"></param>
-        //private static void AddTableRow(XElement table, List<XElement> rows, Dictionary<string, string> cols)
-        //{
-        //    XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
-        //    XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
-
-        //    var row = rows[0];
-        //    var newElem = new XElement(row.Name);
-        //    newElem.Add(new XAttribute(diffNs + "id", row.Name + (rows.Count() + 1).ToString()));    // diffgr:id
-        //    newElem.Add(new XAttribute(msNs + "rowOrder", rows.Count().ToString()));   // msdata:rowOrder
-
-        //    foreach(var col in cols)
-        //    {
-        //        newElem.Add(new XElement(col.Key)
-        //        {
-        //            Value = col.Value
-        //        });
-        //    }
-
-        //    table.Add(newElem);
-        //}
 
         /// <summary>
         /// add table row
