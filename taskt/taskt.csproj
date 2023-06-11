@@ -632,7 +632,7 @@
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunCSharpCodeCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunBatchScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserElementActionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserElementActionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWebElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserExecuteScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserNavigateBackCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserNavigateForwardCommand.cs" />

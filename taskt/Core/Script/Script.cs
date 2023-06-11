@@ -20,6 +20,9 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Data;
 using taskt.Core.Automation.Commands;
+using System.Web.ModelBinding;
+using Microsoft.Office.Interop.Word;
+using SimpleNLG;
 
 namespace taskt.Core.Script
 {
@@ -299,6 +302,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_45(doc);
             convertTo3_5_1_46(doc);
             convertTo3_5_1_48(doc);
+            convertTo3_5_1_49(doc);
 
             return doc;
         }
@@ -539,16 +543,23 @@ namespace taskt.Core.Script
         }
         private static XDocument convertTo3_5_0_78(XDocument doc)
         {
-            var modFunc = new Action<XElement, List<XElement>>((table, rows) =>
+            var modFunc = new Action<XElement, XElement, List<XElement>, string>((table, before, rows, rowName) =>
             {
                 var isExists = rows.Any(r => r.Element("Parameter_x0020_Name").Value == "Search Method");
                 if (!isExists)
                 {
-                    AddTableRow(table, rows, new Dictionary<string, string>
+                    //AddTableRow(table, rows, new Dictionary<string, string>
+                    //{
+                    //    { "Parameter_x0020_Name", "Search Method" },
+                    //    { "Parameter_x0020_Value", "Contains" },
+                    //});
+                    var addRow = new Dictionary<string, string>
                     {
                         { "Parameter_x0020_Name", "Search Method" },
                         { "Parameter_x0020_Value", "Contains" },
-                    });
+                    };
+                    AddTableRow(table, addRow, rowName, rows.Count);
+                    AddTableRow(before, addRow, rowName, rows.Count, false);
                 }
             });
 
@@ -968,10 +979,15 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_1_44(XDocument doc)
         {
             // Move/Copy File command -> Move File, Copy File command
-            var commands = doc.Descendants("ScriptCommand").Where(el => {
+            //var commands = doc.Descendants("ScriptCommand").Where(el => {
+            //    return (el.Attribute("CommandName").Value == "MoveFileCommand") &&
+            //        (el.Attribute("v_OperationType") != null);
+            //});
+            var commands = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
                 return (el.Attribute("CommandName").Value == "MoveFileCommand") &&
                     (el.Attribute("v_OperationType") != null);
-            });
+            }));
             var moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy file")).ToList();
             var copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy file")).ToList();
             ChangeCommandName(moveCommands, "MoveFileCommand", "Move File");
@@ -987,10 +1003,15 @@ namespace taskt.Core.Script
             copyCommands = null;
 
             // Move/Copy Folder command -> Move Folder, Copy Folder command
-            commands = doc.Descendants("ScriptCommand").Where(el => {
+            //commands = doc.Descendants("ScriptCommand").Where(el => {
+            //    return (el.Attribute("CommandName").Value == "MoveFolderCommand") &&
+            //        (el.Attribute("v_OperationType") != null);
+            //});
+            commands = GetCommands(doc, new Func<XElement, bool>(el =>
+            {
                 return (el.Attribute("CommandName").Value == "MoveFolderCommand") &&
                     (el.Attribute("v_OperationType") != null);
-            });
+            }));
             moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy folder")).ToList();
             copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy folder")).ToList();
             ChangeCommandName(moveCommands, "MoveFolderCommand", "Move Folder");
@@ -1018,11 +1039,16 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
 
             // UIAutomationClickElementCommand clickType, xOffset, yOffset parameters to attributes
-            var commands = doc.Descendants("ScriptCommand").Where(el =>
+            //var commands = doc.Descendants("ScriptCommand").Where(el =>
+            //{
+            //    return ((el.Attribute("CommandName").Value == "UIAutomationClickElementCommand") &&
+            //                (el.Attribute("v_ClickType") == null));
+            //});
+            var commands = GetCommands(doc, new Func<XElement, bool>(el =>
             {
                 return ((el.Attribute("CommandName").Value == "UIAutomationClickElementCommand") &&
                             (el.Attribute("v_ClickType") == null));
-            });
+            }));
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
             {
@@ -1057,7 +1083,8 @@ namespace taskt.Core.Script
             commands = null;    // release
 
             // UIAutomationSearchElementAndWindowByXPathCommand v_SearchXPath to attributes
-            commands = doc.Descendants("ScriptCommand").Where(el => (el.Attribute("CommandName").Value == "UIAutomationSearchElementAndWindowByXPathCommand"));
+            //commands = doc.Descendants("ScriptCommand").Where(el => (el.Attribute("CommandName").Value == "UIAutomationSearchElementAndWindowByXPathCommand"));
+            commands = GetCommands(doc, "UIAutomationSearchElementAndWindowByXPathCommand");
             foreach (var cmd in commands)
             {
                 var xpath = cmd.Element("v_SearchXPath");
@@ -1079,7 +1106,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        public static XDocument convertTo3_5_1_48(XDocument doc)
+        private static XDocument convertTo3_5_1_48(XDocument doc)
         {
             // SeleniumBrowserGetAnElementValuesAsDataTableCommand -> SeleniumBrowserGetAnWebElementValuesAsDataTableCommand
             ChangeCommandName(doc, "SeleniumBrowserGetAnElementValuesAsDataTableCommand", "SeleniumBrowserGetAnWebElementValuesAsDataTableCommand", "Get An WebElement Values As DataTable");
@@ -1103,6 +1130,164 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "SeleniumBrowserGetElementsValuesAsDataTableCommand", "SeleniumBrowserGetWebElementsValuesAsDataTableCommand", "Get WebElements Values As DataTable");
 
             return doc;
+        }
+
+        private static XDocument convertTo3_5_1_49(XDocument doc)
+        {
+            // SeleniumBrowserElementActionCommand -> SeleniumBrowserWebElementActionCommand
+            ChangeCommandName(doc, "SeleniumBrowserElementActionCommand", "SeleniumBrowserWebElementActionCommand", "WebElement Action");
+
+            // change new SeleniumBrowserWebElementActionCommand
+            var commands = GetCommands(doc, "SeleniumBrowserWebElementActionCommand");
+            foreach(var cmd in commands)
+            {
+                var elementAction = cmd.Element("v_SeleniumElementAction");
+                string act = "";
+                if (elementAction != null)
+                {
+                    cmd.SetAttributeValue("v_SeleniumElementAction", elementAction.Value);
+                    act = elementAction.Value.ToLower();
+                    elementAction.Remove();
+                }
+
+                (var table, var before, var rowName, var diffgram) = GetTable(cmd, "v_WebActionParameterTable");
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
+                switch (act)
+                {
+                    case "invoke click":
+                        cmd.Attribute("v_SeleniumElementAction").Value = "Click WebElement";
+                        if (table == null)
+                        {
+                            CreateTable(diffgram);
+                            (table, before, rowName, _) = GetTable(cmd, "v_WebActionParameterTable");
+                        }
+                        var addRowsInvoke = new List<Dictionary<string, string>>()
+                        {
+                            new Dictionary<string, string>()
+                            {
+                                { "Parameter_x0020_Name", "Click Type" },
+                                { "Parameter_x0020_Value", "Invoke Click" },
+                            },
+                            new Dictionary<string, string>()
+                            {
+                                { "Parameter_x0020_Name", "X Offset" },
+                                { "Parameter_x0020_Value", "" },
+                            },
+                            new Dictionary<string, string>()
+                            {
+                                { "Parameter_x0020_Name", "Y Offset" },
+                                { "Parameter_x0020_Value", "" },
+                            }
+                        };
+
+                        AddTableRows(table, addRowsInvoke, rowName, rows.Count);
+                        AddTableRows(before, addRowsInvoke, rowName, rows.Count, false);
+                        break;
+
+                    case "left click":
+                    case "right click":
+                    case "middle click":
+                    case "double left click":
+                        cmd.Attribute("v_SeleniumElementAction").Value = "Click WebElement";
+                        string x = "", y = "";
+                        for (int i = 0; i < rows.Count; i++)
+                        {
+                            if (rows[i].Element("Parameter_x0020_Name").Value == "X Adjustment")
+                            {
+                                x = rows[i].Element("Parameter_x0020_Value").Value;
+                            }
+                            if (rows[i].Element("Parameter_x0020_Name").Value == "Y Adjustment")
+                            {
+                                y = rows[i].Element("Parameter_x0020_Value").Value;
+                            }
+                            rows[i].Remove();
+                            beforeRows[i].Remove();
+                        }
+                        string click = "";
+                        switch (act)
+                        {
+                            case "left click":
+                                click = "Left Click";
+                                break;
+                            case "right click":
+                                click = "Reft Click";
+                                break;
+                            case "middle click":
+                                click = "Middle Click";
+                                break;
+                            case "double left click":
+                                click = "Double Left Click";
+                                break;
+                        }
+                        rows = table?.Elements()?.ToList() ?? new List<XElement>();
+
+                        var addRowsClick = new List<Dictionary<string, string>>()
+                        {
+                            new Dictionary<string, string>() {
+                                { "Parameter_x0020_Name", "Click Type" },
+                                { "Parameter_x0020_Value", click },
+                            },
+                            new Dictionary<string, string>() {
+                                { "Parameter_x0020_Name", "X Offset" },
+                                { "Parameter_x0020_Value", x },
+                            },
+                            new Dictionary<string, string>()
+                            {
+                                { "Parameter_x0020_Name", "Y Offset" },
+                                { "Parameter_x0020_Value", y },
+                            }
+                        };
+
+                        AddTableRows(table, addRowsClick, rowName, rows.Count);
+                        AddTableRows(before, addRowsClick, rowName, rows.Count, false);
+                        break;
+
+                    case "clear element":
+                        cmd.SetAttributeValue("v_SeleniumElementAction", "Clear WebElement");
+                        break;
+                    case "get matching elements":
+                        cmd.SetAttributeValue("v_SeleniumElementAction", "Get Matching WebElements");
+                        break;
+                    case "wait for element to exist":
+                        cmd.SetAttributeValue("v_SeleniumElementAction", "Wait For WebElement To Exists");
+                        for (int i = 0; i < rows.Count; i++)
+                        {
+                            if (rows[i].Element("Parameter_x0020_Name").Value == "Timeout (Seconds)")
+                            {
+                                cmd.SetAttributeValue("v_WaitTime", rows[i].Element("Parameter_x0020_Value").Value);
+                                rows[i].Remove();
+                                beforeRows[i].Remove();
+                                break;
+                            }
+                        }
+                        break;
+                }
+            }
+
+            return doc;
+        }
+
+        /// <summary>
+        /// get specfied commands
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <returns></returns>
+        private static IEnumerable<XElement> GetCommands(XDocument doc, Func<XElement, bool> searchFunc)
+        {
+            return doc.Descendants("ScriptCommand").Where(searchFunc);
+        }
+
+        /// <summary>
+        /// get specified commands
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="commandName"></param>
+        /// <returns></returns>
+        private static IEnumerable<XElement> GetCommands(XDocument doc, string commandName)
+        {
+            return GetCommands(doc, new Func<XElement, bool>(el => el.Attribute("CommandName").Value == commandName));
         }
 
         /// <summary>
@@ -1241,25 +1426,52 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
+        /// get table element
+        /// </summary>
+        /// <param name="elem"></param>
+        /// <param name="tableParameterName"></param>
+        /// <returns>Table, Table:before, rowName, XElem:diffgram</returns>
+        private static (XElement, XElement, string, XElement) GetTable(XElement elem, string tableParameterName)
+        {
+            XNamespace nsXs = "http://www.w3.org/2001/XMLSchema";
+            XNamespace nsMsdata = "urn:schemas-microsoft-com:xml-msdata";
+            var rowName = elem.Element(tableParameterName).Element(nsXs + "schema").Element(nsXs + "element").Attribute("name").Value;
+            if (rowName == "NewDataSet")
+            {
+                rowName = elem.Element(tableParameterName).Element(nsXs + "schema").Element(nsXs + "element").Attribute(nsMsdata + "MainDataTable")?.Value;
+            }
+
+            XNamespace nsDiffgram = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            var baseElem = elem.Element(tableParameterName).Element(nsDiffgram + "diffgram");
+            return (
+                baseElem.Element("DocumentElement"),
+                baseElem.Element(nsDiffgram + "before"),
+                rowName,
+                baseElem
+            );
+        }
+
+        /// <summary>
         /// modify table
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="searchFunc"></param>
         /// <param name="tableParameterName"></param>
-        /// <param name="modifyFunc"></param>
+        /// <param name="modifyFunc">table, before, rows</param>
         /// <returns></returns>
-        private static XDocument ModifyTable(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, Action<XElement, List<XElement>> modifyFunc)
+        private static XDocument ModifyTable(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, Action<XElement, XElement, List<XElement>, string> modifyFunc)
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
 
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
             {
-                XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
+                //XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
+                (var tableParams, var beforeParams, var rowName, _) = GetTable(cmd, tableParameterName);
                 var rows = tableParams?.Elements().ToList() ?? null;
                 if (rows != null)
                 {
-                    modifyFunc(tableParams, rows);
+                    modifyFunc(tableParams, beforeParams, rows, rowName);
                 }
             }
             return doc;
@@ -1273,7 +1485,7 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="modifyFunc"></param>
         /// <returns></returns>
-        private static XDocument ModifyTable(XDocument doc, string targetCommand, string tableParameterName, Action<XElement, List<XElement>> modifyFunc)
+        private static XDocument ModifyTable(XDocument doc, string targetCommand, string tableParameterName, Action<XElement, XElement, List<XElement>, string> modifyFunc)
         {
             ModifyTable(doc, new Func<XElement, bool>(el =>
             {
@@ -1282,23 +1494,55 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        ///// <summary>
+        ///// add table row
+        ///// </summary>
+        ///// <param name="table"></param>
+        ///// <param name="rows"></param>
+        ///// <param name="cols"></param>
+        //private static void AddTableRow(XElement table, List<XElement> rows, Dictionary<string, string> cols)
+        //{
+        //    XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
+        //    XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
+
+        //    var row = rows[0];
+        //    var newElem = new XElement(row.Name);
+        //    newElem.Add(new XAttribute(diffNs + "id", row.Name + (rows.Count() + 1).ToString()));    // diffgr:id
+        //    newElem.Add(new XAttribute(msNs + "rowOrder", rows.Count().ToString()));   // msdata:rowOrder
+
+        //    foreach(var col in cols)
+        //    {
+        //        newElem.Add(new XElement(col.Key)
+        //        {
+        //            Value = col.Value
+        //        });
+        //    }
+
+        //    table.Add(newElem);
+        //}
+
         /// <summary>
         /// add table row
         /// </summary>
         /// <param name="table"></param>
-        /// <param name="rows"></param>
         /// <param name="cols"></param>
-        private static void AddTableRow(XElement table, List<XElement> rows, Dictionary<string, string> cols)
+        /// <param name="rowName"></param>
+        /// <param name="currentMaxRows"></param>
+        /// <param name="addModified"></param>
+        private static void AddTableRow(XElement table, Dictionary<string, string> cols, string rowName, int currentMaxRows, bool addModified = true)
         {
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
 
-            var row = rows[0];
-            var newElem = new XElement(row.Name);
-            newElem.Add(new XAttribute(diffNs + "id", row.Name + (rows.Count() + 1).ToString()));    // diffgr:id
-            newElem.Add(new XAttribute(msNs + "rowOrder", rows.Count().ToString()));   // msdata:rowOrder
+            var newElem = new XElement(rowName);
+            newElem.Add(new XAttribute(diffNs + "id", rowName + (currentMaxRows + 1).ToString()));    // diffgr:id
+            newElem.Add(new XAttribute(msNs + "rowOrder", currentMaxRows.ToString()));   // msdata:rowOrder
+            if (addModified)
+            {
+                newElem.Add(new XAttribute(diffNs + "hasChanges", "modified"));
+            }
 
-            foreach(var col in cols)
+            foreach (var col in cols)
             {
                 newElem.Add(new XElement(col.Key)
                 {
@@ -1307,6 +1551,52 @@ namespace taskt.Core.Script
             }
 
             table.Add(newElem);
+        }
+
+        /// <summary>
+        /// add table rows
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="cols"></param>
+        /// <param name="rowName"></param>
+        /// <param name="currentMaxRows"></param>
+        /// <param name="addModified"></param>
+        private static void AddTableRows(XElement table, List<Dictionary<string, string>> cols, string rowName, int currentMaxRows, bool addModified = true)
+        {
+            XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
+
+            for (int i = 0; i < cols.Count; i++)
+            {
+                var newElem = new XElement(rowName);
+                newElem.Add(new XAttribute(diffNs + "id", rowName + (i + 1).ToString()));    // diffgr:id
+                newElem.Add(new XAttribute(msNs + "rowOrder", i.ToString()));   // msdata:rowOrder
+                if (addModified)
+                {
+                    newElem.Add(new XAttribute(diffNs + "hasChanges", "modified"));
+                }
+
+                foreach (var col in cols[i])
+                {
+                    newElem.Add(new XElement(col.Key)
+                    {
+                        Value = col.Value
+                    });
+                }
+
+                table.Add(newElem);
+            }
+        }
+
+        /// <summary>
+        /// create table row space
+        /// </summary>
+        /// <param name="diffgram"></param>
+        private static void CreateTable(XElement diffgram)
+        {
+            XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            diffgram.Add(new XElement("DocumentElement"));
+            diffgram.Add(new XElement(diffNs + "before"));
         }
 
         /// <summary>

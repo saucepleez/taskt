@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Runtime.CompilerServices;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -171,7 +172,7 @@ namespace taskt.Core.Automation.Commands
 
         private static bool DetermineStatementTruth_DateCompare(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", false);
 
             string operand = param["Operand"].ConvertToUserVariable(engine);
 
@@ -276,7 +277,7 @@ namespace taskt.Core.Automation.Commands
 
         private static bool DetermineStatementTruth_ErrorOccur(DataTable actionParameterTable, Engine.AutomationEngineInstance engine, bool inverseResult = false)
         {
-            var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", false);
             int lineNumber = param["Line Number"].ConvertToUserVariableAsInteger("Line Number", engine);
 
             bool result;
@@ -357,11 +358,21 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
 
-            SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
-            newElementActionCommand.v_SeleniumSearchType = param["Element Search Method"];
-            newElementActionCommand.v_InstanceName = param["WebBrowser Instance Name"];
-            bool elementExists = newElementActionCommand.ElementExists(engine, param["Element Search Method"], param["Element Search Parameter"]);
-            return elementExists;
+            //SeleniumBrowserElementActionCommand newElementActionCommand = new SeleniumBrowserElementActionCommand();
+            //newElementActionCommand.v_SeleniumSearchType = param["Element Search Method"];
+            //newElementActionCommand.v_InstanceName = param["WebBrowser Instance Name"];
+            //bool elementExists = newElementActionCommand.ElementExists(engine, param["Element Search Method"], param["Element Search Parameter"]);
+
+            var checkWebElement = new SeleniumBrowserCheckWebElementExistsCommand()
+            {
+                v_InstanceName = param["WebBrowser Instance Name"],
+                v_SeleniumSearchType = param["Element Search Method"],
+                v_SeleniumSearchParameter = param["Element Search Parameter"],
+                v_Result = VariableNameControls.GetInnerVariableName(0, engine),
+            };
+            checkWebElement.RunCommand(engine);
+
+            return VariableNameControls.GetInnerVariable(0, engine).VariableValue.ToString().ConvertToUserVariableAsBool("Result", engine);
         }
 
         private static bool DetermineStatementTruth_GUIElement(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
@@ -384,7 +395,7 @@ namespace taskt.Core.Automation.Commands
         }
         private static bool DetermineStatementTruth_Boolean(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
             bool value = param["Variable Name"].ConvertToUserVariableAsBool("Variable Name", engine);
             string compare = param["Value Is"].ConvertToUserVariable(engine);
@@ -401,7 +412,7 @@ namespace taskt.Core.Automation.Commands
         }
         private static bool DetermineStatementTruth_BooleanCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
             bool value1 = param["Value1"].ConvertToUserVariableAsBool("Variable Name", engine);
             bool value2 = param["Value2"].ConvertToUserVariableAsBool("Variable Name", engine);
@@ -428,7 +439,7 @@ namespace taskt.Core.Automation.Commands
 
         private static bool DetermineStatementTruth_ListCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
             var list1 = param["List1"].GetListVariable(engine);
             var list2 = param["List2"].GetListVariable(engine);
@@ -452,7 +463,7 @@ namespace taskt.Core.Automation.Commands
 
         private static bool DetermineStatementTruth_DictionaryCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
             var dic1 = param["Dictionary1"].GetDictionaryVariable(engine);
             var dic2 = param["Dictionary2"].GetDictionaryVariable(engine);
@@ -481,7 +492,7 @@ namespace taskt.Core.Automation.Commands
 
         private static bool DetermineStatementTruth_DataTableCompare(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
         {
-            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
             var dt1 = param["DataTable1"].GetDataTableVariable(engine);
             var dt2 = param["DataTable2"].GetDataTableVariable(engine);
@@ -882,7 +893,7 @@ namespace taskt.Core.Automation.Commands
 
         public static bool WebValidate(DataTable actionParameters, out string result)
         {
-            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value", false);
             result = "";
             if (String.IsNullOrEmpty(param["WebBrowser Instance Name"]))
             {
@@ -902,7 +913,7 @@ namespace taskt.Core.Automation.Commands
 
         public static bool GUIValidate(DataTable actionParameters, out string result)
         {
-            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value", false);
             result = "";
 
             if (String.IsNullOrEmpty(param["Window Name"]))
@@ -962,7 +973,7 @@ namespace taskt.Core.Automation.Commands
 
         public static bool BooleanCompareValidate(DataTable actionParameters, out string result)
         {
-            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value", false);
             result = "";
 
             if (String.IsNullOrEmpty(param["Value1"]))
@@ -983,7 +994,7 @@ namespace taskt.Core.Automation.Commands
 
         public static bool ListCompareValidate(DataTable actionParameters, out string result)
         {
-            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value", false);
             result = "";
 
             if (String.IsNullOrEmpty(param["List1"]))
@@ -1000,7 +1011,7 @@ namespace taskt.Core.Automation.Commands
 
         public static bool DictionaryCompareValidate(DataTable actionParameters, out string result)
         {
-            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value", false);
             result = "";
 
             if (String.IsNullOrEmpty(param["Dictionary1"]))
@@ -1017,7 +1028,7 @@ namespace taskt.Core.Automation.Commands
 
         public static bool DataTableCompareValidate(DataTable actionParameters, out string result)
         {
-            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value");
+            var param = DataTableControls.GetFieldValues(actionParameters, "Parameter Name", "Parameter Value", false);
             result = "";
 
             if (String.IsNullOrEmpty(param["DataTable1"]))
@@ -1037,7 +1048,7 @@ namespace taskt.Core.Automation.Commands
 
         public static string GetDisplayValue(string commandPrefix, string actionType, DataTable parameterTable, string parameterNameColumn = "Parameter Name", string parameterValueColumn = "Parameter Value")
         {
-            var param = DataTableControls.GetFieldValues(parameterTable, parameterNameColumn, parameterValueColumn);
+            var param = DataTableControls.GetFieldValues(parameterTable, parameterNameColumn, parameterValueColumn, false);
 
             if (String.IsNullOrEmpty(actionType))
             {
