@@ -301,6 +301,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetHTMLFromWebElementCommand .cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetMatchedWebElementsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementFromWebEelementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameToWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSelectOptionForWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetOptionsFromWebElementCommand.cs" />
