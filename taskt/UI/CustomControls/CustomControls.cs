@@ -813,7 +813,7 @@ namespace taskt.UI
             {nameof(SeleniumBrowserCheckBrowserInstanceExistsCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserCloseCommand), "taskt.Properties.Resources.command_window_close"},
             {nameof(SeleniumBrowserCreateCommand), "taskt.Properties.Resources.command_web"},
-            {nameof(SeleniumBrowserElementActionCommand), "taskt.Properties.Resources.command_web"},
+            {nameof(SeleniumBrowserWebElementActionCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserExecuteScriptCommand), "taskt.Properties.Resources.command_script"},
             {nameof(SeleniumBrowserGetAnWebElementValuesAsDataTableCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand), "taskt.Properties.Resources.command_web"},

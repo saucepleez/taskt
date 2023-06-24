@@ -15,6 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add a row to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a row to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class AddDataTableRowCommand : ScriptCommand
     {
@@ -33,13 +34,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Column Name", "Column Name", false)]
         [PropertyDataGridViewColumnSettings("Data", "Data", false)]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [PropertyCustomUIHelper("Load Column Names From Existing Table", nameof(LoadSchemaControl_Click), "load_column")]
+        // todo: enable
+        //[PropertyCustomUIHelper("Load Column Names From Existing Table", nameof(LoadSchemaControl_Click), "load_column")]
         [PropertyDisplayText(true, "Rows", "items")]
         public DataTable v_AddDataDataTable { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private List<CreateDataTableCommand> DataTableCreationCommands;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private List<CreateDataTableCommand> DataTableCreationCommands;
 
         public AddDataTableRowCommand()
         {
@@ -66,42 +68,42 @@ namespace taskt.Core.Automation.Commands
             dataTable.Rows.Add(newRow);
         }
 
-        public override List<Control> Render(UI.Forms.frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //public override List<Control> Render(UI.Forms.frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
-            RenderedControls.AddRange(ctrls);
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            DataTableCreationCommands = editor.configuredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
+        //    DataTableCreationCommands = editor.configuredCommands.Where(f => f is CreateDataTableCommand).Select(f => (CreateDataTableCommand)f).ToList();
 
-            return RenderedControls;
-        }
+        //    return RenderedControls;
+        //}
 
-        private void LoadSchemaControl_Click(object sender, EventArgs e)
-        {
-            var items = new List<string>();
-            foreach (var item in DataTableCreationCommands)
-            {
-                items.Add(item.v_DataTableName);
-            }
+        //private void LoadSchemaControl_Click(object sender, EventArgs e)
+        //{
+        //    var items = new List<string>();
+        //    foreach (var item in DataTableCreationCommands)
+        //    {
+        //        items.Add(item.v_DataTableName);
+        //    }
 
-            using (var selectionForm = new UI.Forms.Supplemental.frmItemSelector(items, "Load Schema", "Select a table from the list"))
-            {
-                if (selectionForm.ShowDialog() == DialogResult.OK)
-                {
-                    var tableName = selectionForm.selectedItem.ToString();
-                    var schema = DataTableCreationCommands.Where(f => f.v_DataTableName == tableName).FirstOrDefault();
+        //    using (var selectionForm = new UI.Forms.Supplemental.frmItemSelector(items, "Load Schema", "Select a table from the list"))
+        //    {
+        //        if (selectionForm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            var tableName = selectionForm.selectedItem.ToString();
+        //            var schema = DataTableCreationCommands.Where(f => f.v_DataTableName == tableName).FirstOrDefault();
 
-                    v_AddDataDataTable.Rows.Clear();
+        //            v_AddDataDataTable.Rows.Clear();
 
-                    foreach (DataRow rw in schema.v_ColumnNameDataTable.Rows)
-                    {
-                        v_AddDataDataTable.Rows.Add(rw.Field<string>("Column Name"), "");
-                    }
-                }
-            }
-        }
+        //            foreach (DataRow rw in schema.v_ColumnNameDataTable.Rows)
+        //            {
+        //                v_AddDataDataTable.Rows.Add(rw.Field<string>("Column Name"), "");
+        //            }
+        //        }
+        //    }
+        //}
 
         //public override string GetDisplayValue()
         //{

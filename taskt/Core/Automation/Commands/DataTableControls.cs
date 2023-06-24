@@ -549,6 +549,49 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// get DataTable Values as Dictionary
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="parameterColumnName"></param>
+        /// <param name="valueColumnName"></param>
+        /// <param name="expandVaiable"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static Dictionary<string, string> GetFieldValues(DataTable dt, string parameterColumnName = "ParameterName", string valueColumnName = "ParameterValue", bool expandVaiable = false, Engine.AutomationEngineInstance engine = null)
+        {
+            if ((!IsColumnExists(dt, parameterColumnName)) || (!IsColumnExists(dt, valueColumnName)))
+            {
+                throw new Exception("Parameter Column or Value Column does not exists");
+            }
+
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            foreach (DataRow row in dt.Rows)
+            {
+                var key = row.Field<string>(parameterColumnName) ?? "";
+                if (key != "")
+                {
+                    dic.Add(key, row.Field<string>(valueColumnName) ?? "");
+                }
+            }
+
+            if (expandVaiable)
+            {
+                if (engine == null)
+                {
+                    throw new Exception("No Engine Specified. Fail expand variable.");
+                }
+                var keys = dic.Keys.ToArray();
+                foreach (string key in keys)
+                {
+                    dic[key] = dic[key].ConvertToUserVariable(engine);
+                }
+            }
+            
+            return dic;
+        }
+
+        /// <summary>
         /// set DataTable value specified by column names
         /// </summary>
         /// <param name="dt"></param>
