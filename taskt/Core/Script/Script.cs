@@ -20,9 +20,6 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Data;
 using taskt.Core.Automation.Commands;
-using System.Web.ModelBinding;
-using Microsoft.Office.Interop.Word;
-using SimpleNLG;
 
 namespace taskt.Core.Script
 {
