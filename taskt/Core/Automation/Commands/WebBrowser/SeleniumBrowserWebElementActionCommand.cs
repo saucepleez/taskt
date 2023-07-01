@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get Text")]
         [PropertyUISelectionOption("Get Attribute")]
         [PropertyUISelectionOption("Get Matching WebElements")]
-        [PropertyUISelectionOption("Wait For WebElement To Exist")]
+        [PropertyUISelectionOption("Wait For WebElement To Exists")]
         [PropertyUISelectionOption("Switch To Frame")]
         [PropertyUISelectionOption("Get WebElements Count")]
         [PropertyUISelectionOption("Get Options")]
@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
             var parameters = DataTableControls.GetFieldValues(v_WebActionParameterTable, "Parameter Name", "Parameter Value", false, engine);
             switch (actionType)
             {
-                case "wait for webelement to exist":
+                case "wait for webelement to exists":
                     var waitCommand = new SeleniumBrowserWaitForWebElementExistCommand()
                     {
                         v_InstanceName = this.v_InstanceName,
