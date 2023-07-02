@@ -10,16 +10,15 @@ namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.CommandSettings("UI Automation")]
-    [Attributes.ClassAttributes.SubGruop("Other")]
+    [Attributes.ClassAttributes.Group("UIAutomation Commands")]
+    [Attributes.ClassAttributes.SubGruop("Element Action")]
+    [Attributes.ClassAttributes.CommandSettings("Element Action")]
     [Attributes.ClassAttributes.Description("Combined implementation of the ThickAppClick/GetText command but includes an advanced Window Recorder to record the required element.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationCommand : ScriptCommand
-    {
-        
+    {   
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
@@ -40,6 +39,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get Value From Table Element")]
         [PropertyUISelectionOption("Wait For Element To Exists")]
         [PropertySelectionChangeEvent(nameof(cmbActionType_SelectedItemChange))]
+        [PropertyDisplayText(true, "Action")]
         public string v_AutomationType { get; set; }
 
         [XmlElement]
@@ -525,61 +525,70 @@ namespace taskt.Core.Automation.Commands
             WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
-        public override string GetDisplayValue()
+        public override void BeforeValidate()
         {
-            if (v_AutomationType == "Click Element")
-            {
-                //create search params
-                var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
-                                 where rw.Field<string>("Parameter Name") == "Click Type"
-                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            var dgvAction = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
+            DataTableControls.BeforeValidate(dgvAction, v_UIAActionParameters);
 
-
-                return base.GetDisplayValue() + " [" + clickType + " element in window '" + v_WindowName + "']";
-            }
-            else if(v_AutomationType == "Check If Element Exists")
-            {
-
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                return base.GetDisplayValue() + " [Check for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
-            }
-            else if (v_AutomationType == "Get Text Value From Element")
-            {
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                return base.GetDisplayValue() + " [Text Value for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
-            }
-            else if (v_AutomationType == "Get Selected State From Element")
-            {
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                return base.GetDisplayValue() + " [Selected State for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
-            }
-            else
-            {
-                //get value from property
-                var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "Get Value From"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                return base.GetDisplayValue() + " [Get value from '" + propertyName + "' in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
-            }
+            var dgvSearch = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIASearchParameters));
+            DataTableControls.BeforeValidate(dgvSearch, v_UIASearchParameters);
         }
+
+        //public override string GetDisplayValue()
+        //{
+        //    if (v_AutomationType == "Click Element")
+        //    {
+        //        //create search params
+        //        var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
+        //                         where rw.Field<string>("Parameter Name") == "Click Type"
+        //                         select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+
+        //        return base.GetDisplayValue() + " [" + clickType + " element in window '" + v_WindowName + "']";
+        //    }
+        //    else if(v_AutomationType == "Check If Element Exists")
+        //    {
+
+        //        //apply to variable
+        //        var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+        //                               where rw.Field<string>("Parameter Name") == "Apply To Variable"
+        //                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+        //        return base.GetDisplayValue() + " [Check for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+        //    }
+        //    else if (v_AutomationType == "Get Text Value From Element")
+        //    {
+        //        //apply to variable
+        //        var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+        //                               where rw.Field<string>("Parameter Name") == "Apply To Variable"
+        //                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+        //        return base.GetDisplayValue() + " [Text Value for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+        //    }
+        //    else if (v_AutomationType == "Get Selected State From Element")
+        //    {
+        //        //apply to variable
+        //        var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+        //                               where rw.Field<string>("Parameter Name") == "Apply To Variable"
+        //                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+        //        return base.GetDisplayValue() + " [Selected State for element in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+        //    }
+        //    else
+        //    {
+        //        //get value from property
+        //        var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
+        //                            where rw.Field<string>("Parameter Name") == "Get Value From"
+        //                            select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+        //        //apply to variable
+        //        var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+        //                               where rw.Field<string>("Parameter Name") == "Apply To Variable"
+        //                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+        //        return base.GetDisplayValue() + " [Get value from '" + propertyName + "' in window '" + v_WindowName + "' and apply to '" + applyToVariable + "']";
+        //    }
+        //}
 
         //public override bool IsValidate(frmCommandEditor editor)
         //{
@@ -619,7 +628,7 @@ namespace taskt.Core.Automation.Commands
         //                break;
         //        }
         //    }
-            
+
         //    return this.IsValid;
         //}
 
