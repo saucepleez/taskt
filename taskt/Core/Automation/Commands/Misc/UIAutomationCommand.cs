@@ -3,1101 +3,526 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using System.Windows.Automation;
-using System.Reflection;
-using taskt.Core.Automation.User32;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
 
 namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Misc Commands")]
+    [Attributes.ClassAttributes.CommandSettings("UI Automation")]
     [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("Combined implementation of the ThickAppClick/GetText command but includes an advanced Window Recorder to record the required element.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationCommand : ScriptCommand
     {
+        
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the action")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Click Element")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Element")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Check If Element Exists")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Text Value From Element")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Selected State From Element")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Get Value From Table Element")]
-        [Attributes.PropertyAttributes.SampleUsage("**Click Element** or **Get Value From Element** or **Check If Element Exists** or **Get Text Value From Element** or **Get Check State From Element**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_AutomationType { get; set; }
-
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select the Window to Automate (ex. Untitled - Notepad, %kwd_current_window%, {{{vWindowName}}")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to activate or bring forward.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindowName}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Window name search method (Default is Contains)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Starts with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Ends with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
-        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Starts with** or **Ends with** or **Exact match**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
-        public string v_SearchMethod { get; set; }
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls),  nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("AutomationElement Action")]
+        [PropertyUISelectionOption("Click Element")]
+        [PropertyUISelectionOption("Expand Collapse Items In Element")]
+        [PropertyUISelectionOption("Scroll Element")]
+        [PropertyUISelectionOption("Select Element")]
+        [PropertyUISelectionOption("Select Item In Element")]
+        [PropertyUISelectionOption("Set Text To Element")]
+        [PropertyUISelectionOption("Get Value From Element")]
+        [PropertyUISelectionOption("Check If Element Exists")]
+        [PropertyUISelectionOption("Get Text Value From Element")]
+        [PropertyUISelectionOption("Get Selected State From Element")]
+        [PropertyUISelectionOption("Get Value From Table Element")]
+        [PropertyUISelectionOption("Wait For Element To Exists")]
+        [PropertySelectionChangeEvent(nameof(cmbActionType_SelectedItemChange))]
+        public string v_AutomationType { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Set Search Parameters")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Use the Element Recorder to generate a listing of potential search parameters.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("Once you have clicked on a valid window the search parameters will be populated.  Enable only the ones required to be a match at runtime.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
         public DataTable v_UIASearchParameters { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Set Action Parameters")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Define the parameters for the actions.")]
-        [Attributes.PropertyAttributes.SampleUsage("n/a")]
-        [Attributes.PropertyAttributes.Remarks("Parameters change depending on the Automation Type selected.")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDescription("Action Parameters")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView)]
+        [PropertyDataGridViewSetting(false, false, true, 400, 250)]
+        [PropertyDataGridViewColumnSettings("Parameter Name", "Parameter Name", true)]
+        [PropertyDataGridViewColumnSettings("Parameter Value", "Parameter Value", false)]
         public DataTable v_UIAActionParameters { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox AutomationTypeControl;
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        public string v_SearchMethod { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox WindowNameControl;
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        public string v_MatchMethod { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView SearchParametersGridViewHelper;
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        public string v_TargetWindowIndex { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ActionParametersGridViewHelper;
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        public string v_WindowWaitTime { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        public string v_ElementWaitTime { get; set; }
 
         public UIAutomationCommand()
         {
-            this.CommandName = "UIAutomationCommand";
-            this.SelectionName = "UI Automation";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-
-            //set up search parameter table
-            this.v_UIASearchParameters = new DataTable();
-            this.v_UIASearchParameters.Columns.Add("Enabled");
-            this.v_UIASearchParameters.Columns.Add("Parameter Name");
-            this.v_UIASearchParameters.Columns.Add("Parameter Value");
-            this.v_UIASearchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-
-            this.v_UIAActionParameters = new DataTable();
-            this.v_UIAActionParameters.Columns.Add("Parameter Name");
-            this.v_UIAActionParameters.Columns.Add("Parameter Value");
-            this.v_UIAActionParameters.TableName = DateTime.Now.ToString("UIAActionParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
-        }
-
-        private void ActionParametersGridViewHelper_MouseEnter(object sender, EventArgs e)
-        {
-            this.UIAType_SelectionChangeCommitted(null, null);
-        }
-
-        public PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
-        {
-            string propName = propertyName + "Property";
-
-            switch (propertyName)
-            {
-                case "AcceleratorKey":
-                    return new PropertyCondition(AutomationElement.AcceleratorKeyProperty, propertyValue);
-                case "AccessKey":
-                    return new PropertyCondition(AutomationElement.AccessKeyProperty, propertyValue);
-                case "AutomationId":
-                    return new PropertyCondition(AutomationElement.AutomationIdProperty, propertyValue);
-                case "ClassName":
-                    return new PropertyCondition(AutomationElement.ClassNameProperty, propertyValue);
-                case "FrameworkId":
-                    return new PropertyCondition(AutomationElement.FrameworkIdProperty, propertyValue);
-                case "HasKeyboardFocus":
-                    return new PropertyCondition(AutomationElement.HasKeyboardFocusProperty, propertyValue);
-                case "HelpText":
-                    return new PropertyCondition(AutomationElement.HelpTextProperty, propertyValue);
-                case "IsContentElement":
-                    return new PropertyCondition(AutomationElement.IsContentElementProperty, propertyValue);
-                case "IsControlElement":
-                    return new PropertyCondition(AutomationElement.IsControlElementProperty, propertyValue);
-                case "IsEnabled":
-                    return new PropertyCondition(AutomationElement.IsEnabledProperty, propertyValue);
-                case "IsKeyboardFocusable":
-                    return new PropertyCondition(AutomationElement.IsKeyboardFocusableProperty, propertyValue);
-                case "IsOffscreen":
-                    return new PropertyCondition(AutomationElement.IsOffscreenProperty, propertyValue);
-                case "IsPassword":
-                    return new PropertyCondition(AutomationElement.IsPasswordProperty, propertyValue);
-                case "IsRequiredForForm":
-                    return new PropertyCondition(AutomationElement.IsRequiredForFormProperty, propertyValue);
-                case "ItemStatus":
-                    return new PropertyCondition(AutomationElement.ItemStatusProperty, propertyValue);
-                case "ItemType":
-                    return new PropertyCondition(AutomationElement.ItemTypeProperty, propertyValue);
-                case "LocalizedControlType":
-                    return new PropertyCondition(AutomationElement.LocalizedControlTypeProperty, propertyValue);
-                case "Name":
-                    return new PropertyCondition(AutomationElement.NameProperty, propertyValue);
-                case "NativeWindowHandle":
-                    return new PropertyCondition(AutomationElement.NativeWindowHandleProperty, propertyValue);
-                case "ProcessID":
-                    return new PropertyCondition(AutomationElement.ProcessIdProperty, propertyValue);
-                default:
-                    throw new NotImplementedException("Property Type '" + propertyName + "' not implemented");
-            }
-        }
-
-        public AutomationElement SearchForGUIElement(object sender, string variableWindowName)
-        {
-            //create search params
-            var searchParams = from rw in v_UIASearchParameters.AsEnumerable()
-                               where rw.Field<string>("Enabled") == "True"
-                               select rw;
-
-            //create and populate condition list
-            var conditionList = new List<Condition>();
-            foreach (var param in searchParams)
-            {
-                var parameterName = (string)param["Parameter Name"];
-                var parameterValue = (string)param["Parameter Value"];
-
-                parameterName = parameterName.ConvertToUserVariable(sender);
-                parameterValue = parameterValue.ConvertToUserVariable(sender);
-
-                PropertyCondition propCondition;
-                if (bool.TryParse(parameterValue, out bool bValue))
-                {
-                    propCondition = CreatePropertyCondition(parameterName, bValue);
-                }
-                else
-                {
-                    propCondition = CreatePropertyCondition(parameterName, parameterValue);
-                }
-                conditionList.Add(propCondition);
-            }
-
-            //concatenate or take first condition
-            Condition searchConditions;
-            if (conditionList.Count > 1)
-            {
-                searchConditions = new AndCondition(conditionList.ToArray());
-
-            }
-            else
-            {
-                searchConditions = conditionList[0];
-            }
-
-            //find window
-            var windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
-            if (windowElement == null)
-            {
-                // more deep search
-                windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, variableWindowName));
-            }
-
-            //if window was not found
-            if (windowElement == null)
-            {
-                throw new Exception("Window named '" + variableWindowName + "' was not found!");
-            }
-
-            //find required handle based on specified conditions
-            var element = windowElement.FindFirst(TreeScope.Descendants, searchConditions);
-            if (element == null)
-            {
-                // more deep search
-                element = windowElement.FindFirst(TreeScope.Subtree, searchConditions);
-                if (element == null)
-                {
-                    element = DeepSearchGUIElement(windowElement, searchConditions);
-                }
-            }
-            // if element not found, don't throw exception here
-            return element;
-        }
-
-        private AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition)
-        {
-            TreeWalker walker = TreeWalker.RawViewWalker;
-
-            // format conditions
-            PropertyCondition[] conditions;
-            if (searchCondition is AndCondition)
-            {
-                Condition[] conds = ((AndCondition)searchCondition).GetConditions();
-                conditions = new PropertyCondition[conds.Length];
-                for (int i = 0; i < conds.Length; i++)
-                {
-                    conditions[i] = (PropertyCondition)conds[i];
-                }
-            }
-            else
-            {
-                conditions = new PropertyCondition[1];
-                conditions[0] = (PropertyCondition)searchCondition;
-            }
-
-            var ret =  WalkerSearch(rootElement, conditions, walker);
-            return ret;
-        }
-
-        private AutomationElement WalkerSearch(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker)
-        {
-            AutomationElement node = walker.GetFirstChild(rootElement);
-            AutomationElement ret = null;
-
-            while (node != null)
-            {
-                //string parsed = (node.Current.Name == null ? "(null)" : node.Current.Name);
-                //parsed += " *** " + (node.Current.LocalizedControlType == null ? "(null)" : node.Current.LocalizedControlType);
-                //parsed += " !!! " + (node.Current.NativeWindowHandle == 0 ? "(null)" : node.Current.NativeWindowHandle.ToString());
-                //parsed += " !!! " + (node.TryGetCurrentPattern(InvokePattern.Pattern, out object aba) ? "invoked" : "noinvo");
-
-                //// cast several pattern
-                //object ptn;
-                //if (node.TryGetCurrentPattern(DockPattern.Pattern, out ptn))
-                //{
-                //    DockPattern dPtn = (DockPattern)ptn;
-                //    parsed += " %%% Dock";
-                //}
-                //if (node.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out ptn))
-                //{
-                //    ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)ptn;
-                //    parsed += " %%% ExpandCollapse";
-                //}
-                //if (node.TryGetCurrentPattern(GridItemPattern.Pattern, out ptn))
-                //{
-                //    GridItemPattern giPtn = (GridItemPattern)ptn;
-                //    parsed += " %%% GridItem";
-                //}
-                //if (node.TryGetCurrentPattern(InvokePattern.Pattern, out ptn))
-                //{
-                //    InvokePattern iPtn = (InvokePattern)ptn;
-                //    parsed += " %%% Invoke";
-                //    System.Windows.Point clickablePoint;
-                //    if (node.TryGetClickablePoint(out clickablePoint))
-                //    {
-                //        parsed += " [] " + clickablePoint.ToString();
-                //    }
-                //}
-                //if (node.TryGetCurrentPattern(ItemContainerPattern.Pattern, out ptn))
-                //{
-                //    ItemContainerPattern icPtn = (ItemContainerPattern)ptn;
-                //    //icPtn.FindItemByProperty()
-                //    parsed += " %%% ItemContainer";
-                //}
-                //if (node.TryGetCurrentPattern(MultipleViewPattern.Pattern, out ptn))
-                //{
-                //    MultipleViewPattern mvPtn = (MultipleViewPattern)ptn;
-                //    parsed += " %%% MultipleView";
-                //}
-                //if (node.TryGetCurrentPattern(RangeValuePattern.Pattern, out ptn))
-                //{
-                //    RangeValuePattern rvPtn = (RangeValuePattern)ptn;
-                //    parsed += " %%% RangeValue";
-                //}
-                //if (node.TryGetCurrentPattern(ScrollPattern.Pattern, out ptn))
-                //{
-                //    ScrollPattern sPtn = (ScrollPattern)ptn;
-                //    parsed += " %%% Scroll";
-                //}
-                //if (node.TryGetCurrentPattern(ScrollItemPattern.Pattern, out ptn))
-                //{
-                //    ScrollItemPattern siPtn = (ScrollItemPattern)ptn;
-                //    parsed += " %%% ScrollItem";
-                //}
-                //if (node.TryGetCurrentPattern(SelectionPattern.Pattern, out ptn))
-                //{
-                //    SelectionPattern sPtn = (SelectionPattern)ptn;
-                //    parsed += " %%% Selection";
-                //}
-                //if (node.TryGetCurrentPattern(SelectionItemPattern.Pattern, out ptn))
-                //{
-                //    SelectionItemPattern siPtn = (SelectionItemPattern)ptn;
-                //    parsed += " %%% SelectionItem";
-                //}
-                //if (node.TryGetCurrentPattern(SynchronizedInputPattern.Pattern, out ptn))
-                //{
-                //    SynchronizedInputPattern siPtn = (SynchronizedInputPattern)ptn;
-                //    parsed += " %%% SynchronizedItem";
-                //}
-                //if (node.TryGetCurrentPattern(TableItemPattern.Pattern, out ptn))
-                //{
-                //    TableItemPattern tiPtn = (TableItemPattern)ptn;
-                //    parsed += " %%% TableItem";
-                //}
-                //if (node.TryGetCurrentPattern(TextPattern.Pattern, out ptn))
-                //{
-                //    TextPattern tPtn = (TextPattern)ptn;
-                //    parsed += " %%% Text";
-                //}
-                //if (node.TryGetCurrentPattern(TogglePattern.Pattern, out ptn))
-                //{
-                //    TogglePattern tPtn = (TogglePattern)ptn;
-                //    parsed += " %%% Toggle";
-                //}
-                //if (node.TryGetCurrentPattern(TransformPattern.Pattern, out ptn))
-                //{
-                //    TransformPattern tPtn = (TransformPattern)ptn;
-                //    parsed += " %%% Transform";
-                //}
-                //if (node.TryGetCurrentPattern(ValuePattern.Pattern, out ptn))
-                //{
-                //    ValuePattern vPtn = (ValuePattern)ptn;
-                //    parsed += " %%% Value";
-                //}
-                //if (node.TryGetCurrentPattern(VirtualizedItemPattern.Pattern, out ptn))
-                //{
-                //    VirtualizedItemPattern viPtn = (VirtualizedItemPattern)ptn;
-                //    parsed += " %%% VirtualizedItem";
-                //}
-                //if (node.TryGetCurrentPattern(WindowPattern.Pattern, out ptn))
-                //{
-                //    WindowPattern wPtn = (WindowPattern)ptn;
-                //    parsed += " %%% Window";
-                //}
-
-                //Console.WriteLine("walker: " + parsed);
-
-                bool result = true;
-                foreach (PropertyCondition condition in searchConditions)
-                {
-                    if (node.GetCurrentPropertyValue(condition.Property) != condition.Value)
-                    {
-                        result = false;
-                        break;
-                    }
-                }
-                if (result)
-                {
-                    ret = node;
-                    break;
-                }
-
-                // search child node
-                if (walker.GetFirstChild(node) != null)
-                {
-                    ret = WalkerSearch(node, searchConditions, walker);
-                    if (ret != null)
-                    {
-                        break;
-                    }
-                }
-
-                // next sibling
-                node = walker.GetNextSibling(node);
-            }
-
-            return ret;
         }
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+            var elemAction = this.GetUISelectionValue(nameof(v_AutomationType), engine);
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            //create variable window name
-            var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
-
-            if (variableWindowName == engine.engineSettings.CurrentWindowKeyword)
+            var winElemVar = VariableNameControls.GetInnerVariableName(0, engine);
+            var winElem = new UIAutomationSearchElementFromWindowCommand()
             {
-                //variableWindowName = User32Functions.GetActiveWindowTitle();
-                variableWindowName = WindowNameControls.GetActiveWindowTitle();
-            }
-            else
-            {
-                // search and activate window
-                var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(searchMethod))
+                v_WindowName = this.v_WindowName,
+                v_SearchMethod = this.v_SearchMethod,
+                v_MatchMethod = this.v_MatchMethod,
+                v_TargetWindowIndex = this.v_TargetWindowIndex,
+                v_WindowWaitTime = this.v_WindowWaitTime,
+                v_AutomationElementVariable = winElemVar,
+            };
+            winElem.RunCommand(engine);
+
+            var p = DataTableControls.GetFieldValues(v_UIAActionParameters, "Parameter Name", "Parameter Value", false, engine);
+            var trgElemVar = VariableNameControls.GetInnerVariableName(1, engine);
+            try
+            {   
+                var trgElem = new UIAutomationSearchElementFromElementCommand()
                 {
-                    searchMethod = "Contains";
-                }
-
-                if (searchMethod != "Exact match")
-                {
-                    ActivateWindowCommand activateWindow = new ActivateWindowCommand
-                    {
-                        v_WindowName = variableWindowName,
-                        v_SearchMethod = searchMethod
-                    };
-                    activateWindow.RunCommand(sender);
-                    System.Threading.Thread.Sleep(500); // wait a bit
-                    //variableWindowName = User32Functions.GetActiveWindowTitle();
-                    variableWindowName = WindowNameControls.GetActiveWindowTitle();
-                }
-            }
-
-            var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
-
-            //if element exists type
-            if (v_AutomationType == "Check If Element Exists")
-            {
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                
-                //remove brackets from variable
-                applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
-
-                //declare search result
-                string searchResult;
-
-                //determine search result
-                if (requiredHandle == null)
-                {
-                    searchResult = "FALSE";
-  
-                }
-                else
-                {
-                    searchResult = "TRUE";
-                }
-
-                //store data
-                searchResult.StoreInUserVariable(sender, applyToVariable);
-
-            }
-
-            //determine element click type
-            else if (v_AutomationType == "Click Element")
-            {
-
-                //if handle was not found
-                if (requiredHandle == null)
-                    throw new Exception("Element was not found in window '" + variableWindowName + "'");
-
-                //create search params
-                var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
-                                 where rw.Field<string>("Parameter Name") == "Click Type"
-                                 select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //get x adjust
-                var xAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
-                               where rw.Field<string>("Parameter Name") == "X Adjustment"
-                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //get y adjust
-                var yAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
-                               where rw.Field<string>("Parameter Name") == "Y Adjustment"
-                               select rw.Field<string>("Parameter Value")).FirstOrDefault();
-
-                //convert potential variable
-                var xAdjustVariable = xAdjust.ConvertToUserVariable(sender);
-                var yAdjustVariable = yAdjust.ConvertToUserVariable(sender);
-
-                //parse to int
-                var xAdjustInt = int.Parse(xAdjustVariable);
-                var yAdjustInt = int.Parse(yAdjustVariable);
-
-                //get clickable point
-                var newPoint = requiredHandle.GetClickablePoint();
-
-                //send mousemove command
-                var newMouseMove = new MoveMouseCommand
-                {
-                    v_XMousePosition = (newPoint.X + xAdjustInt).ToString(),
-                    v_YMousePosition = (newPoint.Y + yAdjustInt).ToString(),
-                    v_MouseClick = clickType
+                    v_TargetElement = winElemVar,
+                    v_SearchParameters = this.v_UIASearchParameters,
+                    v_WaitTime = this.v_ElementWaitTime,
+                    v_AutomationElementVariable = trgElemVar,
                 };
-
-                //run commands
-                newMouseMove.RunCommand(sender);
+                trgElem.RunCommand(engine);
             }
-            else if (v_AutomationType == "Get Value From Element")
+            catch (Exception ex)
             {
+                if (elemAction == "check if element exists")
+                {
+                    false.StoreInUserVariable(engine, p["Apply To Variable"]);
+                    return; // finish command
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
 
-                //if handle was not found
-                if (requiredHandle == null)
-                    throw new Exception("Element was not found in window '" + variableWindowName + "'");
-                //get value from property
-                var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
-                                    where rw.Field<string>("Parameter Name") == "Get Value From"
-                                    select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            switch (elemAction)
+            {
+                case "click element":
+                    var clickCmd = new UIAutomationClickElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_ClickType = p["Click Type"],
+                        v_XOffset = p["X Adjustment"],
+                        v_YOffset = p["Y Adjustment"],
+                    };
+                    clickCmd.RunCommand(engine);
+                    break;
+                case "expand collapse items in element":
+                    var expandCmd = new UIAutomationExpandCollapseItemsInElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_ItemsState = p["Items State"],
+                    };
+                    expandCmd.RunCommand(engine);
+                    break;
+                case "scroll element":
+                    var scrollCmd = new UIAutomationScrollElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_ScrollBarType = p["ScrollBar Type"],
+                        v_DirectionAndAmount = p["Scroll Method"],
+                    };
+                    scrollCmd.RunCommand(engine);
+                    break;
+                case "select element":
+                    var selectCmd = new UIAutomationSelectElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                    };
+                    selectCmd.RunCommand(engine);
+                    break;
+                case "select item in element":
+                    var selectItemCmd = new UIAutomationSelectItemInElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_Item = p["Item Value"],
+                    };
+                    selectItemCmd.RunCommand(engine);
+                    break;
+                case "set text to element":
+                    var setTextCmd = new UIAutomationSetTextToElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_TextVariable = p["Text To Set"],
+                    };
+                    setTextCmd.RunCommand(engine);
+                    break;
+                case "get value from element":
+                    // todo: not supported now
+                    break;
+                case "check if element exists":
+                    true.StoreInUserVariable(engine, p["Apply To Variable"]);
+                    break;
+                case "get text value from element":
+                    var getTextCmd = new UIAutomationGetTextFromElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_TextVariable = p["Apply To Variable"],
+                    };
+                    getTextCmd.RunCommand(engine);
+                    break;
+                case "get selected state from element":
+                    var getSelectedCmd = new UIAutomationGetSelectedStateFromElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_ResultVariable = p["Apply To Variable"],
+                    };
+                    getSelectedCmd.RunCommand(engine);
+                    break;
+                case "get value from table element":
+                    var getTableCmd = new UIAutomationGetTextFromTableElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_Row = p["Row"],
+                        v_Column = p["Column"],
+                        v_TextVariable = p["Apply To Variable"],
+                    };
+                    getTableCmd.RunCommand(engine);
+                    break;
+            }
+
+            ////create variable window name
+            //var variableWindowName = v_WindowName.ConvertToUserVariable(sender);
+
+            //if (variableWindowName == engine.engineSettings.CurrentWindowKeyword)
+            //{
+            //    //variableWindowName = User32Functions.GetActiveWindowTitle();
+            //    variableWindowName = WindowNameControls.GetActiveWindowTitle();
+            //}
+            //else
+            //{
+            //    // search and activate window
+            //    var searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
+            //    if (String.IsNullOrEmpty(searchMethod))
+            //    {
+            //        searchMethod = "Contains";
+            //    }
+
+            //    if (searchMethod != "Exact match")
+            //    {
+            //        ActivateWindowCommand activateWindow = new ActivateWindowCommand
+            //        {
+            //            v_WindowName = variableWindowName,
+            //            v_SearchMethod = searchMethod
+            //        };
+            //        activateWindow.RunCommand(sender);
+            //        System.Threading.Thread.Sleep(500); // wait a bit
+            //        //variableWindowName = User32Functions.GetActiveWindowTitle();
+            //        variableWindowName = WindowNameControls.GetActiveWindowTitle();
+            //    }
+            //}
+
+            //var requiredHandle =  SearchForGUIElement(sender, variableWindowName);
+
+            ////if element exists type
+            //if (v_AutomationType == "Check If Element Exists")
+            //{
+            //    //apply to variable
+            //    var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Apply To Variable"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+                
+            //    //remove brackets from variable
+            //    applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+
+            //    //declare search result
+            //    string searchResult;
+
+            //    //determine search result
+            //    if (requiredHandle == null)
+            //    {
+            //        searchResult = "FALSE";
+  
+            //    }
+            //    else
+            //    {
+            //        searchResult = "TRUE";
+            //    }
+
+            //    //store data
+            //    searchResult.StoreInUserVariable(sender, applyToVariable);
+
+            //}
+
+            ////determine element click type
+            //else if (v_AutomationType == "Click Element")
+            //{
+
+            //    //if handle was not found
+            //    if (requiredHandle == null)
+            //        throw new Exception("Element was not found in window '" + variableWindowName + "'");
+
+            //    //create search params
+            //    var clickType = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                     where rw.Field<string>("Parameter Name") == "Click Type"
+            //                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+            //    //get x adjust
+            //    var xAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                   where rw.Field<string>("Parameter Name") == "X Adjustment"
+            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+            //    //get y adjust
+            //    var yAdjust = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                   where rw.Field<string>("Parameter Name") == "Y Adjustment"
+            //                   select rw.Field<string>("Parameter Value")).FirstOrDefault();
+
+            //    //convert potential variable
+            //    var xAdjustVariable = xAdjust.ConvertToUserVariable(sender);
+            //    var yAdjustVariable = yAdjust.ConvertToUserVariable(sender);
+
+            //    //parse to int
+            //    var xAdjustInt = int.Parse(xAdjustVariable);
+            //    var yAdjustInt = int.Parse(yAdjustVariable);
+
+            //    //get clickable point
+            //    var newPoint = requiredHandle.GetClickablePoint();
+
+            //    //send mousemove command
+            //    var newMouseMove = new MoveMouseCommand
+            //    {
+            //        v_XMousePosition = (newPoint.X + xAdjustInt).ToString(),
+            //        v_YMousePosition = (newPoint.Y + yAdjustInt).ToString(),
+            //        v_MouseClick = clickType
+            //    };
+
+            //    //run commands
+            //    newMouseMove.RunCommand(sender);
+            //}
+            //else if (v_AutomationType == "Get Value From Element")
+            //{
+
+            //    //if handle was not found
+            //    if (requiredHandle == null)
+            //        throw new Exception("Element was not found in window '" + variableWindowName + "'");
+            //    //get value from property
+            //    var propertyName = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                        where rw.Field<string>("Parameter Name") == "Get Value From"
+            //                        select rw.Field<string>("Parameter Value")).FirstOrDefault();
                
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            //    //apply to variable
+            //    var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Apply To Variable"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                //remove brackets from variable
-                applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
+            //    //remove brackets from variable
+            //    applyToVariable = applyToVariable.Replace(engine.engineSettings.VariableStartMarker, "").Replace(engine.engineSettings.VariableEndMarker, "");
 
-                //get required value
-                var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
+            //    //get required value
+            //    var requiredValue = requiredHandle.Current.GetType().GetRuntimeProperty(propertyName)?.GetValue(requiredHandle.Current).ToString();
 
-                //store into variable
-                requiredValue.StoreInUserVariable(sender, applyToVariable);
+            //    //store into variable
+            //    requiredValue.StoreInUserVariable(sender, applyToVariable);
 
-            }
-            else if (v_AutomationType == "Get Text Value From Element")
-            {
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            //}
+            //else if (v_AutomationType == "Get Text Value From Element")
+            //{
+            //    //apply to variable
+            //    var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Apply To Variable"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                object patternObj;
-                if (requiredHandle.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
-                {
-                    // TextBox
-                    ((ValuePattern)patternObj).Current.Value.StoreInUserVariable(sender, applyToVariable);
-                }
-                else if (requiredHandle.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
-                {
-                    // TextBox Multilune
-                    TextPattern tPtn = (TextPattern)patternObj;
-                    tPtn.DocumentRange.GetText(-1).StoreInUserVariable(sender, applyToVariable);
-                }
-                else if (requiredHandle.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
-                {
-                    ((SelectionPattern)patternObj).Current.GetSelection()[0].GetCurrentPropertyValue(AutomationElement.NameProperty).ToString().StoreInUserVariable(sender, applyToVariable);
-                }
-                else
-                {
-                    requiredHandle.Current.Name.StoreInUserVariable(sender, applyToVariable);
-                }
-            }
-            else if (v_AutomationType == "Get Selected State From Element")
-            {
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-                object patternObj;
-                bool checkState;
-                if (requiredHandle.TryGetCurrentPattern(TogglePattern.Pattern, out patternObj))
-                {
-                    checkState = (((TogglePattern)patternObj).Current.ToggleState == ToggleState.On);
-                }
-                else if (requiredHandle.TryGetCurrentPattern(SelectionItemPattern.Pattern, out patternObj))
-                {
-                    checkState = ((SelectionItemPattern)patternObj).Current.IsSelected;
-                }
-                else
-                {
-                    throw new Exception("Thie element is not CheckBox or RadioButton.");
-                }
-                (checkState ? "TRUE" : "FALSE").StoreInUserVariable(sender, applyToVariable);
-            }
-            else if (v_AutomationType == "Get Value From Table Element")
-            {
-                // row, column
-                var vTarget = (from rw in v_UIAActionParameters.AsEnumerable()
-                            where rw.Field<string>("Parameter Name") == "Target"
-                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
-                var vRow = (from rw in v_UIAActionParameters.AsEnumerable()
-                            where rw.Field<string>("Parameter Name") == "Row"
-                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
-                var vColumn = (from rw in v_UIAActionParameters.AsEnumerable()
-                            where rw.Field<string>("Parameter Name") == "Column"
-                            select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
-                //apply to variable
-                var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
-                                       where rw.Field<string>("Parameter Name") == "Apply To Variable"
-                                       select rw.Field<string>("Parameter Value")).FirstOrDefault();
-                int row, col;
+            //    object patternObj;
+            //    if (requiredHandle.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
+            //    {
+            //        // TextBox
+            //        ((ValuePattern)patternObj).Current.Value.StoreInUserVariable(sender, applyToVariable);
+            //    }
+            //    else if (requiredHandle.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
+            //    {
+            //        // TextBox Multilune
+            //        TextPattern tPtn = (TextPattern)patternObj;
+            //        tPtn.DocumentRange.GetText(-1).StoreInUserVariable(sender, applyToVariable);
+            //    }
+            //    else if (requiredHandle.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
+            //    {
+            //        ((SelectionPattern)patternObj).Current.GetSelection()[0].GetCurrentPropertyValue(AutomationElement.NameProperty).ToString().StoreInUserVariable(sender, applyToVariable);
+            //    }
+            //    else
+            //    {
+            //        requiredHandle.Current.Name.StoreInUserVariable(sender, applyToVariable);
+            //    }
+            //}
+            //else if (v_AutomationType == "Get Selected State From Element")
+            //{
+            //    //apply to variable
+            //    var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Apply To Variable"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            //    object patternObj;
+            //    bool checkState;
+            //    if (requiredHandle.TryGetCurrentPattern(TogglePattern.Pattern, out patternObj))
+            //    {
+            //        checkState = (((TogglePattern)patternObj).Current.ToggleState == ToggleState.On);
+            //    }
+            //    else if (requiredHandle.TryGetCurrentPattern(SelectionItemPattern.Pattern, out patternObj))
+            //    {
+            //        checkState = ((SelectionItemPattern)patternObj).Current.IsSelected;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Thie element is not CheckBox or RadioButton.");
+            //    }
+            //    (checkState ? "TRUE" : "FALSE").StoreInUserVariable(sender, applyToVariable);
+            //}
+            //else if (v_AutomationType == "Get Value From Table Element")
+            //{
+            //    // row, column
+            //    var vTarget = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                where rw.Field<string>("Parameter Name") == "Target"
+            //                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+            //    var vRow = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                where rw.Field<string>("Parameter Name") == "Row"
+            //                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+            //    var vColumn = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                where rw.Field<string>("Parameter Name") == "Column"
+            //                select rw.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+            //    //apply to variable
+            //    var applyToVariable = (from rw in v_UIAActionParameters.AsEnumerable()
+            //                           where rw.Field<string>("Parameter Name") == "Apply To Variable"
+            //                           select rw.Field<string>("Parameter Value")).FirstOrDefault();
+            //    int row, col;
                 
 
-                object dgvPattern;
-                if (requiredHandle.TryGetCurrentPattern(TablePattern.Pattern, out dgvPattern))
-                {
-                    row = int.Parse(vRow);
-                    col = int.Parse(vColumn);
-                    var cell = ((TablePattern)dgvPattern).GetItem(row, col);
-                    cell.Current.Name.StoreInUserVariable(sender, applyToVariable);
-                }
-                else
-                {
-                    throw new Exception("This table is not supported.");
-                }
+            //    object dgvPattern;
+            //    if (requiredHandle.TryGetCurrentPattern(TablePattern.Pattern, out dgvPattern))
+            //    {
+            //        row = int.Parse(vRow);
+            //        col = int.Parse(vColumn);
+            //        var cell = ((TablePattern)dgvPattern).GetItem(row, col);
+            //        cell.Current.Name.StoreInUserVariable(sender, applyToVariable);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("This table is not supported.");
+            //    }
                 
-            }
-            else
-            {
-                throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
-            }
+            //}
+            //else
+            //{
+            //    throw new NotImplementedException("Automation type '" + v_AutomationType + "' not supported.");
+            //}
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        private void cmbActionType_SelectedItemChange(object sender, EventArgs e)
         {
-            base.Render(editor);
+            var a = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
 
-            //create search param grid
-            //SearchParametersGridViewHelper = new DataGridView();
-            //SearchParametersGridViewHelper.Width = 500;
-            //SearchParametersGridViewHelper.Height = 140;
-            //SearchParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIASearchParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-            SearchParametersGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_UIASearchParameters", this, false, false, false, 500, 240);
-            SearchParametersGridViewHelper.CellBeginEdit += SearchParametersGridViewHelper_CellBeginEdit;
-            SearchParametersGridViewHelper.CellClick += SearchParametersGridViewHelper_CellClick;
-
-            DataGridViewCheckBoxColumn enabled = new DataGridViewCheckBoxColumn();
-            enabled.HeaderText = "Enabled";
-            enabled.DataPropertyName = "Enabled";
-            SearchParametersGridViewHelper.Columns.Add(enabled);
-
-            DataGridViewTextBoxColumn propertyName = new DataGridViewTextBoxColumn();
-            propertyName.HeaderText = "Parameter Name";
-            propertyName.DataPropertyName = "Parameter Name";
-            SearchParametersGridViewHelper.Columns.Add(propertyName);
-
-            DataGridViewTextBoxColumn propertyValue = new DataGridViewTextBoxColumn();
-            propertyValue.HeaderText = "Parameter Value";
-            propertyValue.DataPropertyName = "Parameter Value";
-            SearchParametersGridViewHelper.Columns.Add(propertyValue);
-
-            //SearchParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            //SearchParametersGridViewHelper.AllowUserToAddRows = false;
-            //SearchParametersGridViewHelper.AllowUserToDeleteRows = false;
-
-            //create actions
-            //ActionParametersGridViewHelper = new DataGridView();
-            //ActionParametersGridViewHelper.Width = 500;
-            //ActionParametersGridViewHelper.Height = 140;
-            //ActionParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_UIAActionParameters", false, DataSourceUpdateMode.OnPropertyChanged);
-            ActionParametersGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_UIAActionParameters", this, false, false, false, 500, 140);
-            ActionParametersGridViewHelper.MouseEnter += ActionParametersGridViewHelper_MouseEnter;
-            //ActionParametersGridViewHelper.CellBeginEdit += ActionParametersGridViewHelper_CellBeginEdit;
-            //ActionParametersGridViewHelper.CellClick += ActionParametersGridViewHelper_CellClick;
-            ActionParametersGridViewHelper.CellBeginEdit += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellBeginEdit;
-            ActionParametersGridViewHelper.CellClick += DataTableControls.FirstColumnReadonlySubsequentEditableDataGridView_CellClick;
-
-            propertyName = new DataGridViewTextBoxColumn();
-            propertyName.HeaderText = "Parameter Name";
-            propertyName.DataPropertyName = "Parameter Name";
-            ActionParametersGridViewHelper.Columns.Add(propertyName);
-
-            propertyValue = new DataGridViewTextBoxColumn();
-            propertyValue.HeaderText = "Parameter Value";
-            propertyValue.DataPropertyName = "Parameter Value";
-            ActionParametersGridViewHelper.Columns.Add(propertyValue);
-
-            //ActionParametersGridViewHelper.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            //ActionParametersGridViewHelper.AllowUserToAddRows = false;
-            //ActionParametersGridViewHelper.AllowUserToDeleteRows = false;
-
-
-            //create helper control
-            //CommandItemControl helperControl = new CommandItemControl();
-            //helperControl.Padding = new Padding(10, 0, 0, 0);
-            //helperControl.ForeColor = Color.AliceBlue;
-            //helperControl.Font = new Font("Segoe UI Semilight", 10);         
-            //helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-            CommandItemControl helperControl = CommandControls.CreateSimpleUIHelper(nameof(v_UIASearchParameters) + "_helper", SearchParametersGridViewHelper);
-            helperControl.CommandDisplay = "Element Recorder";
-            helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
-            helperControl.Click += ShowRecorder;
-
-            //automation type
-            var automationTypeGroup = CommandControls.CreateDefaultDropdownGroupFor("v_AutomationType", this, editor);
-            AutomationTypeControl = (ComboBox)automationTypeGroup.Where(f => f is ComboBox).FirstOrDefault();
-            AutomationTypeControl.SelectionChangeCommitted += UIAType_SelectionChangeCommitted;
-            RenderedControls.AddRange(automationTypeGroup);
-
-
-
-            //window name
-            RenderedControls.Add(UI.CustomControls.CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            WindowNameControl = UI.CustomControls.CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultUIHelpersFor("v_WindowName", this, WindowNameControl, editor));
-            RenderedControls.Add(WindowNameControl);
-
-            RenderedControls.AddRange(UI.CustomControls.CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-            var emptyParameterLink = CommandControls.CreateSimpleUIHelper(nameof(v_UIASearchParameters) + "_customhelper_0", SearchParametersGridViewHelper);
-            emptyParameterLink.CommandDisplay = "Add empty parameters";
-            emptyParameterLink.DrawIcon = taskt.Properties.Resources.taskt_command_helper;
-            emptyParameterLink.Click += (sender, e) => EmptySearchParameterClicked(sender, e);
-
-            var inspectParserLink = CommandControls.CreateSimpleUIHelper(nameof(v_UIASearchParameters) + "_customhelper_1", SearchParametersGridViewHelper);
-            inspectParserLink.CommandDisplay = "Inspect Tool Parser";
-            inspectParserLink.DrawIcon = taskt.Properties.Resources.command_window;
-            inspectParserLink.Click += (sender, e) => InspectToolParserClicked(sender, e);
-
-            //create search parameters   
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIASearchParameters", this));
-            RenderedControls.Add(helperControl);
-            RenderedControls.Add(emptyParameterLink);
-            RenderedControls.Add(inspectParserLink);
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_UIASearchParameters", this, SearchParametersGridViewHelper, editor));
-            RenderedControls.Add(SearchParametersGridViewHelper);
-
-            
-            //RenderedControls.Add(emptyParameterLink);
-
-            //create action parameters
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UIAActionParameters", this));
-            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_UIAActionParameters", this, ActionParametersGridViewHelper, editor));
-            RenderedControls.Add(ActionParametersGridViewHelper);
-
-            return RenderedControls;
-
-        }
-
-        private void SearchParametersGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            if (e.ColumnIndex == 1)
+            var dgv = PropertyControls.GetPropertyControl<DataGridView>(this.ControlsList, nameof(v_UIAActionParameters));
+            var table = v_UIAActionParameters;
+            table.Rows.Clear();
+            switch (a.ToLower())
             {
-                e.Cancel = true;
-            }
-        }
-        private void SearchParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                if (e.ColumnIndex == 2)
-                {
-                    SearchParametersGridViewHelper.BeginEdit(false);
-                }
-            }
-            else
-            {
-                SearchParametersGridViewHelper.EndEdit();
-            }
-        }
-       
-        //private void ActionParametersGridViewHelper_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        //{
-        //    if (e.ColumnIndex == 0)
-        //    {
-        //        e.Cancel = true;
-        //    }
-        //}
-        //private void ActionParametersGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.ColumnIndex >= 0)
-        //    {
-        //        if (e.ColumnIndex == 1)
-        //        {
-        //            var targetCell = ActionParametersGridViewHelper.Rows[e.RowIndex].Cells[1];
-        //            if (targetCell is DataGridViewTextBoxCell)
-        //            {
-        //                ActionParametersGridViewHelper.BeginEdit(false);
-        //            }
-        //            else if ((targetCell is DataGridViewComboBoxCell) && (targetCell.Value.ToString() == ""))
-        //            {
-        //                SendKeys.Send("%{DOWN}");
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ActionParametersGridViewHelper.EndEdit();
-        //    }
-        //}
+                case "click element":
+                    table.Rows.Add(new string[] { "Click Type", "" });
+                    table.Rows.Add(new string[] { "X Adjustment", "" });
+                    table.Rows.Add(new string[] { "Y Adjustment", "" });
 
-
-        public void ShowRecorder(object sender, EventArgs e)
-        {
-            //get command reference
-            //create recorder
-            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = this.v_UIASearchParameters;
-
-            //show form
-            newElementRecorder.ShowDialog();
-
-            WindowNameControl.Text = newElementRecorder.cboWindowTitle.Text;
-
-
-            this.v_UIASearchParameters.Rows.Clear();
-            foreach (DataRow rw in newElementRecorder.searchParameters.Rows)
-            {
-                this.v_UIASearchParameters.ImportRow(rw);
-            }
-
-           
-            SearchParametersGridViewHelper.DataSource = this.v_UIASearchParameters;
-            SearchParametersGridViewHelper.Refresh();
-
-        }
-
-        public void UIAType_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-  
-            ComboBox selectedAction = AutomationTypeControl;
-
-            if (selectedAction == null)
-                return;
-
-            DataGridView actionParameterView = ActionParametersGridViewHelper;
-            actionParameterView.Refresh();
-
-            DataTable actionParameters = this.v_UIAActionParameters;
-
-            if (sender != null)
-            {
-                actionParameters.Rows.Clear();
-            }
-
-  
-            switch (selectedAction.SelectedItem)
-            {
-                case "Click Element":
-                    var mouseClickBox = new DataGridViewComboBoxCell();
-                    mouseClickBox.Items.Add("Left Click");
-                    mouseClickBox.Items.Add("Middle Click");
-                    mouseClickBox.Items.Add("Right Click");
-                    mouseClickBox.Items.Add("Left Down");
-                    mouseClickBox.Items.Add("Middle Down");
-                    mouseClickBox.Items.Add("Right Down");
-                    mouseClickBox.Items.Add("Left Up");
-                    mouseClickBox.Items.Add("Middle Up");
-                    mouseClickBox.Items.Add("Right Up");
-                    mouseClickBox.Items.Add("Double Left Click");
-
-
-                    if (sender != null)
+                    var clickType = new DataGridViewComboBoxCell();
+                    clickType.Items.AddRange(new string[]
                     {
-                        actionParameters.Rows.Add("Click Type", "");
-                        actionParameters.Rows.Add("X Adjustment", 0);
-                        actionParameters.Rows.Add("Y Adjustment", 0);
-                    }
-
-                    actionParameterView.Rows[0].Cells[1] = mouseClickBox;
+                        "Left Click",
+                        "Middle Click",
+                        "Right Click",
+                        "Left Down",
+                        "Middle Down",
+                        "Right Down",
+                        "Left Up",
+                        "Middle Up",
+                        "Right Up",
+                        "Double Left Click",
+                        "None",
+                    });
+                    dgv.Rows[0].Cells[1] = clickType;
                     break;
-
-                case "Check If Element Exists":
-
-                    if (sender != null)
+                case "expand collapse items in element":
+                    table.Rows.Add(new string[] { "Items State", "" });
+                    var itemState = new DataGridViewComboBoxCell();
+                    itemState.Items.AddRange(new string[]
                     {
-                        actionParameters.Rows.Add("Apply To Variable", "");
-                    }
+                        "Expand",
+                        "Collapse"
+                    });
+                    dgv.Rows[0].Cells[1] = itemState;
                     break;
-
-                case "Get Text Value From Element":
-                    if (sender != null)
+                case "scroll element":
+                    table.Rows.Add(new string[] { "ScrollBar Type", "" });
+                    table.Rows.Add(new string[] { "Scroll Method", "" });
+                    var barType = new DataGridViewComboBoxCell();
+                    barType.Items.AddRange(new string[]
                     {
-                        actionParameters.Rows.Add("Apply To Variable", "");
-                    }
+                        "Vertical",
+                        "Horizonal",
+                    });
+                    var scrollMethod = new DataGridViewComboBoxCell();
+                    scrollMethod.Items.AddRange(new string[]
+                    {
+                        "Scroll Small Down or Right",
+                        "Scroll Large Down or Right",
+                        "Scroll Small Up or Left",
+                        "Scroll Large Up or Left",
+                    });
+                    dgv.Rows[0].Cells[1] = barType;
+                    dgv.Rows[1].Cells[1] = scrollMethod;
                     break;
-
-                case "Get Selected State From Element":
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Apply To Variable", "");
-                    }
+                case "select item in element":
+                    table.Rows.Add(new string[] { "Item Value", "" });
                     break;
-
-                case "Get Value From Table Element":
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Row", "");
-                        actionParameters.Rows.Add("Column", "");
-                        actionParameters.Rows.Add("Apply To Variable", "");
-                    }
+                case "set text to element":
+                    table.Rows.Add(new string[] { "Text To Set", "" });
                     break;
-
-                default:
-                    var parameterName = new DataGridViewComboBoxCell();
-                    parameterName.Items.Add("AcceleratorKey");
-                    parameterName.Items.Add("AccessKey");
-                    parameterName.Items.Add("AutomationId");
-                    parameterName.Items.Add("ClassName");
-                    parameterName.Items.Add("FrameworkId");
-                    parameterName.Items.Add("HasKeyboardFocus");
-                    parameterName.Items.Add("HelpText");
-                    parameterName.Items.Add("IsContentElement");
-                    parameterName.Items.Add("IsControlElement");
-                    parameterName.Items.Add("IsEnabled");
-                    parameterName.Items.Add("IsKeyboardFocusable");
-                    parameterName.Items.Add("IsOffscreen");
-                    parameterName.Items.Add("IsPassword");
-                    parameterName.Items.Add("IsRequiredForForm");
-                    parameterName.Items.Add("ItemStatus");
-                    parameterName.Items.Add("ItemType");
-                    parameterName.Items.Add("LocalizedControlType");
-                    parameterName.Items.Add("Name");
-                    parameterName.Items.Add("NativeWindowHandle");
-                    parameterName.Items.Add("ProcessID");
-
-                    if (sender != null)
-                    {
-                        actionParameters.Rows.Add("Get Value From", "");
-                        actionParameters.Rows.Add("Apply To Variable", "");
-                        actionParameterView.Refresh();
-                        try
-                        {
-                            actionParameterView.Rows[0].Cells[1] = parameterName;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Unable to select first row, second cell to apply '" + parameterName + "': " + ex.ToString());
-                        }
-
-                    }
-
+                case "get value from element":
+                    table.Rows.Add(new string[] { "Get Value From", "" });
+                    table.Rows.Add(new string[] { "Apply To Variable", "" });
+                    break;
+                case "get value from table element":
+                    table.Rows.Add(new string[] { "Row", "" });
+                    table.Rows.Add(new string[] { "Column", "" });
+                    table.Rows.Add(new string[] { "Apply To Variable", "" });
+                    break;
+                case "check if element exists":
+                case "get text value from element":
+                case "get selected state from element":
+                    table.Rows.Add(new string[] { "Apply To Variable", "" });
+                    break;
+                case "select element":
+                case "wait for element to exists":
+                    // nothing
                     break;
             }
-
-            actionParameterView.Refresh();
         }
 
-        private void EmptySearchParameterClicked(object sender, EventArgs e)
+        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            SearchParametersGridViewHelper.SuspendLayout();
-
-            v_UIASearchParameters.Rows.Clear();
-            v_UIASearchParameters.Rows.Add(false, "AcceleratorKey", "");
-            v_UIASearchParameters.Rows.Add(false, "AccessKey", "");
-            v_UIASearchParameters.Rows.Add(false, "AutomationId", "");
-            v_UIASearchParameters.Rows.Add(false, "ClassName", "");
-            v_UIASearchParameters.Rows.Add(false, "FrameworkId", "");
-            v_UIASearchParameters.Rows.Add(false, "HasKeyboardFocus", "");
-            v_UIASearchParameters.Rows.Add(false, "HelpText", "");
-            v_UIASearchParameters.Rows.Add(false, "IsContentElement", "");
-            v_UIASearchParameters.Rows.Add(false, "IsControlElement", "");
-            v_UIASearchParameters.Rows.Add(false, "IsEnabled", "");
-            v_UIASearchParameters.Rows.Add(false, "IsKeyboardFocusable", "");
-            v_UIASearchParameters.Rows.Add(false, "IsOffscreen", "");
-            v_UIASearchParameters.Rows.Add(false, "IsPassword", "");
-            v_UIASearchParameters.Rows.Add(false, "IsRequiredForForm", "");
-            v_UIASearchParameters.Rows.Add(false, "ItemStatus", "");
-            v_UIASearchParameters.Rows.Add(false, "ItemType", "");
-            v_UIASearchParameters.Rows.Add(false, "LocalizedControlType", "");
-            v_UIASearchParameters.Rows.Add(false, "Name", "");
-            v_UIASearchParameters.Rows.Add(false, "NativeWindowHandle", "");
-            v_UIASearchParameters.Rows.Add(false, "ProcessID", "");
-
-            SearchParametersGridViewHelper.ResumeLayout();
-        }
-
-        private void InspectToolParserClicked(object sender, EventArgs e)
-        {
-            using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
-            {
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    string inspect = frm.inspectResult;
-                    string[] results = inspect.Split(new [] { "\r\n" }, StringSplitOptions.None);
-                    if ((results.Length >= 1) && (inspect != ""))
-                    {
-                        v_UIASearchParameters.Rows.Clear();
-                        EmptySearchParameterClicked(null, null);  // add rows
-
-                        List<string> ancestors = new List<string>();
-                        string currentParam = "";
-                        foreach(string res in results)
-                        {
-                            string[] spt = res.Split('\t');
-                            string value = (spt.Length >= 2) ? spt[1] : "";
-                            if (value.StartsWith("\"") && value.EndsWith("\""))
-                            {
-                                value = value.Substring(1, value.Length - 2);
-                            }
-                            if (spt[0] != "")
-                            {
-                                string name = spt[0].Substring(0, spt[0].Length - 1);
-                                currentParam = name;
-                                
-                                switch (name)
-                                {
-                                    case "AcceleratorKey":
-                                    case "AccessKey":
-                                    case "AutomationId":
-                                    case "ClassName":
-                                    case "FrameworkId":
-                                    case "HasKeyboardFocus":
-                                    case "HelpText":
-                                    case "IsContentElement":
-                                    case "IsControlElement":
-                                    case "IsEnabled":
-                                    case "IsKeyboardFocusable":
-                                    case "IsOffscreen":
-                                    case "IsPassword":
-                                    case "IsRequiredForForm":
-                                    case "ItemStatus":
-                                    case "ItemType":
-                                    case "LocalizedControlType":
-                                    case "Name":
-                                    case "NativeWindowHandle":
-                                    case "ProcessID":
-                                        DataTableControls.SetParameterValue(v_UIASearchParameters, value, name, "Parameter Name", "Parameter Value");
-                                        break;
-
-                                    case "Ancestors":
-                                        ancestors.Add(value);
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                if (currentParam == "Ancestors")
-                                {
-                                    ancestors.Add(value);
-                                }
-                            }
-                        }
-                        if (ancestors.Count > 0)
-                        {
-                            string[] windows = new string[WindowNameControl.Items.Count];
-                            WindowNameControl.Items.CopyTo(windows, 0);
-
-                            bool isFound = false;
-                            foreach(string ancestor in ancestors)
-                            {
-                                // get quoted " " text
-                                int pos = ancestor.IndexOf("\"");
-                                if (pos < 0)
-                                {
-                                    continue;
-                                }
-
-                                string winName = ancestor.Substring(pos + 1);
-                                pos = winName.IndexOf("\"");
-                                if (pos < 0)
-                                {
-                                    continue;
-                                }
-                                winName = winName.Substring(0, pos);
-
-                                foreach(string win in windows)
-                                {
-                                    if (winName == win)
-                                    {
-                                        v_WindowName = winName;
-                                        WindowNameControl.Text = winName;
-                                        isFound = true;
-                                        break;
-                                    }
-                                }
-                                if (isFound)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        var f = new UI.Forms.Supplemental.frmDialog("No Inspect Tool Results", "Fail Parse", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0);
-                        f.ShowDialog();
-                    }
-                }
-            }
+            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
         public override string GetDisplayValue()
@@ -1156,47 +581,47 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            if (String.IsNullOrEmpty(this.v_WindowName))
-            {
-                this.validationResult += "Window Name is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_AutomationType))
-            {
-                this.validationResult += "Action is empty.\n";
-                this.IsValid = false;
-            }
-            else
-            {
-                switch (this.v_AutomationType)
-                {
-                    case "Click Element":
-                        ClickElementValidate();
-                        break;
-                    case "Get Value From Element":
-                        GetValueFromElementValidate();
-                        break;
-                    case "Check If Element Exists":
-                    case "Get Text Value From Element":
-                    case "Get Selected State From Element":
-                        CheckIfElementExistsValidate();
-                        break;
+        //    if (String.IsNullOrEmpty(this.v_WindowName))
+        //    {
+        //        this.validationResult += "Window Name is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    if (String.IsNullOrEmpty(this.v_AutomationType))
+        //    {
+        //        this.validationResult += "Action is empty.\n";
+        //        this.IsValid = false;
+        //    }
+        //    else
+        //    {
+        //        switch (this.v_AutomationType)
+        //        {
+        //            case "Click Element":
+        //                ClickElementValidate();
+        //                break;
+        //            case "Get Value From Element":
+        //                GetValueFromElementValidate();
+        //                break;
+        //            case "Check If Element Exists":
+        //            case "Get Text Value From Element":
+        //            case "Get Selected State From Element":
+        //                CheckIfElementExistsValidate();
+        //                break;
 
-                    case "Get Value From Table Element":
-                        GetValueFromTableElement();
-                        break;
+        //            case "Get Value From Table Element":
+        //                GetValueFromTableElement();
+        //                break;
 
-                    default:
-                        break;
-                }
-            }
+        //            default:
+        //                break;
+        //        }
+        //    }
             
-            return this.IsValid;
-        }
+        //    return this.IsValid;
+        //}
 
         private void ClickElementValidate()
         {
@@ -1290,18 +715,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void ConvertToIntermediate(EngineSettings settings, List<Core.Script.ScriptVariable> variables)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_WindowName", "convertToIntermediateWindowName");
-            ConvertToIntermediate(settings, cnv, variables);
-        }
+        //public override void ConvertToIntermediate(EngineSettings settings, List<Script.ScriptVariable> variables)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add("v_WindowName", "convertToIntermediateWindowName");
+        //    ConvertToIntermediate(settings, cnv, variables);
+        //}
 
-        public override void ConvertToRaw(EngineSettings settings)
-        {
-            var cnv = new Dictionary<string, string>();
-            cnv.Add("v_WindowName", "convertToRawWindowName");
-            ConvertToRaw(settings, cnv);
-        }
+        //public override void ConvertToRaw(EngineSettings settings)
+        //{
+        //    var cnv = new Dictionary<string, string>();
+        //    cnv.Add("v_WindowName", "convertToRawWindowName");
+        //    ConvertToRaw(settings, cnv);
+        //}
     }
 }

@@ -389,7 +389,10 @@ namespace taskt.Core.Automation.Commands
             UIAutomationCommand newUIACommand = new UIAutomationCommand();
             newUIACommand.v_WindowName = windowName;
             newUIACommand.v_UIASearchParameters.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
-            var handle = newUIACommand.SearchForGUIElement(engine, windowName);
+
+            // todo: fix it !
+            //var handle = newUIACommand.SearchForGUIElement(engine, windowName);
+            object handle = null;
 
             return !(handle is null);
         }

@@ -45,6 +45,7 @@ namespace taskt.Core.Automation.Commands
 
             string textValue = v_TextVariable.ConvertToUserVariable(sender);
 
+            // todo: support range value pattern
             if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object textPtn))
             {
                 ((ValuePattern)textPtn).SetValue(textValue);
