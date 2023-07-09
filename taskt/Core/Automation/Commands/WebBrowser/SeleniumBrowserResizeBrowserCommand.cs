@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.SubGruop("Actions")]
+    [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
     [Attributes.ClassAttributes.CommandSettings("Resize Browser")]
     [Attributes.ClassAttributes.Description("This command allows you to change browser window size.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change browser window size.")]
