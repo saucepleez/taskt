@@ -300,6 +300,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_46(doc);
             convertTo3_5_1_48(doc);
             convertTo3_5_1_49(doc);
+            convertTo3_5_1_50(doc);
 
             return doc;
         }
@@ -1258,7 +1259,7 @@ namespace taskt.Core.Script
                         if (currentRows == 0)
                         {
                             table.Remove();
-                            diffgram.Remove();
+                            before.Remove();
                         }
 
                         break;
@@ -1267,6 +1268,32 @@ namespace taskt.Core.Script
 
             return doc;
         }
+
+        private static XDocument convertTo3_5_1_50(XDocument doc) 
+        {
+            // WebElement Action: Wait For WebElement To Exists
+            // WebElement Action: fix parameter table
+            var commands = GetCommands(doc, "SeleniumBrowserWebElementActionCommand");
+            foreach (var cmd in commands)
+            {
+                var act = cmd.Attribute("v_SeleniumElementAction").Value;
+                if (act.ToLower() == "wait for webelement to exist")
+                {
+                    cmd.SetAttributeValue("v_SeleniumElementAction", "Wait For WebElement To Exists");
+                }
+
+                (var table, var before, var _, var _) = GetTable(cmd, "v_WebActionParameterTable");
+                int rows = table?.Elements()?.Count() ?? 0;
+                if ((table != null) && (rows == 0))
+                {
+                    table.Remove();
+                    before.Remove();
+                }
+            }
+
+            return doc;
+        }
+
 
         /// <summary>
         /// get specfied commands
