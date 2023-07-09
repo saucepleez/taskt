@@ -111,6 +111,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch (Exception ex)
             {
+                // todo: add new command and fix it
                 if (elemAction == "check if element exists")
                 {
                     false.StoreInUserVariable(engine, p["Apply To Variable"]);
