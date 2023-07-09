@@ -315,7 +315,7 @@
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
-    <Compile Include="Core\Automation\Commands\AutomationElementControls.cs" />
+    <Compile Include="Core\Automation\Commands\UIElementControls.cs" />
     <Compile Include="Core\Automation\Commands\BooleanControls.cs" />
     <Compile Include="Core\Automation\Commands\ClipboardControls.cs" />
     <Compile Include="Core\Automation\Commands\ColorControls.cs" />

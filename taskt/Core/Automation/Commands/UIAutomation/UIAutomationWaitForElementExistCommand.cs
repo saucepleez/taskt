@@ -17,15 +17,15 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationWaitForElementExistCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
         public UIAutomationWaitForElementExistCommand()
@@ -40,13 +40,13 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            AutomationElementControls.SearchGUIElement(this, engine);
+            UIElementControls.SearchGUIElement(this, engine);
         }
 
         public override void AfterShown()
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            AutomationElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
         }
     }
 }

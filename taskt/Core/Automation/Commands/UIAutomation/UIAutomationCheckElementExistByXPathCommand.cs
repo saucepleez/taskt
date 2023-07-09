@@ -16,11 +16,11 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationCheckElementExistByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                AutomationElementControls.SearchGUIElementByXPath(this, engine);
+                UIElementControls.SearchGUIElementByXPath(this, engine);
                 true.StoreInUserVariable(engine, v_Result);
             }
             catch

@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationScrollElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             var scrollbarType = v_ScrollBarType.GetUISelectionValue("v_ScrollBarType", this, engine);
 
             var dirAndAmo = v_DirectionAndAmount.GetUISelectionValue("v_DirectionAndAmount", this, engine);
@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
             {
                 if (targetElement.Current.ControlType == ControlType.ScrollBar)
                 {
-                    var parentElement = AutomationElementControls.GetParentElement(targetElement);
+                    var parentElement = UIElementControls.GetParentUIElement(targetElement);
                     if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
                     {
                         throw new Exception("AutomationElement '" + v_TargetElement + "' does not have ScrollBar");

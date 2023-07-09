@@ -22,11 +22,11 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowWaitTime { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_ElementWaitTime { get; set; }
 
         public UIAutomationSearchElementAndWindowByXPathCommand()

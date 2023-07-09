@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationExpandCollapseItemsInElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             var state = v_ItemsState.GetUISelectionValue("v_ItemsState", this, engine);
 
             if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))

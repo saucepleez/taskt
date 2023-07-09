@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            AutomationElementControls.GetWindowAutomationElement(this, engine);
+            UIElementControls.GetWindowUIElement(this, engine);
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)

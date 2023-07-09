@@ -18,12 +18,12 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSearchChildElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         [PropertyDescription("Root AutomationElement Variable")]
         public string v_RootElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Index { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
         [PropertyDescription("AutomationElemnet Variable Name to Store Child Element")]
         public string v_AutomationElementVariable { get; set; }
 
@@ -56,10 +56,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_RootElement.GetAutomationElementVariable(engine);
+            var rootElement = v_RootElement.GetUIElementVariable(engine);
             int index = v_Index.ConvertToUserVariableAsInteger("v_Index", engine);
 
-            var elems = AutomationElementControls.GetChildrenElements(rootElement, v_SearchParameters, engine);
+            var elems = UIElementControls.GetChildrenUIElements(rootElement, v_SearchParameters, engine);
             if (elems.Count > 0)
             {
                 elems[index].StoreInUserVariable(engine, v_AutomationElementVariable);
@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
         public override void AfterShown()
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            AutomationElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
         }
     }
 }

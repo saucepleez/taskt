@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSearchElementFromTableElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Column { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
         public string v_AutomationElementVariable { get; set; }
 
         public UIAutomationSearchElementFromTableElementCommand()
@@ -58,11 +58,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             int row = v_Row.ConvertToUserVariableAsInteger("v_Row", engine);
             int column = v_Column.ConvertToUserVariableAsInteger("v_Column", engine);
 
-            AutomationElement cellElem = AutomationElementControls.GetTableElement(targetElement, row, column);
+            AutomationElement cellElem = UIElementControls.GetTableUIElement(targetElement, row, column);
             cellElem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
     }

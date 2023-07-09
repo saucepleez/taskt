@@ -17,11 +17,11 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationCheckElementExistCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                AutomationElementControls.SearchGUIElement(this, engine);
+                UIElementControls.SearchGUIElement(this, engine);
                 true.StoreInUserVariable(engine, v_Result);
             }
             catch
@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
         public override void AfterShown()
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            AutomationElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
         }
     }
 }

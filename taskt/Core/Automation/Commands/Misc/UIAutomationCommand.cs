@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         public string v_AutomationType { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_UIASearchParameters { get; set; }
 
         [XmlElement]
@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowWaitTime { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_ElementWaitTime { get; set; }
 
         public UIAutomationCommand()

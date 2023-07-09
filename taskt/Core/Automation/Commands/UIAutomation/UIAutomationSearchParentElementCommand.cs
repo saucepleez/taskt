@@ -16,16 +16,16 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSearchParentElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
         [PropertyDescription("AutomationElement Variable Name to Store Parent AutomationElement")]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
         public UIAutomationSearchParentElementCommand()
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var rootElement = v_TargetElement.GetUIElementVariable(engine);
 
             var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), engine);
             object ret = WaitControls.WaitProcess(waitTime, "Parent Element",
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     try
                     {
-                        var root = AutomationElementControls.GetParentElement(rootElement);
+                        var root = UIElementControls.GetParentUIElement(rootElement);
                         return (true, root);
                     }
                     catch

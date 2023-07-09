@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationGetTextFromElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -35,9 +35,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
-            string res = AutomationElementControls.GetTextValue(targetElement);
+            string res = UIElementControls.GetTextValue(targetElement);
             res.StoreInUserVariable(engine, v_TextVariable);
         }
     }

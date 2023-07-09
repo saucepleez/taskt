@@ -16,15 +16,15 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationWaitForElementExistByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
         public UIAutomationWaitForElementExistByXPathCommand()
@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            AutomationElementControls.SearchGUIElementByXPath(this, engine);
+            UIElementControls.SearchGUIElementByXPath(this, engine);
         }
     }
 }

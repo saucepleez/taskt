@@ -16,20 +16,20 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSearchElementFromElementByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         [PropertyDescription("AutomationElement Variable Name to Search")]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
         //[XmlIgnore]
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var elem = AutomationElementControls.SearchGUIElementByXPath(this, engine);
+            var elem = UIElementControls.SearchGUIElementByXPath(this, engine);
             elem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
     }

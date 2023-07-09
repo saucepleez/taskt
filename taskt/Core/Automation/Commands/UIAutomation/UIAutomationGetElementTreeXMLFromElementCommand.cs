@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationGetElementTreeXMLFromElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -45,9 +45,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             //var xml = AutomationElementControls.GetElementXml(targetElement, out _);
-            (var xml, _) = AutomationElementControls.GetElementXml(targetElement);
+            (var xml, _) = UIElementControls.GetElementXml(targetElement);
             using(System.IO.StringWriter sw = new System.IO.StringWriter())
             {
                 xml.Save(sw);

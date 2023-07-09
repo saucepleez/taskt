@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSelectElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         public UIAutomationSelectElementCommand()
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
             if (targetElement.TryGetCurrentPattern(TogglePattern.Pattern, out object checkPtn))
             {

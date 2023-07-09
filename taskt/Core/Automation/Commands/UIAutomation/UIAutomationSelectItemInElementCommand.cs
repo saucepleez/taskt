@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     public class UIAutomationSelectItemInElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -42,11 +42,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
             var itemName = v_Item.ConvertToUserVariable(engine);
 
-            var items = AutomationElementControls.GetSelectionItems(targetElement, true);
+            var items = UIElementControls.GetSelectionItems(targetElement, true);
             bool isSelected = false;
             foreach(var item in items)
             {
