@@ -175,8 +175,8 @@ namespace taskt.Core.Script
                 {
                     serializer = CreateSerializer();
                 }
-                Script des = (Script)serializer.Deserialize(reader);
 
+                Script des = (Script)serializer.Deserialize(reader);
                 foreach (var cmd in des.Commands)
                 {
                     cmd.ConvertToRaw(engineSettings);
@@ -1253,6 +1253,14 @@ namespace taskt.Core.Script
                                 break;
                             }
                         }
+
+                        int currentRows = table.Elements().Count();
+                        if (currentRows == 0)
+                        {
+                            table.Remove();
+                            diffgram.Remove();
+                        }
+
                         break;
                 }
             }
