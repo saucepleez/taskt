@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
-        [Remarks("When the Element exists, Result value is **True**")]
+        [Remarks("When the UIElement exists, Result value is **True**")]
         public string v_Result { get; set; }
 
         [XmlAttribute]
