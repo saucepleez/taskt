@@ -301,6 +301,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_48(doc);
             convertTo3_5_1_49(doc);
             convertTo3_5_1_50(doc);
+            convertTo3_5_1_51(doc);
 
             return doc;
         }
@@ -1290,6 +1291,29 @@ namespace taskt.Core.Script
                     before.Remove();
                 }
             }
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_51(XDocument doc)
+        {
+            // UIAutomationCheckElementExistByXPathCommand -> UIAutomationCheckUIElementExistByXPathCommand
+            ChangeCommandName(doc, "UIAutomationCheckElementExistByXPathCommand", "UIAutomationCheckUIElementExistByXPathCommand", "Check UIElement Exist By XPath");
+
+            // UIAutomationCheckElementExistCommand -> UIAutomationCheckUIElementExistCommand
+            ChangeCommandName(doc, "UIAutomationCheckElementExistCommand", "UIAutomationCheckUIElementExistCommand", "Check UIElement Exist");
+
+            // UIAutomationClickElementCommand -> UIAutomationClickUIElementCommand
+            ChangeCommandName(doc, "UIAutomationClickElementCommand", "UIAutomationClickUIElementCommand", "Click UIElement");
+
+            // UIAutomationExpandCollapseItemsInElementCommand -> UIAutomationExpandCollapseItemsInElementCommand
+            ChangeCommandName(doc, "UIAutomationExpandCollapseItemsInElementCommand", "UIAutomationExpandCollapseItemsInElementCommand", "Expand Collapse Items In UIElement");
+
+            // UIAutomationGetChildrenElementsInformationCommand -> UIAutomationGetChildrenUIElementsInformationCommand
+            ChangeCommandName(doc, "UIAutomationGetChildrenElementsInformationCommand", "UIAutomationGetChildrenUIElementsInformationCommand", "Get Children Elements Information");
+
+            // UIAutomationGetElementTreeXMLFromElementCommand -> UIAutomationGetUIElementTreeXMLFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetElementTreeXMLFromElementCommand", "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "Get UIElement Tree XML From UIElement");
 
             return doc;
         }

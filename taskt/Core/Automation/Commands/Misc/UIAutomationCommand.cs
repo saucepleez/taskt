@@ -126,7 +126,7 @@ namespace taskt.Core.Automation.Commands
             switch (elemAction)
             {
                 case "click element":
-                    var clickCmd = new UIAutomationClickElementCommand()
+                    var clickCmd = new UIAutomationClickUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ClickType = p["Click Type"],
@@ -136,7 +136,7 @@ namespace taskt.Core.Automation.Commands
                     clickCmd.RunCommand(engine);
                     break;
                 case "expand collapse items in element":
-                    var expandCmd = new UIAutomationExpandCollapseItemsInElementCommand()
+                    var expandCmd = new UIAutomationExpandCollapseItemsInUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ItemsState = p["Items State"],
