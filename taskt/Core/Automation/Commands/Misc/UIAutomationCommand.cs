@@ -144,7 +144,7 @@ namespace taskt.Core.Automation.Commands
                     expandCmd.RunCommand(engine);
                     break;
                 case "scroll element":
-                    var scrollCmd = new UIAutomationScrollElementCommand()
+                    var scrollCmd = new UIAutomationScrollUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ScrollBarType = p["ScrollBar Type"],

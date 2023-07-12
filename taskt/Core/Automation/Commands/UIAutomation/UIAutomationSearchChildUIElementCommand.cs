@@ -10,16 +10,16 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search Element")]
-    [Attributes.ClassAttributes.CommandSettings("Search Child Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Child Element from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child Element from AutomationElement. Search only for Child Elements.")]
+    [Attributes.ClassAttributes.CommandSettings("Search Child UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Child Element from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child UIElement from UIElement. Search only for Child UIElements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchChildElementCommand : ScriptCommand
+    public class UIAutomationSearchChildUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        [PropertyDescription("Root AutomationElement Variable")]
+        [PropertyDescription("Root UIElement Variable")]
         public string v_RootElement { get; set; }
 
         [XmlElement]
@@ -28,9 +28,9 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Child Element Index")]
+        [PropertyDescription("Child UIElement Index")]
         [InputSpecification("Index", true)]
-        [PropertyDetailSampleUsage("**0**", "Specfity the First AutomationElement")]
+        [PropertyDetailSampleUsage("**0**", "Specfity the First UIElement")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
         [Remarks("")]
@@ -41,10 +41,10 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
-        [PropertyDescription("AutomationElemnet Variable Name to Store Child Element")]
+        [PropertyDescription("UIElement Variable Name to Store Child UIElement")]
         public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationSearchChildElementCommand()
+        public UIAutomationSearchChildUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetChildElementCommand";
             //this.SelectionName = "Get Child Element";
@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("AutomationElement not found");
+                throw new Exception("UIElement not found");
             }
         }
 

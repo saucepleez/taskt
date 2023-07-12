@@ -1327,6 +1327,18 @@ namespace taskt.Core.Script
             // UIAutomationGetTextFromTableElementCommand -> UIAutomationGetTextFromTableUIElementCommand
             ChangeCommandName(doc, "UIAutomationGetTextFromTableElementCommand", "UIAutomationGetTextFromTableUIElementCommand", "Get Text From Table UIElement");
 
+            // UIAutomationScrollElementCommand -> UIAutomationScrollUIElementCommand
+            ChangeCommandName(doc, "UIAutomationScrollElementCommand", "UIAutomationScrollUIElementCommand", "Scroll UIElement");
+
+            // UIAutomationSearchChildElementCommand -> UIAutomationSearchChildUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchChildElementCommand", "UIAutomationSearchChildUIElementCommand", "Search Child UIElement");
+
+            // UIAutomationSearchElementAndWindowByXPathCommand -> UIAutomationSearchUIElementAndWindowByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementAndWindowByXPathCommand", "UIAutomationSearchUIElementAndWindowByXPathCommand", "Search UIElement And Window By XPath");
+
+            // UIAutomationSearchElementAndWindowCommand -> UIAutomationSearchUIElementAndWindowCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementAndWindowCommand", "UIAutomationSearchUIElementAndWindowCommand", "Search UIElement And Window");
+
             return doc;
         }
 
