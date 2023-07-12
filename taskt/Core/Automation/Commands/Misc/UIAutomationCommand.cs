@@ -182,7 +182,7 @@ namespace taskt.Core.Automation.Commands
                     true.StoreInUserVariable(engine, p["Apply To Variable"]);
                     break;
                 case "get text value from element":
-                    var getTextCmd = new UIAutomationGetTextFromElementCommand()
+                    var getTextCmd = new UIAutomationGetTextFromUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_TextVariable = p["Apply To Variable"],
@@ -190,7 +190,7 @@ namespace taskt.Core.Automation.Commands
                     getTextCmd.RunCommand(engine);
                     break;
                 case "get selected state from element":
-                    var getSelectedCmd = new UIAutomationGetSelectedStateFromElementCommand()
+                    var getSelectedCmd = new UIAutomationGetSelectedStateFromUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ResultVariable = p["Apply To Variable"],
@@ -198,7 +198,7 @@ namespace taskt.Core.Automation.Commands
                     getSelectedCmd.RunCommand(engine);
                     break;
                 case "get value from table element":
-                    var getTableCmd = new UIAutomationGetTextFromTableElementCommand()
+                    var getTableCmd = new UIAutomationGetTextFromTableUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_Row = p["Row"],

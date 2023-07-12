@@ -8,12 +8,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Text From Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Text Value from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from AutomationElement.")]
+    [Attributes.ClassAttributes.CommandSettings("Get Text From UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Text Value from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetTextFromElementCommand : ScriptCommand
+    public class UIAutomationGetTextFromUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_TextVariable { get; set; }
 
-        public UIAutomationGetTextFromElementCommand()
+        public UIAutomationGetTextFromUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetTextFromElementCommand";
             //this.SelectionName = "Get Text From Element";

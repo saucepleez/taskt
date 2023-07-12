@@ -1315,6 +1315,18 @@ namespace taskt.Core.Script
             // UIAutomationGetElementTreeXMLFromElementCommand -> UIAutomationGetUIElementTreeXMLFromUIElementCommand
             ChangeCommandName(doc, "UIAutomationGetElementTreeXMLFromElementCommand", "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "Get UIElement Tree XML From UIElement");
 
+            // UIAutomationGetSelectionItemsFromElementCommand -> UIAutomationGetSelectionItemsFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromElementCommand", "UIAutomationGetSelectionItemsFromUIElementCommand", "Get Selection Items From UIElement");
+
+            // UIAutomationGetSelectedStateFromElementCommand -> UIAutomationGetSelectedStateFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetSelectedStateFromElementCommand", "UIAutomationGetSelectedStateFromUIElementCommand", "Get Selected State From UIElement");
+
+            // UIAutomationGetTextFromElementCommand -> UIAutomationGetTextFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetTextFromElementCommand", "UIAutomationGetTextFromUIElementCommand", "Get Text From UIElement");
+
+            // UIAutomationGetTextFromTableElementCommand -> UIAutomationGetTextFromTableUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetTextFromTableElementCommand", "UIAutomationGetTextFromTableUIElementCommand", "Get Text From Table UIElement");
+
             return doc;
         }
 

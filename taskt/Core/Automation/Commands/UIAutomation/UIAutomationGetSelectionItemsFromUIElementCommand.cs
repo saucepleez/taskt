@@ -9,12 +9,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Selection Items From Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Selection Items Name from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selection Items Name from AutomationElement. Search for only Child Elements.")]
+    [Attributes.ClassAttributes.CommandSettings("Get Selection Items From UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Selection Items Name from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selection Items Name from UIElement. Search for only Child Elements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetSelectionItemsFromElementCommand : ScriptCommand
+    public class UIAutomationGetSelectionItemsFromUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         public string v_ListVariable { get; set; }
 
-        public UIAutomationGetSelectionItemsFromElementCommand()
+        public UIAutomationGetSelectionItemsFromUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetSelectionItemsFromElementCommand";
             //this.SelectionName = "Get Selection Items From Element";

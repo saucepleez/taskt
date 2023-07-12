@@ -9,12 +9,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Text From Table Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Text Value from Table AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from Table AutomationElement.")]
+    [Attributes.ClassAttributes.CommandSettings("Get Text From Table UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Text Value from Table UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from Table UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetTextFromTableElementCommand : ScriptCommand
+    public class UIAutomationGetTextFromTableUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         public string v_TextVariable { get; set; }
 
-        public UIAutomationGetTextFromTableElementCommand()
+        public UIAutomationGetTextFromTableUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetTextFromTableElementCommand";
             //this.SelectionName = "Get Text From Table Element";
