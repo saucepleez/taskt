@@ -658,7 +658,7 @@ namespace taskt.UI
             {nameof(EnterKeysCommand), "taskt.Properties.Resources.command_input"},
             {nameof(MoveMouseCommand), "taskt.Properties.Resources.command_input"},
             {nameof(ClickMouseCommand), "taskt.Properties.Resources.command_input"},
-            {nameof(UIAutomationCommand), "taskt.Properties.Resources.command_input"},
+            {nameof(UIAutomationUIElementActionCommand), "taskt.Properties.Resources.command_input"},
             
             // JSON
             {nameof(AddJSONArrayItemCommand), "taskt.Properties.Resources.command_parse"},

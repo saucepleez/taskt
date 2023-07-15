@@ -658,7 +658,7 @@
     <Compile Include="Core\Automation\Commands\Misc\SequenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\ThickAppClickItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\ThickAppGetTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\UIAutomationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationUIElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowUserInputDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\DatabaseRunQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\DateCalculationCommand.cs" />

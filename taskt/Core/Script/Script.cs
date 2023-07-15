@@ -1369,6 +1369,9 @@ namespace taskt.Core.Script
             // UIAutomationWaitForElementExistCommand -> UIAutomationWaitForUIElementExistCommand
             ChangeCommandName(doc, "UIAutomationWaitForElementExistCommand", "UIAutomationWaitForUIElementExistCommand", "Wait For UIElement Exist");
 
+            // UIAutomationCommand -> UIAutomationUIElementActionCommand
+            ChangeCommandName(doc, "UIAutomationCommand", "UIAutomationUIElementActionCommand", "UIElement Action");
+
             return doc;
         }
 
