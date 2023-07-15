@@ -128,9 +128,9 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// AutomationElement wait time
         /// </summary>
-        [PropertyDescription("Wait Time for the AutomationElement to Exist (sec)")]
+        [PropertyDescription("Wait Time for the UIElement to Exist (sec)")]
         [InputSpecification("Wait Time", true)]
-        [Remarks("Specify how long to Wait before an Error will occur because the AutomationElement is Not Found.")]
+        [Remarks("Specify how long to Wait before an Error will occur because the UIElement is Not Found.")]
         [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
         [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
         [PropertyShowSampleUsageInDescription(true)]
