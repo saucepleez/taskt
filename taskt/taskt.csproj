@@ -487,12 +487,12 @@
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\CreateTextVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForElementExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationClickUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildrenUIElementsInformationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForElementExistByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementExistByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromUIElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromUIElementCommand.cs" />
@@ -501,9 +501,9 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationExpandCollapseItemsInUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementTreeXMLFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationScrollUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectItemInElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSetTextToElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectItemInUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSetTextToUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromTableUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchParentUIElementCommand.cs" />

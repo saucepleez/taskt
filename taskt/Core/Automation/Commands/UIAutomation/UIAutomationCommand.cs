@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Element Action")]
+    [Attributes.ClassAttributes.CommandSettings("UIElement Action")]
     [Attributes.ClassAttributes.Description("Combined implementation of the ThickAppClick/GetText command but includes an advanced Window Recorder to record the required element.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls),  nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("AutomationElement Action")]
+        [PropertyDescription("UIElement Action")]
         [PropertyUISelectionOption("Click Element")]
         [PropertyUISelectionOption("Expand Collapse Items In Element")]
         [PropertyUISelectionOption("Scroll Element")]
