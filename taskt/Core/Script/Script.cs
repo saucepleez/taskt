@@ -1354,6 +1354,15 @@ namespace taskt.Core.Script
             // UIAutomationSearchParentElementCommand -> UIAutomationSearchParentUIElementCommand
             ChangeCommandName(doc, "UIAutomationSearchParentElementCommand", "UIAutomationSearchParentUIElementCommand", "Search Parent UIElement");
 
+            // UIAutomationSelectElementCommand -> UIAutomationSelectUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSelectElementCommand", "UIAutomationSelectUIElementCommand", "Select UIElement");
+
+            // UIAutomationSelectItemInElementCommand -> UIAutomationSelectItemInUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSelectItemInElementCommand", "UIAutomationSelectItemInUIElementCommand", "Select Item In UIElement");
+
+            // UIAutomationSetTextToElementCommand -> UIAutomationSetTextToUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSetTextToElementCommand", "UIAutomationSetTextToUIElementCommand", "Set Text To UIElement");
+
             return doc;
         }
 

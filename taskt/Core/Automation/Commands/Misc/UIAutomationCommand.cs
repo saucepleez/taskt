@@ -153,14 +153,14 @@ namespace taskt.Core.Automation.Commands
                     scrollCmd.RunCommand(engine);
                     break;
                 case "select element":
-                    var selectCmd = new UIAutomationSelectElementCommand()
+                    var selectCmd = new UIAutomationSelectUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                     };
                     selectCmd.RunCommand(engine);
                     break;
                 case "select item in element":
-                    var selectItemCmd = new UIAutomationSelectItemInElementCommand()
+                    var selectItemCmd = new UIAutomationSelectItemInUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_Item = p["Item Value"],
@@ -168,7 +168,7 @@ namespace taskt.Core.Automation.Commands
                     selectItemCmd.RunCommand(engine);
                     break;
                 case "set text to element":
-                    var setTextCmd = new UIAutomationSetTextToElementCommand()
+                    var setTextCmd = new UIAutomationSetTextToUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_TextVariable = p["Text To Set"],

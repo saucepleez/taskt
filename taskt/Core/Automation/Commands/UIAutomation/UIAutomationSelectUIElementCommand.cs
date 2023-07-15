@@ -9,18 +9,18 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Select Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to Select AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select AutomationElement.")]
+    [Attributes.ClassAttributes.CommandSettings("Select UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Select UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSelectElementCommand : ScriptCommand
+    public class UIAutomationSelectUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
-        public UIAutomationSelectElementCommand()
+        public UIAutomationSelectUIElementCommand()
         {
             //this.CommandName = "UIAutomationSelectElementCommand";
             //this.SelectionName = "Select Element";
