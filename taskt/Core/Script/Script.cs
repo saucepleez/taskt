@@ -1372,6 +1372,57 @@ namespace taskt.Core.Script
             // UIAutomationCommand -> UIAutomationUIElementActionCommand
             ChangeCommandName(doc, "UIAutomationCommand", "UIAutomationUIElementActionCommand", "UIElement Action");
 
+            // UIAutomationUIElementActionCommand : UIElement Action name
+            var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
+            foreach(var cmd in cmds)
+            {
+                var act = cmd.Attribute("v_AutomationType").Value.ToLower();
+                string newAct = "";
+                switch (act)
+                {
+                    case "click element":
+                        newAct = "Click UIElement";
+                        break;
+                    case "expand collapse items in element":
+                        newAct = "Expand Collapse Items In UIElement";
+                        break;
+                    case "scroll element":
+                        newAct = "Scroll UIElement";
+                        break;
+                    case "select element":
+                        newAct = "Select UIElement";
+                        break;
+                    case "select item in element":
+                        newAct = "Select Item In UIElement";
+                        break;
+                    case "set text to element":
+                        newAct = "Set Text To UIElement";
+                        break;
+                    case "get value from element":
+                        newAct = "Get Value From UIElement";
+                        break;
+                    case "check if element exists":
+                        newAct = "Check UIElement Exists";
+                        break;
+                    case "get text value from element":
+                        newAct = "Get Text From UIElemen";
+                        break;
+                    case "get selected state from element":
+                        newAct = "Get Selected State From UIElement";
+                        break;
+                    case "get value from table element":
+                        newAct = "Get Text From Table UIElement";
+                        break;
+                    case "wait for element to exists":
+                        newAct = "Wait For UIElement To Exists";
+                        break;
+                }
+                if (newAct.ToLower() != act)
+                {
+                    cmd.SetAttributeValue("v_AutomationType", newAct);
+                }
+            }
+
             return doc;
         }
 
