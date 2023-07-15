@@ -1363,6 +1363,12 @@ namespace taskt.Core.Script
             // UIAutomationSetTextToElementCommand -> UIAutomationSetTextToUIElementCommand
             ChangeCommandName(doc, "UIAutomationSetTextToElementCommand", "UIAutomationSetTextToUIElementCommand", "Set Text To UIElement");
 
+            // UIAutomationWaitForElementExistByXPathCommand -> UIAutomationWaitForUIElementExistByXPathCommand
+            ChangeCommandName(doc, "UIAutomationWaitForElementExistByXPathCommand", "UIAutomationWaitForUIElementExistByXPathCommand", "Wait For UIElement Exist By XPath");
+
+            // UIAutomationWaitForElementExistCommand -> UIAutomationWaitForUIElementExistCommand
+            ChangeCommandName(doc, "UIAutomationWaitForElementExistCommand", "UIAutomationWaitForUIElementExistCommand", "Wait For UIElement Exist");
+
             return doc;
         }
 

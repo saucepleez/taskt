@@ -798,8 +798,8 @@ namespace taskt.UI
             {nameof(UIAutomationSelectItemInUIElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationSetTextToUIElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationScrollUIElementCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationWaitForElementExistByXPathCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationWaitForElementExistCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationWaitForUIElementExistByXPathCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationWaitForUIElementExistCommand), "taskt.Properties.Resources.command_window"},
 
             // Variable
             {nameof(CheckVariableExistsCommand), "taskt.Properties.Resources.command_function"},

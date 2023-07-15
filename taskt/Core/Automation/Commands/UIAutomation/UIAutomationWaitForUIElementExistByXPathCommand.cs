@@ -8,12 +8,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search Element")]
-    [Attributes.ClassAttributes.CommandSettings("Wait For Element Exist By XPath")]
-    [Attributes.ClassAttributes.Description("This command allows you to Wait until the AutomationElement exists using by XPath.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the AutomationElement exists using by XPath.")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For UIElement Exist By XPath")]
+    [Attributes.ClassAttributes.Description("This command allows you to Wait until the UIElement exists using by XPath.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the UIElement exists using by XPath.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationWaitForElementExistByXPathCommand : ScriptCommand
+    public class UIAutomationWaitForUIElementExistByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public UIAutomationWaitForElementExistByXPathCommand()
+        public UIAutomationWaitForUIElementExistByXPathCommand()
         {
             //this.CommandName = "UIAutomationWaitForElementExistByXPathCommand";
             //this.SelectionName = "Wait For Element Exist By XPath";
