@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Get")]
+    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
     [Attributes.ClassAttributes.CommandSettings("Get UIElement Tree XML From UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get UIElement Tree XML from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement Tree XML from UIElement. XML content is based on WinAppDriver UI Recorder.")]

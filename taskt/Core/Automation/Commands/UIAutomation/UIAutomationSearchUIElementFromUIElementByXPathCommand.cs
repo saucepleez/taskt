@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search Element")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
     [Attributes.ClassAttributes.CommandSettings("Search UIElement From UIElement By XPath")]
     [Attributes.ClassAttributes.Description("This command allows you to get UIElement from UIElement using by XPath.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from UIElement. XPath does not support to use parent and sibling for root element.")]

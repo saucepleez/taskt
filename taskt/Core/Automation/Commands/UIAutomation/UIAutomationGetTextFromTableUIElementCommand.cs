@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Get")]
+    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
     [Attributes.ClassAttributes.CommandSettings("Get Text From Table UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Text Value from Table UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from Table UIElement.")]

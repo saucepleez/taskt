@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search Element")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
     [Attributes.ClassAttributes.CommandSettings("Search Child UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Child Element from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child UIElement from UIElement. Search only for Child UIElements.")]

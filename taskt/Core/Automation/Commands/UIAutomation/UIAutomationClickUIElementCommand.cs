@@ -7,7 +7,7 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
     [Attributes.ClassAttributes.CommandSettings("Click UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Click UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Click UIElement.")]
