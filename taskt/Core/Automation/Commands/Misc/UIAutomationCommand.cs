@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
             var elemAction = this.GetUISelectionValue(nameof(v_AutomationType), engine);
 
             var winElemVar = VariableNameControls.GetInnerVariableName(0, engine);
-            var winElem = new UIAutomationSearchElementFromWindowCommand()
+            var winElem = new UIAutomationSearchUIElementFromWindowCommand()
             {
                 v_WindowName = this.v_WindowName,
                 v_SearchMethod = this.v_SearchMethod,
@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             var trgElemVar = VariableNameControls.GetInnerVariableName(1, engine);
             try
             {   
-                var trgElem = new UIAutomationSearchElementFromElementCommand()
+                var trgElem = new UIAutomationSearchUIElementFromUIElementCommand()
                 {
                     v_TargetElement = winElemVar,
                     v_SearchParameters = this.v_UIASearchParameters,

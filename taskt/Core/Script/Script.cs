@@ -1339,6 +1339,21 @@ namespace taskt.Core.Script
             // UIAutomationSearchElementAndWindowCommand -> UIAutomationSearchUIElementAndWindowCommand
             ChangeCommandName(doc, "UIAutomationSearchElementAndWindowCommand", "UIAutomationSearchUIElementAndWindowCommand", "Search UIElement And Window");
 
+            // UIAutomationSearchElementFromElementByXPathCommand -> UIAutomationSearchUIElementFromUIElementByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromElementByXPathCommand", "UIAutomationSearchUIElementFromUIElementByXPathCommand", "Search UIElement From UIElement By XPath");
+
+            // UIAutomationSearchElementFromElementCommand -> UIAutomationSearchUIElementFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromElementCommand", "UIAutomationSearchUIElementFromUIElementCommand", "Search UIElement From UIElement");
+
+            // UIAutomationSearchElementFromTableElementCommand -> UIAutomationSearchUIElementFromTableUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromTableElementCommand", "UIAutomationSearchUIElementFromTableUIElementCommand", "Search UIElement From Table UIElement");
+
+            // UIAutomationSearchElementFromWindowCommand -> UIAutomationSearchUIElementFromWindowCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromWindowCommand", "UIAutomationSearchUIElementFromWindowCommand", "Search UIElement From Window");
+
+            // UIAutomationSearchParentElementCommand -> UIAutomationSearchParentUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchParentElementCommand", "UIAutomationSearchParentUIElementCommand", "Search Parent UIElement");
+
             return doc;
         }
 

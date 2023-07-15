@@ -10,12 +10,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search Window")]
-    [Attributes.ClassAttributes.CommandSettings("Search Element From Window")]
-    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from Window Name using by XPath.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from Window Name. XPath does not support to use parent and sibling for root element.")]
+    [Attributes.ClassAttributes.CommandSettings("Search UIElement From Window")]
+    [Attributes.ClassAttributes.Description("This command allows you to get UIElement from Window Name using by XPath.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from Window Name. XPath does not support to use parent and sibling for root element.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchElementFromWindowCommand : ScriptCommand
+    public class UIAutomationSearchUIElementFromWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WindowWaitTime { get; set; }
 
-        public UIAutomationSearchElementFromWindowCommand()
+        public UIAutomationSearchUIElementFromWindowCommand()
         {
             //this.CommandName = "UIAutomationGetElementFromWindowCommand";
             //this.SelectionName = "Get Element From Window";

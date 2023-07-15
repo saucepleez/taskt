@@ -494,9 +494,9 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildrenUIElementsInformationCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForElementExistByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowByXPathCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromElementByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromUIElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromTableElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromTableUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectionItemsFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationExpandCollapseItemsInUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementTreeXMLFromUIElementCommand.cs" />
@@ -506,10 +506,10 @@
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSetTextToElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromTableUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchParentElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchParentUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchChildUIElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchElementFromWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ValidationControls.cs" />
     <Compile Include="Core\Automation\Commands\VariableNameControls.cs" />
     <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />

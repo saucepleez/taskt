@@ -8,12 +8,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search Element")]
-    [Attributes.ClassAttributes.CommandSettings("Search Parent Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Parent Element from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent Element from AutomationElement.")]
+    [Attributes.ClassAttributes.CommandSettings("Search Parent UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Parent UIElement from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent UIElement from UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchParentElementCommand : ScriptCommand
+    public class UIAutomationSearchParentUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -21,14 +21,14 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
-        [PropertyDescription("AutomationElement Variable Name to Store Parent AutomationElement")]
+        [PropertyDescription("UIElement Variable Name to Store Parent UIElement")]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public UIAutomationSearchParentElementCommand()
+        public UIAutomationSearchParentUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetParentElementCommand";
             //this.SelectionName = "Get Parent Element";
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Parent AutomationElement not Found");
+                throw new Exception("Parent UIElement not Found");
             }
         }
     }
