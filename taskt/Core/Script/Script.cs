@@ -1306,8 +1306,8 @@ namespace taskt.Core.Script
             // UIAutomationClickElementCommand -> UIAutomationClickUIElementCommand
             ChangeCommandName(doc, "UIAutomationClickElementCommand", "UIAutomationClickUIElementCommand", "Click UIElement");
 
-            // UIAutomationExpandCollapseItemsInElementCommand -> UIAutomationExpandCollapseItemsInElementCommand
-            ChangeCommandName(doc, "UIAutomationExpandCollapseItemsInElementCommand", "UIAutomationExpandCollapseItemsInElementCommand", "Expand Collapse Items In UIElement");
+            // UIAutomationExpandCollapseItemsInElementCommand -> UIAutomationExpandCollapseItemsInUIElementCommand
+            ChangeCommandName(doc, "UIAutomationExpandCollapseItemsInElementCommand", "UIAutomationExpandCollapseItemsInUIElementCommand", "Expand Collapse Items In UIElement");
 
             // UIAutomationGetChildrenElementsInformationCommand -> UIAutomationGetChildrenUIElementsInformationCommand
             ChangeCommandName(doc, "UIAutomationGetChildrenElementsInformationCommand", "UIAutomationGetChildrenUIElementsInformationCommand", "Get Children Elements Information");
