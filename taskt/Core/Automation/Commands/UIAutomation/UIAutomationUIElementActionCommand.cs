@@ -98,29 +98,30 @@ namespace taskt.Core.Automation.Commands
 
             var p = DataTableControls.GetFieldValues(v_UIAActionParameters, "Parameter Name", "Parameter Value", false, engine);
             var trgElemVar = VariableNameControls.GetInnerVariableName(1, engine);
-            try
-            {   
-                var trgElem = new UIAutomationSearchUIElementFromUIElementCommand()
-                {
-                    v_TargetElement = winElemVar,
-                    v_SearchParameters = this.v_UIASearchParameters,
-                    v_WaitTime = this.v_ElementWaitTime,
-                    v_AutomationElementVariable = trgElemVar,
-                };
-                trgElem.RunCommand(engine);
-            }
-            catch (Exception ex)
+
+            switch (elemAction)
             {
-                // todo: add new command and fix it
-                if (elemAction == "check if element exists")
-                {
-                    false.StoreInUserVariable(engine, p["Apply To Variable"]);
-                    return; // finish command
-                }
-                else
-                {
-                    throw ex;
-                }
+                case "check if element exists":
+                    var chkElem = new UIAutomationCheckUIElementExistCommand()
+                    {
+                        v_TargetElement = winElemVar,
+                        v_SearchParameters = this.v_UIASearchParameters,
+                        v_WaitTime = this.v_ElementWaitTime,
+                        v_Result = p["Apply To Variable"],
+                    };
+                    chkElem.RunCommand(engine);
+                    return;
+                    
+                default:
+                    var trgElem = new UIAutomationSearchUIElementFromUIElementCommand()
+                    {
+                        v_TargetElement = winElemVar,
+                        v_SearchParameters = this.v_UIASearchParameters,
+                        v_WaitTime = this.v_ElementWaitTime,
+                        v_AutomationElementVariable = trgElemVar,
+                    };
+                    trgElem.RunCommand(engine);
+                    break;
             }
 
             switch (elemAction)
