@@ -18,7 +18,8 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationUIElementActionCommand : ScriptCommand
-    {   
+    {
+        // todo: XPath command
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
