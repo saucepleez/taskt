@@ -325,7 +325,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             List,
             Boolean,
             DateTime,
-            AutomationElement,
+            UIElement,
             Color,
             MailKitEMail,
             MailKitEMailList,

@@ -178,7 +178,7 @@ namespace taskt.Core
             Dictionary<string, Dictionary<string, int>> targetDic;
             switch (instanceType)
             {
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.AutomationElement:
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement:
                     targetDic = automationElementInstance;
                     break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean:
@@ -243,7 +243,7 @@ namespace taskt.Core
             switch (instanceType.ToLower())
             {
                 case "automationelement":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.AutomationElement;
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement;
                 case "boolean":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean;
                 case "color":
