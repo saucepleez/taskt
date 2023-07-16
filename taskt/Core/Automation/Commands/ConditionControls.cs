@@ -386,7 +386,7 @@ namespace taskt.Core.Automation.Commands
                 windowName = WindowNameControls.GetActiveWindowTitle();
             }
 
-            UIAutomationCommand newUIACommand = new UIAutomationCommand();
+            UIAutomationUIElementActionCommand newUIACommand = new UIAutomationUIElementActionCommand();
             newUIACommand.v_WindowName = windowName;
             newUIACommand.v_UIASearchParameters.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
 

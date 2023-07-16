@@ -8,16 +8,16 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Expand Collapse Items In Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to Expand or Collapse Items in AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Expand or Collapse Items in AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("Expand Collapse Items In UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Expand or Collapse Items in UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Expand or Collapse Items in UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationExpandCollapseItemsInElementCommand : ScriptCommand
+    public class UIAutomationExpandCollapseItemsInUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "State")]
         public string v_ItemsState { get; set; }
 
-        public UIAutomationExpandCollapseItemsInElementCommand()
+        public UIAutomationExpandCollapseItemsInUIElementCommand()
         {
             //this.CommandName = "UIAutomationExpandCollapseItemsInElementCommand";
             //this.SelectionName = "Expand Collapse Items In Element";
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             var state = v_ItemsState.GetUISelectionValue("v_ItemsState", this, engine);
 
             if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))
@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("AutomationElement '" + v_TargetElement + "' does not support Expand/Collapse");
+                throw new Exception("UIElement '" + v_TargetElement + "' does not support Expand/Collapse");
             }
         }
     }

@@ -210,7 +210,7 @@ namespace taskt.Core.Script
                 case "TYPE":
                     return "AUTOMATIONELEMENT";
                 default:
-                    return "Name: " + element.Current.Name + ", LocalizedControlType: " + element.Current.LocalizedControlType + ", ControlType: " + taskt.Core.Automation.Commands.AutomationElementControls.GetControlTypeText(element.Current.ControlType);
+                    return "Name: " + element.Current.Name + ", LocalizedControlType: " + element.Current.LocalizedControlType + ", ControlType: " + taskt.Core.Automation.Commands.UIElementControls.GetControlTypeText(element.Current.ControlType);
             }
         }
         private string GetDisplayValue(DateTime dt, string requiredProperty)

@@ -8,32 +8,32 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search Element")]
-    [Attributes.ClassAttributes.CommandSettings("Search Element From Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from AutomationElement. Search for Descendants Elements.")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Search UIElement From UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get UIElement from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from UIElement. Search for Descendants Elements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchElementFromElementCommand : ScriptCommand
+    public class UIAutomationSearchUIElementFromUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
-        [PropertyDescription("AutomationElement Variable Name to Search")]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        [PropertyDescription("UIElement Variable Name to Search")]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public UIAutomationSearchElementFromElementCommand()
+        public UIAutomationSearchUIElementFromUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetElementFromElementCommand";
             //this.SelectionName = "Get Element From Element";
@@ -45,14 +45,14 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var elem = AutomationElementControls.SearchGUIElement(this, engine);
+            var elem = UIElementControls.SearchGUIElement(this, engine);
             elem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
 
         public override void AfterShown()
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            AutomationElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
         }
     }
 }

@@ -11,39 +11,40 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Element Action")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("UIElement Action")]
     [Attributes.ClassAttributes.Description("Combined implementation of the ThickAppClick/GetText command but includes an advanced Window Recorder to record the required element.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Windows UI Automation' to find elements and invokes a Variable Command to assign data and achieve automation")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationCommand : ScriptCommand
-    {   
+    public class UIAutomationUIElementActionCommand : ScriptCommand
+    {
+        // todo: XPath command
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls),  nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("AutomationElement Action")]
-        [PropertyUISelectionOption("Click Element")]
-        [PropertyUISelectionOption("Expand Collapse Items In Element")]
-        [PropertyUISelectionOption("Scroll Element")]
-        [PropertyUISelectionOption("Select Element")]
-        [PropertyUISelectionOption("Select Item In Element")]
-        [PropertyUISelectionOption("Set Text To Element")]
-        [PropertyUISelectionOption("Get Value From Element")]
-        [PropertyUISelectionOption("Check If Element Exists")]
-        [PropertyUISelectionOption("Get Text Value From Element")]
-        [PropertyUISelectionOption("Get Selected State From Element")]
-        [PropertyUISelectionOption("Get Value From Table Element")]
-        [PropertyUISelectionOption("Wait For Element To Exists")]
+        [PropertyDescription("UIElement Action")]
+        [PropertyUISelectionOption("Click UIElement")]
+        [PropertyUISelectionOption("Expand Collapse Items In UIElement")]
+        [PropertyUISelectionOption("Scroll UIElement")]
+        [PropertyUISelectionOption("Select UIElement")]
+        [PropertyUISelectionOption("Select Item In UIElement")]
+        [PropertyUISelectionOption("Set Text To UIElement")]
+        [PropertyUISelectionOption("Get Value From UIElement")]
+        [PropertyUISelectionOption("Check UIElement Exists")]
+        [PropertyUISelectionOption("Get Text From UIElement")]
+        [PropertyUISelectionOption("Get Selected State From UIElement")]
+        [PropertyUISelectionOption("Get Text From Table UIElement")]
+        [PropertyUISelectionOption("Wait For UIElement To Exists")]
         [PropertySelectionChangeEvent(nameof(cmbActionType_SelectedItemChange))]
         [PropertyDisplayText(true, "Action")]
         public string v_AutomationType { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_UIASearchParameters { get; set; }
 
         [XmlElement]
@@ -72,10 +73,10 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowWaitTime { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_ElementWaitTime { get; set; }
 
-        public UIAutomationCommand()
+        public UIAutomationUIElementActionCommand()
         {
         }
 
@@ -85,7 +86,7 @@ namespace taskt.Core.Automation.Commands
             var elemAction = this.GetUISelectionValue(nameof(v_AutomationType), engine);
 
             var winElemVar = VariableNameControls.GetInnerVariableName(0, engine);
-            var winElem = new UIAutomationSearchElementFromWindowCommand()
+            var winElem = new UIAutomationSearchUIElementFromWindowCommand()
             {
                 v_WindowName = this.v_WindowName,
                 v_SearchMethod = this.v_SearchMethod,
@@ -98,35 +99,36 @@ namespace taskt.Core.Automation.Commands
 
             var p = DataTableControls.GetFieldValues(v_UIAActionParameters, "Parameter Name", "Parameter Value", false, engine);
             var trgElemVar = VariableNameControls.GetInnerVariableName(1, engine);
-            try
-            {   
-                var trgElem = new UIAutomationSearchElementFromElementCommand()
-                {
-                    v_TargetElement = winElemVar,
-                    v_SearchParameters = this.v_UIASearchParameters,
-                    v_WaitTime = this.v_ElementWaitTime,
-                    v_AutomationElementVariable = trgElemVar,
-                };
-                trgElem.RunCommand(engine);
-            }
-            catch (Exception ex)
+
+            switch (elemAction)
             {
-                // todo: add new command and fix it
-                if (elemAction == "check if element exists")
-                {
-                    false.StoreInUserVariable(engine, p["Apply To Variable"]);
-                    return; // finish command
-                }
-                else
-                {
-                    throw ex;
-                }
+                case "check uielement exists":
+                    var chkElem = new UIAutomationCheckUIElementExistCommand()
+                    {
+                        v_TargetElement = winElemVar,
+                        v_SearchParameters = this.v_UIASearchParameters,
+                        v_WaitTime = this.v_ElementWaitTime,
+                        v_Result = p["Apply To Variable"],
+                    };
+                    chkElem.RunCommand(engine);
+                    return;
+                    
+                default:
+                    var trgElem = new UIAutomationSearchUIElementFromUIElementCommand()
+                    {
+                        v_TargetElement = winElemVar,
+                        v_SearchParameters = this.v_UIASearchParameters,
+                        v_WaitTime = this.v_ElementWaitTime,
+                        v_AutomationElementVariable = trgElemVar,
+                    };
+                    trgElem.RunCommand(engine);
+                    break;
             }
 
             switch (elemAction)
             {
-                case "click element":
-                    var clickCmd = new UIAutomationClickElementCommand()
+                case "click uielement":
+                    var clickCmd = new UIAutomationClickUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ClickType = p["Click Type"],
@@ -135,16 +137,16 @@ namespace taskt.Core.Automation.Commands
                     };
                     clickCmd.RunCommand(engine);
                     break;
-                case "expand collapse items in element":
-                    var expandCmd = new UIAutomationExpandCollapseItemsInElementCommand()
+                case "expand collapse items in uielement":
+                    var expandCmd = new UIAutomationExpandCollapseItemsInUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ItemsState = p["Items State"],
                     };
                     expandCmd.RunCommand(engine);
                     break;
-                case "scroll element":
-                    var scrollCmd = new UIAutomationScrollElementCommand()
+                case "scroll uielement":
+                    var scrollCmd = new UIAutomationScrollUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ScrollBarType = p["ScrollBar Type"],
@@ -152,53 +154,53 @@ namespace taskt.Core.Automation.Commands
                     };
                     scrollCmd.RunCommand(engine);
                     break;
-                case "select element":
-                    var selectCmd = new UIAutomationSelectElementCommand()
+                case "select uielement":
+                    var selectCmd = new UIAutomationSelectUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                     };
                     selectCmd.RunCommand(engine);
                     break;
-                case "select item in element":
-                    var selectItemCmd = new UIAutomationSelectItemInElementCommand()
+                case "select item in uielement":
+                    var selectItemCmd = new UIAutomationSelectItemInUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_Item = p["Item Value"],
                     };
                     selectItemCmd.RunCommand(engine);
                     break;
-                case "set text to element":
-                    var setTextCmd = new UIAutomationSetTextToElementCommand()
+                case "set text to uielement":
+                    var setTextCmd = new UIAutomationSetTextToUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_TextVariable = p["Text To Set"],
                     };
                     setTextCmd.RunCommand(engine);
                     break;
-                case "get value from element":
+                case "get value from uielement":
                     // todo: not supported now
                     break;
-                case "check if element exists":
+                case "check uielement exists":
                     true.StoreInUserVariable(engine, p["Apply To Variable"]);
                     break;
-                case "get text value from element":
-                    var getTextCmd = new UIAutomationGetTextFromElementCommand()
+                case "get text from uielement":
+                    var getTextCmd = new UIAutomationGetTextFromUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_TextVariable = p["Apply To Variable"],
                     };
                     getTextCmd.RunCommand(engine);
                     break;
-                case "get selected state from element":
-                    var getSelectedCmd = new UIAutomationGetSelectedStateFromElementCommand()
+                case "get selected state from uielement":
+                    var getSelectedCmd = new UIAutomationGetSelectedStateFromUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_ResultVariable = p["Apply To Variable"],
                     };
                     getSelectedCmd.RunCommand(engine);
                     break;
-                case "get value from table element":
-                    var getTableCmd = new UIAutomationGetTextFromTableElementCommand()
+                case "get text from table uielement":
+                    var getTableCmd = new UIAutomationGetTextFromTableUIElementCommand()
                     {
                         v_TargetElement = trgElemVar,
                         v_Row = p["Row"],

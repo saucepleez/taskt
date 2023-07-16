@@ -9,28 +9,28 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search Element")]
-    [Attributes.ClassAttributes.CommandSettings("Search Child Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Child Element from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child Element from AutomationElement. Search only for Child Elements.")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Search Child UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Child Element from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Child UIElement from UIElement. Search only for Child UIElements.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchChildElementCommand : ScriptCommand
+    public class UIAutomationSearchChildUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
-        [PropertyDescription("Root AutomationElement Variable")]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
+        [PropertyDescription("Root UIElement Variable")]
         public string v_RootElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Child Element Index")]
+        [PropertyDescription("Child UIElement Index")]
         [InputSpecification("Index", true)]
-        [PropertyDetailSampleUsage("**0**", "Specfity the First AutomationElement")]
+        [PropertyDetailSampleUsage("**0**", "Specfity the First UIElement")]
         [PropertyDetailSampleUsage("**1**", PropertyDetailSampleUsage.ValueType.Value, "Index")]
         [PropertyDetailSampleUsage("**{{{vIndex}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Index")]
         [Remarks("")]
@@ -40,11 +40,11 @@ namespace taskt.Core.Automation.Commands
         public string v_Index { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
-        [PropertyDescription("AutomationElemnet Variable Name to Store Child Element")]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
+        [PropertyDescription("UIElement Variable Name to Store Child UIElement")]
         public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationSearchChildElementCommand()
+        public UIAutomationSearchChildUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetChildElementCommand";
             //this.SelectionName = "Get Child Element";
@@ -56,24 +56,24 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_RootElement.GetAutomationElementVariable(engine);
+            var rootElement = v_RootElement.GetUIElementVariable(engine);
             int index = v_Index.ConvertToUserVariableAsInteger("v_Index", engine);
 
-            var elems = AutomationElementControls.GetChildrenElements(rootElement, v_SearchParameters, engine);
+            var elems = UIElementControls.GetChildrenUIElements(rootElement, v_SearchParameters, engine);
             if (elems.Count > 0)
             {
                 elems[index].StoreInUserVariable(engine, v_AutomationElementVariable);
             }
             else
             {
-                throw new Exception("AutomationElement not found");
+                throw new Exception("UIElement not found");
             }
         }
 
         public override void AfterShown()
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            AutomationElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
         }
     }
 }

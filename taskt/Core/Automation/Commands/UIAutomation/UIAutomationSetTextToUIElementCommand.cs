@@ -8,16 +8,16 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Set Text To Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to set Text Value from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to set Text Value from AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("Set Text To UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to set Text Value from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to set Text Value from UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSetTextToElementCommand : ScriptCommand
+    public class UIAutomationSetTextToUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Text")]
         public string v_TextVariable { get; set; }
 
-        public UIAutomationSetTextToElementCommand()
+        public UIAutomationSetTextToUIElementCommand()
         {
             //this.CommandName = "UIAutomationSetTextToElementCommand";
             //this.SelectionName = "Set Text To Element";
@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
             string textValue = v_TextVariable.ConvertToUserVariable(sender);
 
@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("AutomationElement '" + v_TargetElement + "' can not set Text");
+                throw new Exception("UIElement '" + v_TargetElement + "' can not set Text");
             }
         }
     }

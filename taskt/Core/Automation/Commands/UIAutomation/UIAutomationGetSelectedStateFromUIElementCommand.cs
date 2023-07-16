@@ -8,24 +8,24 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Selected State From Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Selected State from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selected State from AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Get Selected State From UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Selected State from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selected State from UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetSelectedStateFromElementCommand : ScriptCommand
+    public class UIAutomationGetSelectedStateFromUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
-        [Remarks("When Element is Checked, Result is **True**")]
+        [Remarks("When UIElement is Selected, Result is **True**")]
         public string v_ResultVariable { get; set; }
 
-        public UIAutomationGetSelectedStateFromElementCommand()
+        public UIAutomationGetSelectedStateFromUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetSelectedStateFromElementCommand";
             //this.SelectionName = "Get Selected State From Element";
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
             bool checkState;
             if (targetElement.TryGetCurrentPattern(TogglePattern.Pattern, out object patternObj))
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Thie element does not have Selected State");
+                throw new Exception("Thie UIElement does not have Selected State");
             }
             checkState.StoreInUserVariable(engine, v_ResultVariable);
         }

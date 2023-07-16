@@ -7,28 +7,28 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search Element")]
-    [Attributes.ClassAttributes.CommandSettings("Search Parent Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Parent Element from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent Element from AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Search Parent UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Parent UIElement from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Parent UIElement from UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchParentElementCommand : ScriptCommand
+    public class UIAutomationSearchParentUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_NewOutputAutomationElementName))]
-        [PropertyDescription("AutomationElement Variable Name to Store Parent AutomationElement")]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
+        [PropertyDescription("UIElement Variable Name to Store Parent UIElement")]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public UIAutomationSearchParentElementCommand()
+        public UIAutomationSearchParentUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetParentElementCommand";
             //this.SelectionName = "Get Parent Element";
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var rootElement = v_TargetElement.GetUIElementVariable(engine);
 
             var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), engine);
             object ret = WaitControls.WaitProcess(waitTime, "Parent Element",
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     try
                     {
-                        var root = AutomationElementControls.GetParentElement(rootElement);
+                        var root = UIElementControls.GetParentUIElement(rootElement);
                         return (true, root);
                     }
                     catch
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Parent AutomationElement not Found");
+                throw new Exception("Parent UIElement not Found");
             }
         }
     }

@@ -7,16 +7,16 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Element Tree XML From Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Element Tree XML from AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Element Tree XML from AutomationElement. XML content is based on WinAppDriver UI Recorder.")]
+    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Get UIElement Tree XML From UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get UIElement Tree XML from UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement Tree XML from UIElement. XML content is based on WinAppDriver UI Recorder.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetElementTreeXMLFromElementCommand : ScriptCommand
+    public class UIAutomationGetUIElementTreeXMLFromUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Store")]
         public string v_XMLVariable { get; set; }
 
-        public UIAutomationGetElementTreeXMLFromElementCommand()
+        public UIAutomationGetUIElementTreeXMLFromUIElementCommand()
         {
             //this.CommandName = "UIAutomationGetElementTreeXMLFromElementCommand";
             //this.SelectionName = "Get Element Tree XML From Element";
@@ -45,9 +45,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             //var xml = AutomationElementControls.GetElementXml(targetElement, out _);
-            (var xml, _) = AutomationElementControls.GetElementXml(targetElement);
+            (var xml, _) = UIElementControls.GetElementXml(targetElement);
             using(System.IO.StringWriter sw = new System.IO.StringWriter())
             {
                 xml.Save(sw);

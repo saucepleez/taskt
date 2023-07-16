@@ -8,16 +8,16 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Get")]
-    [Attributes.ClassAttributes.CommandSettings("Get Text From Table Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Text Value from Table AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Text Value from Table AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Search UIElement From Table UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to get UIElement from Table UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from Table UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetTextFromTableElementCommand : ScriptCommand
+    public class UIAutomationSearchUIElementFromTableUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -43,13 +43,13 @@ namespace taskt.Core.Automation.Commands
         public string v_Column { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_TextVariable { get; set; }
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_NewOutputUIElementName))]
+        public string v_AutomationElementVariable { get; set; }
 
-        public UIAutomationGetTextFromTableElementCommand()
+        public UIAutomationSearchUIElementFromTableUIElementCommand()
         {
-            //this.CommandName = "UIAutomationGetTextFromTableElementCommand";
-            //this.SelectionName = "Get Text From Table Element";
+            //this.CommandName = "UIAutomationGetElementFromTableElementCommand";
+            //this.SelectionName = "Get Element From Table Element";
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
@@ -58,14 +58,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             int row = v_Row.ConvertToUserVariableAsInteger("v_Row", engine);
             int column = v_Column.ConvertToUserVariableAsInteger("v_Column", engine);
 
-            AutomationElement cellElem = AutomationElementControls.GetTableElement(targetElement, row, column);
-
-            string res = AutomationElementControls.GetTextValue(cellElem);
-            res.StoreInUserVariable(engine, v_TextVariable);
+            AutomationElement cellElem = UIElementControls.GetTableUIElement(targetElement, row, column);
+            cellElem.StoreInUserVariable(engine, v_AutomationElementVariable);
         }
     }
 }

@@ -8,16 +8,16 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Scroll Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to Scroll AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Scroll AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("Scroll UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Scroll UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Scroll UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationScrollElementCommand : ScriptCommand
+    public class UIAutomationScrollUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Method")]
         public string v_DirectionAndAmount{ get; set; }
 
-        public UIAutomationScrollElementCommand()
+        public UIAutomationScrollUIElementCommand()
         {
             //this.CommandName = "UIAutomationScrollElementCommand";
             //this.SelectionName = "Scroll Element";
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
             var scrollbarType = v_ScrollBarType.GetUISelectionValue("v_ScrollBarType", this, engine);
 
             var dirAndAmo = v_DirectionAndAmount.GetUISelectionValue("v_DirectionAndAmount", this, engine);
@@ -81,15 +81,15 @@ namespace taskt.Core.Automation.Commands
             {
                 if (targetElement.Current.ControlType == ControlType.ScrollBar)
                 {
-                    var parentElement = AutomationElementControls.GetParentElement(targetElement);
+                    var parentElement = UIElementControls.GetParentUIElement(targetElement);
                     if (!parentElement.TryGetCurrentPattern(ScrollPattern.Pattern, out scrollPtn))
                     {
-                        throw new Exception("AutomationElement '" + v_TargetElement + "' does not have ScrollBar");
+                        throw new Exception("UIElement '" + v_TargetElement + "' does not have ScrollBar");
                     }
                 }
                 else
                 {
-                    throw new Exception("AutomationElement '" + v_TargetElement + "' is not ScrollBar and does not have ScrollBar");
+                    throw new Exception("UIElement '" + v_TargetElement + "' is not ScrollBar and does not have ScrollBar");
                 }
             }
             ScrollPattern sp = (ScrollPattern)scrollPtn;

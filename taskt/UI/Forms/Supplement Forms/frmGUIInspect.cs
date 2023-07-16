@@ -96,7 +96,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
             try
             {
-                var nodes = AutomationElementControls.GetElementTreeNode(windowName, engine, out xml);
+                var nodes = UIElementControls.GetElementTreeNode(windowName, engine, out xml);
 
                 tvElements.SuspendLayout();
                 tvElements.BeginUpdate();
@@ -315,17 +315,17 @@ namespace taskt.UI.Forms.Supplement_Forms
         #region node methods
         private void showElementInformation(AutomationElement elem)
         {
-            txtElementInformation.Text = AutomationElementControls.GetInspectResultFromAutomationElement(elem);
+            txtElementInformation.Text = UIElementControls.GetInspectResultFromAutomationElement(elem);
 
             if ((chkShowInTree.Checked) && (chkXPathRelative.Checked))
             {
                 TreeNode chk = getCheckedNode();
                 AutomationElement curElem = (AutomationElement)chk.Tag;
-                txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, curElem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+                txtXPath.Text = UIElementControls.GetXPath(xml, elem, curElem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
             }
             else
             {
-                txtXPath.Text = AutomationElementControls.GetXPath(xml, elem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
+                txtXPath.Text = UIElementControls.GetXPath(xml, elem, chkUseNameAttr.Checked, chkUseAutomationIdAttr.Checked);
             }
         }
 

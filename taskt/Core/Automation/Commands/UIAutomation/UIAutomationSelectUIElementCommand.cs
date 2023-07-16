@@ -8,19 +8,19 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Select Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to Select AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("Select UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Select UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSelectElementCommand : ScriptCommand
+    public class UIAutomationSelectUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
-        public UIAutomationSelectElementCommand()
+        public UIAutomationSelectUIElementCommand()
         {
             //this.CommandName = "UIAutomationSelectElementCommand";
             //this.SelectionName = "Select Element";
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
             if (targetElement.TryGetCurrentPattern(TogglePattern.Pattern, out object checkPtn))
             {

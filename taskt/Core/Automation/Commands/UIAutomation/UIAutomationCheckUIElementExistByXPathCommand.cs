@@ -7,34 +7,34 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search Element")]
-    [Attributes.ClassAttributes.CommandSettings("Check Element Exist By XPath")]
-    [Attributes.ClassAttributes.Description("This command allows you to check AutomationElement existence.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check AutomationElement existence.")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement")]
+    [Attributes.ClassAttributes.CommandSettings("Check UIElement Exist By XPath")]
+    [Attributes.ClassAttributes.Description("This command allows you to check UIElement existence.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check UIElement existence.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationCheckElementExistByXPathCommand : ScriptCommand
+    public class UIAutomationCheckUIElementExistByXPathCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_XPath))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_XPath))]
         public string v_SearchXPath { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
-        [Remarks("When the Element exists, Result value is **True**")]
+        [Remarks("When the UIElement exists, Result value is **True**")]
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         public string v_WaitTime { get; set; }
 
-        public UIAutomationCheckElementExistByXPathCommand()
+        public UIAutomationCheckUIElementExistByXPathCommand()
         {
             //this.CommandName = "UIAutomationCheckElementExistByXPathCommand";
             //this.SelectionName = "Check Element Exist By XPath";
@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                AutomationElementControls.SearchGUIElementByXPath(this, engine);
+                UIElementControls.SearchGUIElementByXPath(this, engine);
                 true.StoreInUserVariable(engine, v_Result);
             }
             catch

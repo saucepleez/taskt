@@ -8,16 +8,16 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Select Item In Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to Select a Item in AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select a Item in AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("Select Item In UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Select a Item in UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Select a Item in UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSelectItemInElementCommand : ScriptCommand
+    public class UIAutomationSelectItemInUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Item")]
         public string v_Item { get; set; }
 
-        public UIAutomationSelectItemInElementCommand()
+        public UIAutomationSelectItemInUIElementCommand()
         {
             //this.CommandName = "UIAutomationSelectItemInElementCommand";
             //this.SelectionName = "Select Item In Element";
@@ -42,11 +42,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
             var itemName = v_Item.ConvertToUserVariable(engine);
 
-            var items = AutomationElementControls.GetSelectionItems(targetElement, true);
+            var items = UIElementControls.GetSelectionItems(targetElement, true);
             bool isSelected = false;
             foreach(var item in items)
             {

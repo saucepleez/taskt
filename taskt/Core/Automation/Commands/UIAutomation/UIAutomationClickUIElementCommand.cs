@@ -7,16 +7,16 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Element Action")]
-    [Attributes.ClassAttributes.CommandSettings("Click Element")]
-    [Attributes.ClassAttributes.Description("This command allows you to Click AutomationElement.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Click AutomationElement.")]
+    [Attributes.ClassAttributes.SubGruop("UIElement Action")]
+    [Attributes.ClassAttributes.CommandSettings("Click UIElement")]
+    [Attributes.ClassAttributes.Description("This command allows you to Click UIElement.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Click UIElement.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationClickElementCommand : ScriptCommand
+    public class UIAutomationClickUIElementCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_InputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
         public string v_TargetElement { get; set; }
 
         [XmlAttribute]
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Yes")]
         public string v_ActivateWindow { get; set; }
 
-        public UIAutomationClickElementCommand()
+        public UIAutomationClickUIElementCommand()
         {
             //this.CommandName = "UIAutomationClickElementCommand";
             //this.SelectionName = "Click Element";
@@ -49,9 +49,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetAutomationElementVariable(engine);
+            var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
-            string windowName = AutomationElementControls.GetWindowName(targetElement);
+            string windowName = UIElementControls.GetWindowName(targetElement);
             if (this.GetYesNoSelectionValue(nameof(v_ActivateWindow), engine))
             {
                 var activateWindow = new ActivateWindowCommand()
@@ -87,13 +87,13 @@ namespace taskt.Core.Automation.Commands
 
                     if (!targetElement.TryGetClickablePoint(out point))
                     {
-                        throw new Exception("No Clickable Point in AutomationElement '" + v_TargetElement + "'");
+                        throw new Exception("No Clickable Point in UIElement '" + v_TargetElement + "'");
                     }
                 }
             }
             catch (Exception)
             {
-                throw new Exception("No Clickable Point in AutomationElement '" + v_TargetElement + "'");
+                throw new Exception("No Clickable Point in UIElement '" + v_TargetElement + "'");
             }
 
             var click = this.GetUISelectionValue(nameof(v_ClickType), engine);

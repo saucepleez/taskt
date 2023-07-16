@@ -10,24 +10,24 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search Element & Window")]
-    [Attributes.ClassAttributes.CommandSettings("Search Element And Window")]
-    [Attributes.ClassAttributes.Description("This command allows you to get AutomationElement from Window Name using by XPath.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get AutomationElement from Window Name. XPath does not support to use parent and sibling for root element.")]
+    [Attributes.ClassAttributes.SubGruop("Search UIElement & Window")]
+    [Attributes.ClassAttributes.CommandSettings("Search UIElement And Window")]
+    [Attributes.ClassAttributes.Description("This command allows you to get UIElement from Window Name.")]
+    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement from Window Name.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationSearchElementAndWindowCommand : ScriptCommand
+    public class UIAutomationSearchUIElementAndWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_SearchParameters))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_SearchParameters))]
         public DataTable v_SearchParameters { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_OutputAutomationElementName))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_OutputUIElementName))]
         public string v_AutomationElementVariable { get; set; }
 
         [XmlAttribute]
@@ -48,10 +48,10 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowWaitTime { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(AutomationElementControls), nameof(AutomationElementControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_ElementWaitTime { get; set; }
 
-        public UIAutomationSearchElementAndWindowCommand()
+        public UIAutomationSearchUIElementAndWindowCommand()
         {
         }
 
@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
 
             var varName = VariableNameControls.GetInnerVariableName(0, engine, false);
 
-            var winSearch = new UIAutomationSearchElementFromWindowCommand()
+            var winSearch = new UIAutomationSearchUIElementFromWindowCommand()
             {
                 v_WindowName = this.v_WindowName,
                 v_SearchMethod = this.v_SearchMethod,
@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands
             };
             winSearch.RunCommand(engine);
 
-            var searchElem = new UIAutomationSearchElementFromElementCommand()
+            var searchElem = new UIAutomationSearchUIElementFromUIElementCommand()
             {
                 v_TargetElement = varName,
                 v_SearchParameters = this.v_SearchParameters,
@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
         public override void AfterShown()
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
-            AutomationElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
+            UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));
         }
     }
 }

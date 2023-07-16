@@ -301,6 +301,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_48(doc);
             convertTo3_5_1_49(doc);
             convertTo3_5_1_50(doc);
+            convertTo3_5_1_51(doc);
 
             return doc;
         }
@@ -1289,6 +1290,169 @@ namespace taskt.Core.Script
                     table.Remove();
                     before.Remove();
                 }
+            }
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_51(XDocument doc)
+        {
+            // UIAutomationCheckElementExistByXPathCommand -> UIAutomationCheckUIElementExistByXPathCommand
+            ChangeCommandName(doc, "UIAutomationCheckElementExistByXPathCommand", "UIAutomationCheckUIElementExistByXPathCommand", "Check UIElement Exist By XPath");
+
+            // UIAutomationCheckElementExistCommand -> UIAutomationCheckUIElementExistCommand
+            ChangeCommandName(doc, "UIAutomationCheckElementExistCommand", "UIAutomationCheckUIElementExistCommand", "Check UIElement Exist");
+
+            // UIAutomationClickElementCommand -> UIAutomationClickUIElementCommand
+            ChangeCommandName(doc, "UIAutomationClickElementCommand", "UIAutomationClickUIElementCommand", "Click UIElement");
+
+            // UIAutomationExpandCollapseItemsInElementCommand -> UIAutomationExpandCollapseItemsInUIElementCommand
+            ChangeCommandName(doc, "UIAutomationExpandCollapseItemsInElementCommand", "UIAutomationExpandCollapseItemsInUIElementCommand", "Expand Collapse Items In UIElement");
+
+            // UIAutomationGetChildrenElementsInformationCommand -> UIAutomationGetChildrenUIElementsInformationCommand
+            ChangeCommandName(doc, "UIAutomationGetChildrenElementsInformationCommand", "UIAutomationGetChildrenUIElementsInformationCommand", "Get Children Elements Information");
+
+            // UIAutomationGetElementTreeXMLFromElementCommand -> UIAutomationGetUIElementTreeXMLFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetElementTreeXMLFromElementCommand", "UIAutomationGetUIElementTreeXMLFromUIElementCommand", "Get UIElement Tree XML From UIElement");
+
+            // UIAutomationGetSelectionItemsFromElementCommand -> UIAutomationGetSelectionItemsFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetSelectionItemsFromElementCommand", "UIAutomationGetSelectionItemsFromUIElementCommand", "Get Selection Items From UIElement");
+
+            // UIAutomationGetSelectedStateFromElementCommand -> UIAutomationGetSelectedStateFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetSelectedStateFromElementCommand", "UIAutomationGetSelectedStateFromUIElementCommand", "Get Selected State From UIElement");
+
+            // UIAutomationGetTextFromElementCommand -> UIAutomationGetTextFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetTextFromElementCommand", "UIAutomationGetTextFromUIElementCommand", "Get Text From UIElement");
+
+            // UIAutomationGetTextFromTableElementCommand -> UIAutomationGetTextFromTableUIElementCommand
+            ChangeCommandName(doc, "UIAutomationGetTextFromTableElementCommand", "UIAutomationGetTextFromTableUIElementCommand", "Get Text From Table UIElement");
+
+            // UIAutomationScrollElementCommand -> UIAutomationScrollUIElementCommand
+            ChangeCommandName(doc, "UIAutomationScrollElementCommand", "UIAutomationScrollUIElementCommand", "Scroll UIElement");
+
+            // UIAutomationSearchChildElementCommand -> UIAutomationSearchChildUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchChildElementCommand", "UIAutomationSearchChildUIElementCommand", "Search Child UIElement");
+
+            // UIAutomationSearchElementAndWindowByXPathCommand -> UIAutomationSearchUIElementAndWindowByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementAndWindowByXPathCommand", "UIAutomationSearchUIElementAndWindowByXPathCommand", "Search UIElement And Window By XPath");
+
+            // UIAutomationSearchElementAndWindowCommand -> UIAutomationSearchUIElementAndWindowCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementAndWindowCommand", "UIAutomationSearchUIElementAndWindowCommand", "Search UIElement And Window");
+
+            // UIAutomationSearchElementFromElementByXPathCommand -> UIAutomationSearchUIElementFromUIElementByXPathCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromElementByXPathCommand", "UIAutomationSearchUIElementFromUIElementByXPathCommand", "Search UIElement From UIElement By XPath");
+
+            // UIAutomationSearchElementFromElementCommand -> UIAutomationSearchUIElementFromUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromElementCommand", "UIAutomationSearchUIElementFromUIElementCommand", "Search UIElement From UIElement");
+
+            // UIAutomationSearchElementFromTableElementCommand -> UIAutomationSearchUIElementFromTableUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromTableElementCommand", "UIAutomationSearchUIElementFromTableUIElementCommand", "Search UIElement From Table UIElement");
+
+            // UIAutomationSearchElementFromWindowCommand -> UIAutomationSearchUIElementFromWindowCommand
+            ChangeCommandName(doc, "UIAutomationSearchElementFromWindowCommand", "UIAutomationSearchUIElementFromWindowCommand", "Search UIElement From Window");
+
+            // UIAutomationSearchParentElementCommand -> UIAutomationSearchParentUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSearchParentElementCommand", "UIAutomationSearchParentUIElementCommand", "Search Parent UIElement");
+
+            // UIAutomationSelectElementCommand -> UIAutomationSelectUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSelectElementCommand", "UIAutomationSelectUIElementCommand", "Select UIElement");
+
+            // UIAutomationSelectItemInElementCommand -> UIAutomationSelectItemInUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSelectItemInElementCommand", "UIAutomationSelectItemInUIElementCommand", "Select Item In UIElement");
+
+            // UIAutomationSetTextToElementCommand -> UIAutomationSetTextToUIElementCommand
+            ChangeCommandName(doc, "UIAutomationSetTextToElementCommand", "UIAutomationSetTextToUIElementCommand", "Set Text To UIElement");
+
+            // UIAutomationWaitForElementExistByXPathCommand -> UIAutomationWaitForUIElementExistByXPathCommand
+            ChangeCommandName(doc, "UIAutomationWaitForElementExistByXPathCommand", "UIAutomationWaitForUIElementExistByXPathCommand", "Wait For UIElement Exist By XPath");
+
+            // UIAutomationWaitForElementExistCommand -> UIAutomationWaitForUIElementExistCommand
+            ChangeCommandName(doc, "UIAutomationWaitForElementExistCommand", "UIAutomationWaitForUIElementExistCommand", "Wait For UIElement Exist");
+
+            // UIAutomationCommand -> UIAutomationUIElementActionCommand
+            ChangeCommandName(doc, "UIAutomationCommand", "UIAutomationUIElementActionCommand", "UIElement Action");
+
+            // UIAutomationUIElementActionCommand : UIElement Action name
+            var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
+            foreach(var cmd in cmds)
+            {
+                var act = cmd.Attribute("v_AutomationType").Value.ToLower();
+                string newAct = "";
+                switch (act)
+                {
+                    case "click element":
+                        newAct = "Click UIElement";
+                        break;
+                    case "expand collapse items in element":
+                        newAct = "Expand Collapse Items In UIElement";
+                        break;
+                    case "scroll element":
+                        newAct = "Scroll UIElement";
+                        break;
+                    case "select element":
+                        newAct = "Select UIElement";
+                        break;
+                    case "select item in element":
+                        newAct = "Select Item In UIElement";
+                        break;
+                    case "set text to element":
+                        newAct = "Set Text To UIElement";
+                        break;
+                    case "get value from element":
+                        newAct = "Get Value From UIElement";
+                        break;
+                    case "check if element exists":
+                        newAct = "Check UIElement Exists";
+                        break;
+                    case "get text value from element":
+                        newAct = "Get Text From UIElemen";
+                        break;
+                    case "get selected state from element":
+                        newAct = "Get Selected State From UIElement";
+                        break;
+                    case "get value from table element":
+                        newAct = "Get Text From Table UIElement";
+                        break;
+                    case "wait for element to exists":
+                        newAct = "Wait For UIElement To Exists";
+                        break;
+                }
+                if (newAct.ToLower() != act)
+                {
+                    cmd.SetAttributeValue("v_AutomationType", newAct);
+                }
+            }
+
+            // WebElementAction: Set Text (Encrypted Text param)
+            cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            {
+                return (el.Attribute("CommandName").Value == "SeleniumBrowserWebElementActionCommand") &&
+                        (el.Attribute("v_SeleniumElementAction").Value.ToLower() == "set text");
+            }));
+            foreach(var cmd in cmds)
+            {
+                (var table, var before, _, _) = GetTable(cmd, "v_WebActionParameterTable");
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
+
+                foreach(var row in rows)
+                {
+                    if (row.Element("Parameter_x0020_Name").Value == "Encrypted Text")
+                    {
+                        switch (row.Element("Parameter_x0020_Value").Value.ToLower())
+                        {
+                            case "encrypted":
+                                row.Element("Parameter_x0020_Value").SetValue("Yes");
+                                break;
+                            case "not encrypted":
+                                row.Element("Parameter_x0020_Value").SetValue("No");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                break;
             }
 
             return doc;

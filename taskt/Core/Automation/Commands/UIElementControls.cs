@@ -14,12 +14,12 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for AutomationElement methods
     /// </summary>
-    internal static class AutomationElementControls
+    internal static class UIElementControls
     {
         #region fields
 
         /// <summary>
-        /// AutomationElement type for Reflection
+        /// UIElement type for Reflection
         /// </summary>
         private static Type TypeOfAutomationElement = typeof(AutomationElement);
 
@@ -40,10 +40,10 @@ namespace taskt.Core.Automation.Commands
 
         #region VirtualProperties
         /// <summary>
-        /// input AutomationElement property
+        /// input UIElement property
         /// </summary>
-        [PropertyDescription("AutomationElement Variable Name")]
-        [InputSpecification("AutomationElement Variable Name", true)]
+        [PropertyDescription("UIElement Variable Name")]
+        [InputSpecification("UIElement Variable Name", true)]
         [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
@@ -51,15 +51,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
-        [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Element")]
-        public static string v_InputAutomationElementName { get; }
+        public static string v_InputUIElementName { get; }
 
         /// <summary>
-        /// output AutomationElement property
+        /// output UIElement property
         /// </summary>
-        [PropertyDescription("AutomationElement Variable Name")]
-        [InputSpecification("AutomationElement Variable Name", true)]
+        [PropertyDescription("UIElement Variable Name")]
+        [InputSpecification("    Variable Name", true)]
         [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
@@ -68,15 +68,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Element")]
-        public static string v_OutputAutomationElementName { get; }
+        public static string v_OutputUIElementName { get; }
 
         /// <summary>
-        /// New output AutomationElement name
+        /// New output UIElement name
         /// </summary>
-        [PropertyDescription("AutomationElement Variable Name")]
-        [InputSpecification("AutomationElement Variable Name", true)]
+        [PropertyDescription("UIElement Variable Name")]
+        [InputSpecification("    Variable Name", true)]
         [PropertyDetailSampleUsage("**vNewElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vNewElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
@@ -85,9 +85,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.AutomationElement, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        [PropertyValidationRule("New AutomationElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(true, "New Element")]
-        public static string v_NewOutputAutomationElementName { get; }
+        [PropertyValidationRule("New UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New UIElement")]
+        public static string v_NewOutputUIElementName { get; }
 
         /// <summary>
         /// xpath property
@@ -102,16 +102,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "XPath")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(AutomationElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
+        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
         public static string v_XPath { get; }
 
         /// <summary>
         /// Search paramters property
         /// </summary>
         [PropertyDescription("Search Parameters")]
-        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(AutomationElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByInspectResult_Click))]
-        [PropertyCustomUIHelper("Inspect Tool Parser", nameof(AutomationElementControls) + "+" + nameof(lnkInspectToolParser_Click))]
-        [PropertyCustomUIHelper("Add Empty Parameters", nameof(AutomationElementControls) + "+" + nameof(lnkAddEmptyParameter_Click))]
+        [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByInspectResult_Click))]
+        [PropertyCustomUIHelper("Inspect Tool Parser", nameof(UIElementControls) + "+" + nameof(lnkInspectToolParser_Click))]
+        [PropertyCustomUIHelper("Add Empty Parameters", nameof(UIElementControls) + "+" + nameof(lnkAddEmptyParameter_Click))]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [InputSpecification("Search Paramters", true)]
         [Remarks("")]
@@ -120,17 +120,17 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [PropertyDataGridViewCellEditEvent(nameof(AutomationElementControls) + "+" + nameof(AutomationElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
-        [PropertyDataGridViewInitMethod(nameof(AutomationElementControls) + "+" + nameof(CreateEmptyParamters))]
+        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewInitMethod(nameof(UIElementControls) + "+" + nameof(CreateEmptyParamters))]
         public static string v_SearchParameters { get; }
 
         /// <summary>
         /// AutomationElement wait time
         /// </summary>
-        [PropertyDescription("Wait Time for the AutomationElement to Exist (sec)")]
+        [PropertyDescription("Wait Time for the UIElement to Exist (sec)")]
         [InputSpecification("Wait Time", true)]
-        [Remarks("Specify how long to Wait before an Error will occur because the AutomationElement is Not Found.")]
+        [Remarks("Specify how long to Wait before an Error will occur because the UIElement is Not Found.")]
         [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Wait Time")]
         [PropertyDetailSampleUsage("**{{{vTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Wait Time")]
         [PropertyShowSampleUsageInDescription(true)]
@@ -143,13 +143,13 @@ namespace taskt.Core.Automation.Commands
         #region variable methods
 
         /// <summary>
-        /// get AutomationElement from Specified variable name
+        /// get UIElement from Specified variable name
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static AutomationElement GetAutomationElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement GetUIElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is AutomationElement e)
@@ -158,22 +158,22 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Variable " + variableName + " is not AutomationElement");
+                throw new Exception("Variable " + variableName + " is not UIElement");
             }
         }
 
         /// <summary>
-        /// get AutomationElement from specified parameter name
+        /// get UIElement from specified parameter name
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static AutomationElement CovnertToUserVariableAsAutomationElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement CovnertToUserVariableAsUIElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var value = prop?.GetValue(command)?.ToString() ?? "";
-            return GetAutomationElementVariable(value, engine);
+            return GetUIElementVariable(value, engine);
         }
 
         /// <summary>
@@ -632,7 +632,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var elem = command.CovnertToUserVariableAsAutomationElement(elementName, engine);
+            var elem = command.CovnertToUserVariableAsUIElement(elementName, engine);
             var table = command.ConvertToUserVariableAsDataTable(conditionName, engine);
             var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
 
@@ -647,9 +647,9 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static AutomationElement SearchGUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
-            var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
-            var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_SearchParameters)))?.Name ?? "";
-            var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime))).Name ?? "";
+            var elementName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_InputUIElementName)))?.Name ?? "";
+            var conditionName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_SearchParameters)))?.Name ?? "";
+            var waitTimeName = PropertyControls.GetProperty(command, new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_WaitTime))).Name ?? "";
 
             return SearchGUIElement(command, elementName, conditionName, waitTimeName, engine);
         }
@@ -659,13 +659,13 @@ namespace taskt.Core.Automation.Commands
         #region Winodow Search Methods
 
         /// <summary>
-        /// get window AutomationElement. this method use PropertyVirtualProperty
+        /// get window UIElement. this method use PropertyVirtualProperty
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <param name="resultName"></param>
         /// <returns></returns>
-        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, Engine.AutomationEngineInstance engine, string resultName = "")
+        public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine, string resultName = "")
         {
             AutomationElement ret = null;
 
@@ -688,22 +688,22 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get window AutomationElement
+        /// get window UIElement
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static AutomationElement GetWindowAutomationElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
+        public static AutomationElement GetWindowUIElement(ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
-            var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_OutputAutomationElementName)))?.Name ?? "";
+            var resultName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_OutputUIElementName)))?.Name ?? "";
 
-            return GetWindowAutomationElement(command, engine, resultName);
+            return GetWindowUIElement(command, engine, resultName);
         }
         #endregion
 
         #region search element node
 
-        public static List<AutomationElement> GetChildrenElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
+        public static List<AutomationElement> GetChildrenUIElements(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
@@ -721,11 +721,11 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                return GetAllChildrenElements(rootElement);
+                return GetAllChildrenUIElements(rootElement);
             }
         }
 
-        private static List<AutomationElement> GetAllChildrenElements(AutomationElement rootElement)
+        private static List<AutomationElement> GetAllChildrenUIElements(AutomationElement rootElement)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
 
@@ -747,7 +747,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="targetElement"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static AutomationElement GetParentElement(AutomationElement targetElement)
+        public static AutomationElement GetParentUIElement(AutomationElement targetElement)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
 
@@ -758,12 +758,12 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Parent Element not exists");
+                throw new Exception("Parent UIElement not exists");
             }
         }
 
         /// <summary>
-        /// get window name from AutomationElement
+        /// get window name from UIElement
         /// </summary>
         /// <param name="targetElement"></param>
         /// <returns></returns>
@@ -805,13 +805,13 @@ namespace taskt.Core.Automation.Commands
                 }
                 catch
                 {
-                    throw new Exception("Fail Get Window Name from AutomationElement");
+                    throw new Exception("Fail Get Window Name from UIElement");
                 }
             }
         }
 
         /// <summary>
-        /// get window handle from AutomationElement
+        /// get window handle from UIElement
         /// </summary>
         /// <param name="targetElement"></param>
         /// <returns></returns>
@@ -865,12 +865,12 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static AutomationElement GetTableElement(AutomationElement targetElement, int row, int column)
+        public static AutomationElement GetTableUIElement(AutomationElement targetElement, int row, int column)
         {
             object tryObj;
             if (!targetElement.TryGetCurrentPattern(GridPattern.Pattern, out tryObj))
             {
-                throw new Exception("AutomationElement is not Table Element");
+                throw new Exception("UIElement is not Table Element");
             }
             GridPattern gridPtn = (GridPattern)tryObj;
 
@@ -907,7 +907,7 @@ namespace taskt.Core.Automation.Commands
                 ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
                 if (!(bool)ptnResult)
                 {
-                    rootElement = GetParentElement(rootElement);
+                    rootElement = GetParentUIElement(rootElement);
                 }
 
                 ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
@@ -933,7 +933,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    throw new Exception("This element does not have Selection Items");
+                    throw new Exception("This UIElement does not have Selection Items");
                 }
             }
         }
@@ -1033,7 +1033,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("AutomationElement not Found");
+                throw new Exception("UIElement not Found");
             }
         }
 
@@ -1047,7 +1047,7 @@ namespace taskt.Core.Automation.Commands
 
         public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var element = command.CovnertToUserVariableAsAutomationElement(rootElementName, engine);
+            var element = command.CovnertToUserVariableAsUIElement(rootElementName, engine);
             var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
             var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
 
@@ -1056,9 +1056,9 @@ namespace taskt.Core.Automation.Commands
 
         public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
-            var elemName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_InputAutomationElementName)))?.Name ?? "";
-            var xpathName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_XPath)))?.Name ?? "";
-            var waitTimeName = command.GetProperty(new PropertyVirtualProperty(nameof(AutomationElementControls), nameof(v_WaitTime)))?.Name ?? "";
+            var elemName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_InputUIElementName)))?.Name ?? "";
+            var xpathName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_XPath)))?.Name ?? "";
+            var waitTimeName = command.GetProperty(new PropertyVirtualProperty(nameof(UIElementControls), nameof(v_WaitTime)))?.Name ?? "";
 
             return SearchGUIElementByXPath(command, elemName, xpathName, waitTimeName, engine);
         }
@@ -1254,7 +1254,7 @@ namespace taskt.Core.Automation.Commands
                 idx++;
             }
 
-            throw new Exception("Fail Create AutomationElement XPath");
+            throw new Exception("Fail Create UIElement XPath");
         }
 
         #region events
