@@ -310,7 +310,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAttributeFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSetTextToWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClearTextInWebElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
@@ -487,12 +487,12 @@
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\CreateTextVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationClickUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildrenUIElementsInformationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementExistByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementToExistsByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromUIElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromUIElementCommand.cs" />
@@ -649,7 +649,7 @@
     <Compile Include="Core\Automation\Commands\StopWatch\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableIndexCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\WaitForWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\WaitForWindowToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowHTMLInputDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\SendAdvancedKeyStrokesCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\EnterKeysCommand.cs" />

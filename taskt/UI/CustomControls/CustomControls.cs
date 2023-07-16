@@ -798,8 +798,8 @@ namespace taskt.UI
             {nameof(UIAutomationSelectItemInUIElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationSetTextToUIElementCommand), "taskt.Properties.Resources.command_window"},
             {nameof(UIAutomationScrollUIElementCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationWaitForUIElementExistByXPathCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(UIAutomationWaitForUIElementExistCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationWaitForUIElementToExistsByXPathCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(UIAutomationWaitForUIElementToExistsCommand), "taskt.Properties.Resources.command_window"},
 
             // Variable
             {nameof(CheckVariableExistsCommand), "taskt.Properties.Resources.command_function"},
@@ -843,7 +843,7 @@ namespace taskt.UI
             {nameof(MoveWindowCommand), "taskt.Properties.Resources.command_window"},
             {nameof(ResizeWindowCommand), "taskt.Properties.Resources.command_window"},
             {nameof(SetWindowStateCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(WaitForWindowCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(WaitForWindowToExistsCommand), "taskt.Properties.Resources.command_window"},
 
             // Word
             {nameof(WordAddDocumentCommand), "taskt.Properties.Resources.command_files"},

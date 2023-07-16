@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
             switch (actionType)
             {
                 case "wait for webelement to exists":
-                    var waitCommand = new SeleniumBrowserWaitForWebElementExistCommand()
+                    var waitCommand = new SeleniumBrowserWaitForWebElementToExistsCommand()
                     {
                         v_InstanceName = this.v_InstanceName,
                         v_SeleniumSearchType = this.v_SeleniumSearchType,

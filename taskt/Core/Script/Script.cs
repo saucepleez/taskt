@@ -302,6 +302,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_49(doc);
             convertTo3_5_1_50(doc);
             convertTo3_5_1_51(doc);
+            convertTo3_5_1_52(doc);
 
             return doc;
         }
@@ -1454,6 +1455,26 @@ namespace taskt.Core.Script
                 }
                 break;
             }
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_52(XDocument doc)
+        {
+            // SeleniumBrowserWaitForWebElementExistCommand -> SeleniumBrowserWaitForWebElementToExistsCommand
+            ChangeCommandName(doc, "SeleniumBrowserWaitForWebElementExistCommand", "SeleniumBrowserWaitForWebElementToExistsCommand", "Wait For WebElement To Exists");
+
+            // UIAutomationWaitForUIElementExistByXPathCommand -> UIAutomationWaitForUIElementToExistsByXPathCommand
+            ChangeCommandName(doc, "UIAutomationWaitForUIElementExistByXPathCommand", "UIAutomationWaitForUIElementToExistsByXPathCommand", "Wait For UIElement To Exists By XPath");
+
+            // UIAutomationWaitForUIElementExistCommand -> UIAutomationWaitForUIElementToExistsCommand
+            ChangeCommandName(doc, "UIAutomationWaitForUIElementExistCommand", "UIAutomationWaitForUIElementToExistsCommand", "Wait For UIElement To Exists");
+
+            // WaitForFileToExistCommand (Display command)
+            ChangeCommandName(doc, "WaitForFileToExistCommand", "WaitForFileToExistCommand", "Wait For File To Exists");
+
+            // WaitForWindowCommand -> WaitForWindowToExistsCommand
+            ChangeCommandName(doc, "WaitForWindowCommand", "WaitForWindowToExistsCommand", "Wait For Window To Exists");
 
             return doc;
         }
