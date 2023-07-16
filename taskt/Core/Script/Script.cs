@@ -1423,6 +1423,38 @@ namespace taskt.Core.Script
                 }
             }
 
+            // WebElementAction: Set Text (Encrypted Text param)
+            cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            {
+                return (el.Attribute("CommandName").Value == "SeleniumBrowserWebElementActionCommand") &&
+                        (el.Attribute("v_SeleniumElementAction").Value.ToLower() == "set text");
+            }));
+            foreach(var cmd in cmds)
+            {
+                (var table, var before, _, _) = GetTable(cmd, "v_WebActionParameterTable");
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
+
+                foreach(var row in rows)
+                {
+                    if (row.Element("Parameter_x0020_Name").Value == "Encrypted Text")
+                    {
+                        switch (row.Element("Parameter_x0020_Value").Value.ToLower())
+                        {
+                            case "encrypted":
+                                row.Element("Parameter_x0020_Value").SetValue("Yes");
+                                break;
+                            case "not encrypted":
+                                row.Element("Parameter_x0020_Value").SetValue("No");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                break;
+            }
+
             return doc;
         }
 
