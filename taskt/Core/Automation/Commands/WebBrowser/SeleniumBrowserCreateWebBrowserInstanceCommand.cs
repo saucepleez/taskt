@@ -8,13 +8,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
-    [Attributes.ClassAttributes.CommandSettings("Create Browser")]
+    [Attributes.ClassAttributes.CommandSettings("Create Web Browser Instance")]
     [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data.\nIf this command does not work, please check your browser version, and WebDriver version.\nYou can check the WebDriver version with \"foo.exe -v\" in command prompt.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SeleniumBrowserCreateCommand : ScriptCommand
+    public class SeleniumBrowserCreateWebBrowserInstanceCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("WebBrowser Command Line Options")]
+        [PropertyDescription("We bBrowser Command Line Options")]
         [InputSpecification("Command Line Options", true)]
         [SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
         [Remarks("")]
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("WebBrowser Type")]
+        [PropertyDescription("Web Browser Type")]
         [PropertyUISelectionOption("Edge")]
         [PropertyUISelectionOption("Chrome")]
         [PropertyUISelectionOption("Firefox")]
@@ -72,13 +72,13 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(true, "Chrome")]
         [PropertyFirstValue("Chrome")]
-        [PropertyDisplayText(true, "WebBrowser Type")]
+        [PropertyDisplayText(true, "Web Browser Type")]
         public string v_EngineType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("WebBrowser Binary Path")]
-        [InputSpecification("WebBrowser Binary Path", true)]
+        [PropertyDescription("Web Browser Binary Path")]
+        [InputSpecification("Web Browser Binary Path", true)]
         //[SampleUsage("**C:\\temp\\BrowserPath.exe** or **{{{vPath}}}**")]
         [PropertyDetailSampleUsage("**C:\\temp\\BrowserPath.exe**", PropertyDetailSampleUsage.ValueType.Value, "WebBrowser Path")]
         [PropertyDetailSampleUsage("**{{{vBrowserPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "WebBrowser Path")]
@@ -90,8 +90,8 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("WebDriver Binary Path")]
-        [InputSpecification("WebDriver Binary Path", true)]
+        [PropertyDescription("Web Driver Binary Path")]
+        [InputSpecification("Web Driver Binary Path", true)]
         //[SampleUsage("**C:\\temp\\WebDriverPath.exe** or **{{{vPath}}}**")]
         [PropertyDetailSampleUsage("**C:\\temp\\WebDriverPath.exe**", PropertyDetailSampleUsage.ValueType.Value, "WebDriver Path")]
         [PropertyDetailSampleUsage("**{{{vBrowserPath}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "WebDriver Path")]
@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_WebDriverPath { get; set; }
 
-        public SeleniumBrowserCreateCommand()
+        public SeleniumBrowserCreateWebBrowserInstanceCommand()
         {
             //this.CommandName = "SeleniumBrowserCreateCommand";
             //this.SelectionName = "Create Browser";

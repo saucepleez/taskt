@@ -1482,6 +1482,12 @@ namespace taskt.Core.Script
             // ExcelCloseApplicationCommand -> ExcelCloseExcelInstanceCommand
             ChangeCommandName(doc, "ExcelCloseApplicationCommand", "ExcelCloseExcelInstanceCommand", "Close Excel Instance");
 
+            // SeleniumBrowserCreateCommand -> SeleniumBrowserCreateWebBrowserInstanceCommand
+            ChangeCommandName(doc, "SeleniumBrowserCreateCommand", "SeleniumBrowserCreateWebBrowserInstanceCommand", "Create Web Browser Instance");
+
+            // SeleniumBrowserCloseCommand -> SeleniumBrowserCloseWebBrowserInstanceCommand
+            ChangeCommandName(doc, "SeleniumBrowserCloseCommand", "SeleniumBrowserCloseWebBrowserInstanceCommand", "Close Web Browser Instance");
+
             return doc;
         }
 

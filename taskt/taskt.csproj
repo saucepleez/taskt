@@ -623,11 +623,11 @@
     <Compile Include="Core\Automation\Commands\API\HTTPExecuteRESTAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCloseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCreateCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserInfoCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunCSharpCodeCommand.cs" />
