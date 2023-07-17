@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Select UIElement")]
         [PropertyUISelectionOption("Select Item In UIElement")]
         [PropertyUISelectionOption("Set Text To UIElement")]
-        [PropertyUISelectionOption("Get Value From UIElement")]
+        [PropertyUISelectionOption("Get Property Value From UIElement")]
         [PropertyUISelectionOption("Check UIElement Exists")]
         [PropertyUISelectionOption("Get Text From UIElement")]
         [PropertyUISelectionOption("Get Selected State From UIElement")]
@@ -132,8 +132,8 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_TargetElement = trgElemVar,
                         v_ClickType = p["Click Type"],
-                        v_XOffset = p["X Adjustment"],
-                        v_YOffset = p["Y Adjustment"],
+                        v_XOffset = p["X Offset"],
+                        v_YOffset = p["Y Offset"],
                     };
                     clickCmd.RunCommand(engine);
                     break;
@@ -177,8 +177,14 @@ namespace taskt.Core.Automation.Commands
                     };
                     setTextCmd.RunCommand(engine);
                     break;
-                case "get value from uielement":
-                    // todo: not supported now
+                case "get property value from uielement":
+                    var propValueCmd = new UIAutomationGetPropertyValueFromUIElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_PropertyName = p["Property Name"],
+                        v_Result = p["Apply To Variable"],
+                    };
+                    propValueCmd.RunCommand(engine);
                     break;
                 case "check uielement exists":
                     true.StoreInUserVariable(engine, p["Apply To Variable"]);
@@ -446,8 +452,8 @@ namespace taskt.Core.Automation.Commands
             {
                 case "click uielement":
                     table.Rows.Add(new string[] { "Click Type", "" });
-                    table.Rows.Add(new string[] { "X Adjustment", "" });
-                    table.Rows.Add(new string[] { "Y Adjustment", "" });
+                    table.Rows.Add(new string[] { "X Offset", "" });
+                    table.Rows.Add(new string[] { "Y Offset", "" });
 
                     var clickType = new DataGridViewComboBoxCell();
                     clickType.Items.AddRange(new string[]
@@ -502,11 +508,37 @@ namespace taskt.Core.Automation.Commands
                 case "set text to uielement":
                     table.Rows.Add(new string[] { "Text To Set", "" });
                     break;
-                case "get value from uielement":
-                    table.Rows.Add(new string[] { "Get Value From", "" });
+                case "get property value from uielement":
+                    table.Rows.Add(new string[] { "Property Name", "" });
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
+                    var propNames = new DataGridViewComboBoxCell();
+                    propNames.Items.AddRange(new string[]
+                    {
+                        "Name",
+                        "ControlType",
+                        "LocalizedControlType",
+                        "IsEnabled",
+                        "IsOffscreen",
+                        "IsKeyboardFocusable",
+                        "HasKeyboardFocusable",
+                        "AccessKey",
+                        "ProcessId",
+                        "AutomationId",
+                        "FrameworkId",
+                        "ClassName",
+                        "IsContentElement",
+                        "IsPassword",
+                        "AcceleratorKey",
+                        "HelpText",
+                        "IsControlElement",
+                        "IsRequiredForForm",
+                        "ItemStatus",
+                        "ItemType",
+                        "NativeWindowHandle",
+                    });
+                    dgv.Rows[0].Cells[1] = propNames;
                     break;
-                case "get value from table uielement":
+                case "get text from table uielement":
                     table.Rows.Add(new string[] { "Row", "" });
                     table.Rows.Add(new string[] { "Column", "" });
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
