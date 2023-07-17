@@ -525,7 +525,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsListCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeBrowserCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeWebBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowNameControls.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
@@ -602,7 +602,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\RenameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\LoadScriptFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserTakeScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\EnterShortcutKeyCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEnginePreferenceCommand.cs" />
@@ -625,8 +625,8 @@
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCloseCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCreateCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserInfoCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebBrowserInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowCommand.cs" />

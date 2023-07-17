@@ -1494,6 +1494,18 @@ namespace taskt.Core.Script
             // WordCloseApplicationCommand -> WordCloseWordInstanceCommand
             ChangeCommandName(doc, "WordCloseApplicationCommand", "WordCloseWordInstanceCommand", "Close Word Instance");
 
+            // SeleniumBrowserInfoCommand -> SeleniumBrowserGetWebBrowserInfoCommand
+            ChangeCommandName(doc, "SeleniumBrowserInfoCommand", "SeleniumBrowserGetWebBrowserInfoCommand", "Get Web Browser Info");
+
+            // SeleniumBrowserResizeBrowserCommand -> SeleniumBrowserResizeWebBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserResizeBrowserCommand", "SeleniumBrowserResizeWebBrowserCommand", "Resize Web Browser");
+
+            // SeleniumBrowserSwitchFrameCommand -> SeleniumBrowserSwitchWebBrowserFrameCommand
+            ChangeCommandName(doc, "SeleniumBrowserSwitchFrameCommand", "SeleniumBrowserSwitchWebBrowserFrameCommand", "Switch Web Browser Frame");
+
+            // SeleniumBrowserSwitchWindowCommand -> SeleniumBrowserSwitchWebBrowserWindowCommand
+            ChangeCommandName(doc, "SeleniumBrowserSwitchWindowCommand", "SeleniumBrowserSwitchWebBrowserWindowCommand", "Switch Web Browser Window");
+
             return doc;
         }
 

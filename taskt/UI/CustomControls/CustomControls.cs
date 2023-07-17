@@ -823,14 +823,14 @@ namespace taskt.UI
             {nameof(SeleniumBrowserGetWebElementsValueAsListCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserGetWebElementsValuesAsDataTableCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserGetTableValueAsDataTableCommand), "taskt.Properties.Resources.command_web"},
-            {nameof(SeleniumBrowserInfoCommand), "taskt.Properties.Resources.command_web"},
+            {nameof(SeleniumBrowserGetWebBrowserInfoCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserNavigateBackCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserNavigateForwardCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserNavigateURLCommand), "taskt.Properties.Resources.command_web"},
             {nameof(SeleniumBrowserRefreshCommand), "taskt.Properties.Resources.command_web"},
-            {nameof(SeleniumBrowserResizeBrowserCommand), "taskt.Properties.Resources.command_web"},
-            {nameof(SeleniumBrowserSwitchFrameCommand), "taskt.Properties.Resources.command_window"},
-            {nameof(SeleniumBrowserSwitchWindowCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(SeleniumBrowserResizeWebBrowserCommand), "taskt.Properties.Resources.command_web"},
+            {nameof(SeleniumBrowserSwitchWebBrowserFrameCommand), "taskt.Properties.Resources.command_window"},
+            {nameof(SeleniumBrowserSwitchWebBrowserWindowCommand), "taskt.Properties.Resources.command_window"},
             {nameof(SeleniumBrowserTakeScreenshotCommand), "taskt.Properties.Resources.command_web"},
 
             // Window
