@@ -711,8 +711,8 @@
     <Compile Include="Core\Automation\Commands\Word\WordAppendDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendImageCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word\WordCloseApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word\WordCreateApplicationCommandcs.cs" />
+    <Compile Include="Core\Automation\Commands\Word\WordCloseWordInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Word\WordCreateWordInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordExportToPDFCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordOpenDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordReadDocumentCommand.cs" />

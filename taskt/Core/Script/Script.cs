@@ -1488,6 +1488,12 @@ namespace taskt.Core.Script
             // SeleniumBrowserCloseCommand -> SeleniumBrowserCloseWebBrowserInstanceCommand
             ChangeCommandName(doc, "SeleniumBrowserCloseCommand", "SeleniumBrowserCloseWebBrowserInstanceCommand", "Close Web Browser Instance");
 
+            // WordCreateApplicationCommand -> WordCreateWordInstanceCommand
+            ChangeCommandName(doc, "WordCreateApplicationCommand", "WordCreateWordInstanceCommand", "Create Word Instance");
+
+            // WordCloseApplicationCommand -> WordCloseWordInstanceCommand
+            ChangeCommandName(doc, "WordCloseApplicationCommand", "WordCloseWordInstanceCommand", "Close Word Instance");
+
             return doc;
         }
 
