@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
-    [Attributes.ClassAttributes.CommandSettings("Create Excel Application")]
-    [Attributes.ClassAttributes.Description("This command opens the Excel Application.")]
+    [Attributes.ClassAttributes.CommandSettings("Create Excel Instance")]
+    [Attributes.ClassAttributes.Description("This command opens the Excel Instance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCreateApplicationCommand : ScriptCommand
+    public class ExcelCreateExcelInstanceCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         public string v_InstanceName { get; set; }
 
-        public ExcelCreateApplicationCommand()
+        public ExcelCreateExcelInstanceCommand()
         {
             //this.CommandName = "ExcelOpenApplicationCommand";
             //this.SelectionName = "Create Excel Application";

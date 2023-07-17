@@ -665,8 +665,8 @@
     <Compile Include="Core\Automation\Commands\Loop\EndLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelActivateSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorkbookCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCloseApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateApplicationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCloseExcelInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\LoadDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteRowCommand.cs" />

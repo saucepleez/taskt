@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Instance")]
-    [Attributes.ClassAttributes.CommandSettings("Close Excel Application")]
-    [Attributes.ClassAttributes.Description("This command allows you to close Excel.")]
+    [Attributes.ClassAttributes.CommandSettings("Close Excel Instance")]
+    [Attributes.ClassAttributes.Description("This command allows you to close Excel instance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Excel.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCloseApplicationCommand : ScriptCommand
+    public class ExcelCloseExcelInstanceCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_ExcelSaveOnExit { get; set; }
 
-        public ExcelCloseApplicationCommand()
+        public ExcelCloseExcelInstanceCommand()
         {
             //this.CommandName = "ExcelCloseApplicationCommand";
             //this.SelectionName = "Close Excel Application";
