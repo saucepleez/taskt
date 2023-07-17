@@ -444,7 +444,7 @@ namespace taskt.Core.Automation.Commands
             table.Rows.Clear();
             switch (a.ToLower())
             {
-                case "click element":
+                case "click uielement":
                     table.Rows.Add(new string[] { "Click Type", "" });
                     table.Rows.Add(new string[] { "X Adjustment", "" });
                     table.Rows.Add(new string[] { "Y Adjustment", "" });
@@ -466,7 +466,7 @@ namespace taskt.Core.Automation.Commands
                     });
                     dgv.Rows[0].Cells[1] = clickType;
                     break;
-                case "expand collapse items in element":
+                case "expand collapse items in uielement":
                     table.Rows.Add(new string[] { "Items State", "" });
                     var itemState = new DataGridViewComboBoxCell();
                     itemState.Items.AddRange(new string[]
@@ -476,7 +476,7 @@ namespace taskt.Core.Automation.Commands
                     });
                     dgv.Rows[0].Cells[1] = itemState;
                     break;
-                case "scroll element":
+                case "scroll uielement":
                     table.Rows.Add(new string[] { "ScrollBar Type", "" });
                     table.Rows.Add(new string[] { "Scroll Method", "" });
                     var barType = new DataGridViewComboBoxCell();
@@ -496,28 +496,28 @@ namespace taskt.Core.Automation.Commands
                     dgv.Rows[0].Cells[1] = barType;
                     dgv.Rows[1].Cells[1] = scrollMethod;
                     break;
-                case "select item in element":
+                case "select item in uielement":
                     table.Rows.Add(new string[] { "Item Value", "" });
                     break;
-                case "set text to element":
+                case "set text to uielement":
                     table.Rows.Add(new string[] { "Text To Set", "" });
                     break;
-                case "get value from element":
+                case "get value from uielement":
                     table.Rows.Add(new string[] { "Get Value From", "" });
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
                     break;
-                case "get value from table element":
+                case "get value from table uielement":
                     table.Rows.Add(new string[] { "Row", "" });
                     table.Rows.Add(new string[] { "Column", "" });
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
                     break;
-                case "check if element exists":
-                case "get text value from element":
-                case "get selected state from element":
+                case "check uielement exists":
+                case "get text from uielement":
+                case "get selected state from uielement":
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
                     break;
-                case "select element":
-                case "wait for element to exists":
+                case "select uielement":
+                case "wait for uielement to exists":
                     // nothing
                     break;
             }
