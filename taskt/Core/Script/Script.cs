@@ -1378,7 +1378,7 @@ namespace taskt.Core.Script
             foreach(var cmd in cmds)
             {
                 var act = cmd.Attribute("v_AutomationType").Value.ToLower();
-                string newAct = "";
+                string newAct = act.ToLower();
                 switch (act)
                 {
                     case "click element":
@@ -1432,9 +1432,9 @@ namespace taskt.Core.Script
             }));
             foreach(var cmd in cmds)
             {
-                (var table, var before, _, _) = GetTable(cmd, "v_WebActionParameterTable");
+                (var table, _, _, _) = GetTable(cmd, "v_WebActionParameterTable");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
-                var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
+                //var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
 
                 foreach(var row in rows)
                 {
@@ -1505,6 +1505,60 @@ namespace taskt.Core.Script
 
             // SeleniumBrowserSwitchWindowCommand -> SeleniumBrowserSwitchWebBrowserWindowCommand
             ChangeCommandName(doc, "SeleniumBrowserSwitchWindowCommand", "SeleniumBrowserSwitchWebBrowserWindowCommand", "Switch Web Browser Window");
+
+            // UIAutomationUIElementAction: Get Value From UIElement -> Get Property Value From UIElement
+            var cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            {
+                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                        (el.Attribute("v_AutomationType").Value.ToLower() == "get value from uielement");
+            }));
+            foreach(var cmd in cmds)
+            {
+                cmd.SetAttributeValue("v_AutomationType", "Get Property Value From UIElement");
+            }
+
+            // UIAutomationUIElementAction: Get Property Value From UIElement parameter
+            cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            {
+                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                        (el.Attribute("v_AutomationType").Value.ToLower() == "get property value from uielement");
+            }));
+            foreach (var cmd in cmds)
+            {
+                (var table, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                foreach (var row in rows)
+                {
+                    if (row.Element("Parameter_x0020_Name").Value == "Get Value From")
+                    {
+                        row.Element("Parameter_x0020_Name").SetValue("Property Name");
+                        break;
+                    }
+                }
+            }
+
+            // UIAutomationUIElementAction: Click UIElement
+            cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            {
+                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                        (el.Attribute("v_AutomationType").Value.ToLower() == "click uielement");
+            }));
+            foreach (var cmd in cmds)
+            {
+                (var table, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                foreach (var row in rows)
+                {
+                    if (row.Element("Parameter_x0020_Name").Value == "X Adjustment")
+                    {
+                        row.Element("Parameter_x0020_Name").SetValue("X Offset");
+                    }
+                    else if (row.Element("Parameter_x0020_Name").Value == "Y Adjustment")
+                    {
+                        row.Element("Parameter_x0020_Name").SetValue("Y Offset");
+                    }
+                }
+            }
 
             return doc;
         }
