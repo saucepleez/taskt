@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Search WebElement")]
     [Attributes.ClassAttributes.CommandSettings("Wait For WebElement To Exists")]
     [Attributes.ClassAttributes.Description("This command allows you to Wait for WebElement exists.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Wait for WebElement exists.")]

@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Search WebElement")]
     [Attributes.ClassAttributes.CommandSettings("Get WebElements Count")]
     [Attributes.ClassAttributes.Description("This command allows you to count WebElements.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to count WebElements.")]
