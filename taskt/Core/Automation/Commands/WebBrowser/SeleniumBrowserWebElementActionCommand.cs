@@ -211,7 +211,7 @@ namespace taskt.Core.Automation.Commands
         {
             var cmb = PropertyControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_SeleniumElementAction));
             var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
-            actionParameterProcess(dgv, v_WebActionParameterTable, cmb.SelectedItem?.ToString() ?? "");
+            actionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
         }
 
         private void cmbSearchType_SelectionChangeCommited(object sender, EventArgs e)
@@ -271,7 +271,7 @@ namespace taskt.Core.Automation.Commands
             }
             dgv.DataSource = v_WebActionParameterTable;
 
-            actionParameterProcess(dgv, v_WebActionParameterTable, actionType);
+            actionParameterProcess(dgv, actionType);
 
             //switch (actionType)
             //{
@@ -322,7 +322,7 @@ namespace taskt.Core.Automation.Commands
             //}
         }
 
-        private static void actionParameterProcess(DataGridView dgv, DataTable table, string actionType)
+        private static void actionParameterProcess(DataGridView dgv, string actionType)
         {
             switch (actionType.ToLower())
             {
