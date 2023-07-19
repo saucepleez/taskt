@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.SubGruop("WebElement Action")]
+    [Attributes.ClassAttributes.SubGruop("Get From WebElement")]
     [Attributes.ClassAttributes.CommandSettings("Get Options From WebElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Get Options Value from WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get Options Value from WebElement.")]
