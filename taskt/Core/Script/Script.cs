@@ -1451,9 +1451,9 @@ namespace taskt.Core.Script
                             default:
                                 break;
                         }
+                        break;
                     }
                 }
-                break;
             }
 
             return doc;
