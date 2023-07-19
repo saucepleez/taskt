@@ -1506,6 +1506,15 @@ namespace taskt.Core.Script
             // SeleniumBrowserSwitchWindowCommand -> SeleniumBrowserSwitchWebBrowserWindowCommand
             ChangeCommandName(doc, "SeleniumBrowserSwitchWindowCommand", "SeleniumBrowserSwitchWebBrowserWindowCommand", "Switch Web Browser Window");
 
+            // SeleniumBrowserGetAnWebElementValuesAsDataTableCommand -> SeleniumBrowserGetAWebElementValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnWebElementValuesAsDataTableCommand", "SeleniumBrowserGetAWebElementValuesAsDataTableCommand", "Get A WebElement Values As DataTable");
+
+            // SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand -> SeleniumBrowserGetAWebElementValuesAsDictionaryCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand", "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand", "Get A WebElement Values As Dictionary");
+
+            // SeleniumBrowserGetAnWebElementValuesAsListCommand -> SeleniumBrowserGetAWebElementValuesAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnWebElementValuesAsListCommand", "SeleniumBrowserGetAWebElementValuesAsListCommand", "Get A WebElement Values As List");
+
             // UIAutomationUIElementAction: Get Value From UIElement -> Get Property Value From UIElement
             var cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
