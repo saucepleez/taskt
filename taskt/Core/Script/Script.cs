@@ -1516,18 +1516,18 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "SeleniumBrowserGetAnWebElementValuesAsListCommand", "SeleniumBrowserGetAWebElementValuesAsListCommand", "Get A WebElement Values As List");
 
             // UIAutomationUIElementAction: Get Value From UIElement -> Get Property Value From UIElement
-            var cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
-            {
-                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
-                        (el.Attribute("v_AutomationType").Value.ToLower() == "get value from uielement");
-            }));
-            foreach(var cmd in cmds)
-            {
-                cmd.SetAttributeValue("v_AutomationType", "Get Property Value From UIElement");
-            }
+            ChangeAttributeValue(doc, new Func<XElement, bool>((el) =>
+                {
+                    return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                            (el.Attribute("v_AutomationType").Value.ToLower() == "get value from uielement");
+                }), "v_AutomationType", new Action<XAttribute>((attr) =>
+                {
+                    attr.SetValue("Get Property Value From UIElement");
+                })
+            );
 
             // UIAutomationUIElementAction: Get Property Value From UIElement parameter
-            cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            var cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
                 return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
                         (el.Attribute("v_AutomationType").Value.ToLower() == "get property value from uielement");
