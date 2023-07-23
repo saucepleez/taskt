@@ -90,21 +90,21 @@ namespace taskt.Core.Automation.Commands
             var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(engine);
 
             var regex = new Regex(variableExtractorPattern);
-            var matches = regex.Matches(variableInput);
-            if (matches.Count > 0)
+            var matches = regex.Match(variableInput);
+            if (matches.Groups.Count > 0)
             {
                 var matchGroup = this.ConvertToUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
 
                 if (matchGroup < 0)
                 {
-                    matchGroup += matches.Count;
+                    matchGroup += matches.Groups.Count;
                 }
-                if (matchGroup >= matches.Count)
+                if (matchGroup >= matches.Groups.Count)
                 {
                     throw new Exception("Match Group Index is out of Range.");
                 }
 
-                matches[matchGroup].Value.StoreInUserVariable(engine, v_applyToVariableName);
+                matches.Groups[matchGroup].Value.StoreInUserVariable(engine, v_applyToVariableName);
             }
             else
             {

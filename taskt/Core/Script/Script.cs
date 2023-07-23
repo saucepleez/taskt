@@ -302,6 +302,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_49(doc);
             convertTo3_5_1_50(doc);
             convertTo3_5_1_51(doc);
+            convertTo3_5_1_52(doc);
 
             return doc;
         }
@@ -1377,7 +1378,7 @@ namespace taskt.Core.Script
             foreach(var cmd in cmds)
             {
                 var act = cmd.Attribute("v_AutomationType").Value.ToLower();
-                string newAct = "";
+                string newAct = act.ToLower();
                 switch (act)
                 {
                     case "click element":
@@ -1431,9 +1432,9 @@ namespace taskt.Core.Script
             }));
             foreach(var cmd in cmds)
             {
-                (var table, var before, _, _) = GetTable(cmd, "v_WebActionParameterTable");
+                (var table, _, _, _) = GetTable(cmd, "v_WebActionParameterTable");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
-                var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
+                //var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
 
                 foreach(var row in rows)
                 {
@@ -1450,9 +1451,122 @@ namespace taskt.Core.Script
                             default:
                                 break;
                         }
+                        break;
                     }
                 }
-                break;
+            }
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_52(XDocument doc)
+        {
+            // SeleniumBrowserWaitForWebElementExistCommand -> SeleniumBrowserWaitForWebElementToExistsCommand
+            ChangeCommandName(doc, "SeleniumBrowserWaitForWebElementExistCommand", "SeleniumBrowserWaitForWebElementToExistsCommand", "Wait For WebElement To Exists");
+
+            // UIAutomationWaitForUIElementExistByXPathCommand -> UIAutomationWaitForUIElementToExistsByXPathCommand
+            ChangeCommandName(doc, "UIAutomationWaitForUIElementExistByXPathCommand", "UIAutomationWaitForUIElementToExistsByXPathCommand", "Wait For UIElement To Exists By XPath");
+
+            // UIAutomationWaitForUIElementExistCommand -> UIAutomationWaitForUIElementToExistsCommand
+            ChangeCommandName(doc, "UIAutomationWaitForUIElementExistCommand", "UIAutomationWaitForUIElementToExistsCommand", "Wait For UIElement To Exists");
+
+            // WaitForFileToExistCommand (Display command)
+            ChangeCommandName(doc, "WaitForFileToExistCommand", "WaitForFileToExistCommand", "Wait For File To Exists");
+
+            // WaitForWindowCommand -> WaitForWindowToExistsCommand
+            ChangeCommandName(doc, "WaitForWindowCommand", "WaitForWindowToExistsCommand", "Wait For Window To Exists");
+
+            // ExcelCreateApplicationCommand -> ExcelCreateExcelInstanceCommand
+            ChangeCommandName(doc, "ExcelCreateApplicationCommand", "ExcelCreateExcelInstanceCommand", "Create Excel Instance");
+
+            // ExcelCloseApplicationCommand -> ExcelCloseExcelInstanceCommand
+            ChangeCommandName(doc, "ExcelCloseApplicationCommand", "ExcelCloseExcelInstanceCommand", "Close Excel Instance");
+
+            // SeleniumBrowserCreateCommand -> SeleniumBrowserCreateWebBrowserInstanceCommand
+            ChangeCommandName(doc, "SeleniumBrowserCreateCommand", "SeleniumBrowserCreateWebBrowserInstanceCommand", "Create Web Browser Instance");
+
+            // SeleniumBrowserCloseCommand -> SeleniumBrowserCloseWebBrowserInstanceCommand
+            ChangeCommandName(doc, "SeleniumBrowserCloseCommand", "SeleniumBrowserCloseWebBrowserInstanceCommand", "Close Web Browser Instance");
+
+            // WordCreateApplicationCommand -> WordCreateWordInstanceCommand
+            ChangeCommandName(doc, "WordCreateApplicationCommand", "WordCreateWordInstanceCommand", "Create Word Instance");
+
+            // WordCloseApplicationCommand -> WordCloseWordInstanceCommand
+            ChangeCommandName(doc, "WordCloseApplicationCommand", "WordCloseWordInstanceCommand", "Close Word Instance");
+
+            // SeleniumBrowserInfoCommand -> SeleniumBrowserGetWebBrowserInfoCommand
+            ChangeCommandName(doc, "SeleniumBrowserInfoCommand", "SeleniumBrowserGetWebBrowserInfoCommand", "Get Web Browser Info");
+
+            // SeleniumBrowserResizeBrowserCommand -> SeleniumBrowserResizeWebBrowserCommand
+            ChangeCommandName(doc, "SeleniumBrowserResizeBrowserCommand", "SeleniumBrowserResizeWebBrowserCommand", "Resize Web Browser");
+
+            // SeleniumBrowserSwitchFrameCommand -> SeleniumBrowserSwitchWebBrowserFrameCommand
+            ChangeCommandName(doc, "SeleniumBrowserSwitchFrameCommand", "SeleniumBrowserSwitchWebBrowserFrameCommand", "Switch Web Browser Frame");
+
+            // SeleniumBrowserSwitchWindowCommand -> SeleniumBrowserSwitchWebBrowserWindowCommand
+            ChangeCommandName(doc, "SeleniumBrowserSwitchWindowCommand", "SeleniumBrowserSwitchWebBrowserWindowCommand", "Switch Web Browser Window");
+
+            // SeleniumBrowserGetAnWebElementValuesAsDataTableCommand -> SeleniumBrowserGetAWebElementValuesAsDataTableCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnWebElementValuesAsDataTableCommand", "SeleniumBrowserGetAWebElementValuesAsDataTableCommand", "Get A WebElement Values As DataTable");
+
+            // SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand -> SeleniumBrowserGetAWebElementValuesAsDictionaryCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand", "SeleniumBrowserGetAWebElementValuesAsDictionaryCommand", "Get A WebElement Values As Dictionary");
+
+            // SeleniumBrowserGetAnWebElementValuesAsListCommand -> SeleniumBrowserGetAWebElementValuesAsListCommand
+            ChangeCommandName(doc, "SeleniumBrowserGetAnWebElementValuesAsListCommand", "SeleniumBrowserGetAWebElementValuesAsListCommand", "Get A WebElement Values As List");
+
+            // UIAutomationUIElementAction: Get Value From UIElement -> Get Property Value From UIElement
+            ChangeAttributeValue(doc, new Func<XElement, bool>((el) =>
+                {
+                    return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                            (el.Attribute("v_AutomationType").Value.ToLower() == "get value from uielement");
+                }), "v_AutomationType", new Action<XAttribute>((attr) =>
+                {
+                    attr.SetValue("Get Property Value From UIElement");
+                })
+            );
+
+            // UIAutomationUIElementAction: Get Property Value From UIElement parameter
+            var cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            {
+                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                        (el.Attribute("v_AutomationType").Value.ToLower() == "get property value from uielement");
+            }));
+            foreach (var cmd in cmds)
+            {
+                (var table, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                foreach (var row in rows)
+                {
+                    if (row.Element("Parameter_x0020_Name").Value == "Get Value From")
+                    {
+                        row.Element("Parameter_x0020_Name").SetValue("Property Name");
+                        break;
+                    }
+                }
+            }
+
+            // UIAutomationUIElementAction: Click UIElement
+            cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
+            {
+                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                        (el.Attribute("v_AutomationType").Value.ToLower() == "click uielement");
+            }));
+            foreach (var cmd in cmds)
+            {
+                (var table, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                foreach (var row in rows)
+                {
+                    if (row.Element("Parameter_x0020_Name").Value == "X Adjustment")
+                    {
+                        row.Element("Parameter_x0020_Name").SetValue("X Offset");
+                    }
+                    else if (row.Element("Parameter_x0020_Name").Value == "Y Adjustment")
+                    {
+                        row.Element("Parameter_x0020_Name").SetValue("Y Offset");
+                    }
+                }
             }
 
             return doc;

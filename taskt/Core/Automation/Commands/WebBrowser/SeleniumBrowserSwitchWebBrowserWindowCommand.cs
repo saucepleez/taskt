@@ -8,13 +8,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
-    [Attributes.ClassAttributes.CommandSettings("Switch Browser Window")]
+    [Attributes.ClassAttributes.CommandSettings("Switch Web Browser Window")]
     [Attributes.ClassAttributes.Description("This command allows you to create a new Selenium web browser session which enables automation for websites.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a browser that will eventually perform web automation such as checking an internal company intranet site to retrieve data")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SeleniumBrowserSwitchWindowCommand : ScriptCommand
+    public class SeleniumBrowserSwitchWebBrowserWindowCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Parameter")]
         public string v_MatchParameter { get; set; }
 
-        public SeleniumBrowserSwitchWindowCommand()
+        public SeleniumBrowserSwitchWebBrowserWindowCommand()
         {
             //this.CommandName = "SeleniumBrowserSwitchWindowCommand";
             //this.SelectionName = "Switch Browser Window";

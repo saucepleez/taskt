@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
             }
             else if (rawValue is AutomationElement)
             {
-                result = "AUTOMATIONELEMENT";
+                result = "UIELEMENT";
             }
             else if (rawValue is IWebElement)
             {

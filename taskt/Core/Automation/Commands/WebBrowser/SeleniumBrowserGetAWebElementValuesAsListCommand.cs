@@ -10,13 +10,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Scraping")]
-    [Attributes.ClassAttributes.CommandSettings("Get An WebElement Values As List")]
-    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for an WebElement As List.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for an WebElement As List.")]
+    [Attributes.ClassAttributes.CommandSettings("Get A WebElement Values As List")]
+    [Attributes.ClassAttributes.Description("This command allows you to get Attributes value for a WebElement As List.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get Attributes value for a WebElement As List.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SeleniumBrowserGetAnWebElementValuesAsListCommand : ScriptCommand
+    public class SeleniumBrowserGetAWebElementValuesAsListCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public SeleniumBrowserGetAnWebElementValuesAsListCommand()
+        public SeleniumBrowserGetAWebElementValuesAsListCommand()
         {
             //this.CommandName = "SeleniumBrowserGetAnElementValuesAsListCommand";
             //this.SelectionName = "Get An Element Values As List";

@@ -6,14 +6,14 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
-    [Attributes.ClassAttributes.CommandSettings("Wait For WebElement Exist")]
+    [Attributes.ClassAttributes.SubGruop("Search WebElement")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For WebElement To Exists")]
     [Attributes.ClassAttributes.Description("This command allows you to Wait for WebElement exists.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Wait for WebElement exists.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SeleniumBrowserWaitForWebElementExistCommand : ScriptCommand
+    public class SeleniumBrowserWaitForWebElementToExistsCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public SeleniumBrowserWaitForWebElementExistCommand()
+        public SeleniumBrowserWaitForWebElementToExistsCommand()
         {
         }
 

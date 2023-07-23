@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.SubGruop("Search")]
+    [Attributes.ClassAttributes.SubGruop("Search WebElement")]
     [Attributes.ClassAttributes.CommandSettings("Search WebElement From WebElement")]
     [Attributes.ClassAttributes.Description("This command allows you to search WebElement from WebElement.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get WebElement from WebElement.")]

@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Select UIElement")]
         [PropertyUISelectionOption("Select Item In UIElement")]
         [PropertyUISelectionOption("Set Text To UIElement")]
-        [PropertyUISelectionOption("Get Value From UIElement")]
+        [PropertyUISelectionOption("Get Property Value From UIElement")]
         [PropertyUISelectionOption("Check UIElement Exists")]
         [PropertyUISelectionOption("Get Text From UIElement")]
         [PropertyUISelectionOption("Get Selected State From UIElement")]
@@ -132,8 +132,8 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_TargetElement = trgElemVar,
                         v_ClickType = p["Click Type"],
-                        v_XOffset = p["X Adjustment"],
-                        v_YOffset = p["Y Adjustment"],
+                        v_XOffset = p["X Offset"],
+                        v_YOffset = p["Y Offset"],
                     };
                     clickCmd.RunCommand(engine);
                     break;
@@ -177,8 +177,14 @@ namespace taskt.Core.Automation.Commands
                     };
                     setTextCmd.RunCommand(engine);
                     break;
-                case "get value from uielement":
-                    // todo: not supported now
+                case "get property value from uielement":
+                    var propValueCmd = new UIAutomationGetPropertyValueFromUIElementCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_PropertyName = p["Property Name"],
+                        v_Result = p["Apply To Variable"],
+                    };
+                    propValueCmd.RunCommand(engine);
                     break;
                 case "check uielement exists":
                     true.StoreInUserVariable(engine, p["Apply To Variable"]);
@@ -435,6 +441,13 @@ namespace taskt.Core.Automation.Commands
             //}
         }
 
+        public override void AfterShown()
+        {
+            var cmb = PropertyControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_AutomationType));
+            var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
+            actionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
+        }
+
         private void cmbActionType_SelectedItemChange(object sender, EventArgs e)
         {
             var a = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
@@ -444,11 +457,118 @@ namespace taskt.Core.Automation.Commands
             table.Rows.Clear();
             switch (a.ToLower())
             {
-                case "click element":
+                case "click uielement":
                     table.Rows.Add(new string[] { "Click Type", "" });
-                    table.Rows.Add(new string[] { "X Adjustment", "" });
-                    table.Rows.Add(new string[] { "Y Adjustment", "" });
+                    table.Rows.Add(new string[] { "X Offset", "" });
+                    table.Rows.Add(new string[] { "Y Offset", "" });
 
+                    //var clickType = new DataGridViewComboBoxCell();
+                    //clickType.Items.AddRange(new string[]
+                    //{
+                    //    "Left Click",
+                    //    "Middle Click",
+                    //    "Right Click",
+                    //    "Left Down",
+                    //    "Middle Down",
+                    //    "Right Down",
+                    //    "Left Up",
+                    //    "Middle Up",
+                    //    "Right Up",
+                    //    "Double Left Click",
+                    //    "None",
+                    //});
+                    //dgv.Rows[0].Cells[1] = clickType;
+                    break;
+                case "expand collapse items in uielement":
+                    table.Rows.Add(new string[] { "Items State", "" });
+                    //var itemState = new DataGridViewComboBoxCell();
+                    //itemState.Items.AddRange(new string[]
+                    //{
+                    //    "Expand",
+                    //    "Collapse"
+                    //});
+                    //dgv.Rows[0].Cells[1] = itemState;
+                    break;
+                case "scroll uielement":
+                    table.Rows.Add(new string[] { "ScrollBar Type", "" });
+                    table.Rows.Add(new string[] { "Scroll Method", "" });
+                    //var barType = new DataGridViewComboBoxCell();
+                    //barType.Items.AddRange(new string[]
+                    //{
+                    //    "Vertical",
+                    //    "Horizonal",
+                    //});
+                    //var scrollMethod = new DataGridViewComboBoxCell();
+                    //scrollMethod.Items.AddRange(new string[]
+                    //{
+                    //    "Scroll Small Down or Right",
+                    //    "Scroll Large Down or Right",
+                    //    "Scroll Small Up or Left",
+                    //    "Scroll Large Up or Left",
+                    //});
+                    //dgv.Rows[0].Cells[1] = barType;
+                    //dgv.Rows[1].Cells[1] = scrollMethod;
+                    break;
+                case "select item in uielement":
+                    table.Rows.Add(new string[] { "Item Value", "" });
+                    break;
+                case "set text to uielement":
+                    table.Rows.Add(new string[] { "Text To Set", "" });
+                    break;
+                case "get property value from uielement":
+                    table.Rows.Add(new string[] { "Property Name", "" });
+                    table.Rows.Add(new string[] { "Apply To Variable", "" });
+                    //var propNames = new DataGridViewComboBoxCell();
+                    //propNames.Items.AddRange(new string[]
+                    //{
+                    //    "Name",
+                    //    "ControlType",
+                    //    "LocalizedControlType",
+                    //    "IsEnabled",
+                    //    "IsOffscreen",
+                    //    "IsKeyboardFocusable",
+                    //    "HasKeyboardFocusable",
+                    //    "AccessKey",
+                    //    "ProcessId",
+                    //    "AutomationId",
+                    //    "FrameworkId",
+                    //    "ClassName",
+                    //    "IsContentElement",
+                    //    "IsPassword",
+                    //    "AcceleratorKey",
+                    //    "HelpText",
+                    //    "IsControlElement",
+                    //    "IsRequiredForForm",
+                    //    "ItemStatus",
+                    //    "ItemType",
+                    //    "NativeWindowHandle",
+                    //});
+                    //dgv.Rows[0].Cells[1] = propNames;
+                    break;
+                case "get text from table uielement":
+                    table.Rows.Add(new string[] { "Row", "" });
+                    table.Rows.Add(new string[] { "Column", "" });
+                    table.Rows.Add(new string[] { "Apply To Variable", "" });
+                    break;
+                case "check uielement exists":
+                case "get text from uielement":
+                case "get selected state from uielement":
+                    table.Rows.Add(new string[] { "Apply To Variable", "" });
+                    break;
+                case "select uielement":
+                case "wait for uielement to exists":
+                    // nothing
+                    break;
+            }
+
+            actionParameterProcess(dgv, a);
+        }
+
+        private static void actionParameterProcess(DataGridView dgv, string actionType)
+        {
+            switch (actionType.ToLower())
+            {
+                case "click uielement":
                     var clickType = new DataGridViewComboBoxCell();
                     clickType.Items.AddRange(new string[]
                     {
@@ -466,8 +586,7 @@ namespace taskt.Core.Automation.Commands
                     });
                     dgv.Rows[0].Cells[1] = clickType;
                     break;
-                case "expand collapse items in element":
-                    table.Rows.Add(new string[] { "Items State", "" });
+                case "expand collapse items in uielement":
                     var itemState = new DataGridViewComboBoxCell();
                     itemState.Items.AddRange(new string[]
                     {
@@ -476,9 +595,7 @@ namespace taskt.Core.Automation.Commands
                     });
                     dgv.Rows[0].Cells[1] = itemState;
                     break;
-                case "scroll element":
-                    table.Rows.Add(new string[] { "ScrollBar Type", "" });
-                    table.Rows.Add(new string[] { "Scroll Method", "" });
+                case "scroll uielement":
                     var barType = new DataGridViewComboBoxCell();
                     barType.Items.AddRange(new string[]
                     {
@@ -496,29 +613,33 @@ namespace taskt.Core.Automation.Commands
                     dgv.Rows[0].Cells[1] = barType;
                     dgv.Rows[1].Cells[1] = scrollMethod;
                     break;
-                case "select item in element":
-                    table.Rows.Add(new string[] { "Item Value", "" });
-                    break;
-                case "set text to element":
-                    table.Rows.Add(new string[] { "Text To Set", "" });
-                    break;
-                case "get value from element":
-                    table.Rows.Add(new string[] { "Get Value From", "" });
-                    table.Rows.Add(new string[] { "Apply To Variable", "" });
-                    break;
-                case "get value from table element":
-                    table.Rows.Add(new string[] { "Row", "" });
-                    table.Rows.Add(new string[] { "Column", "" });
-                    table.Rows.Add(new string[] { "Apply To Variable", "" });
-                    break;
-                case "check if element exists":
-                case "get text value from element":
-                case "get selected state from element":
-                    table.Rows.Add(new string[] { "Apply To Variable", "" });
-                    break;
-                case "select element":
-                case "wait for element to exists":
-                    // nothing
+                case "get property value from uielement":
+                    var propNames = new DataGridViewComboBoxCell();
+                    propNames.Items.AddRange(new string[]
+                    {
+                        "Name",
+                        "ControlType",
+                        "LocalizedControlType",
+                        "IsEnabled",
+                        "IsOffscreen",
+                        "IsKeyboardFocusable",
+                        "HasKeyboardFocusable",
+                        "AccessKey",
+                        "ProcessId",
+                        "AutomationId",
+                        "FrameworkId",
+                        "ClassName",
+                        "IsContentElement",
+                        "IsPassword",
+                        "AcceleratorKey",
+                        "HelpText",
+                        "IsControlElement",
+                        "IsRequiredForForm",
+                        "ItemStatus",
+                        "ItemType",
+                        "NativeWindowHandle",
+                    });
+                    dgv.Rows[0].Cells[1] = propNames;
                     break;
             }
         }

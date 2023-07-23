@@ -9,12 +9,12 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("UIAutomation Commands")]
     [Attributes.ClassAttributes.SubGruop("Search UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Wait For UIElement Exist")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For UIElement To Exists")]
     [Attributes.ClassAttributes.Description("This command allows you to Wait until the UIElement exists.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Wait until the UIElement exists.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationWaitForUIElementExistCommand : ScriptCommand
+    public class UIAutomationWaitForUIElementToExistsCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public UIAutomationWaitForUIElementExistCommand()
+        public UIAutomationWaitForUIElementToExistsCommand()
         {
             //this.CommandName = "UIAutomationWaitForElementExistCommand";
             //this.SelectionName = "Wait For Element Exist";

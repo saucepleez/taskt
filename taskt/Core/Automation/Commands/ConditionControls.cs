@@ -386,12 +386,38 @@ namespace taskt.Core.Automation.Commands
                 windowName = WindowNameControls.GetActiveWindowTitle();
             }
 
-            UIAutomationUIElementActionCommand newUIACommand = new UIAutomationUIElementActionCommand();
-            newUIACommand.v_WindowName = windowName;
-            newUIACommand.v_UIASearchParameters.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
+            //UIAutomationUIElementActionCommand newUIACommand = new UIAutomationUIElementActionCommand();
+            //newUIACommand.v_WindowName = windowName;
+            //newUIACommand.v_UIASearchParameters.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
 
             // todo: fix it !
             //var handle = newUIACommand.SearchForGUIElement(engine, windowName);
+
+            
+
+            //var chkUIElem = new UIAutomationUIElementActionCommand();
+            //chkUIElem.v_WindowName = windowName;
+            //chkUIElem.v_AutomationType = "Check UIElement Exists";
+
+            //var searchTable = new DataTable();
+            //searchTable.Columns.Add("Enabled");
+            //searchTable.Columns.Add("Parameter Name");
+            //searchTable.Columns.Add("Parameter Value");
+            //searchTable.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
+            //chkUIElem.v_UIASearchParameters = searchTable;
+            ////chkUIElem.v_UIAActionParameters.Rows.Add("")
+
+            //var r = VariableNameControls.GetInnerVariableName(2, engine);
+            //var actionTable = new DataTable();
+            //actionTable.Columns.Add("Parameter Name");
+            //actionTable.Columns.Add("Parameter Value");
+            //actionTable.Rows.Add("Apply To Variable", r);
+            //chkUIElem.v_UIAActionParameters = actionTable;
+
+            //chkUIElem.RunCommand(engine);
+
+            //var x = VariableNameControls.GetInnerVariable(2, engine);
+
             object handle = null;
 
             return !(handle is null);

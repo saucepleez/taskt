@@ -295,6 +295,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckWebElementExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClickWebElementCommand.cs" />
@@ -310,7 +311,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAttributeFromWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSetTextToWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClearTextInWebElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
@@ -487,12 +488,12 @@
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\CreateTextVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationClickUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildrenUIElementsInformationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementExistByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementToExistsByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromUIElementByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromUIElementCommand.cs" />
@@ -519,13 +520,13 @@
     <Compile Include="Core\Automation\Commands\WaitControls.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValuesAsDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnWebElementValuesAsDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnWebElementValuesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAWebElementValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAWebElementValuesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAnWebElementValuesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAWebElementValuesAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsListCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeBrowserCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeWebBrowserCommand.cs" />
     <Compile Include="Core\Automation\Commands\WindowNameControls.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
@@ -602,7 +603,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\RenameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\LoadScriptFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserTakeScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\EnterShortcutKeyCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEnginePreferenceCommand.cs" />
@@ -623,11 +624,11 @@
     <Compile Include="Core\Automation\Commands\API\HTTPExecuteRESTAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCloseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCreateCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserInfoCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebBrowserInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunCSharpCodeCommand.cs" />
@@ -649,7 +650,7 @@
     <Compile Include="Core\Automation\Commands\StopWatch\StopwatchCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableIndexCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\WaitForWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\WaitForWindowToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowHTMLInputDialogCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\SendAdvancedKeyStrokesCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\EnterKeysCommand.cs" />
@@ -665,8 +666,8 @@
     <Compile Include="Core\Automation\Commands\Loop\EndLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelActivateSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorkbookCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCloseApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateApplicationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCloseExcelInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\LoadDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteRowCommand.cs" />
@@ -711,8 +712,8 @@
     <Compile Include="Core\Automation\Commands\Word\WordAppendDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendImageCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word\WordCloseApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word\WordCreateApplicationCommandcs.cs" />
+    <Compile Include="Core\Automation\Commands\Word\WordCloseWordInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Word\WordCreateWordInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordExportToPDFCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordOpenDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordReadDocumentCommand.cs" />

@@ -6,13 +6,13 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command allows you to close Word.")]
-    [Attributes.ClassAttributes.CommandSettings("Close Word Application")]
+    [Attributes.ClassAttributes.Description("This command allows you to close Word Instance.")]
+    [Attributes.ClassAttributes.CommandSettings("Close Word Instance")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an open instance of Word.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class WordCloseApplicationCommand : ScriptCommand
+    public class WordCloseWordInstanceCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_WordSaveOnExit { get; set; }
 
-        public WordCloseApplicationCommand()
+        public WordCloseWordInstanceCommand()
         {
             //this.CommandName = "WordCloseApplicationCommand";
             //this.SelectionName = "Close Word Application";

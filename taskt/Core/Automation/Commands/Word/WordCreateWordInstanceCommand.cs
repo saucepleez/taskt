@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
-    [Attributes.ClassAttributes.Description("This command creates a Word Application.")]
-    [Attributes.ClassAttributes.CommandSettings("Create Word Application")]
+    [Attributes.ClassAttributes.Description("This command creates a Word Instance.")]
+    [Attributes.ClassAttributes.CommandSettings("Create Word Instance")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to launch a new instance of Word.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class WordCreateApplicationCommand : ScriptCommand
+    public class WordCreateWordInstanceCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         public string v_InstanceName { get; set; }
 
-        public WordCreateApplicationCommand()
+        public WordCreateWordInstanceCommand()
         {
             //this.CommandName = "WordCreateApplicationCommand";
             //this.SelectionName = "Create Word Application";

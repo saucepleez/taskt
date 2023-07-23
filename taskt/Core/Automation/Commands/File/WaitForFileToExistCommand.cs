@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Wait For File")]
+    [Attributes.ClassAttributes.CommandSettings("Wait For File To Exists")]
     [Attributes.ClassAttributes.Description("This command waits for a file to exist at a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to wait for a file to exist before proceeding.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]

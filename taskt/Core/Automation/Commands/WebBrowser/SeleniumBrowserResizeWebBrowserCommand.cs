@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
     [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
-    [Attributes.ClassAttributes.CommandSettings("Resize Browser")]
-    [Attributes.ClassAttributes.Description("This command allows you to change browser window size.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change browser window size.")]
+    [Attributes.ClassAttributes.CommandSettings("Resize Web Browser")]
+    [Attributes.ClassAttributes.Description("This command allows you to change web browser window size.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change web browser window size.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class SeleniumBrowserResizeBrowserCommand : ScriptCommand
+    public class SeleniumBrowserResizeWebBrowserCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Browser Window Width")]
+        [PropertyDescription("Web Browser Window Width")]
         [InputSpecification("Width", true)]
         [PropertyDetailSampleUsage("**640**", PropertyDetailSampleUsage.ValueType.Value, "Window Width")]
         [PropertyDetailSampleUsage("**{{{vWidth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Width")]
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Browser Window Height")]
+        [PropertyDescription("Web Browser Window Height")]
         [InputSpecification("Height", true)]
         [PropertyDetailSampleUsage("**480**", PropertyDetailSampleUsage.ValueType.Value, "Window Height")]
         [PropertyDetailSampleUsage("**{{{vHeight}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Height")]
@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Height")]
         public string v_BrowserHeight { get; set; }
 
-        public SeleniumBrowserResizeBrowserCommand()
+        public SeleniumBrowserResizeWebBrowserCommand()
         {
             //this.CommandName = "SeleniumBrowserResizeBrowserCommand";
             //this.SelectionName = "Resize Browser";
