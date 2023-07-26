@@ -1476,8 +1476,19 @@ namespace taskt.Core.Script
             // WaitForWindowCommand -> WaitForWindowToExistsCommand
             ChangeCommandName(doc, "WaitForWindowCommand", "WaitForWindowToExistsCommand", "Wait For Window To Exists");
 
-            // ExcelCreateApplicationCommand -> ExcelCreateExcelInstanceCommand
-            ChangeCommandName(doc, "ExcelCreateApplicationCommand", "ExcelCreateExcelInstanceCommand", "Create Excel Instance");
+            // ExcelCreateApplicationCommand, ExcelOpenApplicationCommand -> ExcelCreateExcelInstanceCommand
+            //ChangeCommandName(doc, "ExcelCreateApplicationCommand", "ExcelCreateExcelInstanceCommand", "Create Excel Instance");
+            ChangeCommandName(doc, new Func<XElement, bool>((el) =>
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "ExcelCreateApplicationCommand":
+                    case "ExcelOpenApplicationCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "ExcelCreateExcelInstanceCommand", "Create Excel Instance");
 
             // ExcelCloseApplicationCommand -> ExcelCloseExcelInstanceCommand
             ChangeCommandName(doc, "ExcelCloseApplicationCommand", "ExcelCloseExcelInstanceCommand", "Close Excel Instance");
