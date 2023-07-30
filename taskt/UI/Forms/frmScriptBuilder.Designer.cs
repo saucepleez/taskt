@@ -1079,7 +1079,7 @@
             this.flwRecentFiles.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.flwRecentFiles.Location = new System.Drawing.Point(116, 242);
             this.flwRecentFiles.Name = "flwRecentFiles";
-            this.flwRecentFiles.Size = new System.Drawing.Size(397, 144);
+            this.flwRecentFiles.Size = new System.Drawing.Size(606, 144);
             this.flwRecentFiles.TabIndex = 12;
             this.myToolTip.SetToolTip(this.flwRecentFiles, "Recent Files in Script Files folder");
             this.flwRecentFiles.WrapContents = false;
