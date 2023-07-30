@@ -386,14 +386,34 @@ namespace taskt.Core.Automation.Commands
                 windowName = WindowNameControls.GetActiveWindowTitle();
             }
 
+            var searchTb = new DataTable();
+            searchTb.Columns.Add("Enabled");
+            searchTb.Columns.Add("ParameterName");
+            searchTb.Columns.Add("ParameterValue");
+            searchTb.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
+
+            var vName = VariableNameControls.GetInnerVariableName(2, engine);
+
+            var actionTb = new DataTable();
+            actionTb.Columns.Add("Parameter Name");
+            actionTb.Columns.Add("Parameter Value");
+            actionTb.Rows.Add("Apply To Variable", vName);
+
+            var checkUI = new UIAutomationUIElementActionCommand();
+            checkUI.v_WindowName = windowName;
+            checkUI.v_UIASearchParameters = searchTb;
+            checkUI.v_AutomationType = "Check UIElement Exists";
+            checkUI.v_UIAActionParameters = actionTb;
+            checkUI.RunCommand(engine);
+
+            return vName.ConvertToUserVariableAsBool("result", engine);
+
             //UIAutomationUIElementActionCommand newUIACommand = new UIAutomationUIElementActionCommand();
             //newUIACommand.v_WindowName = windowName;
             //newUIACommand.v_UIASearchParameters.Rows.Add(true, param["Element Search Method"], param["Element Search Parameter"]);
+            //newUIACommand.RunCommand(engine);
 
-            // todo: fix it !
             //var handle = newUIACommand.SearchForGUIElement(engine, windowName);
-
-            
 
             //var chkUIElem = new UIAutomationUIElementActionCommand();
             //chkUIElem.v_WindowName = windowName;
@@ -418,9 +438,9 @@ namespace taskt.Core.Automation.Commands
 
             //var x = VariableNameControls.GetInnerVariable(2, engine);
 
-            object handle = null;
+            //object handle = null;
 
-            return !(handle is null);
+            //return !(handle is null);
         }
         private static bool DetermineStatementTruth_Boolean(DataTable actionParamterTable, Engine.AutomationEngineInstance engine)
         {
