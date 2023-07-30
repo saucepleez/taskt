@@ -445,7 +445,7 @@ namespace taskt.Core.Automation.Commands
 
             Core.Automation.Commands.IEBrowserElementActionCommand cmd = (Core.Automation.Commands.IEBrowserElementActionCommand)this;
             DataTable actionParameters = cmd.v_WebActionParameterTable;
-            DataGridViewComboBoxCell comparisonComboBox;
+            //DataGridViewComboBoxCell comparisonComboBox;
 
             if (sender != null)
             {
