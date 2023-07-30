@@ -303,6 +303,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_50(doc);
             convertTo3_5_1_51(doc);
             convertTo3_5_1_52(doc);
+            convertTo3_5_1_53(doc);
 
             return doc;
         }
@@ -1145,7 +1146,7 @@ namespace taskt.Core.Script
                     elementAction.Remove();
                 }
 
-                (var table, var before, var rowName, var diffgram) = GetTable(cmd, "v_WebActionParameterTable");
+                (var table, var before, var rowName, var diffgram, _) = GetTable(cmd, "v_WebActionParameterTable");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
                 var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
                 switch (act)
@@ -1155,7 +1156,7 @@ namespace taskt.Core.Script
                         if (table == null)
                         {
                             CreateTable(diffgram);
-                            (table, before, rowName, _) = GetTable(cmd, "v_WebActionParameterTable");
+                            (table, before, rowName, _, _) = GetTable(cmd, "v_WebActionParameterTable");
                         }
                         var addRowsInvoke = new List<Dictionary<string, string>>()
                         {
@@ -1284,7 +1285,7 @@ namespace taskt.Core.Script
                     cmd.SetAttributeValue("v_SeleniumElementAction", "Wait For WebElement To Exists");
                 }
 
-                (var table, var before, var _, var _) = GetTable(cmd, "v_WebActionParameterTable");
+                (var table, var before, _, _, _) = GetTable(cmd, "v_WebActionParameterTable");
                 int rows = table?.Elements()?.Count() ?? 0;
                 if ((table != null) && (rows == 0))
                 {
@@ -1432,7 +1433,7 @@ namespace taskt.Core.Script
             }));
             foreach(var cmd in cmds)
             {
-                (var table, _, _, _) = GetTable(cmd, "v_WebActionParameterTable");
+                (var table, _, _, _, _) = GetTable(cmd, "v_WebActionParameterTable");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
                 //var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
 
@@ -1545,7 +1546,7 @@ namespace taskt.Core.Script
             }));
             foreach (var cmd in cmds)
             {
-                (var table, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
+                (var table, _, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
                 foreach (var row in rows)
                 {
@@ -1565,7 +1566,7 @@ namespace taskt.Core.Script
             }));
             foreach (var cmd in cmds)
             {
-                (var table, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
+                (var table, _, _, _, _) = GetTable(cmd, "v_UIAActionParameters");
                 var rows = table?.Elements()?.ToList() ?? new List<XElement>();
                 foreach (var row in rows)
                 {
@@ -1579,6 +1580,24 @@ namespace taskt.Core.Script
                     }
                 }
             }
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_53(XDocument doc)
+        {
+            //var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
+            //foreach(var cmd in cmds)
+            //{
+
+            //}
+            // UIAutomationUIElementActionCommand : tablename
+            ChangeTableColumnNames(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters",
+                new List<(string, string)>()
+                {
+                    ("Parameter_x0020_Name", "ParameterName"),
+                    ("Parameter_x0020_Value", "ParameterValue"),
+                });
 
             return doc;
         }
@@ -1746,24 +1765,35 @@ namespace taskt.Core.Script
         /// </summary>
         /// <param name="elem"></param>
         /// <param name="tableParameterName"></param>
-        /// <returns>Table, Table:before, rowName, XElem:diffgram</returns>
-        private static (XElement, XElement, string, XElement) GetTable(XElement elem, string tableParameterName)
+        /// <returns>Table, Table:before, rowName, XElem:diffgram, xs:sequence</returns>
+        private static (XElement, XElement, string, XElement, List<XElement>) GetTable(XElement elem, string tableParameterName)
         {
             XNamespace nsXs = "http://www.w3.org/2001/XMLSchema";
             XNamespace nsMsdata = "urn:schemas-microsoft-com:xml-msdata";
-            var rowName = elem.Element(tableParameterName).Element(nsXs + "schema").Element(nsXs + "element").Attribute("name").Value;
+
+            var el = elem.Element(tableParameterName);
+            var elel = el.Element(nsXs + "schema").Element(nsXs + "element");
+
+            // table name
+            var rowName = elel.Attribute("name").Value;
             if (rowName == "NewDataSet")
             {
-                rowName = elem.Element(tableParameterName).Element(nsXs + "schema").Element(nsXs + "element").Attribute(nsMsdata + "MainDataTable")?.Value;
+                rowName = elel.Attribute(nsMsdata + "MainDataTable")?.Value;
             }
+            
+            // xs:sequence
+            var seq = elel.Element(nsXs + "complexType").Element(nsXs + "choice").Element(nsXs + "element").Element(nsXs + "complexType").Element(nsXs + "sequence");
 
+
+            // table, diffgram
             XNamespace nsDiffgram = "urn:schemas-microsoft-com:xml-diffgram-v1";
-            var baseElem = elem.Element(tableParameterName).Element(nsDiffgram + "diffgram");
+            var baseElem = el.Element(nsDiffgram + "diffgram");
             return (
                 baseElem.Element("DocumentElement"),
                 baseElem.Element(nsDiffgram + "before"),
                 rowName,
-                baseElem
+                baseElem,
+                seq.Elements()?.ToList() ?? new List<XElement>()
             );
         }
 
@@ -1783,7 +1813,7 @@ namespace taskt.Core.Script
             foreach (var cmd in commands)
             {
                 //XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
-                (var tableParams, var beforeParams, var rowName, _) = GetTable(cmd, tableParameterName);
+                (var tableParams, var beforeParams, var rowName, _, _) = GetTable(cmd, tableParameterName);
                 var rows = tableParams?.Elements().ToList() ?? null;
                 if (rows != null)
                 {
@@ -1886,6 +1916,58 @@ namespace taskt.Core.Script
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             diffgram.Add(new XElement("DocumentElement"));
             diffgram.Add(new XElement(diffNs + "before"));
+        }
+
+        private static void ChangeTableColumnNames(XDocument doc, string commandName, string tableParameterName, List<(string currentColumnName, string newColumnName)> changes)
+        {
+            var cmds = GetCommands(doc, commandName);
+            foreach(var cmd in cmds)
+            {
+                (var table, var before, _, _, var seq) = GetTable(cmd, tableParameterName);
+
+                foreach (var e in seq)
+                {
+                    foreach (var c in changes)
+                    {
+                        if (e.Attribute("name").Value == c.currentColumnName)
+                        {
+                            e.Attribute("name").SetValue(c.newColumnName);
+                        }
+                    }
+                }
+
+                // change func
+                var changeFunc = new Action<XElement>((el) =>
+                {
+                    foreach (var c in changes)
+                    {
+                        if (el.Name == c.currentColumnName)
+                        {
+                            el.Name = c.newColumnName;
+                        }
+                    }
+                });
+
+                var rows = table?.Elements()?.ToList() ?? new List<XElement>();
+                foreach (var r in rows)
+                {
+                    var elems = r.Elements()?.ToList() ?? new List<XElement>();
+                    foreach (var e in elems)
+                    {
+                        changeFunc(e);
+                    }
+                }
+
+                var beforeRows = before?.Elements()?.ToList() ?? new List<XElement>();
+                foreach (var r in beforeRows)
+                {
+                    var elems = r.Elements()?.ToList() ?? new List<XElement>();
+                    foreach (var e in elems)
+                    {
+                        changeFunc(e);
+                    }
+                }
+            }
         }
 
         /// <summary>
