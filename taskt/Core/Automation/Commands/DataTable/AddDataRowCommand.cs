@@ -47,9 +47,9 @@ namespace taskt.Core.Automation.Commands
         [NonSerialized]
         private List<CreateDataTableCommand> DataTableCreationCommands;
 
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView AddDataGridViewHelper;
+        //[XmlIgnore]
+        //[NonSerialized]
+        //private DataGridView AddDataGridViewHelper;
 
         public AddDataRowCommand()
         {
