@@ -229,7 +229,9 @@ namespace taskt.Core.Automation.Commands
                                 seachCriteria.SetField<string>("Match Found", "False");
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception) 
+                        { 
+                        }
                     }
                     else
                     {
@@ -262,7 +264,9 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception) 
+                { 
+                }
             }
 
             /*foreach (var seachCriteria in elementSearchProperties)
