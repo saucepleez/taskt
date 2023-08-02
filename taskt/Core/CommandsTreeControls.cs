@@ -135,12 +135,14 @@ namespace taskt.Core
             }
             tvCommands.Sort();
 
+            tvCommands.ResumeLayout();
+            tvCommands.EndUpdate();
+
+            tvCommands.BeginUpdate();
             if (expandAllNodes)
             {
                 tvCommands.ExpandAll();
             }
-
-            tvCommands.ResumeLayout();
             tvCommands.EndUpdate();
         }
 
