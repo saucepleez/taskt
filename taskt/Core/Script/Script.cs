@@ -1586,11 +1586,6 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_53(XDocument doc)
         {
-            //var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
-            //foreach(var cmd in cmds)
-            //{
-
-            //}
             // UIAutomationUIElementActionCommand : tablename
             ChangeTableColumnNames(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters",
                 new List<(string, string)>()
