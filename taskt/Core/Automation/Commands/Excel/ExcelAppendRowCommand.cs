@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
                                  Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
                                  false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 lastUsedRow = 0;
             }

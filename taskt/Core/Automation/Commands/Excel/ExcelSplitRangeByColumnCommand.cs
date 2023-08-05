@@ -180,7 +180,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         newName = newDT.Rows[0].Field<string>(vColumnName).ToString();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         continue;
                     }

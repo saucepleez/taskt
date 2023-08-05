@@ -229,7 +229,9 @@ namespace taskt.Core.Automation.Commands
                                 seachCriteria.SetField<string>("Match Found", "False");
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception) 
+                        { 
+                        }
                     }
                     else
                     {
@@ -262,7 +264,9 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception) 
+                { 
+                }
             }
 
             /*foreach (var seachCriteria in elementSearchProperties)
@@ -445,7 +449,7 @@ namespace taskt.Core.Automation.Commands
 
             Core.Automation.Commands.IEBrowserElementActionCommand cmd = (Core.Automation.Commands.IEBrowserElementActionCommand)this;
             DataTable actionParameters = cmd.v_WebActionParameterTable;
-            DataGridViewComboBoxCell comparisonComboBox;
+            //DataGridViewComboBoxCell comparisonComboBox;
 
             if (sender != null)
             {

@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
                 WaitForReadyState(newBrowserSession);
                 newBrowserSession.Visible = true;
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
             }
 
@@ -85,7 +85,9 @@ namespace taskt.Core.Automation.Commands
 
                 while ((ieInstance.ReadyState != SHDocVw.tagREADYSTATE.READYSTATE_COMPLETE) && (waitExpires > DateTime.Now));
             }
-            catch (Exception ex) { }
+            catch (Exception) 
+            { 
+            }
         }
 
         public override List<Control> Render(frmCommandEditor editor)
