@@ -12,13 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.CustomControls
@@ -63,23 +57,42 @@ namespace taskt.UI.CustomControls
             }
         }
 
+        private bool isMouseOver = false;
+        private SolidBrush mouseOverColor = null;
+        private SolidBrush normalColor = null;
+
         private void CommandItemControl_MouseEnter(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Hand;
+            this.isMouseOver = true;
+            this.Invalidate();
         }
         private void CommandItemControl_MouseLeave(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Arrow;
+            this.isMouseOver = false;
+            this.Invalidate();
         }
 
         private void CommandItemControl_Paint(object sender, PaintEventArgs e)
         {
+            var strSize = TextRenderer.MeasureText(this.commandDisplay, this.Font);
+            this.Size = new Size(strSize.Width + 20, strSize.Height + 2);
+
+            e.Graphics.FillRectangle(
+                (isMouseOver ? this.mouseOverColor : this.normalColor),
+                0, 0, strSize.Width + 20, strSize.Height);
+
             e.Graphics.DrawImage(this.DrawIcon, 0, 0, 16, 16);
             e.Graphics.DrawString(this.CommandDisplay, this.Font, new SolidBrush(this.ForeColor), 18, 0);
+            
+            //Console.WriteLine("## paint!" + DateTime.Now);
         }
 
         private void CommandItemControl_Load(object sender, EventArgs e)
         {
+            this.mouseOverColor = new SolidBrush(Color.FromArgb(64, 255, 255, 255));
+            this.normalColor = new SolidBrush(Color.FromArgb(0, 255, 255, 255));
         }
     }
 }
