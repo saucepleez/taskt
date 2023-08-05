@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c5cc70c9-7ad3-4269-9d24-743728055e1b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Random Number Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c5cc70c9-7ad3-4269-9d24-743728055e1b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Integer is between 0 to 2147483647" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RandomNumberCommand" CommandID="e7d0822d-e8c9-4f6d-8c52-5884687c0bcf" CommandName="RandomNumberCommand" IsCommented="false" SelectionName="Random Number" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_RandomType="Integer Number" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2b4f1aac-b645-4809-b310-be2510a70163" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RandomNumberCommand" CommandID="e7d0822d-e8c9-4f6d-8c52-5884687c0bcf" CommandName="RandomNumberCommand" IsCommented="false" SelectionName="Random Number" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_RandomType="Integer Number" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2b4f1aac-b645-4809-b310-be2510a70163" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c5cc70c9-7ad3-4269-9d24-743728055e1b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Real is between 0.0 to 1.0" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RandomNumberCommand" CommandID="e87c2e4d-b8c8-4403-9edc-fce18b839ad3" CommandName="RandomNumberCommand" IsCommented="false" SelectionName="Random Number" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_RandomType="Real Number" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2b4f1aac-b645-4809-b310-be2510a70163" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RandomNumberCommand" CommandID="e87c2e4d-b8c8-4403-9edc-fce18b839ad3" CommandName="RandomNumberCommand" IsCommented="false" SelectionName="Random Number" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_RandomType="Real Number" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="2b4f1aac-b645-4809-b310-be2510a70163" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.86</TasktVersion>
+    <Author />
+    <LastRunTime>2022-06-01T23:08:27.426072+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>num</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

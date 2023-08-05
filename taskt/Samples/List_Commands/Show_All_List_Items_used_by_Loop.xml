@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="dc4861d9-996b-4241-90f3-9515f1702f69" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Show All List items used by Loop" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="dc4861d9-996b-4241-90f3-9515f1702f69" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create List ⦃ &quot;hello&quot;, &quot;world&quot;, &quot;taskt&quot; ⦄" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateListCommand" CommandID="dd403294-c004-44a4-9171-c7c6eb1ed40f" CommandName="CreateListCommand" IsCommented="false" SelectionName="Create List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="vList">
+        <v_ListValues>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ListValues010822.071441">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Values" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ListValues010822.071441" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ListValues010822.071441" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ListValues010822.071441 diffgr:id="ListValues010822.0714411" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Values>hello</Values>
+              </ListValues010822.071441>
+              <ListValues010822.071441 diffgr:id="ListValues010822.0714412" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Values>world</Values>
+              </ListValues010822.071441>
+              <ListValues010822.071441 diffgr:id="ListValues010822.0714413" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Values>taskt</Values>
+              </ListValues010822.071441>
+            </DocumentElement>
+            <diffgr:before>
+              <ListValues010822.071441 diffgr:id="ListValues010822.0714411" msdata:rowOrder="0">
+                <Values>hello</Values>
+              </ListValues010822.071441>
+              <ListValues010822.071441 diffgr:id="ListValues010822.0714412" msdata:rowOrder="1">
+                <Values>world</Values>
+              </ListValues010822.071441>
+              <ListValues010822.071441 diffgr:id="ListValues010822.0714413" msdata:rowOrder="2">
+                <Values>taskt</Values>
+              </ListValues010822.071441>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ListValues>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="dc4861d9-996b-4241-90f3-9515f1702f69" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Show All List items" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="7ec245df-dfeb-4f01-ae82-e7180167539e" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="⦃vList⦄" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="GetListItemCommand" CommandID="074a1c63-b6f2-4694-b22a-ad28450018a5" CommandName="GetListItemCommand" IsCommented="false" SelectionName="Get List Item" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="⦃vList⦄" v_UserVariableName="vValue" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6043dbf4-3b37-4fb2-a57d-1d6820bd1281" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vValue⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="1f1a9c20-0975-4df8-894e-6a611ebf7d6d" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.65</TasktVersion>
+    <Author />
+    <LastRunTime>2022-02-27T13:51:57.8843977+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vValue</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

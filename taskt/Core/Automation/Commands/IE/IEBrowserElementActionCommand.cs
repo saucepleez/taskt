@@ -10,7 +10,6 @@ using OpenQA.Selenium;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 using SHDocVw;
-using System.Data;
 using MSHTML;
 using taskt.Core.Automation.User32;
 
@@ -24,6 +23,8 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Please enter or capture element search parameters")]
@@ -228,7 +229,9 @@ namespace taskt.Core.Automation.Commands
                                 seachCriteria.SetField<string>("Match Found", "False");
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception) 
+                        { 
+                        }
                     }
                     else
                     {
@@ -261,7 +264,9 @@ namespace taskt.Core.Automation.Commands
                         }
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception) 
+                { 
+                }
             }
 
             /*foreach (var seachCriteria in elementSearchProperties)
@@ -302,9 +307,10 @@ namespace taskt.Core.Automation.Commands
                                                    where rw.Field<string>("Parameter Name") == "Y Adjustment"
                                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
-                var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
+                //var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
+                var ieClientLocation = WindowNameControls.GetWindowPosition(new IntPtr(browserInstance.HWND));
 
-                SendMouseMoveCommand newMouseMove = new SendMouseMoveCommand();
+                MoveMouseCommand newMouseMove = new MoveMouseCommand();
 
                 newMouseMove.v_XMousePosition = ((elementXposition + ieClientLocation.left + 10) + userXAdjust).ToString(); // + 10 gives extra padding
                 newMouseMove.v_YMousePosition = ((elementYposition + ieClientLocation.top + 90 + System.Windows.Forms.SystemInformation.CaptionHeight) + userYAdjust).ToString(); // +90 accounts for title bar height
@@ -393,7 +399,7 @@ namespace taskt.Core.Automation.Commands
             //SearchGridViewHelper.Size = new Size(400, 250);
             //SearchGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //SearchGridViewHelper.DataBindings.Add("DataSource", this, "v_WebSearchParameter", false, DataSourceUpdateMode.OnPropertyChanged);
-            SearchGridViewHelper = CommandControls.CreateDataGridView(this, "v_WebSearchParameter", true, true, false, 400, 250);
+            SearchGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_WebSearchParameter", this, false, false, false, 400, 250);
             SearchGridViewHelper.CellClick += SearchGridViewHelper_CellClick;
 
             //ElementsGridViewHelper = new DataGridView();
@@ -402,28 +408,31 @@ namespace taskt.Core.Automation.Commands
             //ElementsGridViewHelper.Size = new Size(400, 250);
             //ElementsGridViewHelper.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //ElementsGridViewHelper.DataBindings.Add("DataSource", this, "v_WebActionParameterTable", false, DataSourceUpdateMode.OnPropertyChanged);
-            ElementsGridViewHelper = CommandControls.CreateDataGridView(this, "v_WebActionParameterTable", false , false, false, 400, 150);
+            ElementsGridViewHelper = CommandControls.CreateDefaultDataGridViewFor("v_WebActionParameterTable", this, false, false, false, 400, 150);
             ElementsGridViewHelper.CellClick += ElementsGridViewHelper_CellClick;
             ElementsGridViewHelper.CellBeginEdit += ElementsGridViewHelper_CellBeginEdit;
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => t.Name == "v_InstanceName").FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE);
+            RenderedControls.AddRange(instanceCtrls);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
             SearchParameterControls = new List<Control>();
             SearchParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebSearchParameter", this));
-            SearchParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebSearchParameter", this, new Control[] { SearchGridViewHelper }, editor));
+            SearchParameterControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_WebSearchParameter", this, SearchGridViewHelper, editor));
 
             SearchParameterControls.Add(SearchGridViewHelper);
             RenderedControls.AddRange(SearchParameterControls);
 
-            ElementActionDropdown = (ComboBox)CommandControls.CreateDropdownFor("v_WebAction", this);
+            ElementActionDropdown = (ComboBox)CommandControls.CreateDefaultDropdownFor("v_WebAction", this);
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WebAction", this));
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebAction", this, new Control[] { ElementActionDropdown }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_WebAction", this, ElementActionDropdown, editor));
             ElementActionDropdown.SelectionChangeCommitted += ElementActionDropdown_SelectionChangeCommitted;
             RenderedControls.Add(ElementActionDropdown);
 
             ElementParameterControls = new List<Control>();
             ElementParameterControls.Add(CommandControls.CreateDefaultLabelFor("v_WebActionParameterTable", this));
-            ElementParameterControls.AddRange(CommandControls.CreateUIHelpersFor("v_WebActionParameterTable", this, new Control[] { ElementsGridViewHelper }, editor));
+            ElementParameterControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_WebActionParameterTable", this, ElementsGridViewHelper, editor));
             ElementParameterControls.Add(ElementsGridViewHelper);
             RenderedControls.AddRange(ElementParameterControls);
 
@@ -440,7 +449,7 @@ namespace taskt.Core.Automation.Commands
 
             Core.Automation.Commands.IEBrowserElementActionCommand cmd = (Core.Automation.Commands.IEBrowserElementActionCommand)this;
             DataTable actionParameters = cmd.v_WebActionParameterTable;
-            DataGridViewComboBoxCell comparisonComboBox;
+            //DataGridViewComboBoxCell comparisonComboBox;
 
             if (sender != null)
             {
@@ -579,19 +588,20 @@ namespace taskt.Core.Automation.Commands
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (SearchGridViewHelper.IsCurrentCellDirty || SearchGridViewHelper.IsCurrentRowDirty)
-            {
-                SearchGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_WebSearchParameter.NewRow();
-                v_WebSearchParameter.Rows.Add(newRow);
-                for (var i = v_WebSearchParameter.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_WebSearchParameter.Rows[i][1].ToString() == "" && v_WebSearchParameter.Rows[i][2].ToString() == "")
-                    {
-                        v_WebSearchParameter.Rows[i].Delete();
-                    }
-                }
-            }
+            //if (SearchGridViewHelper.IsCurrentCellDirty || SearchGridViewHelper.IsCurrentRowDirty)
+            //{
+            //    SearchGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //    var newRow = v_WebSearchParameter.NewRow();
+            //    v_WebSearchParameter.Rows.Add(newRow);
+            //    for (var i = v_WebSearchParameter.Rows.Count - 1; i >= 0; i--)
+            //    {
+            //        if (v_WebSearchParameter.Rows[i][1].ToString() == "" && v_WebSearchParameter.Rows[i][2].ToString() == "")
+            //        {
+            //            v_WebSearchParameter.Rows[i].Delete();
+            //        }
+            //    }
+            //}
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_WebSearchParameter)], v_WebSearchParameter);
         }
 
     }

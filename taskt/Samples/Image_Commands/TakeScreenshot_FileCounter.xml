@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7415bfb3-3264-4453-9435-53e19cdd1494" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Screenshot FileCounter sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginNumberOfTimesLoopCommand" CommandID="8fd6ccbe-535e-46b2-aa46-950f4d005a60" CommandName="BeginNumberOfTimesLoopCommand" IsCommented="false" SelectionName="Loop Number Of Times" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="3" v_LoopStart="0" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="7415bfb3-3264-4453-9435-53e19cdd1494" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Take screenshot" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ScreenshotCommand" CommandID="99f4d7e2-e2b8-44b6-ab93-5549657775f0" CommandName="ScreenshotCommand" IsCommented="false" SelectionName="Take Screenshot" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ScreenshotWindowName="Desktop" v_FilePath="⦃Folder.Desktop⦄\screenshot_⦃FileCounter.F000⦄.png" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="7415bfb3-3264-4453-9435-53e19cdd1494" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="wait 1 sec." CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="PauseCommand" CommandID="32215f42-b286-4948-8650-5b0873045892" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="" CommandEnabled="true" v_PauseLength="1000" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="c918c320-b6b2-4204-bbeb-93c38eeb900a" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7415bfb3-3264-4453-9435-53e19cdd1494" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Now, 3 png images (screenshot_001, 002, 003) saved in Desktop" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.35</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-26T21:22:35.9613487+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>

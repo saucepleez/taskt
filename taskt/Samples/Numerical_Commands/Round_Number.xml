@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="844b62c2-b3b0-4fa4-89d1-488665d6285c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Round Number Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="844b62c2-b3b0-4fa4-89d1-488665d6285c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Type is based Excel functions" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="844b62c2-b3b0-4fa4-89d1-488665d6285c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Round" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RoundNumberCommand" CommandID="6d95e0d0-2f62-4ba4-b428-b8a76927c4fd" CommandName="RoundNumberCommand" IsCommented="false" SelectionName="Round Number" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Round(1.4)" CommandEnabled="true" v_Numeric="1.4" v_RoundType="Round" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="073557a7-76da-41bd-915a-7f31d4425cdc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RoundNumberCommand" CommandID="6d95e0d0-2f62-4ba4-b428-b8a76927c4fd" CommandName="RoundNumberCommand" IsCommented="false" SelectionName="Round Number" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Round(1.5)" CommandEnabled="true" v_Numeric="1.5" v_RoundType="Round" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="073557a7-76da-41bd-915a-7f31d4425cdc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="844b62c2-b3b0-4fa4-89d1-488665d6285c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Round Up" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RoundNumberCommand" CommandID="6d95e0d0-2f62-4ba4-b428-b8a76927c4fd" CommandName="RoundNumberCommand" IsCommented="false" SelectionName="Round Number" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="RoundUp(1.1)" CommandEnabled="true" v_Numeric="1.1" v_RoundType="Round Up" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="073557a7-76da-41bd-915a-7f31d4425cdc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="844b62c2-b3b0-4fa4-89d1-488665d6285c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Round Down" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RoundNumberCommand" CommandID="6d95e0d0-2f62-4ba4-b428-b8a76927c4fd" CommandName="RoundNumberCommand" IsCommented="false" SelectionName="Round Number" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="RoundDown(1.9)" CommandEnabled="true" v_Numeric="1.9" v_RoundType="Round Down" v_Result="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="073557a7-76da-41bd-915a-7f31d4425cdc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.86</TasktVersion>
+    <Author />
+    <LastRunTime>2022-06-01T23:11:08.2167091+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>num</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

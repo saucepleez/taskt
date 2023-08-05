@@ -2,11 +2,12 @@
 using System.Xml.Serialization;
 using System.Data;
 using System.Collections.Generic;
-using taskt.UI.Forms;
 using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using System.Data.OleDb;
 using System.Drawing;
+using System.Linq;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -26,6 +27,9 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase)]
+        [Attributes.PropertyAttributes.PropertyParameterDirection(Attributes.PropertyAttributes.PropertyParameterDirection.ParameterDirection.Output)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -110,7 +114,9 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
+            RenderedControls.AddRange(instanceCtrls);
 
             CommandItemControl helperControl = new CommandItemControl();
             helperControl.Padding = new Padding(10, 0, 0, 0);
@@ -122,10 +128,10 @@ namespace taskt.Core.Automation.Commands
             helperControl.Click += (sender, e) => Button_Click(sender, e);
 
 
-            ConnectionString = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionString", this);
+            ConnectionString = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionString", this, null);
 
             var connectionLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionString", this);
-            var connectionHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionString", this, new[] { ConnectionString }, editor);
+            var connectionHelpers = CommandControls.CreateDefaultUIHelpersFor("v_ConnectionString", this, ConnectionString , editor);
             CommandItemControl testConnectionControl = new CommandItemControl();
             testConnectionControl.Padding = new Padding(10, 0, 0, 0);
             testConnectionControl.ForeColor = Color.AliceBlue;
@@ -142,10 +148,10 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.Add(testConnectionControl);
             RenderedControls.Add(ConnectionString);
 
-            ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this);
+            ConnectionStringPassword = (TextBox)CommandControls.CreateDefaultInputFor("v_ConnectionStringPassword", this, null);
 
             var connectionPassLabel = CommandControls.CreateDefaultLabelFor("v_ConnectionStringPassword", this);
-            var connectionPassHelpers = CommandControls.CreateUIHelpersFor("v_ConnectionStringPassword", this, new[] { ConnectionStringPassword }, editor);
+            var connectionPassHelpers = CommandControls.CreateDefaultUIHelpersFor("v_ConnectionStringPassword", this, ConnectionStringPassword, editor);
 
             RenderedControls.Add(connectionPassLabel);
             RenderedControls.AddRange(connectionPassHelpers);

@@ -1,369 +1,478 @@
-﻿using SHDocVw;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using taskt.UI.Forms;
 using taskt.Core;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
+using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.UI.CustomControls
 {
     public static class CommandControls
     {
-        public static UI.Forms.frmCommandEditor CurrentEditor { get; set; }
+        public static frmCommandEditor CurrentEditor { get; set; }
 
-        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        // todo: add colorful setting parameter
+        private static List<Color> paramColors = new List<Color>
         {
-            var controlList = new List<string>();
-            var parentProps = parent.GetType().GetProperties();
-            foreach(var prop in parentProps)
-            {
-                if (prop.Name.StartsWith("v_") && prop.Name != "v_Comment")
-                {
-                    controlList.Add(prop.Name);
-                }
-            }
+            Color.FromArgb(70, 70, 70),
+            Color.FromArgb(80, 59, 59),
+            Color.FromArgb(59, 80, 59),
+            Color.FromArgb(59, 59, 80),
+            Color.FromArgb(80, 80, 59),
+            Color.FromArgb(80, 59, 80),
+            Color.FromArgb(59, 80, 80),
+            Color.FromArgb(80, 80, 80),
+        };
 
-            return MultiCreateInferenceDefaultControlGroupFor(controlList, parent, editor);
-        }
-
-        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(List<string> parameterNames, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor)
+        #region create multi group for
+        /// <summary>
+        /// create Controls for Render. This method automatically creates all properties controls except "v_Comment". This method supports all attributes.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="renderComment"></param>
+        /// <returns></returns>
+        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(ScriptCommand command, frmCommandEditor editor, bool renderComment = false)
         {
+            var props = command.GetParameterProperties(renderComment);
             var controlList = new List<Control>();
 
-            foreach(var parameterName in parameterNames)
+            int count = 0;
+            foreach(var prop in props)
             {
-                controlList.AddRange(CreateInferenceDefaultControlGroupFor(parameterName, parent, editor));
+                FlowLayoutPanel flowPanel = new FlowLayoutPanel
+                {
+                    Name = GroupPrefix + prop.Name,
+                    FlowDirection = FlowDirection.TopDown,
+                    WrapContents = false,
+                    AutoSize = true,
+                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                    BackColor = paramColors[count % 8],
+                };
+                var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
+                flowPanel.Controls.AddRange(ctrls.ToArray());
+
+                controlList.Add(flowPanel);
+                count++;
             }
 
             return controlList;
         }
 
-        public static List<Control> CreateInferenceDefaultControlGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        /// <summary>
+        /// create Controls for Render specified by List&lt;string&gt;. This method supports all attributes.
+        /// </summary>
+        /// <param name="propartiesName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<Control> MultiCreateInferenceDefaultControlGroupFor(List<string> propartiesName, ScriptCommand command, frmCommandEditor editor)
         {
             var controlList = new List<Control>();
 
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
-
-            Control input;
-            
-            var rct = (Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl));
-            if (rct != null)
+            int count = 0;
+            foreach (var propertyName in propartiesName)
             {
-                switch (rct.recommendedControl)
+                FlowLayoutPanel flowPanel = new FlowLayoutPanel
                 {
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
-                        input = CreateDefaultInputFor(parameterName, parent, variableProperties);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
-                        input = CreateDropdownFor(parameterName, parent, variableProperties);
-                        var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
-                        if ((varList != null) && varList.isVariablesList)
-                        {
-                            ((ComboBox)input).AddVariableNames(editor);
-                        }
-                        else
-                        {
-                            var winList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList));
-                            if ((winList != null) && (winList.isWindowNamesList))
-                            {
-                                ((ComboBox)input).AddWindowNames(editor);
-                            }
-                        }
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
-                        input = CreateDataGridView(parent, parameterName, variableProperties);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
-                        input = CreateDefaultInputFor(parameterName, parent, variableProperties);
-                        break;
+                    Name = GroupPrefix + propertyName,
+                    FlowDirection = FlowDirection.TopDown,
+                    WrapContents = false,
+                    AutoSize = true,
+                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                    BackColor = paramColors[count % 8],
+                };
+
+                var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
+                flowPanel.Controls.AddRange(ctrls);
+
+                controlList.Add(flowPanel);
+
+                //controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
+                count++;
+            }
+
+            return controlList;
+        }
+        #endregion
+
+        #region create inference default control group for
+        /// <summary>
+        /// create control group. this method use PropertyRecommendedUIControl attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<Control> CreateInferenceDefaultControlGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor)
+        {
+            var propInfo = command.GetProperty(propertyName);
+
+            return CreateInferenceDefaultControlGroupFor(propInfo, command, editor);
+        }
+
+        /// <summary>
+        /// create control group. this method use PropertyRecommendedUIControl attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<Control> CreateInferenceDefaultControlGroupFor(PropertyInfo propInfo, ScriptCommand command, frmCommandEditor editor)
+        {
+            string propertyName = propInfo.Name;
+            var virtualPropInfo = propInfo.GetVirtualProperty();
+
+            var attrRecommended = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropInfo);
+            if (attrRecommended != null)
+            {
+                switch (attrRecommended.recommendedControl)
+                {
+                    case PropertyRecommendedUIControl.RecommendeUIControlType.TextBox:
+                    case PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox:
+                        return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
+
+                    case PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox:
+                        return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
+
+                    case PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox:
+                        return CreateDefaultCheckBoxGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
+
+                    case PropertyRecommendedUIControl.RecommendeUIControlType.DataGridView:
+                        return CreateDataGridViewGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
+
                     default:
-                        input = CreateDefaultInputFor(parameterName, parent, variableProperties);
-                        break;
+                        return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                 }
             }
             else
             {
                 // check combobox
-                var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
-                var winList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsWindowNamesList));
-                var uiList = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption), true);
-
-                if (uiList.Length > 0)
+                var attrUIOpt = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
+                var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
+                var attrIsVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
+                var attrInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
+                var attrCmbItem = GetCustomAttributeWithVirtual<PropertyComboBoxItemMethod>(propInfo, virtualPropInfo);
+                if ((attrUIOpt.Count > 0) || (attrIsWin != null) || (attrIsVar != null) || (attrInstance != null) || (attrCmbItem != null))
                 {
-                    input = CreateDropdownFor(parameterName, parent, variableProperties);
-                }
-                else if (varList != null && varList.isVariablesList)
-                {
-                    input = CreateDropdownFor(parameterName, parent, variableProperties);
-                    ((ComboBox)input).AddVariableNames(editor);
-                }
-                else if (winList != null && winList.isWindowNamesList)
-                {
-                    input = CreateDropdownFor(parameterName, parent, variableProperties);
-                    ((ComboBox)input).AddVariableNames(editor);
+                    return CreateDefaultDropdownGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                 }
                 else
                 {
-                    input = CreateDefaultInputFor(parameterName, parent, variableProperties);
+                    return CreateDefaultInputGroupFor(propertyName, command, editor, propInfo, virtualPropInfo);
                 }
             }
-
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
-
-            controlList.Add(label);
-
-            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
-            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
-            {
-                var label2 = CreateSimpleLabel();
-                label2.Name = "lbl2_" + parameterName;
-                controlList.Add(label2);
-            }
-
-            controlList.AddRange(helpers);
-            if (additionalLinks != null)
-            {
-                controlList.AddRange(additionalLinks);
-            }
-            controlList.Add(input);
-
-            return controlList;
         }
+        #endregion
 
-        public static List<Control> CreateDefaultInputGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        #region create default control group for
+
+        /// <summary>
+        /// create input control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
+        /// <returns></returns>
+        public static List<Control> CreateDefaultInputGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
-            //Todo: Test
-            var controlList = new List<Control>();
-
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-
-            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
-            var input = CreateDefaultInputFor(parameterName, parent, variableProperties);
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
-
-            controlList.Add(label);
-
-            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
-            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
+            if (propInfo == null)
             {
-                var label2 = CreateSimpleLabel();
-                label2.Name = "lbl2_" + parameterName;
-                controlList.Add(label2);
+                propInfo = command.GetProperty(propertyName);
             }
-
-            controlList.AddRange(helpers);
-            if (additionalLinks != null)
+            if (virtualPropInfo== null)
             {
-                controlList.AddRange(additionalLinks);
+                virtualPropInfo = propInfo.GetVirtualProperty();
             }
-            controlList.Add(input);
-
-            return controlList;
             
+            return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() =>
+            {
+                return CreateDefaultInputFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
         }
 
-        public static List<Control> CreateDefaultDropdownGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
+        /// <summary>
+        /// create combobox control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
+        /// <returns></returns>
+        public static List<Control> CreateDefaultDropdownGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
-            //Todo: Test
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+            if (virtualPropInfo == null)
+            {
+                virtualPropInfo = propInfo.GetVirtualProperty();
+            }
+
+            return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
+                return CreateDefaultDropdownFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
+        }
+
+        /// <summary>
+        /// create checkbox control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
+        /// <returns></returns>
+        public static List<Control> CreateDefaultCheckBoxGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        {
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+            if (virtualPropInfo == null)
+            {
+                virtualPropInfo = propInfo.GetVirtualProperty();
+            }
+
+            return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
+                return CreateDefaultCheckBoxFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
+        }
+
+        /// <summary>
+        /// create datagridview control group. this method try use PropertyVirtualProperty attribute, and finally use several attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo"></param>
+        /// <returns></returns>
+        public static List<Control> CreateDataGridViewGroupFor(string propertyName, ScriptCommand command, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
+        {
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+            if (virtualPropInfo == null)
+            {
+                virtualPropInfo = propInfo.GetVirtualProperty();
+            }
+
+            return CreateDefaultControlGroupFor(propertyName, command, new Func<Control>(() => {
+                return CreateDefaultDataGridViewFor(propertyName, command, editor, propInfo, virtualPropInfo);
+            }), editor, propInfo, virtualPropInfo);
+        }
+
+        /// <summary>
+        /// create control group. this method control body is created by method as argument. this method use several attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="createFunc"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property</param>
+        /// <returns></returns>
+        private static List<Control> CreateDefaultControlGroupFor(string propertyName, ScriptCommand command, Func<Control> createFunc, frmCommandEditor editor, PropertyInfo propInfo, PropertyInfo virtualPropInfo)
+        {
             var controlList = new List<Control>();
 
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-
-            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
-            var input = CreateDropdownFor(parameterName, parent, variableProperties);
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { input }, editor, variableProperties);
-
+            // label
+            var label = CreateDefaultLabelFor(propertyName, command, editor, propInfo, virtualPropInfo);
             controlList.Add(label);
 
-            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
-            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
+            // 2nd label
+            var attr2ndLabel = GetCustomAttributeWithVirtual<PropertySecondaryLabel>(propInfo, virtualPropInfo);
+            if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
-                label2.Name = "lbl2_" + parameterName;
+                label2.Name = Label2ndPrefix + propertyName;
                 controlList.Add(label2);
             }
 
-            controlList.AddRange(helpers);
-            if (additionalLinks != null)
+            var createdInput = createFunc();
+
+            // ui helper
+            controlList.AddRange(CreateDefaultUIHelpersFor(propertyName, command, createdInput, editor, propInfo, virtualPropInfo));
+
+            // custom ui helper
+            controlList.AddRange(CreateCustomUIHelpersFor(propertyName, command, createdInput, editor, propInfo, virtualPropInfo));
+
+            // body
+            controlList.Add(createdInput);
+
+            // into Field (Scheduled to be discontinued)
+            var attrInto = GetCustomAttributeWithVirtual<PropertyControlIntoCommandField>(propInfo, virtualPropInfo);
+            if (attrInto != null)
             {
-                controlList.AddRange(additionalLinks);
+                var tp = command.GetType();
+                if (attrInto.bodyName != "")
+                {
+                    var field = tp.GetField(attrInto.bodyName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as Body does not Exists. Name: '" + attrInto.bodyName + "'");
+                    field.SetValue(command, createdInput);
+                }
+                if (attrInto.labelName != "")
+                {
+                    var field = tp.GetField(attrInto.labelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as Label does not Exists. Name: '" + attrInto.bodyName + "'");
+                    field.SetValue(command, label);
+                }
+                if (attrInto.secondLabelName != "")
+                {
+                    var field = tp.GetField(attrInto.secondLabelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as 2nd-Label does not Exists. Name: '" + attrInto.bodyName + "'");
+                    var label2nd = controlList.Where(c => (c.Name == Label2ndPrefix + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
+                    field.SetValue(command, label2nd);
+                }
             }
-            controlList.Add(input);
-
-            return controlList;
-            
-        }
-
-        public static List<Control> CreateDataGridViewGroupFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Forms.frmCommandEditor editor, List<Control> additionalLinks = null)
-        {
-            var controlList = new List<Control>();
-
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-
-            var label = CreateDefaultLabelFor(parameterName, parent, variableProperties);
-            var gridview = CreateDataGridView(parent, parameterName, variableProperties);
-            var helpers = CreateUIHelpersFor(parameterName, parent, new Control[] { gridview }, editor, variableProperties);
-
-            controlList.Add(label);
-
-            var secondaryLabel = (Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertySecondaryLabel));
-            if (secondaryLabel != null && secondaryLabel.useSecondaryLabel)
-            {
-                var label2 = CreateSimpleLabel();
-                label2.Name = "lbl2_" + parameterName;
-                controlList.Add(label2);
-            }
-
-            controlList.AddRange(helpers);
-            if (additionalLinks != null)
-            {
-                controlList.AddRange(additionalLinks);
-            }
-            controlList.Add(gridview);
 
             return controlList;
         }
+        #endregion
 
-        public static Label CreateSimpleLabel()
+        #region create default controls
+
+        #region label
+
+        /// <summary>
+        /// create Label from seveal attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use viratul property</param>
+        /// <returns></returns>
+        public static Control CreateDefaultLabelFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
-            Label newLabel = new Label();
-            var theme = CurrentEditor.Theme.Label;
-            newLabel.AutoSize = true;
-            newLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            newLabel.ForeColor = theme.FontColor;
-            newLabel.BackColor = theme.BackColor;
-            return newLabel;
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            var setting = editor?.appSettings ?? CurrentEditor.appSettings;
+
+            var labelText = GetLabelText(propertyName, propInfo, setting, virtualPropInfo);
+
+            // get addtional parameter info
+            var attrAdditionalParams = GetCustomAttributesWithVirtual<PropertyAddtionalParameterInfo>(propInfo, virtualPropInfo);
+            Dictionary<string, string> addParams = null;
+            if (attrAdditionalParams.Count > 0)
+            {
+                Func<string, string> convFunc;
+                if (editor == null)
+                {
+                    convFunc = new Func<string, string>((str) =>
+                    {
+                        return str;
+                    });
+                }
+                else
+                {
+                    convFunc = new Func<string, string>((str) =>
+                    {
+                        return GetSampleUsageTextForLabel(str, editor.appSettings);
+                    });
+                }
+
+                addParams = new Dictionary<string, string>();
+                foreach (var p in attrAdditionalParams)
+                {
+                    addParams.Add(p.searchKey, convFunc(p.description));
+                }
+            }
+
+            return CreateDefaultLabelFor(propertyName, command, labelText, addParams);
         }
-        public static Control CreateDefaultLabelFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
+
+        /// <summary>
+        /// create Label. This method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="labelText"></param>
+        /// <param name="additionalParams"></param>
+        /// <returns></returns>
+        public static Control CreateDefaultLabelFor(string propertyName, ScriptCommand command, string labelText, Dictionary<string, string> additionalParams = null)
         {
-            PropertyInfo variableProperties;
-            if (pInfo == null)
+            var inputLabel = CreateSimpleLabel();
+
+            inputLabel.Text = labelText;
+            inputLabel.Name = LabelPrefix + propertyName;
+
+            if (additionalParams != null)
             {
-                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            }
-            else
-            {
-                variableProperties = pInfo;
-            }
-
-            var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDescription), true);
-
-            // var settings = (new Core.ApplicationSettings().GetOrCreateApplicationSettings()).EngineSettings;
-            var settings = CurrentEditor.appSettings.EngineSettings;
-
-            Label inputLabel = CreateSimpleLabel();
-            if (propertyAttributesAssigned.Length > 0)
-            {
-                var desc = (Core.Automation.Attributes.PropertyAttributes.PropertyDescription)propertyAttributesAssigned[0];
-                var labelText = desc.propertyDescription.replaceEngineKeyword();
-
-                if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
-                {
-                    var showSample = (Core.Automation.Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription));
-                    if (showSample != null && showSample.showSampleUsage)
-                    {
-                        if (!labelText.Contains("(ex."))
-                        {
-                            var sampleAttr = (Core.Automation.Attributes.PropertyAttributes.SampleUsage)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.SampleUsage));
-                            var sampleText = (sampleAttr == null) ? "" : sampleAttr.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
-                            if (sampleText.Length > 0)
-                            {
-                                labelText += " (ex. " + sampleText + ")";
-                            }
-                        }
-                    }
-                }
-
-                var attrIsOpt = (Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsOptional));
-                if (attrIsOpt != null && attrIsOpt.isOptional)
-                {
-                    if (!labelText.Contains("Optional"))
-                    {
-                        labelText = "Optional - " + labelText;
-                    }
-                }
-
-                inputLabel.Text = labelText;
-            }
-            else
-            {
-                inputLabel.Text = parameterName;
+                inputLabel.Tag = additionalParams;
             }
 
-            //var theme = CurrentEditor.Theme.Label;
-            //inputLabel.AutoSize = true;
-            //inputLabel.Font = new Font("Segoe UI Light", 12);
-            //inputLabel.ForeColor = Color.White;
-            //inputLabel.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            //inputLabel.ForeColor = theme.FontColor;
-            //inputLabel.BackColor = theme.BackColor;
-
-            inputLabel.Name = "lbl_" + parameterName;
             return inputLabel;
         }
-        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
+        #endregion
+
+        #region textbox
+        /// <summary>
+        /// create TextBox from PropertyTextBoxSetting, PropertyRecommendedUIControl, PropertyFirstValue attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
+        /// <returns></returns>
+        public static Control CreateDefaultInputFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
-            var variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            return CreateDefaultInputFor(parameterName, parent, variableProperties);
-        }
-        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
-        {
-            PropertyInfo variableProperties;
-            if (pInfo == null)
+            if (propInfo == null)
             {
-                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            }
-            else
-            {
-                variableProperties = pInfo;
+                propInfo = command.GetProperty(propertyName);
             }
 
-            var setting = (Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyTextBoxSetting));
-            var rcmCtl = (Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl)variableProperties.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl));
-            if (setting == null)
-            {
-                if (rcmCtl == null || rcmCtl.recommendedControl != Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)
-                {
-                    return CreateDefaultInputFor(parameterName, parent, 30, 300, true);
-                }
-                else
-                {
-                    return CreateDefaultInputFor(parameterName, parent, 90, 300, true);
-                }
-            }
-            else
-            {
-                if (rcmCtl != null && rcmCtl.recommendedControl == Core.Automation.Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)
-                {
-                    int height = (setting.height < 2) ? 3 : setting.height;
-                    return CreateDefaultInputFor(parameterName, parent, height * 30, 300, setting.allowNewLine);
-                }
-                else
-                {
-                    return CreateDefaultInputFor(parameterName, parent, setting.height * 30, 300, setting.allowNewLine);
-                }
-            }
-        }
-        public static Control CreateDefaultInputFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, int height = 30, int width = 300, bool allowNewLine = true)
-        {
-            var inputBox = new TextBox();
-            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            var theme = CurrentEditor.Theme.Input;
-            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            inputBox.ForeColor = theme.FontColor;
-            inputBox.BackColor = theme.BackColor;
-            inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
+            var textBoxSetting = GetCustomAttributeWithVirtual<PropertyTextBoxSetting>(propInfo, virtualPropInfo) ?? new PropertyTextBoxSetting();
+            var recommendedControl = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropInfo) ?? new PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextLink);
+            var firstValue = GetCustomAttributeWithVirtual<PropertyFirstValue>(propInfo, virtualPropInfo);
+
+            TextBox newTextBox;
             
+            int height = textBoxSetting.height;
+            if (recommendedControl.recommendedControl == PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)
+            {
+                height = (height < 2) ? 3 : height; // multi line fix
+            }
+            newTextBox = (TextBox)CreateDefaultInputFor(propertyName, command, height * 30, 300, textBoxSetting.allowNewLine, (firstValue?.firstValue ?? ""), editor, propInfo);
+
+            return newTextBox;
+        }
+
+        /// <summary>
+        /// create TextBox and binding property, this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <param name="allowNewLine"></param>
+        /// <param name="firstValue">if editor and propInfo is null, firtValue not work.</param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
+        public static Control CreateDefaultInputFor(string propertyName, ScriptCommand command, int height = 30, int width = 300, bool allowNewLine = true, string firstValue = "", frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        {
+            var inputBox = CreateStandardTextBoxFor(propertyName, command);
+
+            // new line setting
             if (!allowNewLine)
             {
-                inputBox.KeyDown += (sender, e) => TextBoxKeyDown(sender, e);
+                inputBox.KeyDown += (sender, e) => TextBoxKeyDown_DenyEnterNewLine(sender, e);
                 inputBox.ScrollBars = ScrollBars.None;
             }
             else
@@ -371,243 +480,262 @@ namespace taskt.UI.CustomControls
                 inputBox.Multiline = true;
                 inputBox.ScrollBars = ScrollBars.Vertical;
             }
+
             inputBox.Height = height;
             inputBox.Width = width;
 
-            inputBox.Name = parameterName;
-            return inputBox;
-
-        }
-        public static Control CreateDropdownFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, PropertyInfo pInfo = null)
-        {
-            var inputBox = new ComboBox();
-            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            var theme = CurrentEditor.Theme.Dropdown;
-            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            inputBox.ForeColor = theme.FontColor;
-            inputBox.BackColor = theme.BackColor;
-            inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
-            inputBox.Height = 30;
-            inputBox.Width = 300;
-            inputBox.Name = parameterName;
-
-            PropertyInfo variableProperties;
-            if (pInfo == null)
+            // first value
+            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
             {
-                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
+                propInfo?.SetValue(command, editor.appSettings.replaceApplicationKeyword(firstValue));
             }
-            else
-            {
-                variableProperties = pInfo;
-            }
-
-            var propertyAttributesAssigned = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption), true);
-
-            foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUISelectionOption option in propertyAttributesAssigned)
-            {
-                inputBox.Items.Add(option.uiOption);
-            }
-
-            inputBox.KeyUp += (sender, e) => ComboBoxKeyUp(sender, e);
-            inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
 
             return inputBox;
-
         }
-        public static ComboBox CreateStandardComboboxFor(string parameterName, Core.Automation.Commands.ScriptCommand parent)
+        #endregion
+
+        #region checkbox
+        /// <summary>
+        /// create CheckBox and binding property, this method try to use PropertyDescription attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
+        /// <returns></returns>
+        public static Control CreateDefaultCheckBoxFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
-            var inputBox = new ComboBox();
-            //inputBox.Font = new Font("Segoe UI", 12, FontStyle.Regular);
-            var theme = CurrentEditor.Theme.Combobox;
-            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            inputBox.ForeColor = theme.FontColor;
-            inputBox.BackColor = theme.BackColor;
-            inputBox.DataBindings.Add("Text", parent, parameterName, false, DataSourceUpdateMode.OnPropertyChanged);
-            inputBox.Height = 30;
-            inputBox.Width = 300;
-            inputBox.Name = parameterName;
-
-            inputBox.KeyUp += (sender, e) => ComboBoxKeyUp(sender, e);
-            inputBox.Click += (sender, e) => ComboBoxClick(sender, e);
-
-            return inputBox;
-
-        }
-
-        public static CommandItemControl CreateUIHelper()
-        {
-            taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
-            helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            var theme = CurrentEditor.Theme.UIHelper;
-            helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            helperControl.ForeColor = theme.FontColor;
-            helperControl.BackColor = theme.BackColor;
-
-            return helperControl;
-        }
-
-        public static List<Control> CreateUIHelpersFor(string parameterName, Core.Automation.Commands.ScriptCommand parent, Control[] targetControls, UI.Forms.frmCommandEditor editor, PropertyInfo pInfo = null)
-        {
-            PropertyInfo variableProperties;
-            if (pInfo == null)
+            if (propInfo == null)
             {
-                variableProperties = parent.GetType().GetProperties().Where(f => f.Name == parameterName).FirstOrDefault();
-            }
-            else
-            {
-                variableProperties = pInfo;
-            }
-            
-            var propertyUIHelpers = variableProperties.GetCustomAttributes(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper), true);
-            var controlList = new List<Control>();
-
-            if (propertyUIHelpers.Count() == 0)
-            {
-                return controlList;
+                propInfo = command.GetProperty(propertyName);
             }
 
-            int count = 0;
-            foreach (Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper attrib in propertyUIHelpers)
-            {
-                taskt.UI.CustomControls.CommandItemControl helperControl = new taskt.UI.CustomControls.CommandItemControl();
-                helperControl.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-                //helperControl.ForeColor = Color.AliceBlue;
-                //helperControl.Font = new Font("Segoe UI Semilight", 10);
-                var theme = CurrentEditor.Theme.UIHelper;
-                helperControl.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-                helperControl.ForeColor = theme.FontColor;
-                helperControl.BackColor = theme.BackColor;
-                helperControl.Name = parameterName + "_helper_" + count.ToString(); ;
-                helperControl.Tag = targetControls.FirstOrDefault();
-                helperControl.HelperType = attrib.additionalHelper;
+            var desc = GetCustomAttributeWithVirtual<PropertyDescription>(propInfo, virtualPropInfo);
+            var firstValue = GetCustomAttributeWithVirtual<PropertyFirstValue>(propInfo, virtualPropInfo);
+            return CreateDefaultCheckBoxFor(propertyName, command, desc?.propertyDescription ?? "", firstValue?.firstValue ?? "", editor, propInfo);
+        }
 
-                switch (attrib.additionalHelper)
+        /// <summary>
+        /// create CheckBox and binding property, this method does not use attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="description"></param>
+        /// <param name="firstValue">if editor and propInfo is null, firtValue not work.</param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
+        public static Control CreateDefaultCheckBoxFor(string propertyName, ScriptCommand command, string description, string firstValue = "", frmCommandEditor editor = null, PropertyInfo propInfo = null)
+        {
+            var inputBox = CreateStandardCheckboxFor(propertyName, command);
+            inputBox.Text = description;
+
+            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            {
+                string convValue = editor.appSettings.replaceApplicationKeyword(firstValue);
+                if ((convValue != "") && (bool.TryParse(convValue, out bool b)))
                 {
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
-                        helperControl.CommandDisplay = "Insert Variable";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_variable_helper;
-                        helperControl.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
-                        break;
-
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
-                        //show file selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-                        helperControl.CommandDisplay = "Select a File";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_file_helper;
-                        helperControl.Click += (sender, e) => ShowFileSelector(sender, e, editor);
-                        break;
-
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
-                        //show file selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-                        helperControl.CommandDisplay = "Select a Folder";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_folder_helper;
-                        helperControl.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
-                        break;
-
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowImageRecogitionHelper:
-                        //show file selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("OCRCommand");
-                        helperControl.CommandDisplay = "Capture Reference Image";
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
-                        helperControl.Click += (sender, e) => ShowImageCapture(sender, e, editor);
-
-                        taskt.UI.CustomControls.CommandItemControl testRun = new taskt.UI.CustomControls.CommandItemControl();
-                        testRun.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-                        testRun.ForeColor = Color.AliceBlue;
-
-                        testRun.CommandImage = UI.Images.GetUIImage("OCRCommand");
-                        testRun.CommandDisplay = "Run Image Recognition Test";
-                        testRun.ForeColor = Color.AliceBlue;
-                        testRun.Tag = targetControls.FirstOrDefault();
-                        testRun.Click += (sender, e) => RunImageCapture(sender, e);
-                        controlList.Add(testRun);
-                        break;
-
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowCodeBuilder:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("RunScriptCommand");
-                        helperControl.CommandDisplay = "Code Builder";
-                        helperControl.Click += (sender, e) => ShowCodeBuilder(sender, e, editor);
-                        break;
-
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowMouseCaptureHelper:
-                        helperControl.CommandImage = UI.Images.GetUIImage("SendMouseMoveCommand");
-                        helperControl.CommandDisplay = "Capture Mouse Position";
-                        //helperControl.ForeColor = Color.AliceBlue;
-                        helperControl.DrawIcon = taskt.Properties.Resources.taskt_element_helper;
-                        helperControl.Click += (sender, e) => ShowMouseCaptureForm(sender, e);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowElementRecorder:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("ClipboardGetTextCommand");
-                        helperControl.CommandDisplay = "Element Recorder";
-                        helperControl.Click += (sender, e) => ShowElementRecorder(sender, e, editor);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.GenerateDLLParameters:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
-                        helperControl.CommandDisplay = "Generate Parameters";
-                        helperControl.Click += (sender, e) => GenerateDLLParameters(sender, e);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowDLLExplorer:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
-                        helperControl.CommandDisplay = "Launch DLL Explorer";
-                        helperControl.Click += (sender, e) => ShowDLLExplorer(sender, e);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.AddInputParameter:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
-                        helperControl.CommandDisplay = "Add Input Parameter";
-                        helperControl.Click += (sender, e) => AddInputParameter(sender, e, editor);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowHTMLBuilder:
-                        helperControl.CommandImage = UI.Images.GetUIImage("ExecuteDLLCommand");
-                        helperControl.CommandDisplay = "Launch HTML Builder";
-                        helperControl.Click += (sender, e) => ShowHTMLBuilder(sender, e, editor);
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowIfBuilder:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
-                        helperControl.CommandDisplay = "Add New If Statement";
-                        break;
-                    case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowLoopBuilder:
-                        //show variable selector
-                        helperControl.CommandImage = UI.Images.GetUIImage("VariableCommand");
-                        helperControl.CommandDisplay = "Add New Loop Statement";
-                        break;
-
-                        //default:
-                        //    MessageBox.Show("Command Helper does not exist for: " + attrib.additionalHelper.ToString());
-                        //    break;
+                    propInfo?.SetValue(command, b);
                 }
-
-                controlList.Add(helperControl);
-                count++;
             }
 
-            return controlList;
-
+            return inputBox;
         }
+        #endregion
 
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, PropertyInfo prop)
+        #region combobox
+        /// <summary>
+        /// create ComboBox and binding property, some events, selection items. this method use PropertyIsWindowNamesList, PropertyIsVariableList, PropertyInstanceType, PropertyComboBoxItemMethod, PropertyParameterDirection, PropertyUISelectionOption, PropertySelectionChangeEvent attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor">if editor is null, does not support variable, window, instance selection items</param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
+        /// <returns></returns>
+        public static Control CreateDefaultDropdownFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
-            var dgvProp = (Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyDataGridViewSetting));
-            if (dgvProp == null)
+            if (propInfo == null)
             {
-                return CreateDataGridView(sourceCommand, dataSourceName);
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            var uiOptions = new List<string>();
+
+            // window names list
+            var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
+            if (attrIsWin?.isWindowNamesList ?? false)
+            {
+                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+            }
+
+            // variable names list & instance name list
+            var attrIsVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropInfo);
+            var attrIsInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
+            if (attrIsVar?.isVariablesList ?? false)
+            {
+                uiOptions.AddRange(GetVariableNames(editor));
             }
             else
             {
-                return CreateDataGridView(sourceCommand, dataSourceName, dgvProp.allowAddRow, dgvProp.allowDeleteRow, dgvProp.allowResizeRow, dgvProp.width, dgvProp.height, dgvProp.autoGenerateColumns, dgvProp.headerRowHeight);
+                var attrDirection = GetCustomAttributeWithVirtual<PropertyParameterDirection>(propInfo, virtualPropInfo);
+                if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
+                {
+                    if ((attrDirection?.porpose ?? PropertyParameterDirection.ParameterDirection.Unknown) == PropertyParameterDirection.ParameterDirection.Output)
+                    {
+                        uiOptions.AddRange(GetVariableNames(editor));
+                    }
+                    else
+                    {
+                        uiOptions.AddRange(GetInstanceNames(editor, attrIsInstance.instanceType));
+                    }
+                }
             }
+
+            // item method
+            var attrItemMethod = GetCustomAttributeWithVirtual<PropertyComboBoxItemMethod>(propInfo, virtualPropInfo);
+            if ((attrItemMethod?.methodName ?? "") != "")
+            {
+                (var methodInfo, var isOuter) = GetMethodInfo(attrItemMethod.methodName, command);
+                List<string> items;
+                if (isOuter)
+                {
+                    items = (List<string>)methodInfo.Invoke(null, new object[] { });
+                }
+                else
+                {
+                    items = (List<string>)methodInfo.Invoke(command, new object[] { });
+                }
+                uiOptions.AddRange(items);
+            }
+
+            // ui options
+            var opts = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
+            if (opts.Count > 0)
+            {
+                uiOptions.AddRange(opts.Select(opt => opt.uiOption).ToList());
+            }
+
+            var changeEvent = GetCustomAttributeWithVirtual<PropertySelectionChangeEvent>(propInfo, virtualPropInfo);
+            var firstValue = GetCustomAttributeWithVirtual<PropertyFirstValue>(propInfo, virtualPropInfo);
+
+            // instance first value
+            if ((attrIsInstance?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none)
+            {
+                if ((uiOptions.Count > 1) && (editor.appSettings.ClientSettings.DontShowDefaultInstanceWhenMultipleItemsExists))
+                {
+                    firstValue = null;
+                }
+            }
+
+            return CreateDefaultDropdownFor(propertyName, command, uiOptions, changeEvent?.methodName ?? "", firstValue?.firstValue ?? "", editor, propInfo);
         }
 
-        public static DataGridView CreateDataGridView(object sourceCommand, string dataSourceName, bool AllowAddRows = true, bool AllowDeleteRows = true, bool AllowResizeRows = false, int width = 400, int height = 250, bool AutoGenerateColumns = true, int headerRowHeight = 1)
+        /// <summary>
+        /// create ComboBox and binding property, some events, selection items. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="uiOptions"></param>
+        /// <param name="selectionChangeEventName"></param>
+        /// <param name="firstValue">if editor and propInfo is null, firtValue not work.</param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
+        public static Control CreateDefaultDropdownFor(string propertyName, ScriptCommand command, List<string> uiOptions, string selectionChangeEventName = "", string firstValue = "", frmCommandEditor editor = null, PropertyInfo propInfo = null)
         {
+            var inputBox = CreateStandardComboboxFor(propertyName, command);
+            inputBox.Items.AddRange(uiOptions.ToArray());
+
+            if (selectionChangeEventName != "")
+            {
+                (var trgMethod, var useOuterClassEvent) = GetMethodInfo(selectionChangeEventName, command);
+
+                inputBox.SelectionChangeCommitted += useOuterClassEvent ?
+                    (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler)) :
+                    (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
+            }
+
+            if ((editor?.creationMode ?? frmCommandEditor.CreationMode.Edit) == frmCommandEditor.CreationMode.Add)
+            {
+                propInfo?.SetValue(command, editor.appSettings.replaceApplicationKeyword(firstValue));
+            }
+
+            return inputBox;
+        }
+        #endregion
+
+        #region DataGridView
+        /// <summary>
+        /// create DataGridView and binding property, this method use PropertyDataGridViewSetting, PropertyDataGridViewColumnSettings, PropertyDataGridViewCellEditEvent, PropertyDataGridViewInitMethod attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property</param>
+        /// <returns></returns>
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, ScriptCommand command, frmCommandEditor editor = null, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
+        {
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            // DataGridView setting
+            var dgvSetting = GetCustomAttributeWithVirtual<PropertyDataGridViewSetting>(propInfo, virtualPropertyInfo) ?? new PropertyDataGridViewSetting();
+            // columns setting
+            var columnSetting = GetCustomAttributesWithVirtual<PropertyDataGridViewColumnSettings>(propInfo, virtualPropertyInfo);
+            // events
+            var events = GetCustomAttributesWithVirtual<PropertyDataGridViewCellEditEvent>(propInfo, virtualPropertyInfo);
+            // init
+            var init = GetCustomAttributeWithVirtual<PropertyDataGridViewInitMethod>(propInfo, virtualPropertyInfo)?.methodName ?? "";
+
+            return CreateDefaultDataGridViewFor(propertyName, command, dgvSetting.allowAddRow, dgvSetting.allowDeleteRow, dgvSetting.allowResizeRow,
+                    dgvSetting.width, dgvSetting.height,
+                    dgvSetting.autoGenerateColumns, dgvSetting.headerRowHeight,
+                    false, columnSetting, events, init);
+        }
+
+
+        /// <summary>
+        /// create DataGridView and binding property, some events, selection items. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="allowAddRows"></param>
+        /// <param name="allowDeleteRows"></param>
+        /// <param name="allowResizeRows"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="autoGenerateColumns"></param>
+        /// <param name="headerRowHeight"></param>
+        /// <param name="allowSort"></param>
+        /// <param name="columns"></param>
+        /// <param name="events"></param>
+        /// <param name="initMethod"></param>
+        /// <returns></returns>
+        public static DataGridView CreateDefaultDataGridViewFor(string propertyName, ScriptCommand command, bool allowAddRows = true, bool allowDeleteRows = true, bool allowResizeRows = false, int width = 400, int height = 250, bool autoGenerateColumns = true, int headerRowHeight = 1, bool allowSort = false, List<PropertyDataGridViewColumnSettings> columns = null, List<PropertyDataGridViewCellEditEvent> events = null, string initMethod = "")
+        {
+            var propInfo = command.GetProperty(propertyName);
+
+            var dgv = CreateStandardDataGridViewFor(propertyName, command);
+
+            // create DataTable
+            if ((columns?.Count ?? 0) > 0)
+            {
+                var table = CreateDataTable(propertyName, command, dgv, columns);
+                propInfo.SetValue(command, table);
+            }
+
+            // behavior
+            dgv.AllowUserToAddRows = allowAddRows;
+            dgv.AllowUserToDeleteRows = allowDeleteRows;
+            dgv.AllowUserToResizeRows = allowResizeRows;
+            dgv.AutoGenerateColumns = autoGenerateColumns;
+
+            // looks
             if (width < 100)
             {
                 width = 400;
@@ -617,418 +745,764 @@ namespace taskt.UI.CustomControls
                 height = 250;
             }
 
-            var gridView = new DataGridView();
-            gridView.Name = dataSourceName;
-            gridView.AllowUserToAddRows = AllowAddRows;
-            gridView.AllowUserToDeleteRows = AllowDeleteRows;
-            gridView.AutoGenerateColumns = AutoGenerateColumns;
-            gridView.Size = new Size(width, height);
-            gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridView.DataBindings.Add("DataSource", sourceCommand, dataSourceName, false, DataSourceUpdateMode.OnPropertyChanged);
-            gridView.AllowUserToResizeRows = AllowResizeRows;
-
-            var theme = CurrentEditor.Theme.Datagridview;
-            gridView.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-            gridView.ForeColor = theme.FontColor;
-            gridView.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
-            gridView.RowTemplate.Height = Convert.ToInt32(theme.FontSize) + 20;
+            dgv.Size = new Size(width, height);
 
             if (headerRowHeight > 1)
             {
-                gridView.ColumnHeadersHeight = ((Convert.ToInt32(theme.FontSize) + 15) * headerRowHeight);
+                dgv.ColumnHeadersHeight = ((Convert.ToInt32(CurrentEditor.Theme.Datagridview.FontSize) + 15) * headerRowHeight);
             }
 
-            return gridView;
-        }
-        private static void ShowCodeBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
-        {
-            //get textbox text
-            CustomControls.CommandItemControl commandItem = (CustomControls.CommandItemControl)sender;
-            TextBox targetTextbox = (TextBox)commandItem.Tag;
-
-            using (UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
+            // sort mode
+            if ((dgv.Columns.Count > 0) && !allowSort)
             {
-                if (codeBuilder.ShowDialog() == DialogResult.OK)
+                foreach (DataGridViewColumn column in dgv.Columns)
                 {
-
-                    targetTextbox.Text = codeBuilder.rtbCode.Text;
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
             }
-        }
-        private static void ShowMouseCaptureForm(object sender, EventArgs e)
-        {
-            using (taskt.UI.Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new taskt.UI.Forms.Supplemental.frmShowCursorPosition())
+
+            // set events
+            if (events != null)
             {
-                //if user made a successful selection
-                if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
+                foreach (var ev in events)
                 {
-                    //Todo - ideally one function to add to textbox which adds to class
+                    (var trgMethod, var useOuterClass) = GetMethodInfo(ev.methodName, command);
 
-                    //add selected variables to associated control text
-                    CurrentEditor.flw_InputVariables.Controls["v_XMousePosition"].Text = frmShowCursorPos.xPos.ToString();
-                    CurrentEditor.flw_InputVariables.Controls["v_YMousePosition"].Text = frmShowCursorPos.yPos.ToString();
-
-                    //find current command and add to underlying class
-                    Core.Automation.Commands.SendMouseMoveCommand cmd = (Core.Automation.Commands.SendMouseMoveCommand)CurrentEditor.selectedCommand;
-                    cmd.v_XMousePosition = frmShowCursorPos.xPos.ToString();
-                    cmd.v_YMousePosition = frmShowCursorPos.yPos.ToString();
-                }
-            }  
-        }
-        public static void ShowVariableSelector(object sender, EventArgs e, taskt.UI.Forms.frmCommandEditor editor)
-        {
-            //create variable selector form
-            UI.Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector();
-
-       
-            //get copy of user variables and append system variables, then load to combobox
-            var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
-            newVariableSelector.lstVariables.Items.AddRange(variableList.ToArray());
-
-            //if user pressed "OK"
-            if (newVariableSelector.ShowDialog() == DialogResult.OK)
-            {
-                //ensure that a variable was actually selected
-                if (newVariableSelector.lstVariables.SelectedItem == null)
-                {
-                    //return out as nothing was selected
-                    MessageBox.Show("There were no variables selected!");
-                    return;
-                }
-
-                //grab the referenced input assigned to the 'insert variable' button instance
-                CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                //currently variable insertion is only available for simply textboxes
-
-                //load settings
-                //var settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                var settings = CurrentEditor.appSettings.EngineSettings;
-
-                if (inputBox.Tag is TextBox)
-                {
-                    TextBox targetTextbox = (TextBox)inputBox.Tag;
-                    //concat variable name with brackets [vVariable] as engine searches for the same
-                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                    switch (ev.eventRaise)
                     {
-                        string str = targetTextbox.Text;
-                        int cursorPos = targetTextbox.SelectionStart;
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                        targetTextbox.Focus();
-                        targetTextbox.SelectionStart = cursorPos + ins.Length;
-                        targetTextbox.SelectionLength = 0;
-                    }
-                    else
-                    {
-                        targetTextbox.Text = targetTextbox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetTextbox.Focus();
-                        targetTextbox.SelectionStart = targetTextbox.Text.Length;
-                        targetTextbox.SelectionLength = 0;
-                    }
-                }
-                else if (inputBox.Tag is ComboBox)
-                {
-                    ComboBox targetCombobox = (ComboBox)inputBox.Tag;
-                    if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
-                    {
-                        string str = targetCombobox.Text;
-                        int cursorPos;
-                        if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
-                        {
-                            cursorPos = str.Length;
-                        }
-                        string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
-                        targetCombobox.Focus();
-                        targetCombobox.SelectionStart = cursorPos + ins.Length;
-                        targetCombobox.SelectionLength = 0;
-                    }
-                    else
-                    {
-                        //concat variable name with brackets [vVariable] as engine searches for the same
-                        targetCombobox.Text = targetCombobox.Text + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                        targetCombobox.Focus();
-                        targetCombobox.SelectionStart = targetCombobox.Text.Length;
-                        targetCombobox.SelectionLength = 0;
-                    }
-                }
-                else if (inputBox.Tag is DataGridView)
-                {
-                    DataGridView targetDGV = (DataGridView)inputBox.Tag;
-
-                    if (targetDGV.SelectedCells.Count == 0)
-                    {
-                        MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
-                    {
-                        MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (targetDGV.SelectedCells[0].ColumnIndex == 0)
-                    {
-                        if (targetDGV.Tag == null)
-                        {
-                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                        else if (targetDGV.Tag.ToString() != "column-a-editable")
-                        {
-                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
-
-                    var source = (DataTable)targetDGV.DataSource;
-                    var rowIndex = targetDGV.SelectedCells[0].RowIndex;
-                    var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
-                    if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
-                    {
-                        source.Rows.Add(source.NewRow());
-                    }
-                    var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
-                    targetCell.Value = targetCell.Value + string.Concat(settings.VariableStartMarker, newVariableSelector.lstVariables.SelectedItem.ToString(), settings.VariableEndMarker);
-                }
-
-
-            }
-        }
-        private static void ShowFileSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
-        {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                    //currently variable insertion is only available for simply textboxes
-                    TextBox targetTextbox = (TextBox)inputBox.Tag;
-                    //concat variable name with brackets [vVariable] as engine searches for the same
-                    targetTextbox.Text = ofd.FileName;
-                }
-            }     
-        }
-        private static void ShowFolderSelector(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
-        {
-            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
-            {
-                if (fbd.ShowDialog() == DialogResult.OK)
-                {
-                    CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                    TextBox targetTextBox = (TextBox)inputBox.Tag;
-                    targetTextBox.Text = fbd.SelectedPath;
-                }
-            }
-        }
-        private static void ShowImageCapture(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
-        {
-            //ApplicationSettings settings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-            var settings = editor.appSettings;
-            var minimizePreference = settings.ClientSettings.MinimizeToTray;
-
-            if (minimizePreference)
-            {
-                settings.ClientSettings.MinimizeToTray = false;
-                settings.Save(settings);
-            }
-
-            HideAllForms();
-
-            var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
-
-            if (userAcceptance == DialogResult.Yes)
-            {
-
-                using (Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new Forms.Supplement_Forms.frmImageCapture())
-                {
-                    if (imageCaptureForm.ShowDialog() == DialogResult.OK)
-                    {
-                        CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-                        UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-                        targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                        var convertedImage = Core.Common.ImageToBase64(imageCaptureForm.userSelectedBitmap);
-                        var convertedLength = convertedImage.Length;
-                        targetPictureBox.EncodedImage = convertedImage;
-                        //imageCaptureForm.Show();
+                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick:
+                            DataGridViewCellEventHandler clickMethod = (useOuterClass) ?
+                                (DataGridViewCellEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellEventHandler)) :
+                                (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), command, trgMethod);
+                            dgv.CellClick += clickMethod;
+                            break;
+                        case PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit:
+                            DataGridViewCellCancelEventHandler beginEditMethod = (useOuterClass) ?
+                                (DataGridViewCellCancelEventHandler)trgMethod.CreateDelegate(typeof(DataGridViewCellCancelEventHandler)) :
+                                (DataGridViewCellCancelEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellCancelEventHandler), command, trgMethod);
+                            dgv.CellBeginEdit += beginEditMethod;
+                            break;
                     }
                 }
             }
 
-            ShowAllForms();
-
-            if (minimizePreference)
+            if (!string.IsNullOrEmpty(initMethod))
             {
-                settings.ClientSettings.MinimizeToTray = true;
-                settings.Save(settings);
-            }
-        }
-        private static void RunImageCapture(object sender, EventArgs e)
-        {
+                (var methodInfo, var isOuter) = GetMethodInfo(initMethod, command);
 
-            //get input control
-            CustomControls.CommandItemControl inputBox = (CustomControls.CommandItemControl)sender;
-            UIPictureBox targetPictureBox = (UIPictureBox)inputBox.Tag;
-            string imageSource = targetPictureBox.EncodedImage;
+                var table = (DataTable)propInfo.GetValue(command);
 
-            if (string.IsNullOrEmpty(imageSource))
-            {
-                MessageBox.Show("Please capture an image before attempting to test!");
-                return;
-            }
-
-            //hide all
-            HideAllForms();
-
-
-
-            try
-            {
-                //run image recognition
-                Core.Automation.Commands.ImageRecognitionCommand imageRecognitionCommand = new Core.Automation.Commands.ImageRecognitionCommand();
-                imageRecognitionCommand.v_ImageCapture = imageSource;
-                imageRecognitionCommand.TestMode = true;
-                imageRecognitionCommand.RunCommand(null);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.ToString());
-            }
-            //show all forms
-            ShowAllForms();
-
-
-        }
-        private static void ShowElementRecorder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
-        {
-            //get command reference
-            Core.Automation.Commands.UIAutomationCommand cmd = (Core.Automation.Commands.UIAutomationCommand)editor.selectedCommand;
-
-            //create recorder
-            UI.Forms.Supplemental.frmThickAppElementRecorder newElementRecorder = new UI.Forms.Supplemental.frmThickAppElementRecorder();
-            newElementRecorder.searchParameters = cmd.v_UIASearchParameters;
-
-            //show form
-            newElementRecorder.ShowDialog();
-
-            ComboBox txtWindowName = (ComboBox)editor.flw_InputVariables.Controls["v_WindowName"];
-            txtWindowName.Text = newElementRecorder.cboWindowTitle.Text;
-
-            editor.WindowState = FormWindowState.Normal;
-            editor.BringToFront();
-        }
-        private static void GenerateDLLParameters(object sender, EventArgs e)
-        {
-
-
-            Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
-
-            var filePath = CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text;
-            var className = CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text;
-            var methodName = CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text;
-            DataGridView parameterBox = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_MethodParameters"];
-
-            //clear all rows
-            cmd.v_MethodParameters.Rows.Clear();
-
-            //Load Assembly
-            try
-            {
-                Assembly requiredAssembly = Assembly.LoadFrom(filePath);
-
-                //get type
-                Type t = requiredAssembly.GetType(className);
-
-                //verify type was found
-                if (t == null)
+                if (isOuter)
                 {
-                    MessageBox.Show("The class '" + className + "' was not found in assembly loaded at '" + filePath + "'", "Class Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                //get method
-                MethodInfo m = t.GetMethod(methodName);
-
-                //verify method found
-                if (m == null)
-                {
-                    MessageBox.Show("The method '" + methodName + "' was not found in assembly loaded at '" + filePath + "'", "Method Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                //get parameters
-                var reqdParams = m.GetParameters();
-
-                if (reqdParams.Length > 0)
-                {
-                    cmd.v_MethodParameters.Rows.Clear();
-                    foreach (var param in reqdParams)
-                    {
-                        cmd.v_MethodParameters.Rows.Add(param.Name, "");
-                    }
+                    methodInfo.Invoke(null, new object[] { table});
                 }
                 else
                 {
-                    MessageBox.Show("There are no parameters required for this method!", "No Parameters Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    methodInfo.Invoke(command, new object[] { table});
                 }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("There was an error generating the parameters: " + ex.ToString());
             }
 
-
-
+            return dgv;
         }
-        private static void ShowDLLExplorer(object sender, EventArgs e)
+        #endregion
+
+        #region  CustomItemControl(UIHelper)
+
+        /// <summary>
+        /// create UIHelpers(CommandItemControl) and binding a event. this method use PropertyUIHelper attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property</param>
+        /// <returns></returns>
+        public static List<Control> CreateDefaultUIHelpersFor(string propertyName, ScriptCommand command, Control targetControl, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropInfo = null)
         {
-            //create form
-            using (UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer())
+            if (propInfo == null)
             {
-                //show dialog
-                if (dllExplorer.ShowDialog() == DialogResult.OK)
+                propInfo = command.GetProperty(propertyName);
+            }
+
+            var propertyUIHelpers = GetCustomAttributesWithVirtual<PropertyUIHelper>(propInfo, virtualPropInfo);
+
+            // force add Variable Helper
+            if (propertyUIHelpers.Where(attr => (attr.additionalHelper == PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper))
+                    .Count() == 0)
+            {
+                propertyUIHelpers.Add(new PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper));
+            }
+
+            var controlList = new List<Control>();
+            int count = 0;
+            foreach (PropertyUIHelper uiHelper in propertyUIHelpers)
+            {
+                controlList.Add(CreateDefaultUIHelperFor(propertyName, uiHelper, count, targetControl, editor));
+
+                count++;
+            }
+
+            return controlList;
+        }
+
+        /// <summary>
+        /// create CustomUIHelpers(CommandItemControl) and binding a event. this method use PropertyCustomUIHelper attribute.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
+        /// <returns></returns>
+        public static List<Control> CreateCustomUIHelpersFor(string propertyName, ScriptCommand command, Control targetControl, frmCommandEditor editor, PropertyInfo propInfo = null, PropertyInfo virtualPropertyInfo = null)
+        {
+            if (propInfo == null)
+            {
+                propInfo = command.GetProperty(propertyName);
+            }
+            List<Control> ctrls = new List<Control>();
+
+            var uiHelpers = GetCustomAttributesWithVirtual<PropertyCustomUIHelper>(propInfo, virtualPropertyInfo);
+
+            if (uiHelpers.Count == 0)
+            {
+                return ctrls;
+            }
+
+            int counter = 0;
+            foreach (var uiHelper in uiHelpers)
+            {
+                ctrls.Add(CreateDefaultCustomUIHelperFor(propertyName, command, uiHelper, counter, targetControl, editor));
+
+                counter++;
+            }
+
+            return ctrls;
+        }
+
+        /// <summary>
+        /// create UIHelper(CommandItemControl) and binding a event. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="setting"></param>
+        /// <param name="num"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
+        {
+            var uiHelper = CreateSimpleUIHelper(propertyName + HelperInfix + num, targetControl);
+            uiHelper.HelperType = setting.additionalHelper;
+            switch (setting.additionalHelper)
+            {
+                case PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
+                    //show variable selector
+                    uiHelper.CommandImage = Images.GetUIImage("VariableCommand");
+                    uiHelper.CommandDisplay = "Insert Variable";
+                    uiHelper.DrawIcon = Properties.Resources.taskt_variable_helper;
+                    uiHelper.Click += (sender, e) => ShowVariableSelector(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper:
+                    //show file selector
+                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                    uiHelper.CommandDisplay = "Select a File";
+                    uiHelper.DrawIcon = Properties.Resources.taskt_file_helper;
+                    uiHelper.Click += (sender, e) => ShowFileSelector(sender, e, editor);
+                    break;
+
+                case PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper:
+                    //show folder selector
+                    uiHelper.CommandImage = Images.GetUIImage("ClipboardGetTextCommand");
+                    uiHelper.CommandDisplay = "Select a Folder";
+                    uiHelper.DrawIcon = Properties.Resources.taskt_folder_helper;
+                    uiHelper.Click += (sender, e) => ShowFolderSelector(sender, e, editor);
+                    break;
+            }
+            return uiHelper;
+        }
+
+        /// <summary>
+        /// create CustomUIHelper(CommandItemControl) and binding a event. this method does not support attributes. only specify arguments.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="setting"></param>
+        /// <param name="num"></param>
+        /// <param name="targetControl"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, frmCommandEditor editor)
+        {
+            var uiHelper = CreateSimpleUIHelper(propertyName + CustomHelperInfix + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            uiHelper.CommandDisplay = setting.labelText;
+            (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
+
+            if (isOuterClass)
+            {
+                uiHelper.Click += (EventHandler)trgMethod.CreateDelegate(typeof(EventHandler));
+            }
+            else
+            {
+                uiHelper.Click += (EventHandler)Delegate.CreateDelegate(typeof(EventHandler), command, trgMethod);
+            }
+
+            return uiHelper;
+        }
+        #endregion
+
+        #endregion
+
+        #region create standard controls
+
+        /// <summary>
+        /// create ComboBox and binding property. This methods does not use attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static TextBox CreateStandardTextBoxFor(string propertyName, ScriptCommand command)
+        {
+            var inputBox = new TextBox();
+            var theme = CurrentEditor.Theme.Input;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
+            inputBox.DataBindings.Add("Text", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+            inputBox.Name = propertyName;
+            return inputBox;
+        }
+
+        /// <summary>
+        /// create ComboBox and binding property and binding some events for cursor position. This methods does not use attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static ComboBox CreateStandardComboboxFor(string propertyName, ScriptCommand command)
+        {
+            var inputBox = new ComboBox();
+            var theme = CurrentEditor.Theme.Combobox;
+            inputBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            inputBox.ForeColor = theme.FontColor;
+            inputBox.BackColor = theme.BackColor;
+            inputBox.DataBindings.Add("Text", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+            inputBox.Height = 30;
+            inputBox.Width = 300;
+            inputBox.Name = propertyName;
+
+            // cursor position events
+            inputBox.KeyUp += (sender, e) => ComboBoxKeyUp_SaveCursorPosition(sender, e);
+            inputBox.Click += (sender, e) => ComboBoxClick_SaveCursorPosition(sender, e);
+
+            return inputBox;
+        }
+
+        /// <summary>
+        /// create CheckBox and binding property. This method does not use attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static CheckBox CreateStandardCheckboxFor(string propertyName, ScriptCommand command)
+        {
+            var checkBox = new CheckBox();
+
+            var theme = CurrentEditor.Theme.Checkbox;
+            checkBox.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            checkBox.ForeColor = theme.FontColor;
+            checkBox.BackColor = theme.BackColor;
+            checkBox.DataBindings.Add("Checked", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+            checkBox.Name = propertyName;
+
+            return checkBox;
+        }
+
+        /// <summary>
+        ///  create DataGridView and binding property. This method does not use attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public static DataGridView CreateStandardDataGridViewFor(string propertyName, ScriptCommand command)
+        {
+            var theme = CurrentEditor.Theme.Datagridview;
+            var dgv = new DataGridView();
+            dgv.Font = new Font(theme.Font, theme.FontSize, theme.Style);
+            dgv.ForeColor = theme.FontColor;
+            dgv.ColumnHeadersHeight = Convert.ToInt32(theme.FontSize) + 20;
+            dgv.RowTemplate.Height = Convert.ToInt32(theme.FontSize) + 20;
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.DataBindings.Add("DataSource", command, propertyName, false, DataSourceUpdateMode.OnPropertyChanged);
+
+            dgv.Name = propertyName;
+
+            return dgv;
+        }
+
+        /// <summary>
+        /// create CommandItemControl. This method does not use attributes.
+        /// </summary>
+        /// <param name="controlName"></param>
+        /// <param name="targetControl"></param>
+        /// <returns></returns>
+        public static CommandItemControl CreateSimpleUIHelper(string controlName, Control targetControl)
+        {
+            var theme = CurrentEditor.Theme.UIHelper;
+            CommandItemControl helperControl = new CommandItemControl
+            {
+                Padding = new Padding(10, 0, 0, 0),
+                Font = new Font(theme.Font, theme.FontSize, theme.Style),
+                ForeColor = theme.FontColor,
+                BackColor = theme.BackColor,
+                Name = controlName,
+                Tag = targetControl
+            };
+
+            return helperControl;
+        }
+
+        /// <summary>
+        /// create Label, this method does not use attributes.
+        /// </summary>
+        /// <returns></returns>
+        public static Label CreateSimpleLabel()
+        {
+            var theme = CurrentEditor.Theme.Label;
+            Label newLabel = new Label
+            {
+                AutoSize = true,
+                Font = new Font(theme.Font, theme.FontSize, theme.Style),
+                ForeColor = theme.FontColor,
+                BackColor = theme.BackColor
+            };
+            return newLabel;
+        }
+        #endregion
+
+        #region create Control support methods
+
+        #region DataGridView methods
+        /// <summary>
+        /// create/init DataTable and DataGridView columns to specified arguments
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="command"></param>
+        /// <param name="dgv"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        private static DataTable CreateDataTable(string propertyName, ScriptCommand command, DataGridView dgv, List<PropertyDataGridViewColumnSettings> columns = null)
+        {
+            var table = new DataTable
+            {
+                TableName = propertyName.Replace("v_", "") + DateTime.Now.ToString("MMddyy.hhmmss")
+            };
+
+            // add column
+            foreach (var colSetting in columns)
+            {
+                // DataTable Column
+                table.Columns.Add(colSetting.columnName);
+                table.Columns[table.Columns.Count - 1].DefaultValue = colSetting.defaultValue;
+
+                // DataGridView Column
+                DataGridViewColumn newDGVColumn;
+                switch (colSetting.type)
                 {
-                    //user accepted the selections
-                    //declare command
-                    Core.Automation.Commands.ExecuteDLLCommand cmd = (Core.Automation.Commands.ExecuteDLLCommand)CurrentEditor.selectedCommand;
+                    case PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox:
+                        newDGVColumn = new DataGridViewTextBoxColumn();
+                        break;
+                    case PropertyDataGridViewColumnSettings.DataGridViewColumnType.ComboBox:
+                        newDGVColumn = new DataGridViewComboBoxColumn();
+                        var so = colSetting.comboBoxItems.Split('\n');
+                        ((DataGridViewComboBoxColumn) newDGVColumn).Items.AddRange(so);
+                        break;
+                    case PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox:
+                        newDGVColumn = new DataGridViewCheckBoxColumn();
+                        break;
+                    default:
+                        newDGVColumn = new DataGridViewTextBoxColumn();
+                        break;
+                }
+                newDGVColumn.HeaderText = colSetting.headerText;
+                newDGVColumn.DataPropertyName = colSetting.columnName;
+                newDGVColumn.ReadOnly = colSetting.readOnly;
+                dgv.Columns.Add(newDGVColumn);
+            }
 
-                    //add file name
-                    if (!string.IsNullOrEmpty(dllExplorer.FileName))
+            return table;
+        }
+        #endregion
+
+        #region Label methods
+        /// <summary>
+        /// get text for Label. This method use PropertyDescription, PropertyShowSampleUsageInDescription, PropertyIsOptional attributes.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="propInfo"></param>
+        /// <param name="setting"></param>
+        /// <param name="virtualPropertyInfo">if not null, try use virtual property info</param>
+        /// <returns></returns>
+        public static string GetLabelText(string propertyName, PropertyInfo propInfo, ApplicationSettings setting, PropertyInfo virtualPropertyInfo = null)
+        {
+            var attrDescription = GetCustomAttributeWithVirtual<PropertyDescription>(propInfo, virtualPropertyInfo) ?? new PropertyDescription(propertyName);
+
+            string labelText = setting.replaceApplicationKeyword(attrDescription.propertyDescription);
+
+            // polite text
+            if (setting.ClientSettings.ShowPoliteTextInDescription)
+            {
+                var lowText = labelText.ToLower();
+
+                if (!Regex.IsMatch(lowText, "^please (select|specify|enter|indicate|input)"))
+                {
+                    // check "Select" or not
+                    var controlType = GetCustomAttributeWithVirtual<PropertyRecommendedUIControl>(propInfo, virtualPropertyInfo)?.recommendedControl ?? PropertyRecommendedUIControl.RecommendeUIControlType.TextBox;
+                    bool isSelect = ((controlType == PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox) ||
+                                        (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.CheckBox) ||
+                                        (controlType == PropertyRecommendedUIControl.RecommendeUIControlType.RadioButton));
+                    if (!isSelect)
                     {
-                        CurrentEditor.flw_InputVariables.Controls["v_FilePath"].Text = dllExplorer.FileName;
+                        var uiOpts = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropertyInfo);
+                        var isWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropertyInfo);
+                        var isVar = GetCustomAttributeWithVirtual<PropertyIsVariablesList>(propInfo, virtualPropertyInfo);
+                        var ins = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropertyInfo);
+
+                        isSelect = (uiOpts.Count > 0) ||
+                                    (isWin?.isWindowNamesList ?? false) ||
+                                    (isVar?.isVariablesList ?? false) ||
+                                    ((ins?.instanceType ?? PropertyInstanceType.InstanceType.none) != PropertyInstanceType.InstanceType.none);
                     }
 
-                    //add class name
-                    if (dllExplorer.lstClasses.SelectedItem != null)
+                    if (Regex.IsMatch(lowText, "^(the|a|an) "))
                     {
-                        CurrentEditor.flw_InputVariables.Controls["v_ClassName"].Text = dllExplorer.lstClasses.SelectedItem.ToString();
+                        // ex.) the variable name
+                        labelText = "Please " + (isSelect ? "Select" : "Specify") + " " + labelText;
                     }
-
-                    //add method name
-                    if (dllExplorer.lstMethods.SelectedItem != null)
+                    else if (Regex.IsMatch(lowText, "^(select|specify|enter|indicate|input)"))
                     {
-                        CurrentEditor.flw_InputVariables.Controls["v_MethodName"].Text = dllExplorer.lstMethods.SelectedItem.ToString();
+                        // ex.) select the variable name
+                        labelText = "Please " + labelText;
                     }
-
-                    cmd.v_MethodParameters.Rows.Clear();
-
-                    //add parameters
-                    if ((dllExplorer.lstParameters.Items.Count > 0) && (dllExplorer.lstParameters.Items[0].ToString() != "This method requires no parameters!"))
+                    else
                     {
-                        foreach (var param in dllExplorer.SelectedParameters)
+                        // ex.) variable name
+                        labelText = "Please " + (isSelect ? "Select" : "Specify") + " the " + labelText;
+                    }
+                }
+            }
+
+            // show sample usage
+            if (setting.ClientSettings.ShowSampleUsageInDescription)
+            {
+                var attrShowSample = GetCustomAttributeWithVirtual<PropertyShowSampleUsageInDescription>(propInfo, virtualPropertyInfo);
+                if (attrShowSample?.showSampleUsage ?? false)
+                {
+                    if (!labelText.Contains("(ex."))
+                    {
+                        var sampleText = GetSampleUsageText(propInfo, setting, virtualPropertyInfo);
+                        if (sampleText != "")
                         {
-                            cmd.v_MethodParameters.Rows.Add(param, "");
+                            labelText += " (ex. " + sampleText + ")";
                         }
                     }
                 }
             }
+
+            // show optional
+            var attrIsOpt = GetCustomAttributeWithVirtual<PropertyIsOptional>(propInfo, virtualPropertyInfo);
+            if (attrIsOpt?.isOptional ?? false)
+            {
+                if (!labelText.Contains("Optional"))
+                {
+                    labelText = "Optional - " + labelText;
+                }
+
+                if ((attrIsOpt.setBlankToValue != "") && (!labelText.Contains("Default is") && (setting.ClientSettings.ShowDefaultValueInDescription)))
+                {
+                    labelText += " (Default is " + attrIsOpt.setBlankToValue + ")";
+                }
+            }
+
+            return labelText;
         }
 
-        private static void TextBoxKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        /// <summary>
+        /// get sample usage text to Label. This method use PropertyShowSampleUsageInDescription, PropertyDetailSampleUsage, SampleUsage attributes.
+        /// </summary>
+        /// <param name="propInfo"></param>
+        /// <param name="setting"></param>
+        /// <param name="virtualPropInfo">if not null, try use virtual property info</param>
+        /// <param name="planeText">if sample usege text written in MarkDown, return value is plane text.</param>
+        /// <returns></returns>
+        public static string GetSampleUsageText(PropertyInfo propInfo, ApplicationSettings setting, PropertyInfo virtualPropInfo = null, bool planeText = true)
+        {
+            var sampleText = "";
+            var attrShowSample = GetCustomAttributeWithVirtual<PropertyShowSampleUsageInDescription>(propInfo, virtualPropInfo);
+            if (attrShowSample?.showSampleUsage ?? false)
+            {
+                var attrDetailSamples = GetCustomAttributesWithVirtual<PropertyDetailSampleUsage>(propInfo, virtualPropInfo)
+                                            .Where(v => v.showInDescription)
+                                            .ToList();
+
+                if (attrDetailSamples.Count > 0)
+                {
+                    foreach (var d in attrDetailSamples)
+                    {
+                        sampleText += d.sampleUsage + " or ";
+                    }
+                    sampleText = sampleText.Trim();
+                    sampleText = sampleText.Substring(0, sampleText.Length - 2);
+                }
+
+                if (sampleText == "")
+                {
+                    var attrSample = GetCustomAttributeWithVirtual<SampleUsage>(propInfo, virtualPropInfo);
+                    sampleText = attrSample?.sampleUsage ?? "";
+                }
+            }
+
+            if (planeText)
+            {
+                return GetSampleUsageTextForLabel(sampleText, setting);
+            }
+            else
+            {
+                return setting.replaceApplicationKeyword(sampleText);
+            }
+        }
+
+        #region keyword md format
+
+        /// <summary>
+        /// get SampleUsage text for Label (Description)
+        /// </summary>
+        /// <param name="sample"></param>
+        /// <param name="setting"></param>
+        /// <returns></returns>
+        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
+        {
+            return setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim()).Replace(" or ", ", ");
+        }
+        #endregion
+        #endregion
+
+        #region ComboBox methods
+        
+        /// <summary>
+        /// add windows names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        public static ComboBox AddWindowNames(this ComboBox cbo, frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            return cbo.AddComoboBoxItems(editor, new Func<List<string>>( () => {
+                return GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop);
+            }));
+        }
+
+        /// <summary>
+        /// add variable names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static ComboBox AddVariableNames(this ComboBox cbo, frmCommandEditor editor)
+        {
+            return cbo.AddComoboBoxItems(editor, new Func<List<string>>(() =>
+            {
+                return GetVariableNames(editor);
+            }));
+        }
+
+        /// <summary>
+        /// add Instace names to specified ComboBox
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static ComboBox AddInstanceNames(this ComboBox cbo, frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        {
+            return cbo.AddComoboBoxItems(editor, new Func<List<string>>(() =>
+            {
+                return GetInstanceNames(editor, tp);
+            }));
+        }
+
+        public static ComboBox AddComoboBoxItems(this ComboBox cbo, frmCommandEditor editor, Func<List<string>> itemsFunc)
+        {
+            if ((cbo == null) || (editor == null))
+            {
+                return null;
+            }
+
+            cbo.BeginUpdate();
+
+            cbo.Items.Clear();
+
+            cbo.Items.AddRange(itemsFunc().ToArray());
+
+            cbo.EndUpdate();
+
+            return cbo;
+        }
+
+        /// <summary>
+        /// get Window Names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        public static List<string> GetWindowNames(frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            var lst = new List<string>();
+
+            if (addCurrentWindow)
+            {
+                lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
+            }
+
+            if (addAllWindows)
+            {
+                lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
+            }
+            if (addDesktop)
+            {
+                lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
+            }
+            lst.AddRange(WindowNameControls.GetAllWindowTitles());
+
+            return lst;
+        }
+
+        #region create ComboBox items list
+        /// <summary>
+        /// get variable names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<string> GetVariableNames(frmCommandEditor editor)
+        {
+            return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
+        }
+
+        /// <summary>
+        /// get instance names list
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <param name="tp"></param>
+        /// <returns></returns>
+        public static List<string> GetInstanceNames(frmCommandEditor editor, PropertyInstanceType.InstanceType tp)
+        {
+            if (editor == null)
+            {
+                return new List<string>();
+            }
+
+            string sortOrder = editor.appSettings.ClientSettings.InstanceNameOrder.ToLower();
+
+            Dictionary<string, int> instanceList = editor.instanceList.getInstanceClone(tp, (sortOrder == "frequency of use"));
+
+            string defInstanceName = "";
+            switch (tp)
+            {
+                case PropertyInstanceType.InstanceType.DataBase:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.Excel:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.IE:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.NLG:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultNLGInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.WebBrowser:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.StopWatch:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultStopWatchInstanceName;
+                    break;
+                case PropertyInstanceType.InstanceType.Word:
+                    defInstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
+                    break;
+            }
+            if ((defInstanceName != "") && !instanceList.ContainsKey(defInstanceName))
+            {
+                instanceList.Add(defInstanceName, 0);
+            }
+
+            List<string> sortedInstance;
+            switch (editor.appSettings.ClientSettings.InstanceNameOrder.ToLower())
+            {
+                case "no sorting":
+                    sortedInstance = instanceList.Keys.ToList();
+                    break;
+                case "by name":
+                    sortedInstance = instanceList.OrderBy(t => t.Key).Select(v => v.Key).ToList();
+                    break;
+                case "creation frequently":
+                case "frequency of use":
+                default:
+                    sortedInstance = instanceList.OrderByDescending(t => t.Value).Select(v => v.Key).ToList();
+                    break;
+            }
+
+            return sortedInstance;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// get MethodInfo from name. If methodName contains "+", it means use outer class method.
+        /// </summary>
+        /// <param name="methodName"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        private static (MethodInfo, bool) GetMethodInfo(string methodName, ScriptCommand command)
+        {
+            bool useOuterClassEvent = methodName.Contains("+");
+            MethodInfo trgMethod;
+            if (useOuterClassEvent)
+            {
+                int idx = methodName.IndexOf("+");
+                string className = methodName.Substring(0, idx);
+                string shortMethodName = methodName.Substring(idx + 1);
+                var tp = Type.GetType("taskt.Core.Automation.Commands." + className);
+                trgMethod = tp.GetMethod(shortMethodName, BindingFlags.Public | BindingFlags.Static);
+            }
+            else
+            {
+                trgMethod = command.GetType().GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            }
+
+            if (trgMethod == null)
+            {
+                throw new Exception("Method '" + methodName + "' does not exists. Command: " + command.CommandName);
+            }
+
+            return (trgMethod, useOuterClassEvent);
+        }
+        #endregion
+
+        #region Control event handlers
+
+        /// <summary>
+        /// deny create new line when type Enter in TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void TextBoxKeyDown_DenyEnterNewLine(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -1037,58 +1511,203 @@ namespace taskt.UI.CustomControls
             }
         }
 
-        private static void ComboBoxKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        /// <summary>
+        /// remember cursor position in ComboBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ComboBoxKeyUp_SaveCursorPosition(object sender, KeyEventArgs e)
         {
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
-            Console.WriteLine(trg.Tag);
         }
-        private static void ComboBoxClick(object sender, System.EventArgs e)
+        /// <summary>
+        /// remember cursor position in ComboBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ComboBoxClick_SaveCursorPosition(object sender, EventArgs e)
         {
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
-            Console.WriteLine(trg.Tag);
         }
+        #endregion
 
-        private static void AddInputParameter(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
+        #endregion
+
+        #region UIHelper events
+
+        /// <summary>
+        /// show Variable Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
+        public static void ShowVariableSelector(object sender, EventArgs e, frmCommandEditor editor)
         {
+            //get copy of user variables and append system variables, then load to combobox
+            var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
+            variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
 
-            DataGridView inputControl = (DataGridView)CurrentEditor.flw_InputVariables.Controls["v_UserInputConfig"];
-            var inputTable = (DataTable)inputControl.DataSource;
-            var newRow = inputTable.NewRow();
-            newRow["Size"] = "500,100";
-            inputTable.Rows.Add(newRow);
-
-        }
-        private static void ShowHTMLBuilder(object sender, EventArgs e, UI.Forms.frmCommandEditor editor)
-        {
-            using (var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder())
+            using (Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList))
             {
-                RichTextBox inputControl = (RichTextBox)editor.flw_InputVariables.Controls["v_InputHTML"];
-                htmlForm.rtbHTML.Text = inputControl.Text;
-
-                if (htmlForm.ShowDialog() == DialogResult.OK)
+                if (newVariableSelector.ShowDialog() == DialogResult.OK)
                 {
-                    inputControl.Text = htmlForm.rtbHTML.Text;
+                    //ensure that a variable was actually selected
+                    if (newVariableSelector.selectedItem == null)
+                    {
+                        //return out as nothing was selected
+                        MessageBox.Show("There were no variables selected!");
+                        return;
+                    }
+
+                    //grab the referenced input assigned to the 'insert variable' button instance
+                    CommandItemControl inputBox = (CommandItemControl)sender;
+
+                    //load settings
+                    var settings = CurrentEditor.appSettings.EngineSettings;
+
+                    if (inputBox.Tag is TextBox targetTextbox)
+                    {
+                        if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                        {
+                            string str = targetTextbox.Text;
+                            int cursorPos = targetTextbox.SelectionStart;
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                            targetTextbox.Focus();
+                            targetTextbox.SelectionStart = cursorPos + ins.Length;
+                            targetTextbox.SelectionLength = 0;
+                        }
+                        else
+                        {
+                            targetTextbox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetTextbox.Focus();
+                            targetTextbox.SelectionStart = targetTextbox.Text.Length;
+                            targetTextbox.SelectionLength = 0;
+                        }
+                    }
+                    else if (inputBox.Tag is ComboBox targetCombobox)
+                    {
+                        if (editor.appSettings.ClientSettings.InsertVariableAtCursor)
+                        {
+                            string str = targetCombobox.Text;
+                            int cursorPos;
+                            if (targetCombobox.Tag == null)
+                            {
+                                targetCombobox.Tag = 0;
+                            }
+                            if (!int.TryParse(targetCombobox.Tag.ToString(), out cursorPos))
+                            {
+                                cursorPos = str.Length;
+                            }
+                            string ins = string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Text = str.Substring(0, cursorPos) + ins + str.Substring(cursorPos);
+                            targetCombobox.Focus();
+                            targetCombobox.SelectionStart = cursorPos + ins.Length;
+                            targetCombobox.SelectionLength = 0;
+                        }
+                        else
+                        {
+                            targetCombobox.Text += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                            targetCombobox.Focus();
+                            targetCombobox.SelectionStart = targetCombobox.Text.Length;
+                            targetCombobox.SelectionLength = 0;
+                        }
+                    }
+                    else if (inputBox.Tag is DataGridView targetDGV)
+                    {
+                        if (targetDGV.SelectedCells.Count == 0)
+                        {
+                            MessageBox.Show("Please make sure you have selected an action and selected a cell before attempting to insert a variable!", "No Cell Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        if (!(targetDGV.SelectedCells[0] is DataGridViewTextBoxCell))
+                        {
+                            MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        if (targetDGV.SelectedCells[0].ColumnIndex == 0)
+                        {
+                            if (targetDGV.Tag == null)
+                            {
+                                MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            else if (targetDGV.Tag.ToString() != "column-a-editable")
+                            {
+                                MessageBox.Show("Invalid Cell Selected!", "Invalid Cell Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
+
+                        var source = (DataTable)targetDGV.DataSource;
+                        var rowIndex = targetDGV.SelectedCells[0].RowIndex;
+                        var colIndex = targetDGV.SelectedCells[0].ColumnIndex;
+                        if (source.Rows.Count == targetDGV.SelectedCells[0].RowIndex)
+                        {
+                            source.Rows.Add(source.NewRow());
+                        }
+                        var targetCell = targetDGV.Rows[rowIndex].Cells[colIndex];
+                        targetCell.Value += string.Concat(settings.VariableStartMarker, newVariableSelector.selectedItem.ToString(), settings.VariableEndMarker);
+                    }
                 }
             }
         }
 
-        public static void ShowAllForms()
+        /// <summary>
+        /// show File Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
+        private static void ShowFileSelector(object sender, EventArgs e, frmCommandEditor editor)
         {
-            foreach (Form frm in Application.OpenForms)
+            using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                frm.WindowState = FormWindowState.Normal;
-            }
-        }
-        public static void HideAllForms()
-        {
-            foreach (Form frm in Application.OpenForms)
-            {
-                frm.WindowState = FormWindowState.Minimized;
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    SetControlValue((Control)((CommandItemControl)sender).Tag, ofd.FileName);
+                }
             }
         }
 
+        /// <summary>
+        /// show Folder Selector form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="editor"></param>
+        private static void ShowFolderSelector(object sender, EventArgs e, frmCommandEditor editor)
+        {
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    SetControlValue((Control)((CommandItemControl)sender).Tag, fbd.SelectedPath);
+                }
+            }
+        }
+
+        private static void SetControlValue(Control targetControl, string newValue)
+        {
+            if (targetControl is TextBox targetText)
+            {
+                targetText.Text = newValue;
+            }
+            else if (targetControl is ComboBox targetCombo)
+            {
+                targetCombo.Text = newValue;
+            }
+            else if (targetControl is DataGridView targetDGV)
+            {
+                targetDGV.CurrentCell.Value = newValue;
+            }
+        }
+
+        #endregion
 
         public static List<AutomationCommand> GenerateCommandsandControls()
         {
@@ -1116,9 +1735,9 @@ namespace taskt.UI.CustomControls
                 }
                 var subGroupAttr = (Core.Automation.Attributes.ClassAttributes.SubGruop)commandClass.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.SubGruop));
                 string subGroupName = (subGroupAttr != null) ? subGroupAttr.subGruopName : "";
-                    
+
                 //Instantiate Class
-                Core.Automation.Commands.ScriptCommand newCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(commandClass);
+                ScriptCommand newCommand = (ScriptCommand)Activator.CreateInstance(commandClass);
 
                 //If command is enabled, pull for display and configuration
                 if (newCommand.CommandEnabled)
@@ -1144,273 +1763,6 @@ namespace taskt.UI.CustomControls
 
             return commandList;
 
-        }
-        public static ComboBox AddWindowNames(this ComboBox cbo, UI.Forms.frmCommandEditor editor = null)
-        {
-            if (cbo == null)
-                return null;
-
-            cbo.BeginUpdate();
-
-            cbo.Items.Clear();
-
-            if (editor != null)
-            {
-                cbo.Items.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
-            }
-            else
-            {
-                cbo.Items.Add("Current Window");
-            }
-
-            Process[] processlist = Process.GetProcesses();
-            //pull the main window title for each
-            foreach (Process process in processlist)
-            {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
-                {
-                    //add to the control list of available windows
-                    cbo.Items.Add(process.MainWindowTitle);
-                }
-            }
-
-            cbo.EndUpdate();
-
-            return cbo;
-        }
-        public static ComboBox AddVariableNames(this ComboBox cbo, UI.Forms.frmCommandEditor editor)
-        {
-            if (cbo == null)
-                return null;
-
-            if (editor != null)
-            {
-                cbo.BeginUpdate();
-
-                cbo.Items.Clear();
-
-                foreach (var variable in editor.scriptVariables)
-                {
-                    cbo.Items.Add(variable.VariableName);
-                }
-
-                cbo.EndUpdate();
-
-            }
-
-            return cbo;
-        }
-
-        public static string GetDataGridViewRowInfoText(Core.Automation.Attributes.PropertyAttributes.PropertyAddtionalParameterInfo rowInfo)
-        {
-            if (rowInfo == null)
-            {
-                return "";
-            }
-
-            string ret = rowInfo.description.replaceEngineKeyword();
-            if (CurrentEditor.appSettings.ClientSettings.ShowSampleUsageInDescription)
-            {
-                if (!ret.Contains("(ex."))
-                {
-                    string smp = rowInfo.sampleUsage.getTextMDFormat().replaceEngineKeyword().Replace(" or ", ", ");
-                    if (smp.Length > 0)
-                    {
-                        ret += " (ex. " + smp + ")";
-                    }
-                }
-            }
-
-            return ret;
-        }
-
-        private static string replaceEngineKeyword(this string targetString)
-        {
-            var settings = CurrentEditor.appSettings.EngineSettings;
-            return targetString.Replace("{{{", settings.VariableStartMarker).Replace("}}}", settings.VariableEndMarker)
-                    .Replace("%kwd_current_window%", settings.CurrentWindowKeyword);
-        }
-
-        private static string getTextMDFormat(this string targetString)
-        {
-            int idxAster, idxTable;
-            string ret = "";
-            while(targetString.Length > 0)
-            {
-                idxAster = targetString.IndexOf("\\*");
-                idxTable = targetString.IndexOf("\\|");
-                if (idxAster >= 0 || idxTable >= 0)
-                {
-                    if ((idxAster >= 0) && (idxTable < 0))
-                    {
-                        ret += targetString.Substring(0, idxAster).removeMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if ((idxTable >= 0) && (idxAster < 0))
-                    {
-                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                    else if (idxAster < idxTable)
-                    {
-                        ret += targetString.Substring(0, idxAster).removeMDFormat() + "*";
-                        targetString = targetString.Substring(idxAster + 1);
-                    }
-                    else if (idxTable < idxAster)
-                    {
-                        ret += targetString.Substring(0, idxTable).removeMDFormat() + "|";
-                        targetString = targetString.Substring(idxTable + 1);
-                    }
-                }
-                else
-                {
-                    ret += targetString.removeMDFormat();
-                    targetString = "";
-                }
-            }
-            return ret;
-        }
-
-        private static string removeMDFormat(this string targetString)
-        {
-            return targetString.Replace("*", "").Replace("**", "").Replace("|", "");
-        }
-
-    }
-
-
-
-public class AutomationCommand
-    {
-        public Type CommandClass { get; set; }
-        public string FullName { get; set; }
-        public string ShortName { get; set; }
-        public string DisplayGroup { get; set; }
-        public string DisplaySubGroup { get; set; }
-        public Core.Automation.Commands.ScriptCommand Command { get; set; }
-        public List<Control> UIControls { get; set; }
-        public void RenderUIComponents(taskt.UI.Forms.frmCommandEditor editorForm)
-        {
-            if (Command == null)
-            {
-                throw new InvalidOperationException("Command cannot be null!");
-            }
-
-            UIControls = new List<Control>();
-            if (Command.CustomRendering)
-            {
-   
-                var renderedControls = Command.Render(editorForm);
-
-                if (renderedControls.Count == 0)
-                {
-                    var label = new Label();
-                    var theme = editorForm.Theme.ErrorLabel;
-                    //label.ForeColor = Color.Red;
-                    //label.AutoSize = true;
-                    //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
-                    label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-                    label.AutoSize = true;
-                    label.ForeColor = theme.FontColor;
-                    label.BackColor = theme.BackColor;
-                    label.Text = "No Controls are defined for rendering!  If you intend to override with custom controls, you must handle the Render() method of this command!  If you do not wish to override with your own custom controls then set 'CustomRendering' to False.";
-                    UIControls.Add(label);
-                }
-                else
-                {
-                    foreach (var ctrl in renderedControls)
-                    {
-                        UIControls.Add(ctrl);
-                    }
-
-                    //generate comment command if user did not generate it
-                    var commentControlExists = renderedControls.Any(f => f.Name == "v_Comment");
-
-                    if (!commentControlExists)
-                    {
-                        UIControls.Add(CommandControls.CreateDefaultLabelFor("v_Comment", Command));
-                        UIControls.Add(CommandControls.CreateDefaultInputFor("v_Comment", Command, 100, 300));                      
-                    }
-
-                }
-
-
-            }
-            else
-            {
-
-                var label = new Label();
-                var theme = editorForm.Theme.ErrorLabel;
-                //label.ForeColor = Color.Red;
-                //label.AutoSize = true;
-                //label.Font = new Font("Segoe UI", 18, FontStyle.Bold);
-                label.Font = new Font(theme.Font, theme.FontSize, theme.Style);
-                label.AutoSize = true;
-                label.ForeColor = theme.FontColor;
-                label.BackColor = theme.BackColor;
-                label.Text = "Command not enabled for custom rendering!";
-                UIControls.Add(label);
-            }
-        }  
-        public void Bind(UI.Forms.frmCommandEditor editor)
-        {
-            //preference to preload is false
-            //if (UIControls is null)
-            //{
-            this.RenderUIComponents(editor);
-            //}
-
-            foreach (var ctrl in UIControls)
-            {
-
-                if (ctrl.DataBindings.Count > 0)
-                {
-                    var newBindingList = new List<Binding>();
-                    foreach (Binding binding in ctrl.DataBindings)
-                    {
-                        newBindingList.Add(new Binding(binding.PropertyName, Command, binding.BindingMemberInfo.BindingField, false, DataSourceUpdateMode.OnPropertyChanged));
-                    }
-
-                    ctrl.DataBindings.Clear();
-
-                    foreach (var newBinding in newBindingList)
-                    {
-                        ctrl.DataBindings.Add(newBinding);
-                    }
-                }
-
-                if (ctrl is CommandItemControl)
-                {
-                    var control = (CommandItemControl)ctrl;
-                    switch (control.HelperType)
-                    {
-                        case Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper:
-                            control.DataSource = editor.scriptVariables;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                //if (ctrl is UIPictureBox)
-                //{
-
-                //    var typedControl = (UIPictureBox)InputControl;
-                
-                //}
-
-                //Todo: helper for loading variables, move to attribute
-                if ((ctrl.Name == "v_userVariableName") && (ctrl is ComboBox))
-                {
-                    var variableCbo = (ComboBox)ctrl;
-                    variableCbo.Items.Clear();
-                    foreach (var var in editor.scriptVariables)
-                    {
-                        variableCbo.Items.Add(var.VariableName);
-                    }
-                }
-              
-            }
         }
     }
 }

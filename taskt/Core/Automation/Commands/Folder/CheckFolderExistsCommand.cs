@@ -1,87 +1,71 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
-using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Folder Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Check Folder Exists")]
     [Attributes.ClassAttributes.Description("This command returns existence of folder paths from a specified location")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to return a existence of file paths from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CheckFolderExistsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify the path of the folder you want to check for existence (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfolder** or **{{{vFolderPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
         public string v_TargetFolderName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify the variable to assign the result")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("Result is **TRUE** or **FALSE**")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [Remarks("When the Folder Exists, Result is **TRUE**")]
         public string v_UserVariableName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
+        [PropertyIsOptional(true, "0")]
+        [PropertyFirstValue("0")]
+        public string v_WaitForFolder { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPathResult))]
+        public string v_ResultPath { get; set; }
 
         public CheckFolderExistsCommand()
         {
-            this.CommandName = "CheckFolderExistsCommand";
-            this.SelectionName = "Check Folder Exists";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CheckFolderExistsCommand";
+            //this.SelectionName = "Check Folder Exists";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            //apply variable logic
-            var targetFile = v_TargetFolderName.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
+            //try
+            //{
+            //    FolderPathControls.WaitForFolder(this, nameof(v_TargetFolderName), nameof(v_WaitForFolder), engine);
 
-            (System.IO.Directory.Exists(targetFile) ? "TRUE" : "FALSE").StoreInUserVariable(sender, v_UserVariableName);
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+            //    true.StoreInUserVariable(engine, v_UserVariableName);
+            //}
+            //catch
+            //{
+            //    false.StoreInUserVariable(engine, v_UserVariableName);
+            //}
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TargetFolderName", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_UserVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_UserVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_UserVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
-            return RenderedControls;
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Check: '" + v_TargetFolderName + "', Result In: '" + v_UserVariableName + "']";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_TargetFolderName))
-            {
-                this.validationResult += "Target folder is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_UserVariableName))
-            {
-                this.validationResult += "Variable is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
+            FolderPathControls.FolderAction(this, engine,
+                new Action<string>(path =>
+                {
+                    true.StoreInUserVariable(engine, v_UserVariableName);
+                }),
+                new Action<Exception>(ex =>
+                {
+                    false.StoreInUserVariable(engine, v_UserVariableName);
+                })
+            );
         }
     }
 }

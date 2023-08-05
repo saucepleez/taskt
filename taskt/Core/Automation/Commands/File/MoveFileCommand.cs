@@ -1,163 +1,169 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.IO;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
-
- 
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Move File")]
     [Attributes.ClassAttributes.Description("This command moves a file to a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to move a file to a new destination.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
+    // TODO: change to file action command
     public class MoveFileCommand : ScriptCommand
     {
-        [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Indicate whether to move or copy the file (default is Move File)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Move File")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Copy File")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether you intend to move the file or copy the file.  Moving will remove the file from the original path while Copying will not.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select either **Move File** or **Copy File**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_OperationType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        //[PropertyDescription("File Operation")]
+        //[PropertyUISelectionOption("Move File")]
+        //[PropertyUISelectionOption("Copy File")]
+        //[Remarks("Specify whether you intend to move the file or copy the file.  Moving will remove the file from the original path while Copying will not.")]
+        //[PropertyIsOptional(true, "Move File")]
+        //[PropertyDisplayText(true, "Operation")]
+        //public string v_OperationType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file (ex. C:\\temp\\myfile.txt, {{{vFilePath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_SourceFilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory to move/copy to (ex. C:\\temp\\new_folder, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the new path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\new path\\** or **{{{vTextFolderPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        [PropertyDescription("Destination Folder Path to Move")]
+        [PropertyDisplayText(true, "Folder")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Create folder if destination does not exist (default is No)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether the directory should be created if it does not already exist.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Create Folder When Destination Folder does not Exist")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [Remarks("Specify whether the directory should be created if it does not already exist.")]
+        [PropertyIsOptional(true, "No")]
         public string v_CreateDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Delete file if it already exists (default is No)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether the file should be deleted first if it is already found to exist.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Delete File if it already Exists")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [Remarks("Specify whether the file should be deleted first if it is already found to exist.")]
+        [PropertyIsOptional(true, "No")]
         public string v_DeleteExisting { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        [PropertyDescription("Variable Name to Store File Path Before Move")]
+        public string v_BeforeFilePathResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        [PropertyDescription("Variable Name to Store File Path After Move")]
+        public string v_AfterFilePathResult { get; set; }
 
         public MoveFileCommand()
         {
-            this.CommandName = "MoveFileCommand";
-            this.SelectionName = "Move/Copy File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MoveFileCommand";
+            //this.SelectionName = "Move/Copy File";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //apply variable logic
-            var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
-            var destinationFolder = v_DestinationDirectory.ConvertToUserVariable(sender);
+       //     var sourceFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
-            if (!System.IO.Directory.Exists(destinationFolder))
-            {
-                var vCreateDirectroy = v_CreateDirectory.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(vCreateDirectroy))
+       //     var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
+
+       //     if (!Directory.Exists(destinationFolder))
+       //     {
+       //         if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+       //         {
+       //             Directory.CreateDirectory(destinationFolder);
+       //         }
+       //         else
+       //         {
+       //             throw new Exception("destination folder does not exists: " + destinationFolder);
+       //         }
+       //     }
+
+       //     get source file name and info
+       //     FileInfo sourceFileInfo = new FileInfo(sourceFile);
+
+       //     create destination
+       //     var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
+
+       // todo: check folder is same
+
+       //delete if it already exists per user
+       //     if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+       //     {
+       //         File.Delete(destinationPath);
+       //     }
+
+            //File.Move(sourceFile, destinationPath);
+
+            //var vOperationType = this.GetUISelectionValue(nameof(v_OperationType), engine);
+            //switch (vOperationType) 
+            //{
+            //    case "move file":
+            //        File.Move(sourceFile, destinationPath);
+            //        break;
+
+            //    case "copy file":
+            //        File.Copy(sourceFile, destinationPath);
+            //        break;
+            //}
+
+            FilePathControls.FileAction(this, engine,
+                new Action<string>(path =>
                 {
-                    vCreateDirectroy = "No";
-                }
-                if (vCreateDirectroy.ToLower() == "yes")
-                {
-                    System.IO.Directory.CreateDirectory(destinationFolder);
-                }
-                else
-                {
-                    throw new Exception("destination folder does not exists: " + destinationFolder);
-                }
-            }
+                    var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
 
-            //get source file name and info
-            System.IO.FileInfo sourceFileInfo = new FileInfo(sourceFile);
+                    if (!Directory.Exists(destinationFolder))
+                    {
+                        if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                        {
+                            Directory.CreateDirectory(destinationFolder);
+                        }
+                        else
+                        {
+                            throw new Exception("destination folder does not exists: " + destinationFolder);
+                        }
+                    }
 
-            //create destination
-            var destinationPath = System.IO.Path.Combine(destinationFolder, sourceFileInfo.Name);
+                    //get source file name and info
+                    FileInfo sourceFileInfo = new FileInfo(path);
 
-            //delete if it already exists per user
-            var vDeleteExistsint = v_DeleteExisting.ConvertToUserVariable(sender);
-            if (vDeleteExistsint.ToLower() == "yes")
-            {
-                System.IO.File.Delete(destinationPath);
-            }
+                    //create destination
+                    var destinationPath = Path.Combine(destinationFolder, sourceFileInfo.Name);
 
-            var vOperationType = v_OperationType.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(vOperationType))
-            {
-                vOperationType = "Move File";
-            }
-            if (vOperationType == "Move File")
-            {
-                //move file
-                System.IO.File.Move(sourceFile, destinationPath);
-            }
-            else
-            {
-                //copy file
-                System.IO.File.Copy(sourceFile, destinationPath);
-            }
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+                    // todo: check folder is same
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_OperationType", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationDirectory", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_CreateDirectory", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteExisting", this, editor));
-            return RenderedControls;
-        }
+                    //delete if it already exists per user
+                    if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                    {
+                        File.Delete(destinationPath);
+                    }
 
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [" + v_OperationType + " from '" + v_SourceFilePath + "' to '" + v_DestinationDirectory + "']";
-        }
+                    File.Move(path, destinationPath);
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(v_SourceFilePath))
-            {
-                this.validationResult += "Source file is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(v_SourceFilePath))
-            {
-                this.validationResult += "Move/copy directory is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
+                    if (!string.IsNullOrEmpty(v_AfterFilePathResult))
+                    {
+                        destinationPath.StoreInUserVariable(engine, v_AfterFilePathResult);
+                    }
+                })
+            );
         }
     }
 }

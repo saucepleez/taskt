@@ -9,12 +9,8 @@ using taskt.UI.CustomControls;
 namespace taskt.Core.Automation.Commands
 {
 
-
-    
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a date calculation.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements actions against VariableList from the scripting engine.")]
@@ -27,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**{{{DateTime.Now}}}** or **1/1/2000**")]
         [Attributes.PropertyAttributes.Remarks("You can use known text or variables.")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [Attributes.PropertyAttributes.PropertyFirstValue("{{{DateTime.Now}}}")]
         public string v_InputValue { get; set; }
 
         [XmlAttribute]
@@ -63,6 +60,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.Remarks("")]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [Attributes.PropertyAttributes.PropertyFirstValue("MM/dd/yyyy hh:mm:ss")]
         public string v_ToStringFormat { get; set; }
 
         [XmlAttribute]
@@ -82,8 +80,8 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
 
-            this.v_InputValue = "";
-            this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
+            //this.v_InputValue = "";
+            //this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
         }
 
         public override void RunCommand(object sender)
@@ -174,10 +172,11 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-            {
-                this.v_InputValue = editor.ReplaceVariableMaker("{{{DateTime.Now}}}");
-            }
+            //if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            //{
+            //    //this.v_InputValue = editor.ReplaceVariableMaker("{{{DateTime.Now}}}");
+            //    this.v_InputValue = CommandControls.replaceApplicationKeyword("{{{DateTime.Now}}}");
+            //}
 
             return RenderedControls;
 

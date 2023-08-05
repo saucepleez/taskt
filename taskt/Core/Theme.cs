@@ -80,6 +80,16 @@ namespace taskt.Core
             }
         }
 
+        // checkbox
+        private UIFont _checkbox = new UIFont();
+        public UIFont Checkbox
+        {
+            get
+            {
+                return _checkbox;
+            }
+        }
+
         // uiHelper
         private UIFont _uihelper = new UIFont("Segoe UI Semilight", 10, FontStyle.Regular, Color.AliceBlue, Color.Transparent);
         public UIFont UIHelper
@@ -100,19 +110,23 @@ namespace taskt.Core
             }
         }
 
-        // script charactore
+        // script charactor
         public static Dictionary<string, UIFont> scriptTexts = new Dictionary<string, UIFont>() {
             { "normal", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.SteelBlue, Color.WhiteSmoke)},
             { "invalid", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Crimson, Color.WhiteSmoke)},
             { "comment", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.ForestGreen, Color.WhiteSmoke)},
             { "pause", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.MediumPurple, Color.Lavender)},
             { "debug", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.White, Color.OrangeRed)},
-            { "current", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Black, Color.Goldenrod)},
+            { "current-match", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Black, Color.Goldenrod)},
             { "match", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Black, Color.LightYellow)},
             { "selected-normal", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.White, Color.DodgerBlue)},
             { "selected-invalid", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Crimson, Color.DodgerBlue)},
             { "selected-comment", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.LightGreen, Color.DodgerBlue)},
             { "selected-pause", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.Plum, Color.DodgerBlue)},
+
+            { "number-normal", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.LightSlateGray, Color.Transparent)},
+            { "number-dontsaved", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.LightSlateGray, Color.Yellow)},
+            { "number-newline", new UIFont("Segoe UI", 12, FontStyle.Bold, Color.White, Color.LimeGreen)},
         };
 
         public class UIFont

@@ -1,78 +1,72 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("File/Book")]
+    [Attributes.ClassAttributes.CommandSettings("Add Workbook")]
     [Attributes.ClassAttributes.Description("This command adds a new Excel Workbook.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new workbook to an Exel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExcelAddWorkbookCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("When Workbook Exists")]
+        [InputSpecification("")]
+        [PropertyDetailSampleUsage("**Ignore**", "Do not add a Workbook")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [PropertyDetailSampleUsage("**Add**", "Add a Workbook. This should result in two Workbooks open")]
+        [Remarks("")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Add")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfWorkbookExists { get; set; }
 
         public ExcelAddWorkbookCommand()
         {
-            this.CommandName = "ExcelAddWorkbookCommand";
-            this.SelectionName = "Add Workbook";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-
-            this.v_InstanceName = "";
+            //this.CommandName = "ExcelAddWorkbookCommand";
+            //this.SelectionName = "Add Workbook";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var excelObject = engine.GetAppInstance(vInstance);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            excelInstance.Workbooks.Add();            
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var ifWorkbookExists = this.GetUISelectionValue(nameof(v_IfWorkbookExists), engine);
 
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            if (excelInstance.Workbooks.Count > 0)
             {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+                switch (ifWorkbookExists)
+                {
+                    case "error":
+                        throw new Exception("Excel Instance '" + v_InstanceName + "' has Workbook.");
+
+                    case "ignore":
+                        break;
+
+                    case "add":
+                        excelInstance.Workbooks.Add();
+                        break;
+                }
             }
-
-            return RenderedControls;
-
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_InstanceName))
+            else
             {
-                this.validationResult += "Instance is empty.\n";
-                this.IsValid = false;
+                excelInstance.Workbooks.Add();
             }
-
-            return this.IsValid;
         }
     }
 }

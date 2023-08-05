@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Set Clipboard, Get Clipboard sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set clipboard &quot;Hello!&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ClipboardSetTextCommand" CommandID="9f40374b-487c-471b-b634-0158efcc3a03" CommandName="ClipboardSetTextCommand" IsCommented="false" SelectionName="Set Clipboard Text" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="Hello!" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Execute Notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandID="55059c82-17c8-4f7d-b695-244455ebeecd" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="12ad5fe9-9896-43c6-8be4-8eb213f14635" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Paste clipboard text in Notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendHotkeyCommand" CommandID="847aabc0-748c-4d79-83ac-60c99d98e67b" CommandName="SendHotkeyCommand" IsCommented="false" SelectionName="Send Hotkey" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_Hotkey="Paste" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Type &quot;WORLD!!&quot; in Notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandID="6d707c12-5cb0-4270-8819-12098c27357d" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Send Keystrokes" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_TextToSend=" WORLD!!" v_EncryptionOption="Not Encrypted" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Copy all text in Notepad to Clipboard" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendHotkeyCommand" CommandID="7ff028b6-79cf-45e8-9c3c-2a0b939711f3" CommandName="SendHotkeyCommand" IsCommented="false" SelectionName="Send Hotkey" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_Hotkey="Select All" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendHotkeyCommand" CommandID="7ff028b6-79cf-45e8-9c3c-2a0b939711f3" CommandName="SendHotkeyCommand" IsCommented="false" SelectionName="Send Hotkey" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_Hotkey="Copy" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" v_Comment="Get clipboard text in 'vClipboardText'" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ClipboardGetTextCommand" CommandID="ee50bcd6-b861-4952-89de-4176e725aa5f" CommandName="ClipboardCommand" IsCommented="false" SelectionName="Get Clipboard Text" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vClipboardText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="b12fb70f-c9af-45ba-8a9b-128a46fa3de7" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Clipboard: ⦃vClipboardText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="66fec0e2-2c3c-4dbf-9b08-ddc44425418e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" v_Comment="Please close Noteapd, after finished :-)" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.28</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-07T23:57:18.6559698+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vClipboardText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

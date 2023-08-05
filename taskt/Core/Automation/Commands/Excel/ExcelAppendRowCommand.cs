@@ -2,55 +2,57 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Linq;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
-
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Row")]
+    [Attributes.ClassAttributes.CommandSettings("Append Row")]
     [Attributes.ClassAttributes.Description("Append to last row of sheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command will take in a comma seprerated value and append it to the end of an excel sheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automations.")]
     public class ExcelAppendRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyDescription("Please Enter the instance name")]
+        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [SampleUsage("**myInstance** or **excelInstance**")]
+        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Row to set")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set (This could be a DataRow).")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello,world or {vText}")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please Enter the Row to set")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter the text value that will be set (This could be a DataRow).")]
+        [SampleUsage("Hello,world or {vText}")]
+        [Remarks("")]
         public string v_TextToSet { get; set; }
 
         public ExcelAppendRowCommand()
         {
-            this.CommandName = "ExcelAppendRowCommand";
-            this.SelectionName = "Append Row";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelAppendRowCommand";
+            //this.SelectionName = "Append Row";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             this.v_InstanceName = "";
         }
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
             var splittext = v_TextToSet.Split(',');
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var excelObject = engine.GetAppInstance(vInstance);
-            int i = 1;
 
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+
+            int i = 1;            
             int lastUsedRow;
             try
             {
@@ -59,7 +61,7 @@ namespace taskt.Core.Automation.Commands
                                  Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
                                  false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 lastUsedRow = 0;
             }
@@ -80,14 +82,15 @@ namespace taskt.Core.Automation.Commands
                 excelSheet.Cells[lastUsedRow + 1, i] = output;
                 i++;
             }
-
-
         }
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Excel);
+            RenderedControls.AddRange(instanceCtrls);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TextToSet", this, editor));
 
             if (editor.creationMode == frmCommandEditor.CreationMode.Add)

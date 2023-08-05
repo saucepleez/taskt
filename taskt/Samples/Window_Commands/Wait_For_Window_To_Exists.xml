@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0e60882e-73d7-4e9a-a16f-47909ef47198" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Wait For Window To Exists sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="67a3e76c-5bd9-4ebe-8417-eb2651d9d2cc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Please execute Microsoft Edge, after close this message.&#xD;&#xA;I'll wait 300 sec." v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0e60882e-73d7-4e9a-a16f-47909ef47198" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Wait 'Edge' 300 sec." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="WaitForWindowCommand" CommandID="e2ccc657-a301-4b4f-b67d-31c34f61cc61" CommandName="WaitForWindowCommand" IsCommented="false" SelectionName="Wait For Window To Exist" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Edge" v_SearchMethod="Contains" v_LengthToWait="300" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0e60882e-73d7-4e9a-a16f-47909ef47198" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="A window that contains 'Edge' exists." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="f23ddffa-f123-42b5-9d28-cf3de68d36fe" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Microsoft Edge is here!" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0e60882e-73d7-4e9a-a16f-47909ef47198" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Please close Microsoft Edge, after finished :-)" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.29</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-08T17:29:51.0638141+09:00</LastRunTime>
+    <RunTimes>6</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>

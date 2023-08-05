@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="75e724a2-fe89-4a89-95cd-1bfe6ade2dc5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Using Variables as Lists (It's Not Recommended method)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4d5a3b1c-3283-4c05-88e0-409d77bc89b4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set Variable command applies a list encased in double braces ⦃⦃ item1|item2|item3⦄⦄" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2d7f34d3-4892-4f3e-8c97-ee72a32d35a7" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Note: Items must be encased in ⦃⦃ ⦄⦄ and delimited by pipe |" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="598d8f37-692d-402e-9136-b3c4d424a44e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Example 1) Create a list directly" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="07dbd758-bf93-4628-9b06-9a6763fb7926" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="⦃⦃one|two|three⦄⦄" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2bee5a70-ecdf-4ecc-8307-c19fe099a40c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Loop list to show each item" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="f3f308e8-fc93-4d7e-8e0e-f38ddef5f559" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="⦃vList⦄" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="08a79809-6b6c-454b-9bc1-442fbd3bdaa3" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vList⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="7007b085-1915-42b1-bde6-a8558b234946" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="dfbad92c-d41b-4fc7-9539-5a34240a8c2c" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Example 2) Initialize List with Variables" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="17b3b8fc-0318-4958-9d82-c4c8c631390b" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vColors" v_Input="red|blue|green|⦃varTest⦄" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="0493ce49-3cb9-4416-9e39-30d78114bd56" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="⦃⦃⦃vColors⦄⦄⦄" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="78ed5aee-3aa7-4d28-b3ac-efcac12abd28" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Loop list to show each item" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="54f3c1e9-b9d2-430b-b1d6-ab4797c4a77c" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="⦃vList⦄" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="26fc2fef-3cb6-4e2d-9ef1-f77a19edd3ef" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vList⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="fcc14a3e-44e1-490c-8fe6-338358191eab" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0901f317-7197-47e4-a33a-54ad24a316c9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" v_Comment="Example 3) Append to Existing List" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="d4c138fb-d25a-43a1-b253-b2f1d3e04ef6" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vColors" v_Input="⦃vColors⦄|black|purple|brown|teal" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="83953d4d-ae71-422c-83be-52468d4e197b" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="⦃⦃⦃vColors⦄⦄⦄" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="c9d69afc-9a47-4103-b8dc-b951eda980cb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Loop list to show each item" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="3a2f5c2c-ca78-4230-83b9-bf1fd282c841" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="⦃vList⦄" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="a31e71e5-3bb2-4f2d-b256-25c516ff1045" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vList⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="52babab2-ce80-4592-a57d-8e44a73ec21a" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="23" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.27</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-05T16:54:13.4461685+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>varTest</VariableName>
+      <VariableValue xsi:type="xsd:string">orange</VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vColors</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

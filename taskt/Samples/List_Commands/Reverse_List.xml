@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3801a123-0f0c-4c70-a049-5b3c3104d1b3" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Reverse List Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3801a123-0f0c-4c70-a049-5b3c3104d1b3" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create List, now ⦃ &quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;, &quot;jkl&quot; ⦄" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateListCommand" CommandID="630ceffa-7f97-44d4-b16b-6ec8e9f7d041" CommandName="CreateListCommand" IsCommented="false" SelectionName="Create List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="vList">
+        <v_ListValues>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ListValues122921.033024">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Values" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ListValues122921.033024" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ListValues122921.033024" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330241" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Values>abc</Values>
+              </ListValues122921.033024>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330242" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Values>def</Values>
+              </ListValues122921.033024>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330243" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Values>ghi</Values>
+              </ListValues122921.033024>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330244" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Values>jkl</Values>
+              </ListValues122921.033024>
+            </DocumentElement>
+            <diffgr:before>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330241" msdata:rowOrder="0">
+                <Values>abc</Values>
+              </ListValues122921.033024>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330242" msdata:rowOrder="1">
+                <Values>def</Values>
+              </ListValues122921.033024>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330243" msdata:rowOrder="2">
+                <Values>ghi</Values>
+              </ListValues122921.033024>
+              <ListValues122921.033024 diffgr:id="ListValues122921.0330244" msdata:rowOrder="3">
+                <Values>jkl</Values>
+              </ListValues122921.033024>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ListValues>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3801a123-0f0c-4c70-a049-5b3c3104d1b3" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Reverse" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ReverseListCommand" CommandID="91f43b16-262d-4080-80ee-b96f07211e74" CommandName="ReverseListCommand" IsCommented="false" SelectionName="Reverse List" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_OutputList="vNewList" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a9b81c4f-d306-459a-9991-756be3496d01" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Show List Item in vList" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConvertListToJSONCommand" CommandID="7b96590d-5e0e-4ec3-a59c-94be97b122aa" CommandName="ConvertListToJSONCommand" IsCommented="false" SelectionName="Convert List To JSON" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_applyToVariableName="vJSON" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d9b87c90-b234-4bce-a8dd-256902019cad" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vJSON⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a9b81c4f-d306-459a-9991-756be3496d01" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Show List Item in vNewList" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConvertListToJSONCommand" CommandID="7b96590d-5e0e-4ec3-a59c-94be97b122aa" CommandName="ConvertListToJSONCommand" IsCommented="false" SelectionName="Convert List To JSON" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vNewList" v_applyToVariableName="vJSON" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d9b87c90-b234-4bce-a8dd-256902019cad" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vJSON⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.55</TasktVersion>
+    <Author />
+    <LastRunTime>2021-12-29T15:43:56.9663819+09:00</LastRunTime>
+    <RunTimes>8</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vJSON</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vNewList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

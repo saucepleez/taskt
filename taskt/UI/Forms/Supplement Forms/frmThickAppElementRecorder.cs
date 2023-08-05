@@ -26,15 +26,12 @@ namespace taskt.UI.Forms.Supplemental
         private void frmThickAppElementRecorder_Load(object sender, EventArgs e)
         {
             //create data source from windows
-            cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            
+            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
         }
 
-
-      
         private void pbRecord_Click(object sender, EventArgs e)
         {
-
             // this.WindowState = FormWindowState.Minimized;
 
             if (!chkStopOnClick.Checked)
@@ -50,28 +47,24 @@ namespace taskt.UI.Forms.Supplemental
          
             this.Size = new Size(540, 140);
 
-
             this.searchParameters = new DataTable();
             this.searchParameters.Columns.Add("Enabled");
             this.searchParameters.Columns.Add("Parameter Name");
             this.searchParameters.Columns.Add("Parameter Value");
             this.searchParameters.TableName = DateTime.Now.ToString("UIASearchParamTable" + DateTime.Now.ToString("MMddyy.hhmmss"));
 
-
             //clear all
             searchParameters.Rows.Clear();
 
             //get window name and find window
             string windowName = cboWindowTitle.Text;
-            IntPtr hWnd = User32Functions.FindWindow(windowName);
-
-            //check if window is found
-            if (hWnd != IntPtr.Zero)
+            //IntPtr hWnd = User32Functions.FindWindow(windowName);
+            try
             {
-                //set window state and move to 0,0
-                User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
-                User32Functions.SetForegroundWindow(hWnd);
-                User32Functions.SetWindowPosition(hWnd, 0, 0);
+                IntPtr hWnd = WindowNameControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
+                WindowNameControls.ActivateWindow(hWnd);
+                //User32Functions.SetWindowPosition(hWnd, 0, 0);
+                WindowNameControls.SetWindowPosition(hWnd, 0, 0);
 
                 //start global hook and wait for left mouse down event
                 User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
@@ -79,6 +72,25 @@ namespace taskt.UI.Forms.Supplemental
                 User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
                 User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            ////check if window is found
+            //if (hWnd != IntPtr.Zero)
+            //{
+            //    //set window state and move to 0,0
+            //    User32Functions.SetWindowState(hWnd, User32Functions.WindowState.SW_SHOWNORMAL);
+            //    User32Functions.SetForegroundWindow(hWnd);
+            //    User32Functions.SetWindowPosition(hWnd, 0, 0);
+
+            //    //start global hook and wait for left mouse down event
+            //    User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
+            //    User32Functions.GlobalHook.HookStopped += GlobalHook_HookStopped;
+            //    User32Functions.GlobalHook.StartElementCaptureHook(chkStopOnClick.Checked);
+            //    User32Functions.GlobalHook.MouseEvent += GlobalHook_MouseEvent;
+            //}
         }
 
         private void GlobalHook_HookStopped(object sender, EventArgs e)
@@ -94,7 +106,6 @@ namespace taskt.UI.Forms.Supplemental
             //invoke UIA
             try
             {
-            
                 System.Windows.Automation.AutomationElement element = System.Windows.Automation.AutomationElement.FromPoint(e.MouseCoordinates);
                 System.Windows.Automation.AutomationElement.AutomationElementInformation elementProperties = element.Current;
 
@@ -112,20 +123,19 @@ namespace taskt.UI.Forms.Supplemental
                 {
                     try
                     {         
-                    var propName = property.Name;
-                    var propValue = property.GetValue(elementProperties, null);
+                        var propName = property.Name;
+                        var propValue = property.GetValue(elementProperties, null);
 
-                    //if property is a basic type then display
-                    if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
-                    {
-                        searchParameters.Rows.Add(false, propName, propValue);
-                    }
+                        //if property is a basic type then display
+                        if ((propValue is string) || (propValue is bool) || (propValue is int) || (propValue is double))
+                        {
+                            searchParameters.Rows.Add(false, propName, propValue);
+                        }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Error Iterating over properties in window: " + ex.ToString());
                     }
-
                 }
             }
             catch (Exception)
@@ -138,28 +148,24 @@ namespace taskt.UI.Forms.Supplemental
             {
                 this.Close();     
             }
-              
-            
-           
-
-
         }
 
         private void pbRefresh_Click(object sender, EventArgs e)
         {
             //handle window refresh requests
-            cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+            //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
+            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
         }
 
-        private void uiBtnOk_Click(object sender, EventArgs e)
-        {       
-            this.DialogResult = DialogResult.OK;
-        }
+        //private void uiBtnOk_Click(object sender, EventArgs e)
+        //{       
+        //    this.DialogResult = DialogResult.OK;
+        //}
 
-        private void uiBtnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-        }
+        //private void uiBtnCancel_Click(object sender, EventArgs e)
+        //{
+        //    this.DialogResult = DialogResult.Cancel;
+        //}
     }
 
 }

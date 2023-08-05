@@ -2,37 +2,48 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Apply text to variable" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="253b90c3-bc58-4492-9065-7a14fdc4d5a7" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Apply text to variable" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vText" v_Input="The cow, jumped over, the moon!" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="6b8d0257-27c6-4345-8db6-6cbf9e8f9e3a" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vText" v_Input="The cow, jumped over, the moon!" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="show text to user" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="b960314f-84b3-4260-8646-a4fb72578760" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" v_Comment="show text to user" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="[vText]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="ed5c2bc1-c45d-4149-87a2-76c3d2fe7b6c" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vText⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="show a system variable" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="4fdb56ed-1ac6-4691-8287-4dffd398b70e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="show a system variable" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The current time is [DateTime.Now]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="1675aa6c-0581-4a4b-abd1-38442d38bb0b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The current time is ⦃DateTime.Now⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="write variable text into notepad" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a3d2471d-5389-4526-a1c5-956124b7c0ff" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="write variable text into notepad" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartProcessCommand" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" />
+      <ScriptCommand xsi:type="StartProcessCommand" CommandID="5a716ca4-46bf-4e2f-94b3-c53dd99b6bc9" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SendKeysCommand" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Send Keystrokes" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Current Window" v_TextToSend="[vText]" />
+      <ScriptCommand xsi:type="SendKeysCommand" CommandID="552381ed-e20f-4865-a21c-d0f9d6fe1937" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Send Keystrokes" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_TextToSend="⦃vText⦄" v_EncryptionOption="Not Encrypted" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9b5be94c-e81c-43ad-8887-b6416c5455ae" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Plese close notepad after." v_AutoCloseAfter="0" />
     </ScriptAction>
   </Commands>
+  <Info>
+    <TasktVersion>3.5.0.24</TasktVersion>
+    <Author />
+    <LastRunTime>2021-08-31T23:47:26.3097219+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
   <Variables>
     <ScriptVariable>
-      <currentPosition>0</currentPosition>
-      <variableName>vText</variableName>
+      <VariableName>vText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
     </ScriptVariable>
   </Variables>
 </Script>

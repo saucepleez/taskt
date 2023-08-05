@@ -6,39 +6,46 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("DataTable Commands")]
+    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command allows you remove specified data rows.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a specific row.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to delete a DataTable Row")]
     public class RemoveDataRowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the DataTable Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the name of your DataTable")]
-        [Attributes.PropertyAttributes.SampleUsage("**myData**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the DataTable Variable Name")]
+        [InputSpecification("Enter the name of your DataTable")]
+        [SampleUsage("**myDataTable** or **{{{vMyDataTable}}}**")]
+        [Remarks("")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_DataTableName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please select overwrite option")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("And")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Or")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate whether this command should remove rows with all the constraints or remove them with 1 or more constraints")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **And** or **Or**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_AndOr { get; set; }
+        [PropertyDescription("Please indicate tuples to delete column rows")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a tuple containing the column name and item you would like to remove.")]
+        [SampleUsage("{ColumnName1,Item1},{ColumnName2,Item2}")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        public string v_SearchItem { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate tuples to delete column rows.")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a tuple containing the column name and item you would like to remove.")]
-        [Attributes.PropertyAttributes.SampleUsage("{ColumnName1,Item1},{ColumnName2,Item2}")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        public string v_SearchItem { get; set; }
+        [PropertyDescription("Please select overwrite option")]
+        [PropertyUISelectionOption("And")]
+        [PropertyUISelectionOption("Or")]
+        [InputSpecification("Indicate whether this command should remove rows with all the constraints or remove them with 1 or more constraints")]
+        [SampleUsage("Select from **And** or **Or**")]
+        [Remarks("")]
+        public string v_AndOr { get; set; }
 
         public RemoveDataRowCommand()
         {
@@ -50,13 +57,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dataSetVariable = LookupVariable(engine);
+            DataTable Dt = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+
             var vSearchItem = v_SearchItem.ConvertToUserVariable(engine);
 
-            DataTable Dt = new DataTable();
-            Dt = (DataTable)dataSetVariable.VariableValue;
             var t = new List<Tuple<string, string>>();
             var listPairs = vSearchItem.Split('}');
             int i = 0;
@@ -106,11 +112,12 @@ namespace taskt.Core.Automation.Commands
                     Dt.Rows.Remove(item);
                 }
                 Dt.AcceptChanges();
-                dataSetVariable.VariableValue = Dt;
+
+                //dataSetVariable.VariableValue = Dt;
             }
 
             //If And operation is checked
-            if (v_AndOr == "And")
+            else if (v_AndOr == "And")
             {
                 List<DataRow> templist = new List<DataRow>(listrows);
 
@@ -136,33 +143,17 @@ namespace taskt.Core.Automation.Commands
                 Dt.AcceptChanges();
 
                 //Assigns Datatable to newly updated Datatable
-                dataSetVariable.VariableValue = Dt;
-
-
+                //dataSetVariable.VariableValue = Dt;
             }
         }
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataTableName).FirstOrDefault();
-
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_DataTableName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DataTableName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_DataTableName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
-
-            return requiredVariable;
-        }
+        
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SearchItem", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AndOr", this, editor));
+            var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+            RenderedControls.AddRange(ctrls);
+
             return RenderedControls;
         }
 

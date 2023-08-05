@@ -1,77 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.CommandSettings("Add Worksheet")]
     [Attributes.ClassAttributes.Description("This command adds a new Excel Worksheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new worksheet to an Excel Instance")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExcelAddWorksheetCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance}}})")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
+        [PropertyDescription("New Sheet Name")]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Sheet Name")]
+        [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Sheet Name")]
+        public string v_NewSheetName { get; set; }
 
         public ExcelAddWorksheetCommand()
         {
-            this.CommandName = "ExcelAddWorksheetCommand";
-            this.SelectionName = "Add Worksheet";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelAddWorksheetCommand";
+            //this.SelectionName = "Add Worksheet";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var excelObject = engine.GetAppInstance(vInstance);
-
-
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            excelInstance.Worksheets.Add();
+            var engine = (Engine.AutomationEngineInstance)sender;
             
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            excelInstance.Worksheets.Add();
 
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            var sheetName = v_NewSheetName.ConvertToUserVariable(engine);
+            if (!String.IsNullOrEmpty(sheetName))
             {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
+                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
             }
-
-            return RenderedControls;
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_InstanceName))
-            {
-                this.validationResult += "Instance is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Range")]
+    [Attributes.ClassAttributes.CommandSettings("Get Range As Datatable")]
     [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range and put it into a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific range.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
@@ -24,7 +25,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
@@ -67,12 +69,12 @@ namespace taskt.Core.Automation.Commands
 
         public ExcelGetRangeCommandAsDT()
         {
-            this.CommandName = "ExcelGetRangeCommandAsDT";
-            this.SelectionName = "Get Range As Datatable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-            this.v_AddHeaders = "Yes";
+            //this.CommandName = "ExcelGetRangeCommandAsDT";
+            //this.SelectionName = "Get Range As Datatable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
+            this.v_AddHeaders = "Yes";
             this.v_InstanceName = "";
         }
 
@@ -190,13 +192,16 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Excel);
+            RenderedControls.AddRange(instanceCtrls);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress1", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress2", this, editor));
             //create control for variable name
             RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
             var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
+            RenderedControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_userVariableName", this, VariableNameControl, editor));
             RenderedControls.Add(VariableNameControl);
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_Output", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AddHeaders", this, editor));

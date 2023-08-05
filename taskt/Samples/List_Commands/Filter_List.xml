@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="18b07695-22eb-4f87-9fb7-dc03a61e91d6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Filter List Command Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="18b07695-22eb-4f87-9fb7-dc03a61e91d6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="vList is ⦃ &quot;Hello&quot;, &quot;Yah&quot;, &quot;Hey&quot;, &quot;Bye&quot; ⦄" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateListCommand" CommandID="5d32637d-aa24-4742-bcc2-970964da54e9" CommandName="CreateListCommand" IsCommented="false" SelectionName="Create List" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ListName="vList">
+        <v_ListValues>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ListValues080722.044838" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="ListValues080722.044838">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Values" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448381" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Values>Hello</Values>
+              </ListValues080722.044838>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448382" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Values>Yah!</Values>
+              </ListValues080722.044838>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448383" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Values>Hey</Values>
+              </ListValues080722.044838>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448384" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Values>Bye</Values>
+              </ListValues080722.044838>
+            </DocumentElement>
+            <diffgr:before>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448381" msdata:rowOrder="0">
+                <Values>Hello</Values>
+              </ListValues080722.044838>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448382" msdata:rowOrder="1">
+                <Values>Yah!</Values>
+              </ListValues080722.044838>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448383" msdata:rowOrder="2">
+                <Values>Hey</Values>
+              </ListValues080722.044838>
+              <ListValues080722.044838 diffgr:id="ListValues080722.0448384" msdata:rowOrder="3">
+                <Values>Bye</Values>
+              </ListValues080722.044838>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ListValues>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="18b07695-22eb-4f87-9fb7-dc03a61e91d6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="vFilter  is [ &quot;Hello&quot;, &quot;Hey&quot; ]" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FilterListCommand" CommandID="c8642fb5-16b9-49b3-9e15-a3f22cdacf69" CommandName="FilterListCommand" IsCommented="false" SelectionName="Filter List" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vList" v_TargetType="Text" v_FilterAction="Starts with" v_OutputList="vFilter">
+        <v_FilterActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="FilterActionParameterTable080722.044908" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="FilterActionParameterTable080722.044908">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
+                        <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <FilterActionParameterTable080722.044908 diffgr:id="FilterActionParameterTable080722.0449081" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <ParameterName>Value</ParameterName>
+                <ParameterValue>H</ParameterValue>
+              </FilterActionParameterTable080722.044908>
+              <FilterActionParameterTable080722.044908 diffgr:id="FilterActionParameterTable080722.0449082" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <ParameterName>Case Sensitive</ParameterName>
+                <ParameterValue>No</ParameterValue>
+              </FilterActionParameterTable080722.044908>
+            </DocumentElement>
+            <diffgr:before>
+              <FilterActionParameterTable080722.044908 diffgr:id="FilterActionParameterTable080722.0449081" msdata:rowOrder="0">
+                <ParameterName>Value</ParameterName>
+                <ParameterValue>H</ParameterValue>
+              </FilterActionParameterTable080722.044908>
+              <FilterActionParameterTable080722.044908 diffgr:id="FilterActionParameterTable080722.0449082" msdata:rowOrder="1">
+                <ParameterName>Case Sensitive</ParameterName>
+                <ParameterValue>No</ParameterValue>
+              </FilterActionParameterTable080722.044908>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_FilterActionParameterTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConvertListToJSONCommand" CommandID="1f074dc5-59f6-4765-bd99-aa7bf8d37ff7" CommandName="ConvertListToJSONCommand" IsCommented="false" SelectionName="Convert List To JSON" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InputList="vFilter" v_applyToVariableName="vJson" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="526a473d-661c-4dd1-acc1-c53e06df94f9" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vJson⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>2022-08-07T16:49:38.4137449+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vFilter</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vJson</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

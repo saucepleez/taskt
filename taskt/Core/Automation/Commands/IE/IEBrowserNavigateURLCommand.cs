@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Linq;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
-
-  
 
     [Serializable]
     [Attributes.ClassAttributes.Group("IE Browser Commands")]
@@ -23,6 +22,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **IEInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create IE Browser** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please Enter the URL to navigate to")]
@@ -62,7 +63,10 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => t.Name == "v_InstanceName").FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.IE);
+            RenderedControls.AddRange(instanceCtrls);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
 
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_URL", this, editor));
 

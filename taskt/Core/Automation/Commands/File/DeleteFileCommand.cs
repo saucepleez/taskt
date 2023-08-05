@@ -1,75 +1,95 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("File Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Delete File")]
     [Attributes.ClassAttributes.Description("This command deletes a file from a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to detete a file from a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class DeleteFileCommand : ScriptCommand
     {
-
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the path to the source file. (ex. c:\\temp\\myfile.txt, {{{vFilePath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.txt** or **{{{vTextFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.AllowNoExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport)]
         public string v_SourceFilePath { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WhenFileDoesNotExists))]
+        public string v_WhenFileDoesNotExists { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyDescription("File Move to the Recycle Bin")]
+        [PropertyIsOptional(true, "No")]
+        public string v_MoveToRecycleBin { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePathResult))]
+        public string v_ResultPath { get; set; }
 
         public DeleteFileCommand()
         {
-            this.CommandName = "DeleteFileCommand";
-            this.SelectionName = "Delete File";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "DeleteFileCommand";
+            //this.SelectionName = "Delete File";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //apply variable logic
-            var sourceFile = v_SourceFilePath.ConvertToUserVariable(sender);
+            //try
+            //{
+            //    var targetFile = FilePathControls.WaitForFile(this, nameof(v_SourceFilePath), nameof(v_WaitTime), engine);
 
-            //delete file
-            System.IO.File.Delete(sourceFile);
+            //    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+            //    {
+            //        Shell32.MoveToRecycleBin(targetFile);
+            //    }
+            //    else
+            //    {
+            //        System.IO.File.Delete(targetFile);
+            //    }
+            //}
+            //catch
+            //{
+            //    if (this.GetUISelectionValue(nameof(v_WhenFileDoesNotExists), engine) == "error")
+            //    {
+            //        throw new Exception("File does Not Exists. File Path: '" + v_SourceFilePath + "'");
+            //    }
+            //}
 
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SourceFilePath", this, editor));
-
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [delete " + v_SourceFilePath + "']";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_SourceFilePath))
-            {
-                this.validationResult += "Source file is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
+            FilePathControls.FileAction(this, engine,
+                new Action<string>(path =>
+                {
+                    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                    {
+                        Shell32.MoveToRecycleBin(path);
+                    }
+                    else
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }),
+                new Action<Exception>(ex =>
+                {
+                    if (this.GetUISelectionValue(nameof(v_WhenFileDoesNotExists), engine) == "error")
+                    {
+                        throw new Exception("File does Not Exists. File Path: '" + v_SourceFilePath + "'");
+                    }
+                })
+            );
         }
     }
 }

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3a0a5e41-6f54-4929-9844-bb4497af1010" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Mail Recieve sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3a0a5e41-6f54-4929-9844-bb4497af1010" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Recieve Emails as EMailList" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MailKitRecieveEmailListUsingPOPCommand" CommandID="414689b1-02b1-42e5-a669-12481a193539" CommandName="MailKitRecieveEMailListUsingPOPCommand" IsCommented="false" SelectionName="Recieve EMailList Using POP" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_POPHost="pop.mymail.com" v_POPPort="995" v_POPUserName="username@mymail.com" v_POPPassword="mypassword" v_POPSecureOption="Auto" v_MailListName="vMailList" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="3a0a5e41-6f54-4929-9844-bb4497af1010" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Loop EMailList" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginListLoopCommand" CommandID="dbae83c5-fd33-4711-9a99-4d7ec62817d2" CommandName="BeginListLoopCommand" IsCommented="false" SelectionName="Loop List" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_LoopParameter="⦃vMailList⦄" />
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="3a0a5e41-6f54-4929-9844-bb4497af1010" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Get EMail from EMailList" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MailKitGetEMailFromEMailListCommand" CommandID="b198a30d-0ff1-4f8f-aad1-7ca95c959a75" CommandName="MailKitGetEMailFromMailListCommand" IsCommented="false" SelectionName="Get EMail From MailList" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_MailListName="⦃vMailList⦄" v_MailVariable="vMail" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="3a0a5e41-6f54-4929-9844-bb4497af1010" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Get EMail Text" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MailKitGetEMailTextCommand" CommandID="0def009c-769d-4d8f-bb25-9110a342bda6" CommandName="MailKitGetEMailTextCommand" IsCommented="false" SelectionName="Get EMail Text" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_MailName="⦃vMail⦄" v_TextType="Message Body" v_ResultVariable="vMessage" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="a4019a42-470e-4a3d-b045-20a96954a560" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vMessage⦄" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndLoopCommand" CommandID="d746bb7c-d7ad-4d87-8303-67c6abcbeae3" CommandName="EndLoopCommand" IsCommented="false" SelectionName="End Loop" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>1990-01-01T00:00:00</LastRunTime>
+    <RunTimes>0</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vMail</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vMailList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vMessage</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vTitle</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

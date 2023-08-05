@@ -1,88 +1,124 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
 
     [Serializable]
     [Attributes.ClassAttributes.Group("Web Browser Commands")]
-    [Attributes.ClassAttributes.SubGruop("Actions")]
+    [Attributes.ClassAttributes.SubGruop("Web Browser Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Execute Script")]
     [Attributes.ClassAttributes.Description("This command allows you to execute a script in a Selenium web browser session.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Selenium to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SeleniumBrowserExecuteScriptCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{{vInstance}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Browser** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the script code")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("JavaScript Code Type")]
+        //[SampleUsage("**Code** or **File**")]
+        [PropertyDetailSampleUsage("**Code**", "Use Specfied JavaScript Code")]
+        [PropertyDetailSampleUsage("**File**", "Use Specfied JavaScript File")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Code")]
+        [PropertyUISelectionOption("File")]
+        [PropertyIsOptional(true, "Code")]
+        [PropertyFirstValue("Code")]
+        public string v_CodeType { get; set; }
+
+        [XmlAttribute]
+        [PropertyDescription("JavaScript Code")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("JavaScript", true)]
+        [PropertyDetailSampleUsage("**return (2);**", "Specify the JavaScript Code")]
+        [PropertyDetailSampleUsage("**c:\\js\\mycode.js**", "Specify the JavaScript File Path")]
+        [PropertyDetailSampleUsage("**{{{vCode}}}**", "Specify the Variable Value **vCode** for JavaScript Code or JavaScript File Path")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [Remarks("When Selected **Code**, plese Enter the JavaScript Code.\nWhen Selected **File**, please Enter the JavaScript File Path.")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
+        [PropertyValidationRule("JavaScript Code", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(false, "")]
         public string v_ScriptCode { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please Enter the timeout in seconds (Default is 0)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("If less than or equal to 0, wait for the script to finish.")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **10** or **{{{vWaitTime}}}**")]
-        [Attributes.PropertyAttributes.Remarks("time >= 1 is async, time <= 0 is sync")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Timeout in Seconds")]
+        [InputSpecification("Timeout in Seconds", true)]
+        //[SampleUsage("**0** or **10** or **{{{vWaitTime}}}**")]
+        [PropertyDetailSampleUsage("**0**", "Specify **0** for Timeout. This means Waiting until JavaScript is finished.")]
+        [PropertyDetailSampleUsage("**10**", PropertyDetailSampleUsage.ValueType.Value, "Timeout")]
+        [PropertyDetailSampleUsage("**{{{vWaitTime}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Timeout")]
+        [Remarks("When Value is Less Than or Equals to **0**, this means Waiting until JavaScript is finished.")]
+        [PropertyIsOptional(true, "0")]
+        [PropertyDisplayText(false, "")]
         public string v_TimeOut { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Supply Argument")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("The value of the argument can be obtained with 'arguments[0]' in code.")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Argument")]
+        [InputSpecification("Argument", true)]
+        [PropertyDetailSampleUsage("**0**", PropertyDetailSampleUsage.ValueType.Value, "Argument")]
+        [PropertyDetailSampleUsage("**{{{vValue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Argument")]
+        [Remarks("The value of the argument can be obtained with 'arguments[0]' in code.")]
+        [PropertyIsOptional(true)]
+        [PropertyDisplayText(false, "")]
         public string v_Args { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Please select the variable to receive the data")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Select or provide a variable from the variable list")]
-        [Attributes.PropertyAttributes.SampleUsage("**vSomeVariable**")]
-        [Attributes.PropertyAttributes.Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Recieve Result Value")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
         public string v_userVariableName { get; set; }
+
         public SeleniumBrowserExecuteScriptCommand()
         {
-            this.CommandName = "SeleniumBrowserExecuteScriptCommand";
-            this.SelectionName = "Execute Script";
-            this.v_InstanceName = "";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "SeleniumBrowserExecuteScriptCommand";
+            //this.SelectionName = "Execute Script";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
+            
+            //this.v_InstanceName = "";
+            //this.v_CodeType = "Code";
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var codeType = SelectionControls.GetUISelectionValue(this, nameof(v_CodeType), engine);
 
-            var browserObject = engine.GetAppInstance(vInstance);
+            string script = "";
+            if (codeType == "code")
+            {
+                script = v_ScriptCode.ConvertToUserVariable(sender);
+            }
+            else if (codeType == "file")
+            {
+                //string scriptFiile = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptCode, engine, "js", true);
+                var scriptFile = v_ScriptCode.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
+                script = System.IO.File.ReadAllText(scriptFile);
+            }
 
-
-            var script = v_ScriptCode.ConvertToUserVariable(sender);
             var args = v_Args.ConvertToUserVariable(sender);
-            var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);
-
-            var seleniumInstance = (OpenQA.Selenium.IWebDriver)browserObject;
+            
+            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
             //configure timeout
-            int timeOut;
-            if (!int.TryParse(inputTimeout, out timeOut))
-            {
-                timeOut = -1;
-            }
+            //var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);
+            //int timeOut;
+            //if (!int.TryParse(inputTimeout, out timeOut))
+            //{
+            //    timeOut = -1;
+            //}
+            var timeOut = this.ConvertToUserVariableAsInteger(nameof(v_TimeOut), engine);
 
             //set driver timeout
             if (timeOut > 0)
@@ -122,47 +158,6 @@ namespace taskt.Core.Automation.Commands
             {   
                 result.ToString().StoreInUserVariable(sender, v_userVariableName);
             }
-    
-
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ScriptCode", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_Args", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_TimeOut", this, editor));
-
-            RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_userVariableName", this));
-            var VariableNameControl = CommandControls.CreateStandardComboboxFor("v_userVariableName", this).AddVariableNames(editor);
-            RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_userVariableName", this, new Control[] { VariableNameControl }, editor));
-            RenderedControls.Add(VariableNameControl);
-
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-            {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultBrowserInstanceName;
-            }
-
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Instance Name: '" + v_InstanceName + "']";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_InstanceName))
-            {
-                this.validationResult += "Instance name is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
         }
     }
 }

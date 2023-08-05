@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e7554817-c2b0-46f8-a07b-ca7427f0575b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Increase, Decrease Numerical Variable Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="4a0f8f86-f877-415c-8a61-1a2f77c4256a" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set num = 5" CommandEnabled="true" v_userVariableName="num" v_Input="5" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e7554817-c2b0-46f8-a07b-ca7427f0575b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Increase" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="IncreaseNumericalVariableCommand" CommandID="56dd4ee1-2c94-44da-9316-8e8a661d6872" CommandName="IncreaseNumericalVariableCommand" IsCommented="false" SelectionName="Increase Numerical Variable" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="num+1" CommandEnabled="true" v_VariableName="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="e4fb73ed-4432-4550-a252-2f0bc9e6725b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="IncreaseNumericalVariableCommand" CommandID="56dd4ee1-2c94-44da-9316-8e8a661d6872" CommandName="IncreaseNumericalVariableCommand" IsCommented="false" SelectionName="Increase Numerical Variable" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="num+5" CommandEnabled="true" v_VariableName="num" v_Value="5" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="e4fb73ed-4432-4550-a252-2f0bc9e6725b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e7554817-c2b0-46f8-a07b-ca7427f0575b" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Decrease" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="DecreaseNumericalVariableCommand" CommandID="36401e2a-b0f6-49ac-97da-67ddb33b926e" CommandName="DecreaseNumericalVariableCommand" IsCommented="false" SelectionName="Decrease Numerical Variable" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="num-1" CommandEnabled="true" v_VariableName="num" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="e4fb73ed-4432-4550-a252-2f0bc9e6725b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="DecreaseNumericalVariableCommand" CommandID="36401e2a-b0f6-49ac-97da-67ddb33b926e" CommandName="DecreaseNumericalVariableCommand" IsCommented="false" SelectionName="Decrease Numerical Variable" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="num-5" CommandEnabled="true" v_VariableName="num" v_Value="5" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="e4fb73ed-4432-4550-a252-2f0bc9e6725b" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃num⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.86</TasktVersion>
+    <Author />
+    <LastRunTime>2022-06-01T23:08:46.9381401+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>num</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

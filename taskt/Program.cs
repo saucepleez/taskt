@@ -28,8 +28,8 @@ namespace taskt
         [STAThread]
         static void Main(string[] args)
         {
-
-            //SetProcessDPIAware();
+            // High DPI
+            SetProcessDPIAware();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -41,10 +41,42 @@ namespace taskt
             //if the exe was passed a filename argument then run the script
             if (args.Length > 0)
             {
-                string filePath = args[0];
+                string type = "run";
+                string filePath;
+                if (args.Length == 1)
+                {
+                    filePath = args[0];
+                }
+                else
+                {
+                    switch (args[0])
+                    {
+                        case "-r":
+                        case "-e":
+                            filePath = args[1];
+                            break;
+                        case "-o":
+                            type = "open";
+                            filePath = args[1];
+                            break;
+                        case "-oh":
+                            type = "open";
+                            filePath = "*" + args[1];
+                            break;
+                        default:
+                            using (System.Diagnostics.EventLog eventLog = new System.Diagnostics.EventLog("Application"))
+                            {
+                                eventLog.Source = "Application";
+                                eventLog.WriteEntry("Strange parameter", System.Diagnostics.EventLogEntryType.Error, 101, 1);
+                            }
 
+                            Application.Exit();
+                            return;
+                    }
+                }
 
-                if (!System.IO.File.Exists(filePath))
+                string checkFilePath = filePath.StartsWith("*") ? filePath.Substring(1) : filePath;
+                if (!System.IO.File.Exists(checkFilePath))
                 {
                     using (System.Diagnostics.EventLog eventLog = new System.Diagnostics.EventLog("Application"))
                     {
@@ -56,7 +88,19 @@ namespace taskt
                     return;
                 }
 
-                Application.Run(new UI.Forms.frmScriptEngine(filePath, null, null, true));
+                if (type == "run")
+                {
+                    Application.Run(new UI.Forms.frmScriptEngine(filePath, null, null, true));
+                }
+                else
+                {
+                    SplashForm = new UI.Forms.Supplemental.frmSplash();
+                    SplashForm.Show();
+
+                    Application.DoEvents();
+
+                    Application.Run(new UI.Forms.frmScriptBuilder(filePath));
+                }
             }
             else
             {

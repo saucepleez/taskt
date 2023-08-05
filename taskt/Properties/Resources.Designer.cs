@@ -103,6 +103,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap action_bar_config {
+            get {
+                object obj = ResourceManager.GetObject("action_bar_config", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap action_bar_import {
             get {
                 object obj = ResourceManager.GetObject("action-bar-import", resourceCulture);
@@ -206,6 +216,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap action_bar_variable {
             get {
                 object obj = ResourceManager.GetObject("action_bar_variable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap actionbar_edit {
+            get {
+                object obj = ResourceManager.GetObject("actionbar_edit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -336,6 +356,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap command_function {
             get {
                 object obj = ResourceManager.GetObject("command_function", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap command_group {
+            get {
+                object obj = ResourceManager.GetObject("command_group", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -593,6 +623,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap file_icon {
+            get {
+                object obj = ResourceManager.GetObject("file_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap header_backing {
             get {
                 object obj = ResourceManager.GetObject("header_backing", resourceCulture);
@@ -713,6 +753,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap sample_templete {
+            get {
+                object obj = ResourceManager.GetObject("sample_templete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap taskt_command_helper {
             get {
                 object obj = ResourceManager.GetObject("taskt_command_helper", resourceCulture);
@@ -753,6 +803,16 @@ namespace taskt.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap taskt_logo_alt {
+            get {
+                object obj = ResourceManager.GetObject("taskt_logo_alt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap taskt_splash {
             get {
                 object obj = ResourceManager.GetObject("taskt-splash", resourceCulture);
@@ -776,6 +836,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap various_cancel_button {
             get {
                 object obj = ResourceManager.GetObject("various_cancel_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap various_info {
+            get {
+                object obj = ResourceManager.GetObject("various_info", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -816,6 +886,16 @@ namespace taskt.Properties {
         internal static System.Drawing.Bitmap various_stop_button {
             get {
                 object obj = ResourceManager.GetObject("various_stop_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap web_help {
+            get {
+                object obj = ResourceManager.GetObject("web_help", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

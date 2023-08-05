@@ -50,9 +50,9 @@
             this.lblDefineName.ForeColor = System.Drawing.Color.White;
             this.lblDefineName.Location = new System.Drawing.Point(10, 44);
             this.lblDefineName.Name = "lblDefineName";
-            this.lblDefineName.Size = new System.Drawing.Size(167, 21);
+            this.lblDefineName.Size = new System.Drawing.Size(192, 21);
             this.lblDefineName.TabIndex = 1;
-            this.lblDefineName.Text = "Define Variable Name";
+            this.lblDefineName.Text = "Define Variable &Name (&A)";
             // 
             // lblHeader
             // 
@@ -118,9 +118,9 @@
             this.lblDefineDefaultValue.ForeColor = System.Drawing.Color.White;
             this.lblDefineDefaultValue.Location = new System.Drawing.Point(12, 162);
             this.lblDefineDefaultValue.Name = "lblDefineDefaultValue";
-            this.lblDefineDefaultValue.Size = new System.Drawing.Size(220, 21);
+            this.lblDefineDefaultValue.Size = new System.Drawing.Size(244, 21);
             this.lblDefineDefaultValue.TabIndex = 4;
-            this.lblDefineDefaultValue.Text = "Define Variable Default Value";
+            this.lblDefineDefaultValue.Text = "Define Variable Default Value (&V)";
             // 
             // uiBtnOk
             // 
@@ -172,10 +172,13 @@
             this.Controls.Add(this.txtVariableName);
             this.Controls.Add(this.lblDefineName);
             this.Controls.Add(this.lblHeader);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmAddVariable";
             this.Text = "Add Variable";
             this.Load += new System.EventHandler(this.frmAddVariable_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmAddVariable_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnCancel)).EndInit();
             this.ResumeLayout(false);
@@ -192,7 +195,7 @@
         private System.Windows.Forms.Label lblDefineDefaultValue;
         private CustomControls.UIPictureButton uiBtnOk;
         private CustomControls.UIPictureButton uiBtnCancel;
-        public System.Windows.Forms.TextBox txtVariableName;
-        public System.Windows.Forms.TextBox txtDefaultValue;
+        private System.Windows.Forms.TextBox txtVariableName;
+        private System.Windows.Forms.TextBox txtDefaultValue;
     }
 }

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="59da48b6-2e40-4e0a-9f52-caeb63fe4da0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Create new Excel file and write value" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="41909382-45f8-4ca1-b2e7-8887b85414ad" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Variable &quot;cellValue&quot; exists" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandID="3cd22852-a1fd-43cd-9dc4-494243b430f9" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelAddWorkbookCommand" CommandID="1a8f7201-7201-4b5d-9660-f705b7547754" CommandName="ExcelAddWorkbookCommand" IsCommented="false" SelectionName="Add Workbook" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="create new file in excel" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetCellCommand" CommandID="8e39108e-1b16-4dd8-b6d5-9d600c1239d4" CommandName="ExcelSetCellCommand" IsCommented="false" SelectionName="Set Cell" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Write &quot;Hello&quot; in cell A1" CommandEnabled="true" v_InstanceName="RPAExcel" v_TextToSet="Hello" v_ExcelCellAddress="A1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelGetCellCommand" CommandID="5823bcf2-093e-42cc-b3ee-4ef0a92d9eec" CommandName="ExcelGetCellCommand" IsCommented="false" SelectionName="Get Cell" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Assign the Value of cell A1 to variable &quot;cellValue&quot;" CommandEnabled="true" v_InstanceName="RPAExcel" v_ExcelCellAddress="A1" v_userVariableName="cellValue" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCloseApplicationCommand" CommandID="53c8a65f-8a85-4297-a759-4ad05bce8f74" CommandName="ExcelCloseApplicationCommand" IsCommented="false" SelectionName="Close Excel Application" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="32ed2a5a-293b-4172-b332-9a2145ad2fc4" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="show variable &quot;cellValue&quot; value" CommandEnabled="true" v_Message="⦃cellValue⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.23</TasktVersion>
+    <Author />
+    <LastRunTime>1990-01-01T00:00:00</LastRunTime>
+    <RunTimes>0</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>cellValue</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

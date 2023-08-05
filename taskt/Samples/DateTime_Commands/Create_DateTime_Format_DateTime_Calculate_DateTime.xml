@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="53ca37b3-3e23-4054-93be-1c6a5092d2c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Create DateTime, Format DateTime, Calculate DateTime sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="53ca37b3-3e23-4054-93be-1c6a5092d2c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="!IMPORTANT! Disable Auto Calc" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetEnginePreferenceCommand" CommandID="a304705a-58f7-4583-9e50-5b2079680b8d" CommandName="SetEnginePreferenceCommand" IsCommented="false" SelectionName="Set Engine Preference" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_PreferenceType="Disable Automatic Calculations" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="53ca37b3-3e23-4054-93be-1c6a5092d2c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="11/25/2018 (MM/dd/yyyy)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDateTimeCommand" CommandID="b2f55948-8732-4f2f-9c04-b80cd7c0a6ef" CommandName="CreateDateTimeCommand" IsCommented="false" SelectionName="Create DateTime" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_DateTime="vBaseDate" v_Year="2018" v_Month="11" v_Day="25" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatDateTimeCommand" CommandID="9e7a050c-7354-4a1d-9a2e-177a1f830c8f" CommandName="FormatDateTimeCommand" IsCommented="false" SelectionName="Format DateTime" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="ISO like format" CommandEnabled="true" v_DateTime="⦃vBaseDate⦄" v_Format="yyyy-MM-dd" v_Result="vDateText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="75cad37a-2a4b-432a-b34a-87e68c913e7f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vDateText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="53ca37b3-3e23-4054-93be-1c6a5092d2c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Calculate Date (+25 days)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CalculateDateTimeCommand" CommandID="a2a4e191-7c2b-4d50-a692-a99a32a776a7" CommandName="CalculateDateTimeCommand" IsCommented="false" SelectionName="Calculate DateTime" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Add 25 days" CommandEnabled="true" v_DateTime="⦃vBaseDate⦄" v_CalculationMethod="Add Days" v_Value="25" v_Result="vNewDate" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatDateTimeCommand" CommandID="9e7a050c-7354-4a1d-9a2e-177a1f830c8f" CommandName="FormatDateTimeCommand" IsCommented="false" SelectionName="Format DateTime" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="ISO like format" CommandEnabled="true" v_DateTime="⦃vNewDate⦄" v_Format="yyyy-MM-dd" v_Result="vDateText" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="75cad37a-2a4b-432a-b34a-87e68c913e7f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vDateText⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8ab90189-00a4-4317-8713-cdb6e629129a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="More Format info: https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>2022-08-07T17:21:16.8699911+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vBaseDate</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vDateText</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vNewDate</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

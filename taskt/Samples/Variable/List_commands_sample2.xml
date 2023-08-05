@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="List sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set list values (It's Not Recommended method)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddToVariableCommand" CommandID="c0451107-7870-4c3a-815f-569fd3c7f6c9" CommandName="AddToVariableCommand" IsCommented="false" SelectionName="Add To Variable" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="a" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddToVariableCommand" CommandID="ecf6a0cf-806b-428f-8015-7b5a6d19a664" CommandName="AddToVariableCommand" IsCommented="false" SelectionName="Add To Variable" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="b" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="AddToVariableCommand" CommandID="e5d48a34-112f-4ecc-9a14-88bcea10ae2b" CommandName="AddToVariableCommand" IsCommented="false" SelectionName="Add To Variable" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="c" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Now 'vList' is [ a, b, c ]" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="vList current index is 0" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableIndexCommand" CommandID="a83499c5-0b2c-4006-9680-e71e9d1fe93f" CommandName="SetVariableIndexCommand" IsCommented="false" SelectionName="Set Variable Index" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Index="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="ca3f579f-3324-44ad-8116-3e16d0bf29b5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="'vList[0]' value is ⦃vList⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="vList current index is 1" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableIndexCommand" CommandID="a83499c5-0b2c-4006-9680-e71e9d1fe93f" CommandName="SetVariableIndexCommand" IsCommented="false" SelectionName="Set Variable Index" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Index="1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="ca3f579f-3324-44ad-8116-3e16d0bf29b5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="'vList[1]' value is ⦃vList⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="ccdddb81-d885-4409-a1ab-d858297578c6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="vList current index is 2" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetVariableIndexCommand" CommandID="a83499c5-0b2c-4006-9680-e71e9d1fe93f" CommandName="SetVariableIndexCommand" IsCommented="false" SelectionName="Set Variable Index" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Index="2" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="ca3f579f-3324-44ad-8116-3e16d0bf29b5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="'vList[2]' value is ⦃vList⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.29</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-09T19:21:32.4306089+09:00</LastRunTime>
+    <RunTimes>6</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

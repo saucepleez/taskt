@@ -25,11 +25,15 @@ namespace taskt_updater
             }
             else
             {
-                Application.Run(new frmUpdating(args[0]));
+                try
+                {
+                    Application.Run(new frmUpdating(args[0], args[1]));
+                }
+                catch
+                {
+
+                }
             }
-
-
-           
         }
     }
 }

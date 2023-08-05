@@ -1,212 +1,189 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window Actions")]
+    [Attributes.ClassAttributes.CommandSettings("Move Window")]
     [Attributes.ClassAttributes.Description("This command moves a window to a specified location on screen.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to move an existing window by name to a certain point on the screen.")]
-    [Attributes.ClassAttributes.ImplementationDescription("This command implements 'FindWindowNative', 'SetWindowPos' from user32.dll to achieve automation.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class MoveWindowCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please enter or select the window that you want to move.")]
-        [Attributes.PropertyAttributes.InputSpecification("Input or Type the name of the window that you want to move.")]
-        [Attributes.PropertyAttributes.SampleUsage("**Untitled - Notepad** or **%kwd_current_window%** or **{{{vWindow}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsWindowNamesList(true)]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Window title search method (Default is Contains)")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Contains")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("End with")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Exact match")]
-        [Attributes.PropertyAttributes.SampleUsage("**Contains** or **Start with** or **End with** or **Exact match**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new X horizontal coordinate (pixel) for the window's location.  0 starts at the left of the screen.")]
-        [Attributes.PropertyAttributes.InputSpecification("Input the new horizontal coordinate of the window, 0 starts at the left and goes to the right")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vXPos}}}**")]
-        [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("X horizontal coordinate (pixel) for the Window's Location")]
+        [InputSpecification("X Window Location", true)]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyDetailSampleUsage("**0**", "Specify X Top Position")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "X Position")]
+        [PropertyDetailSampleUsage("**{{{vXPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "X Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_position%**", "Specify Current Position for X Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_xposition%**", "Specify Current X Position for X Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_yposition%**", "Specify Current Y Position for X Position", false)]
+        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
+        [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "X Position")]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
         public string v_XWindowPosition { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the new Y vertical coordinate (pixel) for the window's location.  0 starts at the top of the screen.")]
-        [Attributes.PropertyAttributes.InputSpecification("Input the new vertical coordinate of the window, 0 starts at the top and goes downwards")]
-        [Attributes.PropertyAttributes.SampleUsage("**0** or **{{{vYPos}}}**")]
-        [Attributes.PropertyAttributes.Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
-        [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Y vertical coordinate (pixel) for the Window's Location")]
+        [InputSpecification("Y Window Location", true)]
+        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyDetailSampleUsage("**0**", "Specify Y Left Position")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Y Position")]
+        [PropertyDetailSampleUsage("**{{{vYPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Y Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_position%**", "Specify Current Position for Y Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_xposition%**", "Specify Current X Position for Y Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_yposition%**", "Specify Current Y Position for Y Position", false)]
+        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
+        [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Y Position")]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
         public string v_YWindowPosition { get; set; }
 
-        [XmlIgnore]
-        [NonSerialized]
-        public ComboBox WindowNameControl;
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
+        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        public string v_MatchMethod { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        public string v_TargetWindowIndex { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        public string v_WaitTime { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
+        public string v_HandleResult { get; set; }
 
         public MoveWindowCommand()
         {
-            this.CommandName = "MoveWindowCommand";
-            this.SelectionName = "Move Window";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MoveWindowCommand";
+            //this.SelectionName = "Move Window";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            string windowName = v_WindowName.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            string searchMethod = v_SearchMethod.ConvertToUserVariable(sender);
-            if (String.IsNullOrEmpty(searchMethod))
-            {
-                searchMethod = "Contains";
-            }
+            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
 
-            bool targetIsCurrentWindow = ((Automation.Engine.AutomationEngineInstance)sender).engineSettings.CurrentWindowKeyword == windowName;
+            //foreach(var win in wins)
+            //{
+            //    var pos = WindowNameControls.GetWindowPosition(win.Item1);
 
-            var targetWindows = User32Functions.FindTargetWindows(windowName, targetIsCurrentWindow, (searchMethod != "Contains"));
+            //    var variableXPosition = v_XWindowPosition.ConvertToUserVariable(engine);
+            //    int xPos;
+            //    if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
+            //    {
+            //        xPos = pos.left;
+            //    }
+            //    else if (variableXPosition == engine.engineSettings.CurrentWindowYPositionKeyword)
+            //    {
+            //        xPos = pos.top;
+            //    }
+            //    else
+            //    {
+            //        xPos = v_XWindowPosition.ConvertToUserVariableAsInteger("X Position", engine);
+            //    }
 
-            var variableXPosition = v_XWindowPosition.ConvertToUserVariable(sender);
-            var variableYPosition = v_YWindowPosition.ConvertToUserVariable(sender);
+            //    var variableYPosition = v_YWindowPosition.ConvertToUserVariable(engine);
+            //    int yPos;
+            //    if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
+            //    {
+            //        yPos = pos.top;
+            //    }
+            //    else if (variableYPosition == engine.engineSettings.CurrentWindowXPositionKeyword)
+            //    {
+            //        yPos = pos.left;
+            //    }
+            //    else
+            //    {
+            //        yPos = v_YWindowPosition.ConvertToUserVariableAsInteger("Y Position", engine);
+            //    }
 
-            if (!int.TryParse(variableXPosition, out int xPos))
-            {
-                throw new Exception("X Position Invalid - " + v_XWindowPosition);
-            }
-            if (!int.TryParse(variableYPosition, out int yPos))
-            {
-                throw new Exception("X Position Invalid - " + v_XWindowPosition);
-            }
+            //    WindowNameControls.SetWindowPosition(win.Item1, xPos, yPos);
+            //}
 
-            if (searchMethod == "Contains" || targetIsCurrentWindow)
-            {
-                //loop each window
-                foreach (var targetedWindow in targetWindows)
+            WindowNameControls.WindowAction(this, engine,
+                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
-                    User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
-                }
-            }
-            else
-            {
-                Func<string, bool> searchFunc;
-                switch (searchMethod)
-                {
-                    case "Start with":
-                        searchFunc = (s) => s.StartsWith(windowName);
-                        break;
-
-                    case "End with":
-                        searchFunc = (s) => s.EndsWith(windowName);
-                        break;
-
-                    case "Exact match":
-                        searchFunc = (s) => (s == windowName);
-                        break;
-
-                    default:
-                        throw new Exception("Search method " + searchMethod + " is not support.");
-                        break;
-                }
-
-                bool isMoveWindow = false;
-                //loop each window
-                foreach (var targetedWindow in targetWindows)
-                {
-                    if (searchFunc(User32Functions.GetWindowTitle(targetedWindow)))
+                    foreach (var win in wins)
                     {
-                        User32Functions.SetWindowPosition(targetedWindow, xPos, yPos);
-                        isMoveWindow = true;
+                        var pos = WindowNameControls.GetWindowPosition(win.Item1);
+
+                        var variableXPosition = v_XWindowPosition.ConvertToUserVariable(engine);
+                        int xPos;
+                        if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
+                        {
+                            xPos = pos.left;
+                        }
+                        else if (variableXPosition == engine.engineSettings.CurrentWindowYPositionKeyword)
+                        {
+                            xPos = pos.top;
+                        }
+                        else
+                        {
+                            xPos = v_XWindowPosition.ConvertToUserVariableAsInteger("X Position", engine);
+                        }
+
+                        var variableYPosition = v_YWindowPosition.ConvertToUserVariable(engine);
+                        int yPos;
+                        if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
+                        {
+                            yPos = pos.top;
+                        }
+                        else if (variableYPosition == engine.engineSettings.CurrentWindowXPositionKeyword)
+                        {
+                            yPos = pos.left;
+                        }
+                        else
+                        {
+                            yPos = v_YWindowPosition.ConvertToUserVariableAsInteger("Y Position", engine);
+                        }
+
+                        WindowNameControls.SetWindowPosition(win.Item1, xPos, yPos);
                     }
-                }
-                if (!isMoveWindow)
-                {
-                    throw new Exception("Window name '" + windowName + "' is not found.Search method " + searchMethod + ".");
-                }
-            }
-            
+                })
+            );
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            //create window name helper control
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_WindowName", this));
-            //WindowNameControl = CommandControls.CreateStandardComboboxFor("v_WindowName", this).AddWindowNames(editor);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_WindowName", this, new Control[] { WindowNameControl }, editor));
-            //RenderedControls.Add(WindowNameControl);
-
-            //RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_SearchMethod", this, editor));
-
-            //var xGroup = CommandControls.CreateDefaultInputGroupFor("v_XWindowPosition", this, editor);
-            //var yGroup = CommandControls.CreateDefaultInputGroupFor("v_YWindowPosition", this, editor);
-            //RenderedControls.AddRange(xGroup);
-            //RenderedControls.AddRange(yGroup);
-
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_XWindowPosition", this));
-            //var xPositionControl = CommandControls.CreateDefaultInputFor("v_XWindowPosition", this);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_XWindowPosition", this, new Control[] { xPositionControl }, editor));
-            //RenderedControls.Add(xPositionControl);
-
-            //RenderedControls.Add(CommandControls.CreateDefaultLabelFor("v_YWindowPosition", this));
-            //var yPositionControl = CommandControls.CreateDefaultInputFor("v_YWindowPosition", this);
-            //RenderedControls.AddRange(CommandControls.CreateUIHelpersFor("v_YWindowPosition", this, new Control[] { yPositionControl }, editor));
-            //RenderedControls.Add(yPositionControl);
-
-            RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor));
-
-
-            return RenderedControls;
-
-        }
         public override void Refresh(frmCommandEditor editor)
         {
             base.Refresh();
-            WindowNameControl.AddWindowNames();
+            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
         }
 
-
-        public override string GetDisplayValue()
+        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            return base.GetDisplayValue() + " [Target Window: " + v_WindowName + ", Target Coordinates (" + v_XWindowPosition + "," + v_YWindowPosition + ")]";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_WindowName))
-            {
-                this.validationResult += "Windows is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_XWindowPosition))
-            {
-                this.validationResult += "X is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_YWindowPosition))
-            {
-                this.validationResult += "Y is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
+            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
     }
 }

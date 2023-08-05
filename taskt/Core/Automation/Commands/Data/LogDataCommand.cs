@@ -9,7 +9,6 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
-    [Attributes.ClassAttributes.SubGruop("Other")]
     [Attributes.ClassAttributes.Description("This command logs data to files.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to log custom data to a file for debugging or analytical purposes.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Thread.Sleep' to achieve automation.")]
@@ -53,7 +52,8 @@ namespace taskt.Core.Automation.Commands
             {
                 //log to the standard engine logs
                 var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-                engine.engineLogger.Information(textToLog);
+                //engine.engineLogger.Information(textToLog);
+                engine.WriteLog(textToLog);
             }
             else
             {

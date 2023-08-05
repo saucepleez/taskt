@@ -6,55 +6,81 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
     [Attributes.ClassAttributes.Description("This command Reads a Config file and stores it into a Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load a config file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop and OLEDB to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class LoadDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Dictionary Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a name for a Dictionary.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myDictionary**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please Enter the Dictionary Variable Name")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a name for a Dictionary.")]
+        [SampleUsage("**myDictionary** or **{{{vDictionary}}}**")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Dictionary)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Dictionary")]
         public string v_DictionaryName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be loaded into the Dictionary.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.xlsx or {vFilePath}")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the Workbook File Path")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
+        [InputSpecification("Enter or Select the path to the applicable file that should be loaded into the Dictionary.")]
+        [SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vFilePath}}}**")]
+        [Remarks("If file does not contain extension, supplement extensions supported by Excel.\nIf file does not contain folder path, file will be opened in the same folder as script file.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "File Path")]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Sheet Name")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the sheet name of the workbook to be read.")]
-        [Attributes.PropertyAttributes.SampleUsage("Sheet1")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the Sheet Name")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter the sheet name of the workbook to be read.")]
+        [SampleUsage("**Sheet1** or **{{{vSheet}}}**")]
+        [Remarks("Sheet has one table")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Sheet Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Sheet Name")]
         public string v_SheetName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Key column")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the key column name to create a Dictionary off of.")]
-        [Attributes.PropertyAttributes.SampleUsage("keyColumn")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the Key Column")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter the key column name to create a Dictionary off of.")]
+        [SampleUsage("**Key** or **{{{vKeyColumn}}}**")]
+        [Remarks("This value is NOT Column Index Value like A, B. Please specify table column name.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Key Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Key Column")]
         public string v_KeyColumn { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the Value Column")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter a value column name to create a Dictionary off of.")]
-        [Attributes.PropertyAttributes.SampleUsage("valueColumn")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please indicate the Value Column")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter a value column name to create a Dictionary off of.")]
+        [SampleUsage("**Value** or **{{{vValueColumn}}}**")]
+        [Remarks("This value is NOT Column Index Value like A, B. Please specify table column name.")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Value Colmun", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Value Column")]
         public string v_ValueColumn { get; set; }
 
         public LoadDictionaryCommand()
@@ -66,31 +92,26 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = DateTime.Now.ToString();
+            var engine = (Engine.AutomationEngineInstance)sender;
+            //var vInstance = DateTime.Now.ToString();
+
+            var vSheet = v_SheetName.ConvertToUserVariable(sender);
+            var vKeyColumn = v_KeyColumn.ConvertToUserVariable(sender);
+            var vValueColumn = v_ValueColumn.ConvertToUserVariable(sender);
+
+            //string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
             var vFilePath = v_FilePath.ConvertToUserVariable(sender);
-            var vDictionaryName = v_DictionaryName;
-            var vDictionary = LookupVariable(engine); 
-            if (vDictionary != null)
-            {
-                vDictionaryName = vDictionary.VariableName;
-            }
-
-            var newExcelSession = new Microsoft.Office.Interop.Excel.Application
-            {
-                Visible = false
-            };
-
-            engine.AddAppInstance(vInstance, newExcelSession);
-
-
-            var excelObject = engine.GetAppInstance(vInstance);
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
 
             //Query required from workbook using OLEDB
-            DatasetCommands dataSetCommand = new DatasetCommands();
-            DataTable requiredData = dataSetCommand.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + vFilePath + @";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""", "Select " + v_KeyColumn + "," + v_ValueColumn + " From [" + v_SheetName + "$]");
+            //DataTableControls dataSetCommand = new DataTableControls();
 
+            string param = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=""" + vFilePath + @""";Extended Properties=""Excel 12.0;HDR=YES;IMEX=1""";
+            string queue = "Select " + vKeyColumn + "," + vValueColumn + " From " + "[" + vSheet + "$]";
+            
+            // DBG
+            //MessageBox.Show(param + "\n" + queue);
+
+            DataTable requiredData = DataTableControls.CreateDataTable(param, queue);
             var dictlist = requiredData.AsEnumerable().Select(x => new
             {
                 keys = (string)x[v_KeyColumn],
@@ -102,60 +123,55 @@ namespace taskt.Core.Automation.Commands
                 outputDictionary.Add(dict.keys, dict.values);
             }
 
-
-            Script.ScriptVariable newDictionary = new Script.ScriptVariable
-            {
-                VariableName = vDictionaryName,
-                VariableValue = outputDictionary
-            };
-            //close excel
-            excelInstance.Quit();
-
-            //remove instance
-            engine.RemoveAppInstance(vInstance);
-
-            //Overwrites variable if it already exists
-            if (engine.VariableList.Exists(x => x.VariableName == newDictionary.VariableName))
-            {
-                Script.ScriptVariable tempDictionary = engine.VariableList.Where(x => x.VariableName == newDictionary.VariableName).FirstOrDefault();
-                engine.VariableList.Remove(tempDictionary);
-            }
-            engine.VariableList.Add(newDictionary);
+            outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
         }
 
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
-        {
-            //search for the variable
-            var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DictionaryName).FirstOrDefault();
+        //public override List<Control> Render(frmCommandEditor editor)
+        //{
+        //    base.Render(editor);
 
-            //if variable was not found but it starts with variable naming pattern
-            if ((requiredVariable == null) && (v_DictionaryName.StartsWith(sendingInstance.engineSettings.VariableStartMarker)) && (v_DictionaryName.EndsWith(sendingInstance.engineSettings.VariableEndMarker)))
-            {
-                //reformat and attempt
-                var reformattedVariable = v_DictionaryName.Replace(sendingInstance.engineSettings.VariableStartMarker, "").Replace(sendingInstance.engineSettings.VariableEndMarker, "");
-                requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == reformattedVariable).FirstOrDefault();
-            }
+        //    var ctrls = CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor);
+        //    RenderedControls.AddRange(ctrls);
 
-            return requiredVariable;
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+        //    return RenderedControls;
 
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_SheetName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_KeyColumn", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ValueColumn", this, editor));
+        //}
+        //public override string GetDisplayValue()
+        //{
+        //    return base.GetDisplayValue() + " [Load Dictionary from '" + v_FilePath + "' and store in: '" +v_DictionaryName+ "']";
+        //}
 
+        //public override bool IsValidate(frmCommandEditor editor)
+        //{
+        //    base.IsValidate(editor);
 
-            return RenderedControls;
+        //    if (String.IsNullOrEmpty(v_DictionaryName))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Dictionary Variable Name is empty.\n";
+        //    }
+        //    if (String.IsNullOrEmpty(v_FilePath))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Workbook file path is empty.\n";
+        //    }
+        //    if (String.IsNullOrEmpty(v_SheetName))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Sheet name is empty.\n";
+        //    }
+        //    if (String.IsNullOrEmpty(v_KeyColumn))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Key column is empty.\n";
+        //    }
+        //    if (String.IsNullOrEmpty(v_ValueColumn))
+        //    {
+        //        this.IsValid = false;
+        //        this.validationResult += "Value column is empty.\n";
+        //    }
 
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Load Dictionary from '" + v_FilePath + "' and store in: '" +v_DictionaryName+ "']";
-        }
+        //    return this.IsValid;
+        //}
     }
 }

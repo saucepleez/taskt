@@ -346,4 +346,28 @@
   <data name="taskt_element_helper" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\taskt-element-helper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="actionbar_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\actionbar-edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="taskt_logo_alt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\taskt_logo_alt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="action_bar_config" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\action-bar-config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="web_help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\web_help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="command_group" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\command-group.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sample_templete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sample_templete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="various_info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\various_info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

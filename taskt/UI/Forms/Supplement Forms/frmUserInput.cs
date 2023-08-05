@@ -12,7 +12,7 @@ namespace taskt.UI.Forms.Supplemental
 {
     public partial class frmUserInput : UIForm
     {
-        public Core.Automation.Commands.UserInputCommand InputCommand { get; set; }
+        public Core.Automation.Commands.ShowUserInputDialogCommand InputCommand { get; set; }
         public List<Control> InputControls;
         public frmUserInput()
         {

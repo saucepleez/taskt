@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="fdabccaa-8dcf-47b5-a1bf-3e8fc8673fd4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Compare Variable Values" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="50394aad-e9ef-428c-a8f7-6e6375dee37e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set &quot;vPowerLevel&quot; 8500" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="cc242b99-da36-45b1-88a7-e840f3087572" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPowerLevel" v_Input="8500" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="515d8488-4c16-4ecf-a203-0b9d28462456" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I9AcPionPara15Table060418.051533">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9AcPionPara15Table060418.051533" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I9AcPionPara15Table060418.051533" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515331" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vPowerLevel⦄</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515332" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is greater than</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515333" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>9000</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+            </DocumentElement>
+            <diffgr:before>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515331" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vPowerLevel}</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515332" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is greater than</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515333" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>9000</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="6e73ed49-1b0a-4449-bae5-7705d7d3cfb5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="evaluated true" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="8d974918-5632-496d-8607-ff009aa0bdd0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That PowerLevel is over 9000" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="f7433ffb-28a0-4bca-9b95-60ef9e961dbf" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="c2bcd339-6991-433a-92a1-6b68ab5ff1b4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="evaluated false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3fc6a451-ea7b-4508-b500-97803cf691da" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That PowerLevel is under 9000" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="7c684b22-e754-46a1-90e6-89d66c7f787e" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="50394aad-e9ef-428c-a8f7-6e6375dee37e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Set &quot;vPowerLevel&quot; 9000" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="cc242b99-da36-45b1-88a7-e840f3087572" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPowerLevel" v_Input="9000" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="515d8488-4c16-4ecf-a203-0b9d28462456" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I9AcPionPara15Table060418.051533">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9AcPionPara15Table060418.051533" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I9AcPionPara15Table060418.051533" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515331" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vPowerLevel⦄</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515332" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is greater than</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515333" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>9000</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+            </DocumentElement>
+            <diffgr:before>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515331" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vPowerLevel}</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515332" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is greater than</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515333" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>9000</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="6e73ed49-1b0a-4449-bae5-7705d7d3cfb5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" v_Comment="evaluated true" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="8d974918-5632-496d-8607-ff009aa0bdd0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That PowerLevel is over 9000" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="f7433ffb-28a0-4bca-9b95-60ef9e961dbf" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="c2bcd339-6991-433a-92a1-6b68ab5ff1b4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="17" PauseBeforeExeucution="false" v_Comment="evaluated false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3fc6a451-ea7b-4508-b500-97803cf691da" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="18" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That PowerLevel is under 9000" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="7c684b22-e754-46a1-90e6-89d66c7f787e" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="50394aad-e9ef-428c-a8f7-6e6375dee37e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Set &quot;vPowerLevel&quot; 9300" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="cc242b99-da36-45b1-88a7-e840f3087572" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vPowerLevel" v_Input="9300" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="515d8488-4c16-4ecf-a203-0b9d28462456" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="250" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I9AcPionPara15Table060418.051533">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I9AcPionPara15Table060418.051533" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I9AcPionPara15Table060418.051533" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515331" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vPowerLevel⦄</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515332" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is greater than</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515333" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>9000</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+            </DocumentElement>
+            <diffgr:before>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515331" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vPowerLevel}</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515332" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is greater than</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+              <I9AcPionPara15Table060418.051533 diffgr:id="I9AcPionPara15Table060418.0515333" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>9000</Parameter_x0020_Value>
+              </I9AcPionPara15Table060418.051533>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="6e73ed49-1b0a-4449-bae5-7705d7d3cfb5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="23" PauseBeforeExeucution="false" v_Comment="evaluated true" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="8d974918-5632-496d-8607-ff009aa0bdd0" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="24" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That PowerLevel is over 9000" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="f7433ffb-28a0-4bca-9b95-60ef9e961dbf" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="25" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="CommentCommand" CommandID="c2bcd339-6991-433a-92a1-6b68ab5ff1b4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="26" PauseBeforeExeucution="false" v_Comment="evaluated false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="3fc6a451-ea7b-4508-b500-97803cf691da" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="27" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="That PowerLevel is under 9000" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="7c684b22-e754-46a1-90e6-89d66c7f787e" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="28" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-01T23:29:54.4763631+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vPowerLevel</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

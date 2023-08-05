@@ -2,41 +2,54 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Engine Context example which shows how to output engine data" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="724a4c02-4442-4748-a8fb-502be4e46900" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Engine Context example which shows how to output engine data" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get Engine Context which contains engine information" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a0a54105-79f8-47ca-9da7-8e9b3a57df36" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get Engine Context which contains engine information" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNewVar" v_Input="[taskt.EngineContext]" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="be85ba70-6be1-468b-9bd6-a24d3ad4c897" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNewVar" v_Input="⦃taskt.EngineContext⦄" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vNewVar" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="c5424ada-dd11-4394-a5c1-7dd47b3933eb" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vNewVar⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Show Current Variables" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f6e3030a-13df-4502-adb5-e327a8d8a730" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Show Current Variables" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Showing Variable List: [vNewVar =&gt; $.VariableList]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="b72895da-f1bc-4fd9-9c4c-ffb78175cdc8" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Showing Variable List: ⦃vNewVar =&gt; $.VariableList⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Show Current App Instances" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8e073d40-da52-4761-a894-987b8aeb8d71" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Show Current App Instances" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Showing App Instances: [vNewVar =&gt; $.AppInstances]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4cbcc0e9-7fa4-4181-9225-b3a87d67081d" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Showing App Instances: ⦃vNewVar =&gt; $.AppInstances⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Show Engine Setting" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="e681478b-bcfa-476c-97bf-17e4b4e758f4" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Show Engine Setting (ex. Create missing variable during execution)" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Create missing variables during execution setting: [vNewVar =&gt; $.engineSettings.CreateMissingVariablesDuringExecution]" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6f79a3c5-890d-48b7-a232-895da9cc1243" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Create missing variables during execution setting: ⦃vNewVar =&gt; $.engineSettings.CreateMissingVariablesDuringExecution⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Write To File" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8e64c9d4-7c9f-4a16-9856-aa7287ab68a7" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Write To File" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="WriteTextFileCommand" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write To File" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="[Folder.Desktop]\outputSample.json" v_TextToWrite="vNewVar" v_Overwrite="Overwrite" />
+      <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="b29c9760-4913-4cf6-b829-de9760c376a6" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write To File" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="⦃Folder.Desktop⦄\outputSample.json" v_TextToWrite="⦃vNewVar⦄" v_Overwrite="Overwrite" />
     </ScriptAction>
   </Commands>
-  <Variables />
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-03T17:24:54.6491933+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vNewVar</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
 </Script>

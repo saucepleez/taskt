@@ -74,9 +74,9 @@
             this.lblMainLogo.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.lblMainLogo.Location = new System.Drawing.Point(3, 0);
             this.lblMainLogo.Name = "lblMainLogo";
-            this.lblMainLogo.Size = new System.Drawing.Size(318, 45);
+            this.lblMainLogo.Size = new System.Drawing.Size(329, 45);
             this.lblMainLogo.TabIndex = 5;
-            this.lblMainLogo.Text = "engine context viewer";
+            this.lblMainLogo.Text = "Engine Context Viewer";
             // 
             // pnlDialogResult
             // 
@@ -113,7 +113,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmEngineContextViewer";
-            this.Text = "engine context viewer";
+            this.Text = "Engine Context Viewer";
             this.Load += new System.EventHandler(this.FrmEngineContextViewer_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

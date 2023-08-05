@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1e435026-e522-45ec-a3b9-c482aa8acb1a" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Run Custom Code With Arguments" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="96b78b78-e4d9-4efe-ad37-870849780e6e" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Arguments will be split by space unless contained within quotes" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="1e201213-7bd1-4a38-a33f-9c0aec821588" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="Assign a Variable to be passed into Custom Code as an argument" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="2a8802ad-fd48-43f2-ae8e-b5d05ccca8e8" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vArgument" v_Input="Hello World!" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="f4f01a71-bdc3-4503-ab54-0435437be08f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Run Custom Code, passing Arguments" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="RunCustomCodeCommand" CommandID="6aa1dc3b-c0c8-43f7-9e3e-b241d6239ead" CommandName="RunCustomCodeCommand" IsCommented="false" SelectionName="Run Custom Code" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Code="// A Hello World! program in C#.&#xA;            using System;&#xA;&#xA;            namespace HelloWorld&#xA;            {&#xA;            class Hello &#xA;             {&#xA;               static void Main(string[] args) &#xA;               {&#xA;                &#xA;&#xA;               System.Console.WriteLine(&quot;Number of command line parameters = {0}&quot;, args.Length);&#xA;&#xA;              foreach (string s in args)&#xA;              {&#xA;                System.Console.WriteLine(&quot;Found Argument: &quot; + s);&#xA;              }&#xA;&#xA;&#xA;            Console.WriteLine(&quot;Hi! This code was compiled on the fly from taskt!&quot;);&#xA;&#xA;                 //Keep the console window open, remove this if you do not want the exe to block&#xA;                 Console.WriteLine(&quot;Press any key to exit.&quot;);&#xA;                 Console.ReadKey();&#xA;               }&#xA;             }&#xA;           }" v_Args="arg1 arg2 &quot;⦃vArgument⦄&quot;" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.6.0.0</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-23T18:36:42.7803592+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vArgument</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

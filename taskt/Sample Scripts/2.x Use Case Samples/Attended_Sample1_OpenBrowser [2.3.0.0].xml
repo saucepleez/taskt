@@ -2,11 +2,34 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserCreateCommand" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Create Browser" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_InstanceTracking="Keep Instance Alive" v_BrowserWindowOption="Normal" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="80c117fa-03d0-4a62-8ad3-c4f0bb4d5f8f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Web Browser sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_URL="https://wiki.taskt.net" />
+      <ScriptCommand xsi:type="SeleniumBrowserCreateCommand" CommandID="eac99b55-1148-4829-8335-77f26c444c53" CommandName="SeleniumBrowserCreateCommand" IsCommented="false" SelectionName="Create Browser" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="myBrowser" v_InstanceTracking="Keep Instance Alive" v_BrowserWindowOption="Normal" v_EngineType="Chrome" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="80c117fa-03d0-4a62-8ad3-c4f0bb4d5f8f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="access wiki.taskt.net" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserNavigateURLCommand" CommandID="349f2ffc-ec7a-47bf-aac2-ca7030f0292f" CommandName="SeleniumBrowserNavigateURLCommand" IsCommented="false" SelectionName="Navigate to URL" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="myBrowser" v_URL="https://wiki.taskt.net" v_UseHttps="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="80c117fa-03d0-4a62-8ad3-c4f0bb4d5f8f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="do somothing good" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="80c117fa-03d0-4a62-8ad3-c4f0bb4d5f8f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Close browser" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SeleniumBrowserCloseCommand" CommandID="189bbe84-04b3-4a88-8e57-b4bd1acf0082" CommandName="SeleniumBrowserCloseCommand" IsCommented="false" SelectionName="Close Browser" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="myBrowser" />
     </ScriptAction>
   </Commands>
+  <Info>
+    <TasktVersion>3.5.0.27</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-05T18:54:03.0713542+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
   <Variables />
 </Script>

@@ -1,163 +1,173 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
-using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Engine Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Set Engine Preference")]
     [Attributes.ClassAttributes.Description("This command allows you to set preferences for engine behavior.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to change the engine behavior.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
     public class SetEnginePreferenceCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Select Parameter Type")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Enable Automatic Calculations")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Disable Automatic Calculations")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Start Variable Marker")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("End Variable Marker")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Engine Delay")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Current Window Keyword")]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Parameter Type")]
+        [PropertyUISelectionOption("Enable Automatic Calculations")]
+        [PropertyUISelectionOption("Disable Automatic Calculations")]
+        [PropertyUISelectionOption("Start Variable Marker")]
+        [PropertyUISelectionOption("End Variable Marker")]
+        [PropertyUISelectionOption("Engine Delay")]
+        [PropertyUISelectionOption("Current Window Keyword")]
+        [PropertyValidationRule("Parameter Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Parameter Type")]
+        [PropertySelectionChangeEvent(nameof(cmbPreferenceCombobox_SelectedChanged))]
         public string v_PreferenceType { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Specify Parameter Value")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Parameter Value")]
+        [InputSpecification("Parameter Value", true)]
+        [PropertyDisplayText(false, "")]
         public string v_ParameterValue { get; set; }
-
-        [XmlIgnore]
-        [NonSerialized]
-        private ComboBox PreferenceTypeCombobox;
-
-        [XmlIgnore]
-        [NonSerialized]
-        private List<Control> ElementParameterControls;
 
         public SetEnginePreferenceCommand()
         {
-            this.CommandName = "SetEnginePreferenceCommand";
-            this.SelectionName = "Set Engine Preference";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-
+            //this.CommandName = "SetEnginePreferenceCommand";
+            //this.SelectionName = "Set Engine Preference";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var preference = v_PreferenceType.ConvertToUserVariable(sender);
+            var preference = this.GetUISelectionValue(nameof(v_PreferenceType), engine);
 
-            var parameterValue = v_ParameterValue.ConvertToUserVariable(sender);
+            var parameterValue = v_ParameterValue.ConvertToUserVariable(engine);
 
             switch (preference)
             {
-                case "Enable Automatic Calculations":
+                case "enable automatic calculations":
                     engine.AutoCalculateVariables = true;
                     break;
-                case "Disable Automatic Calculations":
+                case "disable automatic calculations":
                     engine.AutoCalculateVariables = false;
                     break;
 
-                case "Start Variable Marker":
+                case "start variable marker":
                     engine.engineSettings.VariableStartMarker = parameterValue;
                     break;
-                case "End Variable Marker":
+                case "end variable marker":
                     engine.engineSettings.VariableEndMarker = parameterValue;
                     break;
-                case "Engine Delay":
-                    engine.engineSettings.DelayBetweenCommands = int.Parse(parameterValue);
+
+                case "engine delay":
+                    if (int.TryParse(parameterValue, out int delay))
+                    {
+                        if (delay >= 1)
+                        {
+                            engine.engineSettings.DelayBetweenCommands = delay;
+                        }
+                        else
+                        {
+                            throw new Exception("Engine Delay is Less Than or Equals zero.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Engine Delay is not Number. Value: '" + parameterValue + "'");
+                    }
                     break;
-                case "Current Window Keyword":
+
+                case "current window keyword":
                     engine.engineSettings.CurrentWindowKeyword = parameterValue;
+                    break;
+            }
+        }
+
+        private void cmbPreferenceCombobox_SelectedChanged(object sender, EventArgs e)
+        {
+            var item = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
+            switch (item)
+            {
+                case "Enable Automatic Calculations":
+                case "Disable Automatic Calculations":
+                    GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), false);
                     break;
 
                 default:
-                    throw new NotImplementedException($"The preference '{preference}' is not implemented.");
+                    GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), true);
+                    break;
             }
-
-
         }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
 
-            var preference = CommandControls.CreateDefaultDropdownGroupFor("v_PreferenceType", this, editor);
-            RenderedControls.AddRange(preference);
-
-            PreferenceTypeCombobox = (ComboBox)preference.Where(t => t is ComboBox).FirstOrDefault();
-            PreferenceTypeCombobox.SelectedValueChanged += (sender, e) => PreferenceCombobox_SelectedChanged(sender, e);
-
-            ElementParameterControls = CommandControls.CreateDefaultInputGroupFor("v_ParameterValue", this, editor);
-            RenderedControls.AddRange(this.ElementParameterControls);
-
-            return RenderedControls;
-        }
         public override string GetDisplayValue()
         {
             switch (this.v_PreferenceType)
             {
                 case "Enable Automatic Calculations":
                 case "Disable Automatic Calculations":
-                    return base.GetDisplayValue() + $" [{v_PreferenceType}]";
-                    break;
+                    return base.GetDisplayValue() + $" [ {v_PreferenceType} ]";
 
                 case "Start Variable Marker":
                 case "End Variable Marker":
                 case "Engine Delay":
                 case "Current Window Keyword":
-                    return base.GetDisplayValue() + " [" + v_PreferenceType +" set '" + (String.IsNullOrEmpty(v_ParameterValue) ? "" : v_ParameterValue) + "']";
-                    break;
+                    return base.GetDisplayValue() + " [ " + v_PreferenceType +" set '" + (String.IsNullOrEmpty(v_ParameterValue) ? "" : v_ParameterValue) + "' ]";
 
                 default:
-                    return base.GetDisplayValue() + $" [{v_PreferenceType}]";
-                    break;
-            }
-            
-        }
-
-        private void PreferenceCombobox_SelectedChanged(object sender, System.EventArgs e)
-        {
-            switch (PreferenceTypeCombobox.Text)
-            {
-                case "Enable Automatic Calculations":
-                case "Disable Automatic Calculations":
-                    foreach(var ctl in ElementParameterControls)
-                    {
-                        ctl.Visible = false;
-                    }
-                    break;
-
-                default:
-                    foreach (var ctl in ElementParameterControls)
-                    {
-                        ctl.Visible = true;
-                    }
-                    break;
+                    return base.GetDisplayValue() + $" [ {v_PreferenceType} ]";
             }
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            this.IsValid = true;
-            this.validationResult = "";
+        //public override void ConvertToIntermediate(EngineSettings settings, List<ScriptVariable> variables)
+        //{
+        //    switch (v_PreferenceType)
+        //    {
+        //        case "Start Variable Marker":
+        //        case "End Variable Marker":
+        //            // not convert
+        //            break;
 
-            if (String.IsNullOrEmpty(v_PreferenceType))
-            {
-                this.validationResult += "Parameter Type is empty.\n";
-                this.IsValid = false;
-            }
+        //        default:
+        //            if (v_ParameterValue != null)
+        //            {
+        //                v_ParameterValue = settings.convertToIntermediate(v_ParameterValue);
+        //            }
+        //            if (v_PreferenceType != null)
+        //            {
+        //                v_PreferenceType = settings.convertToIntermediate(v_PreferenceType);
+        //            }
+        //            break;
+        //    }
+        //}
 
-            return this.IsValid;
-        }
+        //public override void ConvertToRaw(EngineSettings settings)
+        //{
+        //    switch (v_PreferenceType)
+        //    {
+        //        case "Start Variable Marker":
+        //        case "End Variable Marker":
+        //            // not convert
+        //            break;
+
+        //        default:
+        //            if (v_ParameterValue != null)
+        //            {
+        //                v_ParameterValue = settings.convertToRaw(v_ParameterValue);
+        //            }
+        //            if (v_PreferenceType != null)
+        //            {
+        //                v_PreferenceType = settings.convertToRaw(v_PreferenceType);
+        //            }
+        //            break;
+        //    }
+        //}
     }
 }

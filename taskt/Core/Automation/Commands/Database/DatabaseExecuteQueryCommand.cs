@@ -2,11 +2,12 @@
 using System.Xml.Serialization;
 using System.Data;
 using System.Collections.Generic;
-using taskt.UI.Forms;
 using System.Windows.Forms;
-using taskt.UI.CustomControls;
 using System.Data.OleDb;
 using System.Drawing;
+using System.Linq;
+using taskt.UI.Forms;
+using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -23,6 +24,8 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **seleniumInstance**")]
         [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
         [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [Attributes.PropertyAttributes.PropertyInstanceType(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase)]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
@@ -74,7 +77,7 @@ namespace taskt.Core.Automation.Commands
             this.SelectionName = "Execute Database Query";
             this.CommandEnabled = true;
             this.CustomRendering = true;
-            this.v_InstanceName = "sqlDefault";
+            //this.v_InstanceName = "sqlDefault";
 
             this.v_QueryParameters = new System.Data.DataTable
             {
@@ -200,8 +203,10 @@ namespace taskt.Core.Automation.Commands
         {
             base.Render(editor);
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            UI.CustomControls.CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.DataBase);
+            RenderedControls.AddRange(instanceCtrls);
 
             var queryControls = CommandControls.CreateDefaultInputGroupFor("v_Query", this, editor);
             var queryBox = (TextBox)queryControls[2];
@@ -216,7 +221,7 @@ namespace taskt.Core.Automation.Commands
             //QueryParametersGridView.Size = new Size(400, 250);
             //QueryParametersGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //QueryParametersGridView.AutoGenerateColumns = false;
-            QueryParametersGridView = CommandControls.CreateDataGridView(this, "v_QueryParameters", true, true , true, 400, 250, false);
+            QueryParametersGridView = CommandControls.CreateDefaultDataGridViewFor("v_QueryParameters", this, true, true, true, 400, 250, true);
             QueryParametersGridView.CellClick += QueryParametersGridView_CellClick;
         
             var selectColumn = new DataGridViewComboBoxColumn();
@@ -240,7 +245,7 @@ namespace taskt.Core.Automation.Commands
             QueryParametersControls = new List<Control>();
 
             QueryParametersControls.Add(CommandControls.CreateDefaultLabelFor("v_QueryParameters", this));
-            QueryParametersControls.AddRange(CommandControls.CreateUIHelpersFor("v_QueryParameters", this, new Control[] { QueryParametersGridView }, editor));
+            QueryParametersControls.AddRange(CommandControls.CreateDefaultUIHelpersFor("v_QueryParameters", this, QueryParametersGridView, editor));
 
             CommandItemControl helperControl = new CommandItemControl();
             var helperTheme = editor.Theme.UIHelper;
@@ -261,8 +266,13 @@ namespace taskt.Core.Automation.Commands
 
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_QueryType", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DatasetName", this, editor));
-            return RenderedControls;
 
+            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+            {
+                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultDBInstanceName;
+            }
+
+            return RenderedControls;
         }
 
         private void AddParameter(object sender, EventArgs e)

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="7e9263ea-5d02-4f57-9cdc-3bd42410abbd" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Numeric Check" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="a3ff9203-4da1-430c-b27a-9f023e3278ff" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Test a non-numeric value" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="753dd5aa-4257-4d1f-9a0a-bbd12b595b4c" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="test12345" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="2c49fa75-2b3a-4fa1-a02f-77cd8dce0a05" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Is Numeric">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I3AcPionPara30Table120318.013024" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="I3AcPionPara30Table120318.013024">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I3AcPionPara30Table120318.013024 diffgr:id="I3AcPionPara30Table120318.0130241" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vNumber⦄</Parameter_x0020_Value>
+              </I3AcPionPara30Table120318.013024>
+            </DocumentElement>
+            <diffgr:before>
+              <I3AcPionPara30Table120318.013024 diffgr:id="I3AcPionPara30Table120318.0130241" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vNumber}</Parameter_x0020_Value>
+              </I3AcPionPara30Table120318.013024>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="0ae5fbe8-32d7-4e6c-8985-c218f8b9b4bc" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Variable Is Numeric" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="49e56e12-cdaf-4013-ad02-b3561c35424b" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="1c2b9bbe-5972-451f-9df4-d694c08c1155" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Variable Is Not Numeric" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="1b2a7b00-d1be-4b2e-a8d5-0f4eeb56a5d7" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="181843cd-6697-4641-a309-11ea07a0022f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Test a numeric value" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="5f699958-6ef0-468f-b5c8-e464d3ef33b6" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNumber" v_Input="12345" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="3e0c4bd0-de5f-4b11-a707-eecf91f54803" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Is Numeric">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I3AcPionPara30Table120318.013024">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I3AcPionPara30Table120318.013024" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I3AcPionPara30Table120318.013024" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I3AcPionPara30Table120318.013024 diffgr:id="I3AcPionPara30Table120318.0130241" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vNumber⦄</Parameter_x0020_Value>
+              </I3AcPionPara30Table120318.013024>
+            </DocumentElement>
+            <diffgr:before>
+              <I3AcPionPara30Table120318.013024 diffgr:id="I3AcPionPara30Table120318.0130241" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Variable Name</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vNumber}</Parameter_x0020_Value>
+              </I3AcPionPara30Table120318.013024>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="a836a241-0103-4659-8ef2-51422cca5c32" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Variable Is Numeric" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="a72a9324-4ee1-48e4-a2f4-15076a577023" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="bf55fe4b-45d3-495e-95c9-18348d4fd19f" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Variable Is Not Numeric" v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="671f0190-a89f-44a6-adb8-8400f8fd2063" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.27</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-05T16:18:24.9665459+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vNumber</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

@@ -11,22 +11,17 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
+using taskt.Core.Automation.Commands;
 using taskt.Core.IO;
 
 namespace taskt.Core
@@ -171,13 +166,18 @@ namespace taskt.Core
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = Core.Automation.User32.User32Functions.GetActiveWindowTitle() });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = WindowNameControls.GetActiveWindowTitle() });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.Location", VariableValue = System.Reflection.Assembly.GetEntryAssembly().Location });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Cr", VariableValue = "\r" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Lf", VariableValue = "\n" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Tab", VariableValue = "\t" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Space", VariableValue = " " });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F0", VariableValue = "1" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F00", VariableValue = "01" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F000", VariableValue = "001" });
+            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "File.CurrentScriptFile", VariableValue = "" });
             systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
             return systemVariableList;
         }
@@ -202,34 +202,34 @@ namespace taskt.Core
             return image;
         }
 
-        public static List<string> GetAvailableWindowNames()
-        {
-            List<string> windowList = new List<string>();
-            //get all running processes
-            Process[] processlist = Process.GetProcesses();
-            //pull the main window title for each
-            foreach (Process process in processlist)
-            {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
-                {
-                    //add to the control list of available windows
-                    windowList.Add(process.MainWindowTitle);
-                }
-            }
+        //public static List<string> GetAvailableWindowNames()
+        //{
+        //    List<string> windowList = new List<string>();
+        //    //get all running processes
+        //    Process[] processlist = Process.GetProcesses();
+        //    //pull the main window title for each
+        //    foreach (Process process in processlist)
+        //    {
+        //        if (!String.IsNullOrEmpty(process.MainWindowTitle))
+        //        {
+        //            //add to the control list of available windows
+        //            windowList.Add(process.MainWindowTitle);
+        //        }
+        //    }
 
 
-            SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
+        //    SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
 
-            foreach (SHDocVw.InternetExplorer window in shellWindows)
-            {
-                windowList.Add("Windows Explorer - " + window.LocationName);
-            }
+        //    foreach (SHDocVw.InternetExplorer window in shellWindows)
+        //    {
+        //        windowList.Add("Windows Explorer - " + window.LocationName);
+        //    }
 
 
-            windowList.Sort();
+        //    windowList.Sort();
 
-            return windowList;
-        }
+        //    return windowList;
+        //}
 
         private static string GetKeyDescription(Keys key)
         {
@@ -561,21 +561,19 @@ namespace taskt.Core
             return keyDescriptionList;
         }
 
-        public static string ConvertObjectToJson(object obj)
-        {
-           
-                //set json settings
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.Error = (serializer, err) =>
-                {
-                    err.ErrorContext.Handled = true;
-                };
+        //public static string ConvertObjectToJson(object obj)
+        //{
+        //    //set json settings
+        //    JsonSerializerSettings settings = new JsonSerializerSettings();
+        //    settings.Error = (serializer, err) =>
+        //    {
+        //        err.ErrorContext.Handled = true;
+        //    };
 
-                settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+        //    settings.Formatting = Newtonsoft.Json.Formatting.Indented;
 
-                return JsonConvert.SerializeObject(obj, settings);
-         
-        }
+        //    return JsonConvert.SerializeObject(obj, settings);
+        //}
 
     }
 }

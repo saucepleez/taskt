@@ -42,7 +42,6 @@
             this.chkEnableLogging = new System.Windows.Forms.CheckBox();
             this.chkAutoCloseWindow = new System.Windows.Forms.CheckBox();
             this.chkShowDebug = new System.Windows.Forms.CheckBox();
-            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.lblMainLogo = new System.Windows.Forms.Label();
             this.lblOptions = new System.Windows.Forms.Label();
             this.lblApplicationSettings = new System.Windows.Forms.Label();
@@ -52,6 +51,8 @@
             this.chkCreateMissingVariables = new System.Windows.Forms.CheckBox();
             this.uiSettingTabs = new taskt.UI.CustomControls.UITabControl();
             this.tabAppSettings = new System.Windows.Forms.TabPage();
+            this.chkIgnoreFirstVariableMarker = new System.Windows.Forms.CheckBox();
+            this.chkUseNewParser = new System.Windows.Forms.CheckBox();
             this.chkSlimActionBar = new System.Windows.Forms.CheckBox();
             this.chkPreloadCommands = new System.Windows.Forms.CheckBox();
             this.btnLaunchDisplayManager = new System.Windows.Forms.Button();
@@ -71,6 +72,7 @@
             this.lblRootFolder = new System.Windows.Forms.Label();
             this.txtAppFolderPath = new System.Windows.Forms.TextBox();
             this.tabDebugSettings = new System.Windows.Forms.TabPage();
+            this.lblVariableMarkerAlert = new System.Windows.Forms.Label();
             this.txtCurrentWindow = new System.Windows.Forms.TextBox();
             this.lblCurrentWindow = new System.Windows.Forms.Label();
             this.chkAutoCalcVariables = new System.Windows.Forms.CheckBox();
@@ -118,6 +120,20 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.tabEditorSettings = new System.Windows.Forms.TabPage();
+            this.chkGreedlySubGroupName = new System.Windows.Forms.CheckBox();
+            this.chkSubGroupNameSearchTarget = new System.Windows.Forms.CheckBox();
+            this.chkGreedlyGroupName = new System.Windows.Forms.CheckBox();
+            this.chkGroupNameSearchTarget = new System.Windows.Forms.CheckBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cmbInstanceNameOrder = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.chkShowScriptMiniMap = new System.Windows.Forms.CheckBox();
+            this.txtDefaultNLGInstanceName = new System.Windows.Forms.TextBox();
+            this.lblDefaultNLGInstance = new System.Windows.Forms.Label();
+            this.chkExportIntermediate = new System.Windows.Forms.CheckBox();
+            this.lblIndentWidth = new System.Windows.Forms.Label();
+            this.txtIndentWidth = new System.Windows.Forms.TextBox();
+            this.chkShowIndentLine = new System.Windows.Forms.CheckBox();
             this.chkGruopingBySubgruop = new System.Windows.Forms.CheckBox();
             this.chkInsertCommentIfLoop = new System.Windows.Forms.CheckBox();
             this.txtDefaultDBInstanceName = new System.Windows.Forms.TextBox();
@@ -136,9 +152,11 @@
             this.chkInsertCommandsInline = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.uiCancel = new taskt.UI.CustomControls.UIPictureButton();
+            this.uiBtnOpen = new taskt.UI.CustomControls.UIPictureButton();
             this.tmrGetSocketStatus = new System.Windows.Forms.Timer(this.components);
             this.bgwMetrics = new System.ComponentModel.BackgroundWorker();
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.uiSettingTabs.SuspendLayout();
             this.tabAppSettings.SuspendLayout();
             this.tabDebugSettings.SuspendLayout();
@@ -147,6 +165,9 @@
             this.tabEditorSettings.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uiCancel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).BeginInit();
             this.SuspendLayout();
             // 
             // btnConnect
@@ -229,7 +250,7 @@
             this.label3.ForeColor = System.Drawing.Color.SlateGray;
             this.label3.Location = new System.Drawing.Point(290, 336);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(232, 16);
+            this.label3.Size = new System.Drawing.Size(231, 16);
             this.label3.TabIndex = 9;
             this.label3.Text = "Server URL ex. ws://localhost:port/ws)\r";
             this.label3.Visible = false;
@@ -251,7 +272,7 @@
             this.label2.ForeColor = System.Drawing.Color.SlateGray;
             this.label2.Location = new System.Drawing.Point(310, 339);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 16);
+            this.label2.Size = new System.Drawing.Size(85, 16);
             this.label2.TabIndex = 18;
             this.label2.Text = "Connect Key:";
             this.label2.Visible = false;
@@ -294,23 +315,6 @@
             this.chkShowDebug.TabIndex = 1;
             this.chkShowDebug.Text = "Show Debug Window";
             this.chkShowDebug.UseVisualStyleBackColor = false;
-            // 
-            // uiBtnOpen
-            // 
-            this.uiBtnOpen.BackColor = System.Drawing.Color.Transparent;
-            this.uiBtnOpen.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.uiBtnOpen.DisplayText = "Ok";
-            this.uiBtnOpen.DisplayTextBrush = System.Drawing.Color.White;
-            this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.uiBtnOpen.Image = global::taskt.Properties.Resources.various_ok_button;
-            this.uiBtnOpen.IsMouseOver = false;
-            this.uiBtnOpen.Location = new System.Drawing.Point(3, 532);
-            this.uiBtnOpen.Name = "uiBtnOpen";
-            this.uiBtnOpen.Size = new System.Drawing.Size(48, 44);
-            this.uiBtnOpen.TabIndex = 13;
-            this.uiBtnOpen.TabStop = false;
-            this.uiBtnOpen.Text = "Ok";
-            this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
             // 
             // lblMainLogo
             // 
@@ -364,7 +368,7 @@
             // btnUpdates
             // 
             this.btnUpdates.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpdates.Location = new System.Drawing.Point(12, 306);
+            this.btnUpdates.Location = new System.Drawing.Point(12, 350);
             this.btnUpdates.Name = "btnUpdates";
             this.btnUpdates.Size = new System.Drawing.Size(207, 25);
             this.btnUpdates.TabIndex = 15;
@@ -417,6 +421,8 @@
             // 
             this.tabAppSettings.AutoScroll = true;
             this.tabAppSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabAppSettings.Controls.Add(this.chkIgnoreFirstVariableMarker);
+            this.tabAppSettings.Controls.Add(this.chkUseNewParser);
             this.tabAppSettings.Controls.Add(this.chkSlimActionBar);
             this.tabAppSettings.Controls.Add(this.chkPreloadCommands);
             this.tabAppSettings.Controls.Add(this.btnLaunchDisplayManager);
@@ -445,6 +451,32 @@
             this.tabAppSettings.TabIndex = 0;
             this.tabAppSettings.Text = "Application";
             // 
+            // chkIgnoreFirstVariableMarker
+            // 
+            this.chkIgnoreFirstVariableMarker.AutoSize = true;
+            this.chkIgnoreFirstVariableMarker.BackColor = System.Drawing.Color.Transparent;
+            this.chkIgnoreFirstVariableMarker.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkIgnoreFirstVariableMarker.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkIgnoreFirstVariableMarker.Location = new System.Drawing.Point(10, 151);
+            this.chkIgnoreFirstVariableMarker.Name = "chkIgnoreFirstVariableMarker";
+            this.chkIgnoreFirstVariableMarker.Size = new System.Drawing.Size(566, 24);
+            this.chkIgnoreFirstVariableMarker.TabIndex = 31;
+            this.chkIgnoreFirstVariableMarker.Text = "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)";
+            this.chkIgnoreFirstVariableMarker.UseVisualStyleBackColor = true;
+            // 
+            // chkUseNewParser
+            // 
+            this.chkUseNewParser.AutoSize = true;
+            this.chkUseNewParser.BackColor = System.Drawing.Color.Transparent;
+            this.chkUseNewParser.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkUseNewParser.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkUseNewParser.Location = new System.Drawing.Point(10, 128);
+            this.chkUseNewParser.Name = "chkUseNewParser";
+            this.chkUseNewParser.Size = new System.Drawing.Size(261, 24);
+            this.chkUseNewParser.TabIndex = 30;
+            this.chkUseNewParser.Text = "Use New Parser (New Parser is beta)";
+            this.chkUseNewParser.UseVisualStyleBackColor = true;
+            // 
             // chkSlimActionBar
             // 
             this.chkSlimActionBar.AutoSize = true;
@@ -453,9 +485,9 @@
             this.chkSlimActionBar.ForeColor = System.Drawing.Color.SteelBlue;
             this.chkSlimActionBar.Location = new System.Drawing.Point(10, 83);
             this.chkSlimActionBar.Name = "chkSlimActionBar";
-            this.chkSlimActionBar.Size = new System.Drawing.Size(154, 24);
+            this.chkSlimActionBar.Size = new System.Drawing.Size(271, 24);
             this.chkSlimActionBar.TabIndex = 5;
-            this.chkSlimActionBar.Text = "Use Slim Action Bar";
+            this.chkSlimActionBar.Text = "Use Slim Action Bar (Restart required)";
             this.chkSlimActionBar.UseVisualStyleBackColor = false;
             // 
             // chkPreloadCommands
@@ -475,7 +507,7 @@
             // btnLaunchDisplayManager
             // 
             this.btnLaunchDisplayManager.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchDisplayManager.Location = new System.Drawing.Point(225, 336);
+            this.btnLaunchDisplayManager.Location = new System.Drawing.Point(225, 380);
             this.btnLaunchDisplayManager.Name = "btnLaunchDisplayManager";
             this.btnLaunchDisplayManager.Size = new System.Drawing.Size(207, 25);
             this.btnLaunchDisplayManager.TabIndex = 18;
@@ -489,7 +521,7 @@
             this.lblStartupMode.BackColor = System.Drawing.Color.Transparent;
             this.lblStartupMode.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStartupMode.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStartupMode.Location = new System.Drawing.Point(10, 253);
+            this.lblStartupMode.Location = new System.Drawing.Point(10, 297);
             this.lblStartupMode.Name = "lblStartupMode";
             this.lblStartupMode.Size = new System.Drawing.Size(70, 17);
             this.lblStartupMode.TabIndex = 13;
@@ -502,14 +534,14 @@
             this.cboStartUpMode.Items.AddRange(new object[] {
             "Builder Mode",
             "Attended Task Mode"});
-            this.cboStartUpMode.Location = new System.Drawing.Point(13, 270);
+            this.cboStartUpMode.Location = new System.Drawing.Point(13, 314);
             this.cboStartUpMode.Name = "cboStartUpMode";
             this.cboStartUpMode.Size = new System.Drawing.Size(219, 29);
             this.cboStartUpMode.TabIndex = 14;
             // 
             // btnSelectAttendedTaskFolder
             // 
-            this.btnSelectAttendedTaskFolder.Location = new System.Drawing.Point(504, 222);
+            this.btnSelectAttendedTaskFolder.Location = new System.Drawing.Point(504, 266);
             this.btnSelectAttendedTaskFolder.Name = "btnSelectAttendedTaskFolder";
             this.btnSelectAttendedTaskFolder.Size = new System.Drawing.Size(42, 28);
             this.btnSelectAttendedTaskFolder.TabIndex = 12;
@@ -523,7 +555,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.SlateGray;
-            this.label6.Location = new System.Drawing.Point(9, 206);
+            this.label6.Location = new System.Drawing.Point(9, 250);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(130, 17);
             this.label6.TabIndex = 10;
@@ -531,7 +563,7 @@
             // 
             // txtAttendedTaskFolder
             // 
-            this.txtAttendedTaskFolder.Location = new System.Drawing.Point(12, 223);
+            this.txtAttendedTaskFolder.Location = new System.Drawing.Point(12, 267);
             this.txtAttendedTaskFolder.Name = "txtAttendedTaskFolder";
             this.txtAttendedTaskFolder.Size = new System.Drawing.Size(490, 29);
             this.txtAttendedTaskFolder.TabIndex = 11;
@@ -539,7 +571,7 @@
             // btnLaunchAttendedMode
             // 
             this.btnLaunchAttendedMode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchAttendedMode.Location = new System.Drawing.Point(225, 306);
+            this.btnLaunchAttendedMode.Location = new System.Drawing.Point(225, 350);
             this.btnLaunchAttendedMode.Name = "btnLaunchAttendedMode";
             this.btnLaunchAttendedMode.Size = new System.Drawing.Size(207, 25);
             this.btnLaunchAttendedMode.TabIndex = 16;
@@ -563,7 +595,7 @@
             // btnGenerateWikiDocs
             // 
             this.btnGenerateWikiDocs.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 336);
+            this.btnGenerateWikiDocs.Location = new System.Drawing.Point(12, 380);
             this.btnGenerateWikiDocs.Name = "btnGenerateWikiDocs";
             this.btnGenerateWikiDocs.Size = new System.Drawing.Size(207, 25);
             this.btnGenerateWikiDocs.TabIndex = 17;
@@ -574,7 +606,7 @@
             // btnClearMetrics
             // 
             this.btnClearMetrics.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearMetrics.Location = new System.Drawing.Point(11, 509);
+            this.btnClearMetrics.Location = new System.Drawing.Point(11, 553);
             this.btnClearMetrics.Name = "btnClearMetrics";
             this.btnClearMetrics.Size = new System.Drawing.Size(108, 23);
             this.btnClearMetrics.TabIndex = 29;
@@ -589,7 +621,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.SlateGray;
-            this.label5.Location = new System.Drawing.Point(13, 370);
+            this.label5.Location = new System.Drawing.Point(13, 414);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(248, 17);
             this.label5.TabIndex = 19;
@@ -600,7 +632,7 @@
             this.lblMetrics.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDownGrid;
             this.lblMetrics.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMetrics.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblMetrics.Location = new System.Drawing.Point(12, 388);
+            this.lblMetrics.Location = new System.Drawing.Point(12, 432);
             this.lblMetrics.Name = "lblMetrics";
             this.lblMetrics.Size = new System.Drawing.Size(534, 117);
             this.lblMetrics.TabIndex = 20;
@@ -608,7 +640,7 @@
             // 
             // tvExecutionTimes
             // 
-            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 388);
+            this.tvExecutionTimes.Location = new System.Drawing.Point(12, 431);
             this.tvExecutionTimes.Name = "tvExecutionTimes";
             this.tvExecutionTimes.Size = new System.Drawing.Size(534, 118);
             this.tvExecutionTimes.TabIndex = 26;
@@ -616,7 +648,7 @@
             // 
             // btnSelectFolder
             // 
-            this.btnSelectFolder.Location = new System.Drawing.Point(504, 175);
+            this.btnSelectFolder.Location = new System.Drawing.Point(504, 219);
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(42, 28);
             this.btnSelectFolder.TabIndex = 9;
@@ -630,7 +662,7 @@
             this.lblRootFolder.BackColor = System.Drawing.Color.Transparent;
             this.lblRootFolder.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRootFolder.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblRootFolder.Location = new System.Drawing.Point(9, 158);
+            this.lblRootFolder.Location = new System.Drawing.Point(9, 202);
             this.lblRootFolder.Name = "lblRootFolder";
             this.lblRootFolder.Size = new System.Drawing.Size(101, 17);
             this.lblRootFolder.TabIndex = 7;
@@ -638,7 +670,7 @@
             // 
             // txtAppFolderPath
             // 
-            this.txtAppFolderPath.Location = new System.Drawing.Point(12, 175);
+            this.txtAppFolderPath.Location = new System.Drawing.Point(12, 219);
             this.txtAppFolderPath.Name = "txtAppFolderPath";
             this.txtAppFolderPath.Size = new System.Drawing.Size(490, 29);
             this.txtAppFolderPath.TabIndex = 8;
@@ -647,6 +679,7 @@
             // 
             this.tabDebugSettings.AutoScroll = true;
             this.tabDebugSettings.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabDebugSettings.Controls.Add(this.lblVariableMarkerAlert);
             this.tabDebugSettings.Controls.Add(this.txtCurrentWindow);
             this.tabDebugSettings.Controls.Add(this.lblCurrentWindow);
             this.tabDebugSettings.Controls.Add(this.chkAutoCalcVariables);
@@ -675,6 +708,19 @@
             this.tabDebugSettings.Size = new System.Drawing.Size(624, 424);
             this.tabDebugSettings.TabIndex = 1;
             this.tabDebugSettings.Text = "Automation Engine";
+            // 
+            // lblVariableMarkerAlert
+            // 
+            this.lblVariableMarkerAlert.BackColor = System.Drawing.Color.Transparent;
+            this.lblVariableMarkerAlert.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVariableMarkerAlert.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblVariableMarkerAlert.Location = new System.Drawing.Point(331, 331);
+            this.lblVariableMarkerAlert.Name = "lblVariableMarkerAlert";
+            this.lblVariableMarkerAlert.Size = new System.Drawing.Size(245, 65);
+            this.lblVariableMarkerAlert.TabIndex = 22;
+            this.lblVariableMarkerAlert.Text = "If Start Maker and End Marker are the same, the variable may not expand properly." +
+    "";
+            this.lblVariableMarkerAlert.Visible = false;
             // 
             // txtCurrentWindow
             // 
@@ -816,7 +862,7 @@
             this.lblVariableDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lblVariableDisplay.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVariableDisplay.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblVariableDisplay.Location = new System.Drawing.Point(163, 350);
+            this.lblVariableDisplay.Location = new System.Drawing.Point(180, 350);
             this.lblVariableDisplay.Name = "lblVariableDisplay";
             this.lblVariableDisplay.Size = new System.Drawing.Size(133, 25);
             this.lblVariableDisplay.TabIndex = 19;
@@ -826,7 +872,7 @@
             // 
             this.txtVariableEndMarker.Location = new System.Drawing.Point(119, 364);
             this.txtVariableEndMarker.Name = "txtVariableEndMarker";
-            this.txtVariableEndMarker.Size = new System.Drawing.Size(26, 29);
+            this.txtVariableEndMarker.Size = new System.Drawing.Size(36, 29);
             this.txtVariableEndMarker.TabIndex = 18;
             this.txtVariableEndMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
             // 
@@ -834,7 +880,7 @@
             // 
             this.txtVariableStartMarker.Location = new System.Drawing.Point(119, 333);
             this.txtVariableStartMarker.Name = "txtVariableStartMarker";
-            this.txtVariableStartMarker.Size = new System.Drawing.Size(26, 29);
+            this.txtVariableStartMarker.Size = new System.Drawing.Size(36, 29);
             this.txtVariableStartMarker.TabIndex = 16;
             this.txtVariableStartMarker.TextChanged += new System.EventHandler(this.txtVariableStartMarker_TextChanged);
             // 
@@ -1230,6 +1276,20 @@
             // tabEditorSettings
             // 
             this.tabEditorSettings.AutoScroll = true;
+            this.tabEditorSettings.Controls.Add(this.chkGreedlySubGroupName);
+            this.tabEditorSettings.Controls.Add(this.chkSubGroupNameSearchTarget);
+            this.tabEditorSettings.Controls.Add(this.chkGreedlyGroupName);
+            this.tabEditorSettings.Controls.Add(this.chkGroupNameSearchTarget);
+            this.tabEditorSettings.Controls.Add(this.label22);
+            this.tabEditorSettings.Controls.Add(this.cmbInstanceNameOrder);
+            this.tabEditorSettings.Controls.Add(this.label21);
+            this.tabEditorSettings.Controls.Add(this.chkShowScriptMiniMap);
+            this.tabEditorSettings.Controls.Add(this.txtDefaultNLGInstanceName);
+            this.tabEditorSettings.Controls.Add(this.lblDefaultNLGInstance);
+            this.tabEditorSettings.Controls.Add(this.chkExportIntermediate);
+            this.tabEditorSettings.Controls.Add(this.lblIndentWidth);
+            this.tabEditorSettings.Controls.Add(this.txtIndentWidth);
+            this.tabEditorSettings.Controls.Add(this.chkShowIndentLine);
             this.tabEditorSettings.Controls.Add(this.chkGruopingBySubgruop);
             this.tabEditorSettings.Controls.Add(this.chkInsertCommentIfLoop);
             this.tabEditorSettings.Controls.Add(this.txtDefaultDBInstanceName);
@@ -1254,6 +1314,174 @@
             this.tabEditorSettings.Text = "Editor";
             this.tabEditorSettings.UseVisualStyleBackColor = true;
             // 
+            // chkGreedlySubGroupName
+            // 
+            this.chkGreedlySubGroupName.AutoSize = true;
+            this.chkGreedlySubGroupName.BackColor = System.Drawing.Color.Transparent;
+            this.chkGreedlySubGroupName.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGreedlySubGroupName.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGreedlySubGroupName.Location = new System.Drawing.Point(10, 803);
+            this.chkGreedlySubGroupName.Name = "chkGreedlySubGroupName";
+            this.chkGreedlySubGroupName.Size = new System.Drawing.Size(346, 24);
+            this.chkGreedlySubGroupName.TabIndex = 35;
+            this.chkGreedlySubGroupName.Text = "Show All Commands if SubGroup Name Matches";
+            this.chkGreedlySubGroupName.UseVisualStyleBackColor = false;
+            // 
+            // chkSubGroupNameSearchTarget
+            // 
+            this.chkSubGroupNameSearchTarget.AutoSize = true;
+            this.chkSubGroupNameSearchTarget.BackColor = System.Drawing.Color.Transparent;
+            this.chkSubGroupNameSearchTarget.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkSubGroupNameSearchTarget.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkSubGroupNameSearchTarget.Location = new System.Drawing.Point(10, 773);
+            this.chkSubGroupNameSearchTarget.Name = "chkSubGroupNameSearchTarget";
+            this.chkSubGroupNameSearchTarget.Size = new System.Drawing.Size(283, 24);
+            this.chkSubGroupNameSearchTarget.TabIndex = 34;
+            this.chkSubGroupNameSearchTarget.Text = "Make SubGroup Name a Search Target";
+            this.chkSubGroupNameSearchTarget.UseVisualStyleBackColor = false;
+            // 
+            // chkGreedlyGroupName
+            // 
+            this.chkGreedlyGroupName.AutoSize = true;
+            this.chkGreedlyGroupName.BackColor = System.Drawing.Color.Transparent;
+            this.chkGreedlyGroupName.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGreedlyGroupName.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGreedlyGroupName.Location = new System.Drawing.Point(10, 743);
+            this.chkGreedlyGroupName.Name = "chkGreedlyGroupName";
+            this.chkGreedlyGroupName.Size = new System.Drawing.Size(321, 24);
+            this.chkGreedlyGroupName.TabIndex = 33;
+            this.chkGreedlyGroupName.Text = "Show All Commands if Group Name Matches";
+            this.chkGreedlyGroupName.UseVisualStyleBackColor = false;
+            // 
+            // chkGroupNameSearchTarget
+            // 
+            this.chkGroupNameSearchTarget.AutoSize = true;
+            this.chkGroupNameSearchTarget.BackColor = System.Drawing.Color.Transparent;
+            this.chkGroupNameSearchTarget.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkGroupNameSearchTarget.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkGroupNameSearchTarget.Location = new System.Drawing.Point(10, 713);
+            this.chkGroupNameSearchTarget.Name = "chkGroupNameSearchTarget";
+            this.chkGroupNameSearchTarget.Size = new System.Drawing.Size(258, 24);
+            this.chkGroupNameSearchTarget.TabIndex = 32;
+            this.chkGroupNameSearchTarget.Text = "Make Group Name a Search Target";
+            this.chkGroupNameSearchTarget.UseVisualStyleBackColor = false;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.Transparent;
+            this.label22.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label22.Location = new System.Drawing.Point(11, 689);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(212, 21);
+            this.label22.TabIndex = 31;
+            this.label22.Text = "Command Search Settings";
+            // 
+            // cmbInstanceNameOrder
+            // 
+            this.cmbInstanceNameOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbInstanceNameOrder.FormattingEnabled = true;
+            this.cmbInstanceNameOrder.Items.AddRange(new object[] {
+            "Creation Frequently",
+            "By Name",
+            "Frequency Of Use",
+            "No Sorting"});
+            this.cmbInstanceNameOrder.Location = new System.Drawing.Point(226, 285);
+            this.cmbInstanceNameOrder.Name = "cmbInstanceNameOrder";
+            this.cmbInstanceNameOrder.Size = new System.Drawing.Size(192, 29);
+            this.cmbInstanceNameOrder.TabIndex = 30;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.BackColor = System.Drawing.Color.Transparent;
+            this.label21.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label21.Location = new System.Drawing.Point(11, 288);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(213, 21);
+            this.label21.TabIndex = 29;
+            this.label21.Text = "Instance Name Sort order:";
+            // 
+            // chkShowScriptMiniMap
+            // 
+            this.chkShowScriptMiniMap.AutoSize = true;
+            this.chkShowScriptMiniMap.BackColor = System.Drawing.Color.Transparent;
+            this.chkShowScriptMiniMap.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkShowScriptMiniMap.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkShowScriptMiniMap.Location = new System.Drawing.Point(10, 258);
+            this.chkShowScriptMiniMap.Name = "chkShowScriptMiniMap";
+            this.chkShowScriptMiniMap.Size = new System.Drawing.Size(211, 24);
+            this.chkShowScriptMiniMap.TabIndex = 28;
+            this.chkShowScriptMiniMap.Text = "Show Script Mini Map (beta)";
+            this.chkShowScriptMiniMap.UseVisualStyleBackColor = false;
+            // 
+            // txtDefaultNLGInstanceName
+            // 
+            this.txtDefaultNLGInstanceName.Location = new System.Drawing.Point(10, 610);
+            this.txtDefaultNLGInstanceName.Name = "txtDefaultNLGInstanceName";
+            this.txtDefaultNLGInstanceName.Size = new System.Drawing.Size(490, 29);
+            this.txtDefaultNLGInstanceName.TabIndex = 27;
+            // 
+            // lblDefaultNLGInstance
+            // 
+            this.lblDefaultNLGInstance.AutoSize = true;
+            this.lblDefaultNLGInstance.BackColor = System.Drawing.Color.Transparent;
+            this.lblDefaultNLGInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDefaultNLGInstance.ForeColor = System.Drawing.Color.SlateGray;
+            this.lblDefaultNLGInstance.Location = new System.Drawing.Point(7, 590);
+            this.lblDefaultNLGInstance.Name = "lblDefaultNLGInstance";
+            this.lblDefaultNLGInstance.Size = new System.Drawing.Size(163, 17);
+            this.lblDefaultNLGInstance.TabIndex = 26;
+            this.lblDefaultNLGInstance.Text = "Default NLG instance name";
+            // 
+            // chkExportIntermediate
+            // 
+            this.chkExportIntermediate.AutoSize = true;
+            this.chkExportIntermediate.BackColor = System.Drawing.Color.Transparent;
+            this.chkExportIntermediate.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkExportIntermediate.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkExportIntermediate.Location = new System.Drawing.Point(10, 656);
+            this.chkExportIntermediate.Name = "chkExportIntermediate";
+            this.chkExportIntermediate.Size = new System.Drawing.Size(225, 24);
+            this.chkExportIntermediate.TabIndex = 25;
+            this.chkExportIntermediate.Text = "Export Intermediate Script File";
+            this.chkExportIntermediate.UseVisualStyleBackColor = false;
+            // 
+            // lblIndentWidth
+            // 
+            this.lblIndentWidth.AutoSize = true;
+            this.lblIndentWidth.BackColor = System.Drawing.Color.Transparent;
+            this.lblIndentWidth.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIndentWidth.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblIndentWidth.Location = new System.Drawing.Point(11, 220);
+            this.lblIndentWidth.Name = "lblIndentWidth";
+            this.lblIndentWidth.Size = new System.Drawing.Size(172, 21);
+            this.lblIndentWidth.TabIndex = 23;
+            this.lblIndentWidth.Text = "Indent Width (1 to 32):";
+            // 
+            // txtIndentWidth
+            // 
+            this.txtIndentWidth.Location = new System.Drawing.Point(189, 217);
+            this.txtIndentWidth.Name = "txtIndentWidth";
+            this.txtIndentWidth.Size = new System.Drawing.Size(36, 29);
+            this.txtIndentWidth.TabIndex = 24;
+            this.txtIndentWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // chkShowIndentLine
+            // 
+            this.chkShowIndentLine.AutoSize = true;
+            this.chkShowIndentLine.BackColor = System.Drawing.Color.Transparent;
+            this.chkShowIndentLine.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkShowIndentLine.ForeColor = System.Drawing.Color.SteelBlue;
+            this.chkShowIndentLine.Location = new System.Drawing.Point(10, 191);
+            this.chkShowIndentLine.Name = "chkShowIndentLine";
+            this.chkShowIndentLine.Size = new System.Drawing.Size(134, 24);
+            this.chkShowIndentLine.TabIndex = 22;
+            this.chkShowIndentLine.Text = "Show indent line";
+            this.chkShowIndentLine.UseVisualStyleBackColor = false;
+            // 
             // chkGruopingBySubgruop
             // 
             this.chkGruopingBySubgruop.AutoSize = true;
@@ -1262,9 +1490,9 @@
             this.chkGruopingBySubgruop.ForeColor = System.Drawing.Color.SteelBlue;
             this.chkGruopingBySubgruop.Location = new System.Drawing.Point(10, 161);
             this.chkGruopingBySubgruop.Name = "chkGruopingBySubgruop";
-            this.chkGruopingBySubgruop.Size = new System.Drawing.Size(176, 24);
+            this.chkGruopingBySubgruop.Size = new System.Drawing.Size(293, 24);
             this.chkGruopingBySubgruop.TabIndex = 21;
-            this.chkGruopingBySubgruop.Text = "Gruoping by subgroup";
+            this.chkGruopingBySubgruop.Text = "Gruoping by subgroup (Restart required)";
             this.chkGruopingBySubgruop.UseVisualStyleBackColor = false;
             // 
             // chkInsertCommentIfLoop
@@ -1282,7 +1510,7 @@
             // 
             // txtDefaultDBInstanceName
             // 
-            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 438);
+            this.txtDefaultDBInstanceName.Location = new System.Drawing.Point(10, 554);
             this.txtDefaultDBInstanceName.Name = "txtDefaultDBInstanceName";
             this.txtDefaultDBInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultDBInstanceName.TabIndex = 19;
@@ -1293,7 +1521,7 @@
             this.lblDBInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblDBInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDBInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblDBInstance.Location = new System.Drawing.Point(7, 418);
+            this.lblDBInstance.Location = new System.Drawing.Point(7, 534);
             this.lblDBInstance.Name = "lblDBInstance";
             this.lblDBInstance.Size = new System.Drawing.Size(192, 17);
             this.lblDBInstance.TabIndex = 18;
@@ -1327,7 +1555,7 @@
             // 
             // txtDefaultWordInstanceName
             // 
-            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 387);
+            this.txtDefaultWordInstanceName.Location = new System.Drawing.Point(10, 503);
             this.txtDefaultWordInstanceName.Name = "txtDefaultWordInstanceName";
             this.txtDefaultWordInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultWordInstanceName.TabIndex = 15;
@@ -1338,7 +1566,7 @@
             this.lblWordInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblWordInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWordInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblWordInstance.Location = new System.Drawing.Point(7, 367);
+            this.lblWordInstance.Location = new System.Drawing.Point(7, 483);
             this.lblWordInstance.Name = "lblWordInstance";
             this.lblWordInstance.Size = new System.Drawing.Size(169, 17);
             this.lblWordInstance.TabIndex = 14;
@@ -1346,7 +1574,7 @@
             // 
             // txtDefaultExcelInstanceName
             // 
-            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 337);
+            this.txtDefaultExcelInstanceName.Location = new System.Drawing.Point(10, 453);
             this.txtDefaultExcelInstanceName.Name = "txtDefaultExcelInstanceName";
             this.txtDefaultExcelInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultExcelInstanceName.TabIndex = 13;
@@ -1357,7 +1585,7 @@
             this.lblExcelInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblExcelInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExcelInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblExcelInstance.Location = new System.Drawing.Point(7, 317);
+            this.lblExcelInstance.Location = new System.Drawing.Point(7, 433);
             this.lblExcelInstance.Name = "lblExcelInstance";
             this.lblExcelInstance.Size = new System.Drawing.Size(168, 17);
             this.lblExcelInstance.TabIndex = 12;
@@ -1365,7 +1593,7 @@
             // 
             // txtDefaultStopwatchInstanceName
             // 
-            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 284);
+            this.txtDefaultStopwatchInstanceName.Location = new System.Drawing.Point(10, 400);
             this.txtDefaultStopwatchInstanceName.Name = "txtDefaultStopwatchInstanceName";
             this.txtDefaultStopwatchInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultStopwatchInstanceName.TabIndex = 11;
@@ -1376,7 +1604,7 @@
             this.lblStopwatchInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblStopwatchInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStopwatchInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 264);
+            this.lblStopwatchInstance.Location = new System.Drawing.Point(7, 380);
             this.lblStopwatchInstance.Name = "lblStopwatchInstance";
             this.lblStopwatchInstance.Size = new System.Drawing.Size(193, 17);
             this.lblStopwatchInstance.TabIndex = 10;
@@ -1384,7 +1612,7 @@
             // 
             // txtDefaultBrowserInstanceName
             // 
-            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 232);
+            this.txtDefaultBrowserInstanceName.Location = new System.Drawing.Point(10, 348);
             this.txtDefaultBrowserInstanceName.Name = "txtDefaultBrowserInstanceName";
             this.txtDefaultBrowserInstanceName.Size = new System.Drawing.Size(490, 29);
             this.txtDefaultBrowserInstanceName.TabIndex = 9;
@@ -1395,7 +1623,7 @@
             this.lblBrowserInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblBrowserInstance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBrowserInstance.ForeColor = System.Drawing.Color.SlateGray;
-            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 212);
+            this.lblBrowserInstance.Location = new System.Drawing.Point(7, 328);
             this.lblBrowserInstance.Name = "lblBrowserInstance";
             this.lblBrowserInstance.Size = new System.Drawing.Size(182, 17);
             this.lblBrowserInstance.TabIndex = 8;
@@ -1433,8 +1661,8 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.uiSettingTabs, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.uiBtnOpen, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -1442,6 +1670,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(638, 584);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
@@ -1456,6 +1685,51 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(638, 65);
             this.panel1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.uiCancel);
+            this.panel2.Controls.Add(this.uiBtnOpen);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 529);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(638, 55);
+            this.panel2.TabIndex = 2;
+            // 
+            // uiCancel
+            // 
+            this.uiCancel.BackColor = System.Drawing.Color.Transparent;
+            this.uiCancel.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiCancel.DisplayText = "Cancel";
+            this.uiCancel.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiCancel.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiCancel.Image = global::taskt.Properties.Resources.various_cancel_button;
+            this.uiCancel.IsMouseOver = false;
+            this.uiCancel.Location = new System.Drawing.Point(78, 3);
+            this.uiCancel.Name = "uiCancel";
+            this.uiCancel.Size = new System.Drawing.Size(48, 44);
+            this.uiCancel.TabIndex = 15;
+            this.uiCancel.TabStop = false;
+            this.uiCancel.Text = "Cancel";
+            this.uiCancel.Click += new System.EventHandler(this.uiCancel_Click);
+            // 
+            // uiBtnOpen
+            // 
+            this.uiBtnOpen.BackColor = System.Drawing.Color.Transparent;
+            this.uiBtnOpen.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.uiBtnOpen.DisplayText = "Ok";
+            this.uiBtnOpen.DisplayTextBrush = System.Drawing.Color.White;
+            this.uiBtnOpen.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.uiBtnOpen.Image = global::taskt.Properties.Resources.various_ok_button;
+            this.uiBtnOpen.IsMouseOver = false;
+            this.uiBtnOpen.Location = new System.Drawing.Point(12, 3);
+            this.uiBtnOpen.Name = "uiBtnOpen";
+            this.uiBtnOpen.Size = new System.Drawing.Size(48, 44);
+            this.uiBtnOpen.TabIndex = 14;
+            this.uiBtnOpen.TabStop = false;
+            this.uiBtnOpen.Text = "Ok";
+            this.uiBtnOpen.Click += new System.EventHandler(this.uiBtnOpen_Click);
             // 
             // tmrGetSocketStatus
             // 
@@ -1475,10 +1749,11 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "frmSettings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).EndInit();
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSettings_KeyDown);
             this.uiSettingTabs.ResumeLayout(false);
             this.tabAppSettings.ResumeLayout(false);
             this.tabAppSettings.PerformLayout();
@@ -1493,6 +1768,9 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.uiCancel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uiBtnOpen)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1509,7 +1787,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkAutoCloseWindow;
         private System.Windows.Forms.CheckBox chkShowDebug;
-        private CustomControls.UIPictureButton uiBtnOpen;
         private System.Windows.Forms.CheckBox chkEnableLogging;
         private System.Windows.Forms.Label lblMainLogo;
         private System.Windows.Forms.Label lblOptions;
@@ -1606,5 +1883,25 @@
         private System.Windows.Forms.Label lblDBInstance;
         private System.Windows.Forms.CheckBox chkInsertCommentIfLoop;
         private System.Windows.Forms.CheckBox chkGruopingBySubgruop;
+        private System.Windows.Forms.CheckBox chkShowIndentLine;
+        private System.Windows.Forms.Label lblIndentWidth;
+        private System.Windows.Forms.TextBox txtIndentWidth;
+        private System.Windows.Forms.CheckBox chkExportIntermediate;
+        private System.Windows.Forms.Panel panel2;
+        private CustomControls.UIPictureButton uiCancel;
+        private CustomControls.UIPictureButton uiBtnOpen;
+        private System.Windows.Forms.CheckBox chkUseNewParser;
+        private System.Windows.Forms.TextBox txtDefaultNLGInstanceName;
+        private System.Windows.Forms.Label lblDefaultNLGInstance;
+        private System.Windows.Forms.Label lblVariableMarkerAlert;
+        private System.Windows.Forms.CheckBox chkIgnoreFirstVariableMarker;
+        private System.Windows.Forms.CheckBox chkShowScriptMiniMap;
+        private System.Windows.Forms.ComboBox cmbInstanceNameOrder;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.CheckBox chkGreedlySubGroupName;
+        private System.Windows.Forms.CheckBox chkSubGroupNameSearchTarget;
+        private System.Windows.Forms.CheckBox chkGreedlyGroupName;
+        private System.Windows.Forms.CheckBox chkGroupNameSearchTarget;
+        private System.Windows.Forms.Label label22;
     }
 }

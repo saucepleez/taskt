@@ -1,39 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
-    public partial class frmUpdate : UIForm
+    public partial class frmUpdate : ThemedForm
     {
-      
-        public frmUpdate(Core.UpdateManifest manifest)
-        {
+        private Core.Update.UpdateManifest manifest = null;
 
+        public frmUpdate(Core.Update.UpdateManifest manifest)
+        {
             InitializeComponent();
+            this.manifest = manifest;
             lblLocal.Text = "your version: " + manifest.LocalVersionProper.ToString();
             lblRemote.Text = "latest version: " + manifest.RemoteVersionProper.ToString();
-        }
-
-        private void Update_Load(object sender, EventArgs e)
-        {
-        
         }
 
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void btnShowUpdateDetails_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Core.MyURLs.GitReleaseURL + "/v" + manifest.RemoteVersionProper.ToString());
         }
     }
 }

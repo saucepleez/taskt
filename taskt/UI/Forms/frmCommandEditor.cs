@@ -11,23 +11,14 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using SHDocVw;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using taskt.Core.Automation.Attributes;
-using System.IO;
-using taskt.Core;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms
 {
@@ -38,31 +29,54 @@ namespace taskt.UI.Forms
         //list of variables, assigned from frmScriptBuilder
         public List<Core.Script.ScriptVariable> scriptVariables;
         //reference to currently selected command
-        public Core.Automation.Commands.ScriptCommand selectedCommand;
+        public ScriptCommand selectedCommand;
         //reference to original command
-        public Core.Automation.Commands.ScriptCommand originalCommand;
+        public ScriptCommand originalCommand;
         //assigned by frmScriptBuilder to restrict inputs for editing existing commands
         public CreationMode creationMode;
         //startup command, assigned from frmScriptBuilder
         public string defaultStartupCommand;
         //editing command, assigned from frmScriptBuilder when editing a command
-        public Core.Automation.Commands.ScriptCommand editingCommand;
+        public ScriptCommand editingCommand;
         //track existing commands for visibility
-        public List<Core.Automation.Commands.ScriptCommand> configuredCommands;
+        public List<ScriptCommand> configuredCommands;
         // taskt setting
         public Core.ApplicationSettings appSettings;
-        public frmCommandEditor(List<AutomationCommand> commands, List<Core.Automation.Commands.ScriptCommand> existingCommands)
-        {
-            InitializeComponent();
-            commandList = commands;
-            configuredCommands = existingCommands;
-        }
+        // instance counter
+        public Core.InstanceCounter instanceList;
+
+        // command tree
+        private TreeNode[] treeAllCommands;
+        private ImageList treeAllCommandsImage;
 
         public enum CreationMode
         {
             Add,
             Edit
         }
+
+        #region constructors
+        public frmCommandEditor(List<AutomationCommand> commands, List<ScriptCommand> existingCommands)
+        {
+            InitializeComponent();
+            commandList = commands;
+            configuredCommands = existingCommands;
+
+            treeAllCommands = null;
+            treeAllCommandsImage = null;
+
+            cboSelectedCommand.Enabled = false;
+        }
+
+        public frmCommandEditor(List<AutomationCommand> commands, List<ScriptCommand> existingCommands, TreeNode[] treeCommands, ImageList treeCommandImage)
+        {
+            InitializeComponent();
+            commandList = commands;
+            configuredCommands = existingCommands;
+            this.treeAllCommands = treeCommands;
+            this.treeAllCommandsImage = treeCommandImage;
+        }
+        #endregion
 
         #region Form Events
 
@@ -114,8 +128,7 @@ namespace taskt.UI.Forms
                 //copy original properties
                 CopyPropertiesTo(originalCommand, selectedCommand);
 
-                //update bindings
-                foreach (Control c in flw_InputVariables.Controls)
+                Action<Control> readValueFunc = new Action<Control>(c =>
                 {
                     foreach (Binding b in c.DataBindings)
                     {
@@ -123,15 +136,29 @@ namespace taskt.UI.Forms
                     }
 
                     //helper for box
-                    if (c is UIPictureBox)
+                    if (c is UIPictureBox pic)
                     {
-                        var typedControl = (UIPictureBox)c;
+                        //var typedControl = (UIPictureBox)c;
 
-                        var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
+                        var cmd = (ImageRecognitionCommand)selectedCommand;
 
                         if (!string.IsNullOrEmpty(cmd.v_ImageCapture))
                         {
-                            typedControl.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
+                            pic.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
+                        }
+                    }
+                });
+
+                //update bindings
+                foreach (Control ctrl in flw_InputVariables.Controls)
+                {
+                    readValueFunc(ctrl);
+
+                    if (ctrl is FlowLayoutPanel flp)
+                    {
+                        foreach(Control c in flp.Controls)
+                        {
+                            readValueFunc(c);
                         }
                     }
                 }
@@ -158,7 +185,6 @@ namespace taskt.UI.Forms
                 {
                     throw ex;
                 }
-
             }
         }
 
@@ -168,21 +194,65 @@ namespace taskt.UI.Forms
             frmCommandEditor_Resize(null, null);
         }
 
+        private void FocusFirstEditableControl()
+        {
+            Control targetControl = null;
+            foreach(Control ctrl in flw_InputVariables.Controls)
+            {
+                if (ctrl is FlowLayoutPanel flp)
+                {
+                    foreach(Control c in flp.Controls)
+                    {
+                        if ((c is TextBox) || (c is ComboBox) || (c is DataGridView))
+                        {
+                            targetControl = c;
+                            break;
+                        }
+                    }
+                    if (targetControl != null)
+                    {
+                        break;
+                    }
+                }
+                else if((ctrl is TextBox) || (ctrl is ComboBox) || (ctrl is DataGridView))
+                {
+                    targetControl = ctrl;
+                    break;
+                }
+            }
+            if (targetControl != null)
+            {
+                targetControl.Focus();
+                if (targetControl is TextBox txt)
+                {
+                    txt.SelectionStart = txt.Text.Length;
+                    txt.SelectionLength = 0;
+                }
+            }
+        }
+
         private void frmCommandEditor_Shown(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.Sizable;
 
-            //focus first TextBox, ComboBox, DataGridView
-            var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
-            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
+            // focus first control
+            FocusFirstEditableControl();
 
-            firstFocus.Focus();
-            if (firstFocus is TextBox)
+            if (this.creationMode == CreationMode.Edit)
             {
-                var trg = (TextBox)firstFocus;
-                trg.SelectionStart = trg.Text.Length;
-                trg.SelectionLength = 0;
+                this.Text = "Edit Command";
             }
+        }
+
+        private void frmCommandEditor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // set Size, Position
+            if (this.Owner is frmScriptBuilder f)
+            {
+                f.setCommandEditorSizeAndPosition(this);
+            }
+
+            //((frmScriptBuilder)this.Owner).setCommandEditorSizeAndPosition(this);
         }
 
         #endregion Form Events
@@ -196,7 +266,7 @@ namespace taskt.UI.Forms
             var userSelectedCommand = commandList.Where(itm => itm.FullName == selectedCommandItem).FirstOrDefault();
 
             //create new command for binding
-            selectedCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(userSelectedCommand.CommandClass);
+            selectedCommand = (ScriptCommand)Activator.CreateInstance(userSelectedCommand.CommandClass);
 
 
             //Todo: MAKE OPTION TO RENDER ON THE FLY
@@ -229,14 +299,7 @@ namespace taskt.UI.Forms
             flw_InputVariables.ResumeLayout();
 
             //focus first TextBox
-            var firstFocus = (userSelectedCommand.UIControls.First(elem => ((elem is TextBox) || (elem is ComboBox) || (elem is DataGridView))));
-            firstFocus.Focus();
-            if (firstFocus is TextBox)
-            {
-                var trg = (TextBox)firstFocus;
-                trg.SelectionStart = trg.Text.Length;
-                trg.SelectionLength = 0;
-            }
+            FocusFirstEditableControl();
 
             // resize
             frmCommandEditor_Resize(null, null);
@@ -260,12 +323,12 @@ namespace taskt.UI.Forms
                     currentControl.EndEdit();
                 }
 
-                if (ctrl is UIPictureBox)
-                {
-                    var typedControl = (UIPictureBox)ctrl;
-                    var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
-                    cmd.v_ImageCapture = typedControl.EncodedImage;
-                }
+                //if (ctrl is UIPictureBox)
+                //{
+                //    var typedControl = (UIPictureBox)ctrl;
+                //    var cmd = (Core.Automation.Commands.ImageRecognitionCommand)selectedCommand;
+                //    cmd.v_ImageCapture = typedControl.EncodedImage;
+                //}
             }
 
             if (selectedCommand.IsValidate(this))
@@ -276,7 +339,7 @@ namespace taskt.UI.Forms
             {
                 if (!appSettings.ClientSettings.DontShowValidationMessage)
                 {
-                    using(UI.Forms.Supplemental.frmDialog fm = new UI.Forms.Supplemental.frmDialog(selectedCommand.validationResult, selectedCommand.SelectionName, Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using(Supplemental.frmDialog fm = new Supplemental.frmDialog(selectedCommand.validationResult, selectedCommand.SelectionName, Supplemental.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -299,8 +362,21 @@ namespace taskt.UI.Forms
             foreach (Control item in flw_InputVariables.Controls)
             {
                 item.Width = this.Width - 70;
+
+                // flow
+                if (item is FlowLayoutPanel flp)
+                {
+                    //flp.SuspendLayout();
+                    foreach(Control c in flp.Controls)
+                    {
+                        c.Width = this.Width - 70;
+                    }
+                }
             }
             flw_InputVariables.ResumeLayout();
+
+            // when resize, selectedCommand has null
+            selectedCommand?.AfterShown();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -308,24 +384,75 @@ namespace taskt.UI.Forms
 
         }
 
-        public string ReplaceVariableMaker(string v)
-        {
-            var s = appSettings.EngineSettings;
-            return v.Replace("{{{", s.VariableStartMarker).Replace("}}}", s.VariableEndMarker);
-        }
+        #region footer buttons event
 
         private void uiButtonVariable_Click(object sender, EventArgs e)
         {
-            using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
+            using (frmScriptVariables scriptVariableEditor = new frmScriptVariables(this.scriptVariables, this.appSettings))
             {
-                scriptVariableEditor.appSettings = this.appSettings;
-                scriptVariableEditor.scriptVariables = this.scriptVariables;
+                //scriptVariableEditor.appSettings = this.appSettings;
+                //scriptVariableEditor.scriptVariables = this.scriptVariables;
 
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
-                    this.scriptVariables = scriptVariableEditor.scriptVariables;
+                    this.scriptVariables = scriptVariableEditor.scriptVariables.OrderBy(v => v.VariableName).ToList();
+                    reloadVariableList();
                 }
             }
         }
+
+        private void btnHelpThisCommand_Click(object sender, EventArgs e)
+        {
+            var userSelectedCommand = commandList.Where(itm => (itm.FullName == cboSelectedCommand.Text)).FirstOrDefault();
+            //string page = userSelectedCommand.ShortName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
+            ////string parent = ((Core.Automation.Attributes.ClassAttributes.Group)userSelectedCommand.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-");
+            //string parent = userSelectedCommand.DisplayGroup.ToLower().Replace(" ", "-").Replace("/", "-");
+            System.Diagnostics.Process.Start(Core.MyURLs.GetWikiURL(userSelectedCommand.ShortName, userSelectedCommand.DisplayGroup));
+        }
+        #endregion
+
+        #region reload variable list
+        private void reloadVariableList()
+        {
+            PropertyInfo[] props = selectedCommand.GetType().GetProperties();
+            foreach(PropertyInfo prop in props)
+            {
+                if (prop.Name.StartsWith("v_") && (prop.Name != "v_Comment"))
+                {
+                    //var varList = (Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList)prop.GetCustomAttribute(typeof(Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList));
+                    var vProp = PropertyControls.GetVirtualProperty(prop);
+                    var varList = PropertyControls.GetCustomAttributeWithVirtual<Core.Automation.Attributes.PropertyAttributes.PropertyIsVariablesList>(prop, vProp);
+                    //if ((varList != null) && (varList.isVariablesList))
+                    if (varList?.isVariablesList ?? false)
+                    {
+                        var trgCtrl = flw_InputVariables.Controls.Find(prop.Name, true).FirstOrDefault();
+                        if ((trgCtrl != null) && (trgCtrl is ComboBox cmb))
+                        {
+                            CommandControls.AddVariableNames(cmb, this);
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region command list
+        private void cboSelectedCommand_Click(object sender, EventArgs e)
+        {
+            using(var fm = new Supplement_Forms.frmCommandList(appSettings, treeAllCommands, treeAllCommandsImage, cboSelectedCommand.Text))
+            {
+                if (fm.ShowDialog() == DialogResult.OK)
+                {
+                    string newCommand = fm.FullCommandName;
+                    if (cboSelectedCommand.Text != fm.FullCommandName)
+                    {
+                        cboSelectedCommand.Text = fm.FullCommandName;
+                        cboSelectedCommand_SelectionChangeCommitted(null, null);
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }

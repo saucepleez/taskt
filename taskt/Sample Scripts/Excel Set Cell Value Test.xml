@@ -2,23 +2,51 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="97222c16-96e0-4365-af5e-29957c76b8cc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Excel Open File Sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExcelOpenWorkbookCommand" CommandName="ExcelOpenWorkbookCommand" IsCommented="false" SelectionName="Open Workbook" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_FilePath="D:\Dropbox\Environment Folders\Desktop\Sample.xlsx" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2c2c4045-5548-49b4-8a11-1b5aa8e2972d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create Instance 'RPAExcel'" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExcelActivateSheetCommand" CommandName="ExcelActivateSheetCommand" IsCommented="false" SelectionName="Activate Sheet" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_SheetName="Sheet1" />
+      <ScriptCommand xsi:type="ExcelCreateApplicationCommand" CommandID="1dca8757-4f0c-4e38-99b8-a3892c2fdde8" CommandName="ExcelOpenApplicationCommand" IsCommented="false" SelectionName="Create Excel Application" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ExcelSetCellCommand" CommandName="ExcelSetCellCommand" IsCommented="false" SelectionName="Set Cell" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="default" v_TextToSet="[vText]" v_ExcelCellAddress="A1" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2c2c4045-5548-49b4-8a11-1b5aa8e2972d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Open Excel file, please replace your file" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelOpenWorkbookCommand" CommandID="77841b3a-18de-48af-8605-f58e0268e5aa" CommandName="ExcelOpenWorkbookCommand" IsCommented="false" SelectionName="Open Workbook" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_FilePath="C:\Temp\myfile.xlsx" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2c2c4045-5548-49b4-8a11-1b5aa8e2972d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Sheet1 Activate" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelActivateSheetCommand" CommandID="8e042759-71dd-4f68-a006-ae949c29b1a8" CommandName="ExcelActivateSheetCommand" IsCommented="false" SelectionName="Activate Sheet" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_SheetName="Sheet1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2c2c4045-5548-49b4-8a11-1b5aa8e2972d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Write &quot;Hello Excel&quot; in A1" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelSetCellCommand" CommandID="545a1116-7c95-4c89-8837-4ff8175cae16" CommandName="ExcelSetCellCommand" IsCommented="false" SelectionName="Set Cell" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" v_TextToSet="Hello Excel" v_ExcelCellAddress="A1" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="14ca2af3-46c2-435f-94a1-d9f1dd6947bf" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Check A1 value" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2c2c4045-5548-49b4-8a11-1b5aa8e2972d" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Close Excel" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExcelCloseApplicationCommand" CommandID="c831b40c-e5e1-4b3c-9b9a-de038178fe57" CommandName="ExcelCloseApplicationCommand" IsCommented="false" SelectionName="Close Excel Application" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_InstanceName="RPAExcel" />
     </ScriptAction>
   </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-02T23:00:57.2373747+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
   <Variables>
-    <ScriptVariable>
-      <currentPosition>0</currentPosition>
-      <variableName>vText</variableName>
-      <variableValue xsi:type="xsd:string">hello, world!</variableValue>
-    </ScriptVariable>
+    <ScriptVariable />
   </Variables>
 </Script>

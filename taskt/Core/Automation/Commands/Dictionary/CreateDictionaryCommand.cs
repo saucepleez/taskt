@@ -3,143 +3,52 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
-using System.Drawing;
-using System.Linq;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Dictionary Commands")]
+    [Attributes.ClassAttributes.SubGruop("Dictionary Action")]
+    [Attributes.ClassAttributes.CommandSettings("Create Dictionary")]
     [Attributes.ClassAttributes.Description("This command created a DataTable with the column names provided")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to create a new Dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateDictionaryCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Indicate Dictionary Name")]
-        [Attributes.PropertyAttributes.InputSpecification("Indicate a unique reference name for later use")]
-        [Attributes.PropertyAttributes.SampleUsage("vMyDictionary")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
         public string v_DictionaryName { get; set; }
 
         [XmlElement]
-        [Attributes.PropertyAttributes.PropertyDescription("Define Keys and Values")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the Keys and Values required for your dictionary")]
-        [Attributes.PropertyAttributes.SampleUsage("")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_KeyAndValue))]
         public DataTable v_ColumnNameDataTable { get; set; }
-
-        [XmlIgnore]
-        [NonSerialized]
-        private DataGridView ColumnNameDataGridViewHelper;
 
         public CreateDictionaryCommand()
         {
-            this.CommandName = "CreateDictionaryCommand";
-            this.SelectionName = "Create Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-
-            //initialize Datatable
-            this.v_ColumnNameDataTable = new System.Data.DataTable
-            {
-                TableName = "ColumnNamesDataTable" + DateTime.Now.ToString("MMddyy.hhmmss")
-            };
-
-            this.v_ColumnNameDataTable.Columns.Add("Keys");
-            this.v_ColumnNameDataTable.Columns.Add("Values");
-
-
-
+            //this.CommandName = "CreateDictionaryCommand";
+            //this.SelectionName = "Create Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var dictionaryName = v_DictionaryName.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            Dictionary<string, string> outputDictionary = new Dictionary<string, string>();
+            var outputDictionary = new Dictionary<string, string>();
 
-            foreach (DataRow rwColumnName in v_ColumnNameDataTable.Rows)
-            {
-                outputDictionary.Add(rwColumnName.Field<string>("Keys"), rwColumnName.Field<string>("Values"));
-            }
+            outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
 
-
-            
-
-            //add or override existing variable
-            if (engine.VariableList.Any(f => f.VariableName == dictionaryName))
-            {
-                var selectedVariable = engine.VariableList.Where(f => f.VariableName == dictionaryName).FirstOrDefault();
-                selectedVariable.VariableValue = outputDictionary;
-            }
-            else
-            {
-                Script.ScriptVariable newDictionary = new Script.ScriptVariable
-                {
-                    VariableName = dictionaryName,
-                    VariableValue = outputDictionary
-                };
-
-                engine.VariableList.Add(newDictionary);
-            }
-
-
-     
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DictionaryName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDataGridViewGroupFor("v_ColumnNameDataTable", this, editor));
-
-            ColumnNameDataGridViewHelper = (DataGridView)RenderedControls[RenderedControls.Count - 1];
-            ColumnNameDataGridViewHelper.Tag = "column-a-editable";
-            ColumnNameDataGridViewHelper.CellClick += ColumnNameDataGridViewHelper_CellClick;
-
-            return RenderedControls;
-
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + $" [Name: '{v_DictionaryName}' with {v_ColumnNameDataTable.Rows.Count} Entries]";
-        }
-
-        private void ColumnNameDataGridViewHelper_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0)
-            {
-                ColumnNameDataGridViewHelper.BeginEdit(false);
-            }
-            else
-            {
-                ColumnNameDataGridViewHelper.EndEdit();
-            }
+            outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
         }
 
         public override void BeforeValidate()
         {
             base.BeforeValidate();
-            if (ColumnNameDataGridViewHelper.IsCurrentCellDirty || ColumnNameDataGridViewHelper.IsCurrentRowDirty)
-            {
-                ColumnNameDataGridViewHelper.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                var newRow = v_ColumnNameDataTable.NewRow();
-                v_ColumnNameDataTable.Rows.Add(newRow);
-                for (var i = v_ColumnNameDataTable.Rows.Count - 1; i >= 0; i--)
-                {
-                    if (v_ColumnNameDataTable.Rows[i][0].ToString() == "" && v_ColumnNameDataTable.Rows[i][1].ToString() == "")
-                    {
-                        v_ColumnNameDataTable.Rows[i].Delete();
-                    }
-                }
-            }
+            DataTableControls.BeforeValidate((DataGridView)ControlsList[nameof(v_ColumnNameDataTable)], v_ColumnNameDataTable);
         }
     }
 }

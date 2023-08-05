@@ -1,70 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Word Commands")]
     [Attributes.ClassAttributes.Description("This command opens an Word Document.")]
+    [Attributes.ClassAttributes.CommandSettings("Open Document")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to open an existing Word Document.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Word Interop to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class WordOpenDocumentCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Word** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **wordInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Word** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_InstanceName))]
         public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the workbook file path")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file that should be opened by Excel.")]
-        [Attributes.PropertyAttributes.SampleUsage(@"C:\temp\myfile.docx or {vFilePath}")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(WordControls), nameof(WordControls.v_FilePath))]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "docx,docm,doc,odt,rtf")]
         public string v_FilePath { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        public string v_WaitForFile { get; set; }
+
         public WordOpenDocumentCommand()
         {
-            this.CommandName = "WordOpenDocumentCommand";
-            this.SelectionName = "Open Document";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "WordOpenDocumentCommand";
+            //this.SelectionName = "Open Document";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var vFilePath = v_FilePath.ConvertToUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var wordObject = engine.GetAppInstance(vInstance);
-            Microsoft.Office.Interop.Word.Application wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
+            var wordInstance = v_InstanceName.GetWordInstance(engine);
+
+            //string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "docx", "docm", "doc", "odt", "rtf" }, true);
+            var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
+
             wordInstance.Documents.Open(vFilePath);
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FilePath", this, editor));
-
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
-            {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultWordInstanceName;
-            }
-
-            return RenderedControls;
-        }
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Open from '" + v_FilePath + "', Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

@@ -1,105 +1,106 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("File/Book")]
+    [Attributes.ClassAttributes.CommandSettings("Save Workbook As")]
     [Attributes.ClassAttributes.Description("This command allows you to save an Excel workbook.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to save a workbook to a file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class ExcelSaveAsCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name (ex. myInstance, {{{vInstance]}})")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **{{{vInstance}}}**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory of the file (ex. C:\\temp\\myfile.xlsx, {{{vFilePath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFileSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the file.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.xlsx** or **{{{vExcelFilePath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
+        [PropertyDescription("Excel File Path to Save")]
+        [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsx")]
         public string v_FileName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("When Excel File Exists")]
+        [InputSpecification("", true)]
+        //[SampleUsage("**Error** or **Overwrite** or **Ignore**")]
+        [PropertyDetailSampleUsage("**Error**", "Rise a Error")]
+        [PropertyDetailSampleUsage("**Overwrite**", "Overwrite file")]
+        [PropertyDetailSampleUsage("**Ignore**", "Don't save the file")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Error")]
+        [PropertyUISelectionOption("Overwrite")]
+        [PropertyUISelectionOption("Ignore")]
+        [PropertyIsOptional(true, "Error")]
+        public string v_IfExcelFileExists { get; set; }
 
         public ExcelSaveAsCommand()
         {
-            this.CommandName = "ExcelSaveAsCommand";
-            this.SelectionName = "Save Workbook As";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
-
-            this.v_InstanceName = "";
+            //this.CommandName = "ExcelSaveAsCommand";
+            //this.SelectionName = "Save Workbook As";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
+
         public override void RunCommand(object sender)
         {
             //get engine context
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //convert variables
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var fileName = v_FileName.ConvertToUserVariable(engine);
+            var excelInstance = v_InstanceName.GetExcelInstance(engine);
 
-            //get excel app object
-            var excelObject = engine.GetAppInstance(vInstance);
+            //string fileName;
+            //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
+            //{
+            //    fileName = FilePathControls.FormatFilePath_ContainsFileCounter(v_FileName, engine, "xlsx");
+            //}
+            //else
+            //{
+            //    fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
+            //}
+            string fileName = this.ConvertToUserVariableAsFilePath(nameof(v_FileName), engine);
 
-            //convert object
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-
-            //overwrite and save
-            excelInstance.DisplayAlerts = false;
-            excelInstance.ActiveWorkbook.SaveAs(fileName);
-            excelInstance.DisplayAlerts = true;
-
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
-
-            //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_FileName", this, editor));
-
-            if (editor.creationMode == frmCommandEditor.CreationMode.Add)
+			// TODO: support xlsm
+            Action saveAsProcess = () =>
             {
-                this.v_InstanceName = editor.appSettings.ClientSettings.DefaultExcelInstanceName;
-            }
+                //overwrite and save
+                excelInstance.DisplayAlerts = false;
+                excelInstance.ActiveWorkbook.SaveAs(fileName);
+                excelInstance.DisplayAlerts = true;
+            };
 
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + " [Save To '" + v_FileName + "', Instance Name: '" + v_InstanceName + "']";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_InstanceName))
+            if (excelInstance.ActiveWorkbook != null)
             {
-                this.validationResult += "Instance is empty.\n";
-                this.IsValid = false;
+                if (!System.IO.File.Exists(fileName))
+                {
+                    saveAsProcess();
+                }
+                else
+                {
+                    switch(this.GetUISelectionValue(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
+                    {
+                        case "error":
+                            throw new Exception("Excel file '" + v_FileName + "' is already exists.");
+                            
+                        case "overwrite":
+                            saveAsProcess();
+                            break;
+                        case "ignore":
+                            // nothing
+                            break;
+                    }
+                }
             }
-            if (String.IsNullOrEmpty(this.v_FileName))
+            else
             {
-                this.validationResult += "File is empty.\n";
-                this.IsValid = false;
+                throw new Exception("Excel Instance '" + v_InstanceName + "' has no Workbook.");
             }
-
-            return this.IsValid;
         }
     }
 }

@@ -25,15 +25,32 @@ namespace taskt.UI.Forms.Supplemental
 {
     public partial class frmItemSelector : ThemedForm
     {
-        public frmItemSelector()
+        public object selectedItem { get; private set; }
+
+        private string[] bufferdItems;
+
+        #region form events
+        public frmItemSelector(List<string> listItems)
         {
             InitializeComponent();
+            this.bufferdItems = listItems.ToArray();
         }
-
+        public frmItemSelector(List<string> listItems, string title, string headerText)
+        {
+            InitializeComponent();
+            this.bufferdItems = listItems.ToArray();
+            this.Text = title;
+            this.lblHeader.Text = headerText;
+        }
         private void frmVariableSelector_Load(object sender, EventArgs e)
         {
+            lstVariables.BeginUpdate();
+            lstVariables.Items.AddRange(bufferdItems);
+            lstVariables.EndUpdate();
         }
+        #endregion
 
+        #region footer buttons event
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
             if (lstVariables.SelectedItem == null)
@@ -49,10 +66,76 @@ namespace taskt.UI.Forms.Supplemental
         {
             this.DialogResult = DialogResult.Cancel;
         }
+        #endregion
 
+        #region lstVariables events
         private void lstVariables_DoubleClick(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
         }
+        private void lstVariables_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.selectedItem = lstVariables.SelectedItem;
+        }
+        #endregion
+
+        #region variable filter
+        private void picSearch_Click(object sender, EventArgs e)
+        {
+            BeginFilterVariableProcess();
+        }
+        private void picClear_Click(object sender, EventArgs e)
+        {
+            txtSearchBox.Text = "";
+            showAllVariables();
+        }
+        private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                BeginFilterVariableProcess();
+            }
+        }
+        private void BeginFilterVariableProcess()
+        {
+            string keyword = txtSearchBox.Text.ToLower().Trim();
+            if (keyword.Length > 0)
+            {
+                FilterVariableProcess(keyword);
+            }
+            else
+            {
+                showAllVariables();
+            }
+        }
+        private void FilterVariableProcess(string keyword)
+        {
+            var matchedList = new List<string>();
+            foreach (var item in bufferdItems)
+            {
+                if (item.ToLower().Contains(keyword))
+                {
+                    matchedList.Add(item);
+                }
+            }
+            lstVariables.BeginUpdate();
+            lstVariables.Items.Clear();
+            lstVariables.Items.AddRange(matchedList.ToArray());
+            lstVariables.EndUpdate();
+            lstVariables.Focus();
+        }
+        private void showAllVariables()
+        {
+            lstVariables.BeginUpdate();
+            lstVariables.Items.Clear();
+            lstVariables.Items.AddRange(bufferdItems);
+            lstVariables.EndUpdate();
+            lstVariables.Focus();
+        }
+
+        #endregion
+
     }
 }

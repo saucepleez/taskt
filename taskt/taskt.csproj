@@ -43,12 +43,16 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowedReferenceRelatedFileExtensions>
+	  *.xml;
+	  *.pdb
+	</AllowedReferenceRelatedFileExtensions>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>taskt_logo_alt.ico</ApplicationIcon>
@@ -84,77 +88,181 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.6.10.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.6.10\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.2.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.46.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.46\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ImapX, Version=2.0.0.18, Culture=neutral, PublicKeyToken=5992873d65130d1f, processorArchitecture=MSIL">
       <HintPath>..\packages\ImapX.2.0.0.18\lib\net452\ImapX.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.Annotations, Version=11.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.11.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="JetBrains.Annotations, Version=4242.42.42.42, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.2022.3.1\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="MailKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.4.0.0\lib\net48\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Markdig, Version=0.31.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.0.31.0\lib\net462\Markdig.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.14.0.0.1\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1004\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1004\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\TaskScheduler.2.6.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.10.1.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskScheduler.2.10.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="MimeKit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.4.0.0\lib\net48\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="OneNoteOCRDll, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OneNoteOCR.1.0.0.0\lib\OneNoteOCRDll.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=106.6.9.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.6.9\lib\net452\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=110.2.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.110.2.0\lib\net471\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.2.7.1\lib\net45\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.2.12.0\lib\net47\Serilog.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
+    <Reference Include="Serilog.Formatting.Compact, Version=1.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.1.1.0\lib\net452\Serilog.Formatting.Compact.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    <Reference Include="Serilog.Sinks.File, Version=5.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.5.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
-    <Reference Include="SharpCompress, Version=0.25.1.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpCompress.0.25.1\lib\net46\SharpCompress.dll</HintPath>
+    <Reference Include="SharpCompress, Version=0.33.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpCompress.0.33.0\lib\net462\SharpCompress.dll</HintPath>
     </Reference>
-    <Reference Include="SharpSimpleNLG, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpSimpleNLG.1.2.0\lib\net45\SharpSimpleNLG.dll</HintPath>
+    <Reference Include="SharpSimpleNLG, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSimpleNLG.1.3.0\lib\net472\SharpSimpleNLG.dll</HintPath>
     </Reference>
-    <Reference Include="SuperSocket.ClientEngine, Version=0.8.0.13, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
-      <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.8.0.13\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
+    <Reference Include="SuperSocket.ClientEngine, Version=0.10.0.0, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
+      <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Collections.Specialized, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Specialized.4.3.0\lib\net46\System.Collections.Specialized.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NameResolution, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.NameResolution.4.3.0\lib\net46\System.Net.NameResolution.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Security, Version=4.0.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Security.4.3.2\lib\net46\System.Net.Security.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Extensions.4.3.1\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.4.3.0\lib\net463\System.Runtime.InteropServices.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.7.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.7.0.2\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
@@ -166,30 +274,264 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XmlDocument.4.3.0\lib\net46\System.Xml.XmlDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="UIAutomationClient" />
     <Reference Include="UIAutomationClientsideProviders" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
-    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.4.9.0\lib\net48\WebDriver.dll</HintPath>
     </Reference>
-    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
+    <Reference Include="WebDriver.Support, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.4.9.0\lib\net48\WebDriver.Support.dll</HintPath>
     </Reference>
-    <Reference Include="WebSocket4Net, Version=0.15.0.9, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebSocket4Net.0.15.0\lib\net45\WebSocket4Net.dll</HintPath>
+    <Reference Include="WebSocket4Net, Version=0.15.2.11, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocket4Net.0.15.2\lib\net45\WebSocket4Net.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ApplicationUpdate.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationUIElementActionByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckWebElementExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClickWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetHTMLFromWebElementCommand .cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetMatchedWebElementsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementFromWebEelementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameToWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSelectOptionForWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetOptionsFromWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTextFromWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserScrollToWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAttributeFromWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSetTextToWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClearTextInWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementToExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
+    <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
-    <Compile Include="Core\Automation\Commands\Data\StringCheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
+    <Compile Include="Core\Automation\Commands\UIElementControls.cs" />
+    <Compile Include="Core\Automation\Commands\BooleanControls.cs" />
+    <Compile Include="Core\Automation\Commands\ClipboardControls.cs" />
+    <Compile Include="Core\Automation\Commands\ColorControls.cs" />
+    <Compile Include="Core\Automation\Commands\Color\CreateColorFormExcelColorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\ConvertColorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\CreateColorFormHexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Color\CreateColorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ConditionControls.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ReplaceDataTableValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ReplaceDataTableRowValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableColumnByRowValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ReplaceDataTableColumnValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableRowByColumnValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableColumnValuesByListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\DeleteDataTableColumnCommand.cs" />
+    <Compile Include="Core\Automation\Commands\AddDataTableColumnsAndFillValuesByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\AddDataTableColumnAndFillValuesByListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableColumnCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\GetDataTableValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowsByDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SetDataTableRowValuesByDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\DeleteDataTableRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\AddDataTableRowByDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToJSONCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableColumnToListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableToJSONCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToJSONCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ConvertDataTableRowToDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\CheckDataTableColumnExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\GetDataTableColumnListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\CopyDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\GetDataTableRowCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DictionaryControls.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\FilterDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ReplaceDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DisplayTextControls.cs" />
+    <Compile Include="Core\Automation\Commands\EMailControls.cs" />
+    <Compile Include="Core\Automation\Commands\File\ExtractionFilePathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\CopyFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\FolderPathControls.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\ExtractionFolderPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\CopyFolderCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Folder\WaitForFolderToExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\GeneralPropertyControls.cs" />
+    <Compile Include="Core\Automation\Commands\InstanceCounterControls.cs" />
+    <Compile Include="Core\Automation\Commands\IntermediateControls.cs" />
+    <Compile Include="Core\Automation\Commands\JSONControls.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\RemoveJSONArrayItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\InsertJSONArrayItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\AddJSONArrayItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\InsertJSONObjectPropertyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\RemoveJSONPropertyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\CreateJSONVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\AddJSONObjectPropertyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\SetJSONValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouseControls.cs" />
+    <Compile Include="Core\Automation\Commands\List\ReplaceListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\FilterListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetAverageFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetMaxFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetMedianFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetMinFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetSumFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetVarianceFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ListControls.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListIndexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\PlaySystemSoundCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLGControls.cs" />
+    <Compile Include="Core\Automation\Commands\NumberControls.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\FormatNumberCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\DecreaseNumericalVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\CreateNumericalVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\RandomNumberCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\IncreaseNumericalVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\SearchReplaceControls.cs" />
+    <Compile Include="Core\Automation\Commands\SelectionControls.cs" />
+    <Compile Include="Core\Automation\Commands\SeleniumBrowserControls.cs" />
+    <Compile Include="Core\Automation\Commands\Shell32.cs" />
+    <Compile Include="Core\Automation\Commands\SystemControls.cs" />
+    <Compile Include="Core\Automation\Commands\TextControls.cs" />
+    <Compile Include="Core\Automation\Commands\Text\CheckTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\ConcatenateTextVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\ModifyTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\RegExExtractionTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\SubstringTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\ExtractionTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\ConvertDateTimeToExcelSerialCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeFromExcelSerialCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CalculateDateTimeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\GetDateTimeDifferencesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\FormatDateTimeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeFromTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\CreateDateTimeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\CopyDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ConvertDictionaryToJSONCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeysListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\RemoveDictionaryItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\CheckDictionaryKeyExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeyFromValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ConcatenateDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\SetDictionaryValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEmailAttachmentsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitLoadEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEmailAttachmentsNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetRangeValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetColumnValuesFromListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetColumnValuesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetRowValuesFormDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetRowValuesFormDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelSetRowValuesFormListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetRowValuesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetWorksheetInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetExcelInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetCurrentWorksheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelGetWorksheetsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCellRCCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCopyWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelRenameWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellRCCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\RunPowershellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\GetFileInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ConvertJSONToListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ReadJSONFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\AddListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ConvertListToDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ConvertListToDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListIndexFromValueCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ConcatenateListsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\CheckListItemExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\SortListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ReverseListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\CopyListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\CreateListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\SetListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\SetListIndexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetAddressesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetAddressesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetAddressesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailFromEMailListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingIMAPCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingPOPCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSendEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\ClearClipboardTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\CreateTextVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementToExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationCheckUIElementExistByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationClickUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetChildrenUIElementsInformationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationWaitForUIElementToExistsByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromUIElementByXPathCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectedStateFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromTableUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetSelectionItemsFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationExpandCollapseItemsInUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementTreeXMLFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationScrollUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectItemInUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSelectUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSetTextToUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromTableUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetTextFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchParentUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchChildUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementFromWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ValidationControls.cs" />
+    <Compile Include="Core\Automation\Commands\VariableNameControls.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\GetVariableTypeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\CheckVariableExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\PropertyControls.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\GetVariableIndexCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WaitControls.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetTableValueAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAWebElementValuesAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAWebElementValuesAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetAWebElementValuesAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsListCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeWebBrowserCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WindowNameControls.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WordControls.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordCheckWordInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckBrowserInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckExcelInstanceExistsCommand.cs" />
@@ -201,10 +543,10 @@
     <Compile Include="Core\Automation\Commands\Folder\CheckFolderExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\CheckFileExistsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\FolderDialogCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\FileDialogCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ConvertListToJSONCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\UnloadTaskCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\ShowFolderDialogCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\ShowFileDialogCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\ConvertListToJSONCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\UnloadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\PingCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\CreateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\BeginMutliIfCommand.cs" />
@@ -212,14 +554,14 @@
     <Compile Include="Core\Automation\Commands\Folder\DeleteFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelSplitRangeByColumnCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelWriteRowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\File\ExtractFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\File\ExtractZipFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowCountCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\GetDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\GetFilesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\GetFoldersCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\GetListCountCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\GetListItemCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\List\GetListItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\MoveFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\NextLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookDeleteEmailsCommand.cs" />
@@ -227,21 +569,21 @@
     <Compile Include="Core\Automation\Commands\Regex\GetRegexMatchesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\AddDataRowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Variable\AddVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\NewVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\BeginIfCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginContinousLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\BeginExcelDatasetLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginListLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginNumberOfTimesLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowCommand.cs" />
-    <Compile Include="Core\Automation\Attributes\Attributes.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\ClipboardGetTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\ClipboardSetTextCommand.cs" />
+    <Compile Include="Core\Automation\Attributes\ClassAttributes.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\GetClipboardTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Misc\SetClipboardTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\CreateDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Database\DatabaseExecuteQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Database\DatabaseDefineConnectionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\CatchExceptionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\MathCalculationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Numerical\MathCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\EndTryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAppendCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAppendRowCommand.cs" />
@@ -250,50 +592,50 @@
     <Compile Include="Core\Automation\Commands\Dictionary\LoadDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\FinallyCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\EncryptionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\EncryptDecryptTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookForwardEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookGetEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookMoveEmailsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Outlook\OutlookReplyToEmailsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseJsonModelCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\GetMultiJSONValueListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\RemoveDataRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\RenameFolderCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\LoadTaskCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchFrameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\LoadScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserFrameCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserTakeScreenshotCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendHotkeyCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouse\EnterShortcutKeyCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEnginePreferenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\ThrowExceptionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\TryCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseDatasetRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ParseDatasetRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\ShowEngineContextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\NLG\NLGGeneratePhraseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\NLG\NLGSetParameterCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLG\NLGGenerateNLGPhraseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\NLG\NLGSetNLGParameterCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserFindBrowserCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\OSVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\GetDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\GetBotStoreDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\MessageBoxCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseJSONArray.cs" />
-    <Compile Include="Core\Automation\Commands\NLG\NLGCreateInstanceCommand.cs" />
-    <Compile Include="Core\Automation\Commands\API\RESTCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\ShowMessageCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\ParseJSONArray.cs" />
+    <Compile Include="Core\Automation\Commands\NLG\NLGCreateNLGInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\API\HTTPExecuteRESTAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\ScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCloseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCloseWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserCreateCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserInfoCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebBrowserInfoCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserWindowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCreateWebBrowserInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\RunCustomCodeCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\RunScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunCSharpCodeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunBatchScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\IE\IEBrowserElementActionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserElementActionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWebElementActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserExecuteScriptCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserNavigateBackCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserNavigateForwardCommand.cs" />
@@ -302,34 +644,32 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserRefreshCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SMTPSendEmailCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\StartProcessCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\RemoteDesktopCommand.cs" />
-    <Compile Include="Core\Automation\Commands\System\EnvironmentVariableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ModifyVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StartApplicationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\LaunchRemoteDesktopCommand.cs" />
+    <Compile Include="Core\Automation\Commands\System\GetEnvironmentVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\System\SystemActionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\StopwatchCommand.cs" />
-    <Compile Include="Core\Automation\Commands\ProgramProcess\StopProcessCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Variable\AddToVariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\StopWatch\StopwatchCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopApplicationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Variable\SetVariableIndexCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\WaitForWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\HTMLInputCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendAdvancedKeyStrokesCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendKeysCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendMouseClickCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\SendMouseMoveCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\WaitForWindowToExistsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\ShowHTMLInputDialogCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouse\SendAdvancedKeyStrokesCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouse\EnterKeysCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouse\ClickMouseCommand.cs" />
+    <Compile Include="Core\Automation\Commands\KeyMouse\MoveMouseCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\SequenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\ThickAppClickItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\ThickAppGetTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\UIAutomationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Input\UserInputCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Database\DatabaseRunQueryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationUIElementActionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DialogMessage\ShowUserInputDialogCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DatabaseRunQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\DateCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\EndLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelActivateSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorkbookCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCloseApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateDataSetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCloseExcelInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelCreateExcelInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\LoadDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCellCommand.cs" />
@@ -342,42 +682,39 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelSetCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\ExitLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\FormatDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\GetWordCountCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\GetWordLengthCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\GetWordCountCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\GetWordLengthCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\LogDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\ParseJsonCommand.cs" />
+    <Compile Include="Core\Automation\Commands\JSON\GetJSONValueListCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\PDFTextExtractionCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\RegExExtractorCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\StringReplaceCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\StringSplitCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\StringSubstringCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Data\TextExtractorCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\ReplaceTextCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\SplitTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\DeleteFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\ElseCommand.cs" />
     <Compile Include="Core\Automation\Commands\If\EndIfCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\ErrorHandlingCommand.cs" />
     <Compile Include="Core\Automation\Commands\API\ExecuteDLLCommand.cs" />
-    <Compile Include="Core\Automation\Commands\API\HTTPQueryResultCommand.cs" />
-    <Compile Include="Core\Automation\Commands\API\HTTPRequestCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Data\HTMLGetHTMLTextByXPath.cs" />
+    <Compile Include="Core\Automation\Commands\API\HTTPSendHTTPRequestCommand.cs" />
     <Compile Include="Core\Automation\Commands\Image\ImageRecognitionCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\MoveFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Image\OCRCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\PauseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\TextFile\ReadTextFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Image\ExecuteOCRCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\PauseScriptCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\ReadTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\RenameFileCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\RunTaskCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Image\ScreenshotCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Image\TakeScreenshotCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\SetEngineDelayCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Task\StopTaskCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Engine\UploadDataCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Variable\VariableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\ApplicationScriptFile\StopCurrentScriptFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Engine\UploadBotStoreDataCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Variable\SetVariableValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\File\WaitForFileToExistCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAddDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendImageCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordAppendTextCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word\WordCloseApplicationCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Word\WordCreateApplicationCommandcs.cs" />
+    <Compile Include="Core\Automation\Commands\Word\WordCloseWordInstanceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Word\WordCreateWordInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordExportToPDFCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordOpenDocumentCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordReadDocumentCommand.cs" />
@@ -385,17 +722,24 @@
     <Compile Include="Core\Automation\Commands\Word\WordSaveAsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Word\WordSaveCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\WriteDataRowValueCommand.cs" />
-    <Compile Include="Core\Automation\Commands\TextFile\WriteTextFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Text\WriteTextFileCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DateTimeControls.cs" />
+    <Compile Include="Core\CommandsTreeControls.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
+    <Compile Include="Core\Automation\Commands\FilePathControls.cs" />
     <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
     <Compile Include="Core\CompilerServices.cs" />
-    <Compile Include="Core\DatasetCommands.cs" />
+    <Compile Include="Core\Automation\Commands\DataTableControls.cs" />
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />
+    <Compile Include="Core\InstanceCounter.cs" />
     <Compile Include="Core\IO\Folders.cs" />
+    <Compile Include="Core\Script\ScriptAction.cs" />
+    <Compile Include="Core\Script\ScriptInformation.cs" />
+    <Compile Include="Core\Script\ScriptVariable.cs" />
     <Compile Include="Core\Server\LocalTCPListener.cs" />
     <Compile Include="Core\Server\HttpServerClient.cs" />
     <Compile Include="Core\ImageRecognition.cs" />
@@ -405,12 +749,15 @@
     <Compile Include="Core\Theme.cs" />
     <Compile Include="Core\Server\WebSocketClient.cs" />
     <Compile Include="Core\Automation\User32\User32Functionas.cs" />
-    <Compile Include="Core\Script.cs" />
+    <Compile Include="Core\Script\Script.cs" />
+    <Compile Include="Core\MyURLs.cs" />
+    <Compile Include="Core\Update\UpdateManifest.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomControls\AutomationCommand.cs" />
     <Compile Include="UI\CustomControls\CommandControls.cs" />
     <Compile Include="UI\CustomControls\CommandGroupControl.cs">
       <SubType>UserControl</SubType>
@@ -427,11 +774,30 @@
     <Compile Include="UI\CustomControls\CustomControls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Core\Automation\Commands\ExcelControls.cs" />
     <Compile Include="UI\Forms\frmAttendedMode.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Forms\frmAttendedMode.Designer.cs">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmNewSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmNewSettings.Designer.cs">
+      <DependentUpon>frmNewSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmSample.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmSample.Designer.cs">
+      <DependentUpon>frmSample.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptInformations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\frmScriptInformations.Designer.cs">
+      <DependentUpon>frmScriptInformations.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\frmSequenceRecorder.cs">
       <SubType>Form</SubType>
@@ -457,6 +823,12 @@
     <Compile Include="UI\Forms\Supplement Forms\frmCodeBuilder.Designer.cs">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmCommandList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmCommandList.Designer.cs">
+      <DependentUpon>frmCommandList.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmDisplayManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -474,6 +846,12 @@
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmEngineContextViewer.Designer.cs">
       <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmFormatChecker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmFormatChecker.Designer.cs">
+      <DependentUpon>frmFormatChecker.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.cs">
       <SubType>Form</SubType>
@@ -493,17 +871,53 @@
     <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmGUIInspect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmGUIInspect.Designer.cs">
+      <DependentUpon>frmGUIInspect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInputBox.designer.cs">
+      <DependentUpon>frmInputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInspectParser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmInspectParser.Designer.cs">
+      <DependentUpon>frmInspectParser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmJSONPathHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmJSONPathHelper.Designer.cs">
+      <DependentUpon>frmJSONPathHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.Designer.cs">
       <DependentUpon>frmKeysBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.Designer.cs">
+      <DependentUpon>frmMultiSendKeystrokes.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.Designer.cs">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSearchCommands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\frmSearchCommands.Designer.cs">
+      <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmSplash.cs">
       <SubType>Form</SubType>
@@ -612,11 +1026,20 @@
     <EmbeddedResource Include="UI\Forms\frmAttendedMode.resx">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmNewSettings.resx">
+      <DependentUpon>frmNewSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmSample.resx">
+      <DependentUpon>frmSample.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScriptBuilder.ru.resx">
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\frmScriptInformations.resx">
+      <DependentUpon>frmScriptInformations.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmSequenceRecorder.resx">
       <DependentUpon>frmSequenceRecorder.cs</DependentUpon>
@@ -646,6 +1069,9 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCodeBuilder.resx">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCommandList.resx">
+      <DependentUpon>frmCommandList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDialog.resx">
       <DependentUpon>frmDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -657,6 +1083,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmEngineContextViewer.resx">
       <DependentUpon>frmEngineContextViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmFormatChecker.resx">
+      <DependentUpon>frmFormatChecker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLBuilder.resx">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
@@ -670,11 +1099,29 @@
     <EmbeddedResource Include="UI\Forms\frmScriptVariables.resx">
       <DependentUpon>frmScriptVariables.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmGUIInspect.resx">
+      <DependentUpon>frmGUIInspect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInputBox.resx">
+      <DependentUpon>frmInputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInspectParser.resx">
+      <DependentUpon>frmInspectParser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmJSONPathHelper.resx">
+      <DependentUpon>frmJSONPathHelper.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmKeysBuilder.resx">
       <DependentUpon>frmKeysBuilder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.resx">
+      <DependentUpon>frmMultiSendKeystrokes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmSearchCommands.resx">
+      <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmShowCursorPosition.resx">
       <DependentUpon>frmShowCursorPosition.cs</DependentUpon>
@@ -705,6 +1152,7 @@
     <EmbeddedResource Include="UI\Forms\UIForm.resx">
       <DependentUpon>UIForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="latest.json" />
     <None Include="LICENSE" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -823,6 +1271,10 @@
     </Content>
     <None Include="Resources\command-dictionary.png" />
     <None Include="Resources\action-bar-add-variable.png" />
+    <None Include="Resources\actionbar-edit.png" />
+    <None Include="Resources\action-bar-config.png" />
+    <None Include="Resources\command-group.png" />
+    <None Include="Resources\file-icon.png" />
     <Content Include="Resources\geckodriver.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -834,6 +1286,8 @@
     </Content>
     <Content Include="Resources\refresh.png" />
     <None Include="Resources\taskt-element-helper.png" />
+    <None Include="Resources\rpalogo.ico" />
+    <None Include="Resources\sample_templete.png" />
     <Content Include="Resources\taskt-ExtractPDFText.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -844,8 +1298,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\taskt-variable-helper.png" />
+    <None Include="Resources\taskt_logo_alt.ico" />
+    <None Include="Resources\taskt_logo_alt.png" />
     <Content Include="Resources\various-cancel.png" />
     <Content Include="Resources\various-ok.png" />
+    <None Include="Resources\web_help.png" />
+    <None Include="Resources\various_info.png" />
     <Content Include="taskt_logo_alt.ico" />
     <None Include="Resources\item-header96.png" />
     <None Include="Resources\item-header.png" />
@@ -897,12 +1355,13 @@
   <ItemGroup>
     <Folder Include="External Dependencies\" />
     <Folder Include="Sample Scripts\" />
+    <Folder Include="Samples\" />
     <Folder Include="UI\Utilities\" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 および x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 および x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -913,9 +1372,21 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>rmdir /s /q "$(ProjectDir)$(OutDir)selenium-manager\linux"
+rmdir /s /q "$(ProjectDir)$(OutDir)selenium-manager\macos"</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>robocopy "$(ProjectDir)Samples" "$(ProjectDir)$(OutDir)Samples" *.xml /xo /E /S
+robocopy "$(ProjectDir)Manual" "$(ProjectDir)$(OutDir)Manual" *.txt /xo /E /S
+if %25ERRORLEVEL%25 LSS 8 EXIT 0</PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\Selenium.WebDriver.4.9.0\build\Selenium.WebDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.4.9.0\build\Selenium.WebDriver.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.4.9.0\build\Selenium.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.4.9.0\build\Selenium.WebDriver.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="18b07695-22eb-4f87-9fb7-dc03a61e91d6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Filter Dictionary Command Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="18b07695-22eb-4f87-9fb7-dc03a61e91d6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="vDic is ⦃ &quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 20, &quot;contory&quot;: &quot;America&quot;, &quot;like&quot;: &quot;Music&quot; ⦄" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDictionaryCommand" CommandID="5505d821-006b-4780-a6c0-f0644be737f4" CommandName="CreateDictionaryCommand" IsCommented="false" SelectionName="Create Dictionary" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="vDic">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNameDataTable080722.044508" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="ColumnNameDataTable080722.044508">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                        <xs:element name="Values" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445081" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Keys>name</Keys>
+                <Values>Alice</Values>
+              </ColumnNameDataTable080722.044508>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445082" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Keys>age</Keys>
+                <Values>20</Values>
+              </ColumnNameDataTable080722.044508>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445083" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Keys>contory</Keys>
+                <Values>America</Values>
+              </ColumnNameDataTable080722.044508>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445084" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Keys>like</Keys>
+                <Values>Music</Values>
+              </ColumnNameDataTable080722.044508>
+            </DocumentElement>
+            <diffgr:before>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445081" msdata:rowOrder="0">
+                <Keys>name</Keys>
+                <Values>Alice</Values>
+              </ColumnNameDataTable080722.044508>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445082" msdata:rowOrder="1">
+                <Keys>age</Keys>
+                <Values>20</Values>
+              </ColumnNameDataTable080722.044508>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445083" msdata:rowOrder="2">
+                <Keys>contory</Keys>
+                <Values>America</Values>
+              </ColumnNameDataTable080722.044508>
+              <ColumnNameDataTable080722.044508 diffgr:id="ColumnNameDataTable080722.0445084" msdata:rowOrder="3">
+                <Keys>like</Keys>
+                <Values>Music</Values>
+              </ColumnNameDataTable080722.044508>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FilterDictionaryCommand" CommandID="219fc7f0-cf8e-4e24-b7f3-fae5f276686c" CommandName="FilterDictionaryCommand" IsCommented="false" SelectionName="Filter Dictionary" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDictionary="vDic" v_TargetType="Text" v_FilterAction="Starts with" v_OutputDictionary="vFilter">
+        <v_FilterActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="FilterActionParameterTable080722.044619" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="FilterActionParameterTable080722.044619">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
+                        <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <FilterActionParameterTable080722.044619 diffgr:id="FilterActionParameterTable080722.0446191" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <ParameterName>Value</ParameterName>
+                <ParameterValue>A</ParameterValue>
+              </FilterActionParameterTable080722.044619>
+              <FilterActionParameterTable080722.044619 diffgr:id="FilterActionParameterTable080722.0446192" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <ParameterName>Case Sensitive</ParameterName>
+                <ParameterValue>No</ParameterValue>
+              </FilterActionParameterTable080722.044619>
+            </DocumentElement>
+            <diffgr:before>
+              <FilterActionParameterTable080722.044619 diffgr:id="FilterActionParameterTable080722.0446191" msdata:rowOrder="0">
+                <ParameterName>Value</ParameterName>
+                <ParameterValue>A</ParameterValue>
+              </FilterActionParameterTable080722.044619>
+              <FilterActionParameterTable080722.044619 diffgr:id="FilterActionParameterTable080722.0446192" msdata:rowOrder="1">
+                <ParameterName>Case Sensitive</ParameterName>
+                <ParameterValue>No</ParameterValue>
+              </FilterActionParameterTable080722.044619>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_FilterActionParameterTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="18b07695-22eb-4f87-9fb7-dc03a61e91d6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="vFilter  is ⦃ &quot;name&quot;: &quot;Alice&quot;, &quot;contory&quot;: &quot;America&quot; ⦄" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConvertDictionaryToJSONCommand" CommandID="7bba0cff-9510-40ac-9429-a4f8b8a3e17f" CommandName="ConvertDictionaryToJSONCommand" IsCommented="false" SelectionName="Convert Dictionary To JSON" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InputData="vFilter" v_OutputVariable="vJson" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="526a473d-661c-4dd1-acc1-c53e06df94f9" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vJson⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.0</TasktVersion>
+    <Author />
+    <LastRunTime>2022-08-07T16:47:15.885849+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vDic</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vFilter</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vJson</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

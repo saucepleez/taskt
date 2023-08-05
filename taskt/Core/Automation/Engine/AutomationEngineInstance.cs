@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Engine
         public string FileName { get; set; }
         public Core.Server.Task taskModel { get; set; }
         public bool serverExecution { get; set; }
-        public List<IRestResponse> ServiceResponses { get; set; }
+        public List<RestResponse> ServiceResponses { get; set; }
         //events
         public event EventHandler<ReportProgressEventArgs> ReportProgressEvent;
         public event EventHandler<ScriptFinishedEventArgs> ScriptFinishedEvent;
@@ -42,13 +42,18 @@ namespace taskt.Core.Automation.Engine
         public bool AutoCalculateVariables { get; set; }
         public string TasktResult { get; set; } = "";
 
-        public Serilog.Core.Logger engineLogger;
+        private Serilog.Core.Logger engineLogger = null;
 
-        public AutomationEngineInstance()
+        private const int INNER_VARIABLES = 4;
+
+        public AutomationEngineInstance(bool enableLog = true)
         {
             //initialize logger
-            engineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
-            engineLogger.Information("Engine Class has been initialized");
+            if (enableLog)
+            {
+                engineLogger = new Logging().CreateLogger("Engine", Serilog.RollingInterval.Day);
+                WriteLog("Engine Class has been initialized");
+            }
 
             //initialize error tracking list
             ErrorsOccured = new List<ScriptError>();
@@ -69,17 +74,16 @@ namespace taskt.Core.Automation.Engine
             }
       
             AppInstances = new Dictionary<string, object>();
-            ServiceResponses = new List<IRestResponse>();
+            ServiceResponses = new List<RestResponse>();
             DataTables = new List<DataTable>();
 
             //this value can be later overriden by script
             AutoCalculateVariables = engineSettings.AutoCalcVariables;
-
         }
 
         public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null, Dictionary<string, Core.Script.Script> preloadedTasks = null)
         {
-            engineLogger.Information("Client requesting to execute script using frmEngine");
+            WriteLog("Client requesting to execute script using frmEngine");
 
             tasktEngineUI = scriptEngine;
 
@@ -101,7 +105,7 @@ namespace taskt.Core.Automation.Engine
         }
         public void ExecuteScriptAsync(string filePath)
         {
-            engineLogger.Information("Client requesting to execute script independently");
+            WriteLog("Client requesting to execute script independently");
 
             new Thread(() =>
             {
@@ -111,7 +115,7 @@ namespace taskt.Core.Automation.Engine
         }
         public void ExecuteScriptXML(string xmlData)
         {
-            engineLogger.Information("Client requesting to execute script independently");
+            WriteLog("Client requesting to execute script independently");
 
             new Thread(() =>
             {
@@ -123,7 +127,6 @@ namespace taskt.Core.Automation.Engine
         public void ExecuteScript(string data, bool dataIsFile)
         {
             Core.Client.EngineBusy = true;
-
 
             try
             {
@@ -144,21 +147,19 @@ namespace taskt.Core.Automation.Engine
                     preLoadedTask = PreloadedTasks.Any(f => f.Key == data);
                 }
       
-
-              
                 //get automation script
                 Core.Script.Script automationScript;
                 if (dataIsFile && (!preLoadedTask))
                 {
                     ReportProgress("Deserializing File");
-                    engineLogger.Information("Script Path: " + data);
+                    WriteLog("Script Path: " + data);
                     FileName = data;              
-                    automationScript = Core.Script.Script.DeserializeFile(data);
+                    automationScript = Core.Script.Script.DeserializeFile(data, engineSettings);
                 }
                 else if (dataIsFile && preLoadedTask)
                 {
                     ReportProgress("Using Preloaded Task");
-                    engineLogger.Information("Preloaded Script Path: " + data);
+                    WriteLog("Preloaded Script Path: " + data);
                     FileName = data;
                     automationScript = PreloadedTasks[data];
                 }
@@ -198,6 +199,32 @@ namespace taskt.Core.Automation.Engine
 
                 VariableList = automationScript.Variables;
 
+                // add hidden inner variable
+                VariableList.AddRange(
+                    new Script.ScriptVariable[]
+                    {
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_0",
+                            VariableValue = ""
+                        },
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_1",
+                            VariableValue = ""
+                        },
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_2",
+                            VariableValue = ""
+                        },
+                        new Script.ScriptVariable()
+                        {
+                            VariableName = "__INNER_3",
+                            VariableValue = ""
+                        }
+                    }
+                );
 
                 ReportProgress("Creating App Instance Tracking List");
                 //create app instances and merge in global instances
@@ -207,7 +234,6 @@ namespace taskt.Core.Automation.Engine
                 {
                     this.AppInstances.Add(instance.Key, instance.Value);
                 }
-              
               
                 //execute commands
                 foreach (var executionCommand in automationScript.Commands)
@@ -232,17 +258,11 @@ namespace taskt.Core.Automation.Engine
                     //mark finished
                     ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Successful);
                 }
-
-
             }
             catch (Exception ex)
             {
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
-
-         
-
-
         }
         public void ExecuteCommand(Core.Script.ScriptAction command)
         {
@@ -301,38 +321,39 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Core.Automation.Commands.BeginExcelDatasetLoopCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand(this, command);
                 }
                 else if (parentCommand is Core.Automation.Commands.SequenceCommand)
                 {
+                    // todo: execute runcommand
                     parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Core.Automation.Commands.StopTaskCommand)
-                {
-                    IsCancellationPending = true;
-                    return;
-                }
-                else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
-                {
-                    CurrentLoopCancelled = true;
-                }
-                else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
-                {
-                    CurrentLoopContinuing = true;
-                }
-                else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
-                {
-                    //get variable
-                    var setEngineCommand = (Core.Automation.Commands.SetEngineDelayCommand)parentCommand;                    
-                    var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
-                    var delay = int.Parse(engineDelay);
+                //else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
+                //{
+                //    IsCancellationPending = true;
+                //    return;
+                //}
+                //else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
+                //{
+                //    CurrentLoopCancelled = true;
+                //}
+                //else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
+                //{
+                //    CurrentLoopContinuing = true;
+                //}
+                //else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
+                //{
+                //    //get variable
+                //    var setEngineCommand = (Core.Automation.Commands.SetEngineDelayCommand)parentCommand;                    
+                //    var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
+                //    var delay = int.Parse(engineDelay);
 
-                    //update delay setting
-                    this.engineSettings.DelayBetweenCommands = delay;
-                }
+                //    //update delay setting
+                //    this.engineSettings.DelayBetweenCommands = delay;
+                //}
                 else
                 {
                     //sleep required time
@@ -340,6 +361,11 @@ namespace taskt.Core.Automation.Engine
                  
                     //run the command
                     parentCommand.RunCommand(this);
+                }
+
+                if (IsCancellationPending)
+                {
+                    return;
                 }
             }
             catch (Exception ex)
@@ -368,6 +394,10 @@ namespace taskt.Core.Automation.Engine
                 
                     throw ex;
                 }
+            }
+            finally
+            {
+                ClearInnerVariables();
             }
         }
         public void AddAppInstance(string instanceName, object appObject) {
@@ -463,8 +493,6 @@ namespace taskt.Core.Automation.Engine
 
         public void StoreComplexObjectInVariable(string variableName, object value)
         {
-
-
             Script.ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
 
             if (storeVariable == null)
@@ -482,6 +510,19 @@ namespace taskt.Core.Automation.Engine
                 storeVariable.VariableValue = value;
             }
         }
+
+        private void ClearInnerVariables()
+        {
+            for (int i = 0; i < INNER_VARIABLES; i++)
+            {
+                Script.ScriptVariable v = VariableList.Where(x => x.VariableName == "__INNER_" + i.ToString()).FirstOrDefault();
+                if (v != null)
+                {
+                    v.VariableValue = "";
+                }
+            }
+        }
+
         public void CancelScript()
         {
             IsCancellationPending = true;
@@ -494,12 +535,9 @@ namespace taskt.Core.Automation.Engine
         {
             IsScriptPaused = false;
         }
-
-        
-
         public virtual void ReportProgress(string progress)
         {
-            engineLogger.Information(progress);
+            WriteLog(progress);
             ReportProgressEventArgs args = new ReportProgressEventArgs();
             args.ProgressUpdate = progress;
             //send log to server
@@ -510,7 +548,7 @@ namespace taskt.Core.Automation.Engine
         }
         public virtual void ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult result, string error = null)
         {
-            engineLogger.Information("Result Code: " + result.ToString());
+            WriteLog("Result Code: " + result.ToString());
 
             //add result variable if missing
             var resultVar = VariableList.Where(f => f.VariableName == "taskt.Result").FirstOrDefault();
@@ -527,7 +565,7 @@ namespace taskt.Core.Automation.Engine
 
             if (error == null)
             {
-                engineLogger.Information("Error: None");
+                WriteLog("Error: None");
 
                 if (taskModel != null && serverSettings.ServerConnectionEnabled)
                 {
@@ -547,7 +585,7 @@ namespace taskt.Core.Automation.Engine
                
             else
             {
-                engineLogger.Information("Error: " + error);
+                WriteLog("Error: " + error);
 
                 if (taskModel != null)
                 {
@@ -605,7 +643,7 @@ namespace taskt.Core.Automation.Engine
             LineNumberChangedEvent?.Invoke(this, args);
         }
 
-       public enum EngineStatus
+        public enum EngineStatus
         {
             Loaded, Running, Paused, Finished
         }
@@ -621,6 +659,14 @@ namespace taskt.Core.Automation.Engine
             settings.Formatting = Formatting.Indented;
 
             return  JsonConvert.SerializeObject(this, settings);
+        }
+
+        public void WriteLog(string logText)
+        {
+            if (engineLogger != null)
+            {
+                engineLogger.Information(logText);
+            }
         }
 
     }

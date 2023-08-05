@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63204978-85dd-4ae3-abec-5704d44f9625" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Check variable is list or not" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63204978-85dd-4ae3-abec-5704d44f9625" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Set not list variable" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="2c9636d6-96a5-407e-a4c2-82cb5d698cfc" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vVar" v_Input="123" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63204978-85dd-4ae3-abec-5704d44f9625" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Set list variable (It's Not Recommended method)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="VariableCommand" CommandID="14c6915c-351c-405c-8e20-aa3df1069cf0" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vList" v_Input="⦃⦃1|2|3⦄⦄" v_ReplaceInputVariables="Yes" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63204978-85dd-4ae3-abec-5704d44f9625" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Check ⦃vVar⦄ ist list or not" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="906b082c-b90a-44d7-80b6-c7c4bdc65ec7" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I5Ac午ionPara49Table090621.114926" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="I5Ac午ionPara49Table090621.114926">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149261" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vVar.Type⦄</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149262" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149263" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>BASIC</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+            </DocumentElement>
+            <diffgr:before>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149261" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vVar.Type}</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149262" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149263" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>BASIC</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9082049d-7ddd-4023-82ff-9734dc7d4911" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vVar is BASIC variable." v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="8b6eb743-6700-4f5f-941f-8787287c6531" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9082049d-7ddd-4023-82ff-9734dc7d4911" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vVar is LIST variable." v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="2248dc50-fd0d-4f71-bc8b-6e0c78faedc5" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63204978-85dd-4ae3-abec-5704d44f9625" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Check ⦃vList⦄ ist list or not" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="BeginIfCommand" CommandID="906b082c-b90a-44d7-80b6-c7c4bdc65ec7" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Value">
+        <v_IfActionParameterTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="I5Ac午ionPara49Table090621.114926">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                  <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="I5Ac午ionPara49Table090621.114926" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="I5Ac午ionPara49Table090621.114926" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149261" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>⦃vList.Type⦄</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149262" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149263" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>BASIC</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+            </DocumentElement>
+            <diffgr:before>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149261" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Value1</Parameter_x0020_Name>
+                <Parameter_x0020_Value>{vList.Type}</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149262" msdata:rowOrder="1">
+                <Parameter_x0020_Name>Operand</Parameter_x0020_Name>
+                <Parameter_x0020_Value>is equal to</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+              <I5Ac午ionPara49Table090621.114926 diffgr:id="I5Ac午ionPara49Table090621.1149263" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Value2</Parameter_x0020_Name>
+                <Parameter_x0020_Value>BASIC</Parameter_x0020_Value>
+              </I5Ac午ionPara49Table090621.114926>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_IfActionParameterTable>
+      </ScriptCommand>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9082049d-7ddd-4023-82ff-9734dc7d4911" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vList is BASIC variable." v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="ElseCommand" CommandID="8b6eb743-6700-4f5f-941f-8787287c6531" CommandName="ElseCommand" IsCommented="false" SelectionName="Else" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="9082049d-7ddd-4023-82ff-9734dc7d4911" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="vList is LIST variable." v_AutoCloseAfter="0" />
+      </AdditionalScriptCommands>
+      <AdditionalScriptCommands>
+        <ScriptCommand xsi:type="EndIfCommand" CommandID="2248dc50-fd0d-4f71-bc8b-6e0c78faedc5" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" />
+      </AdditionalScriptCommands>
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.27</TasktVersion>
+    <Author />
+    <LastRunTime>1990-01-01T00:00:00</LastRunTime>
+    <RunTimes>0</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vList</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vVar</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

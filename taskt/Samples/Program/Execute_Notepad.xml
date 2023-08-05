@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="02c82b18-41bd-4354-b434-68dda3d14eeb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Execute Notepad sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="02c82b18-41bd-4354-b434-68dda3d14eeb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Execute Notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartProcessCommand" CommandID="f15f4cd2-9874-4608-a632-eaa0158b1a70" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="notepad" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="9e565947-0d23-4817-890c-852baceca0e4" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="wait" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="02c82b18-41bd-4354-b434-68dda3d14eeb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Type &quot;Hello!&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandID="ecdc31b4-3139-4682-a053-7d4d6e69bb60" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Send Keystrokes" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_TextToSend="Hello!" v_EncryptionOption="Not Encrypted" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="02c82b18-41bd-4354-b434-68dda3d14eeb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Stop Notepad" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StopProcessCommand" CommandID="1b5b861f-7667-4e64-be62-f59885a67a84" CommandName="StopProgramCommand" IsCommented="false" SelectionName="Stop Process" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramShortName="notepad" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseCommand" CommandID="9e565947-0d23-4817-890c-852baceca0e4" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="wait" CommandEnabled="true" v_PauseLength="2000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="02c82b18-41bd-4354-b434-68dda3d14eeb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Don't save" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendKeysCommand" CommandID="ecdc31b4-3139-4682-a053-7d4d6e69bb60" CommandName="SendKeysCommand" IsCommented="false" SelectionName="Send Keystrokes" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="𝕂%kwd_current_window%𝕎" v_TextToSend="n" v_EncryptionOption="Not Encrypted" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.28</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-07T23:52:42.137668+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Mouse Move, Click, Drag" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Commands execute every 1 sec." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetEngineDelayCommand" CommandID="0f13fedd-6e74-4638-bd2a-0042eeec82b3" CommandName="SetEngineDelayCommand" IsCommented="false" SelectionName="Set Engine Delay" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_EngineSpeed="1000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Mouse move to desktop top-left" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendMouseMoveCommand" CommandID="62cf917c-1b58-4c82-a88d-63a56bf8400b" CommandName="SendMouseMoveCommand" IsCommented="false" SelectionName="Send Mouse Move" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_XMousePosition="0" v_YMousePosition="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Mouse move to desktop (100, 100)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendMouseMoveCommand" CommandID="62cf917c-1b58-4c82-a88d-63a56bf8400b" CommandName="SendMouseMoveCommand" IsCommented="false" SelectionName="Send Mouse Move" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_XMousePosition="100" v_YMousePosition="100" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Mouse Right Click" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendMouseClickCommand" CommandID="055dce63-1b48-409b-97fe-79210cd87496" CommandName="SendMouseClickCommand" IsCommented="false" SelectionName="Send Mouse Click" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_MouseClick="Right Click" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Mouse move to desktop top-left, and drag start" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendMouseMoveCommand" CommandID="f6d1d104-df90-4c85-99f4-6438d8487473" CommandName="SendMouseMoveCommand" IsCommented="false" SelectionName="Send Mouse Move" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_XMousePosition="0" v_YMousePosition="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendMouseClickCommand" CommandID="055dce63-1b48-409b-97fe-79210cd87496" CommandName="SendMouseClickCommand" IsCommented="false" SelectionName="Send Mouse Click" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_MouseClick="Left Down" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" v_Comment="Mouse move to desktop (200, 200), and drag end" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendMouseMoveCommand" CommandID="62cf917c-1b58-4c82-a88d-63a56bf8400b" CommandName="SendMouseMoveCommand" IsCommented="false" SelectionName="Send Mouse Move" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_XMousePosition="200" v_YMousePosition="200" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SendMouseClickCommand" CommandID="055dce63-1b48-409b-97fe-79210cd87496" CommandName="SendMouseClickCommand" IsCommented="false" SelectionName="Send Mouse Click" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_MouseClick="Left Up" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="65740cd8-4f02-479b-9f3d-a72afcad80a0" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" v_Comment="Now some icons may selected." CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.33</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-23T16:56:32.6527293+09:00</LastRunTime>
+    <RunTimes>3</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables />
+</Script>

@@ -1,115 +1,111 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.UI.CustomControls;
-using taskt.UI.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Folder Operation Commands")]
+    [Attributes.ClassAttributes.CommandSettings("Create Folder")]
     [Attributes.ClassAttributes.Description("This command creates a folder in a specified destination")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to create a folder in a specific location.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements '' to achieve automation.")]
+    [Attributes.ClassAttributes.EnableAutomateRender(true)]
+    [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class CreateFolderCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the name of the new folder (ex. myFolder, {{{vFolderName}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the name of the new folder.")]
-        [Attributes.PropertyAttributes.SampleUsage("**myFolderName** or **{{{vFolderName}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Name of the New Folder")]
+        [InputSpecification("Name of the New Folder", true)]
+        //[SampleUsage("**myFolderName** or **{{{vFolderName}}}**")]
+        [PropertyDetailSampleUsage("**myFolder**", PropertyDetailSampleUsage.ValueType.Value, "Folder Name")]
+        [PropertyDetailSampleUsage("**{{{vFolderName}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Folder Name")]
+        [PropertyValidationRule("New Folder Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "New Folder Name")]
         public string v_NewFolderName { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please indicate the directory for the new folder (ex. C:\\temp\\myfolder, {{{vFolderPath}}})")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowFolderSelectionHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the directory.")]
-        [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfolder** or **{{{TextFolderPath}}}**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_FolderPath))]
+        [PropertyDescription("Location where you want to Create the Folder")]
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Optional - Delete folder if it already exists (default is No)")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("Specify whether the folder should be deleted first if it is already found to exist.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyDescription("Delete Folder When it already Exists")]
+        [PropertyIsOptional(true, "No")]
         public string v_DeleteExisting { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(FolderPathControls), nameof(FolderPathControls.v_WaitTime))]
+        public string v_WaitForFolder { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Created Folder Path")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_CreatedFolderPath { get; set; }
 
         public CreateFolderCommand()
         {
-            this.CommandName = "CreateFolderCommand";
-            this.SelectionName = "Create Folder";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "CreateFolderCommand";
+            //this.SelectionName = "Create Folder";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            //apply variable logic
-            var destinationDirectory = v_DestinationDirectory.ConvertToUserVariable(sender);
-            var newFolder = v_NewFolderName.ConvertToUserVariable(sender);
+            ////apply variable logic
+            //var destinationDirectory = FolderPathControls.WaitForFolder(this, nameof(v_DestinationDirectory), nameof(v_WaitForFolder), engine);
 
+            //var newFolder = v_NewFolderName.ConvertToUserVariableAsFolderName(engine);
 
-            var finalPath = System.IO.Path.Combine(destinationDirectory, newFolder);
-            if (System.IO.Directory.Exists(destinationDirectory + "\\" + newFolder))
-            {
-                var deleteFolder = v_DeleteExisting.ConvertToUserVariable(sender);
-                if (String.IsNullOrEmpty(deleteFolder))
+            //var finalPath = System.IO.Path.Combine(destinationDirectory, newFolder);
+            //if (System.IO.Directory.Exists(finalPath)) { }
+            //{
+            //    if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+            //    {
+            //        System.IO.Directory.Delete(finalPath, true);
+            //    }
+            //}
+
+            ////create folder if it doesn't exist
+            //if (!System.IO.Directory.Exists(finalPath))
+            //{
+            //    System.IO.Directory.CreateDirectory(finalPath);
+            //}
+
+            FolderPathControls.FolderAction(this, engine,
+                new Action<string>(path =>
                 {
-                    deleteFolder = "No";
-                }
-                if (deleteFolder.ToLower() == "yes")
-                {
-                    System.IO.Directory.Delete(finalPath, true);
-                }
-            }
+                    var newFolder = v_NewFolderName.ConvertToUserVariableAsFolderName(engine);
 
-            //create folder if it doesn't exist
-            if (!System.IO.Directory.Exists(finalPath))
-            {
-                System.IO.Directory.CreateDirectory(finalPath);
-            }
-     
-        }
-        public override List<Control> Render(frmCommandEditor editor)
-        {
-            base.Render(editor);
+                    var finalPath = System.IO.Path.Combine(path, newFolder);
+                    if (System.IO.Directory.Exists(finalPath)) { }
+                    {
+                        if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                        {
+                            System.IO.Directory.Delete(finalPath, true);
+                        }
+                    }
 
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DestinationDirectory", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_NewFolderName", this, editor));
-            RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_DeleteExisting", this, editor));
+                    //create folder if it doesn't exist
+                    if (!System.IO.Directory.Exists(finalPath))
+                    {
+                        System.IO.Directory.CreateDirectory(finalPath);
+                    }
 
-            return RenderedControls;
-        }
-
-        public override string GetDisplayValue()
-        {
-            return base.GetDisplayValue() + "[create " + v_DestinationDirectory + "\\" + v_NewFolderName +"']";
-        }
-
-        public override bool IsValidate(frmCommandEditor editor)
-        {
-            base.IsValidate(editor);
-
-            if (String.IsNullOrEmpty(this.v_DestinationDirectory))
-            {
-                this.validationResult += "Directory of new folder is empty.\n";
-                this.IsValid = false;
-            }
-            if (String.IsNullOrEmpty(this.v_NewFolderName))
-            {
-                this.validationResult += "Name of new folder is empty.\n";
-                this.IsValid = false;
-            }
-
-            return this.IsValid;
+                    if (!string.IsNullOrEmpty(v_CreatedFolderPath))
+                    {
+                        finalPath.StoreInUserVariable(engine, v_CreatedFolderPath);
+                    }
+                })
+            );
         }
     }
 }

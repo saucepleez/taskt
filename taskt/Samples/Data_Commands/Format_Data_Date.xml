@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="aee67633-6cc0-4134-8631-cd6ce1b3c084" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="This sample shows how to format data" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="bee21932-036f-4d42-8e21-7cb06447afa5" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="If Calculate Variable Automatically is checked, you may get strange result." CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetEnginePreferenceCommand" CommandID="d4b6a8ff-e0b2-44b3-ac0d-e1d07b389940" CommandName="SetEnginePreferenceCommand" IsCommented="false" SelectionName="Set Engine Preference" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" v_Comment="" CommandEnabled="true" v_PreferenceType="Disable Automatic Calculations" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="02165a5a-062c-47ba-94d0-208cdb10e9e3" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Additional formats can be found: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings?view=netframework-4.7.2" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8613b41c-d4d9-4017-a7f9-9e25a241830f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Format Date Example - No Time" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatDataCommand" CommandID="baf4e740-f65e-4fa3-bd56-c501b2a37132" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="11/20/2018 12:34:54PM" v_FormatType="Date" v_ToStringFormat="MM/dd/yyyy" v_applyToVariableName="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d68ed8dd-55e7-41db-9feb-aa29afd30362" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="8613b41c-d4d9-4017-a7f9-9e25a241830f" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Format Date Example - Year-Day-Month" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="FormatDataCommand" CommandID="baf4e740-f65e-4fa3-bd56-c501b2a37132" CommandName="FormatDataCommand" IsCommented="false" SelectionName="Format Data" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="11/20/2018 12:34:54PM" v_FormatType="Date" v_ToStringFormat="yyyy-dd-MM" v_applyToVariableName="vResult" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="d68ed8dd-55e7-41db-9feb-aa29afd30362" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vResult⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.25</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-02T20:36:53.0310101+09:00</LastRunTime>
+    <RunTimes>4</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vDate</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vResult</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

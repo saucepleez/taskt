@@ -7,68 +7,69 @@ using taskt.UI.Forms;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("Range")]
+    [Attributes.ClassAttributes.CommandSettings("Write Range")]
     [Attributes.ClassAttributes.Description("This command writes a datatable to an excel sheet starting from the given cell address.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     public class ExcelWriteRangeCommand : ScriptCommand
     {
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the instance name")]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [Attributes.PropertyAttributes.SampleUsage("**myInstance** or **excelInstance**")]
-        [Attributes.PropertyAttributes.Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.PropertyTextBoxSetting(1, false)]
+        [PropertyDescription("Please Enter the instance name")]
+        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        [SampleUsage("**myInstance** or **excelInstance**")]
+        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Datatable Variable Name to Set")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the text value that will be set.")]
-        [Attributes.PropertyAttributes.SampleUsage("Hello World or {vText}")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please Enter the Datatable Variable Name to Set")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter the text value that will be set.")]
+        [SampleUsage("Hello World or {vText}")]
+        [Remarks("")]
         public string v_DataTableToSet { get; set; }
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Please Enter the Cell Location to start from (ex. A1 or B2)")]
-        [Attributes.PropertyAttributes.PropertyUIHelper(Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [Attributes.PropertyAttributes.InputSpecification("Enter the actual location of the cell.")]
-        [Attributes.PropertyAttributes.SampleUsage("A1, B10, {vAddress}")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Please Enter the Cell Location to start from (ex. A1 or B2)")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Enter the actual location of the cell.")]
+        [SampleUsage("A1, B10, {vAddress}")]
+        [Remarks("")]
         public string v_ExcelCellAddress { get; set; }
 
         [XmlAttribute]
-        [Attributes.PropertyAttributes.PropertyDescription("Add Headers")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("Yes")]
-        [Attributes.PropertyAttributes.PropertyUISelectionOption("No")]
-        [Attributes.PropertyAttributes.InputSpecification("When selected, the column headers from the specified spreadsheet range are also written.")]
-        [Attributes.PropertyAttributes.SampleUsage("Select from **Yes** or **No**")]
-        [Attributes.PropertyAttributes.Remarks("")]
+        [PropertyDescription("Add Headers")]
+        [PropertyUISelectionOption("Yes")]
+        [PropertyUISelectionOption("No")]
+        [InputSpecification("When selected, the column headers from the specified spreadsheet range are also written.")]
+        [SampleUsage("Select from **Yes** or **No**")]
+        [Remarks("")]
         public string v_AddHeaders { get; set; }
         public ExcelWriteRangeCommand()
         {
-            this.CommandName = "ExcelWriteRangeCommand";
-            this.SelectionName = "Write Range";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "ExcelWriteRangeCommand";
+            //this.SelectionName = "Write Range";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
             this.v_InstanceName = "";
             this.v_AddHeaders = "Yes";
         }
         public override void RunCommand(object sender)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var engine = (Engine.AutomationEngineInstance)sender;
+
+            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+
             var dataSetVariable = LookupVariable(engine);
             var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
-            var excelObject = engine.GetAppInstance(vInstance);
-
-            Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
-            var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet;
 
             DataTable Dt = (DataTable)dataSetVariable.VariableValue;
             if (string.IsNullOrEmpty(targetAddress)) throw new ArgumentNullException("columnName");
@@ -128,7 +129,7 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        private Script.ScriptVariable LookupVariable(Core.Automation.Engine.AutomationEngineInstance sendingInstance)
+        private Script.ScriptVariable LookupVariable(Engine.AutomationEngineInstance sendingInstance)
         {
             //search for the variable
             var requiredVariable = sendingInstance.VariableList.Where(var => var.VariableName == v_DataTableToSet).FirstOrDefault();
@@ -148,7 +149,10 @@ namespace taskt.Core.Automation.Commands
             base.Render(editor);
 
             //create standard group controls
-            RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
+            var instanceCtrls = CommandControls.CreateDefaultDropdownGroupFor("v_InstanceName", this, editor);
+            CommandControls.AddInstanceNames((ComboBox)instanceCtrls.Where(t => (t.Name == "v_InstanceName")).FirstOrDefault(), editor, PropertyInstanceType.InstanceType.Excel);
+            RenderedControls.AddRange(instanceCtrls);
+            //RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_InstanceName", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_DataTableToSet", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultInputGroupFor("v_ExcelCellAddress", this, editor));
             RenderedControls.AddRange(CommandControls.CreateDefaultDropdownGroupFor("v_AddHeaders", this, editor));

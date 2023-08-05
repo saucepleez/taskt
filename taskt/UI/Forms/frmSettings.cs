@@ -11,19 +11,11 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebSocket4Net;
 
 namespace taskt.UI.Forms
 {
@@ -31,6 +23,8 @@ namespace taskt.UI.Forms
     {
         Core.ApplicationSettings newAppSettings;
         public frmScriptBuilder scriptBuilderForm;
+
+        #region form events
         public frmSettings(frmScriptBuilder sender)
         {
             scriptBuilderForm = sender;
@@ -65,7 +59,8 @@ namespace taskt.UI.Forms
             chkOverrideInstances.DataBindings.Add("Checked", engineSettings, "OverrideExistingAppInstances", false, DataSourceUpdateMode.OnPropertyChanged);
             chkAutoCalcVariables.DataBindings.Add("Checked", engineSettings, "AutoCalcVariables", false, DataSourceUpdateMode.OnPropertyChanged);
             txtCurrentWindow.DataBindings.Add("Text", engineSettings, "CurrentWindowKeyword", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            chkUseNewParser.DataBindings.Add("Checked", engineSettings, "UseNewParser", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkIgnoreFirstVariableMarker.DataBindings.Add("Checked", engineSettings, "IgnoreFirstVariableMarkerInOutputParameter", false, DataSourceUpdateMode.OnPropertyChanged);
 
             cboCancellationKey.DataSource = Enum.GetValues(typeof(Keys));
             cboCancellationKey.DataBindings.Add("Text", engineSettings, "CancellationKey", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -98,11 +93,23 @@ namespace taskt.UI.Forms
             chkInsertElse.DataBindings.Add("Checked", clientSettings, "InsertElseAutomatically", false, DataSourceUpdateMode.OnPropertyChanged);
             chkInsertCommentIfLoop.DataBindings.Add("Checked", clientSettings, "InsertCommentIfLoopAbove", false, DataSourceUpdateMode.OnPropertyChanged);
             chkGruopingBySubgruop.DataBindings.Add("Checked", clientSettings, "GroupingBySubgroup", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkShowIndentLine.DataBindings.Add("Checked", clientSettings, "ShowIndentLine", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtIndentWidth.DataBindings.Add("Text", clientSettings, "IndentWidth", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkShowScriptMiniMap.DataBindings.Add("Checked", clientSettings, "ShowScriptMiniMap", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbInstanceNameOrder.DataBindings.Add("Text", clientSettings, "InstanceNameOrder", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultBrowserInstanceName.DataBindings.Add("Text", clientSettings, "DefaultBrowserInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultStopwatchInstanceName.DataBindings.Add("Text", clientSettings, "DefaultStopwatchInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultExcelInstanceName.DataBindings.Add("Text", clientSettings, "DefaultExcelInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultWordInstanceName.DataBindings.Add("Text", clientSettings, "DefaultWordInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDefaultDBInstanceName.DataBindings.Add("Text", clientSettings, "DefaultDBInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtDefaultNLGInstanceName.DataBindings.Add("Text", clientSettings, "DefaultNLGInstanceName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkExportIntermediate.DataBindings.Add("Checked", engineSettings, "ExportIntermediateXML", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            // command search
+            chkGroupNameSearchTarget.DataBindings.Add("Checked", clientSettings, "SearchTargetGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkGreedlyGroupName.DataBindings.Add("Checked", clientSettings, "SearchGreedlyGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkSubGroupNameSearchTarget.DataBindings.Add("Checked", clientSettings, "SearchTargetSubGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkGreedlySubGroupName.DataBindings.Add("Checked", clientSettings, "SearchGreedlySubGroupName", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //get metrics
             bgwMetrics.RunWorkerAsync();
@@ -110,6 +117,31 @@ namespace taskt.UI.Forms
             Core.Server.LocalTCPListener.ListeningStarted += AutomationTCPListener_ListeningStarted;
             Core.Server.LocalTCPListener.ListeningStopped += AutomationTCPListener_ListeningStopped;
         }
+
+        private void frmSettings_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+        #endregion
+
+        #region footer buttons
+        private void uiBtnOpen_Click(object sender, EventArgs e)
+        {
+            Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
+            newAppSettings.EngineSettings.CancellationKey = key;
+            newAppSettings.Save(newAppSettings);
+            Core.Server.SocketClient.LoadSettings();
+            this.Close();
+        }
+        private void uiCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
+
         public delegate void AutomationTCPListener_StartedDelegate(object sender, EventArgs e);
         public delegate void AutomationTCPListener_StoppedDelegate(object sender, EventArgs e);
         private void AutomationTCPListener_ListeningStopped(object sender, EventArgs e)
@@ -156,66 +188,57 @@ namespace taskt.UI.Forms
             }
         }
 
-        private void uiBtnOpen_Click(object sender, EventArgs e)
-        {
-            Keys key = (Keys)Enum.Parse(typeof(Keys), cboCancellationKey.Text);
-            newAppSettings.EngineSettings.CancellationKey = key;
-            newAppSettings.Save(newAppSettings);
-            Core.Server.SocketClient.LoadSettings();
-            this.Close();
-        }
-
         private void btnUpdateCheck_Click(object sender, EventArgs e)
         {
-            taskt.Core.ApplicationUpdate updater = new Core.ApplicationUpdate();
-            Core.UpdateManifest manifest = new Core.UpdateManifest();
-            try
-            {
-                manifest = updater.GetManifest();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error getting manifest: " + ex.ToString());
-                return;
-            }
+            //var updater = new Core.Update.ApplicationUpdate();
+            //var manifest = new Core.Update.UpdateManifest();
+            //try
+            //{
+            //    manifest = updater.GetManifest();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error getting manifest: " + ex.ToString());
+            //    return;
+            //}
 
 
-            if (manifest.RemoteVersionNewer)
-            {
-                Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
-                if (frmUpdate.ShowDialog() == DialogResult.OK)
-                {
+            //if (manifest.IsRemoteVersionNewer)
+            //{
+            //    Supplement_Forms.frmUpdate frmUpdate = new Supplement_Forms.frmUpdate(manifest);
+            //    if (frmUpdate.ShowDialog() == DialogResult.OK)
+            //    {
 
-                    //move update exe to root folder for execution
-                    var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
-                    var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
+            //        //move update exe to root folder for execution
+            //        var updaterExecutionResources = Application.StartupPath + "\\resources\\taskt-updater.exe";
+            //        var updaterExecutableDestination = Application.StartupPath + "\\taskt-updater.exe";
 
 
-                    if (!System.IO.File.Exists(updaterExecutionResources))
-                    {
-                        MessageBox.Show("taskt-updater.exe not found in resources directory!");
-                        return;
-                    }
-                    else
-                    {
-                        System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
-                    }
+            //        if (!System.IO.File.Exists(updaterExecutionResources))
+            //        {
+            //            MessageBox.Show("taskt-updater.exe not found in resources directory!");
+            //            return;
+            //        }
+            //        else
+            //        {
+            //            System.IO.File.Copy(updaterExecutionResources, updaterExecutableDestination);
+            //        }
 
-                    var updateProcess = new System.Diagnostics.Process();
-                    updateProcess.StartInfo.FileName = updaterExecutableDestination;
-                    updateProcess.StartInfo.Arguments = manifest.PackageURL;
+            //        var updateProcess = new System.Diagnostics.Process();
+            //        updateProcess.StartInfo.FileName = updaterExecutableDestination;
+            //        updateProcess.StartInfo.Arguments = manifest.PackageURL;
 
-                    updateProcess.Start();
-                    Application.Exit();
+            //        updateProcess.Start();
+            //        Application.Exit();
 
-                }
+            //    }
 
-            }
-            else
-            {
-                MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
-            }
-
+            //}
+            //else
+            //{
+            //    MessageBox.Show("The application is currently up-to-date!", "No Updates Available", MessageBoxButtons.OK);
+            //}
+            taskt.Core.Update.ApplicationUpdate.ShowUpdateResultSync(newAppSettings.ClientSettings.SkipBetaVersionUpdate);
         }
 
         private void tmrGetSocketStatus_Tick(object sender, EventArgs e)
@@ -388,14 +411,16 @@ namespace taskt.UI.Forms
 
         private void btnGenerateWikiDocs_Click(object sender, EventArgs e)
         {
-            Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
-            var docsRoot = docGeneration.GenerateMarkdownFiles();
+            //Core.DocumentationGeneration docGeneration = new Core.DocumentationGeneration();
+            //var docsRoot = docGeneration.GenerateMarkdownFiles();
+            var docsRoot = Core.DocumentationGeneration.GenerateMarkdownFiles();
             System.Diagnostics.Process.Start(docsRoot);
         }
 
         private void txtVariableStartMarker_TextChanged(object sender, EventArgs e)
         {
             lblVariableDisplay.Text = txtVariableStartMarker.Text + "myVariable" + txtVariableEndMarker.Text;
+            lblVariableMarkerAlert.Visible = (txtVariableEndMarker.Text == txtVariableStartMarker.Text);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -405,8 +430,9 @@ namespace taskt.UI.Forms
 
         private void btnLaunchAttendedMode_Click(object sender, EventArgs e)
         {
-            var frmAttended = new frmAttendedMode();
-            frmAttended.Show();
+            //var frmAttended = new frmAttendedMode();
+            //frmAttended.Show();
+            scriptBuilderForm.showAttendedModeFormProcess();
             this.Close();
         }
 
@@ -460,8 +486,6 @@ namespace taskt.UI.Forms
         private void btnGetBotGUID_Click(object sender, EventArgs e)
         {
             var newGUID =  Core.Server.HttpServerClient.GetGuid();
-
-
         }
 
         private void btnTaskPublish_Click(object sender, EventArgs e)
@@ -513,8 +537,6 @@ namespace taskt.UI.Forms
                 DisableListenerButtons();
                 Core.Server.LocalTCPListener.StartListening(portNumber);
             }
-           
- 
         }
 
         private void btnStopListening_Click(object sender, EventArgs e)

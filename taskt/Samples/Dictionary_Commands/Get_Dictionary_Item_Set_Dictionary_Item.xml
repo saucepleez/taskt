@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Get Dictionary Item, Set Dictionary Item sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create Dictionary ⦃ &quot;name&quot;: &quot;tom&quot;, &quot;age&quot;: 25, &quot;contry&quot;: &quot;USA&quot; ⦄ (JSON like)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDictionaryCommand" CommandID="54ad6f81-4597-4363-a0c3-6d003fa2ff2b" CommandName="CreateDictionaryCommand" IsCommented="false" SelectionName="Create Dictionary" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="myDic">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="ColumnNameDataTable122121.115710">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                  <xs:element name="Values" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNameDataTable122121.115710" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="ColumnNameDataTable122121.115710" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157101" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Keys>name</Keys>
+                <Values>tom</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157102" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Keys>age</Keys>
+                <Values>25</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157103" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Keys>contry</Keys>
+                <Values>USA</Values>
+              </ColumnNameDataTable122121.115710>
+            </DocumentElement>
+            <diffgr:before>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157101" msdata:rowOrder="0">
+                <Keys>name</Keys>
+                <Values>tom</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157102" msdata:rowOrder="1">
+                <Keys>age</Keys>
+                <Values>25</Values>
+              </ColumnNameDataTable122121.115710>
+              <ColumnNameDataTable122121.115710 diffgr:id="ColumnNameDataTable122121.1157103" msdata:rowOrder="2">
+                <Keys>contry</Keys>
+                <Values>USA</Values>
+              </ColumnNameDataTable122121.115710>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Get Dictionary value whose key is &quot;name&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="c4e5e33e-1ace-4c3e-b0fa-6a818f490a1f" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Item" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputVariable="vValue" v_InputData="myDic" v_Key="name" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="610867e7-786f-4f03-b73e-a85a47ca49ff" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Name: ⦃vValue⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get Dictionary value whose key is &quot;age&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="c4e5e33e-1ace-4c3e-b0fa-6a818f490a1f" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Item" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputVariable="vValue" v_InputData="myDic" v_Key="age" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="610867e7-786f-4f03-b73e-a85a47ca49ff" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Name: ⦃vValue⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Set Dictionary value whose key is &quot;contry&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="SetDictionaryValueCommand" CommandID="ac7b7117-2f84-4570-9eaf-1249e05d8b43" CommandName="SetDictionaryValueCommand" IsCommented="false" SelectionName="Set Dictionary Value" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_InputData="myDic" v_Key="contry" v_Value="America" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="10113c24-0a57-441f-ad3a-85679e0e4ac1" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" v_Comment="Get Dictionary value whose key is &quot;contry&quot;" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="GetDictionaryValueCommand" CommandID="c4e5e33e-1ace-4c3e-b0fa-6a818f490a1f" CommandName="GetDictionaryValueCommand" IsCommented="false" SelectionName="Get Dictionary Item" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_OutputVariable="vValue" v_InputData="myDic" v_Key="contry" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="610867e7-786f-4f03-b73e-a85a47ca49ff" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="Name: ⦃vValue⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.53</TasktVersion>
+    <Author />
+    <LastRunTime>2021-12-21T11:59:22.8766644+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>myDic</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vValue</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

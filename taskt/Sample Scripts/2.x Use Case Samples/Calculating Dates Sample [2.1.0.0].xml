@@ -2,51 +2,59 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Let's perform a few date calculation examples" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="45ac887c-7227-4db7-aca6-32963d6a01ae" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Let's perform a few date calculation examples" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Example: Subtract 35 days from Static Date" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="363d8894-7e28-4ce2-a665-054bad8677c7" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Example: Subtract 35 days from Static Date" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="DateCalculationCommand" CommandName="DateCalculationCommand" IsCommented="false" SelectionName="Date Calculation" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="12/25/18" v_CalculationMethod="Subtract Days" v_Increment="35" v_ToStringFormat="MM/dd/yyyy hh:mm:ss" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="DateCalculationCommand" CommandID="bcc234c1-e3f7-4aa0-bc94-82fe3450336e" CommandName="DateCalculationCommand" IsCommented="false" SelectionName="Date Calculation" DefaultPause="250" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="12/25/2018" v_CalculationMethod="Subtract Days" v_Increment="35" v_ToStringFormat="MM/dd/yyyy hh:mm:ss" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The calculated result is: {vResult}" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="4c5a3051-e47d-4d77-87b1-6629a9b83b62" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The calculated result is: ⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Example: Add 5 years to the Current DateTime" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="0871d2db-e336-4c62-8296-57e47eb4bb50" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Example: Add 5 years to the Current DateTime" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vIncrement" v_Input="5" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="3fa7db10-de5f-4c74-ab42-422756161b64" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vIncrement" v_Input="5" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="DateCalculationCommand" CommandName="DateCalculationCommand" IsCommented="false" SelectionName="Date Calculation" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="{DateTime.Now}" v_CalculationMethod="Add Years" v_Increment="{vIncrement}" v_ToStringFormat="MM/dd/yyyy" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="DateCalculationCommand" CommandID="94d1ec3b-edd4-479e-8410-caa61662db27" CommandName="DateCalculationCommand" IsCommented="false" SelectionName="Date Calculation" DefaultPause="250" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃DateTime.Now⦄" v_CalculationMethod="Add Years" v_Increment="⦃vIncrement⦄" v_ToStringFormat="MM/dd/yyyy" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The calculated result is: {vResult}" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="775188ae-1c88-4eff-ae2e-d70f966e4882" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The calculated result is: ⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Example: Create Date Variable Dynamically and add 360 Days" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="5a7cd164-8750-4cd6-8fad-69c7c8f343f9" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="9" PauseBeforeExeucution="false" v_Comment="Example: Create Date Variable Dynamically and add 360 Days" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Settings &gt; Debug &gt; Create Missing Variables must be enabled" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="d28a46c3-e2a4-4335-9bc5-eceeeed15259" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="250" LineNumber="10" PauseBeforeExeucution="false" v_Comment="Settings &gt; Debug &gt; Create Missing Variables must be enabled" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="ErrorHandlingCommand" CommandName="ErrorHandlingCommand" IsCommented="false" SelectionName="Error Handling" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_ErrorHandlingAction="Continue Processing" />
+      <ScriptCommand xsi:type="ErrorHandlingCommand" CommandID="b53c0878-334d-4451-9cc9-5f9fb1968526" CommandName="ErrorHandlingCommand" IsCommented="false" SelectionName="Error Handling" DefaultPause="250" LineNumber="11" PauseBeforeExeucution="false" CommandEnabled="true" v_ErrorHandlingAction="Continue Processing" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNewDate" v_Input="1/1/2000" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="c7c43a59-f94e-4ab0-9d7f-70c89cfb929e" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vNewDate" v_Input="1/1/2000" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="VariableCommand" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vIncrement" v_Input="360" />
+      <ScriptCommand xsi:type="VariableCommand" CommandID="26844002-cdf4-48d4-ae97-5fecfe7ab5e7" CommandName="VariableCommand" IsCommented="false" SelectionName="Set Variable" DefaultPause="250" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_userVariableName="vIncrement" v_Input="360" v_ReplaceInputVariables="Yes" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="DateCalculationCommand" CommandName="DateCalculationCommand" IsCommented="false" SelectionName="Date Calculation" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="{vNewDate}" v_CalculationMethod="Add Days" v_Increment="{vIncrement}" v_ToStringFormat="MM/dd/yyyy hh:mm:ss" v_applyToVariableName="vResult" />
+      <ScriptCommand xsi:type="DateCalculationCommand" CommandID="9484e8ee-9765-4761-b124-badadf43abbe" CommandName="DateCalculationCommand" IsCommented="false" SelectionName="Date Calculation" DefaultPause="250" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_InputValue="⦃vNewDate⦄" v_CalculationMethod="Add Days" v_Increment="⦃vIncrement⦄" v_ToStringFormat="MM/dd/yyyy hh:mm:ss" v_applyToVariableName="vResult" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The calculated result is: {vResult}" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="46982e71-25cd-4d4d-89a1-724575fa8df5" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="250" LineNumber="15" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="The calculated result is: ⦃vResult⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
   </Commands>
+  <Info>
+    <TasktVersion>3.5.0.27</TasktVersion>
+    <Author />
+    <LastRunTime>2021-09-05T18:46:58.7829644+09:00</LastRunTime>
+    <RunTimes>2</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
   <Variables>
     <ScriptVariable>
       <VariableName>vIncrement</VariableName>

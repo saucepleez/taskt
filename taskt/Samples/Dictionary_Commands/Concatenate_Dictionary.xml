@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63901ed9-0287-4047-a60a-d1451a19f1bb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Concatenate Dictionary sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63901ed9-0287-4047-a60a-d1451a19f1bb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Create Dictionary ⦃ &quot;name&quot;: &quot;tom&quot;, &quot;age&quot;: 25 ⦄ (JSON like)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDictionaryCommand" CommandID="9ccca028-fde2-4e4f-ae57-b37f884ee49e" CommandName="CreateDictionaryCommand" IsCommented="false" SelectionName="Create Dictionary" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="vDic1">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNameDataTable123021.021435" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="ColumnNameDataTable123021.021435">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                        <xs:element name="Values" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNameDataTable123021.021435 diffgr:id="ColumnNameDataTable123021.0214351" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Keys>name</Keys>
+                <Values>tom</Values>
+              </ColumnNameDataTable123021.021435>
+              <ColumnNameDataTable123021.021435 diffgr:id="ColumnNameDataTable123021.0214352" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Keys>age</Keys>
+                <Values>25</Values>
+              </ColumnNameDataTable123021.021435>
+            </DocumentElement>
+            <diffgr:before>
+              <ColumnNameDataTable123021.021435 diffgr:id="ColumnNameDataTable123021.0214351" msdata:rowOrder="0">
+                <Keys>name</Keys>
+                <Values>tom</Values>
+              </ColumnNameDataTable123021.021435>
+              <ColumnNameDataTable123021.021435 diffgr:id="ColumnNameDataTable123021.0214352" msdata:rowOrder="1">
+                <Keys>age</Keys>
+                <Values>25</Values>
+              </ColumnNameDataTable123021.021435>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63901ed9-0287-4047-a60a-d1451a19f1bb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="Create Dictionary ⦃ &quot;contry&quot;: &quot;USA&quot; ⦄ (JSON like)" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CreateDictionaryCommand" CommandID="035fc87b-ee51-46f4-8eb6-0a589edf2218" CommandName="CreateDictionaryCommand" IsCommented="false" SelectionName="Create Dictionary" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_DictionaryName="vDic2">
+        <v_ColumnNameDataTable>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="ColumnNameDataTable123021.021446" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="ColumnNameDataTable123021.021446">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Keys" type="xs:string" minOccurs="0" />
+                        <xs:element name="Values" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <ColumnNameDataTable123021.021446 diffgr:id="ColumnNameDataTable123021.0214461" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Keys>contry</Keys>
+                <Values>USA</Values>
+              </ColumnNameDataTable123021.021446>
+            </DocumentElement>
+            <diffgr:before>
+              <ColumnNameDataTable123021.021446 diffgr:id="ColumnNameDataTable123021.0214461" msdata:rowOrder="0">
+                <Keys>contry</Keys>
+                <Values>USA</Values>
+              </ColumnNameDataTable123021.021446>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_ColumnNameDataTable>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63901ed9-0287-4047-a60a-d1451a19f1bb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Concatenate vDic1 and vDic2" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConcatenateDictionaryCommand" CommandID="894174e7-8198-4c64-a936-c141890e3782" CommandName="ConcatenateDictionaryCommand" IsCommented="false" SelectionName="Concatenate Dictionary" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_InputDataA="vDic1" v_InputDataB="vDic2" v_OutputName="vNewDic" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="63901ed9-0287-4047-a60a-d1451a19f1bb" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" v_Comment="Show vNewDic" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ConvertDictionaryToJSONCommand" CommandID="3236ff3e-1940-4a45-933c-f30714beafac" CommandName="ConvertDictionaryToJSONCommand" IsCommented="false" SelectionName="Convert Dictionary To JSON" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_InputData="vNewDic" v_OutputVariable="vJSON" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="7b491bed-6f76-440b-a678-419ad58b9a25" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃vJSON⦄" v_AutoCloseAfter="0" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.0.55</TasktVersion>
+    <Author />
+    <LastRunTime>2021-12-30T14:16:56.1810068+09:00</LastRunTime>
+    <RunTimes>1</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vDic1</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vDic2</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vJSON</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vNewDic</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>
