@@ -303,7 +303,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_50(doc);
             convertTo3_5_1_51(doc);
             convertTo3_5_1_52(doc);
-            convertTo3_5_1_53(doc);
+            convertTo3_5_1_54(doc);
 
             return doc;
         }
@@ -1584,7 +1584,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_1_53(XDocument doc)
+        private static XDocument convertTo3_5_1_54(XDocument doc)
         {
             // UIAutomationUIElementActionCommand : tablename
             ChangeTableColumnNames(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters",
