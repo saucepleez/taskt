@@ -270,6 +270,7 @@ namespace taskt.Core.Script
             // ** DO NOT USE nameof to change command name **
 
             fixDataTableSchemaPosition(doc);
+            fixToSameCommandNames(doc);
 
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
@@ -371,6 +372,24 @@ namespace taskt.Core.Script
                 var choice = se.Element(nsXs + "complexType").Element(nsXs + "choice");
                 choice.Element(nsXs + "element").Remove();  // second <xs:element> has <xs:element>. this node is removed
                 choice.Add(fe); // insert first <xs:element>
+            }
+
+            return doc;
+        }
+
+        private static XDocument fixToSameCommandNames(XDocument doc)
+        {
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+
+            var commands = doc.Descendants("ScriptCommand");
+            foreach(var cmd in commands)
+            {
+                var commandName = cmd.Attribute("CommandName");
+                var xsiType = cmd.Attribute(ns + "type");
+                if (commandName.Value != xsiType.Value)
+                {
+                    xsiType.SetValue(commandName.Value);
+                }
             }
 
             return doc;
