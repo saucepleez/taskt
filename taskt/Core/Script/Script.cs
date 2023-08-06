@@ -268,6 +268,9 @@ namespace taskt.Core.Script
         {
             // very important!
             // ** DO NOT USE nameof to change command name **
+
+            fixDataTableSchemaPosition(doc);
+
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
             convertTo3_5_0_47(doc);
@@ -304,6 +307,71 @@ namespace taskt.Core.Script
             convertTo3_5_1_51(doc);
             convertTo3_5_1_52(doc);
             convertTo3_5_1_54(doc);
+            
+            return doc;
+        }
+
+
+        private static XDocument fixDataTableSchemaPosition(XDocument doc)
+        {
+            // add v3.5.1.55
+
+            /* before
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="mytable">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+		<xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="mytable" msdata:UseCurrentLocale="true">
+	<xs:complexType>
+	  <xs:choice minOccurs="0" maxOccurs="unbounded">
+		<xs:element ref="mytable" />
+	  </xs:choice>
+	</xs:complexType>
+  </xs:element>
+</xs:schema>
+             */
+            /* after
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="mytable" msdata:UseCurrentLocale="true">
+	  <xs:complexType>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+		  <xs:element name="mytable">
+			<xs:complexType>
+			  <xs:sequence>
+				<xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+				<xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+			  </xs:sequence>
+			</xs:complexType>
+		  </xs:element>
+		</xs:choice>
+	  </xs:complexType>
+	</xs:element>
+  </xs:schema>
+             */
+
+            XNamespace nsXs = "http://www.w3.org/2001/XMLSchema";
+            var schemas = doc.Descendants(nsXs + "schema"); // get all datatable schema elements (<xs:schema>)
+            foreach (var schema in schemas)
+            {
+                var elements = schema.Elements(nsXs + "element").ToList();
+                // target datatable has two child <xs:element> elements in <xs:schema>
+                if (elements.Count() != 2)
+                {
+                    continue;
+                }
+                var fe = elements[0];   // first <xs:element> remove from parent
+                fe.Remove();
+
+                var se = elements[1];
+                var choice = se.Element(nsXs + "complexType").Element(nsXs + "choice");
+                choice.Element(nsXs + "element").Remove();  // second <xs:element> has <xs:element>. this node is removed
+                choice.Add(fe); // insert first <xs:element>
+            }
 
             return doc;
         }
