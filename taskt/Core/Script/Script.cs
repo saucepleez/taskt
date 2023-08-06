@@ -379,6 +379,8 @@ namespace taskt.Core.Script
 
         private static XDocument fixToSameCommandNames(XDocument doc)
         {
+            // add v3.5.1.56
+
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
 
             var commands = doc.Descendants("ScriptCommand");
