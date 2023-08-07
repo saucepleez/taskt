@@ -563,7 +563,7 @@ namespace taskt.Core.Script
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, "UIAutomationCommand", "v_UIASearchParameters", "Enabled", new Action<XElement>(c =>
             {
-                switch(c.Value.ToLower() ?? "")
+                switch (c.Value.ToLower())
                 {
                     case "true":
                     case "false":
@@ -572,7 +572,7 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
+            }), "False");   // todo : this is bad hotfix, Enabled column is fix in BeforeValidate etc.
 
             return doc;
         }
@@ -594,7 +594,7 @@ namespace taskt.Core.Script
                         (el.Attribute("CommandName").Value == "BeginIfCommand") &&
                         ((el.Attribute("v_IfActionType")?.Value ?? "") == "Web Element Exists")
                     );
-            }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc);
+            }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
 
             // BeginLoop Selenium -> WebBrowser
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
@@ -603,7 +603,7 @@ namespace taskt.Core.Script
                     (el.Attribute("CommandName").Value == "BeginLoopCommand") &&
                     ((el.Attribute("v_LoopActionType")?.Value ?? "") == "Web Element Exists")
                 );
-            }), "v_LoopActionParameterTable", "Parameter_x0020_Name", changeFunc);
+            }), "v_LoopActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
 
             return doc;
         }
@@ -707,7 +707,7 @@ namespace taskt.Core.Script
                 }
             }), "v_SearchParameters", "Enabled", new Action<XElement>(c =>
             {
-                switch (c.Value.ToLower())
+                switch (c.Value?.ToLower() ?? "")
                 {
                     case "true":
                     case "false":
@@ -716,7 +716,7 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
+            }), "False");
 
             return doc;
         }
@@ -973,7 +973,7 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
+            }), "False");
             return doc;
         }
 
@@ -1463,7 +1463,7 @@ namespace taskt.Core.Script
             // UIAutomationCommand -> UIAutomationUIElementActionCommand
             ChangeCommandName(doc, "UIAutomationCommand", "UIAutomationUIElementActionCommand", "UIElement Action");
 
-            // UIAutomationUIElementActionCommand : UIElement Action name
+            // UIAutomationUIElementActionCommand : UIElement Action name, v_WindowName to Attribute
             var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
             foreach(var cmd in cmds)
             {
@@ -1511,6 +1511,13 @@ namespace taskt.Core.Script
                 if (newAct.ToLower() != act)
                 {
                     cmd.SetAttributeValue("v_AutomationType", newAct);
+                }
+
+                var winNameElem = cmd.Element("v_WindowName");
+                if (winNameElem != null)
+                {
+                    cmd.SetAttributeValue("v_WindowName", winNameElem.Value);
+                    winNameElem.Remove();
                 }
             }
 
@@ -1807,8 +1814,9 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
+        /// <param name="defaultCellValue"></param>
         /// <returns></returns>
-        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc)
+        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
 
@@ -1820,7 +1828,14 @@ namespace taskt.Core.Script
                 foreach (XElement row in table)
                 {
                     XElement targetCell = row.Element(tableCellName);
-                    changeFunc(targetCell);
+                    if (targetCell != null)
+                    {
+                        changeFunc(targetCell);
+                    }
+                    else
+                    {
+                        row.Add(new XElement(tableCellName, defaultCellValue));
+                    }
                 }
             }
             return doc;
@@ -1834,13 +1849,14 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
+        /// <param name="defaultCellValue"></param>
         /// <returns></returns>
-        private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc)
+        private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return el.Attribute("CommandName").Value == commandName;
-            }), tableParameterName, tableCellName, changeFunc);
+            }), tableParameterName, tableCellName, changeFunc, defaultCellValue);
             return doc;
         }
 
