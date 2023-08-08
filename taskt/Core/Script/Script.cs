@@ -284,7 +284,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_73(doc);
             convertTo3_5_0_74(doc);
             convertTo3_5_0_78(doc);
-            fixUIAutomationGroupEnableParameterValue(doc);
+            fixUIAutomationSearchEnableParameterValue(doc);
             convertTo3_5_0_83(doc);
             convertTo3_5_1_16(doc);
             convertTo3_5_1_30(doc);
@@ -295,7 +295,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_36(doc);
             convertTo3_5_1_38(doc);
             convertTo3_5_1_39(doc);
-            fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
+            fixUIAutomationSearchEnableParameterValue_3_5_1_39(doc);
             convertTo3_5_1_40(doc);
             convertTo3_5_1_41(doc);
             convertTo3_5_1_42(doc);
@@ -308,6 +308,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_51(doc);
             convertTo3_5_1_52(doc);
             convertTo3_5_1_54(doc);
+            fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
             
             return doc;
         }
@@ -572,7 +573,7 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }), "False");   // todo : this is bad hotfix, Enabled column is fix in BeforeValidate etc.
+            }), "False");
 
             return doc;
         }
@@ -691,7 +692,7 @@ namespace taskt.Core.Script
 
             return doc;
         }
-        private static XDocument fixUIAutomationGroupEnableParameterValue(XDocument doc)
+        private static XDocument fixUIAutomationSearchEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
@@ -950,7 +951,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument fixUIAutomationGroupEnableParameterValue_3_5_1_39(XDocument doc)
+        private static XDocument fixUIAutomationSearchEnableParameterValue_3_5_1_39(XDocument doc)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
@@ -1690,6 +1691,41 @@ namespace taskt.Core.Script
                     ("Parameter_x0020_Value", "ParameterValue"),
                 });
 
+            return doc;
+        }
+
+        private static XDocument fixUIAutomationSearchEnableParameterValue_v3_5_1_56(XDocument doc)
+        {
+            var changeFunc = new Action<XElement>(e =>
+            {
+                switch (e.Value.ToLower())
+                {
+                    case "true":
+                    case "false":
+                        break;
+                    default:
+                        e.SetValue("False");
+                        break;
+                }
+            });
+
+            ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "UIAutomationCheckUIElementExistCommand":
+                    case "UIAutomationGetChildrenUIElementsInformationCommand":
+                    case "UIAutomationSearchChildUIElementCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                    case "UIAutomationWaitForUIElementToExistsCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_SearchParameters", "Enabled", changeFunc, "False");
+
+            ChangeTableCellValue(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters", "Enabled", changeFunc, "False");
             return doc;
         }
 
