@@ -457,6 +457,8 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
+        // todo: fix use case in GetFieldValue methods
+
         /// <summary>
         /// get DataTable Value, specify ParameterName, ParameterValue column name
         /// </summary>
