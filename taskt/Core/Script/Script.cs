@@ -309,7 +309,8 @@ namespace taskt.Core.Script
             convertTo3_5_1_52(doc);
             convertTo3_5_1_54(doc);
             fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
-            
+            convertTo3_5_1_56(doc);
+
             return doc;
         }
 
@@ -1732,6 +1733,14 @@ namespace taskt.Core.Script
             }), "v_SearchParameters", "Enabled", changeFunc, "False");
 
             ChangeTableCellValue(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters", "Enabled", changeFunc, "False");
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_56(XDocument doc)
+        {
+            // WordOpenApplicationCommand -> WordCreateWordInstanceCommand
+            ChangeCommandName(doc, "WordOpenApplicationCommand", "WordCreateWordInstanceCommand", "Create Word Insntance");
+
             return doc;
         }
 
