@@ -1288,7 +1288,10 @@ namespace taskt.Core.Script
                                 y = rows[i].Element("Parameter_x0020_Value").Value;
                             }
                             rows[i].Remove();
-                            beforeRows[i].Remove();
+                            if (i < beforeRows.Count)   // rare case diffgram:before is null
+                            {
+                                beforeRows[i].Remove();
+                            }
                         }
                         string click = "";
                         switch (act)
@@ -1343,7 +1346,10 @@ namespace taskt.Core.Script
                             {
                                 cmd.SetAttributeValue("v_WaitTime", rows[i].Element("Parameter_x0020_Value").Value);
                                 rows[i].Remove();
-                                beforeRows[i].Remove();
+                                if (i < beforeRows.Count)   // rare case diffgram:before is null
+                                {
+                                    beforeRows[i].Remove();
+                                }
                                 break;
                             }
                         }
@@ -1352,7 +1358,7 @@ namespace taskt.Core.Script
                         if (currentRows == 0)
                         {
                             table.Remove();
-                            before.Remove();
+                            before?.Remove();   // rare case diffgram:before is null
                         }
 
                         break;
@@ -2018,6 +2024,11 @@ namespace taskt.Core.Script
         /// <param name="addModified"></param>
         private static void AddTableRows(XElement table, List<Dictionary<string, string>> cols, string rowName, int currentMaxRows, bool addModified = true)
         {
+            if (table == null)
+            {
+                return;
+            }
+
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
 
