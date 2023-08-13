@@ -1951,7 +1951,7 @@ namespace taskt.Core.Script
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
 
-            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            //XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
             {
                 //XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
