@@ -1992,6 +1992,11 @@ namespace taskt.Core.Script
         /// <param name="addModified"></param>
         private static void AddTableRow(XElement table, Dictionary<string, string> cols, string rowName, int currentMaxRows, bool addModified = true)
         {
+            if (table == null)
+            {
+                return;
+            }
+
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
 
