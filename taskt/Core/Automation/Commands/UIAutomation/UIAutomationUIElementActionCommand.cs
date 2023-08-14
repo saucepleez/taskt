@@ -19,7 +19,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationUIElementActionCommand : ScriptCommand
     {
-        // todo: XPath command
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
@@ -125,6 +124,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
+            // todo: use same method
             switch (elemAction)
             {
                 case "click uielement":

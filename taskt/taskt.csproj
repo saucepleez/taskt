@@ -537,7 +537,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckExcelInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowNamesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CheckWindowNameExistsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Dictionary\AddDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\AddDictionaryItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginMultiLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\CheckFolderExistsCommand.cs" />

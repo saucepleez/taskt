@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Font Size", true)]
         //[SampleUsage("Select **14**")]
         [PropertyFirstValue("11")]
-        [PropertyValidationRule("Font Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.GreaterThanZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Font Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyIsOptional(true, "11")]
         [PropertyDisplayText(false, "")]
         public string v_FontSize { get; set; }
