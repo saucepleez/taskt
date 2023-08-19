@@ -2,16 +2,16 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Save File Dialog sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Save File Dialog sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Show Save File Dialog" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Show Save File Dialog" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="FileDialogCommand" CommandID="51cec5ef-e636-4904-a55d-f306ec1643d0" CommandName="FileDialogCommand" IsCommented="false" SelectionName="File Dialog" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DialogType="Save" v_Filter="Text file (*.txt)|*.txt" v_FilterIndex="" v_InitialDirectory="" v_applyToVariableName="vFilePath" />
+      <ScriptCommand xsi:type="ShowFileDialogCommand" CommandID="51cec5ef-e636-4904-a55d-f306ec1643d0" CommandName="ShowFileDialogCommand" IsCommented="false" SelectionName="Show File Dialog" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_DialogType="Save" v_Filter="Text file (*.txt)|*.txt" v_FilterIndex="" v_InitialDirectory="" v_applyToVariableName="vFilePath" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="If file is selected, vFilePath has value." CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" v_Comment="If file is selected, vFilePath has value." CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
       <ScriptCommand xsi:type="BeginIfCommand" CommandID="e3548670-3e37-4f46-ac55-a5c6c7d3d5b7" CommandName="BeginIfCommand" IsCommented="false" SelectionName="Begin If" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" CommandEnabled="true" v_IfActionType="Variable Has Value">
@@ -49,13 +49,13 @@
         </v_IfActionParameterTable>
       </ScriptCommand>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Save file" CommandEnabled="true" />
+        <ScriptCommand xsi:type="CommentCommand" CommandID="97e26df2-255a-4604-99f4-7ec0ad40e1e6" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" v_Comment="Save file" CommandEnabled="true" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
         <ScriptCommand xsi:type="WriteTextFileCommand" CommandID="f12c75cc-e8c6-4bad-8a6d-4a58eb156a69" CommandName="WriteTextFileCommand" IsCommented="false" SelectionName="Write Text File" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" CommandEnabled="true" v_FilePath="⦃vFilePath⦄" v_TextToWrite="Hello taskt!!" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
-        <ScriptCommand xsi:type="MessageBoxCommand" CommandID="188c100b-c28c-4a8c-be32-a4f30c096309" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="File saved. ⦃vFilePath⦄" v_AutoCloseAfter="0" />
+        <ScriptCommand xsi:type="ShowMessageCommand" CommandID="188c100b-c28c-4a8c-be32-a4f30c096309" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="File saved. ⦃vFilePath⦄" v_AutoCloseAfter="0" />
       </AdditionalScriptCommands>
       <AdditionalScriptCommands>
         <ScriptCommand xsi:type="EndIfCommand" CommandID="e481f954-fa18-4354-a283-fa189a2e2af6" CommandName="EndIfCommand" IsCommented="false" SelectionName="End If" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" />
@@ -63,7 +63,7 @@
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.0.30</TasktVersion>
+    <TasktVersion>3.5.1.57</TasktVersion>
     <Author />
     <LastRunTime>2021-09-10T13:12:44.3676056+09:00</LastRunTime>
     <RunTimes>1</RunTimes>
