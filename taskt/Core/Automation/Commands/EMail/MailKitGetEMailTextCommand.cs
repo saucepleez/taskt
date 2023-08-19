@@ -41,10 +41,10 @@ namespace taskt.Core.Automation.Commands
 
         public MailKitGetEMailTextCommand()
         {
-            this.CommandName = "MailKitGetEMailTextCommand";
-            this.SelectionName = "Get EMail Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitGetEMailTextCommand";
+            //this.SelectionName = "Get EMail Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)

@@ -1119,8 +1119,8 @@ namespace taskt.Core.Script
             // FormatFilePathCommand -> ExtractionFilePathCommand
             ChangeCommandName(doc, "FormatFilePathCommand", "ExtractionFilePathCommand", "Extraction File Path");
 
-            // FormatFolderPathCommnad -> ExtractionFolderPathCommand
-            ChangeCommandName(doc, "FormatFolderPathCommnad", "ExtractionFolderPathCommand", "Extraction Folder Path");
+            // FormatFolderPathCommand -> ExtractionFolderPathCommand
+            ChangeCommandName(doc, "FormatFolderPathCommand", "ExtractionFolderPathCommand", "Extraction Folder Path");
 
             // FormatColorCommand -> ConvertColorCommand
             ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
@@ -1743,7 +1743,6 @@ namespace taskt.Core.Script
 
             return doc;
         }
-
 
         /// <summary>
         /// get specfied commands
