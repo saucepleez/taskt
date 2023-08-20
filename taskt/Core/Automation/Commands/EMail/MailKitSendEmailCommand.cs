@@ -56,14 +56,16 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("CC EMail Address")]
-        [PropertyValidationRule("CC Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("CC", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyIsOptional(true, "")]
         [PropertyDisplayText(true, "CC")]
         public string v_SMTPCCEmail { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("BCC EMail Address")]
-        [PropertyValidationRule("BCC Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("BCC", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyIsOptional(true, "")]
         [PropertyDisplayText(true, "BCC")]
         public string v_SMTPBCCEmail { get; set; }
 
