@@ -8,13 +8,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Load Email")]
+    [Attributes.ClassAttributes.CommandSettings("Load EMail")]
     [Attributes.ClassAttributes.Description("This command allows you to load EMail from File.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load EMail from File.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitLoadEmailCommand : ScriptCommand
+    public class MailKitLoadEMailCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EMailPath))]
@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
         public string v_WaitForFile { get; set; }
 
-        public MailKitLoadEmailCommand()
+        public MailKitLoadEMailCommand()
         {
             //this.CommandName = "MailKitLoadEmailCommand";
             //this.SelectionName = "Load Email";

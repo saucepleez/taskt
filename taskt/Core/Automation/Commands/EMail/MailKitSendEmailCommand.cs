@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Send Email")]
+    [Attributes.ClassAttributes.CommandSettings("Send EMail")]
     [Attributes.ClassAttributes.Description("This command allows you to send EMail using SMTP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an EMail and have access to SMTP server credentials to generate an EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitSendEmailCommand : ScriptCommand
+    public class MailKitSendEMailCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
@@ -105,7 +105,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_SecureOption))]
         public string v_SMTPSecureOption { get; set; }
 
-        public MailKitSendEmailCommand()
+        public MailKitSendEMailCommand()
         {
             //this.CommandName = "MailKitSendEmailCommand";
             //this.SelectionName = "Send Email";
