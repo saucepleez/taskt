@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitRecieveEmailListUsingIMAPCommand : ScriptCommand
+    public class MailKitRecieveEMailListUsingIMAPCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputMailListName))]
         public string v_MailListName { get; set; }
 
-        public MailKitRecieveEmailListUsingIMAPCommand()
+        public MailKitRecieveEMailListUsingIMAPCommand()
         {
             //this.CommandName = "MailKitRecieveEMailListUsingIMAPCommand";
             //this.SelectionName = "Recieve EMailList Using IMAP";

@@ -431,10 +431,10 @@
     <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeyFromValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConcatenateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\SetDictionaryValueCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEmailAttachmentsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitLoadEmailCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEmailAttachmentsNameCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEMailAttachmentsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitLoadEMailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailAttachmentsNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEMailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsCommand.cs" />
@@ -482,9 +482,9 @@
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetAddressesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailFromEMailListCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingIMAPCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingPOPCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitSendEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEMailListUsingIMAPCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEMailListUsingPOPCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSendEMailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClearClipboardTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptFileCommand.cs" />

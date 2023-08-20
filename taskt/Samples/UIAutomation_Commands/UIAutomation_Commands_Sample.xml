@@ -2,28 +2,28 @@
 <Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Commands>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="UI Automation Commands Sample" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="UI Automation Commands Sample" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="b3dc3d27-e9f6-4958-9294-25748430f0bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="It is recommended to check the tree structure of the elements with the Inspect Tool" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="b3dc3d27-e9f6-4958-9294-25748430f0bc" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="It is recommended to check the tree structure of the elements with the Inspect Tool" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="StartProcessCommand" CommandID="bbb74e7c-b345-4766-bc66-ba6b3d79a9c4" CommandName="StartProcessCommand" IsCommented="false" SelectionName="Start Process" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="calc" />
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="bbb74e7c-b345-4766-bc66-ba6b3d79a9c4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="calc" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="PauseCommand" CommandID="339a7d9a-fc60-4d2f-8c43-7090d48c154b" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="1000" />
+      <ScriptCommand xsi:type="PauseScriptCommand" CommandID="339a7d9a-fc60-4d2f-8c43-7090d48c154b" CommandName="PauseScriptCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="1000" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Get &quot;Calculator&quot; Window Element" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Get &quot;Calculator&quot; Window Element" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetElementFromWindowCommand" CommandID="05880b11-9d46-4659-b6ad-479a0ba8496c" CommandName="UIAutomationGetElementFromWindowCommand" IsCommented="false" SelectionName="Get Element From Window" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Calculator" v_AutomationElementVariable="elemWindow" />
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromWindowCommand" CommandID="05880b11-9d46-4659-b6ad-479a0ba8496c" CommandName="UIAutomationSearchUIElementFromWindowCommand" IsCommented="false" SelectionName="Search UIElement From Window" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="Calculator" v_AutomationElementVariable="elemWindow" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get 1 Button Element &amp; Click" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Get 1 Button Element &amp; Click" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetElementFromElementCommand" CommandID="ec4b6d8c-c8fd-4c3f-b0d3-c52aaafc4da9" CommandName="UIAutomationGetElementFromElementCommand" IsCommented="false" SelectionName="Get Element From Element" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemButton1">
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="ec4b6d8c-c8fd-4c3f-b0d3-c52aaafc4da9" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemButton1">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters051222.111035" msdata:UseCurrentLocale="true">
@@ -262,80 +262,30 @@
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationClickElementCommand" CommandID="8beb2028-8ce1-489b-b5cf-817f8a33ff5a" CommandName="UIAutomationClickElementCommand" IsCommented="false" SelectionName="Click Element" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemButton1⦄">
-        <v_ActionParameters>
+      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="8beb2028-8ce1-489b-b5cf-817f8a33ff5a" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemButton1⦄" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="PauseScriptCommand" CommandID="339a7d9a-fc60-4d2f-8c43-7090d48c154b" CommandName="PauseScriptCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="1000" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Get 2 Button Element &amp; Click" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="ec4b6d8c-c8fd-4c3f-b0d3-c52aaafc4da9" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemButton2">
+        <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAAc午ionPara11Table051222.111103" msdata:UseCurrentLocale="true">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters051222.111035" msdata:UseCurrentLocale="true">
               <xs:complexType>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
-                  <xs:element name="UIAAc午ionPara11Table051222.111103">
+                  <xs:element name="SearchParameters051222.111035">
                     <xs:complexType>
                       <xs:sequence>
+                        <xs:element name="Enabled" type="xs:string" minOccurs="0" />
                         <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
                         <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
                       </xs:sequence>
                     </xs:complexType>
                   </xs:element>
-                </xs:choice>
-              </xs:complexType>
-            </xs:element>
-          </xs:schema>
-          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
-            <DocumentElement>
-              <UIAAc午ionPara11Table051222.111103 diffgr:id="UIAAc午ionPara11Table051222.1111031" msdata:rowOrder="0" diffgr:hasChanges="modified">
-                <ParameterName>Click Type</ParameterName>
-                <ParameterValue>Left Click</ParameterValue>
-              </UIAAc午ionPara11Table051222.111103>
-              <UIAAc午ionPara11Table051222.111103 diffgr:id="UIAAc午ionPara11Table051222.1111032" msdata:rowOrder="1" diffgr:hasChanges="modified">
-                <ParameterName>X Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111103>
-              <UIAAc午ionPara11Table051222.111103 diffgr:id="UIAAc午ionPara11Table051222.1111033" msdata:rowOrder="2" diffgr:hasChanges="modified">
-                <ParameterName>Y Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111103>
-            </DocumentElement>
-            <diffgr:before>
-              <UIAAc午ionPara11Table051222.111103 diffgr:id="UIAAc午ionPara11Table051222.1111031" msdata:rowOrder="0">
-                <ParameterName>Click Type</ParameterName>
-                <ParameterValue>Left Click</ParameterValue>
-              </UIAAc午ionPara11Table051222.111103>
-              <UIAAc午ionPara11Table051222.111103 diffgr:id="UIAAc午ionPara11Table051222.1111032" msdata:rowOrder="1">
-                <ParameterName>X Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111103>
-              <UIAAc午ionPara11Table051222.111103 diffgr:id="UIAAc午ionPara11Table051222.1111033" msdata:rowOrder="2">
-                <ParameterName>Y Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111103>
-            </diffgr:before>
-          </diffgr:diffgram>
-        </v_ActionParameters>
-      </ScriptCommand>
-    </ScriptAction>
-    <ScriptAction>
-      <ScriptCommand xsi:type="PauseCommand" CommandID="339a7d9a-fc60-4d2f-8c43-7090d48c154b" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="1000" />
-    </ScriptAction>
-    <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Get 2 Button Element &amp; Click" CommandEnabled="true" />
-    </ScriptAction>
-    <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetElementFromElementCommand" CommandID="ec4b6d8c-c8fd-4c3f-b0d3-c52aaafc4da9" CommandName="UIAutomationGetElementFromElementCommand" IsCommented="false" SelectionName="Get Element From Element" DefaultPause="0" LineNumber="12" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemButton2">
-        <v_SearchParameters>
-          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-            <xs:element name="SearchParameters051222.111035">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="Enabled" type="xs:string" minOccurs="0" />
-                  <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
-                  <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters051222.111035" msdata:UseCurrentLocale="true">
-              <xs:complexType>
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                  <xs:element ref="SearchParameters051222.111035" />
                 </xs:choice>
               </xs:complexType>
             </xs:element>
@@ -560,65 +510,16 @@
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationClickElementCommand" CommandID="11495930-b704-4f3a-b1f8-f4f49c62554d" CommandName="UIAutomationClickElementCommand" IsCommented="false" SelectionName="Click Element" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemButton2⦄">
-        <v_ActionParameters>
-          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAAc午ionPara11Table051222.111123" msdata:UseCurrentLocale="true">
-              <xs:complexType>
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                  <xs:element name="UIAAc午ionPara11Table051222.111123">
-                    <xs:complexType>
-                      <xs:sequence>
-                        <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
-                        <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
-                      </xs:sequence>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:choice>
-              </xs:complexType>
-            </xs:element>
-          </xs:schema>
-          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
-            <DocumentElement>
-              <UIAAc午ionPara11Table051222.111123 diffgr:id="UIAAc午ionPara11Table051222.1111231" msdata:rowOrder="0" diffgr:hasChanges="modified">
-                <ParameterName>Click Type</ParameterName>
-                <ParameterValue>Left Click</ParameterValue>
-              </UIAAc午ionPara11Table051222.111123>
-              <UIAAc午ionPara11Table051222.111123 diffgr:id="UIAAc午ionPara11Table051222.1111232" msdata:rowOrder="1" diffgr:hasChanges="modified">
-                <ParameterName>X Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111123>
-              <UIAAc午ionPara11Table051222.111123 diffgr:id="UIAAc午ionPara11Table051222.1111233" msdata:rowOrder="2" diffgr:hasChanges="modified">
-                <ParameterName>Y Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111123>
-            </DocumentElement>
-            <diffgr:before>
-              <UIAAc午ionPara11Table051222.111123 diffgr:id="UIAAc午ionPara11Table051222.1111231" msdata:rowOrder="0">
-                <ParameterName>Click Type</ParameterName>
-                <ParameterValue>Left Click</ParameterValue>
-              </UIAAc午ionPara11Table051222.111123>
-              <UIAAc午ionPara11Table051222.111123 diffgr:id="UIAAc午ionPara11Table051222.1111232" msdata:rowOrder="1">
-                <ParameterName>X Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111123>
-              <UIAAc午ionPara11Table051222.111123 diffgr:id="UIAAc午ionPara11Table051222.1111233" msdata:rowOrder="2">
-                <ParameterName>Y Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara11Table051222.111123>
-            </diffgr:before>
-          </diffgr:diffgram>
-        </v_ActionParameters>
-      </ScriptCommand>
+      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="11495930-b704-4f3a-b1f8-f4f49c62554d" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="13" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemButton2⦄" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="PauseCommand" CommandID="339a7d9a-fc60-4d2f-8c43-7090d48c154b" CommandName="PauseCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="1000" />
+      <ScriptCommand xsi:type="PauseScriptCommand" CommandID="339a7d9a-fc60-4d2f-8c43-7090d48c154b" CommandName="PauseScriptCommand" IsCommented="false" SelectionName="Pause Script" DefaultPause="0" LineNumber="14" PauseBeforeExeucution="false" CommandEnabled="true" v_PauseLength="1000" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Get Menu Button &amp; Click" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="15" PauseBeforeExeucution="false" v_Comment="Get Menu Button &amp; Click" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetElementFromElementCommand" CommandID="e381e83a-fc3b-4c1d-9777-9fb0a1c31b6b" CommandName="UIAutomationGetElementFromElementCommand" IsCommented="false" SelectionName="Get Element From Element" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemMenu">
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="e381e83a-fc3b-4c1d-9777-9fb0a1c31b6b" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="16" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemMenu">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters051222.111325" msdata:UseCurrentLocale="true">
@@ -857,77 +758,27 @@
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationClickElementCommand" CommandID="1358e2f7-f8cb-483a-a5b2-591cf0df1015" CommandName="UIAutomationClickElementCommand" IsCommented="false" SelectionName="Click Element" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemMenu⦄">
-        <v_ActionParameters>
+      <ScriptCommand xsi:type="UIAutomationClickUIElementCommand" CommandID="1358e2f7-f8cb-483a-a5b2-591cf0df1015" CommandName="UIAutomationClickUIElementCommand" IsCommented="false" SelectionName="Click UIElement" DefaultPause="0" LineNumber="17" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemMenu⦄" v_ClickType="Left Click" v_XOffset="0" v_YOffset="0" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" v_Comment="Get Menu Item Parent" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="e381e83a-fc3b-4c1d-9777-9fb0a1c31b6b" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemMenu">
+        <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAAc午ionPara14Table051222.111417" msdata:UseCurrentLocale="true">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters051222.111325" msdata:UseCurrentLocale="true">
               <xs:complexType>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
-                  <xs:element name="UIAAc午ionPara14Table051222.111417">
+                  <xs:element name="SearchParameters051222.111325">
                     <xs:complexType>
                       <xs:sequence>
+                        <xs:element name="Enabled" type="xs:string" minOccurs="0" />
                         <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
                         <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
                       </xs:sequence>
                     </xs:complexType>
                   </xs:element>
-                </xs:choice>
-              </xs:complexType>
-            </xs:element>
-          </xs:schema>
-          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
-            <DocumentElement>
-              <UIAAc午ionPara14Table051222.111417 diffgr:id="UIAAc午ionPara14Table051222.1114171" msdata:rowOrder="0" diffgr:hasChanges="modified">
-                <ParameterName>Click Type</ParameterName>
-                <ParameterValue>Left Click</ParameterValue>
-              </UIAAc午ionPara14Table051222.111417>
-              <UIAAc午ionPara14Table051222.111417 diffgr:id="UIAAc午ionPara14Table051222.1114172" msdata:rowOrder="1" diffgr:hasChanges="modified">
-                <ParameterName>X Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara14Table051222.111417>
-              <UIAAc午ionPara14Table051222.111417 diffgr:id="UIAAc午ionPara14Table051222.1114173" msdata:rowOrder="2" diffgr:hasChanges="modified">
-                <ParameterName>Y Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara14Table051222.111417>
-            </DocumentElement>
-            <diffgr:before>
-              <UIAAc午ionPara14Table051222.111417 diffgr:id="UIAAc午ionPara14Table051222.1114171" msdata:rowOrder="0">
-                <ParameterName>Click Type</ParameterName>
-                <ParameterValue>Left Click</ParameterValue>
-              </UIAAc午ionPara14Table051222.111417>
-              <UIAAc午ionPara14Table051222.111417 diffgr:id="UIAAc午ionPara14Table051222.1114172" msdata:rowOrder="1">
-                <ParameterName>X Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara14Table051222.111417>
-              <UIAAc午ionPara14Table051222.111417 diffgr:id="UIAAc午ionPara14Table051222.1114173" msdata:rowOrder="2">
-                <ParameterName>Y Adjustment</ParameterName>
-                <ParameterValue>0</ParameterValue>
-              </UIAAc午ionPara14Table051222.111417>
-            </diffgr:before>
-          </diffgr:diffgram>
-        </v_ActionParameters>
-      </ScriptCommand>
-    </ScriptAction>
-    <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="18" PauseBeforeExeucution="false" v_Comment="Get Menu Item Parent" CommandEnabled="true" />
-    </ScriptAction>
-    <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetElementFromElementCommand" CommandID="e381e83a-fc3b-4c1d-9777-9fb0a1c31b6b" CommandName="UIAutomationGetElementFromElementCommand" IsCommented="false" SelectionName="Get Element From Element" DefaultPause="0" LineNumber="19" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃elemWindow⦄" v_AutomationElementVariable="elemMenu">
-        <v_SearchParameters>
-          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-            <xs:element name="SearchParameters051222.111325">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="Enabled" type="xs:string" minOccurs="0" />
-                  <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
-                  <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters051222.111325" msdata:UseCurrentLocale="true">
-              <xs:complexType>
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                  <xs:element ref="SearchParameters051222.111325" />
                 </xs:choice>
               </xs:complexType>
             </xs:element>
@@ -1152,10 +1003,10 @@
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Add Code Comment" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Get Menu Items" CommandEnabled="true" />
+      <ScriptCommand xsi:type="CommentCommand" CommandID="2068da6a-da6c-4ea4-857d-7084fdd85724" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="20" PauseBeforeExeucution="false" v_Comment="Get Menu Items" CommandEnabled="true" />
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="UIAutomationGetChildrenElementsInformationCommand" CommandID="430d963c-9a1f-467e-9d81-1f013392b1a1" CommandName="UIAutomationGetChildrenElementsInformationCommand" IsCommented="false" SelectionName="Get Children Elements Information" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_RootElement="⦃elemMenu⦄" v_ResultVariable="items">
+      <ScriptCommand xsi:type="UIAutomationGetChildrenUIElementsInformationCommand" CommandID="430d963c-9a1f-467e-9d81-1f013392b1a1" CommandName="UIAutomationGetChildrenUIElementsInformationCommand" IsCommented="false" SelectionName="Get Children Elements Information" DefaultPause="0" LineNumber="21" PauseBeforeExeucution="false" CommandEnabled="true" v_RootElement="⦃elemMenu⦄" v_ResultVariable="items">
         <v_SearchParameters>
           <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
             <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters051222.111548" msdata:UseCurrentLocale="true">
@@ -1394,11 +1245,11 @@
       </ScriptCommand>
     </ScriptAction>
     <ScriptAction>
-      <ScriptCommand xsi:type="MessageBoxCommand" CommandID="6d10f052-b495-40b0-bc33-874c6080a574" CommandName="MessageBoxCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃items⦄" v_AutoCloseAfter="0" />
+      <ScriptCommand xsi:type="ShowMessageCommand" CommandID="6d10f052-b495-40b0-bc33-874c6080a574" CommandName="ShowMessageCommand" IsCommented="false" SelectionName="Show Message" DefaultPause="0" LineNumber="22" PauseBeforeExeucution="false" CommandEnabled="true" v_Message="⦃items⦄" v_AutoCloseAfter="0" />
     </ScriptAction>
   </Commands>
   <Info>
-    <TasktVersion>3.5.0.81</TasktVersion>
+    <TasktVersion>3.5.1.57</TasktVersion>
     <Author />
     <LastRunTime>2022-05-12T23:16:53.6284861+09:00</LastRunTime>
     <RunTimes>2</RunTimes>

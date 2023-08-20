@@ -10,11 +10,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.SubGruop("")]
     [Attributes.ClassAttributes.CommandSettings("Recieve EMailList Using POP")]
     [Attributes.ClassAttributes.Description("This command allows you to get EMailList(EMails) using POP protocol.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get MailList(EMails) using POP protocol. Result Variable Type is EMailList.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get EMailList(EMails) using POP protocol. Result Variable Type is EMailList.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitRecieveEmailListUsingPOPCommand : ScriptCommand
+    public class MailKitRecieveEMailListUsingPOPCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputMailListName))]
         public string v_MailListName { get; set; }
 
-        public MailKitRecieveEmailListUsingPOPCommand()
+        public MailKitRecieveEMailListUsingPOPCommand()
         {
             //this.CommandName = "MailKitRecieveEMailListUsingPOPCommand";
             //this.SelectionName = "Recieve EMailList Using POP";

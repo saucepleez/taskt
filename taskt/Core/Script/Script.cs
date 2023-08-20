@@ -310,6 +310,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_54(doc);
             fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
             convertTo3_5_1_56(doc);
+            convertTo3_5_1_58(doc);
 
             return doc;
         }
@@ -1740,6 +1741,32 @@ namespace taskt.Core.Script
         {
             // WordOpenApplicationCommand -> WordCreateWordInstanceCommand
             ChangeCommandName(doc, "WordOpenApplicationCommand", "WordCreateWordInstanceCommand", "Create Word Insntance");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_58(XDocument doc)
+        {
+            // MailKitGetEmailAttachmentsNameCommand -> MailKitGetEMailAttachmentsNameCommand
+            ChangeCommandName(doc, "MailKitGetEmailAttachmentsNameCommand", "MailKitGetEMailAttachmentsNameCommand", "Get EMail Attachments Name");
+
+            // MailKitLoadEmailCommand -> MailKitLoadEMailCommand
+            ChangeCommandName(doc, "MailKitLoadEmailCommand", "MailKitLoadEMailCommand", "Load EMail");
+
+            // MailKitRecieveEmailListUsingIMAPCommand -> MailKitRecieveEMailListUsingIMAPCommand
+            ChangeCommandName(doc, "MailKitRecieveEmailListUsingIMAPCommand", "MailKitRecieveEMailListUsingIMAPCommand", "Recieve EMailList Using IMAP");
+
+            // MailKitRecieveEmailListUsingPOPCommand -> MailKitRecieveEMailListUsingPOPCommand
+            ChangeCommandName(doc, "MailKitRecieveEmailListUsingPOPCommand", "MailKitRecieveEMailListUsingPOPCommand", "Recieve EMailList Using POP");
+
+            // MailKitSaveEmailAttachmentsCommand -> MailKitSaveEMailAttachmentsCommand
+            ChangeCommandName(doc, "MailKitSaveEmailAttachmentsCommand", "MailKitSaveEMailAttachmentsCommand", "Save EMail Attachments");
+
+            // MailKitSaveEmailCommand -> MailKitSaveEMailCommand
+            ChangeCommandName(doc, "MailKitSaveEmailCommand", "MailKitSaveEMailCommand", "Save EMail");
+
+            // MailKitSendEmailCommand -> MailKitSendEMailCommand
+            ChangeCommandName(doc, "MailKitSendEmailCommand", "MailKitSendEMailCommand", "Send EMail");
 
             return doc;
         }
