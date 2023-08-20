@@ -61,6 +61,15 @@ namespace taskt.UI.CustomControls
         private SolidBrush mouseOverColor = null;
         private SolidBrush normalColor = null;
 
+        #region constructer
+        private void CommandItemControl_Load(object sender, EventArgs e)
+        {
+            this.mouseOverColor = new SolidBrush(Color.FromArgb(64, 255, 255, 255));
+            this.normalColor = new SolidBrush(Color.FromArgb(0, 255, 255, 255));
+        }
+        #endregion
+
+        #region events
         private void CommandItemControl_MouseEnter(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Hand;
@@ -74,6 +83,25 @@ namespace taskt.UI.CustomControls
             this.Invalidate();
         }
 
+        private void CommandItemControl_Enter(object sender, EventArgs e)
+        {
+            this.Invalidate();
+        }
+
+        private void CommandItemControl_Leave(object sender, EventArgs e)
+        {
+            this.Invalidate();
+        }
+
+        private void CommandItemControl_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+            }
+        }
+        #endregion
+
+
         private void CommandItemControl_Paint(object sender, PaintEventArgs e)
         {
             var strSize = TextRenderer.MeasureText(this.commandDisplay, this.Font);
@@ -83,16 +111,17 @@ namespace taskt.UI.CustomControls
                 (isMouseOver ? this.mouseOverColor : this.normalColor),
                 0, 0, strSize.Width + 20, strSize.Height);
 
+            if (this.Focused)
+            {
+                var dashedPen = new Pen(Color.Gray, 1);
+                dashedPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                e.Graphics.DrawRectangle(dashedPen, 0, 0, strSize.Width + 18, strSize.Height);
+            }
+
             e.Graphics.DrawImage(this.DrawIcon, 0, 0, 16, 16);
             e.Graphics.DrawString(this.CommandDisplay, this.Font, new SolidBrush(this.ForeColor), 18, 0);
             
             //Console.WriteLine("## paint!" + DateTime.Now);
-        }
-
-        private void CommandItemControl_Load(object sender, EventArgs e)
-        {
-            this.mouseOverColor = new SolidBrush(Color.FromArgb(64, 255, 255, 255));
-            this.normalColor = new SolidBrush(Color.FromArgb(0, 255, 255, 255));
         }
     }
 }
