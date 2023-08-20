@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskt", "taskt\taskt.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskt-updater", "taskt-updater\taskt-updater.csproj", "{3FC72D0C-D083-44C4-96E9-13FE599F8E0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIAutomationTester", "UIAutomationTester\UIAutomationTester.csproj", "{2DB516FB-73C2-4C62-B465-403A9054D701}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{3FC72D0C-D083-44C4-96E9-13FE599F8E0E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3FC72D0C-D083-44C4-96E9-13FE599F8E0E}.Release|x64.ActiveCfg = Release|x64
 		{3FC72D0C-D083-44C4-96E9-13FE599F8E0E}.Release|x64.Build.0 = Release|x64
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Debug|x64.Build.0 = Debug|Any CPU
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Release|x64.ActiveCfg = Release|Any CPU
+		{2DB516FB-73C2-4C62-B465-403A9054D701}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
