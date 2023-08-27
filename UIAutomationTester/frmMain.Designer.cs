@@ -28,33 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "A1",
             "B1",
             "C1"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "A2",
             "B2",
             "C2"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "A3",
             "B3",
             "C3"}, -1);
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("node0_0");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("node0_1");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("node0", new System.Windows.Forms.TreeNode[] {
-            treeNode19,
-            treeNode20});
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("node1_0");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("node1_1");
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("node1_2_0");
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("node1_2", new System.Windows.Forms.TreeNode[] {
-            treeNode24});
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("node1", new System.Windows.Forms.TreeNode[] {
-            treeNode22,
-            treeNode23,
-            treeNode25});
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("node2");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("node0_0");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("node0_1");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("node0", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("node1_0");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("node1_1");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("node1_2_0");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("node1_2", new System.Windows.Forms.TreeNode[] {
+            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("node1", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("node2");
             this.button1 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -73,14 +73,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -104,6 +104,10 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.label16 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -113,6 +117,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -141,7 +146,7 @@
             this.label1.Location = new System.Drawing.Point(105, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 12);
-            this.label1.TabIndex = 2;
+            this.label1.TabIndex = 1;
             this.label1.Text = "label1";
             // 
             // groupBox1
@@ -152,7 +157,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 41);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(94, 91);
-            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
@@ -186,7 +191,7 @@
             this.groupBox2.Location = new System.Drawing.Point(112, 41);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(106, 91);
-            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
             // 
@@ -224,6 +229,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "ItemA",
@@ -232,7 +238,7 @@
             this.comboBox1.Location = new System.Drawing.Point(296, 9);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(144, 20);
-            this.comboBox1.TabIndex = 5;
+            this.comboBox1.TabIndex = 14;
             // 
             // label2
             // 
@@ -240,7 +246,7 @@
             this.label2.Location = new System.Drawing.Point(226, 12);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 12);
-            this.label2.TabIndex = 6;
+            this.label2.TabIndex = 13;
             this.label2.Text = "comboBox1";
             // 
             // listBox1
@@ -258,18 +264,18 @@
             "Item-h",
             "Item-i",
             "Item-j"});
-            this.listBox1.Location = new System.Drawing.Point(296, 35);
+            this.listBox1.Location = new System.Drawing.Point(296, 56);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(144, 40);
-            this.listBox1.TabIndex = 7;
+            this.listBox1.TabIndex = 18;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(243, 35);
+            this.label3.Location = new System.Drawing.Point(243, 56);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 12);
-            this.label3.TabIndex = 8;
+            this.label3.TabIndex = 17;
             this.label3.Text = "listBox1";
             // 
             // textBox1
@@ -278,8 +284,8 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(206, 66);
-            this.textBox1.TabIndex = 9;
+            this.textBox1.Size = new System.Drawing.Size(133, 66);
+            this.textBox1.TabIndex = 5;
             this.textBox1.Text = "Hello1\r\nHello2\r\nHello3\r\nHello4\r\nHello5\r\nHello6\r\nHello7\r\nHello8\r\nHello9\r\nHello10\r\n" +
     "Hello11";
             // 
@@ -289,7 +295,7 @@
             this.label4.Location = new System.Drawing.Point(12, 142);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(51, 12);
-            this.label4.TabIndex = 10;
+            this.label4.TabIndex = 4;
             this.label4.Text = "textBox1";
             // 
             // tabControl1
@@ -297,11 +303,11 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(244, 81);
+            this.tabControl1.Location = new System.Drawing.Point(244, 102);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(200, 100);
-            this.tabControl1.TabIndex = 11;
+            this.tabControl1.TabIndex = 19;
             // 
             // tabPage1
             // 
@@ -314,6 +320,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(8, 34);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label5
             // 
@@ -336,6 +352,16 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(8, 34);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -357,35 +383,6 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 13);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(125, 12);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "tabControl1 > tabPage3";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(8, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(8, 34);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(8, 34);
@@ -395,6 +392,15 @@
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 13);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(125, 12);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "tabControl1 > tabPage3";
             // 
             // numericUpDown1
             // 
@@ -406,7 +412,7 @@
             0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(55, 19);
-            this.numericUpDown1.TabIndex = 12;
+            this.numericUpDown1.TabIndex = 8;
             // 
             // label8
             // 
@@ -414,7 +420,7 @@
             this.label8.Location = new System.Drawing.Point(8, 231);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(137, 12);
-            this.label8.TabIndex = 13;
+            this.label8.TabIndex = 7;
             this.label8.Text = "numericUpDown1 (0 - 10)";
             // 
             // listView1
@@ -425,13 +431,13 @@
             this.columnHeader3});
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
-            this.listView1.Location = new System.Drawing.Point(244, 213);
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
+            this.listView1.Location = new System.Drawing.Point(244, 234);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(200, 85);
-            this.listView1.TabIndex = 14;
+            this.listView1.TabIndex = 22;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
@@ -450,10 +456,10 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(242, 190);
+            this.label9.Location = new System.Drawing.Point(242, 211);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(52, 12);
-            this.label9.TabIndex = 15;
+            this.label9.TabIndex = 20;
             this.label9.Text = "listView1";
             // 
             // cmbListViewView
@@ -466,10 +472,10 @@
             "SmallIcon",
             "List",
             "Tile"});
-            this.cmbListViewView.Location = new System.Drawing.Point(300, 187);
+            this.cmbListViewView.Location = new System.Drawing.Point(300, 208);
             this.cmbListViewView.Name = "cmbListViewView";
             this.cmbListViewView.Size = new System.Drawing.Size(79, 20);
-            this.cmbListViewView.TabIndex = 16;
+            this.cmbListViewView.TabIndex = 21;
             this.cmbListViewView.SelectedIndexChanged += new System.EventHandler(this.cmbListViewView_SelectedIndexChanged);
             // 
             // progressBar1
@@ -478,7 +484,7 @@
             this.progressBar1.Maximum = 10;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(67, 23);
-            this.progressBar1.TabIndex = 17;
+            this.progressBar1.TabIndex = 10;
             this.progressBar1.Value = 5;
             // 
             // label10
@@ -487,7 +493,7 @@
             this.label10.Location = new System.Drawing.Point(28, 260);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(117, 12);
-            this.label10.TabIndex = 18;
+            this.label10.TabIndex = 9;
             this.label10.Text = "progressBar1 (0 - 10)";
             // 
             // trackBar1
@@ -495,7 +501,7 @@
             this.trackBar1.Location = new System.Drawing.Point(118, 283);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(104, 45);
-            this.trackBar1.TabIndex = 19;
+            this.trackBar1.TabIndex = 12;
             this.trackBar1.Value = 3;
             // 
             // label11
@@ -504,7 +510,7 @@
             this.label11.Location = new System.Drawing.Point(16, 286);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(99, 12);
-            this.label11.TabIndex = 20;
+            this.label11.TabIndex = 11;
             this.label11.Text = "trackBar1 (0 - 10)";
             // 
             // dateTimePicker1
@@ -514,7 +520,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(530, 28);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(114, 19);
-            this.dateTimePicker1.TabIndex = 21;
+            this.dateTimePicker1.TabIndex = 24;
             // 
             // label12
             // 
@@ -522,37 +528,37 @@
             this.label12.Location = new System.Drawing.Point(458, 9);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(90, 12);
-            this.label12.TabIndex = 22;
+            this.label12.TabIndex = 23;
             this.label12.Text = "dateTimePicker1";
             // 
             // treeView1
             // 
             this.treeView1.Location = new System.Drawing.Point(460, 116);
             this.treeView1.Name = "treeView1";
-            treeNode19.Name = "node0_0";
-            treeNode19.Text = "node0_0";
-            treeNode20.Name = "node0_1";
-            treeNode20.Text = "node0_1";
-            treeNode21.Name = "node0";
-            treeNode21.Text = "node0";
-            treeNode22.Name = "node1_0";
-            treeNode22.Text = "node1_0";
-            treeNode23.Name = "node1_1";
-            treeNode23.Text = "node1_1";
-            treeNode24.Name = "node1_2_0";
-            treeNode24.Text = "node1_2_0";
-            treeNode25.Name = "node1_2";
-            treeNode25.Text = "node1_2";
-            treeNode26.Name = "node1";
-            treeNode26.Text = "node1";
-            treeNode27.Name = "node2";
-            treeNode27.Text = "node2";
+            treeNode1.Name = "node0_0";
+            treeNode1.Text = "node0_0";
+            treeNode2.Name = "node0_1";
+            treeNode2.Text = "node0_1";
+            treeNode3.Name = "node0";
+            treeNode3.Text = "node0";
+            treeNode4.Name = "node1_0";
+            treeNode4.Text = "node1_0";
+            treeNode5.Name = "node1_1";
+            treeNode5.Text = "node1_1";
+            treeNode6.Name = "node1_2_0";
+            treeNode6.Text = "node1_2_0";
+            treeNode7.Name = "node1_2";
+            treeNode7.Text = "node1_2";
+            treeNode8.Name = "node1";
+            treeNode8.Text = "node1";
+            treeNode9.Name = "node2";
+            treeNode9.Text = "node2";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode21,
-            treeNode26,
-            treeNode27});
+            treeNode3,
+            treeNode8,
+            treeNode9});
             this.treeView1.Size = new System.Drawing.Size(184, 80);
-            this.treeView1.TabIndex = 23;
+            this.treeView1.TabIndex = 28;
             // 
             // label13
             // 
@@ -560,7 +566,7 @@
             this.label13.Location = new System.Drawing.Point(458, 101);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(56, 12);
-            this.label13.TabIndex = 24;
+            this.label13.TabIndex = 27;
             this.label13.Text = "treeView1";
             // 
             // dataGridView1
@@ -576,7 +582,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 21;
             this.dataGridView1.Size = new System.Drawing.Size(184, 85);
-            this.dataGridView1.TabIndex = 25;
+            this.dataGridView1.TabIndex = 30;
             // 
             // colA
             // 
@@ -602,7 +608,7 @@
             this.label14.Location = new System.Drawing.Point(458, 209);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(79, 12);
-            this.label14.TabIndex = 26;
+            this.label14.TabIndex = 29;
             this.label14.Text = "dataGridView1";
             // 
             // label15
@@ -611,7 +617,7 @@
             this.label15.Location = new System.Drawing.Point(458, 57);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(90, 12);
-            this.label15.TabIndex = 28;
+            this.label15.TabIndex = 25;
             this.label15.Text = "dateTimePicker2";
             // 
             // dateTimePicker2
@@ -620,13 +626,56 @@
             this.dateTimePicker2.Location = new System.Drawing.Point(539, 76);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(105, 19);
-            this.dateTimePicker2.TabIndex = 27;
+            this.dateTimePicker2.TabIndex = 26;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(226, 35);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(64, 12);
+            this.label16.TabIndex = 15;
+            this.label16.Text = "comboBox2";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "ItemA",
+            "ItemB",
+            "ItemC"});
+            this.comboBox2.Location = new System.Drawing.Point(296, 32);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(144, 20);
+            this.comboBox2.TabIndex = 16;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(158, 163);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(60, 58);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 30;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(156, 148);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(66, 12);
+            this.label17.TabIndex = 6;
+            this.label17.Text = "pictureBox1";
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(656, 325);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.label14);
@@ -672,6 +721,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -728,6 +778,10 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label17;
     }
 }
 

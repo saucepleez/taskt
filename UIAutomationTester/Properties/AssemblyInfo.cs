@@ -32,5 +32,25 @@ using System.Runtime.InteropServices;
 // すべての値を指定するか、次を使用してビルド番号とリビジョン番号を既定に設定できます
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+/*
+ * my memo
+ * 
+ * v1.0.0.4
+ *  add picturebox
+ * 
+ * v1.0.0.3
+ *  set version
+ *  show version in title bar
+ * 
+ * v1.0.0.2
+ *  add new combobox (disable enter text, select only)
+ * 
+ * v1.0.0.1
+ *  fix tab order, and fix inspect
+ * 
+ * v1.0.0.0
+ *  first
+ */

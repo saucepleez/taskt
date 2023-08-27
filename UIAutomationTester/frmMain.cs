@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows.Forms;
+using UIAutomationTester.Properties;
 
 namespace UIAutomationTester
 {
@@ -20,11 +15,16 @@ namespace UIAutomationTester
         #region Load
         private void frmMain_Load(object sender, EventArgs e)
         {
+            var asm = Assembly.GetExecutingAssembly();
+            this.Text += " v" + asm.GetName().Version;
+
             cmbListViewView.SelectedIndex = 1;
 
             dataGridView1.Rows.Add(new string[] { "A1", "B1", "C1" });
             dataGridView1.Rows.Add(new string[] { "A2", "B2", "C2" });
             dataGridView1.Rows.Add(new string[] { "A3", "B3", "C3" });
+
+            pictureBox1.Image = Properties.Resources.taskt_logo_alt;
         }
         #endregion
 
