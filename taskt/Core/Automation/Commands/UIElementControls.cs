@@ -908,9 +908,9 @@ namespace taskt.Core.Automation.Commands
                 if (!(bool)ptnResult)
                 {
                     rootElement = GetParentUIElement(rootElement);
+                    ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
                 }
 
-                ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
                 if ((bool)ptnResult)
                 {
                     object selPtn = rootElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
@@ -918,11 +918,18 @@ namespace taskt.Core.Automation.Commands
                     ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
                     ecPtn.Expand();
 
+                    // dbg
+                    //System.Threading.Thread.Sleep(1000);
+                    //Console.WriteLine("Expanded");
+
                     var elems = rootElement.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
                     List<AutomationElement> ret = new List<AutomationElement>();
                     foreach (AutomationElement elem in elems)
                     {
                         ret.Add(elem);
+
+                        // dbg
+                        //Console.WriteLine(elem.Current.Name);
                     }
 
                     if (collapseAfter)
