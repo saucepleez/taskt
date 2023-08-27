@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.Windows.Automation;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Windows.Forms;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -43,12 +44,26 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
+            var ct = targetElement.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty) as ControlType;
+            if (ct == ControlType.Spinner)
+            {
+                targetElement = UIElementControls.SearchGUIElementByXPath(targetElement, "/Edit[1]", 10, engine);
+            }
+
             string textValue = v_TextVariable.ConvertToUserVariable(sender);
 
-            // todo: support range value pattern
-            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object textPtn))
+            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object valPtn))
             {
-                ((ValuePattern)textPtn).SetValue(textValue);
+                ((ValuePattern)valPtn).SetValue(textValue);
+            }
+            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out _))
+            {
+                targetElement.SetFocus();
+                System.Threading.Thread.Sleep(100);
+                SendKeys.SendWait("^{HOME}");
+                SendKeys.SendWait("^+{END}");
+                SendKeys.SendWait("{DEL}");
+                SendKeys.SendWait(textValue);
             }
             else
             {
