@@ -841,21 +841,21 @@ namespace taskt.Core.Automation.Commands
 
         public static string GetTextValue(AutomationElement targetElement)
         {
-            object patternObj;
-            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
+            //object patternObj;
+            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object vPtn))
             {
                 // TextBox
-                return ((ValuePattern)patternObj).Current.Value;
+                return ((ValuePattern)vPtn).Current.Value;
             }
-            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
+            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out object tPtn))
             {
                 // TextBox Multilune
-                return ((TextPattern)patternObj).DocumentRange.GetText(-1);
+                return ((TextPattern)tPtn).DocumentRange.GetText(-1);
             }
-            else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
+            else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out object sPtn))
             {
                 // combobox
-                AutomationElement selElem = ((SelectionPattern)patternObj).Current.GetSelection()[0];
+                AutomationElement selElem = ((SelectionPattern)sPtn).Current.GetSelection()[0];
                 return selElem.Current.Name;
             }
             else
@@ -1139,6 +1139,25 @@ namespace taskt.Core.Automation.Commands
                 res += "ItemStatus:\t\"" + elem.Current.ItemStatus + "\"\r\n";
                 res += "ItemType:\t\"" + elem.Current.ItemType + "\"\r\n";
                 res += "NativeWindowHandle:\t" + elem.Current.NativeWindowHandle.ToString() + "\r\n";
+
+                res += "IsDockPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsDockPatternAvailableProperty) + "\r\n";
+                res += "IsExpandCollapsePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty) + "\r\n";
+                res += "IsGridPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) + "\r\n";
+                res += "IsGridItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridItemPatternAvailableProperty) + "\r\n";
+                res += "IsInvokePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty) + "\r\n";
+                res += "IsMultipleViewPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsMultipleViewPatternAvailableProperty) + "\r\n";
+                res += "IsRangeValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsRangeValuePatternAvailableProperty) + "\r\n";
+                res += "IsScrollPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollPatternAvailableProperty) + "\r\n";
+                res += "IsScrollItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollItemPatternAvailableProperty) + "\r\n";
+                res += "IsSelectionPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty) + "\r\n";
+                res += "IsSelectionItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionItemPatternAvailableProperty) + "\r\n";
+                res += "IsTablePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTablePatternAvailableProperty) + "\r\n";
+                res += "IsTableItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTableItemPatternAvailableProperty) + "\r\n";
+                res += "IsTextPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTextPatternAvailableProperty) + "\r\n";
+                res += "IsTogglePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTogglePatternAvailableProperty) + "\r\n";
+                res += "IsTransformPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTransformPatternAvailableProperty) + "\r\n";
+                res += "IsValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsValuePatternAvailableProperty) + "\r\n";
+                res += "IsWindowPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsWindowPatternAvailableProperty) + "\r\n";
             }
             catch(Exception ex)
             {
