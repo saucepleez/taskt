@@ -883,7 +883,7 @@ namespace taskt.Core.Automation.Commands
             return cellElem;
         }
 
-        public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement, bool collapseAfter = true)
+        public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement)
         {
             var getListItemFunc = new Func<AutomationElement, List<AutomationElement>>( el => {
                 var elems = el.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
@@ -905,7 +905,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                // ComboBox
+                // ComboBox, TreeView
                 bool isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
 
                 if (!isCmb)
@@ -928,10 +928,10 @@ namespace taskt.Core.Automation.Commands
 
                     var ret = getListItemFunc(rootElement);
 
-                    if (collapseAfter)
-                    {
-                        ecPtn.Collapse();
-                    }
+                    //if (collapseAfter)
+                    //{
+                    //    ecPtn.Collapse();
+                    //}
                     return ret;
                 }
                 else
