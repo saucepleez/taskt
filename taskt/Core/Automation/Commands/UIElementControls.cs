@@ -842,7 +842,12 @@ namespace taskt.Core.Automation.Commands
         public static string GetTextValue(AutomationElement targetElement)
         {
             //object patternObj;
-            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object vPtn))
+            if (targetElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out object rPtn))
+            {
+                // bar
+                return ((RangeValuePattern)rPtn).Current.Value.ToString();
+            }
+            else if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object vPtn))
             {
                 // TextBox
                 return ((ValuePattern)vPtn).Current.Value;
