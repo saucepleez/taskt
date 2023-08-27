@@ -885,52 +885,48 @@ namespace taskt.Core.Automation.Commands
 
         public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement, bool collapseAfter = true)
         {
-            AutomationElement rootElement = targetElement;
-
-            object ptnResult;
-
-            ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty);
-            if ((bool)ptnResult)
-            {
-                // DataGridView
-                var elems = rootElement.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
+            var getListItemFunc = new Func<AutomationElement, List<AutomationElement>>( el => {
+                var elems = el.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
                 List<AutomationElement> ret = new List<AutomationElement>();
                 foreach (AutomationElement elem in elems)
                 {
                     ret.Add(elem);
                 }
                 return ret;
+            });
+
+            AutomationElement rootElement = targetElement;
+
+            if ((bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) ||
+                (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty))
+            {
+                // DataGridView-ComboBox, ListBox
+                return getListItemFunc(rootElement);
             }
             else
             {
                 // ComboBox
-                ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
-                if (!(bool)ptnResult)
+                bool isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+
+                if (!isCmb)
                 {
                     rootElement = GetParentUIElement(rootElement);
-                    ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+                    isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
                 }
 
-                if ((bool)ptnResult)
+                if ((bool)isCmb)
                 {
                     object selPtn = rootElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
 
                     ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
                     ecPtn.Expand();
+                    System.Threading.Thread.Sleep(500);
 
                     // dbg
                     //System.Threading.Thread.Sleep(1000);
                     //Console.WriteLine("Expanded");
 
-                    var elems = rootElement.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
-                    List<AutomationElement> ret = new List<AutomationElement>();
-                    foreach (AutomationElement elem in elems)
-                    {
-                        ret.Add(elem);
-
-                        // dbg
-                        //Console.WriteLine(elem.Current.Name);
-                    }
+                    var ret = getListItemFunc(rootElement);
 
                     if (collapseAfter)
                     {
