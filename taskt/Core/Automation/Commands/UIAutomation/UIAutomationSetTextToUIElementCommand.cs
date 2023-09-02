@@ -47,7 +47,8 @@ namespace taskt.Core.Automation.Commands
             var ct = targetElement.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty) as ControlType;
             if (ct == ControlType.Spinner)
             {
-                targetElement = UIElementControls.SearchGUIElementByXPath(targetElement, "/Edit[1]", 10, engine);
+                //targetElement = UIElementControls.SearchGUIElementByXPath(targetElement, "/Edit[1]", 10, engine);
+                targetElement = targetElement.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
             }
 
             string textValue = v_TextVariable.ConvertToUserVariable(sender);
