@@ -872,20 +872,39 @@ namespace taskt.Core.Automation.Commands
 
         public static AutomationElement GetTableUIElement(AutomationElement targetElement, int row, int column)
         {
-            object tryObj;
-            if (!targetElement.TryGetCurrentPattern(GridPattern.Pattern, out tryObj))
+            if (targetElement.TryGetCurrentPattern(GridPattern.Pattern, out object gridObj))
+            {
+                var cosutomRows = targetElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Custom));
+                if (cosutomRows.Count > 0)
+                {
+                    // DataGridView (.net)
+                    if (cosutomRows.Count > row)
+                    {
+                        var r = cosutomRows[row + 1];
+                        var cols = r.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
+                        if (cols.Count > column)
+                        {
+                            return cols[column];
+                        }
+                    }
+
+                    throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
+                }
+                else
+                {
+                    // listView
+                    AutomationElement cellElem = ((GridPattern)gridObj).GetItem(row, column);
+                    if (cellElem == null)
+                    {
+                        throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
+                    }
+                    return cellElem;
+                }
+            }
+            else
             {
                 throw new Exception("UIElement is not Table Element");
             }
-            GridPattern gridPtn = (GridPattern)tryObj;
-
-            AutomationElement cellElem = gridPtn.GetItem(row, column);
-            if (cellElem == null)
-            {
-                throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
-            }
-
-            return cellElem;
         }
 
         public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement)
