@@ -45,17 +45,22 @@ namespace taskt.UI.CustomControls
             var controlList = new List<Control>();
 
             int count = 0;
-            foreach(var prop in props)
+            foreach (var prop in props)
             {
-                FlowLayoutPanel flowPanel = new FlowLayoutPanel
-                {
-                    Name = GroupPrefix + prop.Name,
-                    FlowDirection = FlowDirection.TopDown,
-                    WrapContents = false,
-                    AutoSize = true,
-                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                    BackColor = paramColors[count % 8],
-                };
+                //FlowLayoutPanel flowPanel = new FlowLayoutPanel
+                //{
+                //    Name = GroupPrefix + prop.Name,
+                //    FlowDirection = FlowDirection.TopDown,
+                //    WrapContents = false,
+                //    AutoSize = true,
+                //    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                //    BackColor = paramColors[count % 8],
+                //};
+                //var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
+                //flowPanel.Controls.AddRange(ctrls.ToArray());
+                //flowPanel.Click += flowLayoutPanel_Click;
+                //flowPanel.DoubleClick += flowLayoutPanel_DblClick;
+                var flowPanel = CreateStandardGroupFlowLayoutPanel(prop.Name, count);
                 var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
                 flowPanel.Controls.AddRange(ctrls.ToArray());
 
@@ -80,16 +85,21 @@ namespace taskt.UI.CustomControls
             int count = 0;
             foreach (var propertyName in propartiesName)
             {
-                FlowLayoutPanel flowPanel = new FlowLayoutPanel
-                {
-                    Name = GroupPrefix + propertyName,
-                    FlowDirection = FlowDirection.TopDown,
-                    WrapContents = false,
-                    AutoSize = true,
-                    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                    BackColor = paramColors[count % 8],
-                };
+                //FlowLayoutPanel flowPanel = new FlowLayoutPanel
+                //{
+                //    Name = GroupPrefix + propertyName,
+                //    FlowDirection = FlowDirection.TopDown,
+                //    WrapContents = false,
+                //    AutoSize = true,
+                //    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                //    BackColor = paramColors[count % 8],
+                //};
+                //var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
+                //flowPanel.Controls.AddRange(ctrls);
+                //flowPanel.Click += flowLayoutPanel_Click;
+                //flowPanel.DoubleClick += flowLayoutPanel_DblClick;
 
+                var flowPanel = CreateStandardGroupFlowLayoutPanel(propertyName, count);
                 var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
                 flowPanel.Controls.AddRange(ctrls);
 
@@ -1080,6 +1090,23 @@ namespace taskt.UI.CustomControls
             };
             return newLabel;
         }
+
+        private static FlowLayoutPanel CreateStandardGroupFlowLayoutPanel(string name, int count)
+        {
+            FlowLayoutPanel flowPanel = new FlowLayoutPanel
+            {
+                Name = GroupPrefix + name,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoSize = true,
+                Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
+                BackColor = paramColors[count % 8],
+            };
+            flowPanel.Click += flowLayoutPanel_Click;
+            flowPanel.DoubleClick += flowLayoutPanel_DblClick;
+            return flowPanel;
+        }
+
         #endregion
 
         #region create Control support methods
@@ -1707,6 +1734,29 @@ namespace taskt.UI.CustomControls
             }
         }
 
+        #endregion
+
+        #region FlowLayout Events
+        private static void flowLayoutPanel_Click(object sender, EventArgs e)
+        {
+            var flp = sender as FlowLayoutPanel;
+            foreach(Control c in flp.Controls)
+            {
+                if (c is TextBox || c is ComboBox || c is DataGridView)
+                {
+                    c.Focus();
+                    break;
+                }
+            }
+        }
+
+        private static void flowLayoutPanel_DblClick(object sender, EventArgs e)
+        {
+            flowLayoutPanel_Click(sender, null);    // focus editable control
+            var flp = sender as FlowLayoutPanel;
+            var parentFlp = flp.Parent as FlowLayoutPanel;
+            parentFlp.AutoScrollPosition = flp.Location;
+        }
         #endregion
 
         public static List<AutomationCommand> GenerateCommandsandControls()
