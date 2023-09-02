@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Forms;
-using UIAutomationTester.Properties;
 
 namespace UIAutomationTester
 {
