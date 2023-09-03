@@ -64,6 +64,8 @@ namespace taskt.UI.CustomControls
                 var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
                 flowPanel.Controls.AddRange(ctrls.ToArray());
 
+                SetClickEventsToLabels(ctrls);
+
                 controlList.Add(flowPanel);
                 count++;
             }
@@ -102,6 +104,8 @@ namespace taskt.UI.CustomControls
                 var flowPanel = CreateStandardGroupFlowLayoutPanel(propertyName, count);
                 var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
                 flowPanel.Controls.AddRange(ctrls);
+
+                SetClickEventsToLabels(ctrls);
 
                 controlList.Add(flowPanel);
 
@@ -1739,7 +1743,7 @@ namespace taskt.UI.CustomControls
         #region FlowLayout Events
         private static void flowLayoutPanel_Click(object sender, EventArgs e)
         {
-            var flp = sender as FlowLayoutPanel;
+            var flp = (FlowLayoutPanel)sender;
             foreach(Control c in flp.Controls)
             {
                 if (c is TextBox || c is ComboBox || c is DataGridView)
@@ -1753,9 +1757,40 @@ namespace taskt.UI.CustomControls
         private static void flowLayoutPanel_DblClick(object sender, EventArgs e)
         {
             flowLayoutPanel_Click(sender, null);    // focus editable control
-            var flp = sender as FlowLayoutPanel;
-            var parentFlp = flp.Parent as FlowLayoutPanel;
-            parentFlp.AutoScrollPosition = flp.Location;
+            var flp = (FlowLayoutPanel)sender;
+            var parentFlp = (FlowLayoutPanel)flp.Parent;
+            
+            // DBG
+            //Debug.WriteLine(flp.Location.Y + ", " + parentFlp.AutoScrollPosition.Y + ", " + parentFlp.Height);
+
+            parentFlp.AutoScrollPosition = new Point(0, flp.Location.Y - parentFlp.AutoScrollPosition.Y);
+        }
+
+        private static void SetClickEventsToLabels(List<Control> ctrls)
+        {
+            SetClickEventsToLabels(ctrls.ToArray());
+        }
+
+        private static void SetClickEventsToLabels(Control[] ctrls)
+        {
+            foreach(var c in ctrls)
+            {
+                if (c is Label lbl)
+                {
+                    lbl.Click += label_Click;
+                    lbl.DoubleClick += label_DblClick;
+                }
+            }
+        }
+
+        private static void label_Click(object sender, EventArgs e)
+        {
+            flowLayoutPanel_Click((FlowLayoutPanel)((Label)sender).Parent, e);
+        }
+
+        private static void label_DblClick(object sender, EventArgs e)
+        { 
+            flowLayoutPanel_DblClick((FlowLayoutPanel)((Label)sender).Parent, e);
         }
         #endregion
 
