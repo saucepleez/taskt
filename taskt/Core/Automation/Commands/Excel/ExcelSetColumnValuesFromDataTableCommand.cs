@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
 
             (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            DataTable myDT = v_DataTableVariable.GetDataTableVariable(engine);
+            DataTable myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
 
             (int excelColumnIndex, int rowStart, int rowEnd, string valueType) =
                 ExcelControls.GetRangeIndeiesColumnDirection(

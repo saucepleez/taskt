@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            Color co = v_Color.GetColorVariable(engine);
+            Color co = v_Color.ExpandUserVariableAsColor(engine);
             string format = this.GetUISelectionValue(nameof(v_Format), engine);
 
             string res = "";

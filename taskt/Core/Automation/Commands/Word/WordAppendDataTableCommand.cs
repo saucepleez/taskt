@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
 
             (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
 
-            var dataTable = v_DataTableName.GetDataTableVariable(engine);
+            var dataTable = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
             //converting System DataTable to Word DataTable
             int RowCount = dataTable.Rows.Count; 

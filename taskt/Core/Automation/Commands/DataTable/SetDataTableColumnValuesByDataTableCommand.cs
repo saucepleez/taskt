@@ -59,12 +59,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndexFromParameters(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
 
             string trgColName = myDT.Columns[colIndex].ColumnName;
 
 
-            DataTable setDT = v_SetDataTableName.GetDataTableVariable(engine);
+            DataTable setDT = v_SetDataTableName.ExpandUserVariableAsDataTable(engine);
 
             string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check

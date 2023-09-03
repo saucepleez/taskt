@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
             Dictionary<string, string> myDic = v_RowName.GetDictionaryVariable(engine);
 

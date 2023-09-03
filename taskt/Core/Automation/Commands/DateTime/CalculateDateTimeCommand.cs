@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var myDT = v_DateTime.GetDateTimeVariable(engine);
+            var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
 
             string meth = this.GetUISelectionValue(nameof(v_CalculationMethod), engine);
 

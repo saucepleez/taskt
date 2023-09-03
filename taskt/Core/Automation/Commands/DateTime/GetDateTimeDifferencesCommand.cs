@@ -67,8 +67,8 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var myDT1 = v_DateTime1.GetDateTimeVariable(engine);
-            var myDT2 = v_DateTime2.GetDateTimeVariable(engine);
+            var myDT1 = v_DateTime1.ExpandUserVariableAsDateTime(engine);
+            var myDT2 = v_DateTime2.ExpandUserVariableAsDateTime(engine);
 
             string format = this.GetUISelectionValue(nameof(v_Format), engine);
 

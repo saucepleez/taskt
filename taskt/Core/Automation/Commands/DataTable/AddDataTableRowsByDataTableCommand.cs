@@ -49,9 +49,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
-            DataTable addDT = v_RowName.GetDataTableVariable(engine);
+            DataTable addDT = v_RowName.ExpandUserVariableAsDataTable(engine);
 
             string notExistsKey = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Does Not Exists", engine);
 

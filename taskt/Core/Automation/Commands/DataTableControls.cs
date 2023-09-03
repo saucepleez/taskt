@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -171,13 +170,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_WhenGreaterRows { set; get; }
 
         /// <summary>
-        /// get DataTable variable from variable name
+        /// Expand user variable as DataTable
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static DataTable GetDataTableVariable(this string variableName, Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">Value is not DataTable</exception>
+        public static DataTable ExpandUserVariableAsDataTable(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is DataTable table)
@@ -191,13 +190,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get DataTable variable from parameter name
+        /// Convert parameter value to DataTable
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static DataTable ConvertToUserVariableAsDataTable(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        /// <exception cref="">value is not DataTable</exception>
+        public static DataTable ConvertParameterToDataTable(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var value = prop?.GetValue(command) ?? null;
@@ -207,12 +207,12 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Property '" + parameterName + "' is not DataTable");
+                throw new Exception("Parameter '" + parameterName + "' is not DataTable");
             }
         }
 
         /// <summary>
-        /// get DataTable variable and Column Index from variable name property and column properies
+        /// get DataTable variable and Column Index from variable name parameter and column parameters
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tableName"></param>
@@ -220,10 +220,10 @@ namespace taskt.Core.Automation.Commands
         /// <param name="columnName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndexFromParameters(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
             var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
-            var table = targetTable.GetDataTableVariable(engine);
+            var table = targetTable.ExpandUserVariableAsDataTable(engine);
             var index = command.GetColumnIndex(table, columnTypeName, columnName, engine);
             return (table, index);
         }
@@ -237,10 +237,10 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (DataTable table, int rowIndex) GetDataTableVariableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex) GetDataTableVariableAndRowIndexFromParameters(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
         {
             var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
-            var table = targetTable.GetDataTableVariable(engine);
+            var table = targetTable.ExpandUserVariableAsDataTable(engine);
 
             var rowValue = command.ConvertToUserVariable(rowName, "Row Index", engine);
             int index;
@@ -273,10 +273,10 @@ namespace taskt.Core.Automation.Commands
         /// <param name="rowName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int rowIndex, int columnIndex) GetDataTableVariableAndRowColumnIndeies(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex, int columnIndex) GetDataTableVariableAndRowColumnIndeiesFromParameters(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
-            (var table, var rowIndex) = command.GetDataTableVariableAndRowIndex(tableName, rowName, engine);
-            (_, var columnIndex) = command.GetDataTableVariableAndColumnIndex(tableName, columnTypeName, columnName, engine);
+            (var table, var rowIndex) = command.GetDataTableVariableAndRowIndexFromParameters(tableName, rowName, engine);
+            (_, var columnIndex) = command.GetDataTableVariableAndColumnIndexFromParameters(tableName, columnTypeName, columnName, engine);
 
             return (table, rowIndex, columnIndex);
         }

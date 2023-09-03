@@ -633,7 +633,7 @@ namespace taskt.Core.Automation.Commands
         public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
             var elem = command.CovnertToUserVariableAsUIElement(elementName, engine);
-            var table = command.ConvertToUserVariableAsDataTable(conditionName, engine);
+            var table = command.ConvertParameterToDataTable(conditionName, engine);
             var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
 
             return SearchGUIElement(elem, table, waitTime, engine);

@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            DataTable dataTable = v_DataTableName.GetDataTableVariable(engine);
+            DataTable dataTable = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
             var newRow = dataTable.NewRow();
 

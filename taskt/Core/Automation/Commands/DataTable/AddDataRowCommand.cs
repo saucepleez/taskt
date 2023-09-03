@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //DataTable dataTable = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
-            DataTable dataTable = v_DataTableName.GetDataTableVariable(engine);
+            DataTable dataTable = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
             var newRow = dataTable.NewRow();
 

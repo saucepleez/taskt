@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -32,14 +28,14 @@ namespace taskt.Core.Automation.Commands
         public static string v_Result { get; }
 
         /// <summary>
-        /// Convert variable to Boolean Value
+        /// Convert value to Boolean Value
         /// </summary>
         /// <param name="str"></param>
         /// <param name="parameterName"></param>
         /// <param name="sender"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static bool ConvertToUserVariableAsBool(this string str, string parameterName, object sender)
+        /// <exception cref="Exception">value is not Boolean</exception>
+        public static bool ConvertValueToBool(this string str, string parameterName, object sender)
         {
             string convertedText = str.ConvertToUserVariable(sender);
             if (bool.TryParse(convertedText, out bool v))

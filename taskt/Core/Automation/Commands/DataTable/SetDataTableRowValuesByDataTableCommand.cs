@@ -52,9 +52,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var myDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
+            (var myDT, var rowIndex) = this.GetDataTableVariableAndRowIndexFromParameters(nameof(v_DataTableName), nameof(v_RowIndex), engine);
 
-            (var addDT, var srcRowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_RowName), nameof(v_SrcRowIndex), engine);
+            (var addDT, var srcRowIndex) = this.GetDataTableVariableAndRowIndexFromParameters(nameof(v_RowName), nameof(v_SrcRowIndex), engine);
             string ifNotColumnExists = this.GetUISelectionValue(nameof(v_NotExistsKey), "Column not exists", engine);
 
             // get columns list

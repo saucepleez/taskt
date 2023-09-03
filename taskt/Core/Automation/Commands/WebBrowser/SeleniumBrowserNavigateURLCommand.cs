@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             var parsedURL = v_URL.ConvertToUserVariable(sender);
             if (!parsedURL.StartsWith("http"))
             {
-                var useHttps = v_UseHttps.ConvertToUserVariableAsBool("Use HTTPS", engine);
+                var useHttps = v_UseHttps.ConvertValueToBool("Use HTTPS", engine);
                 //parsedURL = this.v_HttpsChoice[useHttps] + parsedURL;
                 parsedURL = ((useHttps) ? "https://" : "http://") + parsedURL;
             }
