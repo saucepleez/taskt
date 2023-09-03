@@ -150,13 +150,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_Value { get; }
 
         /// <summary>
-        /// get Dictionary&lt;string, string&gt; Variable from variable name
+        /// Expand user variable as Dictionary&lt;string, string&gt;
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static Dictionary<string, string> GetDictionaryVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">Value is not Dictionary</exception>
+        public static Dictionary<string, string> ExpandUserVariableAsDictinary(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is Dictionary<string, string> dictionary)
@@ -178,7 +178,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (Dictionary<string, string>, string) GetDictionaryVariableAndKey(this ScriptCommand command, string dictionaryName, string keyName, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (Dictionary<string, string>, string) GetDictionaryVariableAndKey(this ScriptCommand command, string dictionaryName, string keyName, Engine.AutomationEngineInstance engine)
         {
             string dicVariable = command.ConvertToUserVariable(dictionaryName, "Dictionary", engine);
             var v = dicVariable.GetRawVariable(engine);
@@ -211,7 +211,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void StoreInUserVariable(this Dictionary<string, string> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this Dictionary<string, string> value, Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
         }
@@ -223,10 +223,8 @@ namespace taskt.Core.Automation.Commands
         /// <param name="table"></param>
         /// <param name="engine"></param>
         /// <exception cref="Exception"></exception>
-        public static void AddDataAndValueFromDataTable(this Dictionary<string, string> dic, DataTable table, Automation.Engine.AutomationEngineInstance engine)
+        public static void AddDataAndValueFromDataTable(this Dictionary<string, string> dic, DataTable table, Engine.AutomationEngineInstance engine)
         {
-            //var keys = new List<string>();
-
             // Check Items
             foreach (DataRow row in table.Rows)
             {
@@ -235,14 +233,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     throw new Exception("Key value is empty.");
                 }
-                //if (keys.Contains(k))
-                //{
-                //    throw new Exception("Duplicate Key. Name: '" + k + "'");
-                //}
-                //else
-                //{
-                //    keys.Add(k);
-                //}
             }
 
             // Add Items
