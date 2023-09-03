@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void StoreInUserVariable(this bool value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this bool value, Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", sender, false);
         }
