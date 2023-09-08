@@ -243,24 +243,32 @@ namespace taskt.Core.Automation.Commands
             var table = targetTable.ExpandUserVariableAsDataTable(engine);
 
             var rowValue = command.ConvertToUserVariable(rowName, "Row Index", engine);
-            int index;
-            if (String.IsNullOrEmpty(rowValue))
+            //int index;
+            //if (String.IsNullOrEmpty(rowValue))
+            //{
+            //    index = targetTable.GetRawVariable(engine).CurrentPosition;
+            //}
+            //else
+            //{
+            //    index = command.ConvertToUserVariableAsInteger(rowName, "Row Index", engine);
+            //}
+
+            //if (index < 0)
+            //{
+            //    index += table.Rows.Count;
+            //}
+
+            //if ((index < 0) || (index >= table.Rows.Count))
+            //{
+            //    throw new Exception("Strange Row Index '" + rowName + "', parsed '" + index + "'");
+            //}
+
+            if (string.IsNullOrEmpty(rowValue))
             {
-                index = targetTable.GetRawVariable(engine).CurrentPosition;
-            }
-            else
-            {
-                index = command.ConvertToUserVariableAsInteger(rowName, "Row Index", engine);
-            }
-            if (index < 0)
-            {
-                index += table.Rows.Count;
+                rowValue = targetTable.GetRawVariable(engine).CurrentPosition.ToString();
             }
 
-            if ((index < 0) || (index >= table.Rows.Count))
-            {
-                throw new Exception("Strange Row Index '" + rowName + "', parsed '" + index + "'");
-            }
+            var index = GetRowIndex(table, rowValue, engine);
 
             return (table, index);
         }
@@ -438,6 +446,31 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             throw new Exception("Strange Column Name " + columnName);
+        }
+
+        /// <summary>
+        /// get datatable row index
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static int GetRowIndex(DataTable table, string rowIndex, Engine.AutomationEngineInstance engine)
+        {
+            var index = rowIndex.ConvertToUserVariableAsInteger("Row Index", engine);
+
+            if (index < 0)
+            {
+                index += table.Rows.Count;
+            }
+
+            if ((index< 0) || (index >= table.Rows.Count))
+            {
+                throw new Exception("Strange Row Index '" + index + "'");
+            }
+
+            return index;
         }
 
         /// <summary>
