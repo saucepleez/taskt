@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
             dic.Keys.ToList().StoreInUserVariable(engine, v_OutputVariable);
         }
     }

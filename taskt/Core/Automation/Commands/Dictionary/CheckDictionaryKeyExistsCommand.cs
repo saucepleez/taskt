@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             var vKey = v_Key.ConvertToUserVariable(sender);
 
-            var dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
             dic.ContainsKey(vKey).StoreInUserVariable(engine, v_applyToVariable);
         }
     }

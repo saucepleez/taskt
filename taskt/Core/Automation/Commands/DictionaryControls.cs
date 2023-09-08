@@ -170,7 +170,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get Dictionary&lt;string, string&gt; and key name from property names. It supports current position to key.
+        /// expand user variables as Dictionary&lt;string, string&gt; and key name from property names. It supports current position to key.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="dictionaryName"></param>
@@ -178,37 +178,59 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (Dictionary<string, string>, string) GetDictionaryVariableAndKey(this ScriptCommand command, string dictionaryName, string keyName, Engine.AutomationEngineInstance engine)
+        public static (Dictionary<string, string>, string) ExpandUserVariablesAsDictionaryAndKey(this ScriptCommand command, string dictionaryName, string keyName, Engine.AutomationEngineInstance engine)
         {
             string dicVariable = command.ConvertToUserVariable(dictionaryName, "Dictionary", engine);
+            //var v = dicVariable.GetRawVariable(engine);
+            //if (v.VariableValue is Dictionary<string, string> dictionary)
+            //{
+            //    string keyVariable = command.ConvertToUserVariable(keyName, "Key", engine);
+            //    string key;
+            //    if (String.IsNullOrEmpty(keyVariable))
+            //    {
+            //        int pos = v.CurrentPosition;
+            //        string[] keys = dictionary.Keys.ToArray();
+            //        if ((pos >= 0) && (pos < keys.Length))
+            //        {
+            //            key = keys[pos];
+            //        }
+            //        else
+            //        {
+            //            throw new Exception("Strange Current Position in Dictionary " + pos);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        key = keyVariable.ConvertToUserVariable(engine);
+            //    }
+            //    return (dictionary, key);
+            //}
+            //else
+            //{
+            //    throw new Exception("Variable " + dicVariable + " is not Dictionary");
+            //}
+            var dictionary = dicVariable.ExpandUserVariableAsDictinary(engine);
             var v = dicVariable.GetRawVariable(engine);
-            if (v.VariableValue is Dictionary<string, string> dictionary)
+            string keyVariable = command.ConvertToUserVariable(keyName, "Key", engine);
+            string key;
+            if (String.IsNullOrEmpty(keyVariable))
             {
-                string keyVariable = command.ConvertToUserVariable(keyName, "Key", engine);
-                string key;
-                if (String.IsNullOrEmpty(keyVariable))
+                int pos = v.CurrentPosition;
+                string[] keys = dictionary.Keys.ToArray();
+                if ((pos >= 0) && (pos < keys.Length))
                 {
-                    int pos = v.CurrentPosition;
-                    string[] keys = dictionary.Keys.ToArray();
-                    if ((pos >= 0) && (pos < keys.Length))
-                    {
-                        key = keys[pos];
-                    }
-                    else
-                    {
-                        throw new Exception("Strange Current Position in Dictionary " + pos);
-                    }
+                    key = keys[pos];
                 }
                 else
                 {
-                    key = keyVariable.ConvertToUserVariable(engine);
+                    throw new Exception("Strange Current Position in Dictionary " + pos);
                 }
-                return (dictionary, key);
             }
             else
             {
-                throw new Exception("Variable " + dicVariable + " is not Dictionary");
+                key = keyVariable.ConvertToUserVariable(engine);
             }
+            return (dictionary, key);
         }
 
         public static void StoreInUserVariable(this Dictionary<string, string> value, Engine.AutomationEngineInstance sender, string targetVariable)

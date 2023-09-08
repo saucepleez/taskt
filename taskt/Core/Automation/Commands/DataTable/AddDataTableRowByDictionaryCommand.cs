@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
 
             DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
-            Dictionary<string, string> myDic = v_RowName.GetDictionaryVariable(engine);
+            Dictionary<string, string> myDic = v_RowName.ExpandUserVariableAsDictinary(engine);
 
             string notExistsKey = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Does Not Exists", engine);
 

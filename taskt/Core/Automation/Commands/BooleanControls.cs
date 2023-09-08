@@ -28,23 +28,23 @@ namespace taskt.Core.Automation.Commands
         public static string v_Result { get; }
 
         /// <summary>
-        /// Convert value to Boolean Value
+        /// expand value or user variable as Boolean Value
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="value"></param>
         /// <param name="parameterName"></param>
         /// <param name="sender"></param>
         /// <returns></returns>
         /// <exception cref="Exception">value is not Boolean</exception>
-        public static bool ConvertValueToBool(this string str, string parameterName, object sender)
+        public static bool ExpandValueOrUserVariableAsBool(this string value, string parameterName, object sender)
         {
-            string convertedText = str.ConvertToUserVariable(sender);
+            string convertedText = value.ConvertToUserVariable(sender);
             if (bool.TryParse(convertedText, out bool v))
             {
                 return v;
             }
             else
             {
-                throw new Exception(parameterName + " '" + str + "' is not a boolean.");
+                throw new Exception(parameterName + " '" + value + "' is not a boolean.");
             }
         }
 

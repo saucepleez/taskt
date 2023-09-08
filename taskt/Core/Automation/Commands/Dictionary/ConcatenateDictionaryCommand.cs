@@ -68,9 +68,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var dicA = v_InputDataA.GetDictionaryVariable(engine);
+            var dicA = v_InputDataA.ExpandUserVariableAsDictinary(engine);
 
-            var dicB = v_InputDataB.GetDictionaryVariable(engine);
+            var dicB = v_InputDataB.ExpandUserVariableAsDictinary(engine);
 
             var myDic = new Dictionary<string, string>(dicA);
 

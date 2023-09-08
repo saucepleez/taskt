@@ -212,7 +212,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get DataTable variable and Column Index from variable name parameter and column parameters
+        /// expand user variables as DataTable and Column Index from variable name parameter and column parameters
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tableName"></param>
@@ -220,7 +220,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="columnName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndexFromParameters(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int columnIndex) ExpandUserVariablesAsDataTableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
             var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
             var table = targetTable.ExpandUserVariableAsDataTable(engine);
@@ -229,7 +229,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get DataTable variable and Row Index from variable name property and row name property. If row index is empty, return value is current position.
+        /// expand user variables as DataTable and Row Index from variable name property and row name property. If row index is empty, return value is current position.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tableName"></param>
@@ -237,7 +237,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (DataTable table, int rowIndex) GetDataTableVariableAndRowIndexFromParameters(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex) ExpandUserVariablesAsDataTableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
         {
             var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
             var table = targetTable.ExpandUserVariableAsDataTable(engine);
@@ -266,17 +266,17 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get DataTable variable Row Index, and Column Index from variable name property and row, column name properties. If row index is empty, return value is current position.
+        /// expand user variables as DataTable Row Index, and Column Index from variable name property and row, column name properties. If row index is empty, return value is current position.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tableName"></param>
         /// <param name="rowName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int rowIndex, int columnIndex) GetDataTableVariableAndRowColumnIndeiesFromParameters(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex, int columnIndex) ExpandUserVariablesAsDataTableAndRowColumnIndices(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
-            (var table, var rowIndex) = command.GetDataTableVariableAndRowIndexFromParameters(tableName, rowName, engine);
-            (_, var columnIndex) = command.GetDataTableVariableAndColumnIndexFromParameters(tableName, columnTypeName, columnName, engine);
+            (var table, var rowIndex) = command.ExpandUserVariablesAsDataTableAndRowIndex(tableName, rowName, engine);
+            (_, var columnIndex) = command.ExpandUserVariablesAsDataTableAndColumnIndex(tableName, columnTypeName, columnName, engine);
 
             return (table, rowIndex, columnIndex);
         }

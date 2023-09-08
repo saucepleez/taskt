@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
 
             (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
 
-            Dictionary<string, string> myDic = v_DictionaryVariable.GetDictionaryVariable(engine);
+            Dictionary<string, string> myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
 
             (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
                 ExcelControls.GetRangeIndeiesRowDirection(

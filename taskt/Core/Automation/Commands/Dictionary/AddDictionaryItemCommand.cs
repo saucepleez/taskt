@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var outputDictionary = v_DictionaryName.GetDictionaryVariable(engine);
+            var outputDictionary = v_DictionaryName.ExpandUserVariableAsDictinary(engine);
 
             outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
         }

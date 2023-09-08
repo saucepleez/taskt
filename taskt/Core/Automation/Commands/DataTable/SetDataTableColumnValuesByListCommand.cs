@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndexFromParameters(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+            (var myDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
             string trgColumnName = myDT.Columns[colIndex].ColumnName;
 
             List<string> myList = v_SetListName.GetListVariable(engine);

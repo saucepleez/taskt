@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var srcDT, var index) = this.GetDataTableVariableAndRowIndexFromParameters(nameof(v_DataTableName), nameof(v_DataRowIndex), engine);
+            (var srcDT, var index) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTableName), nameof(v_DataRowIndex), engine);
 
             List<string> myList = new List<string>();
 

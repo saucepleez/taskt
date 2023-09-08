@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var targetDT, var rowIndex) = this.GetDataTableVariableAndRowIndexFromParameters(nameof(v_InputDataTable), nameof(v_TargetRowIndex), engine);
+            (var targetDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_InputDataTable), nameof(v_TargetRowIndex), engine);
 
             var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);

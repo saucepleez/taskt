@@ -372,7 +372,7 @@ namespace taskt.Core.Automation.Commands
             };
             checkWebElement.RunCommand(engine);
 
-            return VariableNameControls.GetInnerVariable(0, engine).VariableValue.ToString().ConvertValueToBool("Result", engine);
+            return VariableNameControls.GetInnerVariable(0, engine).VariableValue.ToString().ExpandValueOrUserVariableAsBool("Result", engine);
         }
 
         private static bool DetermineStatementTruth_GUIElement(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
@@ -406,7 +406,7 @@ namespace taskt.Core.Automation.Commands
             checkUI.v_UIAActionParameters = actionTb;
             checkUI.RunCommand(engine);
 
-            return vName.ConvertValueToBool("result", engine);
+            return vName.ExpandValueOrUserVariableAsBool("result", engine);
 
             //UIAutomationUIElementActionCommand newUIACommand = new UIAutomationUIElementActionCommand();
             //newUIACommand.v_WindowName = windowName;
@@ -446,7 +446,7 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            bool value = param["Variable Name"].ConvertValueToBool("Variable Name", engine);
+            bool value = param["Variable Name"].ExpandValueOrUserVariableAsBool("Variable Name", engine);
             string compare = param["Value Is"].ConvertToUserVariable(engine);
 
             switch (compare.ToLower())
@@ -463,8 +463,8 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            bool value1 = param["Value1"].ConvertValueToBool("Variable Name", engine);
-            bool value2 = param["Value2"].ConvertValueToBool("Variable Name", engine);
+            bool value1 = param["Value1"].ExpandValueOrUserVariableAsBool("Variable Name", engine);
+            bool value2 = param["Value2"].ExpandValueOrUserVariableAsBool("Variable Name", engine);
             string operand = param["Operand"].ConvertToUserVariable(engine);
 
             switch (operand.ToLower())
@@ -514,8 +514,8 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            var dic1 = param["Dictionary1"].GetDictionaryVariable(engine);
-            var dic2 = param["Dictionary2"].GetDictionaryVariable(engine);
+            var dic1 = param["Dictionary1"].ExpandUserVariableAsDictinary(engine);
+            var dic2 = param["Dictionary2"].ExpandUserVariableAsDictinary(engine);
 
             if (dic1.Count == dic2.Count)
             {
