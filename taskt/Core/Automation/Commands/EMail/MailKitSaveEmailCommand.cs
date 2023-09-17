@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    path = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "eml");
             //}
-            var path = this.ConvertToUserVariableAsFilePath(nameof(v_SavePath), engine);
+            var path = this.ExpandValueOrUserVariableAsFilePath(nameof(v_SavePath), engine);
 
             mail.WriteTo(path);
         }

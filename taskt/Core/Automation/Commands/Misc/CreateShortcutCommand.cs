@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
                 //}
-                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk"), engine);
+                var savePath = v_SavePath.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk"), engine);
 
                 string description = v_Description.ConvertToUserVariable(engine);
 
@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "url");
                 //}
-                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "url"), engine);
+                var savePath = v_SavePath.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "url"), engine);
 
                 string outputText = "[InternetShortcut]\nURL=" + targetPath;
                 WriteTextFileCommand writeText = new WriteTextFileCommand

@@ -189,20 +189,20 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert to FilePath support FileCounter
+        /// expand value or user variable as FilePath support FileCounter
         /// </summary>
         /// <param name="parameterValue"></param>
         /// <param name="setting"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static string ConvertToUserVariableAsFilePath_SupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
+        private static string ExpandValueOrUserVariableAsFilePath_SupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
         {
             // check contains FileCounter
             if (!ContainsFileCounter(parameterValue, engine))
             {
                 // don't contains FileCounter
-                return ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+                return ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
             }
 
             (var beforeVariable, var wrappedCounterVariableName, var afterVariable) = ParseFileCounter(parameterValue, engine);
@@ -295,14 +295,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert to FilePath not support FileCounter
+        /// expand value or User variable as FilePath not support FileCounter
         /// </summary>
         /// <param name="parameterValue"></param>
         /// <param name="setting"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static string ConvertToUserVariableAsFilePath_NoSupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
+        private static string ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
         {
             var path = parameterValue.ConvertToUserVariable(engine);
 
@@ -374,23 +374,23 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert to FilePath. this method use the specified PropertyFilePathSetting
+        /// expand value or user variable as FilePath. this method use the specified PropertyFilePathSetting
         /// </summary>
         /// <param name="parameterValue"></param>
         /// <param name="setting"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsFilePath(this string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsFilePath(this string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
         {
             string p;
             if ((setting.supportFileCounter != PropertyFilePathSetting.FileCounterBehavior.NoSupport) &&
                 (setting.supportExtension != PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists))
             {
-                p = ConvertToUserVariableAsFilePath_SupportFileCounter(parameterValue, setting, engine);
+                p = ExpandValueOrUserVariableAsFilePath_SupportFileCounter(parameterValue, setting, engine);
             }
             else
             {
-                p = ConvertToUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
+                p = ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(parameterValue, setting, engine);
             }
 
             var invs = Path.GetInvalidPathChars();
@@ -405,13 +405,13 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert to FilePath. this method use PropertyFilePathSetting
+        /// expand value or user variable to FilePath. this method use PropertyFilePathSetting
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsFilePath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsFilePath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var vProp = prop.GetVirtualProperty();
@@ -419,17 +419,17 @@ namespace taskt.Core.Automation.Commands
 
             var pathSetting = PropertyControls.GetCustomAttributeWithVirtual<PropertyFilePathSetting>(prop, vProp) ?? new PropertyFilePathSetting();
 
-            return ConvertToUserVariableAsFilePath(parameterValue, pathSetting, engine);
+            return ExpandValueOrUserVariableAsFilePath(parameterValue, pathSetting, engine);
         }
 
         /// <summary>
-        /// convert to File Name
+        /// expand value or user variable as File Name
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static string ConvertToUserVariableAsFileName(this string fileName, Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not file name</exception>
+        public static string ExpandValueOrUserVariableAsFileName(this string fileName, Engine.AutomationEngineInstance engine)
         {
             var fn = fileName.ConvertToUserVariable(engine);
             var invs = Path.GetInvalidFileNameChars();
@@ -555,7 +555,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string WaitForFile(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var path = command.ConvertToUserVariableAsFilePath(pathName, engine);
+            var path = command.ExpandValueOrUserVariableAsFilePath(pathName, engine);
             var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
             return WaitForFile(path, waitTime, engine);
         }

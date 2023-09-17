@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
             //}
-            string fileName = this.ConvertToUserVariableAsFilePath(nameof(v_FileName), engine);
+            string fileName = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FileName), engine);
 
 			// TODO: support xlsm
             Action saveAsProcess = () =>

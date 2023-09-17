@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var filePath = this.ConvertToUserVariableAsFilePath(nameof(v_SourceFilePath), engine);
+            var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_SourceFilePath), engine);
             string format = v_Format.ConvertToUserVariable(engine);
 
             string result = FilePathControls.FormatFileFolderPath(filePath, format);

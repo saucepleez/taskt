@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get absolute variable path or URL to source file
-            var vSourceFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePathOrigin), engine);
+            var vSourceFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePathOrigin), engine);
 
             //track local file location
             string vLocalSourceFile = vSourceFile;

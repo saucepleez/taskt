@@ -174,7 +174,7 @@ namespace taskt.Core.Automation.Commands
 
             //var startFile = v_taskPath.ConvertToUserVariable(engine);
             //var startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
-            var startFile = this.ConvertToUserVariableAsFilePath(nameof(v_taskPath), engine);
+            var startFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_taskPath), engine);
 
             // check file exists
             if (!System.IO.File.Exists(startFile))

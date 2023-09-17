@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, "txt");
             //}
-            var filePath = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
+            var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
 
             //var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
             var outputText = v_TextToWrite.ConvertToUserVariable(engine);
