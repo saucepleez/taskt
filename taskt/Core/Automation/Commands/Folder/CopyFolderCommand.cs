@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
             FolderPathControls.FolderAction(this, engine,
                 new Action<string>(path =>
                 {
-                    var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
+                    var destinationFolder = v_DestinationDirectory.ExpandValueOrUserVariableAsFolderPath(engine);
 
                     if (!Directory.Exists(destinationFolder))
                     {

@@ -102,7 +102,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     var currentFolderName = Path.GetFileName(path);
 
-                    var newFolderName = v_NewName.ConvertToUserVariableAsFolderName(engine);
+                    var newFolderName = v_NewName.ExpandValueOrUserVariableAsFolderName(engine);
 
                     //get source folder name and info
                     DirectoryInfo sourceFolderInfo = new DirectoryInfo(path);

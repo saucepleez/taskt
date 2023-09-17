@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                directory = this.ConvertToUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
+                directory = this.ExpandValueOrUserVariableAsFolderPath(nameof(v_InitialDirectory), engine);
             }
 
             Type tp = null;

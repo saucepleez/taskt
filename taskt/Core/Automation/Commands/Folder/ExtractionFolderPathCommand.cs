@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (taskt.Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            string folderPath = v_SourceFolderPath.ConvertToUserVariableAsFolderPath(engine);
+            string folderPath = v_SourceFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
 
             string format = v_Format.ConvertToUserVariable(engine);
 

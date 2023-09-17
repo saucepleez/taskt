@@ -121,7 +121,7 @@ namespace taskt.Core.Automation.Commands
 
             //get file path to destination files
             //var vExtractionFolder = v_PathDestination.ConvertToUserVariable(engine);
-            var vExtractionFolder = v_PathDestination.ConvertToUserVariableAsFolderPath(engine);
+            var vExtractionFolder = v_PathDestination.ExpandValueOrUserVariableAsFolderPath(engine);
 
             // If the directory doesn't exist, create it.
             if (!Directory.Exists(vExtractionFolder))

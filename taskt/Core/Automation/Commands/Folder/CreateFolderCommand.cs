@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
             FolderPathControls.FolderAction(this, engine,
                 new Action<string>(path =>
                 {
-                    var newFolder = v_NewFolderName.ConvertToUserVariableAsFolderName(engine);
+                    var newFolder = v_NewFolderName.ExpandValueOrUserVariableAsFolderName(engine);
 
                     var finalPath = System.IO.Path.Combine(path, newFolder);
                     if (System.IO.Directory.Exists(finalPath)) { }
