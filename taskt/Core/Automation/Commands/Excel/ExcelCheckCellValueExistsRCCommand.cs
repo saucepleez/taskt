@@ -55,9 +55,11 @@ namespace taskt.Core.Automation.Commands
 
             var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
 
-            var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
+            //var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
 
-            var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
+            //var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
+
+            var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(nameof(v_ValueType), this, engine);
 
             chkFunc(rg).StoreInUserVariable(engine, v_userVariableName);
         }

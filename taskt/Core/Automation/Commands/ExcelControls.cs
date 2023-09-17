@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
+using OpenQA.Selenium.Internal;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -496,8 +497,36 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region Func methods
-        public static Func<Range, bool> CheckCellValueFunctionFromRange(string valueType)
+        //public static Func<Range, bool> CheckCellValueFunctionFromRange(string valueType)
+        //{
+        //    Func<Range, bool> func = null;
+        //    switch (valueType)
+        //    {
+        //        case "cell":
+        //            func = (rg) => { return !String.IsNullOrEmpty((string)rg.Text); };
+        //            break;
+
+        //        case "formula":
+        //            func = (rg) => { return ((string)rg.Formula).StartsWith("="); };
+        //            break;
+
+        //        case "back color":
+        //            func = (rg) => { return ((long)rg.Interior.Color) != 16777215; };
+        //            break;
+        //    }
+        //    return func;
+        //}
+
+        /// <summary>
+        /// get CheckCellValueFunction
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static Func<Range, bool> CheckCellValueFunctionFromRange(string parameterName, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
+            var valueType = command.GetUISelectionValue(parameterName, engine);
             Func<Range, bool> func = null;
             switch (valueType)
             {
