@@ -181,13 +181,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_EMailPath { get; }
 
         /// <summary>
-        /// get EMailList Variable from variable name specified argument
+        /// expand user variable as EMailList
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static List<MimeKit.MimeMessage> GetMailKitEMailListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not EMailList</exception>
+        public static List<MimeKit.MimeMessage> ExpandUserVariableAsEMailList(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is List<MimeKit.MimeMessage> ml)
@@ -201,13 +201,13 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get EMail Variable from variable name specified argument
+        /// expand user variable as EMail
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static MimeKit.MimeMessage GetMailKitEMailVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not EMail</exception>
+        public static MimeKit.MimeMessage ExpandUserVariableAsEmail(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is MimeKit.MimeMessage mail)
@@ -220,11 +220,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static MimeKit.MimeMessage GetMailKitEMailVariable(this ScriptCommand command, string mailParameterName, Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// expand user variable as EMail from specified parameter
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="mailParameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static MimeKit.MimeMessage ExpandUserVariableAsEmail(this ScriptCommand command, string mailParameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(mailParameterName);
             string mailName = prop.GetValue(command)?.ToString() ?? "";
-            return mailName.GetMailKitEMailVariable(engine);
+            return mailName.ExpandUserVariableAsEmail(engine);
         }
 
         public static void StoreInUserVariable(this List<MimeKit.MimeMessage> value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
@@ -237,9 +244,18 @@ namespace taskt.Core.Automation.Commands
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
         }
 
+        /// <summary>
+        /// get address from EMail
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="mailParameterName"></param>
+        /// <param name="typeParameterName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static MimeKit.InternetAddressList GetMailKitEMailAddresses(this ScriptCommand command, string mailParameterName, string typeParameterName, Engine.AutomationEngineInstance engine)
         {
-            var mail = command.GetMailKitEMailVariable(mailParameterName, engine);
+            var mail = command.ExpandUserVariableAsEmail(mailParameterName, engine);
 
             var addressType = command.GetUISelectionValue(typeParameterName, engine);
             switch (addressType)
@@ -269,6 +285,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get security option
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         public static MailKit.Security.SecureSocketOptions GetMailKitSecureOption(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
             var secureOption = command.GetUISelectionValue(propertyName, engine);

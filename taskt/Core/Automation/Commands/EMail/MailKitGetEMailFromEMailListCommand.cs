@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mails = v_MailListName.GetMailKitEMailListVariable(engine);
+            var mails = v_MailListName.ExpandUserVariableAsEMailList(engine);
 
             int index;
             if (String.IsNullOrEmpty(v_Index))
