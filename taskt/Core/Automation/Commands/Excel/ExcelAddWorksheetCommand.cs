@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             excelInstance.Worksheets.Add();
 
             var sheetName = v_NewSheetName.ConvertToUserVariable(engine);

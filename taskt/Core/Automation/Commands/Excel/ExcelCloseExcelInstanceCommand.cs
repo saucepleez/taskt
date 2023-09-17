@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ConvertToUserVariable(engine);
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             //check if workbook exists and save
             if (excelInstance.ActiveWorkbook != null)

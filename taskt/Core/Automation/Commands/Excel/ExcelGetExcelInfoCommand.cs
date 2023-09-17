@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
             string ret = "";
@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
                     ret = excelInstance.ActiveWorkbook?.FullName ?? "";
                     break;
                 case "current sheet":
-                    var sheet = engine.engineSettings.CurrentWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
+                    var sheet = engine.engineSettings.CurrentWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
                     ret = (sheet == null) ? "" : sheet.Name;
                     break;
                 case "number of sheets":

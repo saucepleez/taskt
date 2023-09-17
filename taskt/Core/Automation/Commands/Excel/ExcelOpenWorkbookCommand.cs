@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 

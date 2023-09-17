@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             var splittext = v_TextToSet.Split(',');
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             int i = 1;            
             int lastUsedRow;

@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             //string fileName;
             //if (FilePathControls.ContainsFileCounter(v_FileName, engine))

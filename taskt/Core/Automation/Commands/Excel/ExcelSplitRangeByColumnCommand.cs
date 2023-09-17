@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             var vTargetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
             var vTargetAddress2 = v_ExcelCellAddress2.ConvertToUserVariable(sender);

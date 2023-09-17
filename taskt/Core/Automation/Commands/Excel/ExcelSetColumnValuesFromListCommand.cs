@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             
             List<string> myList = v_ListVariable.GetListVariable(engine);

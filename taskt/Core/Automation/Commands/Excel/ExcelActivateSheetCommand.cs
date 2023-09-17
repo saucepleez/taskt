@@ -35,9 +35,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var excelInstance, var currentSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var currentSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            Microsoft.Office.Interop.Excel.Worksheet targetSheet = v_SheetName.GetExcelWorksheet(engine, excelInstance);
+            Microsoft.Office.Interop.Excel.Worksheet targetSheet = v_SheetName.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance);
 
             if (currentSheet.Name != targetSheet.Name)
             {

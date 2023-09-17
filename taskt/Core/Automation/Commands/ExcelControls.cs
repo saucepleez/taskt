@@ -252,13 +252,20 @@ namespace taskt.Core.Automation.Commands
 
 
         #region instance, worksheet methods
-        public static Application GetExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// expand value or UserVariable as Excel Instance
+        /// </summary>
+        /// <param name="instanceName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception">value is not Excel Instance</exception>
+        public static Application ExpandValueOrUserVariableAsExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
             string ins = instanceName.ConvertToUserVariable(engine);
             var instanceObject = engine.GetAppInstance(ins);
-            if (instanceObject is Application)
+            if (instanceObject is Application app)
             {
-                return (Application)instanceObject;
+                return app;
             }
             else
             {
@@ -266,20 +273,43 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static (Application instance, Worksheet sheet) GetExcelInstanceAndWorksheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// expancd value or UserVariable as Excel instance and worksheet
+        /// </summary>
+        /// <param name="instanceName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="">value is not Excel Instance</exception>
+        public static (Application instance, Worksheet sheet) ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
-            var instanceObject = instanceName.GetExcelInstance(engine);
+            var instanceObject = instanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             return (instanceObject, GetCurrentWorksheet(instanceObject));
         }
 
-        public static (Application instance, Worksheet sheet) GetExcelInstanceAndWorksheet(this (string instanceName, string sheetName) info, Automation.Engine.AutomationEngineInstance engine, bool returnNullIfSheetDoesNotExists = false)
+        /// <summary>
+        /// expand value or UserVariable as Excel instance and worksheet
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="engine"></param>
+        /// <param name="returnNullIfSheetDoesNotExists"></param>
+        /// <returns></returns>
+        public static (Application instance, Worksheet sheet) ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(this string instanceName, string sheetName, Automation.Engine.AutomationEngineInstance engine, bool returnNullIfSheetDoesNotExists = false)
         {
-            var instanceObject = info.instanceName.GetExcelInstance(engine);
-            var sheet = info.sheetName.GetExcelWorksheet(engine, instanceObject, returnNullIfSheetDoesNotExists);
+            var instanceObject = instanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var sheet = sheetName.ExpandValueOrUserVariableAsExcelWorksheet(engine, instanceObject, returnNullIfSheetDoesNotExists);
             return (instanceObject, sheet);
         }
 
-        public static Worksheet GetExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, bool returnNullIfSheetDoesNotExists = false)
+        /// <summary>
+        /// expand value or user variable as Excel Worksheet
+        /// </summary>
+        /// <param name="sheetVariable"></param>
+        /// <param name="engine"></param>
+        /// <param name="excelInstance"></param>
+        /// <param name="returnNullIfSheetDoesNotExists"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception">worksheet does not exists</exception>
+        public static Worksheet ExpandValueOrUserVariableAsExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, bool returnNullIfSheetDoesNotExists = false)
         {
             var sheet = sheetVariable.ConvertToUserVariable(engine);
             if (sheet == engine.engineSettings.CurrentWorksheetKeyword)
@@ -357,6 +387,11 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get current worksheet
+        /// </summary>
+        /// <param name="excelInstance"></param>
+        /// <returns></returns>
         private static Worksheet GetCurrentWorksheet(Application excelInstance)
         {
             if (excelInstance.Sheets.Count == 0)
@@ -369,6 +404,12 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get next worksheet
+        /// </summary>
+        /// <param name="excelInstance"></param>
+        /// <param name="mySheet"></param>
+        /// <returns></returns>
         private static Worksheet GetNextWorksheet(Application excelInstance, Worksheet mySheet = null)
         {
             Worksheet currentSheet;
@@ -407,6 +448,13 @@ namespace taskt.Core.Automation.Commands
                 return null;
             }
         }
+
+        /// <summary>
+        /// get previous worksheet
+        /// </summary>
+        /// <param name="excelInstance"></param>
+        /// <param name="mySheet"></param>
+        /// <returns></returns>
         private static Worksheet GetPreviousWorksheet(Application excelInstance, Worksheet mySheet = null)
         {
             Worksheet currentSheet;
@@ -639,6 +687,8 @@ namespace taskt.Core.Automation.Commands
             return setFunc;
         }
         #endregion
+
+        #region cell-range methods
 
         public static int GetColumnIndex(Worksheet sheet, string columnName)
         {
@@ -904,6 +954,7 @@ namespace taskt.Core.Automation.Commands
 
             return (rowIndex, columnStartIndex, columnEndIndex, valueType);
         }
+        #endregion
 
         #region convert methods
         public static string GetoExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
