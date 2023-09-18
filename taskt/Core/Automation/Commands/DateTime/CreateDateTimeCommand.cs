@@ -121,17 +121,17 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            int year = this.ConvertToUserVariableAsInteger(nameof(v_Year), engine);
+            int year = this.ExpandValueOrUserVariableAsInteger(nameof(v_Year), engine);
 
-            int month = this.ConvertToUserVariableAsInteger(nameof(v_Month), engine);
+            int month = this.ExpandValueOrUserVariableAsInteger(nameof(v_Month), engine);
 
-            int day = this.ConvertToUserVariableAsInteger(nameof(v_Day), engine);
+            int day = this.ExpandValueOrUserVariableAsInteger(nameof(v_Day), engine);
 
-            int hour = this.ConvertToUserVariableAsInteger(nameof(v_Hour), engine);
+            int hour = this.ExpandValueOrUserVariableAsInteger(nameof(v_Hour), engine);
 
-            int minute = this.ConvertToUserVariableAsInteger(nameof(v_Minute), engine);
+            int minute = this.ExpandValueOrUserVariableAsInteger(nameof(v_Minute), engine);
 
-            int second = this.ConvertToUserVariableAsInteger(nameof(v_Second), engine);
+            int second = this.ExpandValueOrUserVariableAsInteger(nameof(v_Second), engine);
 
             DateTime myDT = new DateTime(year, month, day, hour, minute, second);
             myDT.StoreInUserVariable(engine, v_DateTime);

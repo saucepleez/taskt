@@ -97,8 +97,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             var click = this.GetUISelectionValue(nameof(v_ClickType), engine);
-            var xAd = this.ConvertToUserVariableAsInteger(nameof(v_XOffset), engine);
-            var yAd = this.ConvertToUserVariableAsInteger(nameof(v_YOffset), engine);
+            var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+            var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
             var mouseClick = new MoveMouseCommand()
             {

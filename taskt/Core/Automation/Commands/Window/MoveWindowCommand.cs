@@ -151,7 +151,7 @@ namespace taskt.Core.Automation.Commands
                         }
                         else
                         {
-                            xPos = v_XWindowPosition.ConvertToUserVariableAsInteger("X Position", engine);
+                            xPos = v_XWindowPosition.ExpandValueOrUserVariableAsInteger("X Position", engine);
                         }
 
                         var variableYPosition = v_YWindowPosition.ConvertToUserVariable(engine);
@@ -166,7 +166,7 @@ namespace taskt.Core.Automation.Commands
                         }
                         else
                         {
-                            yPos = v_YWindowPosition.ConvertToUserVariableAsInteger("Y Position", engine);
+                            yPos = v_YWindowPosition.ExpandValueOrUserVariableAsInteger("Y Position", engine);
                         }
 
                         WindowNameControls.SetWindowPosition(win.Item1, xPos, yPos);

@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {  
-                index = this.ConvertToUserVariableAsInteger(nameof(v_Index), engine);
+                index = this.ExpandValueOrUserVariableAsInteger(nameof(v_Index), engine);
             }
 
             if (index < 0)

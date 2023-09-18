@@ -383,7 +383,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static int GetColumnIndex(DataTable table, string columnIndex, Engine.AutomationEngineInstance engine)
         {
-            int index = new PropertyConvertTag(columnIndex, "Column Index").ConvertToUserVariableAsInteger(engine);
+            int index = new PropertyConvertTag(columnIndex, "Column Index").ExpandValueOrUserVariableAsInteger(engine);
             if (index < 0)
             {
                 index = table.Columns.Count + index;
@@ -458,7 +458,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static int GetRowIndex(DataTable table, string rowIndex, Engine.AutomationEngineInstance engine)
         {
-            var index = rowIndex.ConvertToUserVariableAsInteger("Row Index", engine);
+            var index = rowIndex.ExpandValueOrUserVariableAsInteger("Row Index", engine);
 
             if (index < 0)
             {

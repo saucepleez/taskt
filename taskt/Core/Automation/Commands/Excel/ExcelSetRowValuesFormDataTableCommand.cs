@@ -86,7 +86,7 @@ namespace taskt.Core.Automation.Commands
                     myDT
                 );
 
-            int dtRowIndex = this.ConvertToUserVariableAsInteger(nameof(v_DataTableRowIndex), "DataTable Row Index", engine);
+            int dtRowIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_DataTableRowIndex), "DataTable Row Index", engine);
             if  (dtRowIndex >= myDT.Rows.Count)
             {
                 throw new Exception("DataTable Row " + v_DataTableRowIndex + " is not exists");

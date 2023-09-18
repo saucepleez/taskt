@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Strange Filter Property. Value: '" + filter + "'");
             }
 
-            var index = this.ConvertToUserVariableAsInteger(nameof(v_FilterIndex), engine);
+            var index = this.ExpandValueOrUserVariableAsInteger(nameof(v_FilterIndex), engine);
             if (index < 1)
             {
                 throw new Exception("Strange FilterIndex Property: Value: " + index);

@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
 
             // imap host
             string pop = v_IMAPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_IMAPPort), engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_IMAPPort), engine);
 
             // auth
             string user = v_IMAPUserName.ConvertToUserVariable(engine);

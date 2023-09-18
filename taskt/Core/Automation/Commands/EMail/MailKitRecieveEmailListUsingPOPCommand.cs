@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
 
             // pop host
             string pop = v_POPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_POPPort), engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_POPPort), engine);
 
             // auth
             string user = v_POPUserName.ConvertToUserVariable(engine);

@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             //User32Functions.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
             KeyMouseControls.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
 
-            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTimeAfterClick), engine);
+            var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeAfterClick), engine);
             System.Threading.Thread.Sleep(waitTime);
         }
     }

@@ -38,9 +38,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var variableName = VariableNameControls.GetWrappedVariableName(v_VariableName, engine);
-            var variableValue = new PropertyConvertTag(variableName, "Variable Name").ConvertToUserVariableAsDecimal(engine);
+            var variableValue = new PropertyConvertTag(variableName, "Variable Name").ExpandValueOrUserVariableAsDecimal(engine);
 
-            var add = this.ConvertToUserVariableAsDecimal(nameof(v_VariableName), engine);
+            var add = this.ExpandValueOrUserVariableAsDecimal(nameof(v_VariableName), engine);
 
             (variableValue - add).ToString().StoreInUserVariable(engine, variableName);
         }

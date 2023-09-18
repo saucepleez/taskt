@@ -129,7 +129,7 @@ namespace taskt.Core.Automation.Commands
 
             // smtp host
             string smtp = v_SMTPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_SMTPPort), engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_SMTPPort), engine);
 
             // auth
             string user = v_SMTPUserName.ConvertToUserVariable(engine);

@@ -116,8 +116,8 @@ namespace taskt.Core.Automation.Commands
                         //Console.WriteLine($"Brow x:{screenX}, y:{screenY}");
                         //Console.WriteLine($"Scroll x:{scrollX}, y:{scrollY}");
 
-                        var offsetX = this.ConvertToUserVariableAsInteger(nameof(v_XOffset), engine);
-                        var offsetY = this.ConvertToUserVariableAsInteger(nameof(v_YOffset), engine);
+                        var offsetX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+                        var offsetY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
                         var clickX = elementLocation.X - scrollX + screenX + offsetX;
                         var clickY = elementLocation.Y - scrollY + screenY + offsetY;

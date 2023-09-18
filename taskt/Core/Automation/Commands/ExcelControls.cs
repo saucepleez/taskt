@@ -821,13 +821,13 @@ namespace taskt.Core.Automation.Commands
                     columnIndex = GetColumnIndex(excelSheet, col);
                     break;
                 case "rc":
-                    columnIndex = command.ConvertToUserVariableAsInteger(columnValueName, "Column", engine);
+                    columnIndex = command.ExpandValueOrUserVariableAsInteger(columnValueName, "Column", engine);
                     break;
             }
 
             string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
 
-            int rowStartIndex = command.ConvertToUserVariableAsInteger(rowStartName, "Start Row", engine);
+            int rowStartIndex = command.ExpandValueOrUserVariableAsInteger(rowStartName, "Start Row", engine);
             string rowEndValue = command.GetRawPropertyString(rowEndName, "End Row");
             int rowEndIndex;
             if (String.IsNullOrEmpty(rowEndValue))
@@ -864,7 +864,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                rowEndIndex = rowEndValue.ConvertToUserVariableAsInteger("End Row", engine);
+                rowEndIndex = rowEndValue.ExpandValueOrUserVariableAsInteger("End Row", engine);
             }
 
             if (rowStartIndex > rowEndIndex)
@@ -881,7 +881,7 @@ namespace taskt.Core.Automation.Commands
 
         public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(string rowValueName, string columnTypeName, string columnStartName, string columnEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
         {
-            int rowIndex = command.ConvertToUserVariableAsInteger(rowValueName, "Row Index", engine);
+            int rowIndex = command.ExpandValueOrUserVariableAsInteger(rowValueName, "Row Index", engine);
 
             string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
 
@@ -951,7 +951,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         columnStartValue = "1";
                     }
-                    columnStartIndex = columnStartValue.ConvertToUserVariableAsInteger("Start Column", engine);
+                    columnStartIndex = columnStartValue.ExpandValueOrUserVariableAsInteger("Start Column", engine);
 
                     if (String.IsNullOrEmpty(columnEndValue))
                     {
@@ -966,7 +966,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        columnEndIndex = columnEndValue.ConvertToUserVariableAsInteger("Column End", engine);
+                        columnEndIndex = columnEndValue.ExpandValueOrUserVariableAsInteger("Column End", engine);
                     }
 
                     break;
@@ -1001,8 +1001,8 @@ namespace taskt.Core.Automation.Commands
 
         public static (int row, int column) GetExcelRCLocation(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
-            int row = command.ConvertToUserVariableAsInteger(rowPropertyName, "Row", engine);
-            int column = command.ConvertToUserVariableAsInteger(columnPropertyName, "Column", engine);
+            int row = command.ExpandValueOrUserVariableAsInteger(rowPropertyName, "Row", engine);
+            int column = command.ExpandValueOrUserVariableAsInteger(columnPropertyName, "Column", engine);
             if (CheckCorrectRC(row, column, excelInstance))
             {
                 return (row, column);

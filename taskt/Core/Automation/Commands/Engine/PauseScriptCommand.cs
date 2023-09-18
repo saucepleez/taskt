@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var pauseLength = this.ConvertToUserVariableAsInteger(nameof(v_PauseLength), engine);
+            var pauseLength = this.ExpandValueOrUserVariableAsInteger(nameof(v_PauseLength), engine);
 
             System.Threading.Thread.Sleep(pauseLength);
         }

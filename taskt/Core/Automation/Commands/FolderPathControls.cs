@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
         public static string WaitForFolder(string pathValue, string waitTimeValue, Engine.AutomationEngineInstance engine)
         {
             var path = pathValue.ExpandValueOrUserVariableAsFolderPath(engine);
-            var waitTime = waitTimeValue.ConvertToUserVariableAsInteger("Wait Time", engine);
+            var waitTime = waitTimeValue.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
             return WaitForFolder(path, waitTime, engine);
         }
 
@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
         public static string WaitForFolder(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
             var path = command.ExpandValueOrUserVariableAsFolderPath(pathName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
             return WaitForFolder(path, waitTime, engine);
         }
 

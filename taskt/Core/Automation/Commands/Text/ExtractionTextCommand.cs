@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (parms.Keys.Contains("Leading Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var index = parms["Skip Past Occurences"].ExpandValueOrUserVariableAsInteger("Skip Past Occurences", engine);
                 var searchText = parms["Leading Text"];
 
                 var positions = SearchTextPositions(targetText, searchText);
@@ -177,7 +177,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (parms.Keys.Contains("Trailing Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var index = parms["Skip Past Occurences"].ExpandValueOrUserVariableAsInteger("Skip Past Occurences", engine);
                 var searchText = parms["Trailing Text"];
 
                 var positions = SearchTextPositions(targetText, searchText);

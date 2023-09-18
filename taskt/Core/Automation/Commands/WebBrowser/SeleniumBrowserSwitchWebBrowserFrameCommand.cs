@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_FrameParameter = "0";
                     }
-                    var frameIndex = this.ConvertToUserVariableAsInteger(nameof(v_FrameParameter), engine);
+                    var frameIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_FrameParameter), engine);
                     seleniumInstance.SwitchTo().Frame(frameIndex);
                     break;
 

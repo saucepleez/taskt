@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
             var matches = regex.Match(variableInput);
             if (matches.Groups.Count > 0)
             {
-                var matchGroup = this.ConvertToUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
+                var matchGroup = this.ExpandValueOrUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
 
                 if (matchGroup < 0)
                 {

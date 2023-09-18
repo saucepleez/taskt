@@ -61,8 +61,8 @@ namespace taskt.Core.Automation.Commands
 
             var variableName = v_userVariableName.ConvertToUserVariable(engine);
 
-            var startIndex = this.ConvertToUserVariableAsInteger(nameof(v_startIndex), engine);
-            var stringLength = this.ConvertToUserVariableAsInteger(nameof(v_stringLength), engine);
+            var startIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_startIndex), engine);
+            var stringLength = this.ExpandValueOrUserVariableAsInteger(nameof(v_stringLength), engine);
 
             //apply substring
             string subStr;

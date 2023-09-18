@@ -119,8 +119,8 @@ namespace taskt.Core.Automation.Commands
                 default:
                     //value1 = param["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
                     //value2 = param["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
-                    value1 = new PropertyConvertTag(param["Value1"], "Value1").ConvertToUserVariableAsDecimal(engine);
-                    value2 = new PropertyConvertTag(param["Value2"], "Value2").ConvertToUserVariableAsDecimal(engine);
+                    value1 = new PropertyConvertTag(param["Value1"], "Value1").ExpandValueOrUserVariableAsDecimal(engine);
+                    value2 = new PropertyConvertTag(param["Value2"], "Value2").ExpandValueOrUserVariableAsDecimal(engine);
                     break;
             }
 
@@ -278,7 +278,7 @@ namespace taskt.Core.Automation.Commands
         private static bool DetermineStatementTruth_ErrorOccur(DataTable actionParameterTable, Engine.AutomationEngineInstance engine, bool inverseResult = false)
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", false);
-            int lineNumber = param["Line Number"].ConvertToUserVariableAsInteger("Line Number", engine);
+            int lineNumber = param["Line Number"].ExpandValueOrUserVariableAsInteger("Line Number", engine);
 
             bool result;
 
@@ -1558,17 +1558,17 @@ namespace taskt.Core.Automation.Commands
                 case "not between":
                     convFunc = (txt, p) =>
                     {
-                        decimal tv = new PropertyConvertTag(txt, "Value").ConvertToUserVariableAsDecimal(engine);
-                        decimal v1 = new PropertyConvertTag(p["Value1"], "Compared Value1").ConvertToUserVariableAsDecimal(engine);
-                        decimal v2 = new PropertyConvertTag(p["Value2"], "Compared Value2").ConvertToUserVariableAsDecimal(engine);
+                        decimal tv = new PropertyConvertTag(txt, "Value").ExpandValueOrUserVariableAsDecimal(engine);
+                        decimal v1 = new PropertyConvertTag(p["Value1"], "Compared Value1").ExpandValueOrUserVariableAsDecimal(engine);
+                        decimal v2 = new PropertyConvertTag(p["Value2"], "Compared Value2").ExpandValueOrUserVariableAsDecimal(engine);
                         return (tv, v1, v2);
                     };
                     break;
                 default:
                     convFunc = (txt, p) =>
                     {
-                        decimal tv = new PropertyConvertTag(txt, "Value").ConvertToUserVariableAsDecimal(engine);
-                        decimal v1 = new PropertyConvertTag(p["Value"], "Compared Value").ConvertToUserVariableAsDecimal(engine);
+                        decimal tv = new PropertyConvertTag(txt, "Value").ExpandValueOrUserVariableAsDecimal(engine);
+                        decimal v1 = new PropertyConvertTag(p["Value"], "Compared Value").ExpandValueOrUserVariableAsDecimal(engine);
                         return (tv, v1, 0);
                     };
                     break;

@@ -541,7 +541,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("File Path contains Invalid chars. Path: '" + path + "'");
             }
 
-            var waitTime = waitTimeValue.ConvertToUserVariableAsInteger("Wait Time", engine);
+            var waitTime = waitTimeValue.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
             return WaitForFile(path, waitTime, engine);
         }
 
@@ -556,7 +556,7 @@ namespace taskt.Core.Automation.Commands
         public static string WaitForFile(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
             var path = command.ExpandValueOrUserVariableAsFilePath(pathName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
             return WaitForFile(path, waitTime, engine);
         }
 

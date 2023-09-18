@@ -167,7 +167,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //begin search
-            double timeoutSeconds = this.ConvertToUserVariableAsInteger(nameof(v_TimeoutSeconds), engine);
+            double timeoutSeconds = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeoutSeconds), engine);
             DateTime timeoutDue = DateTime.Now.AddSeconds(timeoutSeconds);
 
             bool imageFound = false;
@@ -247,8 +247,8 @@ namespace taskt.Core.Automation.Commands
                                     screenShotUpdate.FillRectangle(brush, Rectangle);
                                 }
 
-                                var xOffset = this.ConvertToUserVariableAsInteger(nameof(v_xOffsetAdjustment), engine);
-                                var yOffset = this.ConvertToUserVariableAsInteger(nameof(v_YOffsetAdjustment), engine);
+                                var xOffset = this.ExpandValueOrUserVariableAsInteger(nameof(v_xOffsetAdjustment), engine);
+                                var yOffset = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffsetAdjustment), engine);
                                 var mouseClick = this.GetUISelectionValue(nameof(v_MouseClick), engine);
 
                                 //move mouse to position

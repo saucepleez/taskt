@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
 
             int range = rowEnd - rowStart + 1;
 
-            int dtColumnIndex = this.ConvertToUserVariableAsInteger(nameof(v_DataTableColumnIndex), "DataTable Column Index", engine);
+            int dtColumnIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_DataTableColumnIndex), "DataTable Column Index", engine);
             if ((dtColumnIndex < 0) || (dtColumnIndex >= myDT.Columns.Count))
             {
                 throw new Exception("Column index " + v_DataTableColumnIndex + " is not exists");

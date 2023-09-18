@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var delay = this.ConvertToUserVariableAsInteger(nameof(v_EngineSpeed), engine);
+            var delay = this.ExpandValueOrUserVariableAsInteger(nameof(v_EngineSpeed), engine);
             engine.engineSettings.DelayBetweenCommands = delay;
         }
 

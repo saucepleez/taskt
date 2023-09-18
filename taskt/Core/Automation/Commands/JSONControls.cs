@@ -329,7 +329,7 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "number":
-                    ret =  new PropertyConvertTag(jsonValue, "Value to " + purpose).ConvertToUserVariableAsDecimal(engine);
+                    ret =  new PropertyConvertTag(jsonValue, "Value to " + purpose).ExpandValueOrUserVariableAsDecimal(engine);
                     break;
 
                 case "bool":

@@ -118,7 +118,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    timeOut = -1;
             //}
-            var timeOut = this.ConvertToUserVariableAsInteger(nameof(v_TimeOut), engine);
+            var timeOut = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeOut), engine);
 
             //set driver timeout
             if (timeOut > 0)

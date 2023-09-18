@@ -634,7 +634,7 @@ namespace taskt.Core.Automation.Commands
         {
             var elem = command.CovnertToUserVariableAsUIElement(elementName, engine);
             var table = command.ConvertParameterToDataTable(conditionName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
             return SearchGUIElement(elem, table, waitTime, engine);
         }
@@ -1076,7 +1076,7 @@ namespace taskt.Core.Automation.Commands
         {
             var element = command.CovnertToUserVariableAsUIElement(rootElementName, engine);
             var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
-            var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+            var wait = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
             return SearchGUIElementByXPath(element, xpath, wait, engine);
         }

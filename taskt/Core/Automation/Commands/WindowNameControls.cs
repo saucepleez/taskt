@@ -691,8 +691,8 @@ namespace taskt.Core.Automation.Commands
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
             var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
             var matchType = command.GetUISelectionValue(matchTypeName, engine);
-            var index = command.ConvertToUserVariableAsInteger(indexName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitName, engine);
+            var index = command.ExpandValueOrUserVariableAsInteger(indexName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitName, engine);
 
             return FindWindows(window, compareMethod, matchType, index, waitTime, engine);
         }
@@ -710,7 +710,7 @@ namespace taskt.Core.Automation.Commands
         {
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
             var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitName, engine);
 
             return FindWindows(window, compareMethod, "All", 60, waitTime, engine);
         }

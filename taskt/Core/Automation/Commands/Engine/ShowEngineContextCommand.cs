@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var closeValue = this.ConvertToUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
+            var closeValue = this.ExpandValueOrUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
             //automatically close messageboxes for server requests
             if (engine.serverExecution && closeValue <= 0)

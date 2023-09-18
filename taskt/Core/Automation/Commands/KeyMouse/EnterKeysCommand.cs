@@ -137,7 +137,7 @@ namespace taskt.Core.Automation.Commands
                 SendKeys.SendWait(textToSend);
             }
 
-            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTime), engine);
+            var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
             System.Threading.Thread.Sleep(waitTime);
         }
 

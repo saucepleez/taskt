@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                 return;
             }
 
-            var closeAfter = this.ConvertToUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
+            var closeAfter = this.ExpandValueOrUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
             //automatically close messageboxes for server requests
             if (engine.serverExecution && closeAfter <= 0)

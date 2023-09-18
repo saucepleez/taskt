@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var rootElement = v_RootElement.GetUIElementVariable(engine);
-            int index = v_Index.ConvertToUserVariableAsInteger("v_Index", engine);
+            int index = v_Index.ExpandValueOrUserVariableAsInteger("v_Index", engine);
 
             var elems = UIElementControls.GetChildrenUIElements(rootElement, v_SearchParameters, engine);
             if (elems.Count > 0)

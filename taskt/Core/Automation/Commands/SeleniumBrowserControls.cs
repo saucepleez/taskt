@@ -424,7 +424,7 @@ namespace taskt.Core.Automation.Commands
             var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
             var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
 
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
             var indexString = command.GetRawPropertyString(elementIndexName, "Index");
             int index;
@@ -434,7 +434,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                index = command.ConvertToUserVariableAsInteger(elementIndexName, engine);
+                index = command.ExpandValueOrUserVariableAsInteger(elementIndexName, engine);
             }
 
             return GetSeleniumBrowserInstanceAndElement(seleniumInstance, searchMethod, searchParameter, index, waitTime, engine);
@@ -513,7 +513,7 @@ namespace taskt.Core.Automation.Commands
             var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
             var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
 
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
             return GetSeleniumBrowserInstanceAndElements(seleniumInstance, searchMethod, searchParameter, waitTime, engine);
         }

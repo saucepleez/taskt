@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
 
             string meth = this.GetUISelectionValue(nameof(v_CalculationMethod), engine);
 
-            int value = this.ConvertToUserVariableAsInteger(nameof(v_Value), engine);
+            int value = this.ExpandValueOrUserVariableAsInteger(nameof(v_Value), engine);
 
             string[] method = meth.Split(' ');
             if (method[0] == "substract")
