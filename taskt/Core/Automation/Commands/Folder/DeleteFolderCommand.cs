@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Folder Move to the Recycle Bin")]
         [PropertyIsOptional(true, "No")]
         public string v_MoveToRecycleBin { get; set; }

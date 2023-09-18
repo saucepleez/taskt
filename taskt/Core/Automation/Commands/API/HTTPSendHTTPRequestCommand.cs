@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WebRequestURL { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Execute Request as the currently logged on user?")]
         public string v_WebRequestCredentials { get; set; }
 

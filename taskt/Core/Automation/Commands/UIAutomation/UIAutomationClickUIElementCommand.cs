@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         public string v_YOffset { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Activate Window before Click")]
         [PropertyIsOptional(true, "Yes")]
         public string v_ActivateWindow { get; set; }

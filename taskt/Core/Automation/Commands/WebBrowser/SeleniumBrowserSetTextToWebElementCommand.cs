@@ -26,13 +26,13 @@ namespace taskt.Core.Automation.Commands
         public string v_TextToSet { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Clear Text before Setting Text")]
         [PropertyIsOptional(true, "No")]
         public string v_ClearTextBeforeSetting { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Encrypted Text")]
         [PropertyIsOptional(true, "No")]
         public string v_EncryptedText { get; set; }

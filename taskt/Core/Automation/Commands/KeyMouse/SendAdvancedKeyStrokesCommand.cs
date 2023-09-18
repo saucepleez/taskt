@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         public DataTable v_KeyActions { get; set; }
 
         [XmlElement]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Return all keys to 'UP' position after execution")]
         [PropertyIsOptional(true, "No")]
         public string v_KeyUpDefault { get; set; }

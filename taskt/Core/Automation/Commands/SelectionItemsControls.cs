@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// methods for PropertyUISelection attributes
     /// </summary>
-    internal static class SelectionControls
+    internal static class SelectionItemsControls
     {
         /// <summary>
         /// yes no combobox

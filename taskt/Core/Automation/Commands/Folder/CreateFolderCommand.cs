@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Delete Folder When it already Exists")]
         [PropertyIsOptional(true, "No")]
         public string v_DeleteExisting { get; set; }

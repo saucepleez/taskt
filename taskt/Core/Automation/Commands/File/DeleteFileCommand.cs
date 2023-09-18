@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WhenFileDoesNotExists { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("File Move to the Recycle Bin")]
         [PropertyIsOptional(true, "No")]
         public string v_MoveToRecycleBin { get; set; }
