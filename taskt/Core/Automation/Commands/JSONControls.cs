@@ -159,13 +159,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_ArrayIndex { get; }
 
         /// <summary>
-        /// get JSON text from text value or variable contains text. this method returns root type "object" or "array".
+        /// expand value or user variable as JSON. this method returns root type "object" or "array".
         /// </summary>
         /// <param name="jsonValue"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (string json, string rootType) ConvertToUserVariableAsJSON(this string jsonValue, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static (string json, string rootType) ExpandValueOrUserVariableAsJSON(this string jsonValue, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             var jsonText = jsonValue.ConvertToUserVariable(engine).Trim();
             if (jsonText.StartsWith("{") && jsonText.EndsWith("}"))
@@ -246,7 +246,7 @@ namespace taskt.Core.Automation.Commands
                 jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
             }
             string extractor = command.ConvertToUserVariable(extractorName, "Extractor", engine);
-            (var jsonText, var rootType) = jsonVariableName.ConvertToUserVariableAsJSON(engine);
+            (var jsonText, var rootType) = jsonVariableName.ExpandValueOrUserVariableAsJSON(engine);
             switch(rootType)
             {
                 case "object":
@@ -290,7 +290,7 @@ namespace taskt.Core.Automation.Commands
                     jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
                 }
             }
-            (var jsonText, var rootType) = jsonVariableName.ConvertToUserVariableAsJSON(engine);
+            (var jsonText, var rootType) = jsonVariableName.ExpandValueOrUserVariableAsJSON(engine);
             switch (rootType)
             {
                 case "object":
