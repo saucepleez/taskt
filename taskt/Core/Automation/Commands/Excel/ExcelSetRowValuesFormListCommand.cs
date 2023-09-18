@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             // get list
-            List<string> myList = v_ListVariable.GetListVariable(engine);
+            List<string> myList = v_ListVariable.ExpandUserVariableAsList(engine);
 
             (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
                 ExcelControls.GetRangeIndeiesRowDirection(

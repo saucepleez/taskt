@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
             var keyType = this.GetUISelectionValue(nameof(v_KeyType), "Key Type", engine);
 
@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands
             switch (keyType)
             {
                 case "list":
-                    keysList = v_Keys.GetListVariable(engine);
+                    keysList = v_Keys.ExpandUserVariableAsList(engine);
                     dicUseKeys(keysList);
                     break;
                 case "comma separated":

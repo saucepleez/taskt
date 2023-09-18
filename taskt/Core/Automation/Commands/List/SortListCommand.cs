@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             switch (targetType)
             {
                 case "text":
-                    List<string> targetList = v_InputList.GetListVariable(engine);
+                    List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
                     List<string> newList = new List<string>(targetList);
 
                     newList.Sort();
@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "number":
-                    List<decimal> targetValueList = v_InputList.GetDecimalListVariable(false, engine);
+                    List<decimal> targetValueList = v_InputList.ExpandUserVariableAsDecimalList(false, engine);
                     List<decimal> valueList = new List<decimal>(targetValueList);
 
                     valueList.Sort();

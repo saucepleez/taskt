@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             (var myDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
             string trgColumnName = myDT.Columns[colIndex].ColumnName;
 
-            List<string> myList = v_SetListName.GetListVariable(engine);
+            List<string> myList = v_SetListName.ExpandUserVariableAsList(engine);
 
             string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check

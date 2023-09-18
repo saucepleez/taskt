@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var _, var index) = this.GetListVariableAndIndex(nameof(v_ListName), nameof(v_Index), engine);
+            (var _, var index) = this.ExpandUserVariablesAsListAndIndex(nameof(v_ListName), nameof(v_Index), engine);
 
             var rawVariable = v_ListName.GetRawVariable(engine);
             rawVariable.CurrentPosition = index;

@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
             DataTable myDT = new DataTable();
 
@@ -161,7 +161,7 @@ namespace taskt.Core.Automation.Commands
             switch (columnsType)
             {
                 case "list":
-                    columnsList = v_Columns.GetListVariable(engine);
+                    columnsList = v_Columns.ExpandUserVariableAsList(engine);
                     dtUseColumns(columnsList);
                     break;
                 case "comma separated":

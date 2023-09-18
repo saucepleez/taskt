@@ -490,8 +490,8 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            var list1 = param["List1"].GetListVariable(engine);
-            var list2 = param["List2"].GetListVariable(engine);
+            var list1 = param["List1"].ExpandUserVariableAsList(engine);
+            var list2 = param["List2"].ExpandUserVariableAsList(engine);
 
             if (list1.Count == list2.Count)
             {

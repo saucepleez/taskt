@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_InputList.GetListVariable(engine);
+            List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
             List<string> newList = new List<string>(targetList);
             newList.StoreInUserVariable(engine, v_OutputList);
         }
