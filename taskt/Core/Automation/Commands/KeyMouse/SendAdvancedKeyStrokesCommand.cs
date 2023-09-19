@@ -156,7 +156,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //return key to up position if requested
-            if (this.GetYesNoSelectionValue(nameof(v_KeyUpDefault), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_KeyUpDefault), engine))
             {
                 foreach (var key in keysDown)
                 {

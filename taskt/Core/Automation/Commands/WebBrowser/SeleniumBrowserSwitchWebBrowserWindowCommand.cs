@@ -86,10 +86,10 @@ namespace taskt.Core.Automation.Commands
 
             var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
-            var matchType = this.GetUISelectionValue(nameof(v_WindowMatchType), engine);
+            var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
 
-            var exactMatchRequired = this.GetUISelectionValue(nameof(v_MatchSpecification), engine);
-            var caseSensitive = this.GetUISelectionValue(nameof(v_CaseSensitiveMatch), engine);
+            var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
+            var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
 
             Func<IWebDriver, string, bool> matchFunc = getMatchFunc(matchType, exactMatchRequired, caseSensitive);
 

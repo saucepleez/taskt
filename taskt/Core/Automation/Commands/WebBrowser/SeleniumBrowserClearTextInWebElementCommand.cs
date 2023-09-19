@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {
                 var scroll = new SeleniumBrowserScrollToWebElementCommand
                 {
@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
                     elem.Clear();
                     break;
                 default:
-                    if (this.GetUISelectionValue(nameof(v_WhenClearNotSupported), engine) == "error")
+                    if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenClearNotSupported), engine) == "error")
                     {
                         throw new Exception("Specified WebElement does not support Clear Text. TagName: '" + elem.TagName + "'");
                     }

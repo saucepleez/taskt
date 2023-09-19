@@ -689,8 +689,8 @@ namespace taskt.Core.Automation.Commands
         public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine)
         {
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
-            var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
-            var matchType = command.GetUISelectionValue(matchTypeName, engine);
+            var compareMethod = command.ExpandValueOrUserVariableAsSelectionItem(compareMethodName, engine);
+            var matchType = command.ExpandValueOrUserVariableAsSelectionItem(matchTypeName, engine);
             var index = command.ExpandValueOrUserVariableAsInteger(indexName, engine);
             var waitTime = command.ExpandValueOrUserVariableAsInteger(waitName, engine);
 
@@ -709,7 +709,7 @@ namespace taskt.Core.Automation.Commands
         public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine)
         {
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
-            var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
+            var compareMethod = command.ExpandValueOrUserVariableAsSelectionItem(compareMethodName, engine);
             var waitTime = command.ExpandValueOrUserVariableAsInteger(waitName, engine);
 
             return FindWindows(window, compareMethod, "All", 60, waitTime, engine);
@@ -795,7 +795,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="errorFunc"></param>
         private static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
         {
-            var matchType = command.GetUISelectionValue(matchTypeName, engine);
+            var matchType = command.ExpandValueOrUserVariableAsSelectionItem(matchTypeName, engine);
 
             WindowAction(command, matchType, new Func<List<(IntPtr, string)>>(() =>
             {

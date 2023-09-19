@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                if (this.GetUISelectionValue(nameof(v_WhenFailScroll), engine) == "error")
+                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailScroll), engine) == "error")
                 {
                     throw new Exception("Failed to Scroll To WebElement");
                 }

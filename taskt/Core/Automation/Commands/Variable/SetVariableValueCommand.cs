@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var isRepalce = this.GetUISelectionValue(nameof(v_ReplaceInputVariables), engine);
+            var isRepalce = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceInputVariables), engine);
             string variableValue;
             if (isRepalce == "yes")
             {

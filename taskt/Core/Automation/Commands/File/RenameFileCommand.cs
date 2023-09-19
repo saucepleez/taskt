@@ -136,7 +136,7 @@ namespace taskt.Core.Automation.Commands
                         newExtension = "." + newExtension;
                     }
 
-                    var newFileOption = this.GetUISelectionValue(nameof(v_ExtentionOption), engine);
+                    var newFileOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExtentionOption), engine);
                     switch (newFileOption)
                     {
                         case "auto":
@@ -169,7 +169,7 @@ namespace taskt.Core.Automation.Commands
                     //create destination
                     var destinationPath = Path.Combine(sourceFileInfo.DirectoryName, newFileName);
 
-                    var whenSame = this.GetUISelectionValue(nameof(v_IfFileNameSame), engine);
+                    var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFileNameSame), engine);
                     if (currentFileName == newFileName)
                     {
                         switch (whenSame)

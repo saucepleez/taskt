@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
 
             string newColName = v_AddColumnName.ConvertToUserVariable(engine);
 
-            string ifColumnExists = this.GetUISelectionValue(nameof(v_IfColumnExists), "If Column Exists", engine);
+            string ifColumnExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfColumnExists), "If Column Exists", engine);
 
             for (int i = 0; i < myDT.Columns.Count; i++)
             {

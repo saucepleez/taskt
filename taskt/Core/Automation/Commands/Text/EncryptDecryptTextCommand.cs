@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
 
             string resultData = "";
 
-            var encType = this.GetUISelectionValue(nameof(v_EncryptionType), engine);
+            var encType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionType), engine);
             switch (encType)
             {
                 case "encrypt":

@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
                 new Action<string>(path =>
                 {
                     //delete folder
-                    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_MoveToRecycleBin), engine))
                     {
                         Shell32.MoveToRecycleBin(path);
                     }

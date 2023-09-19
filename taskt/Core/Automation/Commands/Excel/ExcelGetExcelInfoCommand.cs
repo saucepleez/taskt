@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
             var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
-            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
+            var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine);
             string ret = "";
             switch (infoType)
             {

@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                switch(this.GetUISelectionValue(nameof(v_IfWorksheetExists), "If Worksheet Exists", engine))
+                switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorksheetExists), "If Worksheet Exists", engine))
                 {
                     case "error":
                         throw new Exception("Excel Instance '" + v_InstanceName + "' has Worksheets.");

@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
             //check if workbook exists and save
             if (excelInstance.ActiveWorkbook != null)
             {
-                string vSaved = this.GetUISelectionValue(nameof(v_ExcelSaveOnExit), "Save Setting", engine);
+                string vSaved = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExcelSaveOnExit), "Save Setting", engine);
 
                 excelInstance.ActiveWorkbook.Close((vSaved == "true"));
             }

@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
 
             var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
 
-            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {
                 var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
                 {
@@ -92,7 +92,7 @@ namespace taskt.Core.Automation.Commands
 
             var sel = new SelectElement(elem);
             var value = v_SelectionValue.ConvertToUserVariable(engine);
-            var selectType = this.GetUISelectionValue(nameof(v_SelectionType), engine);
+            var selectType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
             try
             {
                 switch (selectType)
@@ -131,7 +131,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                if (this.GetUISelectionValue(nameof(v_WhenFailSelectAction), engine) == "error")
+                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailSelectAction), engine) == "error")
                 {
                     throw new Exception($"Fail Select Option. Type:'{selectType}', Value:'{value}'");
                 }

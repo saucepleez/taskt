@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             var myDT1 = v_DateTime1.ExpandUserVariableAsDateTime(engine);
             var myDT2 = v_DateTime2.ExpandUserVariableAsDateTime(engine);
 
-            string format = this.GetUISelectionValue(nameof(v_Format), engine);
+            string format = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Format), engine);
 
             TimeSpan diff = myDT2 - myDT1;
 

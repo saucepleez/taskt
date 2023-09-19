@@ -249,7 +249,7 @@ namespace taskt.Core.Automation.Commands
 
                                 var xOffset = this.ExpandValueOrUserVariableAsInteger(nameof(v_xOffsetAdjustment), engine);
                                 var yOffset = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffsetAdjustment), engine);
-                                var mouseClick = this.GetUISelectionValue(nameof(v_MouseClick), engine);
+                                var mouseClick = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MouseClick), engine);
 
                                 //move mouse to position
                                 var mouseMove = new MoveMouseCommand

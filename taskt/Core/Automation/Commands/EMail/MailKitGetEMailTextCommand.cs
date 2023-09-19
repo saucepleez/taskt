@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
             var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
-            var textType = this.GetUISelectionValue(nameof(v_TextType), engine);
+            var textType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextType), engine);
 
             string res = "";
             switch (textType)

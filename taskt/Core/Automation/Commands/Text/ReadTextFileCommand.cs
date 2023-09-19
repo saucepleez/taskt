@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);
-            var readPreference = this.GetUISelectionValue(nameof(v_ReadOption), engine);
+            var readPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReadOption), engine);
             if (readPreference == "line count")
             {
                 result = result.Replace("\r\n", "\n");  // \n\n -> \n

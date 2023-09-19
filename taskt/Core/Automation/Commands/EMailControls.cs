@@ -257,7 +257,7 @@ namespace taskt.Core.Automation.Commands
         {
             var mail = command.ExpandUserVariableAsEmail(mailParameterName, engine);
 
-            var addressType = command.GetUISelectionValue(typeParameterName, engine);
+            var addressType = command.ExpandValueOrUserVariableAsSelectionItem(typeParameterName, engine);
             switch (addressType)
             {
                 case "from":
@@ -294,7 +294,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static MailKit.Security.SecureSocketOptions GetMailKitSecureOption(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
-            var secureOption = command.GetUISelectionValue(propertyName, engine);
+            var secureOption = command.ExpandValueOrUserVariableAsSelectionItem(propertyName, engine);
 
             var option = MailKit.Security.SecureSocketOptions.Auto;
             switch (secureOption)

@@ -274,7 +274,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref=""></exception>
         public static string MathProcess(ScriptCommand command, string notNumericName, string listName, Engine.AutomationEngineInstance engine, Func<List<decimal>, decimal> mathFunc)
         {
-            var notNumeric = command.GetUISelectionValue(notNumericName, "Not Numeric", engine);
+            var notNumeric = command.ExpandValueOrUserVariableAsSelectionItem(notNumericName, "Not Numeric", engine);
 
             var list = ExpandUserVariableAsDecimalList(listName, (notNumeric == "ignore"), engine);
 

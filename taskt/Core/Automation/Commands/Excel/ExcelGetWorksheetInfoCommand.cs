@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             string ret = "";
             int idx = 1;
 
-            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
+            var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine);
             switch (infoType)
             {
                 case "name":

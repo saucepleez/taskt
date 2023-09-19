@@ -97,7 +97,7 @@ namespace taskt.Core.Automation.Commands
 
             if (!String.IsNullOrEmpty(searchFile))
             {
-                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), engine);
+                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine);
                 switch (searchMethod)
                 {
                     case "contains":

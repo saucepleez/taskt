@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
 
             var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
 
-            var selectionType = this.GetUISelectionValue(nameof(v_SelectionType), engine);
+            var selectionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
             switch (selectionType)
             {
                 case "index":

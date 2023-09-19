@@ -315,7 +315,7 @@ namespace taskt.Core.Automation.Commands
         public static object GetJSONValue(this ScriptCommand command, string jsonValueName, string valueTypeName, string purpose, Engine.AutomationEngineInstance engine)
         {
             string jsonValue = command.ConvertToUserVariable(jsonValueName, "Value to " + purpose, engine);
-            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+            string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
             if (valueType == "auto")
             {
                 valueType = GetJSONType(jsonValue).ToLower();

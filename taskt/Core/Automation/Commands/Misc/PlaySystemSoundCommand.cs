@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (taskt.Core.Automation.Engine.AutomationEngineInstance)sender;
-            string sound = v_SoundType.GetUISelectionValue("v_SoundType", this, engine);
+            string sound = v_SoundType.ExpandValueOrUserVariableAsSelectionItem("v_SoundType", this, engine);
             switch (sound)
             {
                 case "asterisk":

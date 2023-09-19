@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
             DataTable addDT = v_RowName.ExpandUserVariableAsDataTable(engine);
 
-            string notExistsKey = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Does Not Exists", engine);
+            string notExistsKey = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_NotExistsKey), "Key Does Not Exists", engine);
 
             // get columns list
             List<string> columns = myDT.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();

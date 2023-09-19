@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
             var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
             string windowName = UIElementControls.GetWindowName(targetElement);
-            if (this.GetYesNoSelectionValue(nameof(v_ActivateWindow), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindow), engine))
             {
                 var activateWindow = new ActivateWindowCommand()
                 {
@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("No Clickable Point in UIElement '" + v_TargetElement + "'");
             }
 
-            var click = this.GetUISelectionValue(nameof(v_ClickType), engine);
+            var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
             var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
             var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 

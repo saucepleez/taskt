@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
 
             var myDic = new Dictionary<string, string>(dicA);
 
-            string keyExists = this.GetUISelectionValue(nameof(v_KeyExists), "When Key Exists", engine);
+            string keyExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_KeyExists), "When Key Exists", engine);
 
             switch (keyExists)
             {

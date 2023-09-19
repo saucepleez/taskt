@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var codeType = SelectionItemsControls.GetUISelectionValue(this, nameof(v_CodeType), engine);
+            var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
 
             string script = "";
             if (codeType == "code")

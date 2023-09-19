@@ -131,7 +131,7 @@ namespace taskt.Core.Automation.Commands
                     //sample for temp testing
                     var htmlInput = v_InputHTML.ConvertToUserVariable(sender);
 
-                    var errorOnClose = this.GetUISelectionValue(nameof(v_ErrorOnClose), engine);
+                    var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
 
                     var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
 

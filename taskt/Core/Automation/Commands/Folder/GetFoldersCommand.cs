@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
             var searchFolder = v_SearchFolderName.ExpandValueOrUserVariableAsFolderName(engine);
             if (!String.IsNullOrEmpty(searchFolder))
             {
-                switch (this.GetUISelectionValue(nameof(v_SearchMethod), engine))
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine))
                 {
                     case "contains":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).Contains(searchFolder)).ToList();

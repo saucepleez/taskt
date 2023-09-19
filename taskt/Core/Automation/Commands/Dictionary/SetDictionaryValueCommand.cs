@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                string ifNotExits = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                string ifNotExits = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExits)
                 {
                     case "error":

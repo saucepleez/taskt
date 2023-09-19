@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
 
             var parms = DataTableControls.GetFieldValues(v_TextExtractionTable, "Parameter Name", "Parameter Value", engine);
             string extractedText = "";
-            switch (this.GetUISelectionValue(nameof(v_TextExtractionType), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextExtractionType), engine))
             {
                 case "extract all after text":
                     extractedText = ExtractLeadingText(variableInput, parms, engine);

@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
 
             var myDic = v_RowValues.ExpandUserVariableAsDictinary(engine);
 
-            string ifKeyNotExists = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Not Exists", engine);
+            string ifKeyNotExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_NotExistsKey), "Key Not Exists", engine);
 
             // get columns list
             new GetDataTableColumnListCommand

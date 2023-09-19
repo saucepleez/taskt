@@ -120,7 +120,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (!Directory.Exists(destinationFolder))
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
                         {
                             Directory.CreateDirectory(destinationFolder);
                         }
@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
                     //delete if it already exists per user
                     if (Directory.Exists(finalPath))
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
                         {
                             Directory.Delete(finalPath, true);
                         }

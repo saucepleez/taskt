@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
 
             var textToSend = v_TextToSend.ConvertToUserVariable(engine);
 
-            var encryptOption = this.GetUISelectionValue(nameof(v_EncryptionOption), engine);
+            var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
             if (encryptOption == "encrypted")
             {
                 textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");

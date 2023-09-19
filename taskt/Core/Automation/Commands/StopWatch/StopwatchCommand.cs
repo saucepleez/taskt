@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;   
             var instanceName = v_StopwatchName.ConvertToUserVariable(engine);
             
-            var action = this.GetUISelectionValue(nameof(v_StopwatchAction), engine);
+            var action = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_StopwatchAction), engine);
             System.Diagnostics.Stopwatch stopwatch;
             switch (action)
             {

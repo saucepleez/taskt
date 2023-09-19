@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    switch(this.GetUISelectionValue(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
+                    switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
                     {
                         case "error":
                             throw new Exception("Excel file '" + v_FileName + "' is already exists.");

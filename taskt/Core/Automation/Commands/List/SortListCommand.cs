@@ -63,9 +63,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string sortOrder = this.GetUISelectionValue(nameof(v_SortOrder), "Sort Order", engine);
+            string sortOrder = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SortOrder), "Sort Order", engine);
 
-            string targetType = this.GetUISelectionValue(nameof(v_TargetType), "Target Type", engine);
+            string targetType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TargetType), "Target Type", engine);
 
             switch (targetType)
             {

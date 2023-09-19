@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> myList = v_SetListName.ExpandUserVariableAsList(engine);
 
-            string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
+            string ifRowNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check
             if (myDT.Rows.Count < myList.Count)
             {
@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            string ifListNotEnough = this.GetUISelectionValue(nameof(v_IfListNotEnough), "List Not Enough", engine);
+            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfListNotEnough), "List Not Enough", engine);
             if ((myDT.Rows.Count > myList.Count) && (ifListNotEnough == "error"))
             {
                 throw new Exception("The number of List items is less than the rows");

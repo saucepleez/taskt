@@ -132,7 +132,7 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    Directory.CreateDirectory(vExtractionFolder);
                 //}
-                if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
                 {
                     Directory.CreateDirectory(vExtractionFolder);
                 }

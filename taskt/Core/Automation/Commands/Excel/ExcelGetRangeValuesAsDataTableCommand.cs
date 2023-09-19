@@ -63,13 +63,13 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+            string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
 
             int rowStartIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_RowStart), "Start Row", engine);
 
             int columnStartIndex = 0;
             int columnEndIndex = 0;
-            switch(this.GetUISelectionValue(nameof(v_ColumnType), "Column Type", engine))
+            switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnType), "Column Type", engine))
             {
                 case "range":
                     columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));

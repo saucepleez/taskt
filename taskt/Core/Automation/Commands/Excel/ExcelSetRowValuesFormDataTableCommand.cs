@@ -92,7 +92,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("DataTable Row " + v_DataTableRowIndex + " is not exists");
             }
 
-            string ifDataTableNotEnough = this.GetUISelectionValue(nameof(v_IfDataTableNotEnough), "If DataTable Not Enough", engine);
+            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDataTableNotEnough), "If DataTable Not Enough", engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifDataTableNotEnough == "error")
             {
@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDT.Columns.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

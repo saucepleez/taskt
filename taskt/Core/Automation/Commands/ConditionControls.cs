@@ -1436,7 +1436,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc(string targetTypeName, string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
-            string tp = command.GetUISelectionValue(targetTypeName, "Target Type", engine);
+            string tp = command.ExpandValueOrUserVariableAsSelectionItem(targetTypeName, "Target Type", engine);
             switch (tp)
             {
                 case "text":

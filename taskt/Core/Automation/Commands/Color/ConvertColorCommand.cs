@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             Color co = v_Color.ExpandUserVariableAsColor(engine);
-            string format = this.GetUISelectionValue(nameof(v_Format), engine);
+            string format = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Format), engine);
 
             string res = "";
             switch (format)

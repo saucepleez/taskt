@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
                     //create destination
                     var destinationPath = Path.Combine(sourceFolderInfo.Parent.FullName, newFolderName);
 
-                    var whenSame = this.GetUISelectionValue(nameof(v_IfFolderNameSame), engine);
+                    var whenSame = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfFolderNameSame), engine);
                     if (currentFolderName == newFolderName)
                     {
                         switch (whenSame)

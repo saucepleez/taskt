@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
 
             var targetText = v_TextToSet.ConvertToUserVariable(sender);
 
-            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+            string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
 
             var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
 

@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var actionType = this.GetUISelectionValue(nameof(v_SeleniumElementAction), engine);
+            var actionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumElementAction), engine);
             var parameters = DataTableControls.GetFieldValues(v_WebActionParameterTable, "Parameter Name", "Parameter Value", false, engine);
             switch (actionType)
             {

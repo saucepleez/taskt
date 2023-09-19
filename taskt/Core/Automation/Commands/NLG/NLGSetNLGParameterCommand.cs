@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
 
             var userInput = v_Parameter.ConvertToUserVariable(sender);
 
-            switch (this.GetUISelectionValue(nameof(v_ParameterType), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine))
             {
                 case "set subject":
                     p.setSubject(userInput);

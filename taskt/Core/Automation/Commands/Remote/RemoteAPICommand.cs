@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
             {
                 var server = v_BaseURL.ConvertToUserVariable(engine);
                 //var paramType = v_ParameterType.ConvertToUserVariable(engine);
-                var paramType = this.GetUISelectionValue(nameof(v_ParameterType), engine);
+                var paramType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine);
                 var timeout = v_RequestTimeout.ConvertToUserVariable(engine);
 
                 var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout);

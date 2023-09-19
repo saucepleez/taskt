@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
 
             var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
 
-            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {
                 var scrollCommand = new SeleniumBrowserScrollToWebElementCommand()
                 {
@@ -86,7 +86,7 @@ namespace taskt.Core.Automation.Commands
 
             var attributeName = v_AttributeName.ConvertToUserVariable(engine);
 
-            var throwError = (this.GetUISelectionValue(nameof(v_WhenNoAttribute), engine) == "error");
+            var throwError = (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenNoAttribute), engine) == "error");
 
             var lst = new List<string>();
             foreach(var opt in options)

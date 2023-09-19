@@ -88,7 +88,7 @@ namespace taskt.Core.Automation.Commands
                 p.ProcessName.StoreInUserVariable(engine, v_StartedProcessName);
             }
 
-            var waitForExit = this.GetUISelectionValue(nameof(v_WaitForExit), engine);
+            var waitForExit = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WaitForExit), engine);
 
             if (waitForExit == "yes")
             {

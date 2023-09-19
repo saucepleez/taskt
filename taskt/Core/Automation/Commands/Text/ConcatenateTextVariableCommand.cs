@@ -64,8 +64,8 @@ namespace taskt.Core.Automation.Commands
             var text = targetVariable.ConvertToUserVariable(engine);
             var con = v_ConcatText.ConvertToUserVariable(engine);
 
-            var insertNewLine = this.GetUISelectionValue(nameof(v_InsertNewLine), "Insert New Line", engine);
-            var concatPosition = this.GetUISelectionValue(nameof(v_ConcatenatePosition), "Concatenate Position", engine);
+            var insertNewLine = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InsertNewLine), "Insert New Line", engine);
+            var concatPosition = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ConcatenatePosition), "Concatenate Position", engine);
 
             switch (insertNewLine)
             {

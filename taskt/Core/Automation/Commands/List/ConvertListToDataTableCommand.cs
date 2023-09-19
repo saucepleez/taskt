@@ -76,8 +76,8 @@ namespace taskt.Core.Automation.Commands
 
             Action<List<string>> dtUseColumns = new Action<List<string>>((targetColumns) =>
             {
-                string columnsNotEnough = this.GetUISelectionValue(nameof(v_ColumnsNotEnough), "Columns Not Enough", engine);
-                string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
+                string columnsNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnsNotEnough), "Columns Not Enough", engine);
+                string listItemNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
 
                 if ((columnsNotEnough == "error") && (targetList.Count > targetColumns.Count))
                 {
@@ -157,7 +157,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> columnsList;
 
-            string columnsType = this.GetUISelectionValue(nameof(v_ColumnType), "Columns Type", engine);
+            string columnsType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnType), "Columns Type", engine);
             switch (columnsType)
             {
                 case "list":

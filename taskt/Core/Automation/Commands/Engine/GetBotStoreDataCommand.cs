@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
 
             var keyName = v_KeyName.ConvertToUserVariable(engine);
 
-            var dataOption = this.GetUISelectionValue(nameof(v_DataOption), engine);
+            var dataOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DataOption), engine);
             BotStoreRequest.RequestType requestType;
             if (dataOption == "Retrieve Entire Record")
             {

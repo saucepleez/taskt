@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             string sendKey = "";
-            switch (this.GetUISelectionValue(nameof(v_Hotkey), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Hotkey), engine))
             {
                 case "new":
                     sendKey = "^n";

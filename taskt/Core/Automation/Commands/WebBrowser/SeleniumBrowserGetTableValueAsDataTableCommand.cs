@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
 
             var attrName = v_AttributeName.ConvertToUserVariable(engine);
 
-            var firstRowMethod = this.GetUISelectionValue(nameof(v_FirstRowMethod), engine);
+            var firstRowMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FirstRowMethod), engine);
 
             DataTable newDT = new DataTable();
 

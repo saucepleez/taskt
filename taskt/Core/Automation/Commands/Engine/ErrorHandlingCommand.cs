@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var act = this.GetUISelectionValue(nameof(v_ErrorHandlingAction), engine);
+            var act = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorHandlingAction), engine);
             switch (act)
             {
                 case "stop processing":

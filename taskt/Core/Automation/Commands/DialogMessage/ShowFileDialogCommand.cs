@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             Type tp = null;
-            switch (this.GetUISelectionValue(nameof(v_DialogType), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DialogType), engine))
             {
                 case "open":
                     //engine.tasktEngineUI.Invoke(new Action(() =>

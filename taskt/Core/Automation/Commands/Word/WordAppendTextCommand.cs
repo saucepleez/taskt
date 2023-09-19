@@ -119,7 +119,7 @@ namespace taskt.Core.Automation.Commands
             paragraph.Range.Font.Name = v_FontName;
             paragraph.Range.Font.Size = float.Parse(v_FontSize);
 
-            if (this.GetUISelectionValue(nameof(v_FontBold), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontBold), engine) == "yes")
             {
                 paragraph.Range.Font.Bold = 1;
             }
@@ -127,7 +127,7 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Bold = 0;
             }
-            if (this.GetUISelectionValue(nameof(v_FontItalic), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontItalic), engine) == "yes")
             {
                 paragraph.Range.Font.Italic = 1;
             }
@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Italic = 0;
             }
-            if (this.GetUISelectionValue(nameof(v_FontUnderline), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontUnderline), engine) == "yes")
             {
                 paragraph.Range.Font.Underline = WdUnderline.wdUnderlineSingle;
             }

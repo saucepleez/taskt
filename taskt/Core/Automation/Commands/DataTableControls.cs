@@ -409,7 +409,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         private static int GetColumnIndex(this ScriptCommand command, DataTable table, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
-            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+            string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
 
             int columnIndex = 0;
             switch (columnType)

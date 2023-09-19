@@ -71,14 +71,14 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_InputList.ExpandUserVariableAsList(engine);
 
-            var keyType = this.GetUISelectionValue(nameof(v_KeyType), "Key Type", engine);
+            var keyType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_KeyType), "Key Type", engine);
 
             Dictionary<string, string> myDic = new Dictionary<string, string>();
 
             Action<List<string>> dicUseKeys = new Action<List<string>>((targetKeys) =>
             {
-                string keysNotEnough = this.GetUISelectionValue(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
-                string listItemNotEnough = this.GetUISelectionValue(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
+                string keysNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_KeysNotEnough), "Keys Not Enough", engine);
+                string listItemNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ListItemNotEnough), "List Item Not Enough", engine);
 
                 if ((keysNotEnough == "error") && (targetList.Count > targetKeys.Count))
                 {

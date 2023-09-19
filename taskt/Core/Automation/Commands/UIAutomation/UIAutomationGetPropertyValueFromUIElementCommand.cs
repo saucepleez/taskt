@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_TargetElement.GetUIElementVariable(engine);
 
-            var propName = this.GetUISelectionValue(nameof(v_PropertyName), engine);
+            var propName = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PropertyName), engine);
             switch (propName)
             {
                 case "name":

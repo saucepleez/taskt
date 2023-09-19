@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
                 );
 
             //string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
-            string ifListNotEnough = this.GetUISelectionValue(nameof(v_IfDictionaryNotEnough), "If Dictionary Not Enough", engine);
+            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDictionaryNotEnough), "If Dictionary Not Enough", engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifListNotEnough == "error")
             {
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDic.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
 
             string[] keys = new string[myDic.Count];
             myDic.Keys.CopyTo(keys, 0);

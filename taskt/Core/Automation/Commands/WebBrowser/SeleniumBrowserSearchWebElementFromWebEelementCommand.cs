@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
 
-            var searchMethod = this.GetUISelectionValue(nameof(v_SeleniumSearchType), engine);
+            var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumSearchType), engine);
             var searchFunc = GetWebElementSearchMethod(searchMethod);
 
             var searchParameter = v_SeleniumSearchParameter.ConvertToUserVariable(engine);

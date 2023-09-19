@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
 
             var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
 
-            string meth = this.GetUISelectionValue(nameof(v_CalculationMethod), engine);
+            string meth = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CalculationMethod), engine);
 
             int value = this.ExpandValueOrUserVariableAsInteger(nameof(v_Value), engine);
 

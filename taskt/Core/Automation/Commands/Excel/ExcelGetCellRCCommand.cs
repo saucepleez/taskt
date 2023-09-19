@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
             var rg = this.GetExcelRange(nameof(v_ExcelCellRow), nameof(v_ExcelCellColumn), engine, excelInstance, excelSheet);
 
-            var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
+            var valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine);
 
             var func = ExcelControls.GetCellValueFunctionFromRange(valueType);
 

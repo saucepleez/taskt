@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             (var myDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
 
             (var addDT, var srcRowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_RowName), nameof(v_SrcRowIndex), engine);
-            string ifNotColumnExists = this.GetUISelectionValue(nameof(v_NotExistsKey), "Column not exists", engine);
+            string ifNotColumnExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_NotExistsKey), "Column not exists", engine);
 
             // get columns list
             new GetDataTableColumnListCommand

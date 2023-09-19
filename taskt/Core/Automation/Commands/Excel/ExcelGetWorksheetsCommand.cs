@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
+                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), "Search Method", engine);
 
                 switch (searchMethod)
                 {

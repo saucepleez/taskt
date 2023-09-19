@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
                     myList
                 );
 
-            string ifListNotEnough = this.GetUISelectionValue(nameof(v_IfListNotEnough), "If List Not Enough", engine);
+            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfListNotEnough), "If List Not Enough", engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifListNotEnough == "error")
             {
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
                 max = myList.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

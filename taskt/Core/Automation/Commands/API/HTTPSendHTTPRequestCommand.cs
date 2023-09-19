@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
 
             //if (v_WebRequestCredentials == "Yes")
-            if (this.GetYesNoSelectionValue(nameof(v_WebRequestCredentials), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_WebRequestCredentials), engine))
             {
                 request.Credentials = CredentialCache.DefaultCredentials;
             }

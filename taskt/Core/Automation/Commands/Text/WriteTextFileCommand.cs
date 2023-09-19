@@ -67,12 +67,12 @@ namespace taskt.Core.Automation.Commands
 
             //var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
             var outputText = v_TextToWrite.ConvertToUserVariable(engine);
-            if (this.GetUISelectionValue(nameof(v_ReplaceToLineBreak), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceToLineBreak), engine) == "yes")
             {
                 outputText = outputText.Replace("[crLF]", Environment.NewLine);
             }
 
-            var isOverwrite = this.GetUISelectionValue(nameof(v_Overwrite), engine);
+            var isOverwrite = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Overwrite), engine);
             //append or overwrite as necessary
             if (isOverwrite == "append")
             {

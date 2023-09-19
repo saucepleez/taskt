@@ -87,10 +87,10 @@ namespace taskt.Core.Automation.Commands
             {
                 var server = v_BaseURL.ConvertToUserVariable(engine);
                 //var paramType = v_ParameterType.ConvertToUserVariable(engine);
-                var paramType = this.GetUISelectionValue(nameof(v_ParameterType), engine);
+                var paramType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine);
                 var parameter = v_Parameter.ConvertToUserVariable(engine);
                 //var awaitPreference = v_ExecuteAwait.ConvertToUserVariable(engine);
-                var awaitPreference = this.GetUISelectionValue(nameof(v_ExecuteAwait), engine);
+                var awaitPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ExecuteAwait), engine);
                 var timeout = v_RequestTimeout.ConvertToUserVariable(engine);
 
                 var response = Server.LocalTCPListener.SendAutomationTask(server, paramType, timeout, parameter, awaitPreference);

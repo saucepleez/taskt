@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var preference = this.GetUISelectionValue(nameof(v_PreferenceType), engine);
+            var preference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PreferenceType), engine);
 
             var parameterValue = v_ParameterValue.ConvertToUserVariable(engine);
 

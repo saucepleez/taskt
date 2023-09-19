@@ -526,7 +526,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static Func<Range, bool> CheckCellValueFunctionFromRange(string parameterName, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
-            var valueType = command.GetUISelectionValue(parameterName, engine);
+            var valueType = command.ExpandValueOrUserVariableAsSelectionItem(parameterName, engine);
             Func<Range, bool> func = null;
             switch (valueType)
             {
@@ -811,7 +811,7 @@ namespace taskt.Core.Automation.Commands
 
         public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
         {
-            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+            string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
 
             int columnIndex = 0;
             switch (columnType)
@@ -825,7 +825,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+            string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
 
             int rowStartIndex = command.ExpandValueOrUserVariableAsInteger(rowStartName, "Start Row", engine);
             string rowEndValue = command.GetRawPropertyString(rowEndName, "End Row");
@@ -883,7 +883,7 @@ namespace taskt.Core.Automation.Commands
         {
             int rowIndex = command.ExpandValueOrUserVariableAsInteger(rowValueName, "Row Index", engine);
 
-            string valueType = command.GetUISelectionValue(valueTypeName, "Value Type", engine);
+            string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
 
             int columnStartIndex = 0;
             int columnEndIndex = 0;
@@ -917,7 +917,7 @@ namespace taskt.Core.Automation.Commands
                 return columnStartIndex + size - 1;
             };
 
-            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+            string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
             switch (columnType)
             {
                 case "range":

@@ -88,7 +88,7 @@ namespace taskt.Core.Automation.Commands
                     var finalPath = System.IO.Path.Combine(path, newFolder);
                     if (System.IO.Directory.Exists(finalPath)) { }
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
                         {
                             System.IO.Directory.Delete(finalPath, true);
                         }
