@@ -42,15 +42,15 @@ namespace taskt.Core.Automation.Commands
         public static string v_FilePath { get; }
 
         /// <summary>
-        /// get word instace from value (specified argument)
+        /// expand value or user variable as Word Instance
         /// </summary>
         /// <param name="instanceName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Application GetWordInstance(this string instanceName, Engine.AutomationEngineInstance engine)
+        public static Application ExpandValueOrUserVariableAsWordInstance(this string instanceName, Engine.AutomationEngineInstance engine)
         {
-            var instance = instanceName.ConvertToUserVariable(engine);
+            var instance = instanceName.ExpandValueOrUserVariable(engine);
             var instanceObject = engine.GetAppInstance(instance);
             if (instanceObject is Application wd)
             {
@@ -63,15 +63,15 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get word instance and ActiveDocument from value (specified argument)
+        /// expand value or user variable as Word Instance and Active Document
         /// </summary>
         /// <param name="instanceName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (Application, Document) GetWordInstanceAndDocument(this string instanceName, Engine.AutomationEngineInstance engine)
+        public static (Application, Document) ExpandValueOrUserVariableAsWordInstanceAndDocument(this string instanceName, Engine.AutomationEngineInstance engine)
         {
-            var ins = instanceName.GetWordInstance(engine);
+            var ins = instanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             if (ins.Documents.Count > 0)
             {

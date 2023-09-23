@@ -19,7 +19,6 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationUIElementActionCommand : ScriptCommand
     {
-        // todo: XPath command
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
@@ -83,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var elemAction = this.GetUISelectionValue(nameof(v_AutomationType), engine);
+            var elemAction = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_AutomationType), engine);
 
             var winElemVar = VariableNameControls.GetInnerVariableName(0, engine);
             var winElem = new UIAutomationSearchUIElementFromWindowCommand()
@@ -125,6 +124,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
+            // todo: use same method
             switch (elemAction)
             {
                 case "click uielement":

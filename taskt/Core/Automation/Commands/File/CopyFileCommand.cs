@@ -101,11 +101,11 @@ namespace taskt.Core.Automation.Commands
             FilePathControls.FileAction(this, engine,
                 new Action<string>(path =>
                 {
-                    var destinationFolder = v_DestinationDirectory.ConvertToUserVariableAsFolderPath(engine);
+                    var destinationFolder = v_DestinationDirectory.ExpandValueOrUserVariableAsFolderPath(engine);
 
                     if (!Directory.Exists(destinationFolder))
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_CreateDirectory), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateDirectory), engine))
                         {
                             Directory.CreateDirectory(destinationFolder);
                         }
@@ -124,7 +124,7 @@ namespace taskt.Core.Automation.Commands
                     // todo: check folder is same
 
                     //delete if it already exists per user
-                    if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
                     {
                         File.Delete(destinationPath);
                     }

@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
             var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
             var rawVariable = variableName.GetRawVariable(engine);
 
-            var index = this.ConvertToUserVariableAsInteger(nameof(v_Index), engine);
+            var index = this.ExpandValueOrUserVariableAsInteger(nameof(v_Index), engine);
             rawVariable.CurrentPosition = index;
         }
     }

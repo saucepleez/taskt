@@ -115,11 +115,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumEngine = SelectionControls.GetUISelectionValue(this, nameof(v_EngineType), engine);
+            var seleniumEngine = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_EngineType), engine);
 
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Resources");
-            var browserPath = v_BrowserPath.ConvertToUserVariable(sender);
-            var webDriverPath = v_WebDriverPath.ConvertToUserVariable(sender);
+            var browserPath = v_BrowserPath.ExpandValueOrUserVariable(sender);
+            var webDriverPath = v_WebDriverPath.ExpandValueOrUserVariable(sender);
 
             OpenQA.Selenium.DriverService driverService;
             OpenQA.Selenium.IWebDriver webDriver;
@@ -133,7 +133,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!String.IsNullOrEmpty(v_SeleniumOptions))
                 {
-                    var convertedOptions = v_SeleniumOptions.ConvertToUserVariable(sender);
+                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(sender);
                     options.AddArguments(convertedOptions);
                 }
 
@@ -197,16 +197,16 @@ namespace taskt.Core.Automation.Commands
             }
 
             //add app instance
-            var instanceName = v_InstanceName.ConvertToUserVariable(sender);
+            var instanceName = v_InstanceName.ExpandValueOrUserVariable(sender);
             engine.AddAppInstance(instanceName, webDriver);
 
-            var instanceTracking = SelectionControls.GetUISelectionValue(this, nameof(v_InstanceTracking), engine);
+            var instanceTracking = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_InstanceTracking), engine);
             if (instanceTracking != "forget instance")
             {
                 GlobalAppInstances.AddInstance(instanceName, webDriver);
             }
 
-            var browserWindowOption = SelectionControls.GetUISelectionValue(this, nameof(v_BrowserWindowOption), engine);
+            var browserWindowOption = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_BrowserWindowOption), engine);
             if (browserWindowOption == "maximize")
             {
                 webDriver.Manage().Window.Maximize();

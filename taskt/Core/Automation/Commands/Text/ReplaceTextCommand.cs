@@ -58,11 +58,11 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get full text
-            string targetText = v_userVariableName.ConvertToUserVariable(engine);
+            string targetText = v_userVariableName.ExpandValueOrUserVariable(engine);
 
             //get replacement text and value
-            string replacementText = v_replacementText.ConvertToUserVariable(engine);
-            string replacementValue = v_replacementValue.ConvertToUserVariable(engine);
+            string replacementText = v_replacementText.ExpandValueOrUserVariable(engine);
+            string replacementValue = v_replacementValue.ExpandValueOrUserVariable(engine);
 
             //perform replacement
             targetText = targetText.Replace(replacementText, replacementValue);

@@ -40,9 +40,9 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vKey = v_Key.ConvertToUserVariable(sender);
+            var vKey = v_Key.ExpandValueOrUserVariable(sender);
 
-            var dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
             dic.ContainsKey(vKey).StoreInUserVariable(engine, v_applyToVariable);
         }
     }

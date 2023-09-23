@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             var currentSize = seleniumInstance.Manage().Window.Size;
 
@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                width = this.ConvertToUserVariableAsInteger(nameof(v_BrowserWidth), engine);
+                width = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserWidth), engine);
             }
 
             int height;
@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                height = this.ConvertToUserVariableAsInteger(nameof(v_BrowserHeight), engine);
+                height = this.ExpandValueOrUserVariableAsInteger(nameof(v_BrowserHeight), engine);
             }
             seleniumInstance.Manage().Window.Size = new System.Drawing.Size(width, height);
         }

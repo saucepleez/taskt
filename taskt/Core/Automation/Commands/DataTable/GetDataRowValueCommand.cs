@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;
 
 
-            var valueIndex = v_DataValueIndex.ConvertToUserVariable(sender);
+            var valueIndex = v_DataValueIndex.ExpandValueOrUserVariable(sender);
 
             if (String.IsNullOrEmpty(v_Option))
             {

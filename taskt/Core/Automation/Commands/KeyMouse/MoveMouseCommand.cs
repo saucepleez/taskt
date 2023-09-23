@@ -63,8 +63,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mouseX = this.ConvertToUserVariableAsInteger(nameof(v_XMousePosition), engine);
-            var mouseY = this.ConvertToUserVariableAsInteger(nameof(v_YMousePosition), engine);
+            var mouseX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XMousePosition), engine);
+            var mouseY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YMousePosition), engine);
 
             try
             {

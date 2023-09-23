@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             var browserObject = engine.GetAppInstance(vInstance);
 

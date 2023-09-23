@@ -50,13 +50,13 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             if (String.IsNullOrEmpty(v_ColumnLetter))
             {
                 v_ColumnLetter = "A";
             }
-            var columnLetter = v_ColumnLetter.ConvertToUserVariable(engine);
+            var columnLetter = v_ColumnLetter.ExpandValueOrUserVariable(engine);
 
             var lastRow = (int)excelSheet.Cells[excelSheet.Rows.Count, columnLetter].End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 

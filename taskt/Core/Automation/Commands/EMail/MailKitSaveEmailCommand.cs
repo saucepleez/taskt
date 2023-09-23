@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Save Email")]
+    [Attributes.ClassAttributes.CommandSettings("Save EMail")]
     [Attributes.ClassAttributes.Description("This command allows you to Save EMail.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Save EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitSaveEmailCommand : ScriptCommand
+    public class MailKitSaveEMailCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_InputEMailName))]
@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyDisplayText(true, "Path")]
         public string v_SavePath { get; set; }
 
-        public MailKitSaveEmailCommand()
+        public MailKitSaveEMailCommand()
         {
             //this.CommandName = "MailKitSaveEmailCommand";
             //this.SelectionName = "Save Email";
@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mail = v_MailName.GetMailKitEMailVariable(engine);
+            var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
             //string path;
             //if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    path = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "eml");
             //}
-            var path = this.ConvertToUserVariableAsFilePath(nameof(v_SavePath), engine);
+            var path = this.ExpandValueOrUserVariableAsFilePath(nameof(v_SavePath), engine);
 
             mail.WriteTo(path);
         }

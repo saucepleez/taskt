@@ -83,10 +83,10 @@ namespace taskt.Core.Automation.Commands
 
            
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
-            var targetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
-            var targetAddress2 = v_ExcelCellAddress2.ConvertToUserVariable(sender);
+            var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(sender);
+            var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(sender);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;

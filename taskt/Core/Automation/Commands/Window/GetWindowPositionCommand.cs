@@ -133,7 +133,7 @@ namespace taskt.Core.Automation.Commands
                     var pos = WindowNameControls.GetWindowPosition(whnd);
 
                     int x = 0, y = 0;
-                    switch (this.GetUISelectionValue(nameof(v_PositionBase), engine))
+                    switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
                     {
                         case "top left":
                             x = pos.left;

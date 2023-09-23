@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string hex = v_Hex.ConvertToUserVariable(engine);
+            string hex = v_Hex.ExpandValueOrUserVariable(engine);
             if (hex.Length > 6)
             {
                 hex = hex.Substring(hex.Length - 6);

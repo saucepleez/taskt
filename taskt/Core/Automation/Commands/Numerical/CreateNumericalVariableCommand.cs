@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string numString = v_NumberValue.ConvertToUserVariable(engine);
+            string numString = v_NumberValue.ExpandValueOrUserVariable(engine);
             if (decimal.TryParse(numString, out _))
             {
                 numString.StoreInUserVariable(engine, v_VariableName);

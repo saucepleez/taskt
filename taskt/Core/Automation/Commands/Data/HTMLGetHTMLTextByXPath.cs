@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(v_userVariableName.ConvertToUserVariable(sender));
+            doc.LoadHtml(v_userVariableName.ExpandValueOrUserVariable(sender));
 
             var div = doc.DocumentNode.SelectSingleNode(v_xPathQuery);
             string divString = div.InnerText;

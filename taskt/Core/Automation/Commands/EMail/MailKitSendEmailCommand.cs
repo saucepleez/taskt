@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("EMail Commands")]
     [Attributes.ClassAttributes.SubGruop("")]
-    [Attributes.ClassAttributes.CommandSettings("Send Email")]
+    [Attributes.ClassAttributes.CommandSettings("Send EMail")]
     [Attributes.ClassAttributes.Description("This command allows you to send EMail using SMTP protocol.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send an EMail and have access to SMTP server credentials to generate an EMail.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitSendEmailCommand : ScriptCommand
+    public class MailKitSendEMailCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
@@ -56,14 +56,16 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("CC EMail Address")]
-        [PropertyValidationRule("CC Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("CC", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyIsOptional(true, "")]
         [PropertyDisplayText(true, "CC")]
         public string v_SMTPCCEmail { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_EmailAddress))]
         [PropertyDescription("BCC EMail Address")]
-        [PropertyValidationRule("BCC Email", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyValidationRule("BCC", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyIsOptional(true, "")]
         [PropertyDisplayText(true, "BCC")]
         public string v_SMTPBCCEmail { get; set; }
 
@@ -105,7 +107,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_SecureOption))]
         public string v_SMTPSecureOption { get; set; }
 
-        public MailKitSendEmailCommand()
+        public MailKitSendEMailCommand()
         {
             //this.CommandName = "MailKitSendEmailCommand";
             //this.SelectionName = "Send Email";
@@ -118,27 +120,27 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             // from, to, cc, bcc, subject, body
-            string from = v_SMTPFromEmail.ConvertToUserVariable(engine);
-            string to = v_SMTPToEmail.ConvertToUserVariable(engine);
-            string cc = v_SMTPCCEmail.ConvertToUserVariable(engine);
-            string bcc = v_SMTPBCCEmail.ConvertToUserVariable(engine);
-            string subject = v_SMTPSubject.ConvertToUserVariable(engine);
-            string body = v_SMTPBody.ConvertToUserVariable(engine);
+            string from = v_SMTPFromEmail.ExpandValueOrUserVariable(engine);
+            string to = v_SMTPToEmail.ExpandValueOrUserVariable(engine);
+            string cc = v_SMTPCCEmail.ExpandValueOrUserVariable(engine);
+            string bcc = v_SMTPBCCEmail.ExpandValueOrUserVariable(engine);
+            string subject = v_SMTPSubject.ExpandValueOrUserVariable(engine);
+            string body = v_SMTPBody.ExpandValueOrUserVariable(engine);
 
             // smtp host
-            string smtp = v_SMTPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_SMTPPort), engine);
+            string smtp = v_SMTPHost.ExpandValueOrUserVariable(engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_SMTPPort), engine);
 
             // auth
-            string user = v_SMTPUserName.ConvertToUserVariable(engine);
+            string user = v_SMTPUserName.ExpandValueOrUserVariable(engine);
             if (String.IsNullOrEmpty(user))
             {
                 user = from;
             }
-            string pass = v_SMTPPassword.ConvertToUserVariable(engine);
+            string pass = v_SMTPPassword.ExpandValueOrUserVariable(engine);
 
             // attachment
-            string attachmentFilePath = v_SMTPAttachment.ConvertToUserVariable(engine);
+            string attachmentFilePath = v_SMTPAttachment.ExpandValueOrUserVariable(engine);
 
             var message = new MimeKit.MimeMessage();
             message.From.Add(new MimeKit.MailboxAddress(from, from));

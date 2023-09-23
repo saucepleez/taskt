@@ -59,14 +59,14 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var myDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+            (var myDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
 
             string trgColName = myDT.Columns[colIndex].ColumnName;
 
 
-            DataTable setDT = v_SetDataTableName.GetDataTableVariable(engine);
+            DataTable setDT = v_SetDataTableName.ExpandUserVariableAsDataTable(engine);
 
-            string ifRowNotEnough = this.GetUISelectionValue(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
+            string ifRowNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfRowNotEnough), "Row Not Enough", engine);
             // rows check
             if (myDT.Rows.Count < setDT.Rows.Count)
             {
@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            string ifDataTableNotEnough = this.GetUISelectionValue(nameof(v_IfSetDataTableNotEnough), "DataTable Not Enough", engine);
+            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfSetDataTableNotEnough), "DataTable Not Enough", engine);
             if ((myDT.Rows.Count > setDT.Rows.Count) && (ifDataTableNotEnough == "error"))
             {
                 throw new Exception("The number of DataTable items is less than the rows to settedd");

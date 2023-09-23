@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                message = v_Message.ConvertToUserVariable(engine);
+                message = v_Message.ExpandValueOrUserVariable(engine);
             }
 
             throw new Exception(message);

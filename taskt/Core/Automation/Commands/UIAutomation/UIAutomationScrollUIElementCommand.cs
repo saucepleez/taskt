@@ -56,10 +56,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
-            var scrollbarType = v_ScrollBarType.GetUISelectionValue("v_ScrollBarType", this, engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+            var scrollbarType = v_ScrollBarType.ExpandValueOrUserVariableAsSelectionItem("v_ScrollBarType", this, engine);
 
-            var dirAndAmo = v_DirectionAndAmount.GetUISelectionValue("v_DirectionAndAmount", this, engine);
+            var dirAndAmo = v_DirectionAndAmount.ExpandValueOrUserVariableAsSelectionItem("v_DirectionAndAmount", this, engine);
             ScrollAmount amount = ScrollAmount.NoAmount;
             switch (dirAndAmo)
             {

@@ -85,10 +85,10 @@ namespace taskt.Core.Automation.Commands
             var psCommand = File.ReadAllText(scriptPath);
 
             //if (v_ReplaceScriptVariables.ToUpperInvariant() == "YES")
-            if (this.GetUISelectionValue(nameof(v_ReplaceScriptVariables), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceScriptVariables), engine) == "yes")
             {
                 //convert variables
-                psCommand = psCommand.ConvertToUserVariable(sender);
+                psCommand = psCommand.ExpandValueOrUserVariable(sender);
             }
             
             //convert ps script

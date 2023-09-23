@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="ScrollBar Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get UIAutomationTester path" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExtractionFilePathCommand" CommandID="a9b35c29-90a1-4201-a6ec-c3c670c148ef" CommandName="ExtractionFilePathCommand" IsCommented="false" SelectionName="Extraction File Path" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFilePath="⦃taskt.Location⦄" v_Format="Folder" v_Result="vPath" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃vPath⦄\Samples\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Get UIAutomationTester window as UIElement" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromWindowCommand" CommandID="be605cdc-25fa-4680-84ad-ac75afc86c91" CommandName="UIAutomationSearchUIElementFromWindowCommand" IsCommented="false" SelectionName="Search UIElement From Window" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationElementVariable="vWin" v_SearchMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WindowWaitTime="60" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Search scrollbar as UIElement" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationSearchUIElementFromUIElementCommand" CommandID="ac724675-6c24-4a80-a6ba-aba3f8dc4b10" CommandName="UIAutomationSearchUIElementFromUIElementCommand" IsCommented="false" SelectionName="Search UIElement From UIElement" DefaultPause="0" LineNumber="8" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vWin⦄" v_AutomationElementVariable="vElem" v_WaitTime="10">
+        <v_SearchParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="SearchParameters082123.114629">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Enabled" type="xs:string" minOccurs="0" />
+                  <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
+                  <xs:element name="ParameterValue" type="xs:string" minOccurs="0" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="SearchParameters082123.114629" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element ref="SearchParameters082123.114629" />
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146291" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>AcceleratorKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146292" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>AccessKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146293" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>AutomationId</ParameterName>
+                <ParameterValue>Vertical ScrollBar</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146294" msdata:rowOrder="3" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ClassName</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146295" msdata:rowOrder="4" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ControlType</ParameterName>
+                <ParameterValue>ScrollBar</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146296" msdata:rowOrder="5" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>FrameworkId</ParameterName>
+                <ParameterValue>WinForm</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146297" msdata:rowOrder="6" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>HasKeyboardFocus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146298" msdata:rowOrder="7" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>HelpText</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146299" msdata:rowOrder="8" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsContentElement</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462910" msdata:rowOrder="9" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsControlElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462911" msdata:rowOrder="10" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsEnabled</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462912" msdata:rowOrder="11" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsKeyboardFocusable</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462913" msdata:rowOrder="12" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsOffscreen</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462914" msdata:rowOrder="13" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsPassword</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462915" msdata:rowOrder="14" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>IsRequiredForForm</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462916" msdata:rowOrder="15" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemStatus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462917" msdata:rowOrder="16" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemType</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462918" msdata:rowOrder="17" diffgr:hasChanges="modified">
+                <Enabled>True</Enabled>
+                <ParameterName>LocalizedControlType</ParameterName>
+                <ParameterValue>スクロール バー</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462919" msdata:rowOrder="18" diffgr:hasChanges="modified">
+                <Enabled>True</Enabled>
+                <ParameterName>Name</ParameterName>
+                <ParameterValue>textBox1</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462920" msdata:rowOrder="19" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>NativeWindowHandle</ParameterName>
+                <ParameterValue>0</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462921" msdata:rowOrder="20" diffgr:hasChanges="modified">
+                <Enabled>False</Enabled>
+                <ParameterName>ProcessID</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+            </DocumentElement>
+            <diffgr:before>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146291" msdata:rowOrder="0">
+                <Enabled>False</Enabled>
+                <ParameterName>AcceleratorKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146292" msdata:rowOrder="1">
+                <Enabled>False</Enabled>
+                <ParameterName>AccessKey</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146293" msdata:rowOrder="2">
+                <Enabled>False</Enabled>
+                <ParameterName>AutomationId</ParameterName>
+                <ParameterValue>Vertical ScrollBar</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146294" msdata:rowOrder="3">
+                <Enabled>False</Enabled>
+                <ParameterName>ClassName</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146295" msdata:rowOrder="4">
+                <Enabled>False</Enabled>
+                <ParameterName>ControlType</ParameterName>
+                <ParameterValue>ScrollBar</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146296" msdata:rowOrder="5">
+                <Enabled>False</Enabled>
+                <ParameterName>FrameworkId</ParameterName>
+                <ParameterValue>WinForm</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146297" msdata:rowOrder="6">
+                <Enabled>False</Enabled>
+                <ParameterName>HasKeyboardFocus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146298" msdata:rowOrder="7">
+                <Enabled>False</Enabled>
+                <ParameterName>HelpText</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.1146299" msdata:rowOrder="8">
+                <Enabled>False</Enabled>
+                <ParameterName>IsContentElement</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462910" msdata:rowOrder="9">
+                <Enabled>False</Enabled>
+                <ParameterName>IsControlElement</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462911" msdata:rowOrder="10">
+                <Enabled>False</Enabled>
+                <ParameterName>IsEnabled</ParameterName>
+                <ParameterValue>True</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462912" msdata:rowOrder="11">
+                <Enabled>False</Enabled>
+                <ParameterName>IsKeyboardFocusable</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462913" msdata:rowOrder="12">
+                <Enabled>False</Enabled>
+                <ParameterName>IsOffscreen</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462914" msdata:rowOrder="13">
+                <Enabled>False</Enabled>
+                <ParameterName>IsPassword</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462915" msdata:rowOrder="14">
+                <Enabled>False</Enabled>
+                <ParameterName>IsRequiredForForm</ParameterName>
+                <ParameterValue>False</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462916" msdata:rowOrder="15">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemStatus</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462917" msdata:rowOrder="16">
+                <Enabled>False</Enabled>
+                <ParameterName>ItemType</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462918" msdata:rowOrder="17">
+                <Enabled>True</Enabled>
+                <ParameterName>LocalizedControlType</ParameterName>
+                <ParameterValue>スクロール バー</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462919" msdata:rowOrder="18">
+                <Enabled>True</Enabled>
+                <ParameterName>Name</ParameterName>
+                <ParameterValue>textBox1</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462920" msdata:rowOrder="19">
+                <Enabled>False</Enabled>
+                <ParameterName>NativeWindowHandle</ParameterName>
+                <ParameterValue>0</ParameterValue>
+              </SearchParameters082123.114629>
+              <SearchParameters082123.114629 diffgr:id="SearchParameters082123.11462921" msdata:rowOrder="20">
+                <Enabled>False</Enabled>
+                <ParameterName>ProcessID</ParameterName>
+                <ParameterValue></ParameterValue>
+              </SearchParameters082123.114629>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_SearchParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="9" PauseBeforeExeucution="false" v_Comment="scroll" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationScrollUIElementCommand" CommandID="bd597cb9-8cc7-4110-8e67-4fc226978ebc" CommandName="UIAutomationScrollUIElementCommand" IsCommented="false" SelectionName="Scroll UIElement" DefaultPause="0" LineNumber="10" PauseBeforeExeucution="false" CommandEnabled="true" v_TargetElement="⦃vElem⦄" v_ScrollBarType="Vertical" v_DirectionAndAmount="Scroll Large Down or Right" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="11" PauseBeforeExeucution="false" v_Comment="Please exit UIAutomationTester after execution" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.58</TasktVersion>
+    <Author />
+    <LastRunTime>2023-08-23T23:29:18.0536731+09:00</LastRunTime>
+    <RunTimes>5</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vPath</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vWin</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+    <ScriptVariable>
+      <VariableName>vElem</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

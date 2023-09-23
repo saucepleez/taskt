@@ -76,11 +76,11 @@ namespace taskt.Core.Automation.Commands
             //    index = targetList.Count + index;
             //}
 
-            (var list, var index) = this.GetListVariableAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
+            (var list, var index) = this.ExpandUserVariablesAsListAndIndex(nameof(v_ListName), nameof(v_ItemIndex), engine);
 
             if ((index >= 0) && (index < list.Count))
             {
-                list[index] = v_NewValue.ConvertToUserVariable(engine);
+                list[index] = v_NewValue.ExpandValueOrUserVariable(engine);
             }
             else
             {

@@ -84,16 +84,16 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var matchType = this.GetUISelectionValue(nameof(v_WindowMatchType), engine);
+            var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);
 
-            var exactMatchRequired = this.GetUISelectionValue(nameof(v_MatchSpecification), engine);
-            var caseSensitive = this.GetUISelectionValue(nameof(v_CaseSensitiveMatch), engine);
+            var exactMatchRequired = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MatchSpecification), engine);
+            var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitiveMatch), engine);
 
             Func<IWebDriver, string, bool> matchFunc = getMatchFunc(matchType, exactMatchRequired, caseSensitive);
 
-            var matchParam = v_MatchParameter.ConvertToUserVariable(sender);
+            var matchParam = v_MatchParameter.ExpandValueOrUserVariable(sender);
             var handles = seleniumInstance.WindowHandles;
             var currentHandle = seleniumInstance.CurrentWindowHandle;
             var matchFound = false;

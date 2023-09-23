@@ -51,12 +51,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetDT = v_InputDataTable.GetDataTableVariable(engine);
+            var targetDT = v_InputDataTable.ExpandUserVariableAsDataTable(engine);
 
             var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
-            string newValue = v_NewValue.ConvertToUserVariable(engine);
+            string newValue = v_NewValue.ExpandValueOrUserVariable(engine);
 
             int cols = targetDT.Columns.Count;
             int rows = targetDT.Rows.Count;

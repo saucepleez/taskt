@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             var splittext = v_TextToSet.Split(',');
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             int i = 1;            
             int lastUsedRow;
@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
                 lastUsedRow = 0;
             }
 
-            var targetText = v_TextToSet.ConvertToUserVariable(sender);
+            var targetText = v_TextToSet.ExpandValueOrUserVariable(sender);
             splittext = targetText.Split(',');
 
             foreach (var item in splittext)

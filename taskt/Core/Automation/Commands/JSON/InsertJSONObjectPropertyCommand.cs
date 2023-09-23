@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 
                 var propertyValue = this.GetJSONValue(nameof(v_PropertyValue), nameof(v_ValueType), "Insert", engine);
-                var propertyName = v_PropertyName.ConvertToUserVariable(engine);
+                var propertyName = v_PropertyName.ExpandValueOrUserVariable(engine);
                 searchResult.Parent.AddAfterSelf(new JProperty(propertyName, propertyValue));
             });
             this.JSONModifyByJSONPath(nameof(v_InputValue), nameof(v_JsonExtractor), addPropertyFunc, addPropertyFunc, engine);

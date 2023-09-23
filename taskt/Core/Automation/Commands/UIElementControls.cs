@@ -143,13 +143,13 @@ namespace taskt.Core.Automation.Commands
         #region variable methods
 
         /// <summary>
-        /// get UIElement from Specified variable name
+        /// expand user variable as UIElement
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static AutomationElement GetUIElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement ExpandUserVariableAsUIElement(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is AutomationElement e)
@@ -163,28 +163,28 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get UIElement from specified parameter name
+        /// expand user variable as UIElement
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static AutomationElement CovnertToUserVariableAsUIElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement ExpandUserVariableAsUIElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var value = prop?.GetValue(command)?.ToString() ?? "";
-            return GetUIElementVariable(value, engine);
+            return ExpandUserVariableAsUIElement(value, engine);
         }
 
         /// <summary>
-        /// convert variable to string as XPath
+        /// expand user variable string as XPath
         /// </summary>
         /// <param name="value"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
+        public static string ExpandUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
         {
-            var p = value.ConvertToUserVariable(engine);
+            var p = value.ExpandValueOrUserVariable(engine);
             if (!p.StartsWith("."))
             {
                 p = "." + p;
@@ -193,17 +193,17 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert variable to string as XPath
+        /// expand variable string as XPath
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        public static string ExpandUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var value = prop?.GetValue(command)?.ToString() ?? "";
-            return ConvertToUserVariableAsXPath(value, engine);
+            return ExpandUserVariableAsXPath(value, engine);
         }
 
         /// <summary>
@@ -632,9 +632,9 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var elem = command.CovnertToUserVariableAsUIElement(elementName, engine);
-            var table = command.ConvertToUserVariableAsDataTable(conditionName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+            var elem = command.ExpandUserVariableAsUIElement(elementName, engine);
+            var table = command.ConvertParameterToDataTable(conditionName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
             return SearchGUIElement(elem, table, waitTime, engine);
         }
@@ -677,7 +677,7 @@ namespace taskt.Core.Automation.Commands
                     if (!string.IsNullOrEmpty(resultName))
                     {
                         //var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
-                        var resultValue = command.GetRawPropertyString(resultName, "Result");
+                        var resultValue = command.GetRawPropertyValueAsString(resultName, "Result");
 
                         ret.StoreInUserVariable(engine, resultValue);
                     }
@@ -841,21 +841,26 @@ namespace taskt.Core.Automation.Commands
 
         public static string GetTextValue(AutomationElement targetElement)
         {
-            object patternObj;
-            if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out patternObj))
+            //object patternObj;
+            if (targetElement.TryGetCurrentPattern(RangeValuePattern.Pattern, out object rPtn))
+            {
+                // bar
+                return ((RangeValuePattern)rPtn).Current.Value.ToString();
+            }
+            else if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object vPtn))
             {
                 // TextBox
-                return ((ValuePattern)patternObj).Current.Value;
+                return ((ValuePattern)vPtn).Current.Value;
             }
-            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out patternObj))
+            else if (targetElement.TryGetCurrentPattern(TextPattern.Pattern, out object tPtn))
             {
                 // TextBox Multilune
-                return ((TextPattern)patternObj).DocumentRange.GetText(-1);
+                return ((TextPattern)tPtn).DocumentRange.GetText(-1);
             }
-            else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out patternObj))
+            else if (targetElement.TryGetCurrentPattern(SelectionPattern.Pattern, out object sPtn))
             {
                 // combobox
-                AutomationElement selElem = ((SelectionPattern)patternObj).Current.GetSelection()[0];
+                AutomationElement selElem = ((SelectionPattern)sPtn).Current.GetSelection()[0];
                 return selElem.Current.Name;
             }
             else
@@ -867,68 +872,90 @@ namespace taskt.Core.Automation.Commands
 
         public static AutomationElement GetTableUIElement(AutomationElement targetElement, int row, int column)
         {
-            object tryObj;
-            if (!targetElement.TryGetCurrentPattern(GridPattern.Pattern, out tryObj))
+            if (targetElement.TryGetCurrentPattern(GridPattern.Pattern, out object gridObj))
+            {
+                var cosutomRows = targetElement.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Custom));
+                if (cosutomRows.Count > 0)
+                {
+                    // DataGridView (.net)
+                    if (cosutomRows.Count > row)
+                    {
+                        var r = cosutomRows[row + 1];
+                        var cols = r.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
+                        if (cols.Count > column)
+                        {
+                            return cols[column];
+                        }
+                    }
+
+                    throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
+                }
+                else
+                {
+                    // listView
+                    AutomationElement cellElem = ((GridPattern)gridObj).GetItem(row, column);
+                    if (cellElem == null)
+                    {
+                        throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
+                    }
+                    return cellElem;
+                }
+            }
+            else
             {
                 throw new Exception("UIElement is not Table Element");
             }
-            GridPattern gridPtn = (GridPattern)tryObj;
-
-            AutomationElement cellElem = gridPtn.GetItem(row, column);
-            if (cellElem == null)
-            {
-                throw new Exception("Table Row: '" + row + "', Column: '" + column + "' does not exists");
-            }
-
-            return cellElem;
         }
 
-        public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement, bool collapseAfter = true)
+        public static List<AutomationElement> GetSelectionItems(AutomationElement targetElement)
         {
-            AutomationElement rootElement = targetElement;
-
-            object ptnResult;
-
-            ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty);
-            if ((bool)ptnResult)
-            {
-                // DataGridView
-                var elems = rootElement.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
+            var getListItemFunc = new Func<AutomationElement, List<AutomationElement>>( el => {
+                var elems = el.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
                 List<AutomationElement> ret = new List<AutomationElement>();
                 foreach (AutomationElement elem in elems)
                 {
                     ret.Add(elem);
                 }
                 return ret;
+            });
+
+            AutomationElement rootElement = targetElement;
+
+            if ((bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) ||
+                (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty))
+            {
+                // DataGridView-ComboBox, ListBox
+                return getListItemFunc(rootElement);
             }
             else
             {
-                // ComboBox
-                ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
-                if (!(bool)ptnResult)
+                // ComboBox, TreeView
+                bool isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+
+                if (!isCmb)
                 {
                     rootElement = GetParentUIElement(rootElement);
+                    isCmb = (bool)rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
                 }
 
-                ptnResult = rootElement.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
-                if ((bool)ptnResult)
+                if ((bool)isCmb)
                 {
                     object selPtn = rootElement.GetCurrentPattern(ExpandCollapsePattern.Pattern);
 
                     ExpandCollapsePattern ecPtn = (ExpandCollapsePattern)selPtn;
                     ecPtn.Expand();
+                    System.Threading.Thread.Sleep(500);
 
-                    var elems = rootElement.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
-                    List<AutomationElement> ret = new List<AutomationElement>();
-                    foreach (AutomationElement elem in elems)
-                    {
-                        ret.Add(elem);
-                    }
+                    // dbg
+                    //System.Threading.Thread.Sleep(1000);
+                    //Console.WriteLine("Expanded");
 
-                    if (collapseAfter)
-                    {
-                        ecPtn.Collapse();
-                    }
+                    var ret = getListItemFunc(rootElement);
+
+                    //if (collapseAfter)
+                    //{
+                    //    ecPtn.Collapse();
+                    //}
                     return ret;
                 }
                 else
@@ -1047,9 +1074,9 @@ namespace taskt.Core.Automation.Commands
 
         public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var element = command.CovnertToUserVariableAsUIElement(rootElementName, engine);
-            var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
-            var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
+            var element = command.ExpandUserVariableAsUIElement(rootElementName, engine);
+            var xpath = command.ExpandUserVariableAsXPath(xpathName, engine);
+            var wait = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
             return SearchGUIElementByXPath(element, xpath, wait, engine);
         }
@@ -1136,6 +1163,25 @@ namespace taskt.Core.Automation.Commands
                 res += "ItemStatus:\t\"" + elem.Current.ItemStatus + "\"\r\n";
                 res += "ItemType:\t\"" + elem.Current.ItemType + "\"\r\n";
                 res += "NativeWindowHandle:\t" + elem.Current.NativeWindowHandle.ToString() + "\r\n";
+
+                res += "IsDockPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsDockPatternAvailableProperty) + "\r\n";
+                res += "IsExpandCollapsePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty) + "\r\n";
+                res += "IsGridPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridPatternAvailableProperty) + "\r\n";
+                res += "IsGridItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsGridItemPatternAvailableProperty) + "\r\n";
+                res += "IsInvokePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsInvokePatternAvailableProperty) + "\r\n";
+                res += "IsMultipleViewPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsMultipleViewPatternAvailableProperty) + "\r\n";
+                res += "IsRangeValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsRangeValuePatternAvailableProperty) + "\r\n";
+                res += "IsScrollPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollPatternAvailableProperty) + "\r\n";
+                res += "IsScrollItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsScrollItemPatternAvailableProperty) + "\r\n";
+                res += "IsSelectionPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionPatternAvailableProperty) + "\r\n";
+                res += "IsSelectionItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsSelectionItemPatternAvailableProperty) + "\r\n";
+                res += "IsTablePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTablePatternAvailableProperty) + "\r\n";
+                res += "IsTableItemPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTableItemPatternAvailableProperty) + "\r\n";
+                res += "IsTextPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTextPatternAvailableProperty) + "\r\n";
+                res += "IsTogglePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTogglePatternAvailableProperty) + "\r\n";
+                res += "IsTransformPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsTransformPatternAvailableProperty) + "\r\n";
+                res += "IsValuePatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsValuePatternAvailableProperty) + "\r\n";
+                res += "IsWindowPatternAvailableProperty:\t" + (bool)elem.GetCurrentPropertyValue(AutomationElement.IsWindowPatternAvailableProperty) + "\r\n";
             }
             catch(Exception ex)
             {

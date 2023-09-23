@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
             myDT.Columns.Cast<DataColumn>().Select(col => col.ColumnName).ToList().StoreInUserVariable(engine, v_OutputList);
         }

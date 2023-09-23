@@ -41,19 +41,19 @@ namespace taskt.Core.Automation.Commands
 
         public MailKitGetEMailTextCommand()
         {
-            this.CommandName = "MailKitGetEMailTextCommand";
-            this.SelectionName = "Get EMail Text";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "MailKitGetEMailTextCommand";
+            //this.SelectionName = "Get EMail Text";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mail = v_MailName.GetMailKitEMailVariable(engine);
+            var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
-            var textType = this.GetUISelectionValue(nameof(v_TextType), engine);
+            var textType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextType), engine);
 
             string res = "";
             switch (textType)

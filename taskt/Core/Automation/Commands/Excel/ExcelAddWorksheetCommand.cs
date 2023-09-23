@@ -38,10 +38,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             excelInstance.Worksheets.Add();
 
-            var sheetName = v_NewSheetName.ConvertToUserVariable(engine);
+            var sheetName = v_NewSheetName.ExpandValueOrUserVariable(engine);
             if (!String.IsNullOrEmpty(sheetName))
             {
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;

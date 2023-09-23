@@ -38,15 +38,15 @@ namespace taskt.Core.Automation.Commands
         public static string v_ColorValue { get; }
 
         /// <summary>
-        /// Get Color variable from Variable name. This type is System.Drawing.Color.
+        /// Expand user variable as Color. This type is System.Drawing.Color.
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception">Variable not Color</exception>
-        public static System.Drawing.Color GetColorVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">Value is not Color</exception>
+        public static System.Drawing.Color ExpandUserVariableAsColor(this string variableName, Engine.AutomationEngineInstance engine)
         {
-            Script.ScriptVariable v = variableName.GetRawVariable(engine);
+            var v = variableName.GetRawVariable(engine);
             if (v.VariableValue is System.Drawing.Color color)
             {
                 return color;
@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void StoreInUserVariable(this System.Drawing.Color value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this System.Drawing.Color value, Engine.AutomationEngineInstance sender, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value, sender);
         }

@@ -45,11 +45,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var excelInstance, var targetSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
-            var newName = v_newSheetName.ConvertToUserVariable(sender);
+            var newName = v_newSheetName.ExpandValueOrUserVariable(sender);
             if (!String.IsNullOrEmpty(newName))
             {
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;

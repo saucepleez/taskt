@@ -72,11 +72,11 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var myDT = v_DateTime.GetDateTimeVariable(engine);
+            var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
 
-            string meth = this.GetUISelectionValue(nameof(v_CalculationMethod), engine);
+            string meth = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CalculationMethod), engine);
 
-            int value = this.ConvertToUserVariableAsInteger(nameof(v_Value), engine);
+            int value = this.ExpandValueOrUserVariableAsInteger(nameof(v_Value), engine);
 
             string[] method = meth.Split(' ');
             if (method[0] == "substract")

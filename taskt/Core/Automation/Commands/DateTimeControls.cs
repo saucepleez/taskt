@@ -41,13 +41,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_OutputDateTime { get; }
 
         /// <summary>
-        /// Get DateTime variable from Variable Name.
+        /// Expand user variable As DateTime
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception">Variable not DateTime</exception>
-        public static DateTime GetDateTimeVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">Value is not DateTime</exception>
+        public static DateTime ExpandUserVariableAsDateTime(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is DateTime time)
@@ -61,16 +61,16 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// expand user variable as DateTime
+        /// Convert value to DateTime
         /// </summary>
         /// <param name="str"></param>
         /// <param name="parameterName"></param>
         /// <param name="sender"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static DateTime ConvertToUserVariableAsDateTime(this string str, string parameterName, object sender)
+        /// <exception cref="Exception">fail convert value to DateTime</exception>
+        public static DateTime ConvertValueToDateTime(this string str, string parameterName, object sender)
         {
-            string convertedText = str.ConvertToUserVariable(sender);
+            string convertedText = str.ExpandValueOrUserVariable(sender);
             if (DateTime.TryParse(convertedText, out DateTime v))
             {
                 return v;

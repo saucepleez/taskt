@@ -51,10 +51,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var stringValue = v_userVariableName.ConvertToUserVariable(engine);
+            var stringValue = v_userVariableName.ExpandValueOrUserVariable(engine);
 
             //var caseType = v_ConvertType.ConvertToUserVariable(sender);
-            var caseType = this.GetUISelectionValue(nameof(v_ConvertType), engine);
+            var caseType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ConvertType), engine);
             switch (caseType)
             {
                 case "to upper case":

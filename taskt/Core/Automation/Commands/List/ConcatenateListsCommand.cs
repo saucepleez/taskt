@@ -51,8 +51,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> listA = v_InputListA.GetListVariable(engine);
-            List<string> listB = v_InputListB.GetListVariable(engine);
+            List<string> listA = v_InputListA.ExpandUserVariableAsList(engine);
+            List<string> listB = v_InputListB.ExpandUserVariableAsList(engine);
 
             List<string> newList = new List<string>();
             newList.AddRange(listA);

@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitRecieveEmailListUsingIMAPCommand : ScriptCommand
+    public class MailKitRecieveEMailListUsingIMAPCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_Host))]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_OutputMailListName))]
         public string v_MailListName { get; set; }
 
-        public MailKitRecieveEmailListUsingIMAPCommand()
+        public MailKitRecieveEMailListUsingIMAPCommand()
         {
             //this.CommandName = "MailKitRecieveEMailListUsingIMAPCommand";
             //this.SelectionName = "Recieve EMailList Using IMAP";
@@ -57,12 +57,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             // imap host
-            string pop = v_IMAPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_IMAPPort), engine);
+            string pop = v_IMAPHost.ExpandValueOrUserVariable(engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_IMAPPort), engine);
 
             // auth
-            string user = v_IMAPUserName.ConvertToUserVariable(engine);
-            string pass = v_IMAPPassword.ConvertToUserVariable(engine);
+            string user = v_IMAPUserName.ExpandValueOrUserVariable(engine);
+            string pass = v_IMAPPassword.ExpandValueOrUserVariable(engine);
 
             using (var client = new MailKit.Net.Imap.ImapClient())
             {

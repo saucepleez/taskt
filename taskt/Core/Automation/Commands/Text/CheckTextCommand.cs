@@ -81,17 +81,17 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetValue = v_userVariableName.ConvertToUserVariable(engine);
-            var checkValue = v_CheckParameter.ConvertToUserVariable(engine);
+            var targetValue = v_userVariableName.ExpandValueOrUserVariable(engine);
+            var checkValue = v_CheckParameter.ExpandValueOrUserVariable(engine);
 
-            var caseSensitive = this.GetUISelectionValue(nameof(v_CaseSensitive), engine);
+            var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitive), engine);
             if (caseSensitive == "no")
             {
                 targetValue = targetValue.ToLower();
                 checkValue = checkValue.ToLower();
             }
 
-            var checkMethod = this.GetUISelectionValue(nameof(v_CheckMethod), engine);
+            var checkMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CheckMethod), engine);
             bool resultValue = false;
             switch (checkMethod)
             {

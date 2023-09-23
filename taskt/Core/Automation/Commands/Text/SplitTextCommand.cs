@@ -52,9 +52,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var stringVariable = v_userVariableName.ConvertToUserVariable(engine);
+            var stringVariable = v_userVariableName.ExpandValueOrUserVariable(engine);
 
-            var split = v_splitCharacter.ConvertToUserVariable(engine);
+            var split = v_splitCharacter.ExpandValueOrUserVariable(engine);
             List<string> splitString;
 
             switch (split)

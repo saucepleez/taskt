@@ -63,7 +63,15 @@ namespace taskt.Core
             '\n', '\r', '\t'
         };
 
-        public static string GetRawPropertyString(this ScriptCommand command, string propertyName, string propertyDescription)
+        /// <summary>
+        /// get raw property value as string
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyDescription"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception">value is not string</exception>
+        public static string GetRawPropertyValueAsString(this ScriptCommand command, string propertyName, string propertyDescription)
         {
             var propInfo = command.GetType().GetProperty(propertyName) ?? throw new Exception(propertyDescription + " (name: '" + propertyName + "') does not exists.");
             object propValue = propInfo.GetValue(command);
@@ -78,20 +86,30 @@ namespace taskt.Core
             }
         }
 
-        public static string ConvertToUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// expand value or user variable as string
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="propertyDescription"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariable(this ScriptCommand command, string propertyName, string propertyDescription, Automation.Engine.AutomationEngineInstance engine)
         {
-            return GetRawPropertyString(command, propertyName, propertyDescription).ConvertToUserVariable(engine);
+            return GetRawPropertyValueAsString(command, propertyName, propertyDescription).ExpandValueOrUserVariable(engine);
         }
 
         /// <summary>
-        /// Replaces variable placeholders ([variable]) with variable text.
+        /// expand value or user variable as string
         /// </summary>
-        /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
-        public static string ConvertToUserVariable(this String str, object sender)
+        /// <param name="str"></param>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariable(this string str, object sender)
         {
             if (((Core.Automation.Engine.AutomationEngineInstance)sender).engineSettings.UseNewParser)
             {
-                return str.ConvertToUserVariable_Unofficial(sender);
+                return str.ExpandValueOrUserVariable_new2022(sender);
             }
             else
             {
@@ -99,7 +117,13 @@ namespace taskt.Core
             }
         }
 
-        public static string ConvertToUserVariable_Unofficial(this String str, object sender)
+        /// <summary>
+        /// new expand method 2022
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="sender"></param>
+        /// <returns></returns>
+        public static string ExpandValueOrUserVariable_new2022(this String str, object sender)
         {
             if (str == null)
             {
@@ -182,7 +206,7 @@ namespace taskt.Core
         }
 
         /// <summary>
-        /// 
+        /// search user variable
         /// </summary>
         /// <param name="str"></param>
         /// <param name="variables"></param>
@@ -282,11 +306,19 @@ namespace taskt.Core
             return new string[] { ret, str };
         }
 
+        /// <summary>
+        /// expand user variable
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="variables"></param>
+        /// <param name="engine"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         private static bool ExpandVariable(string variableName, List<Core.Script.ScriptVariable> variables, Core.Automation.Engine.AutomationEngineInstance engine, out string result)
         {
             variableName = variableName.Trim();
             result = null;
-            if (isExpandJSON(variableName, engine)) // =>
+            if (IsExpandJSON(variableName, engine)) // =>
             {
                 bool ret = ExpandVariableJSON(variableName, variables, engine, out result);
                 if (ret)
@@ -294,7 +326,7 @@ namespace taskt.Core
                     return true;
                 }
             }
-            if (isExpandListIndex(variableName, engine))    // var[index]
+            if (IsExpandListIndex(variableName, engine))    // var[index]
             {
                 bool ret = ExpandVariableListIndex(variableName, variables, engine, out result);
                 if (ret)
@@ -302,7 +334,7 @@ namespace taskt.Core
                     return true;
                 }
             }
-            if (isExpandDotProperty(variableName, engine))  // var.prop
+            if (IsExpandDotProperty(variableName, engine))  // var.prop
             {
                 bool ret = ExpandVariableDotProperty(variableName, variables, engine, out result);
                 if (ret)
@@ -341,7 +373,7 @@ namespace taskt.Core
             return false;
         }
 
-        private static bool isExpandJSON(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static bool IsExpandJSON(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             // TODO: '=>' is engine settings
             return (variableName.Split(new string[] { "=>" }, StringSplitOptions.None).Length >= 2);
@@ -388,7 +420,7 @@ namespace taskt.Core
             }
         }
 
-        private static bool isExpandListIndex(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static bool IsExpandListIndex(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             // TODO: [ ] is engine settings
             return (variableName.Contains('[') && variableName.EndsWith("]"));
@@ -432,7 +464,7 @@ namespace taskt.Core
             }
         }
 
-        private static bool isExpandDotProperty(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        private static bool IsExpandDotProperty(string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             // TODO: . is engine settings
             return (variableName.Split('.').Length == 2);
@@ -881,15 +913,17 @@ namespace taskt.Core
             else
             {
                 //track math chars
-                var mathChars = new List<Char>();
-                mathChars.Add('*');
-                mathChars.Add('+');
-                mathChars.Add('-');
-                mathChars.Add('=');
-                mathChars.Add('/');
-                mathChars.Add('\r');
-                mathChars.Add('\n');
-                mathChars.Add('\t');
+                var mathChars = new List<Char>
+                {
+                    '*',
+                    '+',
+                    '-',
+                    '=',
+                    '/',
+                    '\r',
+                    '\n',
+                    '\t'
+                };
 
                 //if the string matches the char then return
                 //as the user does not want to do math
@@ -977,7 +1011,7 @@ namespace taskt.Core
             {
                 if (parseValue && (variableValue is string))
                 {
-                    requiredVariable.VariableValue = ((string)variableValue).ConvertToUserVariable(engine);
+                    requiredVariable.VariableValue = ((string)variableValue).ExpandValueOrUserVariable(engine);
                 }
                 else
                 {
@@ -987,10 +1021,17 @@ namespace taskt.Core
             }
         }
 
+        /// <summary>
+        /// get raw user variable value
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Script.ScriptVariable GetRawVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             string newName = parseVariableName(variableName, engine);
-            newName = newName.ConvertToUserVariable(engine);
+            newName = newName.ExpandValueOrUserVariable(engine);
             Script.ScriptVariable searchedVaiable = lookupVariable(newName, engine);
             if (searchedVaiable == null)
             {
@@ -1022,7 +1063,7 @@ namespace taskt.Core
             }
             if (variableName.Contains(settings.VariableStartMarker) && variableName.Contains(settings.VariableEndMarker))
             {
-                variableName = variableName.ConvertToUserVariable(engine);
+                variableName = variableName.ExpandValueOrUserVariable(engine);
             }
 
             return variableName;

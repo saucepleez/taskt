@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             //string fileName;
             //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    fileName = FilePathControls.FormatFilePath_NoFileCounter(v_FileName, engine, "xlsx");
             //}
-            string fileName = this.ConvertToUserVariableAsFilePath(nameof(v_FileName), engine);
+            string fileName = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FileName), engine);
 
 			// TODO: support xlsm
             Action saveAsProcess = () =>
@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    switch(this.GetUISelectionValue(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
+                    switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
                     {
                         case "error":
                             throw new Exception("Excel file '" + v_FileName + "' is already exists.");

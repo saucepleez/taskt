@@ -403,7 +403,7 @@
     <Compile Include="Core\Automation\Commands\Numerical\RoundNumberCommand.cs" />
     <Compile Include="Core\Automation\Commands\Numerical\IncreaseNumericalVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\SearchReplaceControls.cs" />
-    <Compile Include="Core\Automation\Commands\SelectionControls.cs" />
+    <Compile Include="Core\Automation\Commands\SelectionItemsControls.cs" />
     <Compile Include="Core\Automation\Commands\SeleniumBrowserControls.cs" />
     <Compile Include="Core\Automation\Commands\Shell32.cs" />
     <Compile Include="Core\Automation\Commands\SystemControls.cs" />
@@ -431,10 +431,10 @@
     <Compile Include="Core\Automation\Commands\Dictionary\GetDictionaryKeyFromValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ConcatenateDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\SetDictionaryValueCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEmailAttachmentsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitLoadEmailCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEmailAttachmentsNameCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEMailAttachmentsCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitLoadEMailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailAttachmentsNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSaveEMailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsRCCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckWorksheetExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckCellValueExistsCommand.cs" />
@@ -482,9 +482,9 @@
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetAddressesAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\EMail\MailKitGetEMailFromEMailListCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingIMAPCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEmailListUsingPOPCommand.cs" />
-    <Compile Include="Core\Automation\Commands\EMail\MailKitSendEmailCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEMailListUsingIMAPCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitRecieveEMailListUsingPOPCommand.cs" />
+    <Compile Include="Core\Automation\Commands\EMail\MailKitSendEMailCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\ClearClipboardTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\Misc\CreateShortcutCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\RunPowerShellScriptFileCommand.cs" />
@@ -537,7 +537,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelCheckExcelInstanceExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowNamesCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CheckWindowNameExistsCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Dictionary\AddDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\AddDictionaryItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\BeginMultiLoopCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\CheckFolderExistsCommand.cs" />
@@ -1377,6 +1377,7 @@ rmdir /s /q "$(ProjectDir)$(OutDir)selenium-manager\macos"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>robocopy "$(ProjectDir)Samples" "$(ProjectDir)$(OutDir)Samples" *.xml /xo /E /S
+robocopy "$(ProjectDir)Samples" "$(ProjectDir)$(OutDir)Samples" *.exe /xo /E /S
 robocopy "$(ProjectDir)Manual" "$(ProjectDir)$(OutDir)Manual" *.txt /xo /E /S
 if %25ERRORLEVEL%25 LSS 8 EXIT 0</PreBuildEvent>
   </PropertyGroup>

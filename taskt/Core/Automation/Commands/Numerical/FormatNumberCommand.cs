@@ -53,9 +53,9 @@ namespace taskt.Core.Automation.Commands
 
             //decimal value = new PropertyConvertTag(v_Number, "Number").ConvertToUserVariableAsDecimal(engine);
             //var value = this.ConvertToUserVariableAsDecimal(nameof(v_Number), "Number", engine);
-            var value = this.ConvertToUserVariableAsDecimal(nameof(v_Number), engine);
+            var value = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Number), engine);
 
-            string format = v_Format.ConvertToUserVariable(engine);
+            string format = v_Format.ExpandValueOrUserVariable(engine);
 
             value.ToString(format).StoreInUserVariable(engine, v_Result);
         }

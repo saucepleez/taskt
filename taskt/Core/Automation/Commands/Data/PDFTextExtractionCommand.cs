@@ -57,9 +57,9 @@ namespace taskt.Core.Automation.Commands
         {
 
             //get variable path or URL to source file
-            var vSourceFilePath = v_FilePath.ConvertToUserVariable(sender);
+            var vSourceFilePath = v_FilePath.ExpandValueOrUserVariable(sender);
             // get source type of file either from a physical file or from a URL
-            var vSourceFileType = v_FileSourceType.ConvertToUserVariable(sender);
+            var vSourceFileType = v_FileSourceType.ExpandValueOrUserVariable(sender);
             if (String.IsNullOrEmpty(vSourceFileType))
             {
                 vSourceFileType = "FilePath";

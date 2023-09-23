@@ -61,9 +61,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            Dictionary<string, string> myDic = v_DictionaryVariable.GetDictionaryVariable(engine);
+            Dictionary<string, string> myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
 
             (int columnIndex, int rowStart, int rowEnd, string valueType) =
                 ExcelControls.GetRangeIndeiesColumnDirection(
@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
 
             int range = rowEnd - rowStart + 1;
 
-            string ifDictionaryNotEnough = this.GetUISelectionValue(nameof(v_IfDictionaryNotEnough), "If Dictionary Not Enough", engine);
+            string ifDictionaryNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDictionaryNotEnough), "If Dictionary Not Enough", engine);
             if (ifDictionaryNotEnough == "error")
             {
                 if (range > myDic.Count)
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDic.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
 
             // copy key list
             string[] keys = new string[myDic.Keys.Count];

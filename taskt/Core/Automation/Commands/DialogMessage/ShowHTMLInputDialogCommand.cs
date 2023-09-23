@@ -129,9 +129,9 @@ namespace taskt.Core.Automation.Commands
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
                 {
                     //sample for temp testing
-                    var htmlInput = v_InputHTML.ConvertToUserVariable(sender);
+                    var htmlInput = v_InputHTML.ExpandValueOrUserVariable(sender);
 
-                    var errorOnClose = this.GetUISelectionValue(nameof(v_ErrorOnClose), engine);
+                    var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
 
                     var variables = engine.tasktEngineUI.ShowHTMLInput(htmlInput);
 

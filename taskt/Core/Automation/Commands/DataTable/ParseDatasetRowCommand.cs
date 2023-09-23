@@ -89,14 +89,14 @@ namespace taskt.Core.Automation.Commands
 
             }
 
-            var columnName = v_ColumnParameter.ConvertToUserVariable(sender);
-            var parseStrat = v_ColumnParseType.ConvertToUserVariable(sender);
+            var columnName = v_ColumnParameter.ExpandValueOrUserVariable(sender);
+            var parseStrat = v_ColumnParseType.ExpandValueOrUserVariable(sender);
             //get datatable
             var dataTable = (DataTable)dataSourceVariable.VariableValue;
 
             int requiredRowNumber;
 
-            if (!int.TryParse(this.v_SpecifiedRow.ConvertToUserVariable(sender), out requiredRowNumber))
+            if (!int.TryParse(this.v_SpecifiedRow.ExpandValueOrUserVariable(sender), out requiredRowNumber))
             {
                 requiredRowNumber = dataSourceVariable.CurrentPosition;
             }

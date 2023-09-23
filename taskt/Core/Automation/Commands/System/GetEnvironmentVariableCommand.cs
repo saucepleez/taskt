@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
             var variables = Environment.GetEnvironmentVariables();
 
-            var environmentVariable = v_EnvVariableName.ConvertToUserVariable(sender);
+            var environmentVariable = v_EnvVariableName.ExpandValueOrUserVariable(sender);
             var keys = variables.Keys.Cast<string>().ToList();
             if (keys.Contains(environmentVariable))
             {

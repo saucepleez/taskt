@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var srcDic = v_InputData.GetDictionaryVariable(engine);
+            var srcDic = v_InputData.ExpandUserVariableAsDictinary(engine);
 
             var newDic = new Dictionary<string, string>(srcDic);
 

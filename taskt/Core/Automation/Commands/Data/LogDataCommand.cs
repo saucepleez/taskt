@@ -44,8 +44,8 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //get text to log and log file name       
-            var textToLog = v_LogText.ConvertToUserVariable(sender);
-            var logFile = v_LogFile.ConvertToUserVariable(sender);
+            var textToLog = v_LogText.ExpandValueOrUserVariable(sender);
+            var logFile = v_LogFile.ExpandValueOrUserVariable(sender);
 
             //determine log file
             if (v_LogFile == "Engine Logs")

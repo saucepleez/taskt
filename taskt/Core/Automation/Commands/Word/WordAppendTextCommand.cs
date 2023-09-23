@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Font Size", true)]
         //[SampleUsage("Select **14**")]
         [PropertyFirstValue("11")]
-        [PropertyValidationRule("Font Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.GreaterThanZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyValidationRule("Font Size", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyIsOptional(true, "11")]
         [PropertyDisplayText(false, "")]
         public string v_FontSize { get; set; }
@@ -110,16 +110,16 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
-            var vText = v_TextToSet.ConvertToUserVariable(engine);
+            var vText = v_TextToSet.ExpandValueOrUserVariable(engine);
 
             Paragraph paragraph = wordDocument.Content.Paragraphs.Add();
             paragraph.Range.Text = vText;
             paragraph.Range.Font.Name = v_FontName;
             paragraph.Range.Font.Size = float.Parse(v_FontSize);
 
-            if (this.GetUISelectionValue(nameof(v_FontBold), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontBold), engine) == "yes")
             {
                 paragraph.Range.Font.Bold = 1;
             }
@@ -127,7 +127,7 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Bold = 0;
             }
-            if (this.GetUISelectionValue(nameof(v_FontItalic), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontItalic), engine) == "yes")
             {
                 paragraph.Range.Font.Italic = 1;
             }
@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
             {
                 paragraph.Range.Font.Italic = 0;
             }
-            if (this.GetUISelectionValue(nameof(v_FontUnderline), engine) == "yes")
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FontUnderline), engine) == "yes")
             {
                 paragraph.Range.Font.Underline = WdUnderline.wdUnderlineSingle;
             }

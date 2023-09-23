@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                var _ = v_InstanceName.GetWordInstance(engine);
+                var _ = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
                 true.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch

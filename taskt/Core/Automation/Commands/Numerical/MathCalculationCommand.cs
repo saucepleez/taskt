@@ -67,12 +67,12 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //get variablized string
-            var variableMath = v_InputValue.ConvertToUserVariable(sender);
+            var variableMath = v_InputValue.ExpandValueOrUserVariable(sender);
 
             try
             {
-                var decimalSeperator = v_DecimalSeperator.ConvertToUserVariable(sender);
-                var thousandSeperator = v_ThousandSeperator.ConvertToUserVariable(sender);
+                var decimalSeperator = v_DecimalSeperator.ExpandValueOrUserVariable(sender);
+                var thousandSeperator = v_ThousandSeperator.ExpandValueOrUserVariable(sender);
 
                 //remove thousandths markers
                 if (thousandSeperator != "")

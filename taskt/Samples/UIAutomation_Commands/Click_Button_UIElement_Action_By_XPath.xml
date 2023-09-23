@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Commands>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="1" PauseBeforeExeucution="false" v_Comment="Click Button Sample" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="2" PauseBeforeExeucution="false" v_Comment="Get UIAutomationTester path" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="ExtractionFilePathCommand" CommandID="a9b35c29-90a1-4201-a6ec-c3c670c148ef" CommandName="ExtractionFilePathCommand" IsCommented="false" SelectionName="Extraction File Path" DefaultPause="0" LineNumber="3" PauseBeforeExeucution="false" CommandEnabled="true" v_SourceFilePath="⦃taskt.Location⦄" v_Format="Folder" v_Result="vPath" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="StartApplicationCommand" CommandID="a7cdfa43-c3e0-4681-8598-3547bb4f31b4" CommandName="StartApplicationCommand" IsCommented="false" SelectionName="Start Application" DefaultPause="0" LineNumber="4" PauseBeforeExeucution="false" CommandEnabled="true" v_ProgramName="⦃vPath⦄\Samples\Resources\UIAutomationTester.exe" v_ProgramArgs="" v_WaitForExit="" v_StartedProcessName="" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="5" PauseBeforeExeucution="false" v_Comment="Search button and Click" CommandEnabled="true" />
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="UIAutomationUIElementActionByXPathCommand" CommandID="b6c9fd34-6ddb-4110-8bbd-9cbfd3e8f2b2" CommandName="UIAutomationUIElementActionByXPathCommand" IsCommented="false" SelectionName="UIElement Action By XPath" DefaultPause="0" LineNumber="6" PauseBeforeExeucution="false" CommandEnabled="true" v_WindowName="UIAutomation Tester" v_AutomationType="Click UIElement" v_UIASearchParameters="/Button[@AutomationId=&quot;button1&quot;]" v_SearchMethod="" v_MatchMethod="" v_TargetWindowIndex="0" v_WindowWaitTime="60" v_ElementWaitTime="10">
+        <v_UIAActionParameters>
+          <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+            <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="UIAActionParameters082323.121218" msdata:UseCurrentLocale="true">
+              <xs:complexType>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="UIAActionParameters082323.121218">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+                        <xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+              </xs:complexType>
+            </xs:element>
+          </xs:schema>
+          <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+            <DocumentElement>
+              <UIAActionParameters082323.121218 diffgr:id="UIAActionParameters082323.1212181" msdata:rowOrder="0" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
+              </UIAActionParameters082323.121218>
+              <UIAActionParameters082323.121218 diffgr:id="UIAActionParameters082323.1212182" msdata:rowOrder="1" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.121218>
+              <UIAActionParameters082323.121218 diffgr:id="UIAActionParameters082323.1212183" msdata:rowOrder="2" diffgr:hasChanges="modified">
+                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.121218>
+            </DocumentElement>
+            <diffgr:before>
+              <UIAActionParameters082323.121218 diffgr:id="UIAActionParameters082323.1212181" msdata:rowOrder="0">
+                <Parameter_x0020_Name>Click Type</Parameter_x0020_Name>
+                <Parameter_x0020_Value>Left Click</Parameter_x0020_Value>
+              </UIAActionParameters082323.121218>
+              <UIAActionParameters082323.121218 diffgr:id="UIAActionParameters082323.1212182" msdata:rowOrder="1">
+                <Parameter_x0020_Name>X Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.121218>
+              <UIAActionParameters082323.121218 diffgr:id="UIAActionParameters082323.1212183" msdata:rowOrder="2">
+                <Parameter_x0020_Name>Y Offset</Parameter_x0020_Name>
+                <Parameter_x0020_Value></Parameter_x0020_Value>
+              </UIAActionParameters082323.121218>
+            </diffgr:before>
+          </diffgr:diffgram>
+        </v_UIAActionParameters>
+      </ScriptCommand>
+    </ScriptAction>
+    <ScriptAction>
+      <ScriptCommand xsi:type="CommentCommand" CommandID="218fd5f4-b58e-497b-b7e5-c801d58b022b" CommandName="CommentCommand" IsCommented="false" SelectionName="Comment" DefaultPause="0" LineNumber="7" PauseBeforeExeucution="false" v_Comment="Please exit UIAutomationTester after execution" CommandEnabled="true" />
+    </ScriptAction>
+  </Commands>
+  <Info>
+    <TasktVersion>3.5.1.58</TasktVersion>
+    <Author />
+    <LastRunTime>2023-08-23T00:12:46.5829483+09:00</LastRunTime>
+    <RunTimes>8</RunTimes>
+    <ScriptVersion>0.0.0</ScriptVersion>
+    <Description />
+  </Info>
+  <Variables>
+    <ScriptVariable>
+      <VariableName>vPath</VariableName>
+      <VariableValue xsi:type="xsd:string"></VariableValue>
+    </ScriptVariable>
+  </Variables>
+</Script>

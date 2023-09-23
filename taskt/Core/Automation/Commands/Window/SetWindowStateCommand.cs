@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
             WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
-                    var windowState = this.GetUISelectionValue(nameof(v_WindowState), engine);
+                    var windowState = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowState), engine);
                     var state = WindowNameControls.WindowState.SW_RESTORE;
                     switch (windowState.ToLower())
                     {

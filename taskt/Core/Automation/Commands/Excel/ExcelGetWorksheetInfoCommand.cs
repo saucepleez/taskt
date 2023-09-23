@@ -56,12 +56,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var excelInstance, var targetSheet) = (v_InstanceName, v_SheetName).GetExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(v_SheetName, engine);
 
             string ret = "";
             int idx = 1;
 
-            var infoType = this.GetUISelectionValue(nameof(v_InfoType), "Info Type", engine);
+            var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine);
             switch (infoType)
             {
                 case "name":
@@ -77,11 +77,11 @@ namespace taskt.Core.Automation.Commands
                     ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
                     break;
                 case "next sheet":
-                    var nextSheet = engine.engineSettings.NextWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
+                    var nextSheet = engine.engineSettings.NextWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
                     ret = (nextSheet == null) ? "" : nextSheet.Name;
                     break;
                 case "previous sheet":
-                    var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.GetExcelWorksheet(engine, excelInstance, true);
+                    var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
                     ret = (prevSheet == null) ? "" : prevSheet.Name;
                     break;
                 case "sheet index":

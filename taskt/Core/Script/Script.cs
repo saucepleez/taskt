@@ -268,6 +268,10 @@ namespace taskt.Core.Script
         {
             // very important!
             // ** DO NOT USE nameof to change command name **
+
+            fixDataTableSchemaPosition(doc);
+            fixToSameCommandNames(doc);
+
             convertTo3_5_0_45(doc);
             convertTo3_5_0_46(doc);
             convertTo3_5_0_47(doc);
@@ -280,7 +284,7 @@ namespace taskt.Core.Script
             convertTo3_5_0_73(doc);
             convertTo3_5_0_74(doc);
             convertTo3_5_0_78(doc);
-            fixUIAutomationGroupEnableParameterValue(doc);
+            fixUIAutomationSearchEnableParameterValue(doc);
             convertTo3_5_0_83(doc);
             convertTo3_5_1_16(doc);
             convertTo3_5_1_30(doc);
@@ -291,7 +295,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_36(doc);
             convertTo3_5_1_38(doc);
             convertTo3_5_1_39(doc);
-            fixUIAutomationGroupEnableParameterValue_3_5_1_39(doc);
+            fixUIAutomationSearchEnableParameterValue_3_5_1_39(doc);
             convertTo3_5_1_40(doc);
             convertTo3_5_1_41(doc);
             convertTo3_5_1_42(doc);
@@ -304,6 +308,95 @@ namespace taskt.Core.Script
             convertTo3_5_1_51(doc);
             convertTo3_5_1_52(doc);
             convertTo3_5_1_54(doc);
+            fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
+            convertTo3_5_1_56(doc);
+            convertTo3_5_1_58(doc);
+            convertTo3_5_1_62(doc);
+
+            return doc;
+        }
+
+
+        private static XDocument fixDataTableSchemaPosition(XDocument doc)
+        {
+            // add v3.5.1.55
+
+            /* before
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="mytable">
+	<xs:complexType>
+	  <xs:sequence>
+		<xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+		<xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+	  </xs:sequence>
+	</xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="mytable" msdata:UseCurrentLocale="true">
+	<xs:complexType>
+	  <xs:choice minOccurs="0" maxOccurs="unbounded">
+		<xs:element ref="mytable" />
+	  </xs:choice>
+	</xs:complexType>
+  </xs:element>
+</xs:schema>
+             */
+            /* after
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="mytable" msdata:UseCurrentLocale="true">
+	  <xs:complexType>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+		  <xs:element name="mytable">
+			<xs:complexType>
+			  <xs:sequence>
+				<xs:element name="Parameter_x0020_Name" type="xs:string" minOccurs="0" />
+				<xs:element name="Parameter_x0020_Value" type="xs:string" minOccurs="0" />
+			  </xs:sequence>
+			</xs:complexType>
+		  </xs:element>
+		</xs:choice>
+	  </xs:complexType>
+	</xs:element>
+  </xs:schema>
+             */
+
+            XNamespace nsXs = "http://www.w3.org/2001/XMLSchema";
+            var schemas = doc.Descendants(nsXs + "schema"); // get all datatable schema elements (<xs:schema>)
+            foreach (var schema in schemas)
+            {
+                var elements = schema.Elements(nsXs + "element").ToList();
+                // target datatable has two child <xs:element> elements in <xs:schema>
+                if (elements.Count() != 2)
+                {
+                    continue;
+                }
+                var fe = elements[0];   // first <xs:element> remove from parent
+                fe.Remove();
+
+                var se = elements[1];
+                var choice = se.Element(nsXs + "complexType").Element(nsXs + "choice");
+                choice.Element(nsXs + "element").Remove();  // second <xs:element> has <xs:element>. this node is removed
+                choice.Add(fe); // insert first <xs:element>
+            }
+
+            return doc;
+        }
+
+        private static XDocument fixToSameCommandNames(XDocument doc)
+        {
+            // add v3.5.1.56
+
+            XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
+
+            var commands = doc.Descendants("ScriptCommand");
+            foreach(var cmd in commands)
+            {
+                var commandName = cmd.Attribute("CommandName");
+                var xsiType = cmd.Attribute(ns + "type");
+                if (commandName.Value != xsiType.Value)
+                {
+                    xsiType.SetValue(commandName.Value);
+                }
+            }
 
             return doc;
         }
@@ -474,7 +567,7 @@ namespace taskt.Core.Script
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, "UIAutomationCommand", "v_UIASearchParameters", "Enabled", new Action<XElement>(c =>
             {
-                switch(c.Value.ToLower() ?? "")
+                switch (c.Value.ToLower())
                 {
                     case "true":
                     case "false":
@@ -483,7 +576,7 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
+            }), "False");
 
             return doc;
         }
@@ -505,7 +598,7 @@ namespace taskt.Core.Script
                         (el.Attribute("CommandName").Value == "BeginIfCommand") &&
                         ((el.Attribute("v_IfActionType")?.Value ?? "") == "Web Element Exists")
                     );
-            }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc);
+            }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
 
             // BeginLoop Selenium -> WebBrowser
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
@@ -514,7 +607,7 @@ namespace taskt.Core.Script
                     (el.Attribute("CommandName").Value == "BeginLoopCommand") &&
                     ((el.Attribute("v_LoopActionType")?.Value ?? "") == "Web Element Exists")
                 );
-            }), "v_LoopActionParameterTable", "Parameter_x0020_Name", changeFunc);
+            }), "v_LoopActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
 
             return doc;
         }
@@ -602,7 +695,7 @@ namespace taskt.Core.Script
 
             return doc;
         }
-        private static XDocument fixUIAutomationGroupEnableParameterValue(XDocument doc)
+        private static XDocument fixUIAutomationSearchEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
@@ -618,7 +711,7 @@ namespace taskt.Core.Script
                 }
             }), "v_SearchParameters", "Enabled", new Action<XElement>(c =>
             {
-                switch (c.Value.ToLower())
+                switch (c.Value?.ToLower() ?? "")
                 {
                     case "true":
                     case "false":
@@ -627,7 +720,7 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
+            }), "False");
 
             return doc;
         }
@@ -861,7 +954,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument fixUIAutomationGroupEnableParameterValue_3_5_1_39(XDocument doc)
+        private static XDocument fixUIAutomationSearchEnableParameterValue_3_5_1_39(XDocument doc)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
@@ -884,7 +977,7 @@ namespace taskt.Core.Script
                         c.SetValue("False");
                         break;
                 }
-            }));
+            }), "False");
             return doc;
         }
 
@@ -1028,8 +1121,8 @@ namespace taskt.Core.Script
             // FormatFilePathCommand -> ExtractionFilePathCommand
             ChangeCommandName(doc, "FormatFilePathCommand", "ExtractionFilePathCommand", "Extraction File Path");
 
-            // FormatFolderPathCommnad -> ExtractionFolderPathCommand
-            ChangeCommandName(doc, "FormatFolderPathCommnad", "ExtractionFolderPathCommand", "Extraction Folder Path");
+            // FormatFolderPathCommand -> ExtractionFolderPathCommand
+            ChangeCommandName(doc, "FormatFolderPathCommand", "ExtractionFolderPathCommand", "Extraction Folder Path");
 
             // FormatColorCommand -> ConvertColorCommand
             ChangeCommandName(doc, "FormatColorCommand", "ConvertColorCommand", "Convert Color");
@@ -1198,7 +1291,10 @@ namespace taskt.Core.Script
                                 y = rows[i].Element("Parameter_x0020_Value").Value;
                             }
                             rows[i].Remove();
-                            beforeRows[i].Remove();
+                            if (i < beforeRows.Count)   // rare case diffgram:before is null
+                            {
+                                beforeRows[i].Remove();
+                            }
                         }
                         string click = "";
                         switch (act)
@@ -1253,7 +1349,10 @@ namespace taskt.Core.Script
                             {
                                 cmd.SetAttributeValue("v_WaitTime", rows[i].Element("Parameter_x0020_Value").Value);
                                 rows[i].Remove();
-                                beforeRows[i].Remove();
+                                if (i < beforeRows.Count)   // rare case diffgram:before is null
+                                {
+                                    beforeRows[i].Remove();
+                                }
                                 break;
                             }
                         }
@@ -1262,7 +1361,7 @@ namespace taskt.Core.Script
                         if (currentRows == 0)
                         {
                             table.Remove();
-                            before.Remove();
+                            before?.Remove();   // rare case diffgram:before is null
                         }
 
                         break;
@@ -1374,7 +1473,7 @@ namespace taskt.Core.Script
             // UIAutomationCommand -> UIAutomationUIElementActionCommand
             ChangeCommandName(doc, "UIAutomationCommand", "UIAutomationUIElementActionCommand", "UIElement Action");
 
-            // UIAutomationUIElementActionCommand : UIElement Action name
+            // UIAutomationUIElementActionCommand : UIElement Action name, v_WindowName to Attribute
             var cmds = GetCommands(doc, "UIAutomationUIElementActionCommand");
             foreach(var cmd in cmds)
             {
@@ -1422,6 +1521,13 @@ namespace taskt.Core.Script
                 if (newAct.ToLower() != act)
                 {
                     cmd.SetAttributeValue("v_AutomationType", newAct);
+                }
+
+                var winNameElem = cmd.Element("v_WindowName");
+                if (winNameElem != null)
+                {
+                    cmd.SetAttributeValue("v_WindowName", winNameElem.Value);
+                    winNameElem.Remove();
                 }
             }
 
@@ -1597,6 +1703,82 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument fixUIAutomationSearchEnableParameterValue_v3_5_1_56(XDocument doc)
+        {
+            var changeFunc = new Action<XElement>(e =>
+            {
+                switch (e.Value.ToLower())
+                {
+                    case "true":
+                    case "false":
+                        break;
+                    default:
+                        e.SetValue("False");
+                        break;
+                }
+            });
+
+            ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "UIAutomationCheckUIElementExistCommand":
+                    case "UIAutomationGetChildrenUIElementsInformationCommand":
+                    case "UIAutomationSearchChildUIElementCommand":
+                    case "UIAutomationSearchUIElementAndWindowCommand":
+                    case "UIAutomationSearchUIElementFromUIElementCommand":
+                    case "UIAutomationWaitForUIElementToExistsCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            }), "v_SearchParameters", "Enabled", changeFunc, "False");
+
+            ChangeTableCellValue(doc, "UIAutomationUIElementActionCommand", "v_UIASearchParameters", "Enabled", changeFunc, "False");
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_56(XDocument doc)
+        {
+            // WordOpenApplicationCommand -> WordCreateWordInstanceCommand
+            ChangeCommandName(doc, "WordOpenApplicationCommand", "WordCreateWordInstanceCommand", "Create Word Insntance");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_58(XDocument doc)
+        {
+            // MailKitGetEmailAttachmentsNameCommand -> MailKitGetEMailAttachmentsNameCommand
+            ChangeCommandName(doc, "MailKitGetEmailAttachmentsNameCommand", "MailKitGetEMailAttachmentsNameCommand", "Get EMail Attachments Name");
+
+            // MailKitLoadEmailCommand -> MailKitLoadEMailCommand
+            ChangeCommandName(doc, "MailKitLoadEmailCommand", "MailKitLoadEMailCommand", "Load EMail");
+
+            // MailKitRecieveEmailListUsingIMAPCommand -> MailKitRecieveEMailListUsingIMAPCommand
+            ChangeCommandName(doc, "MailKitRecieveEmailListUsingIMAPCommand", "MailKitRecieveEMailListUsingIMAPCommand", "Recieve EMailList Using IMAP");
+
+            // MailKitRecieveEmailListUsingPOPCommand -> MailKitRecieveEMailListUsingPOPCommand
+            ChangeCommandName(doc, "MailKitRecieveEmailListUsingPOPCommand", "MailKitRecieveEMailListUsingPOPCommand", "Recieve EMailList Using POP");
+
+            // MailKitSaveEmailAttachmentsCommand -> MailKitSaveEMailAttachmentsCommand
+            ChangeCommandName(doc, "MailKitSaveEmailAttachmentsCommand", "MailKitSaveEMailAttachmentsCommand", "Save EMail Attachments");
+
+            // MailKitSaveEmailCommand -> MailKitSaveEMailCommand
+            ChangeCommandName(doc, "MailKitSaveEmailCommand", "MailKitSaveEMailCommand", "Save EMail");
+
+            // MailKitSendEmailCommand -> MailKitSendEMailCommand
+            ChangeCommandName(doc, "MailKitSendEmailCommand", "MailKitSendEMailCommand", "Send EMail");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_62(XDocument doc)
+        {
+            // CreateTextVariable -> CreateTextVariableCommand
+            ChangeCommandName(doc, "CreateTextVariable", "CreateTextVariableCommand", "Create Text Variable");
+
+            return doc;
+        }
 
         /// <summary>
         /// get specfied commands
@@ -1718,8 +1900,9 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
+        /// <param name="defaultCellValue"></param>
         /// <returns></returns>
-        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc)
+        private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
 
@@ -1731,7 +1914,14 @@ namespace taskt.Core.Script
                 foreach (XElement row in table)
                 {
                     XElement targetCell = row.Element(tableCellName);
-                    changeFunc(targetCell);
+                    if (targetCell != null)
+                    {
+                        changeFunc(targetCell);
+                    }
+                    else
+                    {
+                        row.Add(new XElement(tableCellName, defaultCellValue));
+                    }
                 }
             }
             return doc;
@@ -1745,13 +1935,14 @@ namespace taskt.Core.Script
         /// <param name="tableParameterName"></param>
         /// <param name="tableCellName"></param>
         /// <param name="changeFunc"></param>
+        /// <param name="defaultCellValue"></param>
         /// <returns></returns>
-        private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc)
+        private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return el.Attribute("CommandName").Value == commandName;
-            }), tableParameterName, tableCellName, changeFunc);
+            }), tableParameterName, tableCellName, changeFunc, defaultCellValue);
             return doc;
         }
 
@@ -1804,7 +1995,7 @@ namespace taskt.Core.Script
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
 
-            XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
+            //XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
             {
                 //XElement tableParams = cmd.Element(tableParameterName).Element(ns + "diffgram").Element("DocumentElement");
@@ -1845,6 +2036,11 @@ namespace taskt.Core.Script
         /// <param name="addModified"></param>
         private static void AddTableRow(XElement table, Dictionary<string, string> cols, string rowName, int currentMaxRows, bool addModified = true)
         {
+            if (table == null)
+            {
+                return;
+            }
+
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
 
@@ -1877,6 +2073,11 @@ namespace taskt.Core.Script
         /// <param name="addModified"></param>
         private static void AddTableRows(XElement table, List<Dictionary<string, string>> cols, string rowName, int currentMaxRows, bool addModified = true)
         {
+            if (table == null)
+            {
+                return;
+            }
+
             XNamespace diffNs = "urn:schemas-microsoft-com:xml-diffgram-v1";
             XNamespace msNs = "urn:schemas-microsoft-com:xml-msdata";
 

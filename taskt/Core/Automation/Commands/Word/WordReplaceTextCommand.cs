@@ -52,10 +52,10 @@ namespace taskt.Core.Automation.Commands
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
-            var vFindText = v_FindText.ConvertToUserVariable(engine);
-            var vReplaceWithText = v_ReplaceWithText.ConvertToUserVariable(engine);
+            var vFindText = v_FindText.ExpandValueOrUserVariable(engine);
+            var vReplaceWithText = v_ReplaceWithText.ExpandValueOrUserVariable(engine);
 
             Range range = wordDocument.Content;
 

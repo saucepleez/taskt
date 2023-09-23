@@ -63,10 +63,10 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                prefix = v_KeyPrefix.ConvertToUserVariable(engine);
+                prefix = v_KeyPrefix.ExpandValueOrUserVariable(engine);
             }
 
-            (var srcDT, var colIndex) = this.GetDataTableVariableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
+            (var srcDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_DataColumnIndex), engine);
             Dictionary<string, string> myDic = new Dictionary<string, string>();
             for (int i = 0; i < srcDT.Rows.Count; i++)
             {

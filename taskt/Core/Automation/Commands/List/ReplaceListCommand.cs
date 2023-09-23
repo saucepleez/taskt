@@ -54,12 +54,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            List<string> targetList = v_TargetList.GetListVariable(engine);
+            List<string> targetList = v_TargetList.ExpandUserVariableAsList(engine);
 
             var parameters = DataTableControls.GetFieldValues(v_ReplaceActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_ReplaceAction), parameters, engine, this);
 
-            string newValue = v_ReplaceValue.ConvertToUserVariable(engine);
+            string newValue = v_ReplaceValue.ExpandValueOrUserVariable(engine);
 
             for (int i = targetList.Count - 1; i >= 0; i--)
             {

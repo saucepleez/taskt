@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
             NLGFactory nlgFactory = new NLGFactory(lexicon);
             SPhraseSpec p = nlgFactory.createClause();
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(sender);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(sender);
 
             engine.AddAppInstance(vInstance, p);
         }
