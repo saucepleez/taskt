@@ -311,6 +311,7 @@ namespace taskt.Core.Script
             fixUIAutomationSearchEnableParameterValue_v3_5_1_56(doc);
             convertTo3_5_1_56(doc);
             convertTo3_5_1_58(doc);
+            convertTo3_5_1_62(doc);
 
             return doc;
         }
@@ -1767,6 +1768,14 @@ namespace taskt.Core.Script
 
             // MailKitSendEmailCommand -> MailKitSendEMailCommand
             ChangeCommandName(doc, "MailKitSendEmailCommand", "MailKitSendEMailCommand", "Send EMail");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_62(XDocument doc)
+        {
+            // CreateTextVariable -> CreateTextVariableCommand
+            ChangeCommandName(doc, "CreateTextVariable", "CreateTextVariableCommand", "Create Text Variable");
 
             return doc;
         }
