@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             string windowName = UIElementControls.GetWindowName(targetElement);
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindow), engine))

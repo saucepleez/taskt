@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             var propName = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PropertyName), engine);
             switch (propName)

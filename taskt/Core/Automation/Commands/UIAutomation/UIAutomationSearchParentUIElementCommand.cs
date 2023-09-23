@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var rootElement = v_TargetElement.GetUIElementVariable(engine);
+            var rootElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
             object ret = WaitControls.WaitProcess(waitTime, "Parent Element",

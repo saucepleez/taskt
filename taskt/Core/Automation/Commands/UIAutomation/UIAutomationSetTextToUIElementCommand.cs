@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             var ct = targetElement.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty) as ControlType;
             if (ct == ControlType.Spinner)

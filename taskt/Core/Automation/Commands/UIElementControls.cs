@@ -143,13 +143,13 @@ namespace taskt.Core.Automation.Commands
         #region variable methods
 
         /// <summary>
-        /// get UIElement from Specified variable name
+        /// expand user variable as UIElement
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static AutomationElement GetUIElementVariable(this string variableName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement ExpandUserVariableAsUIElement(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is AutomationElement e)
@@ -163,26 +163,26 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get UIElement from specified parameter name
+        /// expand user variable as UIElement
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static AutomationElement CovnertToUserVariableAsUIElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        public static AutomationElement ExpandUserVariableAsUIElement(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var value = prop?.GetValue(command)?.ToString() ?? "";
-            return GetUIElementVariable(value, engine);
+            return ExpandUserVariableAsUIElement(value, engine);
         }
 
         /// <summary>
-        /// convert variable to string as XPath
+        /// expand user variable string as XPath
         /// </summary>
         /// <param name="value"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
+        public static string ExpandUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
         {
             var p = value.ConvertToUserVariable(engine);
             if (!p.StartsWith("."))
@@ -193,17 +193,17 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert variable to string as XPath
+        /// expand variable string as XPath
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        public static string ExpandUserVariableAsXPath(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var value = prop?.GetValue(command)?.ToString() ?? "";
-            return ConvertToUserVariableAsXPath(value, engine);
+            return ExpandUserVariableAsXPath(value, engine);
         }
 
         /// <summary>
@@ -632,7 +632,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static AutomationElement SearchGUIElement(ScriptCommand command, string elementName, string conditionName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var elem = command.CovnertToUserVariableAsUIElement(elementName, engine);
+            var elem = command.ExpandUserVariableAsUIElement(elementName, engine);
             var table = command.ConvertParameterToDataTable(conditionName, engine);
             var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
@@ -1074,8 +1074,8 @@ namespace taskt.Core.Automation.Commands
 
         public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var element = command.CovnertToUserVariableAsUIElement(rootElementName, engine);
-            var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
+            var element = command.ExpandUserVariableAsUIElement(rootElementName, engine);
+            var xpath = command.ExpandUserVariableAsXPath(xpathName, engine);
             var wait = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
             return SearchGUIElementByXPath(element, xpath, wait, engine);

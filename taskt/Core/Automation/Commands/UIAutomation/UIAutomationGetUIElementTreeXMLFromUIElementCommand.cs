@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
             //var xml = AutomationElementControls.GetElementXml(targetElement, out _);
             (var xml, _) = UIElementControls.GetElementXml(targetElement);
             using(System.IO.StringWriter sw = new System.IO.StringWriter())
