@@ -109,7 +109,7 @@ namespace taskt.Core.Automation.Commands
 
             var args = v_Args.ConvertToUserVariable(sender);
             
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             //configure timeout
             //var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);

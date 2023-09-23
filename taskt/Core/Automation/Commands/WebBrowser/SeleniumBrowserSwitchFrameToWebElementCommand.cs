@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
                 scrollCommand.RunCommand(engine);
             }
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
             switch (elem.TagName.ToLower())
             {
                 case "frame":
@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
                     throw new Exception("WebElement is not frame or iframe");
             }
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             try
             {

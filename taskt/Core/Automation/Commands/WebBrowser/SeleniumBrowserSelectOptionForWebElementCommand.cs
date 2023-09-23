@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {

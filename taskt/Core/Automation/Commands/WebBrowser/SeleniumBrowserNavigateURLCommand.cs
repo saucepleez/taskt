@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
                 parsedURL = ((useHttps) ? "https://" : "http://") + parsedURL;
             }
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             seleniumInstance.Navigate().GoToUrl(parsedURL);
         }

@@ -78,7 +78,7 @@ namespace taskt.Core.Automation.Commands
                 scrollCommand.RunCommand(engine);
             }
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
             var clickType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
 
             Action clickAction;
@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
                 default:
                     clickAction = new Action(() =>
                     {
-                        var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+                        var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
                         
                         var scrollJson = JObject.Parse(SeleniumBrowserControls.ExcecuteScript(seleniumInstance, 
                                             "return JSON.stringify({x: window.scrollX, y: window.scrollY})").ToString());

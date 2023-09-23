@@ -41,8 +41,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
             try
             {

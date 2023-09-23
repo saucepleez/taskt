@@ -200,7 +200,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IWebElement ConvertToUserVariableAsWebElement(this string str, string parameterName, Engine.AutomationEngineInstance engine)
+        public static IWebElement ExpandUserVariableAsWebElement(this string str, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var v = str.GetRawVariable(engine);
             if (v.VariableValue is IWebElement e)
@@ -228,7 +228,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IWebDriver GetSeleniumBrowserInstance(this string instanceName, Engine.AutomationEngineInstance engine)
+        public static IWebDriver ExpandValueOrUserVariableAsSeleniumBrowserInstance(this string instanceName, Engine.AutomationEngineInstance engine)
         {
             var vInstance = instanceName.ConvertToUserVariable(engine);
             var browserObject = engine.GetAppInstance(vInstance);
@@ -346,7 +346,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get instance and searched an element
+        /// expand value or user variable as instance and searched an webElement
         /// </summary>
         /// <param name="seleniumInstance"></param>
         /// <param name="searchMethod"></param>
@@ -356,7 +356,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (IWebDriver, IWebElement) GetSeleniumBrowserInstanceAndElement(IWebDriver seleniumInstance, string searchMethod, string searchParameter, int index, int waitTime, Engine.AutomationEngineInstance engine)
+        public static (IWebDriver, IWebElement) ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(IWebDriver seleniumInstance, string searchMethod, string searchParameter, int index, int waitTime, Engine.AutomationEngineInstance engine)
         {
             var searchFunc = GetWebElementSearchMethod(searchMethod);
 
@@ -406,7 +406,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get instance and searched an element
+        /// expand value or user variable as instance and searched an webElement
         /// </summary>
         /// <param name="command"></param>
         /// <param name="instanceParameterName"></param>
@@ -416,10 +416,10 @@ namespace taskt.Core.Automation.Commands
         /// <param name="waitTimeName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (IWebDriver, IWebElement) GetSeleniumBrowserInstanceAndElement(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, string elementIndexName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        public static (IWebDriver, IWebElement) ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, string elementIndexName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
             var instanceName = command.ConvertToUserVariable(instanceParameterName, "WebBrowser Instance Name", engine);
-            var seleniumInstance = instanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = instanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
             var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
@@ -437,11 +437,11 @@ namespace taskt.Core.Automation.Commands
                 index = command.ExpandValueOrUserVariableAsInteger(elementIndexName, engine);
             }
 
-            return GetSeleniumBrowserInstanceAndElement(seleniumInstance, searchMethod, searchParameter, index, waitTime, engine);
+            return ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(seleniumInstance, searchMethod, searchParameter, index, waitTime, engine);
         }
 
         /// <summary>
-        /// get instance and searched elements
+        /// expand value or user variable as instance and searched an webElements
         /// </summary>
         /// <param name="seleniumInstance"></param>
         /// <param name="searchMethod"></param>
@@ -450,7 +450,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (IWebDriver, List<IWebElement>) GetSeleniumBrowserInstanceAndElements(IWebDriver seleniumInstance, string searchMethod, string searchParameter, int waitTime, Engine.AutomationEngineInstance engine)
+        public static (IWebDriver, List<IWebElement>) ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElements(IWebDriver seleniumInstance, string searchMethod, string searchParameter, int waitTime, Engine.AutomationEngineInstance engine)
         {
             var searchFunc = GetWebElementSearchMethod(searchMethod);
 
@@ -496,7 +496,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get instance and searched elements
+        /// expand value or user variable as instance and searched an webElements
         /// </summary>
         /// <param name="command"></param>
         /// <param name="instanceParameterName"></param>
@@ -505,17 +505,17 @@ namespace taskt.Core.Automation.Commands
         /// <param name="waitTimeName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (IWebDriver, List<IWebElement>) GetSeleniumBrowserInstanceAndElements(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, string waitTimeName, Engine.AutomationEngineInstance engine)
+        public static (IWebDriver, List<IWebElement>) ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElements(ScriptCommand command, string instanceParameterName, string searchMethodName, string searchParameterName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
             var instanceName = command.ConvertToUserVariable(instanceParameterName, "WebBrowser Instance Name", engine);
-            var seleniumInstance = instanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = instanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             var searchParameter = command.ConvertToUserVariable(searchParameterName, "Search Parameter", engine);
             var searchMethod = command.ConvertToUserVariable(searchMethodName, "Search Method", engine);
 
             var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, engine);
 
-            return GetSeleniumBrowserInstanceAndElements(seleniumInstance, searchMethod, searchParameter, waitTime, engine);
+            return ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElements(seleniumInstance, searchMethod, searchParameter, waitTime, engine);
         }
 
         #endregion

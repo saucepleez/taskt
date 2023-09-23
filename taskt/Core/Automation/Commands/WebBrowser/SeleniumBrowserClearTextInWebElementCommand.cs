@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
                 scroll.RunCommand(engine);
             }
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
             switch (elem.TagName.ToLower())
             {
