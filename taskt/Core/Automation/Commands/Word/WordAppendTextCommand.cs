@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
             var vText = v_TextToSet.ConvertToUserVariable(engine);
 

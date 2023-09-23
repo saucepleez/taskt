@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
             var fileName = v_FileName.ConvertToUserVariable(engine);
 

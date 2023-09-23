@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
             //}
             string fileName = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FileName), engine);
 
-            var wordInstance = v_InstanceName.GetWordInstance(engine);
+            var wordInstance = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             //overwrite and save
             wordInstance.DisplayAlerts = WdAlertLevel.wdAlertsNone;

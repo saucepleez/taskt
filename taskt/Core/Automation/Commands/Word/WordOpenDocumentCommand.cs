@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var wordInstance = v_InstanceName.GetWordInstance(engine);
+            var wordInstance = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             //string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "docx", "docm", "doc", "odt", "rtf" }, true);
             var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);

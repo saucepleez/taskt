@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var wordInstance = v_InstanceName.GetWordInstance(engine);
+            var wordInstance = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             wordInstance.Documents.Add();
         }
