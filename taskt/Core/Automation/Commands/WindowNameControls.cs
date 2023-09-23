@@ -496,6 +496,14 @@ namespace taskt.Core.Automation.Commands
             return GetWindowTitle(whnd);
         }
 
+        /// <summary>
+        /// find window handle from specified from args
+        /// </summary>
+        /// <param name="windowName"></param>
+        /// <param name="searchMethod"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static IntPtr FindWindowHandle(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
@@ -520,16 +528,28 @@ namespace taskt.Core.Automation.Commands
             }
         }
     
+        /// <summary>
+        /// get all window titles
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetAllWindowTitles()
         {
             return GetAllWindowNamesAndHandles().Select(w => w.Item2).ToList();
         }
 
+        /// <summary>
+        /// get all window handles
+        /// </summary>
+        /// <returns></returns>
         public static List<IntPtr> GetAllWindowHandles()
         {
             return GetAllWindowNamesAndHandles().Select(w => w.Item1).ToList();
         }
 
+        /// <summary>
+        /// Activate Window
+        /// </summary>
+        /// <param name="handle"></param>
         public static void ActivateWindow(IntPtr handle)
         {
             if (IsIconic(handle))
@@ -573,28 +593,28 @@ namespace taskt.Core.Automation.Commands
             return screenshot;
         }
 
-        public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
-        {
-            if (windowName == engine.engineSettings.CurrentWindowKeyword)
-            {
-                return GetCurrentWindowName();
-            }
-            else
-            {
-                var wins = GetAllWindowNamesAndHandles();
-                var method = GetWindowNameCompareMethod(searchMethod);
-                try
-                {
-                    var win = wins.Where(w => method(w.Item2, windowName)).First();
-                    return win.Item2;
-                }
-                catch
-                {
-                    // not found
-                    throw new Exception("Window Name '" + windowName + "' not found");
-                }
-            }
-        }
+        //public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    if (windowName == engine.engineSettings.CurrentWindowKeyword)
+        //    {
+        //        return GetCurrentWindowName();
+        //    }
+        //    else
+        //    {
+        //        var wins = GetAllWindowNamesAndHandles();
+        //        var method = GetWindowNameCompareMethod(searchMethod);
+        //        try
+        //        {
+        //            var win = wins.Where(w => method(w.Item2, windowName)).First();
+        //            return win.Item2;
+        //        }
+        //        catch
+        //        {
+        //            // not found
+        //            throw new Exception("Window Name '" + windowName + "' not found");
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// expand variable as Window Name
