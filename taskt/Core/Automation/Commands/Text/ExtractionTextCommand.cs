@@ -81,11 +81,11 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(engine);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
 
             var parms = DataTableControls.GetFieldValues(v_TextExtractionTable, "Parameter Name", "Parameter Value", engine);
             string extractedText = "";
-            switch (this.GetUISelectionValue(nameof(v_TextExtractionType), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextExtractionType), engine))
             {
                 case "extract all after text":
                     extractedText = ExtractLeadingText(variableInput, parms, engine);
@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (parms.Keys.Contains("Leading Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var index = parms["Skip Past Occurences"].ExpandValueOrUserVariableAsInteger("Skip Past Occurences", engine);
                 var searchText = parms["Leading Text"];
 
                 var positions = SearchTextPositions(targetText, searchText);
@@ -177,7 +177,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (parms.Keys.Contains("Trailing Text") && parms.Keys.Contains("Skip Past Occurences"))
             {
-                var index = parms["Skip Past Occurences"].ConvertToUserVariableAsInteger("Skip Past Occurences", engine);
+                var index = parms["Skip Past Occurences"].ExpandValueOrUserVariableAsInteger("Skip Past Occurences", engine);
                 var searchText = parms["Trailing Text"];
 
                 var positions = SearchTextPositions(targetText, searchText);

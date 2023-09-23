@@ -61,37 +61,37 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+            string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
 
-            int rowStartIndex = this.ConvertToUserVariableAsInteger(nameof(v_RowStart), "Start Row", engine);
+            int rowStartIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_RowStart), "Start Row", engine);
 
             int columnStartIndex = 0;
             int columnEndIndex = 0;
-            switch(this.GetUISelectionValue(nameof(v_ColumnType), "Column Type", engine))
+            switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnType), "Column Type", engine))
             {
                 case "range":
-                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ExpandValueOrUserVariable(engine));
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
                         columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ExpandValueOrUserVariable(engine));
                     }
                     break;
 
                 case "rc":
-                    columnStartIndex = this.ConvertToUserVariableAsInteger(nameof(v_ColumnStart), "Column Start", engine);
+                    columnStartIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_ColumnStart), "Column Start", engine);
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
                         columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = this.ConvertToUserVariableAsInteger(nameof(v_ColumnEnd), "Column End", engine);
+                        columnEndIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_ColumnEnd), "Column End", engine);
                     }
                     break;
             }
@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                rowEndIndex = this.ConvertToUserVariableAsInteger(nameof(v_RowEnd), "Row End", engine);
+                rowEndIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_RowEnd), "Row End", engine);
             }
 
             if (rowStartIndex > rowEndIndex)

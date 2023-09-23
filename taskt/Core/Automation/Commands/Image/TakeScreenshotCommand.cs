@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
             //var image = User32Functions.CaptureWindow(targetWindowName);
             var image = WindowNameControls.CaptureWindow(targetWindowName, engine);
 
-            var outputFile = this.ConvertToUserVariableAsFilePath(nameof(v_FilePath), engine);
+            var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
 
             image.Save(outputFile);
         }

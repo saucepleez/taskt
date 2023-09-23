@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var jsonText, _) = v_JsonValue.ConvertToUserVariableAsJSON(engine);
+            (var jsonText, _) = v_JsonValue.ExpandValueOrUserVariableAsJSON(engine);
             jsonText.StoreInUserVariable(engine, v_JsonVariable);
         }
     }

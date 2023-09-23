@@ -93,23 +93,23 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var codeType = SelectionControls.GetUISelectionValue(this, nameof(v_CodeType), engine);
+            var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
 
             string script = "";
             if (codeType == "code")
             {
-                script = v_ScriptCode.ConvertToUserVariable(sender);
+                script = v_ScriptCode.ExpandValueOrUserVariable(sender);
             }
             else if (codeType == "file")
             {
                 //string scriptFiile = FilePathControls.FormatFilePath_NoFileCounter(v_ScriptCode, engine, "js", true);
-                var scriptFile = v_ScriptCode.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
+                var scriptFile = v_ScriptCode.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "js"), engine);
                 script = System.IO.File.ReadAllText(scriptFile);
             }
 
-            var args = v_Args.ConvertToUserVariable(sender);
+            var args = v_Args.ExpandValueOrUserVariable(sender);
             
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             //configure timeout
             //var inputTimeout = v_TimeOut.ConvertToUserVariable(sender);
@@ -118,7 +118,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    timeOut = -1;
             //}
-            var timeOut = this.ConvertToUserVariableAsInteger(nameof(v_TimeOut), engine);
+            var timeOut = this.ExpandValueOrUserVariableAsInteger(nameof(v_TimeOut), engine);
 
             //set driver timeout
             if (timeOut > 0)

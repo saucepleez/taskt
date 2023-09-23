@@ -46,11 +46,11 @@ namespace taskt.Core.Automation.Commands
 
             //decimal num = new PropertyConvertTag(v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
             //var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), "Number", engine);
-            var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), engine);
+            var num = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Numeric), engine);
 
             //var round = v_RoundType.GetUISelectionValue("v_RoundType", this, engine);
             //var round = this.GetUISelectionValue(nameof(v_RoundType), "Round Type", engine);
-            var round = this.GetUISelectionValue(nameof(v_RoundType), engine);
+            var round = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_RoundType), engine);
 
             decimal res = 0;
             switch (round)

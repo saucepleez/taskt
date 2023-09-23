@@ -43,10 +43,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var _, var wordDocument) = v_InstanceName.GetWordInstanceAndDocument(engine);
+            (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
             //Appends image after text/images
-            var vImagePath = v_ImagePath.ConvertToUserVariable(engine);
+            var vImagePath = v_ImagePath.ExpandValueOrUserVariable(engine);
             object collapseEnd = WdCollapseDirection.wdCollapseEnd;
             Range imageRange = wordDocument.Content;
             imageRange.Collapse(ref collapseEnd);

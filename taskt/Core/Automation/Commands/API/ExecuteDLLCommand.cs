@@ -95,9 +95,9 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //get file path
-            var filePath = v_FilePath.ConvertToUserVariable(sender);
-            var className = v_ClassName.ConvertToUserVariable(sender);
-            var methodName = v_MethodName.ConvertToUserVariable(sender);
+            var filePath = v_FilePath.ExpandValueOrUserVariable(sender);
+            var className = v_ClassName.ExpandValueOrUserVariable(sender);
+            var methodName = v_MethodName.ExpandValueOrUserVariable(sender);
 
             //if file path does not exist
             if (!System.IO.File.Exists(filePath))
@@ -141,7 +141,7 @@ namespace taskt.Core.Automation.Commands
                     //get parameter value
                     var requiredParameterValue = (from rws in v_MethodParameters.AsEnumerable()
                                                  where rws.Field<string>("Parameter Name") == paramName
-                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault().ConvertToUserVariable(sender);
+                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault().ExpandValueOrUserVariable(sender);
 
               
                     //get type of parameter

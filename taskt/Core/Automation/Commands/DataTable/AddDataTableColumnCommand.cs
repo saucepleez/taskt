@@ -55,11 +55,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DataTable myDT = v_DataTableName.GetDataTableVariable(engine);
+            DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
-            string newColName = v_AddColumnName.ConvertToUserVariable(engine);
+            string newColName = v_AddColumnName.ExpandValueOrUserVariable(engine);
 
-            string ifColumnExists = this.GetUISelectionValue(nameof(v_IfColumnExists), "If Column Exists", engine);
+            string ifColumnExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfColumnExists), "If Column Exists", engine);
 
             for (int i = 0; i < myDT.Columns.Count; i++)
             {

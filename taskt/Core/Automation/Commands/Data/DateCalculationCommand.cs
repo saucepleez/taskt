@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //get variablized string
-            var variableDateTime = v_InputValue.ConvertToUserVariable(sender);
+            var variableDateTime = v_InputValue.ExpandValueOrUserVariable(sender);
 
             //convert to date time
             DateTime requiredDateTime;
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
 
             //get increment value
             double requiredInterval;
-            var variableIncrement = v_Increment.ConvertToUserVariable(sender);
+            var variableIncrement = v_Increment.ExpandValueOrUserVariable(sender);
 
             //convert to double
             if (!Double.TryParse(variableIncrement, out requiredInterval))
@@ -144,7 +144,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //handle if formatter is required     
-            var formatting = v_ToStringFormat.ConvertToUserVariable(sender);
+            var formatting = v_ToStringFormat.ExpandValueOrUserVariable(sender);
             var stringDateFormatted = requiredDateTime.ToString(formatting);
 
 

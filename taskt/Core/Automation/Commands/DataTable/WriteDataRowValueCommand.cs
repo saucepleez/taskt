@@ -68,11 +68,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var dataRowValue = v_DataRowValue.ConvertToUserVariable(sender);
+            var dataRowValue = v_DataRowValue.ExpandValueOrUserVariable(sender);
 
             DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;
 
-            var valueIndex = v_DataValueIndex.ConvertToUserVariable(sender);
+            var valueIndex = v_DataValueIndex.ExpandValueOrUserVariable(sender);
 
             if (String.IsNullOrEmpty(v_Option))
             {

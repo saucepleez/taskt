@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             int test = 0;
             test = excelSheet.Columns.Count;
@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
                                  Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
                                  false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
             var targetAddress = "A" + (lastUsedRow + 1);
-            var targetText = v_TextToSet.ConvertToUserVariable(sender);
+            var targetText = v_TextToSet.ExpandValueOrUserVariable(sender);
             excelSheet.Range[targetAddress].Value = targetText;
         }
         public override List<Control> Render(frmCommandEditor editor)

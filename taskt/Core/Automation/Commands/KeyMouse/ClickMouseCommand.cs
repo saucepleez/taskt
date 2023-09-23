@@ -36,13 +36,13 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var clickType = this.GetUISelectionValue(nameof(v_MouseClick), engine);
+            var clickType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_MouseClick), engine);
 
             var mousePosition = Cursor.Position;
             //User32Functions.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
             KeyMouseControls.SendMouseClick(clickType, mousePosition.X, mousePosition.Y);
 
-            var waitTime = this.ConvertToUserVariableAsInteger(nameof(v_WaitTimeAfterClick), engine);
+            var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeAfterClick), engine);
             System.Threading.Thread.Sleep(waitTime);
         }
     }

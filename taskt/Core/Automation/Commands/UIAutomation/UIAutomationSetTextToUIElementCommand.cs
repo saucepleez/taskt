@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             var ct = targetElement.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty) as ControlType;
             if (ct == ControlType.Spinner)
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
                 targetElement = targetElement.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
             }
 
-            string textValue = v_TextVariable.ConvertToUserVariable(sender);
+            string textValue = v_TextVariable.ExpandValueOrUserVariable(sender);
 
             if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object valPtn))
             {

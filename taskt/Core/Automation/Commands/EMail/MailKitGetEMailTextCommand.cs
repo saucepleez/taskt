@@ -51,9 +51,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mail = v_MailName.GetMailKitEMailVariable(engine);
+            var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
-            var textType = this.GetUISelectionValue(nameof(v_TextType), engine);
+            var textType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TextType), engine);
 
             string res = "";
             switch (textType)

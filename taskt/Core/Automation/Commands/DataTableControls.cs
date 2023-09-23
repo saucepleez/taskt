@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -171,13 +170,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_WhenGreaterRows { set; get; }
 
         /// <summary>
-        /// get DataTable variable from variable name
+        /// Expand user variable as DataTable
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static DataTable GetDataTableVariable(this string variableName, Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">Value is not DataTable</exception>
+        public static DataTable ExpandUserVariableAsDataTable(this string variableName, Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is DataTable table)
@@ -191,13 +190,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get DataTable variable from parameter name
+        /// Convert parameter value to DataTable
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static DataTable ConvertToUserVariableAsDataTable(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
+        /// <exception cref="">value is not DataTable</exception>
+        public static DataTable ConvertParameterToDataTable(this ScriptCommand command, string parameterName, Engine.AutomationEngineInstance engine)
         {
             var prop = command.GetProperty(parameterName);
             var value = prop?.GetValue(command) ?? null;
@@ -207,12 +207,12 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Property '" + parameterName + "' is not DataTable");
+                throw new Exception("Parameter '" + parameterName + "' is not DataTable");
             }
         }
 
         /// <summary>
-        /// get DataTable variable and Column Index from variable name property and column properies
+        /// expand user variables as DataTable and Column Index from variable name parameter and column parameters
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tableName"></param>
@@ -220,16 +220,16 @@ namespace taskt.Core.Automation.Commands
         /// <param name="columnName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int columnIndex) GetDataTableVariableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int columnIndex) ExpandUserVariablesAsDataTableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
-            var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
-            var table = targetTable.GetDataTableVariable(engine);
+            var targetTable = command.ExpandValueOrUserVariable(tableName, "DataTable", engine);
+            var table = targetTable.ExpandUserVariableAsDataTable(engine);
             var index = command.GetColumnIndex(table, columnTypeName, columnName, engine);
             return (table, index);
         }
 
         /// <summary>
-        /// get DataTable variable and Row Index from variable name property and row name property. If row index is empty, return value is current position.
+        /// expand user variables as DataTable and Row Index from variable name property and row name property. If row index is empty, return value is current position.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tableName"></param>
@@ -237,46 +237,54 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (DataTable table, int rowIndex) GetDataTableVariableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex) ExpandUserVariablesAsDataTableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
         {
-            var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
-            var table = targetTable.GetDataTableVariable(engine);
+            var targetTable = command.ExpandValueOrUserVariable(tableName, "DataTable", engine);
+            var table = targetTable.ExpandUserVariableAsDataTable(engine);
 
-            var rowValue = command.ConvertToUserVariable(rowName, "Row Index", engine);
-            int index;
-            if (String.IsNullOrEmpty(rowValue))
+            var rowValue = command.ExpandValueOrUserVariable(rowName, "Row Index", engine);
+            //int index;
+            //if (String.IsNullOrEmpty(rowValue))
+            //{
+            //    index = targetTable.GetRawVariable(engine).CurrentPosition;
+            //}
+            //else
+            //{
+            //    index = command.ConvertToUserVariableAsInteger(rowName, "Row Index", engine);
+            //}
+
+            //if (index < 0)
+            //{
+            //    index += table.Rows.Count;
+            //}
+
+            //if ((index < 0) || (index >= table.Rows.Count))
+            //{
+            //    throw new Exception("Strange Row Index '" + rowName + "', parsed '" + index + "'");
+            //}
+
+            if (string.IsNullOrEmpty(rowValue))
             {
-                index = targetTable.GetRawVariable(engine).CurrentPosition;
-            }
-            else
-            {
-                index = command.ConvertToUserVariableAsInteger(rowName, "Row Index", engine);
-            }
-            if (index < 0)
-            {
-                index += table.Rows.Count;
+                rowValue = targetTable.GetRawVariable(engine).CurrentPosition.ToString();
             }
 
-            if ((index < 0) || (index >= table.Rows.Count))
-            {
-                throw new Exception("Strange Row Index '" + rowName + "', parsed '" + index + "'");
-            }
+            var index = GetRowIndex(table, rowValue, engine);
 
             return (table, index);
         }
 
         /// <summary>
-        /// get DataTable variable Row Index, and Column Index from variable name property and row, column name properties. If row index is empty, return value is current position.
+        /// expand user variables as DataTable Row Index, and Column Index from variable name property and row, column name properties. If row index is empty, return value is current position.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="tableName"></param>
         /// <param name="rowName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (DataTable table, int rowIndex, int columnIndex) GetDataTableVariableAndRowColumnIndeies(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
+        public static (DataTable table, int rowIndex, int columnIndex) ExpandUserVariablesAsDataTableAndRowColumnIndices(this ScriptCommand command, string tableName, string rowName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
-            (var table, var rowIndex) = command.GetDataTableVariableAndRowIndex(tableName, rowName, engine);
-            (_, var columnIndex) = command.GetDataTableVariableAndColumnIndex(tableName, columnTypeName, columnName, engine);
+            (var table, var rowIndex) = command.ExpandUserVariablesAsDataTableAndRowIndex(tableName, rowName, engine);
+            (_, var columnIndex) = command.ExpandUserVariablesAsDataTableAndColumnIndex(tableName, columnTypeName, columnName, engine);
 
             return (table, rowIndex, columnIndex);
         }
@@ -354,7 +362,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static string GetColumnName(DataTable table, string columnName, Engine.AutomationEngineInstance engine)
         {
-            string col = columnName.ConvertToUserVariable(engine);
+            string col = columnName.ExpandValueOrUserVariable(engine);
             if (IsColumnExists(table, col))
             {
                 return col;
@@ -375,7 +383,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static int GetColumnIndex(DataTable table, string columnIndex, Engine.AutomationEngineInstance engine)
         {
-            int index = new PropertyConvertTag(columnIndex, "Column Index").ConvertToUserVariableAsInteger(engine);
+            int index = new PropertyConvertTag(columnIndex, "Column Index").ExpandValueOrUserVariableAsInteger(engine);
             if (index < 0)
             {
                 index = table.Columns.Count + index;
@@ -401,18 +409,18 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         private static int GetColumnIndex(this ScriptCommand command, DataTable table, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
-            string columnType = command.GetUISelectionValue(columnTypeName, "Column Type", engine);
+            string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
 
             int columnIndex = 0;
             switch (columnType)
             {
                 case "column name":
-                    string targetColumnName = command.ConvertToUserVariable(columnName, "Column Name", engine);
+                    string targetColumnName = command.ExpandValueOrUserVariable(columnName, "Column Name", engine);
                     columnIndex = GetColumnIndexFromName(table, targetColumnName, engine);
                     break;
 
                 case "index":
-                    string targetColumnIndex = command.ConvertToUserVariable(columnName, "Column Index", engine);
+                    string targetColumnIndex = command.ExpandValueOrUserVariable(columnName, "Column Index", engine);
                     columnIndex = GetColumnIndex(table, targetColumnIndex, engine);
                     break;
             }
@@ -438,6 +446,31 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             throw new Exception("Strange Column Name " + columnName);
+        }
+
+        /// <summary>
+        /// get datatable row index
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static int GetRowIndex(DataTable table, string rowIndex, Engine.AutomationEngineInstance engine)
+        {
+            var index = rowIndex.ExpandValueOrUserVariableAsInteger("Row Index", engine);
+
+            if (index < 0)
+            {
+                index += table.Rows.Count;
+            }
+
+            if ((index< 0) || (index >= table.Rows.Count))
+            {
+                throw new Exception("Strange Row Index '" + index + "'");
+            }
+
+            return index;
         }
 
         /// <summary>
@@ -543,7 +576,7 @@ namespace taskt.Core.Automation.Commands
                 var keys = dic.Keys.ToArray();
                 foreach (string key in keys)
                 {
-                    dic[key] = dic[key].ConvertToUserVariable(engine);
+                    dic[key] = dic[key].ExpandValueOrUserVariable(engine);
                 }
             }
 
@@ -586,7 +619,7 @@ namespace taskt.Core.Automation.Commands
                 var keys = dic.Keys.ToArray();
                 foreach (string key in keys)
                 {
-                    dic[key] = dic[key].ConvertToUserVariable(engine);
+                    dic[key] = dic[key].ExpandValueOrUserVariable(engine);
                 }
             }
             

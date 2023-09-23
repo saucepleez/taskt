@@ -78,16 +78,16 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //(var _, var trgElem) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), engine);
-            (var _, var trgElem) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), nameof(v_WaitTime), engine);
+            (var _, var trgElem) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElement(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_ElementIndex), nameof(v_WaitTime), engine);
 
             if (trgElem.TagName.ToLower() != "table")
             {
                 throw new Exception("Element is not Table");
             }
 
-            var attrName = v_AttributeName.ConvertToUserVariable(engine);
+            var attrName = v_AttributeName.ExpandValueOrUserVariable(engine);
 
-            var firstRowMethod = this.GetUISelectionValue(nameof(v_FirstRowMethod), engine);
+            var firstRowMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FirstRowMethod), engine);
 
             DataTable newDT = new DataTable();
 

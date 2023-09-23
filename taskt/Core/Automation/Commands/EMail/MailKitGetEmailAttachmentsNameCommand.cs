@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mail = v_MailName.GetMailKitEMailVariable(engine);
+            var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
             var attachments = mail.Attachments.Cast<MimeKit.MimePart>().Select(a => a.FileName).ToList();
 

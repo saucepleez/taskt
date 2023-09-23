@@ -62,9 +62,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var selectionType = this.GetUISelectionValue(nameof(v_SelectionType), engine);
+            var selectionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
             switch (selectionType)
             {
                 case "index":
@@ -72,12 +72,12 @@ namespace taskt.Core.Automation.Commands
                     {
                         v_FrameParameter = "0";
                     }
-                    var frameIndex = this.ConvertToUserVariableAsInteger(nameof(v_FrameParameter), engine);
+                    var frameIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_FrameParameter), engine);
                     seleniumInstance.SwitchTo().Frame(frameIndex);
                     break;
 
                 case "name or id":
-                    var frameName = v_FrameParameter.ConvertToUserVariable(engine);
+                    var frameName = v_FrameParameter.ExpandValueOrUserVariable(engine);
                     seleniumInstance.SwitchTo().Frame(frameName);
                     break;
 

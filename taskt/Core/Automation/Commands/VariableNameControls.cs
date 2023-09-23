@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static bool IsVariableExists(string name, Engine.AutomationEngineInstance engine)
         {
-            return engine.VariableList.Any(v => (v.VariableName == name.ConvertToUserVariable(engine)));
+            return engine.VariableList.Any(v => (v.VariableName == name.ExpandValueOrUserVariable(engine)));
         }
 
         /// <summary>

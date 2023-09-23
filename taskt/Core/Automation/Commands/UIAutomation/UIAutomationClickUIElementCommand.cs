@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         public string v_YOffset { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Activate Window before Click")]
         [PropertyIsOptional(true, "Yes")]
         public string v_ActivateWindow { get; set; }
@@ -49,10 +49,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             string windowName = UIElementControls.GetWindowName(targetElement);
-            if (this.GetYesNoSelectionValue(nameof(v_ActivateWindow), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindow), engine))
             {
                 var activateWindow = new ActivateWindowCommand()
                 {
@@ -96,9 +96,9 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("No Clickable Point in UIElement '" + v_TargetElement + "'");
             }
 
-            var click = this.GetUISelectionValue(nameof(v_ClickType), engine);
-            var xAd = this.ConvertToUserVariableAsInteger(nameof(v_XOffset), engine);
-            var yAd = this.ConvertToUserVariableAsInteger(nameof(v_YOffset), engine);
+            var click = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ClickType), engine);
+            var xAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_XOffset), engine);
+            var yAd = this.ExpandValueOrUserVariableAsInteger(nameof(v_YOffset), engine);
 
             var mouseClick = new MoveMouseCommand()
             {

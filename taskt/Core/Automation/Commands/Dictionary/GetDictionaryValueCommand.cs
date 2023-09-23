@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
+            (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
             if (dic.ContainsKey(vKey))
             {
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                string ifNotExists = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                string ifNotExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExists)
                 {
                     case "error":

@@ -41,8 +41,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
             try
             {
@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                if (this.GetUISelectionValue(nameof(v_WhenFailScroll), engine) == "error")
+                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFailScroll), engine) == "error")
                 {
                     throw new Exception("Failed to Scroll To WebElement");
                 }

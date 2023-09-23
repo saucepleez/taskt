@@ -52,12 +52,12 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var p = (SPhraseSpec)engine.GetAppInstance(vInstance);
 
-            var userInput = v_Parameter.ConvertToUserVariable(sender);
+            var userInput = v_Parameter.ExpandValueOrUserVariable(sender);
 
-            switch (this.GetUISelectionValue(nameof(v_ParameterType), engine))
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine))
             {
                 case "set subject":
                     p.setSubject(userInput);

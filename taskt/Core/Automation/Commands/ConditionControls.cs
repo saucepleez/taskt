@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
 
             //string actionType = actionType.ConvertToUserVariable(engine);
 
-            switch (actionType.ConvertToUserVariable(engine).ToLower())
+            switch (actionType.ExpandValueOrUserVariable(engine).ToLower())
             {
                 //case "value":
                 case "numeric compare":
@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
 
-            string operand = param["Operand"].ConvertToUserVariable(engine);
+            string operand = param["Operand"].ExpandValueOrUserVariable(engine);
 
             bool isBoolCompare = false;
             decimal value1 = 0;
@@ -119,8 +119,8 @@ namespace taskt.Core.Automation.Commands
                 default:
                     //value1 = param["Value1"].ConvertToUserVariableAsDecimal("Value1", engine);
                     //value2 = param["Value2"].ConvertToUserVariableAsDecimal("Value2", engine);
-                    value1 = new PropertyConvertTag(param["Value1"], "Value1").ConvertToUserVariableAsDecimal(engine);
-                    value2 = new PropertyConvertTag(param["Value2"], "Value2").ConvertToUserVariableAsDecimal(engine);
+                    value1 = new PropertyConvertTag(param["Value1"], "Value1").ExpandValueOrUserVariableAsDecimal(engine);
+                    value2 = new PropertyConvertTag(param["Value2"], "Value2").ExpandValueOrUserVariableAsDecimal(engine);
                     break;
             }
 
@@ -174,10 +174,10 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", false);
 
-            string operand = param["Operand"].ConvertToUserVariable(engine);
+            string operand = param["Operand"].ExpandValueOrUserVariable(engine);
 
-            DateTime dt1 = param["Value1"].ConvertToUserVariableAsDateTime("Value1", engine);
-            DateTime dt2 = param["Value2"].ConvertToUserVariableAsDateTime("Value2", engine);
+            DateTime dt1 = param["Value1"].ConvertValueToDateTime("Value1", engine);
+            DateTime dt2 = param["Value2"].ConvertValueToDateTime("Value2", engine);
 
             bool ifResult;
             switch (operand.ToLower())
@@ -278,7 +278,7 @@ namespace taskt.Core.Automation.Commands
         private static bool DetermineStatementTruth_ErrorOccur(DataTable actionParameterTable, Engine.AutomationEngineInstance engine, bool inverseResult = false)
         {
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", false);
-            int lineNumber = param["Line Number"].ConvertToUserVariableAsInteger("Line Number", engine);
+            int lineNumber = param["Line Number"].ExpandValueOrUserVariableAsInteger("Line Number", engine);
 
             bool result;
 
@@ -372,7 +372,7 @@ namespace taskt.Core.Automation.Commands
             };
             checkWebElement.RunCommand(engine);
 
-            return VariableNameControls.GetInnerVariable(0, engine).VariableValue.ToString().ConvertToUserVariableAsBool("Result", engine);
+            return VariableNameControls.GetInnerVariable(0, engine).VariableValue.ToString().ExpandValueOrUserVariableAsBool("Result", engine);
         }
 
         private static bool DetermineStatementTruth_GUIElement(DataTable actionParameterTable, Engine.AutomationEngineInstance engine)
@@ -406,7 +406,7 @@ namespace taskt.Core.Automation.Commands
             checkUI.v_UIAActionParameters = actionTb;
             checkUI.RunCommand(engine);
 
-            return vName.ConvertToUserVariableAsBool("result", engine);
+            return vName.ExpandValueOrUserVariableAsBool("result", engine);
 
             //UIAutomationUIElementActionCommand newUIACommand = new UIAutomationUIElementActionCommand();
             //newUIACommand.v_WindowName = windowName;
@@ -446,8 +446,8 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            bool value = param["Variable Name"].ConvertToUserVariableAsBool("Variable Name", engine);
-            string compare = param["Value Is"].ConvertToUserVariable(engine);
+            bool value = param["Variable Name"].ExpandValueOrUserVariableAsBool("Variable Name", engine);
+            string compare = param["Value Is"].ExpandValueOrUserVariable(engine);
 
             switch (compare.ToLower())
             {
@@ -463,9 +463,9 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            bool value1 = param["Value1"].ConvertToUserVariableAsBool("Variable Name", engine);
-            bool value2 = param["Value2"].ConvertToUserVariableAsBool("Variable Name", engine);
-            string operand = param["Operand"].ConvertToUserVariable(engine);
+            bool value1 = param["Value1"].ExpandValueOrUserVariableAsBool("Variable Name", engine);
+            bool value2 = param["Value2"].ExpandValueOrUserVariableAsBool("Variable Name", engine);
+            string operand = param["Operand"].ExpandValueOrUserVariable(engine);
 
             switch (operand.ToLower())
             {
@@ -490,8 +490,8 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            var list1 = param["List1"].GetListVariable(engine);
-            var list2 = param["List2"].GetListVariable(engine);
+            var list1 = param["List1"].ExpandUserVariableAsList(engine);
+            var list2 = param["List2"].ExpandUserVariableAsList(engine);
 
             if (list1.Count == list2.Count)
             {
@@ -514,8 +514,8 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            var dic1 = param["Dictionary1"].GetDictionaryVariable(engine);
-            var dic2 = param["Dictionary2"].GetDictionaryVariable(engine);
+            var dic1 = param["Dictionary1"].ExpandUserVariableAsDictinary(engine);
+            var dic2 = param["Dictionary2"].ExpandUserVariableAsDictinary(engine);
 
             if (dic1.Count == dic2.Count)
             {
@@ -543,8 +543,8 @@ namespace taskt.Core.Automation.Commands
         {
             var param = DataTableControls.GetFieldValues(actionParamterTable, "Parameter Name", "Parameter Value", false);
 
-            var dt1 = param["DataTable1"].GetDataTableVariable(engine);
-            var dt2 = param["DataTable2"].GetDataTableVariable(engine);
+            var dt1 = param["DataTable1"].ExpandUserVariableAsDataTable(engine);
+            var dt2 = param["DataTable2"].ExpandUserVariableAsDataTable(engine);
 
             if ((dt1.Rows.Count == dt2.Rows.Count) && (dt1.Columns.Count == dt2.Columns.Count))
             {
@@ -1436,7 +1436,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc(string targetTypeName, string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
-            string tp = command.GetUISelectionValue(targetTypeName, "Target Type", engine);
+            string tp = command.ExpandValueOrUserVariableAsSelectionItem(targetTypeName, "Target Type", engine);
             switch (tp)
             {
                 case "text":
@@ -1449,7 +1449,7 @@ namespace taskt.Core.Automation.Commands
 
         private static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc_Text(string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
-            string filterAction = command.ConvertToUserVariable(filterActionName, "Filter Action", engine).ToLower();
+            string filterAction = command.ExpandValueOrUserVariable(filterActionName, "Filter Action", engine).ToLower();
             Func<string, string, bool> checkFunc = null;
             switch (filterAction)
             {
@@ -1549,7 +1549,7 @@ namespace taskt.Core.Automation.Commands
         }
         private static Func<string, Dictionary<string, string>, bool> GetFilterDeterminStatementTruthFunc_Numeric(string filterActionName, Dictionary<string, string> parameters, taskt.Core.Automation.Engine.AutomationEngineInstance engine, ScriptCommand command)
         {
-            string filterAction = command.ConvertToUserVariable(filterActionName, "Filter Action", engine).ToLower();
+            string filterAction = command.ExpandValueOrUserVariable(filterActionName, "Filter Action", engine).ToLower();
 
             Func<string, Dictionary<string, string>, (decimal trgValue, decimal value1, decimal value2)> convFunc;
             switch (filterAction)
@@ -1558,17 +1558,17 @@ namespace taskt.Core.Automation.Commands
                 case "not between":
                     convFunc = (txt, p) =>
                     {
-                        decimal tv = new PropertyConvertTag(txt, "Value").ConvertToUserVariableAsDecimal(engine);
-                        decimal v1 = new PropertyConvertTag(p["Value1"], "Compared Value1").ConvertToUserVariableAsDecimal(engine);
-                        decimal v2 = new PropertyConvertTag(p["Value2"], "Compared Value2").ConvertToUserVariableAsDecimal(engine);
+                        decimal tv = new PropertyConvertTag(txt, "Value").ExpandValueOrUserVariableAsDecimal(engine);
+                        decimal v1 = new PropertyConvertTag(p["Value1"], "Compared Value1").ExpandValueOrUserVariableAsDecimal(engine);
+                        decimal v2 = new PropertyConvertTag(p["Value2"], "Compared Value2").ExpandValueOrUserVariableAsDecimal(engine);
                         return (tv, v1, v2);
                     };
                     break;
                 default:
                     convFunc = (txt, p) =>
                     {
-                        decimal tv = new PropertyConvertTag(txt, "Value").ConvertToUserVariableAsDecimal(engine);
-                        decimal v1 = new PropertyConvertTag(p["Value"], "Compared Value").ConvertToUserVariableAsDecimal(engine);
+                        decimal tv = new PropertyConvertTag(txt, "Value").ExpandValueOrUserVariableAsDecimal(engine);
+                        decimal v1 = new PropertyConvertTag(p["Value"], "Compared Value").ExpandValueOrUserVariableAsDecimal(engine);
                         return (tv, v1, 0);
                     };
                     break;

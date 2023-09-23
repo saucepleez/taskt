@@ -95,8 +95,8 @@ namespace taskt.Core.Automation.Commands
             WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
-                    var width = this.ConvertToUserVariableAsInteger(nameof(v_XWindowSize), engine);
-                    var height = this.ConvertToUserVariableAsInteger(nameof(v_YWindowSize), engine);
+                    var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_XWindowSize), engine);
+                    var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_YWindowSize), engine);
                     foreach (var win in wins)
                     {
                         WindowNameControls.SetWindowSize(win.Item1, width, height);

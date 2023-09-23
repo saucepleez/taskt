@@ -65,11 +65,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
-            var pass = v_Password.ConvertToUserVariable(sender);
+            var pass = v_Password.ExpandValueOrUserVariable(sender);
 
             int worksheets;
             try
@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                switch(this.GetUISelectionValue(nameof(v_IfWorksheetExists), "If Worksheet Exists", engine))
+                switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorksheetExists), "If Worksheet Exists", engine))
                 {
                     case "error":
                         throw new Exception("Excel Instance '" + v_InstanceName + "' has Worksheets.");

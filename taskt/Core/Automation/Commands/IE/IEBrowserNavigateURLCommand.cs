@@ -48,13 +48,13 @@ namespace taskt.Core.Automation.Commands
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             browserObject = engine.GetAppInstance(vInstance);
 
             var browserInstance = (SHDocVw.InternetExplorer)browserObject;
 
-            browserInstance.Navigate(v_URL.ConvertToUserVariable(sender));
+            browserInstance.Navigate(v_URL.ExpandValueOrUserVariable(sender));
 
             IEBrowserCreateCommand.WaitForReadyState(browserInstance);
 

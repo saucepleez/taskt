@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var action = this.GetUISelectionValue(nameof(v_ActionName), engine);
+            var action = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ActionName), engine);
 
             switch (action)
             {

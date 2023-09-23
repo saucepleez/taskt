@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
             var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);
 
-            var errorPreference = this.GetUISelectionValue(nameof(v_ErrorPreference), engine);
+            var errorPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorPreference), engine);
 
             if (engine.PreloadedTasks.ContainsKey(startFile))
             {

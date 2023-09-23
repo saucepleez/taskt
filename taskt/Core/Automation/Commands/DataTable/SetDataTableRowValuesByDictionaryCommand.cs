@@ -52,11 +52,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var myDT, var rowIndex) = this.GetDataTableVariableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
+            (var myDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
 
-            var myDic = v_RowValues.GetDictionaryVariable(engine);
+            var myDic = v_RowValues.ExpandUserVariableAsDictinary(engine);
 
-            string ifKeyNotExists = this.GetUISelectionValue(nameof(v_NotExistsKey), "Key Not Exists", engine);
+            string ifKeyNotExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_NotExistsKey), "Key Not Exists", engine);
 
             // get columns list
             new GetDataTableColumnListCommand

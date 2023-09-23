@@ -57,12 +57,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             // pop host
-            string pop = v_POPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_POPPort), engine);
+            string pop = v_POPHost.ExpandValueOrUserVariable(engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_POPPort), engine);
 
             // auth
-            string user = v_POPUserName.ConvertToUserVariable(engine);
-            string pass = v_POPPassword.ConvertToUserVariable(engine);
+            string user = v_POPUserName.ExpandValueOrUserVariable(engine);
+            string pass = v_POPPassword.ExpandValueOrUserVariable(engine);
 
             using (var client = new MailKit.Net.Pop3.Pop3Client())
             {

@@ -9,7 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// methods for PropertyUISelection attributes
     /// </summary>
-    internal static class SelectionControls
+    internal static class SelectionItemsControls
     {
         /// <summary>
         /// yes no combobox
@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_YesNoComboBox { get; }
 
         /// <summary>
-        /// private GetUISelectionValue method. This method supports check selection value, first value, case sensitive.  This method may use PropertyValidationRule, PropertyDisplayValue, PropertyDescription attributes.
+        /// private ExpandValueOrUserVariableAsSelectionItem method. This method supports check selection value, first value, case sensitive.  This method may use PropertyValidationRule, PropertyDisplayValue, PropertyDescription attributes.
         /// </summary>
         /// <param name="propInfo"></param>
         /// <param name="propertyValue"></param>
@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
-        private static string GetUISelectionValue(PropertyInfo propInfo, string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
+        private static string ExpandValueOrUserVariableAsSelectionItem(PropertyInfo propInfo, string propertyValue, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             var virtualPropInfo = propInfo.GetVirtualProperty();
 
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                 propertyValue = attrIsOpt?.setBlankToValue ?? "";
             }
 
-            string value = propertyValue.ConvertToUserVariable(engine);
+            string value = propertyValue.ExpandValueOrUserVariable(engine);
 
             var options = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
             if (options.Count() > 0)
@@ -110,9 +110,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="propertyName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string GetUISelectionValue(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsSelectionItem(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
-            return GetUISelectionValue(command, propertyName, "", engine);
+            return ExpandValueOrUserVariableAsSelectionItem(command, propertyName, "", engine);
         }
 
         /// <summary>
@@ -124,13 +124,13 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
-        public static string GetUISelectionValue(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsSelectionItem(this ScriptCommand command, string propertyName, string propertyDescription, Engine.AutomationEngineInstance engine)
         {
             var propInfo = command.GetProperty(propertyName);
 
             string propertyValue = propInfo.GetValue(command)?.ToString() ?? "";
 
-            return GetUISelectionValue(propInfo, propertyValue, propertyDescription, engine);
+            return ExpandValueOrUserVariableAsSelectionItem(propInfo, propertyValue, propertyDescription, engine);
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
-        public static string GetUISelectionValue(this PropertyConvertTag p, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsSelectionItem(this PropertyConvertTag p, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
-            return GetUISelectionValue(command, p.Name, p.Description, engine);
+            return ExpandValueOrUserVariableAsSelectionItem(command, p.Name, p.Description, engine);
         }
 
         /// <summary>
@@ -155,9 +155,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
-        public static string GetUISelectionValue(this string text, string propertyName, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsSelectionItem(this string text, string propertyName, ScriptCommand command, Engine.AutomationEngineInstance engine)
         {
-            return new PropertyConvertTag(text, propertyName, "").GetUISelectionValue(command, engine);
+            return new PropertyConvertTag(text, propertyName, "").ExpandValueOrUserVariableAsSelectionItem(command, engine);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static bool GetYesNoSelectionValue(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
+        public static bool ExpandValueOrUserVariableAsYesNo(this ScriptCommand command, string propertyName, Engine.AutomationEngineInstance engine)
         {
-            var sel = command.GetUISelectionValue(propertyName, engine);
+            var sel = command.ExpandValueOrUserVariableAsSelectionItem(propertyName, engine);
             switch (sel)
             {
                 case "yes":

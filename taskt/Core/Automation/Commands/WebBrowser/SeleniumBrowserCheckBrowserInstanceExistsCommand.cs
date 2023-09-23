@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                var _ = v_InstanceName.GetSeleniumBrowserInstance(engine);
+                var _ = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
                 true.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch

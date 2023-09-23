@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Automation.Provider;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -171,13 +170,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_SearchValue { get; }
 
         /// <summary>
-        /// get List&lt;string&gt; variable from variable name
+        /// expand user variable as List&lt;string&gt;
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static List<string> GetListVariable(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not List</exception>
+        public static List<string> ExpandUserVariableAsList(this string variableName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             Script.ScriptVariable v = variableName.GetRawVariable(engine);
             if (v.VariableValue is List<string> list)
@@ -191,21 +190,21 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get List Variabe and Index value from specified Command parameters name
+        /// expand (value or) user variables as List Variabe and Index
         /// </summary>
         /// <param name="command"></param>
         /// <param name="variableName"></param>
         /// <param name="indexName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static (List<string>, int) GetListVariableAndIndex(this ScriptCommand command, string variableName, string indexName, Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not List, or index is out of range</exception>
+        public static (List<string>, int) ExpandUserVariablesAsListAndIndex(this ScriptCommand command, string variableName, string indexName, Engine.AutomationEngineInstance engine)
         {
-            var listVariableName = command.ConvertToUserVariable(variableName, "List Variable Name", engine);
+            var listVariableName = command.ExpandValueOrUserVariable(variableName, "List Variable Name", engine);
 
-            var list = listVariableName.GetListVariable(engine);
+            var list = listVariableName.ExpandUserVariableAsList(engine);
 
-            var indexValue = command.ConvertToUserVariable(indexName, "Index", engine);
+            var indexValue = command.ExpandValueOrUserVariable(indexName, "Index", engine);
             int index;
             if (String.IsNullOrEmpty(indexValue))
             {
@@ -236,16 +235,16 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get List&lt;string&gt; to List&lt;decimal&gt; from variable name
+        /// expand user variable as List&lt;string&gt; to List&lt;decimal&gt;
         /// </summary>
         /// <param name="listName"></param>
         /// <param name="ignoreNotNumeric"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static List<decimal> GetDecimalListVariable(this string listName, bool ignoreNotNumeric, Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not Decimal List</exception>
+        public static List<decimal> ExpandUserVariableAsDecimalList(this string listName, bool ignoreNotNumeric, Engine.AutomationEngineInstance engine)
         {
-            var list = listName.GetListVariable(engine);
+            var list = listName.ExpandUserVariableAsList(engine);
 
             List<decimal> numList = new List<decimal>();
             foreach(var value in list)
@@ -275,9 +274,9 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref=""></exception>
         public static string MathProcess(ScriptCommand command, string notNumericName, string listName, Engine.AutomationEngineInstance engine, Func<List<decimal>, decimal> mathFunc)
         {
-            var notNumeric = command.GetUISelectionValue(notNumericName, "Not Numeric", engine);
+            var notNumeric = command.ExpandValueOrUserVariableAsSelectionItem(notNumericName, "Not Numeric", engine);
 
-            var list = GetDecimalListVariable(listName, (notNumeric == "ignore"), engine);
+            var list = ExpandUserVariableAsDecimalList(listName, (notNumeric == "ignore"), engine);
 
             return mathFunc(list).ToString();
         }

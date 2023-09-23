@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var input = v_InputValue.ConvertToUserVariable(engine);
+            var input = v_InputValue.ExpandValueOrUserVariable(engine);
             //User32Functions.SetClipboardText(input);
             ClipboardControls.SetClipboardText(input);
         }

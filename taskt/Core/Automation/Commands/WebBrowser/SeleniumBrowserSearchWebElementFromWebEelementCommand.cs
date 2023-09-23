@@ -49,18 +49,18 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var targetElement = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            var searchMethod = this.GetUISelectionValue(nameof(v_SeleniumSearchType), engine);
+            var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumSearchType), engine);
             var searchFunc = GetWebElementSearchMethod(searchMethod);
 
-            var searchParameter = v_SeleniumSearchParameter.ConvertToUserVariable(engine);
-            var waitTime = v_WaitTime.ConvertToUserVariableAsInteger("Wait Time", engine);
+            var searchParameter = v_SeleniumSearchParameter.ExpandValueOrUserVariable(engine);
+            var waitTime = v_WaitTime.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
 
             int index = 0;
             if (!string.IsNullOrEmpty(v_ElementIndex))
             {
-                index = v_ElementIndex.ConvertToUserVariableAsInteger("Index", engine);
+                index = v_ElementIndex.ExpandValueOrUserVariableAsInteger("Index", engine);
             }
 
             var ret = WaitControls.WaitProcess(waitTime, "WebElement", new Func<(bool, object)>(() => {

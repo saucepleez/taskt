@@ -49,13 +49,13 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var excelInstance, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
 
-            var targetText = v_TextToSet.ConvertToUserVariable(sender);
+            var targetText = v_TextToSet.ExpandValueOrUserVariable(sender);
 
-            string valueType = this.GetUISelectionValue(nameof(v_ValueType), "Value Type", engine);
+            string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
 
             var setFunc = ExcelControls.SetCellValueFunctionFromRange(valueType);
             setFunc(targetText, excelSheet, rg);

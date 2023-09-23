@@ -100,8 +100,8 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string WaitForFolder(string pathValue, string waitTimeValue, Engine.AutomationEngineInstance engine)
         {
-            var path = pathValue.ConvertToUserVariableAsFolderPath(engine);
-            var waitTime = waitTimeValue.ConvertToUserVariableAsInteger("Wait Time", engine);
+            var path = pathValue.ExpandValueOrUserVariableAsFolderPath(engine);
+            var waitTime = waitTimeValue.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
             return WaitForFolder(path, waitTime, engine);
         }
 
@@ -115,8 +115,8 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string WaitForFolder(ScriptCommand command, string pathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
-            var path = command.ConvertToUserVariableAsFolderPath(pathName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitTimeName, "Wait Time", engine);
+            var path = command.ExpandValueOrUserVariableAsFolderPath(pathName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
             return WaitForFolder(path, waitTime, engine);
         }
 
@@ -139,7 +139,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(pathResultName))
                 {
-                    var pathResult = command.GetRawPropertyString(pathResultName, "Folder Path Result");
+                    var pathResult = command.GetRawPropertyValueAsString(pathResultName, "Folder Path Result");
                     if (!string.IsNullOrEmpty(pathResult))
                     {
                         path.StoreInUserVariable(engine, pathResult);
@@ -196,14 +196,15 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert to Folder Path
+        /// expand value or User variable as Folder Path
         /// </summary>
         /// <param name="value"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsFolderPath(this string value, Engine.AutomationEngineInstance engine)
+        /// <exception cref="">value is not Folder Path</exception>
+        public static string ExpandValueOrUserVariableAsFolderPath(this string value, Engine.AutomationEngineInstance engine)
         {
-            var p = ConvertToFullPath(value.ConvertToUserVariable(engine), engine);
+            var p = ConvertToFullPath(value.ExpandValueOrUserVariable(engine), engine);
             var invs = Path.GetInvalidPathChars();
             if (p.IndexOfAny(invs) < 0)
             {
@@ -216,27 +217,27 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// convert to Folder Path
+        /// Expand value or user variable as Folder Path
         /// </summary>
         /// <param name="command"></param>
         /// <param name="parameterValue"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static string ConvertToUserVariableAsFolderPath(this ScriptCommand command, string parameterValue, Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariableAsFolderPath(this ScriptCommand command, string parameterValue, Engine.AutomationEngineInstance engine)
         {
-            return command.ConvertToUserVariable(parameterValue, "Folder Path", engine).ConvertToUserVariableAsFolderPath(engine);
+            return command.ExpandValueOrUserVariable(parameterValue, "Folder Path", engine).ExpandValueOrUserVariableAsFolderPath(engine);
         }
 
         /// <summary>
-        /// convert to folder name
+        /// expand value or User variable as Folder Name
         /// </summary>
         /// <param name="folderName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static string ConvertToUserVariableAsFolderName(this string folderName, Engine.AutomationEngineInstance engine)
+        /// <exception cref="Exception">value is not folder name</exception>
+        public static string ExpandValueOrUserVariableAsFolderName(this string folderName, Engine.AutomationEngineInstance engine)
         {
-            var fn = folderName.ConvertToUserVariable(engine);
+            var fn = folderName.ExpandValueOrUserVariable(engine);
             var invs = Path.GetInvalidFileNameChars();
             if (fn.IndexOfAny(invs) < 0)
             {

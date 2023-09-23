@@ -165,8 +165,8 @@ namespace taskt.Core.Automation.Commands
                     //        formattedString = "";
                     //        break;
                     //}
-                    var variableString = v_InputValue.ConvertToUserVariable(engine);
-                    var formatting = v_ToStringFormat.ConvertToUserVariable(engine);
+                    var variableString = v_InputValue.ExpandValueOrUserVariable(engine);
+                    var formatting = v_ToStringFormat.ExpandValueOrUserVariable(engine);
                     var formattedString = FilePathControls.FormatFileFolderPath(variableString, formatting);
                     formattedString.StoreInUserVariable(engine, v_applyToVariableName);
                     break;

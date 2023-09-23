@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands
 
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             browserObject = engine.GetAppInstance(vInstance);
 
@@ -167,7 +167,7 @@ namespace taskt.Core.Automation.Commands
             foreach (DataRow seachCriteria in elementSearchProperties)
             {
                 string searchPropertyValue = seachCriteria.Field<string>("Property Value");
-                searchPropertyValue = searchPropertyValue.ConvertToUserVariable(engine);
+                searchPropertyValue = searchPropertyValue.ExpandValueOrUserVariable(engine);
                 seachCriteria.SetField<string>("Property Value", searchPropertyValue);
             }
 
@@ -327,7 +327,7 @@ namespace taskt.Core.Automation.Commands
                                      where rw.Field<string>("Parameter Name") == "Value To Set"
                                      select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                valueToSet = valueToSet.ConvertToUserVariable(sender);
+                valueToSet = valueToSet.ExpandValueOrUserVariable(sender);
 
                 element.setAttribute(attributeName, valueToSet);
             }
@@ -339,7 +339,7 @@ namespace taskt.Core.Automation.Commands
                                     where rw.Field<string>("Parameter Name") == "Text To Set"
                                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                textToSet = textToSet.ConvertToUserVariable(sender);
+                textToSet = textToSet.ExpandValueOrUserVariable(sender);
 
                 element.setAttribute(attributeName, textToSet);
             }

@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WebRequestURL { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Execute Request as the currently logged on user?")]
         public string v_WebRequestCredentials { get; set; }
 
@@ -48,12 +48,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(v_WebRequestURL.ConvertToUserVariable(sender));
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(v_WebRequestURL.ExpandValueOrUserVariable(sender));
             request.Method = "GET";
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
 
             //if (v_WebRequestCredentials == "Yes")
-            if (this.GetYesNoSelectionValue(nameof(v_WebRequestCredentials), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_WebRequestCredentials), engine))
             {
                 request.Credentials = CredentialCache.DefaultCredentials;
             }

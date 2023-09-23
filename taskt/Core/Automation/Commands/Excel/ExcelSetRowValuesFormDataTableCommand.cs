@@ -73,10 +73,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
 
-            DataTable myDT = v_DataTableVariable.GetDataTableVariable(engine);
+            DataTable myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
 
             (int excelRowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
                 ExcelControls.GetRangeIndeiesRowDirection(
@@ -86,13 +86,13 @@ namespace taskt.Core.Automation.Commands
                     myDT
                 );
 
-            int dtRowIndex = this.ConvertToUserVariableAsInteger(nameof(v_DataTableRowIndex), "DataTable Row Index", engine);
+            int dtRowIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_DataTableRowIndex), "DataTable Row Index", engine);
             if  (dtRowIndex >= myDT.Rows.Count)
             {
                 throw new Exception("DataTable Row " + v_DataTableRowIndex + " is not exists");
             }
 
-            string ifDataTableNotEnough = this.GetUISelectionValue(nameof(v_IfDataTableNotEnough), "If DataTable Not Enough", engine);
+            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDataTableNotEnough), "If DataTable Not Enough", engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifDataTableNotEnough == "error")
             {
@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDT.Columns.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

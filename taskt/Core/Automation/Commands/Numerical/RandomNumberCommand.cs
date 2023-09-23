@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
 
             //var t = v_RandomType.GetUISelectionValue("v_RandomType", this, engine);
             //var t = this.GetUISelectionValue(nameof(v_RandomType), "Random Type", engine);
-            var t = this.GetUISelectionValue(nameof(v_RandomType), engine);
+            var t = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_RandomType), engine);
 
             Random rand = new Random();
 

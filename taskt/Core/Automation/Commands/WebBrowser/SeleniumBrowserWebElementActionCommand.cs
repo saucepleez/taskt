@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Element Action")]
+        [PropertyDescription("WebElement Action")]
         [PropertyUISelectionOption("Click WebElement")]
         [PropertyUISelectionOption("Clear WebElement")]
         [PropertyUISelectionOption("Set Text")]
@@ -48,6 +48,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get Options")]
         [PropertyUISelectionOption("Select Option")]
         [PropertySelectionChangeEvent(nameof(cmbSeleniumAction_SelectionChangeCommitted))]
+        [PropertyValidationRule("WebElement Action", PropertyValidationRule.ValidationRuleFlags.Empty)]
         public string v_SeleniumElementAction { get; set; }
 
         [XmlElement]
@@ -80,7 +81,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var actionType = this.GetUISelectionValue(nameof(v_SeleniumElementAction), engine);
+            var actionType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumElementAction), engine);
             var parameters = DataTableControls.GetFieldValues(v_WebActionParameterTable, "Parameter Name", "Parameter Value", false, engine);
             switch (actionType)
             {
@@ -180,6 +181,7 @@ namespace taskt.Core.Automation.Commands
                         case "switch to frame":
                             var switchToFrame = new SeleniumBrowserSwitchFrameToWebElementCommand()
                             {
+                                v_InstanceName = this.v_InstanceName,
                                 v_WebElement = elemVariable,
                             };
                             switchToFrame.RunCommand(engine);

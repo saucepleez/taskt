@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            decimal value = this.ConvertToUserVariableAsDecimal(nameof(v_Serial), engine);
+            decimal value = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Serial), engine);
 
             try
             {

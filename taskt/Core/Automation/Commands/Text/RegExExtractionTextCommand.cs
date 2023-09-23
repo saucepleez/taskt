@@ -86,14 +86,14 @@ namespace taskt.Core.Automation.Commands
             //    matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
             //}
 
-            var variableInput = v_InputValue.ConvertToUserVariable(engine);
-            var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(engine);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
+            var variableExtractorPattern = v_RegExExtractor.ExpandValueOrUserVariable(engine);
 
             var regex = new Regex(variableExtractorPattern);
             var matches = regex.Match(variableInput);
             if (matches.Groups.Count > 0)
             {
-                var matchGroup = this.ConvertToUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
+                var matchGroup = this.ExpandValueOrUserVariableAsInteger(nameof(v_MatchGroupIndex), engine);
 
                 if (matchGroup < 0)
                 {

@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SourceFolderPath { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Folder Move to the Recycle Bin")]
         [PropertyIsOptional(true, "No")]
         public string v_MoveToRecycleBin { get; set; }
@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
                 new Action<string>(path =>
                 {
                     //delete folder
-                    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_MoveToRecycleBin), engine))
                     {
                         Shell32.MoveToRecycleBin(path);
                     }

@@ -52,11 +52,11 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var excelInstance = v_InstanceName.GetExcelInstance(engine);
+            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             List<string> sheetNames = new List<string>();
 
-            var targetSheetName = v_SheetName.ConvertToUserVariable(sender);
+            var targetSheetName = v_SheetName.ExpandValueOrUserVariable(sender);
             
             if (String.IsNullOrEmpty(targetSheetName))
             {
@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                var searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
+                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), "Search Method", engine);
 
                 switch (searchMethod)
                 {

@@ -46,7 +46,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var mail = v_MailName.GetMailKitEMailVariable(engine);
+            var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
             //string path;
             //if (FilePathControls.ContainsFileCounter(v_SavePath, engine))
@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             //{
             //    path = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "eml");
             //}
-            var path = this.ConvertToUserVariableAsFilePath(nameof(v_SavePath), engine);
+            var path = this.ExpandValueOrUserVariableAsFilePath(nameof(v_SavePath), engine);
 
             mail.WriteTo(path);
         }

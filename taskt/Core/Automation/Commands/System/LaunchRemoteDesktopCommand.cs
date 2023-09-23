@@ -81,21 +81,21 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var machineName = v_MachineName.ConvertToUserVariable(sender);
-            var userName = v_UserName.ConvertToUserVariable(sender);
-            var password = v_Password.ConvertToUserVariable(sender);
+            var machineName = v_MachineName.ExpandValueOrUserVariable(sender);
+            var userName = v_UserName.ExpandValueOrUserVariable(sender);
+            var password = v_Password.ExpandValueOrUserVariable(sender);
 
             if (String.IsNullOrEmpty(v_RDPWidth))
             {
                 v_RDPWidth = SystemInformation.PrimaryMonitorSize.Width.ToString();
             }
-            var width = this.ConvertToUserVariableAsInteger(nameof(v_RDPWidth), engine);
+            var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_RDPWidth), engine);
 
             if (String.IsNullOrEmpty(v_RDPHeight))
             {
                 v_RDPHeight = SystemInformation.PrimaryMonitorSize.Height.ToString();
             }
-            var height = this.ConvertToUserVariableAsInteger(nameof(v_RDPHeight), engine);
+            var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_RDPHeight), engine);
 
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {

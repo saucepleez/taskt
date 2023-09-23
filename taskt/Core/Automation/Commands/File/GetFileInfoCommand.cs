@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     var fileInfo = new System.IO.FileInfo(path);
 
-                    var infoType = this.GetUISelectionValue(nameof(v_InfoType), engine);
+                    var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), engine);
                     string ret = "";
                     switch (infoType)
                     {

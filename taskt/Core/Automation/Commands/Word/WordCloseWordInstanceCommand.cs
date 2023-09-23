@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var wordObject = engine.GetAppInstance(vInstance);
 
             var wordInstance = (Microsoft.Office.Interop.Word.Application)wordObject;
@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
             //check if document exists and save
             if (wordInstance.Documents.Count >= 1)
             {
-                var isSave = v_WordSaveOnExit.ConvertToUserVariableAsBool("Document should be saved", engine);
+                var isSave = v_WordSaveOnExit.ExpandValueOrUserVariableAsBool("Document should be saved", engine);
                 wordInstance.ActiveDocument.Close(isSave);
             }
 

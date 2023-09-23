@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var sht) = (v_InstanceName, v_SheetName).GetExcelInstanceAndWorksheet(engine, true);
+            (_, var sht) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(v_SheetName, engine, true);
 
             (sht != null).StoreInUserVariable(engine, v_applyToVariable);
         }

@@ -112,7 +112,7 @@ namespace taskt.Core.Automation.Commands
                 }), 
                 new Action<Exception>(ex =>
                 {
-                    var whenNotFound = this.GetUISelectionValue(nameof(v_WhenWindowNotFound), engine);
+                    var whenNotFound = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenWindowNotFound), engine);
                     switch (whenNotFound)
                     {
                         case "ignore":

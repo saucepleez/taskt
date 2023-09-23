@@ -61,11 +61,11 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             var targetVariable = VariableNameControls.GetWrappedVariableName(v_TargetVariable, engine);
-            var text = targetVariable.ConvertToUserVariable(engine);
-            var con = v_ConcatText.ConvertToUserVariable(engine);
+            var text = targetVariable.ExpandValueOrUserVariable(engine);
+            var con = v_ConcatText.ExpandValueOrUserVariable(engine);
 
-            var insertNewLine = this.GetUISelectionValue(nameof(v_InsertNewLine), "Insert New Line", engine);
-            var concatPosition = this.GetUISelectionValue(nameof(v_ConcatenatePosition), "Concatenate Position", engine);
+            var insertNewLine = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InsertNewLine), "Insert New Line", engine);
+            var concatPosition = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ConcatenatePosition), "Concatenate Position", engine);
 
             switch (insertNewLine)
             {

@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
                 WebClient webClient = new WebClient();
                 webClient.Encoding = System.Text.Encoding.UTF8;
                 webClient.Headers.Add("user-agent", "request");
-                result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
+                result = webClient.DownloadString(v_FilePath.ExpandValueOrUserVariable(engine));
             }
             else
             {
@@ -90,7 +90,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //var readPreference = v_ReadOption.GetUISelectionValue("v_ReadOption", this, engine);
-            var readPreference = this.GetUISelectionValue(nameof(v_ReadOption), engine);
+            var readPreference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReadOption), engine);
             if (readPreference == "line count")
             {
                 result = result.Replace("\r\n", "\n");  // \n\n -> \n

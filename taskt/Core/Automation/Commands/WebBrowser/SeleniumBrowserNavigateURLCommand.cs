@@ -60,15 +60,15 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var parsedURL = v_URL.ConvertToUserVariable(sender);
+            var parsedURL = v_URL.ExpandValueOrUserVariable(sender);
             if (!parsedURL.StartsWith("http"))
             {
-                var useHttps = v_UseHttps.ConvertToUserVariableAsBool("Use HTTPS", engine);
+                var useHttps = v_UseHttps.ExpandValueOrUserVariableAsBool("Use HTTPS", engine);
                 //parsedURL = this.v_HttpsChoice[useHttps] + parsedURL;
                 parsedURL = ((useHttps) ? "https://" : "http://") + parsedURL;
             }
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             seleniumInstance.Navigate().GoToUrl(parsedURL);
         }

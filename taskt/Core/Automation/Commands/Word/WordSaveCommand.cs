@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
             //get engine context
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var wordInstance = v_InstanceName.GetWordInstance(engine);
+            var wordInstance = v_InstanceName.ExpandValueOrUserVariableAsWordInstance(engine);
 
             //save
             wordInstance.ActiveDocument.Save();

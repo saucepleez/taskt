@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
 
             DataTable Dt = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
 
-            var vSearchItem = v_SearchItem.ConvertToUserVariable(engine);
+            var vSearchItem = v_SearchItem.ExpandValueOrUserVariable(engine);
             var t = new List<Tuple<string, string>>();
             var listPairs = vSearchItem.Split('}');
             int i = 0;

@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
                 JObject obj = (JObject)searchResult;
 
                 var propertyValue = this.GetJSONValue(nameof(v_PropertyValue), nameof(v_ValueType), "Add", engine);
-                var propertyName = v_PropertyName.ConvertToUserVariable(engine);
+                var propertyName = v_PropertyName.ExpandValueOrUserVariable(engine);
                 obj.Add(new JProperty(propertyName, propertyValue));
             });
             this.JSONModifyByJSONPath(nameof(v_InputValue), nameof(v_JsonExtractor), addPropertyFunc, addPropertyFunc, engine);

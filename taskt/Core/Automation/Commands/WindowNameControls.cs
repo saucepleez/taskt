@@ -496,6 +496,14 @@ namespace taskt.Core.Automation.Commands
             return GetWindowTitle(whnd);
         }
 
+        /// <summary>
+        /// find window handle from specified from args
+        /// </summary>
+        /// <param name="windowName"></param>
+        /// <param name="searchMethod"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static IntPtr FindWindowHandle(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
         {
             if (windowName == engine.engineSettings.CurrentWindowKeyword)
@@ -520,16 +528,28 @@ namespace taskt.Core.Automation.Commands
             }
         }
     
+        /// <summary>
+        /// get all window titles
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetAllWindowTitles()
         {
             return GetAllWindowNamesAndHandles().Select(w => w.Item2).ToList();
         }
 
+        /// <summary>
+        /// get all window handles
+        /// </summary>
+        /// <returns></returns>
         public static List<IntPtr> GetAllWindowHandles()
         {
             return GetAllWindowNamesAndHandles().Select(w => w.Item1).ToList();
         }
 
+        /// <summary>
+        /// Activate Window
+        /// </summary>
+        /// <param name="handle"></param>
         public static void ActivateWindow(IntPtr handle)
         {
             if (IsIconic(handle))
@@ -573,28 +593,28 @@ namespace taskt.Core.Automation.Commands
             return screenshot;
         }
 
-        public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
-        {
-            if (windowName == engine.engineSettings.CurrentWindowKeyword)
-            {
-                return GetCurrentWindowName();
-            }
-            else
-            {
-                var wins = GetAllWindowNamesAndHandles();
-                var method = GetWindowNameCompareMethod(searchMethod);
-                try
-                {
-                    var win = wins.Where(w => method(w.Item2, windowName)).First();
-                    return win.Item2;
-                }
-                catch
-                {
-                    // not found
-                    throw new Exception("Window Name '" + windowName + "' not found");
-                }
-            }
-        }
+        //public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    if (windowName == engine.engineSettings.CurrentWindowKeyword)
+        //    {
+        //        return GetCurrentWindowName();
+        //    }
+        //    else
+        //    {
+        //        var wins = GetAllWindowNamesAndHandles();
+        //        var method = GetWindowNameCompareMethod(searchMethod);
+        //        try
+        //        {
+        //            var win = wins.Where(w => method(w.Item2, windowName)).First();
+        //            return win.Item2;
+        //        }
+        //        catch
+        //        {
+        //            // not found
+        //            throw new Exception("Window Name '" + windowName + "' not found");
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// expand variable as Window Name
@@ -610,7 +630,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                return value.ConvertToUserVariable(engine);
+                return value.ExpandValueOrUserVariable(engine);
             }
         }
 
@@ -689,10 +709,10 @@ namespace taskt.Core.Automation.Commands
         public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine)
         {
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
-            var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
-            var matchType = command.GetUISelectionValue(matchTypeName, engine);
-            var index = command.ConvertToUserVariableAsInteger(indexName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitName, engine);
+            var compareMethod = command.ExpandValueOrUserVariableAsSelectionItem(compareMethodName, engine);
+            var matchType = command.ExpandValueOrUserVariableAsSelectionItem(matchTypeName, engine);
+            var index = command.ExpandValueOrUserVariableAsInteger(indexName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitName, engine);
 
             return FindWindows(window, compareMethod, matchType, index, waitTime, engine);
         }
@@ -709,8 +729,8 @@ namespace taskt.Core.Automation.Commands
         public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine)
         {
             var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
-            var compareMethod = command.GetUISelectionValue(compareMethodName, engine);
-            var waitTime = command.ConvertToUserVariableAsInteger(waitName, engine);
+            var compareMethod = command.ExpandValueOrUserVariableAsSelectionItem(compareMethodName, engine);
+            var waitTime = command.ExpandValueOrUserVariableAsInteger(waitName, engine);
 
             return FindWindows(window, compareMethod, "All", 60, waitTime, engine);
         }
@@ -737,7 +757,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(nameResultName))
                 {
-                    var nameResult = command.GetRawPropertyString(nameResultName, "Window Name Result");
+                    var nameResult = command.GetRawPropertyValueAsString(nameResultName, "Window Name Result");
                     if (!string.IsNullOrEmpty(nameResult))
                     {
                         if (matchType == "all")
@@ -752,7 +772,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 if (!string.IsNullOrEmpty(handleResultName))
                 {
-                    var handleResult = command.GetRawPropertyString(handleResultName, "Window Handle Result");
+                    var handleResult = command.GetRawPropertyValueAsString(handleResultName, "Window Handle Result");
                     if (!string.IsNullOrEmpty(handleResult))
                     {
                         if (matchType == "all")
@@ -795,7 +815,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="errorFunc"></param>
         private static void WindowAction(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, string nameResultName = "", string handleResultName = "", Action<Exception> errorFunc = null)
         {
-            var matchType = command.GetUISelectionValue(matchTypeName, engine);
+            var matchType = command.ExpandValueOrUserVariableAsSelectionItem(matchTypeName, engine);
 
             WindowAction(command, matchType, new Func<List<(IntPtr, string)>>(() =>
             {

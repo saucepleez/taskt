@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            DateTime myDT = v_DateTime.GetDateTimeVariable(engine);
+            DateTime myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
 
             double serial = myDT.ToOADate();
             serial.ToString().StoreInUserVariable(engine, v_Serial);

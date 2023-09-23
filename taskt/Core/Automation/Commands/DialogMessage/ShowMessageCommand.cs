@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            string variableMessage = v_Message.ConvertToUserVariable(engine);
+            string variableMessage = v_Message.ExpandValueOrUserVariable(engine);
 
             variableMessage = variableMessage.Replace("\\n", Environment.NewLine);
 
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                 return;
             }
 
-            var closeAfter = this.ConvertToUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
+            var closeAfter = this.ExpandValueOrUserVariableAsInteger(nameof(v_AutoCloseAfter), engine);
 
             //automatically close messageboxes for server requests
             if (engine.serverExecution && closeAfter <= 0)

@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             Ping ping = new Ping();
-            string hstname = v_HostName.ConvertToUserVariable(engine);
+            string hstname = v_HostName.ExpandValueOrUserVariable(engine);
 
             PingReply pingresult = ping.Send(hstname);
             var pingReply = ConvertObjectToJson(pingresult);

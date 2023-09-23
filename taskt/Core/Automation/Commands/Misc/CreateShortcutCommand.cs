@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string targetPath = v_TargetPath.ConvertToUserVariable(engine);
+            string targetPath = v_TargetPath.ExpandValueOrUserVariable(engine);
             //bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 
             if (!FilePathControls.IsURL(targetPath))
@@ -78,9 +78,9 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "lnk");
                 //}
-                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk"), engine);
+                var savePath = v_SavePath.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "lnk"), engine);
 
-                string description = v_Description.ConvertToUserVariable(engine);
+                string description = v_Description.ExpandValueOrUserVariable(engine);
 
                 // WshShell
                 Type t = Type.GetTypeFromCLSID(new Guid("72C24DD5-D70A-438B-8A42-98424B88AFB8"));
@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
                 //{
                 //    savePath = FilePathControls.FormatFilePath_NoFileCounter(v_SavePath, engine, "url");
                 //}
-                var savePath = v_SavePath.ConvertToUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "url"), engine);
+                var savePath = v_SavePath.ExpandValueOrUserVariableAsFilePath(new PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "url"), engine);
 
                 string outputText = "[InternetShortcut]\nURL=" + targetPath;
                 WriteTextFileCommand writeText = new WriteTextFileCommand

@@ -76,9 +76,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            DataTable myDT = v_DataTableVariable.GetDataTableVariable(engine);
+            DataTable myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
 
             (int excelColumnIndex, int rowStart, int rowEnd, string valueType) =
                 ExcelControls.GetRangeIndeiesColumnDirection(
@@ -90,13 +90,13 @@ namespace taskt.Core.Automation.Commands
 
             int range = rowEnd - rowStart + 1;
 
-            int dtColumnIndex = this.ConvertToUserVariableAsInteger(nameof(v_DataTableColumnIndex), "DataTable Column Index", engine);
+            int dtColumnIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_DataTableColumnIndex), "DataTable Column Index", engine);
             if ((dtColumnIndex < 0) || (dtColumnIndex >= myDT.Columns.Count))
             {
                 throw new Exception("Column index " + v_DataTableColumnIndex + " is not exists");
             }
 
-            string ifDataTableNotEnough = this.GetUISelectionValue(nameof(v_IfDataTableNotEnough), "Id DataTable Not Enough", engine);
+            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDataTableNotEnough), "Id DataTable Not Enough", engine);
             if (ifDataTableNotEnough == "error")
             {
                 if (range > myDT.Rows.Count)
@@ -111,7 +111,7 @@ namespace taskt.Core.Automation.Commands
                 max = myDT.Rows.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

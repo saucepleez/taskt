@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var valueToSet = v_Value.ConvertToUserVariable(engine);
+            var valueToSet = v_Value.ExpandValueOrUserVariable(engine);
             valueToSet.StoreInUserVariable(engine, v_userVariableName);
         }
     }

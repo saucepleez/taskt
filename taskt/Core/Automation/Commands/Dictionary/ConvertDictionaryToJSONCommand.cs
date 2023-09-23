@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var dic = v_InputData.GetDictionaryVariable(engine);
+            var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
 
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(dic);
             json.StoreInUserVariable(engine, v_OutputVariable);

@@ -54,14 +54,14 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //(var _, var elems) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElements(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), engine);
-            (var _, var elems) = SeleniumBrowserControls.GetSeleniumBrowserInstanceAndElements(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_WaitTime), engine);
+            (var _, var elems) = SeleniumBrowserControls.ExpandValueOrUserVariableAsSeleniumBrowserInstanceAndWebElements(this, nameof(v_InstanceName), nameof(v_SeleniumSearchType), nameof(v_SeleniumSearchParameter), nameof(v_WaitTime), engine);
 
             DataTable newDT = new DataTable();
 
             int attrs = v_AttributesName.Rows.Count;
             for (int i = 0; i <attrs; i++)
             {
-                var attr = v_AttributesName.Rows[i][0]?.ToString().ConvertToUserVariable(engine) ?? "";
+                var attr = v_AttributesName.Rows[i][0]?.ToString().ExpandValueOrUserVariable(engine) ?? "";
                 if (!newDT.Columns.Contains(attr))
                 {
                     newDT.Columns.Add(attr);

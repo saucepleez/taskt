@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WhenFileDoesNotExists { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("File Move to the Recycle Bin")]
         [PropertyIsOptional(true, "No")]
         public string v_MoveToRecycleBin { get; set; }
@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
             FilePathControls.FileAction(this, engine,
                 new Action<string>(path =>
                 {
-                    if (this.GetYesNoSelectionValue(nameof(v_MoveToRecycleBin), engine))
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_MoveToRecycleBin), engine))
                     {
                         Shell32.MoveToRecycleBin(path);
                     }
@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
                 }),
                 new Action<Exception>(ex =>
                 {
-                    if (this.GetUISelectionValue(nameof(v_WhenFileDoesNotExists), engine) == "error")
+                    if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenFileDoesNotExists), engine) == "error")
                     {
                         throw new Exception("File does Not Exists. File Path: '" + v_SourceFilePath + "'");
                     }

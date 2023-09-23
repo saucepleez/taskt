@@ -68,10 +68,10 @@ namespace taskt.Core.Automation.Commands
             //delete folder
             var directoriesList = System.IO.Directory.GetDirectories(sourceFolder).ToList();
 
-            var searchFolder = v_SearchFolderName.ConvertToUserVariableAsFolderName(engine);
+            var searchFolder = v_SearchFolderName.ExpandValueOrUserVariableAsFolderName(engine);
             if (!String.IsNullOrEmpty(searchFolder))
             {
-                switch (this.GetUISelectionValue(nameof(v_SearchMethod), engine))
+                switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine))
                 {
                     case "contains":
                         directoriesList = directoriesList.Where(t => System.IO.Path.GetFileName(t).Contains(searchFolder)).ToList();

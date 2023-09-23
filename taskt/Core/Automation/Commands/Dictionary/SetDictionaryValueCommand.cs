@@ -47,16 +47,16 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (var dic, var vKey) = this.GetDictionaryVariableAndKey(nameof(v_InputData), nameof(v_Key), engine);
+            (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
-            string valueToSet = v_Value.ConvertToUserVariable(engine);
+            string valueToSet = v_Value.ExpandValueOrUserVariable(engine);
             if (dic.ContainsKey(vKey))
             {
                 dic[vKey] = valueToSet;
             }
             else
             {
-                string ifNotExits = this.GetUISelectionValue(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                string ifNotExits = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExits)
                 {
                     case "error":

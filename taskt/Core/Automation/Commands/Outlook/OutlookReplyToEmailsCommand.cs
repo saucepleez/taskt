@@ -80,10 +80,10 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
-            var vFilter = v_Filter.ConvertToUserVariable(sender);
-            var vBody = v_Body.ConvertToUserVariable(sender);
-            var vAttachment = v_Attachment.ConvertToUserVariable(sender);
+            var vSourceFolder = v_SourceFolder.ExpandValueOrUserVariable(sender);
+            var vFilter = v_Filter.ExpandValueOrUserVariable(sender);
+            var vBody = v_Body.ExpandValueOrUserVariable(sender);
+            var vAttachment = v_Attachment.ExpandValueOrUserVariable(sender);
 
             Application outlookApp = new Application();
             AddressEntry currentUser = outlookApp.Session.CurrentUser.AddressEntry;

@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vInstance = v_InstanceName.ConvertToUserVariable(engine);
+            var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var p = (SPhraseSpec)engine.GetAppInstance(vInstance);
 
             Lexicon lexicon = Lexicon.getDefaultLexicon();

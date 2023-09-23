@@ -26,13 +26,13 @@ namespace taskt.Core.Automation.Commands
         public string v_TextToSet { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Clear Text before Setting Text")]
         [PropertyIsOptional(true, "No")]
         public string v_ClearTextBeforeSetting { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Encrypted Text")]
         [PropertyIsOptional(true, "No")]
         public string v_EncryptedText { get; set; }
@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            if (this.GetYesNoSelectionValue(nameof(v_ScrollToElement), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))
             {
                 var scroll = new SeleniumBrowserScrollToWebElementCommand
                 {
@@ -75,9 +75,9 @@ namespace taskt.Core.Automation.Commands
                 scroll.RunCommand(engine);
             }
 
-            var elem = v_WebElement.ConvertToUserVariableAsWebElement("WebElement", engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            if (this.GetYesNoSelectionValue(nameof(v_ClearTextBeforeSetting), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ClearTextBeforeSetting), engine))
             {
                 var clearText = new SeleniumBrowserClearTextInWebElementCommand
                 {
@@ -87,9 +87,9 @@ namespace taskt.Core.Automation.Commands
                 clearText.RunCommand(engine);
             }
 
-            var textToSet = v_TextToSet.ConvertToUserVariable(engine);
+            var textToSet = v_TextToSet.ExpandValueOrUserVariable(engine);
 
-            if (this.GetYesNoSelectionValue(nameof(v_EncryptedText), engine))
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptedText), engine))
             {
                 textToSet = EncryptionServices.DecryptString(textToSet, "TASKT");
             }
@@ -100,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch
             {
-                if (this.GetUISelectionValue(nameof(v_WhenSetNotSupported), engine) == "error")
+                if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenSetNotSupported), engine) == "error")
                 {
                     throw new Exception("Fail Setting Text. TagName: '" + elem.TagName + "'");
                 }

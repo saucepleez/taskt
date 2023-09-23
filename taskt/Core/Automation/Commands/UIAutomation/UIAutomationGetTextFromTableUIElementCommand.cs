@@ -58,9 +58,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetElement = v_TargetElement.GetUIElementVariable(engine);
-            int row = v_Row.ConvertToUserVariableAsInteger("v_Row", engine);
-            int column = v_Column.ConvertToUserVariableAsInteger("v_Column", engine);
+            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+            int row = v_Row.ExpandValueOrUserVariableAsInteger("v_Row", engine);
+            int column = v_Column.ExpandValueOrUserVariableAsInteger("v_Column", engine);
 
             AutomationElement cellElem = UIElementControls.GetTableUIElement(targetElement, row, column);
 

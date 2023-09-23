@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var targetSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             targetSheet.Delete();
         }

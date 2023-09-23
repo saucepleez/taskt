@@ -61,10 +61,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             
-            List<string> myList = v_ListVariable.GetListVariable(engine);
+            List<string> myList = v_ListVariable.ExpandUserVariableAsList(engine);
 
             (int columnIndex, int rowStart, int rowEnd, string valueType) =
                ExcelControls.GetRangeIndeiesColumnDirection(
@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
 
             int range = rowEnd - rowStart + 1;
 
-            string ifListNotEnough = this.GetUISelectionValue(nameof(v_IfListNotEnough), "If List Not Enough", engine);
+            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfListNotEnough), "If List Not Enough", engine);
             if (ifListNotEnough == "error")
             {
                 if (range > myList.Count)
@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.Commands
                 max = myList.Count;
             }
 
-            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.GetUISelectionValue("v_ValueType", this, engine));
+            Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
 
             for (int i = 0; i < max; i++)
             {

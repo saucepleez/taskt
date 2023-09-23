@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         public string v_DestinationDirectory { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(SelectionControls), nameof(SelectionControls.v_YesNoComboBox))]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Delete Folder When it already Exists")]
         [PropertyIsOptional(true, "No")]
         public string v_DeleteExisting { get; set; }
@@ -83,12 +83,12 @@ namespace taskt.Core.Automation.Commands
             FolderPathControls.FolderAction(this, engine,
                 new Action<string>(path =>
                 {
-                    var newFolder = v_NewFolderName.ConvertToUserVariableAsFolderName(engine);
+                    var newFolder = v_NewFolderName.ExpandValueOrUserVariableAsFolderName(engine);
 
                     var finalPath = System.IO.Path.Combine(path, newFolder);
                     if (System.IO.Directory.Exists(finalPath)) { }
                     {
-                        if (this.GetYesNoSelectionValue(nameof(v_DeleteExisting), engine))
+                        if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_DeleteExisting), engine))
                         {
                             System.IO.Directory.Delete(finalPath, true);
                         }

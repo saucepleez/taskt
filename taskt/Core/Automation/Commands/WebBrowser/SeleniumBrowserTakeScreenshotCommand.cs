@@ -62,10 +62,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var seleniumInstance = v_InstanceName.GetSeleniumBrowserInstance(engine);
+            var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
-            var screenshotPath = v_SeleniumScreenshotPathParameter.ConvertToUserVariable(sender);
-            var screenshotFileName = v_SeleniumScreenshotFileNameParameter.ConvertToUserVariable(sender);
+            var screenshotPath = v_SeleniumScreenshotPathParameter.ExpandValueOrUserVariable(sender);
+            var screenshotFileName = v_SeleniumScreenshotFileNameParameter.ExpandValueOrUserVariable(sender);
 
             // take the screenshot
             Screenshot image = ((ITakesScreenshot)seleniumInstance).GetScreenshot();

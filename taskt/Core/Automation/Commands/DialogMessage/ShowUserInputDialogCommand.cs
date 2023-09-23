@@ -79,14 +79,14 @@ namespace taskt.Core.Automation.Commands
             var clonedCommand = Common.Clone(this);
 
             //translate variable
-            clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ConvertToUserVariable(engine);
-            clonedCommand.v_InputDirections = clonedCommand.v_InputDirections.ConvertToUserVariable(engine);
+            clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ExpandValueOrUserVariable(engine);
+            clonedCommand.v_InputDirections = clonedCommand.v_InputDirections.ExpandValueOrUserVariable(engine);
 
             //translate variables for each label
             foreach (DataRow rw in clonedCommand.v_UserInputConfig.Rows)
             {
                 //rw["DefaultValue"] = rw["DefaultValue"].ToString().ConvertToUserVariable(engine);
-                rw["DefaultValue"] = (rw.Field<string>("DefaultValue") ?? "").ConvertToUserVariable(engine);
+                rw["DefaultValue"] = (rw.Field<string>("DefaultValue") ?? "").ExpandValueOrUserVariable(engine);
 
                 var targetVariable = rw["ApplyToVariable"] as string;
 

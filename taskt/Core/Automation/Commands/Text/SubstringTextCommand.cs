@@ -59,10 +59,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var variableName = v_userVariableName.ConvertToUserVariable(engine);
+            var variableName = v_userVariableName.ExpandValueOrUserVariable(engine);
 
-            var startIndex = this.ConvertToUserVariableAsInteger(nameof(v_startIndex), engine);
-            var stringLength = this.ConvertToUserVariableAsInteger(nameof(v_stringLength), engine);
+            var startIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_startIndex), engine);
+            var stringLength = this.ExpandValueOrUserVariableAsInteger(nameof(v_stringLength), engine);
 
             //apply substring
             string subStr;

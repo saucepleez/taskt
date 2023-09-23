@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var elemAction = this.GetUISelectionValue(nameof(v_AutomationType), engine);
+            var elemAction = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_AutomationType), engine);
 
             var winElemVar = VariableNameControls.GetInnerVariableName(0, engine);
             var winElem = new UIAutomationSearchUIElementFromWindowCommand()

@@ -134,9 +134,9 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get parameters
-            var targetURL = v_BaseURL.ConvertToUserVariable(engine);
-            var targetEndpoint = v_APIEndPoint.ConvertToUserVariable(engine);
-            var targetMethod = v_APIMethodType.ConvertToUserVariable(engine);
+            var targetURL = v_BaseURL.ExpandValueOrUserVariable(engine);
+            var targetEndpoint = v_APIEndPoint.ExpandValueOrUserVariable(engine);
+            var targetMethod = v_APIMethodType.ExpandValueOrUserVariable(engine);
 
             //client
             var client = new RestClient(targetURL);
@@ -171,8 +171,8 @@ namespace taskt.Core.Automation.Commands
             //for each api parameter
             foreach (var param in apiParameters)
             {
-                var paramName = ((string)param["Parameter Name"]).ConvertToUserVariable(sender);
-                var paramValue = ((string)param["Parameter Value"]).ConvertToUserVariable(sender);
+                var paramName = ((string)param["Parameter Name"]).ExpandValueOrUserVariable(sender);
+                var paramValue = ((string)param["Parameter Value"]).ExpandValueOrUserVariable(sender);
 
                 request.AddParameter(paramName, paramValue);
             }
@@ -180,8 +180,8 @@ namespace taskt.Core.Automation.Commands
             //for each header
             foreach (var header in apiHeaders)
             {
-                var paramName = ((string)header["Parameter Name"]).ConvertToUserVariable(sender);
-                var paramValue = ((string)header["Parameter Value"]).ConvertToUserVariable(sender);
+                var paramName = ((string)header["Parameter Name"]).ExpandValueOrUserVariable(sender);
+                var paramValue = ((string)header["Parameter Value"]).ExpandValueOrUserVariable(sender);
 
                 request.AddHeader(paramName, paramValue);
             }
@@ -193,7 +193,7 @@ namespace taskt.Core.Automation.Commands
             //add json body
             if (jsonBody != null)
             {
-                var json = jsonBody.ConvertToUserVariable(sender);
+                var json = jsonBody.ExpandValueOrUserVariable(sender);
                 request.AddJsonBody(jsonBody);
             }
 
@@ -205,9 +205,9 @@ namespace taskt.Core.Automation.Commands
             //get file
             if (file != null)
             {
-                var paramName = ((string)file["Parameter Name"]).ConvertToUserVariable(sender);
-                var paramValue = ((string)file["Parameter Value"]).ConvertToUserVariable(sender);
-                var fileData = paramValue.ConvertToUserVariable(sender);
+                var paramName = ((string)file["Parameter Name"]).ExpandValueOrUserVariable(sender);
+                var paramValue = ((string)file["Parameter Value"]).ExpandValueOrUserVariable(sender);
+                var fileData = paramValue.ExpandValueOrUserVariable(sender);
                 request.AddFile(paramName, fileData);
 
             }
@@ -215,10 +215,10 @@ namespace taskt.Core.Automation.Commands
             //add advanced parameters
             foreach (DataRow rw in this.v_AdvancedParameters.Rows)
             {
-                var paramName = rw.Field<string>("Parameter Name").ConvertToUserVariable(sender);
-                var paramValue = rw.Field<string>("Parameter Value").ConvertToUserVariable(sender);
-                var paramType = rw.Field<string>("Parameter Type").ConvertToUserVariable(sender);
-                var contentType = rw.Field<string>("Content Type").ConvertToUserVariable(sender);
+                var paramName = rw.Field<string>("Parameter Name").ExpandValueOrUserVariable(sender);
+                var paramValue = rw.Field<string>("Parameter Value").ExpandValueOrUserVariable(sender);
+                var paramType = rw.Field<string>("Parameter Type").ExpandValueOrUserVariable(sender);
+                var contentType = rw.Field<string>("Content Type").ExpandValueOrUserVariable(sender);
 
                 //var param = new Parameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
 
@@ -227,7 +227,7 @@ namespace taskt.Core.Automation.Commands
                 request.AddParameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
             }
 
-            var requestFormat = v_RequestFormat.ConvertToUserVariable(sender);
+            var requestFormat = v_RequestFormat.ExpandValueOrUserVariable(sender);
             if (string.IsNullOrEmpty(requestFormat))
             {
                 requestFormat = "Xml";

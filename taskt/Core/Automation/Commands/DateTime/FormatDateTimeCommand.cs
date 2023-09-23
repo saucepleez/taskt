@@ -53,8 +53,8 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var myDT = v_DateTime.GetDateTimeVariable(engine);
-            string format = v_Format.ConvertToUserVariable(engine);
+            var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
+            string format = v_Format.ExpandValueOrUserVariable(engine);
 
             myDT.ToString(format).StoreInUserVariable(engine, v_Result);
         }

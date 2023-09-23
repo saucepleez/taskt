@@ -62,10 +62,10 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            (_, var excelSheet) = v_InstanceName.GetExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var targetAddress1 = v_ExcelCellAddress1.ConvertToUserVariable(sender);
-            var targetAddress2 = v_ExcelCellAddress2.ConvertToUserVariable(sender);
+            var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(sender);
+            var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(sender);
 
             Microsoft.Office.Interop.Excel.Range cellValue;
             if (targetAddress2 != "")

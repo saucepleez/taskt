@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             try
             {
-                var excelInstance = v_InstanceName.GetExcelInstance(engine);
+                var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
                 true.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch

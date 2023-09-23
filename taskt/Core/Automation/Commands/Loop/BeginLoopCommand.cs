@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             //var loopResult = DetermineStatementTruth(sender);
 
-            string actionType = v_LoopActionType.ConvertToUserVariable(engine);
+            string actionType = v_LoopActionType.ExpandValueOrUserVariable(engine);
 
             bool loopResult = ConditionControls.DetermineStatementTruth(actionType, v_LoopActionParameterTable, engine);
             engine.ReportProgress("Starting Loop"); 

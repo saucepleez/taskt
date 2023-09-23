@@ -120,27 +120,27 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             // from, to, cc, bcc, subject, body
-            string from = v_SMTPFromEmail.ConvertToUserVariable(engine);
-            string to = v_SMTPToEmail.ConvertToUserVariable(engine);
-            string cc = v_SMTPCCEmail.ConvertToUserVariable(engine);
-            string bcc = v_SMTPBCCEmail.ConvertToUserVariable(engine);
-            string subject = v_SMTPSubject.ConvertToUserVariable(engine);
-            string body = v_SMTPBody.ConvertToUserVariable(engine);
+            string from = v_SMTPFromEmail.ExpandValueOrUserVariable(engine);
+            string to = v_SMTPToEmail.ExpandValueOrUserVariable(engine);
+            string cc = v_SMTPCCEmail.ExpandValueOrUserVariable(engine);
+            string bcc = v_SMTPBCCEmail.ExpandValueOrUserVariable(engine);
+            string subject = v_SMTPSubject.ExpandValueOrUserVariable(engine);
+            string body = v_SMTPBody.ExpandValueOrUserVariable(engine);
 
             // smtp host
-            string smtp = v_SMTPHost.ConvertToUserVariable(engine);
-            var port = this.ConvertToUserVariableAsInteger(nameof(v_SMTPPort), engine);
+            string smtp = v_SMTPHost.ExpandValueOrUserVariable(engine);
+            var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_SMTPPort), engine);
 
             // auth
-            string user = v_SMTPUserName.ConvertToUserVariable(engine);
+            string user = v_SMTPUserName.ExpandValueOrUserVariable(engine);
             if (String.IsNullOrEmpty(user))
             {
                 user = from;
             }
-            string pass = v_SMTPPassword.ConvertToUserVariable(engine);
+            string pass = v_SMTPPassword.ExpandValueOrUserVariable(engine);
 
             // attachment
-            string attachmentFilePath = v_SMTPAttachment.ConvertToUserVariable(engine);
+            string attachmentFilePath = v_SMTPAttachment.ExpandValueOrUserVariable(engine);
 
             var message = new MimeKit.MimeMessage();
             message.From.Add(new MimeKit.MailboxAddress(from, from));
