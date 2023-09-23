@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
                 WebClient webClient = new WebClient();
                 webClient.Encoding = System.Text.Encoding.UTF8;
                 webClient.Headers.Add("user-agent", "request");
-                result = webClient.DownloadString(v_FilePath.ConvertToUserVariable(engine));
+                result = webClient.DownloadString(v_FilePath.ExpandValueOrUserVariable(engine));
             }
             else
             {

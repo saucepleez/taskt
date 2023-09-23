@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             //bypass ssl validation if requested
-            if (v_SSLValidation.ConvertToUserVariable(sender) == "Bypass SSL Validation")
+            if (v_SSLValidation.ExpandValueOrUserVariable(sender) == "Bypass SSL Validation")
             {
                 ServicePointManager.ServerCertificateValidationCallback =
                                     (sndr, certificate, chain, sslPolicyErrors) => true;
@@ -124,18 +124,18 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                string varSMTPHost = v_SMTPHost.ConvertToUserVariable(sender);
-                string varSMTPPort = v_SMTPPort.ConvertToUserVariable(sender);
-                string varSMTPUserName = v_SMTPUserName.ConvertToUserVariable(sender);
-                string varSMTPPassword = v_SMTPPassword.ConvertToUserVariable(sender);
+                string varSMTPHost = v_SMTPHost.ExpandValueOrUserVariable(sender);
+                string varSMTPPort = v_SMTPPort.ExpandValueOrUserVariable(sender);
+                string varSMTPUserName = v_SMTPUserName.ExpandValueOrUserVariable(sender);
+                string varSMTPPassword = v_SMTPPassword.ExpandValueOrUserVariable(sender);
 
-                string varSMTPFromEmail = v_SMTPFromEmail.ConvertToUserVariable(sender);
-                string varSMTPToEmail = v_SMTPToEmail.ConvertToUserVariable(sender);
-                string varSMTPSubject = v_SMTPSubject.ConvertToUserVariable(sender);
-                string varSMTPBody = v_SMTPBody.ConvertToUserVariable(sender);
-                string varSMTPFilePath = v_SMTPAttachment.ConvertToUserVariable(sender);
+                string varSMTPFromEmail = v_SMTPFromEmail.ExpandValueOrUserVariable(sender);
+                string varSMTPToEmail = v_SMTPToEmail.ExpandValueOrUserVariable(sender);
+                string varSMTPSubject = v_SMTPSubject.ExpandValueOrUserVariable(sender);
+                string varSMTPBody = v_SMTPBody.ExpandValueOrUserVariable(sender);
+                string varSMTPFilePath = v_SMTPAttachment.ExpandValueOrUserVariable(sender);
 
-                string varEnableSSL = v_EnableSSL.ConvertToUserVariable(sender).ToUpperInvariant();
+                string varEnableSSL = v_EnableSSL.ExpandValueOrUserVariable(sender).ToUpperInvariant();
 
                 bool sslPreference = true;
                 if (varEnableSSL == "NO")
@@ -168,7 +168,7 @@ namespace taskt.Core.Automation.Commands
             finally
             {
                 //restore default validation
-                if (v_SSLValidation.ConvertToUserVariable(sender) == "Bypass SSL Validation")
+                if (v_SSLValidation.ExpandValueOrUserVariable(sender) == "Bypass SSL Validation")
                 {
                     ServicePointManager.ServerCertificateValidationCallback = null;
                 }

@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_ListName.ExpandUserVariableAsList(engine);
 
-            var searchedValue = v_SearchItem.ConvertToUserVariable(sender);
+            var searchedValue = v_SearchItem.ExpandValueOrUserVariable(sender);
 
             //string searchMethod = this.GetUISelectionValue(nameof(v_SearchMethod), "Search Method", engine);
             string searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), engine);

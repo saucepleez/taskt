@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             //var value = this.ConvertToUserVariableAsDecimal(nameof(v_Number), "Number", engine);
             var value = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Number), engine);
 
-            string format = v_Format.ConvertToUserVariable(engine);
+            string format = v_Format.ExpandValueOrUserVariable(engine);
 
             value.ToString(format).StoreInUserVariable(engine, v_Result);
         }

@@ -49,8 +49,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var keyName = v_KeyName.ConvertToUserVariable(engine);
-            var keyValue = v_InputValue.ConvertToUserVariable(engine);
+            var keyName = v_KeyName.ExpandValueOrUserVariable(engine);
+            var keyValue = v_InputValue.ExpandValueOrUserVariable(engine);
 
             try
             {

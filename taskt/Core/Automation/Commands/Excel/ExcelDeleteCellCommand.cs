@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            string range = v_Range.ConvertToUserVariable(sender);
+            string range = v_Range.ExpandValueOrUserVariable(sender);
             var cells = excelSheet.Range[range, Type.Missing];
 
             if (v_ShiftUp == "Yes")

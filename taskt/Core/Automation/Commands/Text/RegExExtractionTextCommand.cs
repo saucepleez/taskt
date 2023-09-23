@@ -86,8 +86,8 @@ namespace taskt.Core.Automation.Commands
             //    matchedValue.StoreInUserVariable(sender, v_applyToVariableName);
             //}
 
-            var variableInput = v_InputValue.ConvertToUserVariable(engine);
-            var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(engine);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
+            var variableExtractorPattern = v_RegExExtractor.ExpandValueOrUserVariable(engine);
 
             var regex = new Regex(variableExtractorPattern);
             var matches = regex.Match(variableInput);

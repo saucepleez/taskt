@@ -72,14 +72,14 @@ namespace taskt.Core.Automation.Commands
             switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnType), "Column Type", engine))
             {
                 case "range":
-                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnStart.ExpandValueOrUserVariable(engine));
                     if (String.IsNullOrEmpty(v_ColumnEnd))
                     {
                         columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowStartIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, v_ColumnEnd.ExpandValueOrUserVariable(engine));
                     }
                     break;
 

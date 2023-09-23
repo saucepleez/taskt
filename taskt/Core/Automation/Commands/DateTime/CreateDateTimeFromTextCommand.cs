@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string value = v_Text.ConvertToUserVariable(engine);
+            string value = v_Text.ExpandValueOrUserVariable(engine);
 
             if (DateTime.TryParse(value, out DateTime tryDT))
             {

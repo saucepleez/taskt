@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
 
             (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
-            string valueToSet = v_Value.ConvertToUserVariable(engine);
+            string valueToSet = v_Value.ExpandValueOrUserVariable(engine);
             if (dic.ContainsKey(vKey))
             {
                 dic[vKey] = valueToSet;

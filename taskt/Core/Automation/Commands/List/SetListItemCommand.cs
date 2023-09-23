@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands
 
             if ((index >= 0) && (index < list.Count))
             {
-                list[index] = v_NewValue.ConvertToUserVariable(engine);
+                list[index] = v_NewValue.ExpandValueOrUserVariable(engine);
             }
             else
             {

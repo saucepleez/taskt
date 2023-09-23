@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
 
             var rg = this.GetExcelRange(nameof(v_ExcelCellRow), nameof(v_ExcelCellColumn), engine, excelInstance, excelSheet);
 
-            var targetText = v_TextToSet.ConvertToUserVariable(sender);
+            var targetText = v_TextToSet.ExpandValueOrUserVariable(sender);
 
             string valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
 

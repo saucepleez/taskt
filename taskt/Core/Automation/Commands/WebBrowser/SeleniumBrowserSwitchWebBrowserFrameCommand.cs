@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
                     break;
 
                 case "name or id":
-                    var frameName = v_FrameParameter.ConvertToUserVariable(engine);
+                    var frameName = v_FrameParameter.ExpandValueOrUserVariable(engine);
                     seleniumInstance.SwitchTo().Frame(frameName);
                     break;
 

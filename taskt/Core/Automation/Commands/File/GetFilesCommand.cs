@@ -89,7 +89,7 @@ namespace taskt.Core.Automation.Commands
 
             var searchFile = v_SearchFileName.ExpandValueOrUserVariableAsFileName(engine);
 
-            var ext = v_SearchExtension.ConvertToUserVariable(engine).ToLower();
+            var ext = v_SearchExtension.ExpandValueOrUserVariable(engine).ToLower();
 
             // get all files
             List<string> filesList;

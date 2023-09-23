@@ -117,7 +117,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static int ExpandValueOrUserVariableAsInteger(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
         {
-            string convertedText = prop.Value.ConvertToUserVariable(engine);
+            string convertedText = prop.Value.ExpandValueOrUserVariable(engine);
             if (int.TryParse(convertedText, out int v))
             {
                 return v;
@@ -149,7 +149,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static decimal ExpandValueOrUserVariableAsDecimal(this PropertyConvertTag prop, Engine.AutomationEngineInstance engine)
         {
-            string convertedText = prop.Value.ConvertToUserVariable(engine);
+            string convertedText = prop.Value.ExpandValueOrUserVariable(engine);
             if (decimal.TryParse(convertedText, out decimal v))
             {
                 return v;

@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
             var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumSearchType), engine);
             var searchFunc = GetWebElementSearchMethod(searchMethod);
 
-            var searchParameter = v_SeleniumSearchParameter.ConvertToUserVariable(engine);
+            var searchParameter = v_SeleniumSearchParameter.ExpandValueOrUserVariable(engine);
             var waitTime = v_WaitTime.ExpandValueOrUserVariableAsInteger("Wait Time", engine);
 
             int index = 0;

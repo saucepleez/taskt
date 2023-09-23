@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
 
             var preference = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PreferenceType), engine);
 
-            var parameterValue = v_ParameterValue.ConvertToUserVariable(engine);
+            var parameterValue = v_ParameterValue.ExpandValueOrUserVariable(engine);
 
             switch (preference)
             {

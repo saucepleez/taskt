@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
             string script = "";
             if (codeType == "code")
             {
-                script = v_ScriptCode.ConvertToUserVariable(sender);
+                script = v_ScriptCode.ExpandValueOrUserVariable(sender);
             }
             else if (codeType == "file")
             {
@@ -107,7 +107,7 @@ namespace taskt.Core.Automation.Commands
                 script = System.IO.File.ReadAllText(scriptFile);
             }
 
-            var args = v_Args.ConvertToUserVariable(sender);
+            var args = v_Args.ExpandValueOrUserVariable(sender);
             
             var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 

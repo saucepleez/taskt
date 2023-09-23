@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var keyName = v_KeyName.ConvertToUserVariable(engine);
+            var keyName = v_KeyName.ExpandValueOrUserVariable(engine);
 
             var dataOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DataOption), engine);
             BotStoreRequest.RequestType requestType;

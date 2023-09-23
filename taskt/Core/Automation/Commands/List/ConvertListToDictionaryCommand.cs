@@ -152,19 +152,19 @@ namespace taskt.Core.Automation.Commands
                     dicUseKeys(keysList);
                     break;
                 case "comma separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Split(',').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Split(',').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "space separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Split(' ').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Split(' ').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "tab separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Split('\t').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Split('\t').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "newline separated":
-                    keysList = v_Keys.ConvertToUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
+                    keysList = v_Keys.ExpandValueOrUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
                     dicUseKeys(keysList);
                     break;
                 case "key prefix":
@@ -175,7 +175,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        prefix = v_Keys.ConvertToUserVariable(engine);
+                        prefix = v_Keys.ExpandValueOrUserVariable(engine);
                     }
                     for (int i = 0; i < targetList.Count; i++)
                     {

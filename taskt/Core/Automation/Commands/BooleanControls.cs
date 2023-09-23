@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception">value is not Boolean</exception>
         public static bool ExpandValueOrUserVariableAsBool(this string value, string parameterName, object sender)
         {
-            string convertedText = value.ConvertToUserVariable(sender);
+            string convertedText = value.ExpandValueOrUserVariable(sender);
             if (bool.TryParse(convertedText, out bool v))
             {
                 return v;

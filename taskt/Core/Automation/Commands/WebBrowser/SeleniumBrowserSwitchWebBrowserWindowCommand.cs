@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
 
             Func<IWebDriver, string, bool> matchFunc = getMatchFunc(matchType, exactMatchRequired, caseSensitive);
 
-            var matchParam = v_MatchParameter.ConvertToUserVariable(sender);
+            var matchParam = v_MatchParameter.ExpandValueOrUserVariable(sender);
             var handles = seleniumInstance.WindowHandles;
             var currentHandle = seleniumInstance.CurrentWindowHandle;
             var matchFound = false;

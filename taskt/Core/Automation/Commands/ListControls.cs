@@ -200,11 +200,11 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception">value is not List, or index is out of range</exception>
         public static (List<string>, int) ExpandUserVariablesAsListAndIndex(this ScriptCommand command, string variableName, string indexName, Engine.AutomationEngineInstance engine)
         {
-            var listVariableName = command.ConvertToUserVariable(variableName, "List Variable Name", engine);
+            var listVariableName = command.ExpandValueOrUserVariable(variableName, "List Variable Name", engine);
 
             var list = listVariableName.ExpandUserVariableAsList(engine);
 
-            var indexValue = command.ConvertToUserVariable(indexName, "Index", engine);
+            var indexValue = command.ExpandValueOrUserVariable(indexName, "Index", engine);
             int index;
             if (String.IsNullOrEmpty(indexValue))
             {

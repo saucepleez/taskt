@@ -262,7 +262,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception">value is not Excel Instance</exception>
         public static Application ExpandValueOrUserVariableAsExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
         {
-            string ins = instanceName.ConvertToUserVariable(engine);
+            string ins = instanceName.ExpandValueOrUserVariable(engine);
             var instanceObject = engine.GetAppInstance(ins);
             if (instanceObject is Application app)
             {
@@ -312,7 +312,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception">worksheet does not exists</exception>
         public static Worksheet ExpandValueOrUserVariableAsExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, bool returnNullIfSheetDoesNotExists = false)
         {
-            var sheet = sheetVariable.ConvertToUserVariable(engine);
+            var sheet = sheetVariable.ExpandValueOrUserVariable(engine);
             if (sheet == engine.engineSettings.CurrentWorksheetKeyword)
             {
                 try
@@ -817,7 +817,7 @@ namespace taskt.Core.Automation.Commands
             switch (columnType)
             {
                 case "range":
-                    string col = command.ConvertToUserVariable(columnValueName, "Column", engine);
+                    string col = command.ExpandValueOrUserVariable(columnValueName, "Column", engine);
                     columnIndex = GetColumnIndex(excelSheet, col);
                     break;
                 case "rc":
@@ -828,7 +828,7 @@ namespace taskt.Core.Automation.Commands
             string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
 
             int rowStartIndex = command.ExpandValueOrUserVariableAsInteger(rowStartName, "Start Row", engine);
-            string rowEndValue = command.GetRawPropertyString(rowEndName, "End Row");
+            string rowEndValue = command.GetRawPropertyValueAsString(rowEndName, "End Row");
             int rowEndIndex;
             if (String.IsNullOrEmpty(rowEndValue))
             {
@@ -888,8 +888,8 @@ namespace taskt.Core.Automation.Commands
             int columnStartIndex = 0;
             int columnEndIndex = 0;
 
-            string columnStartValue = command.GetRawPropertyString(columnStartName, "Start Column");
-            string columnEndValue = command.GetRawPropertyString(columnEndName, "End Column");
+            string columnStartValue = command.GetRawPropertyValueAsString(columnStartName, "Start Column");
+            string columnEndValue = command.GetRawPropertyValueAsString(columnEndName, "End Column");
 
             Func<int> getLastRowFromObject = () =>
             {
@@ -925,7 +925,7 @@ namespace taskt.Core.Automation.Commands
                     {
                         columnStartValue = "A";
                     }
-                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ConvertToUserVariable(engine));
+                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ExpandValueOrUserVariable(engine));
 
                     
                     if (String.IsNullOrEmpty(columnEndValue))
@@ -941,7 +941,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ConvertToUserVariable(engine));
+                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ExpandValueOrUserVariable(engine));
                         
                     }
                     break;
@@ -988,7 +988,7 @@ namespace taskt.Core.Automation.Commands
         #region convert methods
         public static string GetoExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
         {
-            var location = value.ConvertToUserVariable(engine);
+            var location = value.ExpandValueOrUserVariable(engine);
             if (CheckCorrectRange(location, excelInstance))
             {
                 return location;

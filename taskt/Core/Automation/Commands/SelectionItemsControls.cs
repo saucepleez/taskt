@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
                 propertyValue = attrIsOpt?.setBlankToValue ?? "";
             }
 
-            string value = propertyValue.ConvertToUserVariable(engine);
+            string value = propertyValue.ExpandValueOrUserVariable(engine);
 
             var options = GetCustomAttributesWithVirtual<PropertyUISelectionOption>(propInfo, virtualPropInfo);
             if (options.Count() > 0)

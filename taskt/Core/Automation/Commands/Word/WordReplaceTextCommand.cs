@@ -54,8 +54,8 @@ namespace taskt.Core.Automation.Commands
 
             (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
-            var vFindText = v_FindText.ConvertToUserVariable(engine);
-            var vReplaceWithText = v_ReplaceWithText.ConvertToUserVariable(engine);
+            var vFindText = v_FindText.ExpandValueOrUserVariable(engine);
+            var vReplaceWithText = v_ReplaceWithText.ExpandValueOrUserVariable(engine);
 
             Range range = wordDocument.Content;
 

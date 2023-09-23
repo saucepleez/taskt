@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
 
             var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            var attributeName = v_AttributeName.ConvertToUserVariable(engine);
+            var attributeName = v_AttributeName.ExpandValueOrUserVariable(engine);
 
             var v = elem.GetAttribute(attributeName);
 

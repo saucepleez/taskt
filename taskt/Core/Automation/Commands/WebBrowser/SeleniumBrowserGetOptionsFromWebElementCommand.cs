@@ -84,7 +84,7 @@ namespace taskt.Core.Automation.Commands
             var sel = new SelectElement(elem);
             var options = sel.Options;
 
-            var attributeName = v_AttributeName.ConvertToUserVariable(engine);
+            var attributeName = v_AttributeName.ExpandValueOrUserVariable(engine);
 
             var throwError = (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenNoAttribute), engine) == "error");
 

@@ -222,7 +222,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static (DataTable table, int columnIndex) ExpandUserVariablesAsDataTableAndColumnIndex(this ScriptCommand command, string tableName, string columnTypeName, string columnName, Engine.AutomationEngineInstance engine)
         {
-            var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
+            var targetTable = command.ExpandValueOrUserVariable(tableName, "DataTable", engine);
             var table = targetTable.ExpandUserVariableAsDataTable(engine);
             var index = command.GetColumnIndex(table, columnTypeName, columnName, engine);
             return (table, index);
@@ -239,10 +239,10 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static (DataTable table, int rowIndex) ExpandUserVariablesAsDataTableAndRowIndex(this ScriptCommand command, string tableName, string rowName, Engine.AutomationEngineInstance engine)
         {
-            var targetTable = command.ConvertToUserVariable(tableName, "DataTable", engine);
+            var targetTable = command.ExpandValueOrUserVariable(tableName, "DataTable", engine);
             var table = targetTable.ExpandUserVariableAsDataTable(engine);
 
-            var rowValue = command.ConvertToUserVariable(rowName, "Row Index", engine);
+            var rowValue = command.ExpandValueOrUserVariable(rowName, "Row Index", engine);
             //int index;
             //if (String.IsNullOrEmpty(rowValue))
             //{
@@ -362,7 +362,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static string GetColumnName(DataTable table, string columnName, Engine.AutomationEngineInstance engine)
         {
-            string col = columnName.ConvertToUserVariable(engine);
+            string col = columnName.ExpandValueOrUserVariable(engine);
             if (IsColumnExists(table, col))
             {
                 return col;
@@ -415,12 +415,12 @@ namespace taskt.Core.Automation.Commands
             switch (columnType)
             {
                 case "column name":
-                    string targetColumnName = command.ConvertToUserVariable(columnName, "Column Name", engine);
+                    string targetColumnName = command.ExpandValueOrUserVariable(columnName, "Column Name", engine);
                     columnIndex = GetColumnIndexFromName(table, targetColumnName, engine);
                     break;
 
                 case "index":
-                    string targetColumnIndex = command.ConvertToUserVariable(columnName, "Column Index", engine);
+                    string targetColumnIndex = command.ExpandValueOrUserVariable(columnName, "Column Index", engine);
                     columnIndex = GetColumnIndex(table, targetColumnIndex, engine);
                     break;
             }
@@ -576,7 +576,7 @@ namespace taskt.Core.Automation.Commands
                 var keys = dic.Keys.ToArray();
                 foreach (string key in keys)
                 {
-                    dic[key] = dic[key].ConvertToUserVariable(engine);
+                    dic[key] = dic[key].ExpandValueOrUserVariable(engine);
                 }
             }
 
@@ -619,7 +619,7 @@ namespace taskt.Core.Automation.Commands
                 var keys = dic.Keys.ToArray();
                 foreach (string key in keys)
                 {
-                    dic[key] = dic[key].ConvertToUserVariable(engine);
+                    dic[key] = dic[key].ExpandValueOrUserVariable(engine);
                 }
             }
             

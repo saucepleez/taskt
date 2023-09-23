@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
 
             DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
-            string newColName = v_AddColumnName.ConvertToUserVariable(engine);
+            string newColName = v_AddColumnName.ExpandValueOrUserVariable(engine);
 
             string ifColumnExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfColumnExists), "If Column Exists", engine);
 

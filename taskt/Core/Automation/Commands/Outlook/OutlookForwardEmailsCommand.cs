@@ -53,9 +53,9 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vSourceFolder = v_SourceFolder.ConvertToUserVariable(sender);
-            var vFilter = v_Filter.ConvertToUserVariable(sender);
-            var vRecipients = v_Recipients.ConvertToUserVariable(sender);
+            var vSourceFolder = v_SourceFolder.ExpandValueOrUserVariable(sender);
+            var vFilter = v_Filter.ExpandValueOrUserVariable(sender);
+            var vRecipients = v_Recipients.ExpandValueOrUserVariable(sender);
 
             var splittext = vRecipients.Split(';');
 

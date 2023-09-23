@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             int attrs = v_AttributesName.Rows.Count;
             for (int i = 0; i <attrs; i++)
             {
-                var attr = v_AttributesName.Rows[i][0]?.ToString().ConvertToUserVariable(engine) ?? "";
+                var attr = v_AttributesName.Rows[i][0]?.ToString().ExpandValueOrUserVariable(engine) ?? "";
                 if (!newDT.Columns.Contains(attr))
                 {
                     newDT.Columns.Add(attr);

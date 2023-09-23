@@ -130,7 +130,7 @@ namespace taskt.Core.Automation.Commands
                     var currentFileName = Path.GetFileName(sourceFile);
                     var newFileName = v_NewName.ExpandValueOrUserVariableAsFileName(engine);
 
-                    var newExtension = v_NewExtention.ConvertToUserVariable(engine);
+                    var newExtension = v_NewExtention.ExpandValueOrUserVariable(engine);
                     if (!newExtension.StartsWith("."))
                     {
                         newExtension = "." + newExtension;

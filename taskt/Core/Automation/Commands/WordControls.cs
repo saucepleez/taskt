@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static Application ExpandValueOrUserVariableAsWordInstance(this string instanceName, Engine.AutomationEngineInstance engine)
         {
-            var instance = instanceName.ConvertToUserVariable(engine);
+            var instance = instanceName.ExpandValueOrUserVariable(engine);
             var instanceObject = engine.GetAppInstance(instance);
             if (instanceObject is Application wd)
             {

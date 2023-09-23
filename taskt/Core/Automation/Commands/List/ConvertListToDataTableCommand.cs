@@ -165,19 +165,19 @@ namespace taskt.Core.Automation.Commands
                     dtUseColumns(columnsList);
                     break;
                 case "comma separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Split(',').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Split(',').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "space separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Split(' ').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Split(' ').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "tab separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Split('\t').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Split('\t').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "newline separated":
-                    columnsList = v_Columns.ConvertToUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
+                    columnsList = v_Columns.ExpandValueOrUserVariable(engine).Replace("\r\n", "\n").Replace("\r", "\n").Split('\n').ToList();
                     dtUseColumns(columnsList);
                     break;
                 case "column prefix":
@@ -188,7 +188,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        columnPrefix = v_Columns.ConvertToUserVariable(engine);
+                        columnPrefix = v_Columns.ExpandValueOrUserVariable(engine);
                     }
 
                     myDT.Rows.Add();

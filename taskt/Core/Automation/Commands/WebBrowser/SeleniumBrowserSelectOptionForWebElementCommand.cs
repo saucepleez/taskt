@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             var sel = new SelectElement(elem);
-            var value = v_SelectionValue.ConvertToUserVariable(engine);
+            var value = v_SelectionValue.ExpandValueOrUserVariable(engine);
             var selectType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SelectionType), engine);
             try
             {

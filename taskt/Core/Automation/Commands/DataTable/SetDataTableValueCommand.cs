@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
 
             (var myDT, var rowIndex, var columnIndex) = this.ExpandUserVariablesAsDataTableAndRowColumnIndices(nameof(v_DataTableName), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
 
-            string newValue = v_NewValue.ConvertToUserVariable(engine);
+            string newValue = v_NewValue.ExpandValueOrUserVariable(engine);
 
             myDT.Rows[rowIndex][columnIndex] = newValue;
         }

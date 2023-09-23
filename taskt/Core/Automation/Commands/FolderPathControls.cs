@@ -139,7 +139,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(pathResultName))
                 {
-                    var pathResult = command.GetRawPropertyString(pathResultName, "Folder Path Result");
+                    var pathResult = command.GetRawPropertyValueAsString(pathResultName, "Folder Path Result");
                     if (!string.IsNullOrEmpty(pathResult))
                     {
                         path.StoreInUserVariable(engine, pathResult);
@@ -204,7 +204,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="">value is not Folder Path</exception>
         public static string ExpandValueOrUserVariableAsFolderPath(this string value, Engine.AutomationEngineInstance engine)
         {
-            var p = ConvertToFullPath(value.ConvertToUserVariable(engine), engine);
+            var p = ConvertToFullPath(value.ExpandValueOrUserVariable(engine), engine);
             var invs = Path.GetInvalidPathChars();
             if (p.IndexOfAny(invs) < 0)
             {
@@ -225,7 +225,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string ExpandValueOrUserVariableAsFolderPath(this ScriptCommand command, string parameterValue, Engine.AutomationEngineInstance engine)
         {
-            return command.ConvertToUserVariable(parameterValue, "Folder Path", engine).ExpandValueOrUserVariableAsFolderPath(engine);
+            return command.ExpandValueOrUserVariable(parameterValue, "Folder Path", engine).ExpandValueOrUserVariableAsFolderPath(engine);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception">value is not folder name</exception>
         public static string ExpandValueOrUserVariableAsFolderName(this string folderName, Engine.AutomationEngineInstance engine)
         {
-            var fn = folderName.ConvertToUserVariable(engine);
+            var fn = folderName.ExpandValueOrUserVariable(engine);
             var invs = Path.GetInvalidFileNameChars();
             if (fn.IndexOfAny(invs) < 0)
             {

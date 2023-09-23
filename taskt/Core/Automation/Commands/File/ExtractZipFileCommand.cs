@@ -148,7 +148,7 @@ namespace taskt.Core.Automation.Commands
                     IReader reader;
 
                     //get optional password
-                    var vPassword = v_Password.ConvertToUserVariable(engine);
+                    var vPassword = v_Password.ExpandValueOrUserVariable(engine);
 
                     //check if password is needed
                     if (string.IsNullOrEmpty(vPassword))

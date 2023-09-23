@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             var variableList = engine.VariableList;
             DataRow row;
 
-            var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
+            var targetAddress = v_ExcelCellAddress.ExpandValueOrUserVariable(sender);
 
             //check in case of looping through datatable using BeginListLoopCommand
             if (dataRowVariable.VariableValue is DataTable && engine.VariableList.Exists(x => x.VariableName == "Loop.CurrentIndex"))

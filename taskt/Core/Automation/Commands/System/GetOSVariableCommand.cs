@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var systemVariable = v_OSVariableName.ConvertToUserVariable(sender);
+            var systemVariable = v_OSVariableName.ExpandValueOrUserVariable(sender);
 
             ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);

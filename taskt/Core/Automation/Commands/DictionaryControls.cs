@@ -180,7 +180,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static (Dictionary<string, string>, string) ExpandUserVariablesAsDictionaryAndKey(this ScriptCommand command, string dictionaryName, string keyName, Engine.AutomationEngineInstance engine)
         {
-            string dicVariable = command.ConvertToUserVariable(dictionaryName, "Dictionary", engine);
+            string dicVariable = command.ExpandValueOrUserVariable(dictionaryName, "Dictionary", engine);
             //var v = dicVariable.GetRawVariable(engine);
             //if (v.VariableValue is Dictionary<string, string> dictionary)
             //{
@@ -211,7 +211,7 @@ namespace taskt.Core.Automation.Commands
             //}
             var dictionary = dicVariable.ExpandUserVariableAsDictinary(engine);
             var v = dicVariable.GetRawVariable(engine);
-            string keyVariable = command.ConvertToUserVariable(keyName, "Key", engine);
+            string keyVariable = command.ExpandValueOrUserVariable(keyName, "Key", engine);
             string key;
             if (String.IsNullOrEmpty(keyVariable))
             {
@@ -228,7 +228,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                key = keyVariable.ConvertToUserVariable(engine);
+                key = keyVariable.ExpandValueOrUserVariable(engine);
             }
             return (dictionary, key);
         }
@@ -250,7 +250,7 @@ namespace taskt.Core.Automation.Commands
             // Check Items
             foreach (DataRow row in table.Rows)
             {
-                string k = (row.Field<string>("Keys") ?? "").ConvertToUserVariable(engine);
+                string k = (row.Field<string>("Keys") ?? "").ExpandValueOrUserVariable(engine);
                 if (k == "")
                 {
                     throw new Exception("Key value is empty.");
@@ -260,8 +260,8 @@ namespace taskt.Core.Automation.Commands
             // Add Items
             foreach (DataRow row in table.Rows)
             {
-                var key = row.Field<string>("Keys").ConvertToUserVariable(engine);
-                var value = (row.Field<string>("Values") ?? "").ConvertToUserVariable(engine);
+                var key = row.Field<string>("Keys").ExpandValueOrUserVariable(engine);
+                var value = (row.Field<string>("Values") ?? "").ExpandValueOrUserVariable(engine);
                 dic.Add(key, value);
             }
         }

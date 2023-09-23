@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get input value
-            var stringRequiringCount = v_InputValue.ConvertToUserVariable(engine);
+            var stringRequiringCount = v_InputValue.ExpandValueOrUserVariable(engine);
 
             //count number of words
             var wordCount = stringRequiringCount.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries).Length;

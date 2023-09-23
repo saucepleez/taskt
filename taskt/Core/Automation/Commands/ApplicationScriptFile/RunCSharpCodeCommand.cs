@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var customCode = v_Code.ConvertToUserVariable(engine);
+            var customCode = v_Code.ExpandValueOrUserVariable(engine);
 
             //create compiler service
             var compilerSvc = new CompilerServices();
@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
 
-                var arguments = v_Args.ConvertToUserVariable(sender);
+                var arguments = v_Args.ExpandValueOrUserVariable(sender);
                 scriptProc.StartInfo.Arguments = arguments;
 
                 if (!String.IsNullOrEmpty(v_applyToVariableName))

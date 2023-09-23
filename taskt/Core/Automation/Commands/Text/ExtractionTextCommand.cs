@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get variablized input
-            var variableInput = v_InputValue.ConvertToUserVariable(engine);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
 
             var parms = DataTableControls.GetFieldValues(v_TextExtractionTable, "Parameter Name", "Parameter Value", engine);
             string extractedText = "";

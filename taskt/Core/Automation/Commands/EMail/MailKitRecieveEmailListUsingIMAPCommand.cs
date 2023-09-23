@@ -57,12 +57,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             // imap host
-            string pop = v_IMAPHost.ConvertToUserVariable(engine);
+            string pop = v_IMAPHost.ExpandValueOrUserVariable(engine);
             var port = this.ExpandValueOrUserVariableAsInteger(nameof(v_IMAPPort), engine);
 
             // auth
-            string user = v_IMAPUserName.ConvertToUserVariable(engine);
-            string pass = v_IMAPPassword.ConvertToUserVariable(engine);
+            string user = v_IMAPUserName.ExpandValueOrUserVariable(engine);
+            string pass = v_IMAPPassword.ExpandValueOrUserVariable(engine);
 
             using (var client = new MailKit.Net.Imap.ImapClient())
             {

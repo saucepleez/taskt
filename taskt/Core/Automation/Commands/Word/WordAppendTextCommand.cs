@@ -112,7 +112,7 @@ namespace taskt.Core.Automation.Commands
 
             (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
-            var vText = v_TextToSet.ConvertToUserVariable(engine);
+            var vText = v_TextToSet.ExpandValueOrUserVariable(engine);
 
             Paragraph paragraph = wordDocument.Content.Paragraphs.Add();
             paragraph.Range.Text = vText;

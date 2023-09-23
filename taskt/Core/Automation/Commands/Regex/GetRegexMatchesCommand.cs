@@ -49,8 +49,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var vInputData = v_InputData.ConvertToUserVariable(engine);
-            var vRegex = v_Regex.ConvertToUserVariable(engine);
+            var vInputData = v_InputData.ExpandValueOrUserVariable(engine);
+            var vRegex = v_Regex.ExpandValueOrUserVariable(engine);
 
             Match[] matches = Regex.Matches(vInputData, vRegex)
                        .Cast<Match>()

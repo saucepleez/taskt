@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
 
             var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
-            var itemName = v_Item.ConvertToUserVariable(engine);
+            var itemName = v_Item.ExpandValueOrUserVariable(engine);
 
             var items = UIElementControls.GetSelectionItems(targetElement);
             bool isSelected = false;

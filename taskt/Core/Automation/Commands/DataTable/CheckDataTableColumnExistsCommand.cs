@@ -52,7 +52,7 @@ namespace taskt.Core.Automation.Commands
 
             DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
-            string targetColumnName = v_ColumnName.ConvertToUserVariable(engine);
+            string targetColumnName = v_ColumnName.ExpandValueOrUserVariable(engine);
 
             myDT.Columns.Contains(targetColumnName).StoreInUserVariable(engine, v_OutputVariableName);
         }

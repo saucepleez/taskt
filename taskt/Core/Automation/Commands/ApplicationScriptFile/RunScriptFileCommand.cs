@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 catch
                 {
-                    variableValue = rw.Field<string>("VariableValue").ConvertToUserVariable(engine);
+                    variableValue = rw.Field<string>("VariableValue").ExpandValueOrUserVariable(engine);
                 }
 
                 var variableReturn = "No";

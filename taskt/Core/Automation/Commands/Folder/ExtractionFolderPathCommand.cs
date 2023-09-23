@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
 
             string folderPath = v_SourceFolderPath.ExpandValueOrUserVariableAsFolderPath(engine);
 
-            string format = v_Format.ConvertToUserVariable(engine);
+            string format = v_Format.ExpandValueOrUserVariable(engine);
 
             string result = FilePathControls.FormatFileFolderPath(folderPath, format);
             result.StoreInUserVariable(engine, v_Result);

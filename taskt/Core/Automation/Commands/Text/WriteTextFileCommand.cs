@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
             var filePath = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
 
             //var outputText = v_TextToWrite.ConvertToUserVariable(sender).ToString().Replace("[crLF]",Environment.NewLine);
-            var outputText = v_TextToWrite.ConvertToUserVariable(engine);
+            var outputText = v_TextToWrite.ExpandValueOrUserVariable(engine);
             if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceToLineBreak), engine) == "yes")
             {
                 outputText = outputText.Replace("[crLF]", Environment.NewLine);

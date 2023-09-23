@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;   
-            var instanceName = v_StopwatchName.ConvertToUserVariable(engine);
+            var instanceName = v_StopwatchName.ExpandValueOrUserVariable(engine);
             
             var action = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_StopwatchAction), engine);
             System.Diagnostics.Stopwatch stopwatch;
@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        var format = v_ToStringFormat.ConvertToUserVariable(sender);
+                        var format = v_ToStringFormat.ExpandValueOrUserVariable(sender);
                         elapsedTime = stopwatch.Elapsed.ToString(format);
                     }
 

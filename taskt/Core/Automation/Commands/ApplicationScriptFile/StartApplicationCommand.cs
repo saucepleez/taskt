@@ -70,8 +70,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            var vProgramName = v_ProgramName.ConvertToUserVariable(engine);
-            var vProgramArgs = v_ProgramArgs.ConvertToUserVariable(engine);
+            var vProgramName = v_ProgramName.ExpandValueOrUserVariable(engine);
+            var vProgramArgs = v_ProgramArgs.ExpandValueOrUserVariable(engine);
 
             System.Diagnostics.Process p;
             if (String.IsNullOrEmpty(vProgramArgs))

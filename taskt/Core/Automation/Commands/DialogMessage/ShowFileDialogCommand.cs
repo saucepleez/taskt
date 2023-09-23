@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
             
-            var filter = v_Filter.ConvertToUserVariable(engine);
+            var filter = v_Filter.ExpandValueOrUserVariable(engine);
             if (!checkFileterProperty(filter))
             {
                 throw new Exception("Strange Filter Property. Value: '" + filter + "'");

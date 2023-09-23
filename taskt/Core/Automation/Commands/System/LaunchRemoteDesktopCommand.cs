@@ -81,9 +81,9 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var machineName = v_MachineName.ConvertToUserVariable(sender);
-            var userName = v_UserName.ConvertToUserVariable(sender);
-            var password = v_Password.ConvertToUserVariable(sender);
+            var machineName = v_MachineName.ExpandValueOrUserVariable(sender);
+            var userName = v_UserName.ExpandValueOrUserVariable(sender);
+            var password = v_Password.ExpandValueOrUserVariable(sender);
 
             if (String.IsNullOrEmpty(v_RDPWidth))
             {

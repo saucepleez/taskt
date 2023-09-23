@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
 
             var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
-            var path = v_SaveFolder.ConvertToUserVariable(engine);
+            var path = v_SaveFolder.ExpandValueOrUserVariable(engine);
 
             foreach(var attachment in mail.Attachments)
             {

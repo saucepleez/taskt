@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
             string variableValue;
             if (isRepalce == "yes")
             {
-                variableValue = v_Input.ConvertToUserVariable(engine);
+                variableValue = v_Input.ExpandValueOrUserVariable(engine);
             }
             else
             {

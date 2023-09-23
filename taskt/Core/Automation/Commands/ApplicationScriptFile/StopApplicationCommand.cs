@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            string shortName = v_ProgramShortName.ConvertToUserVariable(engine);
+            string shortName = v_ProgramShortName.ExpandValueOrUserVariable(engine);
             var processes = System.Diagnostics.Process.GetProcessesByName(shortName);
 
             foreach (var prc in processes)

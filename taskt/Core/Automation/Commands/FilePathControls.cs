@@ -207,8 +207,8 @@ namespace taskt.Core.Automation.Commands
 
             (var beforeVariable, var wrappedCounterVariableName, var afterVariable) = ParseFileCounter(parameterValue, engine);
 
-            beforeVariable = beforeVariable.ConvertToUserVariable(engine);
-            afterVariable = afterVariable.ConvertToUserVariable(engine);
+            beforeVariable = beforeVariable.ExpandValueOrUserVariable(engine);
+            afterVariable = afterVariable.ExpandValueOrUserVariable(engine);
             var counterVariableName = VariableNameControls.GetVariableName(wrappedCounterVariableName, engine);
 
             // URL Check
@@ -304,7 +304,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static string ExpandValueOrUserVariableAsFilePath_NoSupportFileCounter(string parameterValue, PropertyFilePathSetting setting, Engine.AutomationEngineInstance engine)
         {
-            var path = parameterValue.ConvertToUserVariable(engine);
+            var path = parameterValue.ExpandValueOrUserVariable(engine);
 
             if (IsURL(path))
             {
@@ -431,7 +431,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception">value is not file name</exception>
         public static string ExpandValueOrUserVariableAsFileName(this string fileName, Engine.AutomationEngineInstance engine)
         {
-            var fn = fileName.ConvertToUserVariable(engine);
+            var fn = fileName.ExpandValueOrUserVariable(engine);
             var invs = Path.GetInvalidFileNameChars();
             if (fn.IndexOfAny(invs) < 0)
             {
@@ -534,7 +534,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string WaitForFile(string pathValue, string waitTimeValue, Engine.AutomationEngineInstance engine)
         {
-            var path = pathValue.ConvertToUserVariable(engine);
+            var path = pathValue.ExpandValueOrUserVariable(engine);
             var invs = Path.GetInvalidPathChars();
             if (path.IndexOfAny(invs) >= 0)
             {
@@ -580,7 +580,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(pathResultName))
                 {
-                    var pathResult = command.GetRawPropertyString(pathResultName, "Path Result");
+                    var pathResult = command.GetRawPropertyValueAsString(pathResultName, "Path Result");
                     if (!string.IsNullOrEmpty(pathResult))
                     {
                         path.StoreInUserVariable(engine, pathResult);

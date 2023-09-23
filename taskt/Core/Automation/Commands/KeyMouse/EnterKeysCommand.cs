@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetWindow = v_WindowName.ConvertToUserVariable(engine);
+            var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
             if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
             {
                 var activateWindow = new ActivateWindowCommand
@@ -94,7 +94,7 @@ namespace taskt.Core.Automation.Commands
                 activateWindow.RunCommand(engine);
             }
 
-            var textToSend = v_TextToSend.ConvertToUserVariable(engine);
+            var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
 
             var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
             if (encryptOption == "encrypted")

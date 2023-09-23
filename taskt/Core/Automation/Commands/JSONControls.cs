@@ -167,7 +167,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static (string json, string rootType) ExpandValueOrUserVariableAsJSON(this string jsonValue, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            var jsonText = jsonValue.ConvertToUserVariable(engine).Trim();
+            var jsonText = jsonValue.ExpandValueOrUserVariable(engine).Trim();
             if (jsonText.StartsWith("{") && jsonText.EndsWith("}"))
             {
                 try
@@ -240,12 +240,12 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static void JSONModifyByJSONPath(this ScriptCommand command, string jsonName, string extractorName, Action<JToken> objectAction, Action<JToken> arrayAction, Engine.AutomationEngineInstance engine)
         {
-            string jsonVariableName = command.ConvertToUserVariable(jsonName, "JSON", engine);
+            string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
             if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
             {
                 jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
             }
-            string extractor = command.ConvertToUserVariable(extractorName, "Extractor", engine);
+            string extractor = command.ExpandValueOrUserVariable(extractorName, "Extractor", engine);
             (var jsonText, var rootType) = jsonVariableName.ExpandValueOrUserVariableAsJSON(engine);
             switch(rootType)
             {
@@ -282,7 +282,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         public static void JSONProcess(this ScriptCommand command, string jsonName, Action<JObject> objectAction, Action<JArray> arrayAction, Engine.AutomationEngineInstance engine, bool forceJSONVariable = false)
         {
-            string jsonVariableName = command.ConvertToUserVariable(jsonName, "JSON", engine);
+            string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
             if (forceJSONVariable)
             {
                 if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
@@ -314,7 +314,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static object GetJSONValue(this ScriptCommand command, string jsonValueName, string valueTypeName, string purpose, Engine.AutomationEngineInstance engine)
         {
-            string jsonValue = command.ConvertToUserVariable(jsonValueName, "Value to " + purpose, engine);
+            string jsonValue = command.ExpandValueOrUserVariable(jsonValueName, "Value to " + purpose, engine);
             string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
             if (valueType == "auto")
             {

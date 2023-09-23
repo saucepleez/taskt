@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
             {
                 v_ColumnLetter = "A";
             }
-            var columnLetter = v_ColumnLetter.ConvertToUserVariable(engine);
+            var columnLetter = v_ColumnLetter.ExpandValueOrUserVariable(engine);
 
             var lastRow = (int)excelSheet.Cells[excelSheet.Rows.Count, columnLetter].End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 

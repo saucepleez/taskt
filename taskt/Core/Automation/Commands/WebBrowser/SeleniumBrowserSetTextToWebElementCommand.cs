@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
                 clearText.RunCommand(engine);
             }
 
-            var textToSet = v_TextToSet.ConvertToUserVariable(engine);
+            var textToSet = v_TextToSet.ExpandValueOrUserVariable(engine);
 
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_EncryptedText), engine))
             {

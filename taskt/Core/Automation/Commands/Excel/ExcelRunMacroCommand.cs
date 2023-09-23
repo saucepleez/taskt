@@ -55,9 +55,9 @@ namespace taskt.Core.Automation.Commands
 
             var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
-            var vMacroName = v_MacroName.ConvertToUserVariable(engine);
+            var vMacroName = v_MacroName.ExpandValueOrUserVariable(engine);
 
-            var vArg1 = v_Argument1.ConvertToUserVariable(engine);
+            var vArg1 = v_Argument1.ExpandValueOrUserVariable(engine);
 
             if (String.IsNullOrEmpty(vArg1))
             {

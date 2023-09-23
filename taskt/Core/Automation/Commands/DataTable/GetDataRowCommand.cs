@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
 
             DataTable dataTable = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
 
-            int index = int.Parse(v_DataRowIndex.ConvertToUserVariable(engine));
+            int index = int.Parse(v_DataRowIndex.ExpandValueOrUserVariable(engine));
 
             DataRow row = dataTable.Rows[index];
 

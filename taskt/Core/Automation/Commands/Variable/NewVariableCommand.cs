@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var variableValue = v_Input.ConvertToUserVariable(engine);
+            var variableValue = v_Input.ExpandValueOrUserVariable(engine);
 
             var ifExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfExists), engine);
             var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);

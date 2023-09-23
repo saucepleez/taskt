@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception">fail convert value to DateTime</exception>
         public static DateTime ConvertValueToDateTime(this string str, string parameterName, object sender)
         {
-            string convertedText = str.ConvertToUserVariable(sender);
+            string convertedText = str.ExpandValueOrUserVariable(sender);
             if (DateTime.TryParse(convertedText, out DateTime v))
             {
                 return v;

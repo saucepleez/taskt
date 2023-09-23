@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             var dataSetVariable = LookupVariable(engine);
-            var targetAddress = v_ExcelCellAddress.ConvertToUserVariable(sender);
+            var targetAddress = v_ExcelCellAddress.ExpandValueOrUserVariable(sender);
 
             DataTable Dt = (DataTable)dataSetVariable.VariableValue;
             if (string.IsNullOrEmpty(targetAddress)) throw new ArgumentNullException("columnName");

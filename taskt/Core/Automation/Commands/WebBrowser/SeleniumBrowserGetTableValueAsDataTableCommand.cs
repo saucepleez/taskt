@@ -85,7 +85,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Element is not Table");
             }
 
-            var attrName = v_AttributeName.ConvertToUserVariable(engine);
+            var attrName = v_AttributeName.ExpandValueOrUserVariable(engine);
 
             var firstRowMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_FirstRowMethod), engine);
 

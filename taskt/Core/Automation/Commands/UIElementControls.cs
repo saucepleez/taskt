@@ -184,7 +184,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string ExpandUserVariableAsXPath(this string value, Engine.AutomationEngineInstance engine)
         {
-            var p = value.ConvertToUserVariable(engine);
+            var p = value.ExpandValueOrUserVariable(engine);
             if (!p.StartsWith("."))
             {
                 p = "." + p;
@@ -677,7 +677,7 @@ namespace taskt.Core.Automation.Commands
                     if (!string.IsNullOrEmpty(resultName))
                     {
                         //var resultValue = command.ConvertToUserVariable(resultName, "Result", engine);
-                        var resultValue = command.GetRawPropertyString(resultName, "Result");
+                        var resultValue = command.GetRawPropertyValueAsString(resultName, "Result");
 
                         ret.StoreInUserVariable(engine, resultValue);
                     }

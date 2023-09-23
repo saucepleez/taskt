@@ -88,7 +88,7 @@ namespace taskt.Core.Automation.Commands
             if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceScriptVariables), engine) == "yes")
             {
                 //convert variables
-                psCommand = psCommand.ConvertToUserVariable(sender);
+                psCommand = psCommand.ExpandValueOrUserVariable(sender);
             }
             
             //convert ps script

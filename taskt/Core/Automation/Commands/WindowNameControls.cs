@@ -630,7 +630,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                return value.ConvertToUserVariable(engine);
+                return value.ExpandValueOrUserVariable(engine);
             }
         }
 
@@ -757,7 +757,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!string.IsNullOrEmpty(nameResultName))
                 {
-                    var nameResult = command.GetRawPropertyString(nameResultName, "Window Name Result");
+                    var nameResult = command.GetRawPropertyValueAsString(nameResultName, "Window Name Result");
                     if (!string.IsNullOrEmpty(nameResult))
                     {
                         if (matchType == "all")
@@ -772,7 +772,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 if (!string.IsNullOrEmpty(handleResultName))
                 {
-                    var handleResult = command.GetRawPropertyString(handleResultName, "Window Handle Result");
+                    var handleResult = command.GetRawPropertyValueAsString(handleResultName, "Window Handle Result");
                     if (!string.IsNullOrEmpty(handleResult))
                     {
                         if (matchType == "all")

@@ -81,8 +81,8 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetValue = v_userVariableName.ConvertToUserVariable(engine);
-            var checkValue = v_CheckParameter.ConvertToUserVariable(engine);
+            var targetValue = v_userVariableName.ExpandValueOrUserVariable(engine);
+            var checkValue = v_CheckParameter.ExpandValueOrUserVariable(engine);
 
             var caseSensitive = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CaseSensitive), engine);
             if (caseSensitive == "no")
