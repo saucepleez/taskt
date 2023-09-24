@@ -199,6 +199,7 @@
             this.clearCmdTVCommandMenuStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
+            this.autoSaveTimer = new System.Windows.Forms.Timer(this.components);
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -2335,6 +2336,7 @@
         private System.Windows.Forms.ToolStripMenuItem showJSONPathHelperToolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiSendKeystrokesEditToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showFormatCheckerToolStripMenuItem;
+        private System.Windows.Forms.Timer autoSaveTimer;
     }
 }
 
