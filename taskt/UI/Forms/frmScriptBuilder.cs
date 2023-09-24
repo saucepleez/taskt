@@ -754,7 +754,6 @@ namespace taskt.UI.Forms
                 {
                     MoveMostNearMatchedLine(true);
                 }
-                
             }
             else
             {
@@ -1055,7 +1054,6 @@ namespace taskt.UI.Forms
             return replaceCount;
         }
         #endregion
-
 
         #region ListView Copy, Paste, Edit, Delete
 
@@ -3024,11 +3022,6 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-
-        #region Automation Engine Delegate
-
-        #endregion
-
         #region misc?
         private void btnManageVariables_Click(object sender, EventArgs e)
         {
@@ -3130,7 +3123,6 @@ namespace taskt.UI.Forms
             return Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
         }
         #endregion
-
 
         #region TreeView Events
         private void GenerateTreeViewCommands()
@@ -3276,7 +3268,6 @@ namespace taskt.UI.Forms
         }
 
         #endregion
-
 
         #region Variable Edit, Settings form
         private void showVariableManager()
