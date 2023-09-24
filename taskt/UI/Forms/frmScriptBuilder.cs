@@ -399,8 +399,6 @@ namespace taskt.UI.Forms
                 return;
             }
 
-
-
             var directory = new System.IO.DirectoryInfo(scriptPath);
 
             var recentFiles = directory.GetFiles("*.xml")
@@ -409,13 +407,6 @@ namespace taskt.UI.Forms
 
             if (recentFiles.Count() == 0)
             {
-                //Label noFilesLabel = new Label();
-                //noFilesLabel.Text = "No Recent Files Found";
-                //noFilesLabel.AutoSize = true;
-                //noFilesLabel.ForeColor = Color.SteelBlue;
-                //noFilesLabel.Font = lnkGitIssue.Font;
-                //noFilesLabel.Margin = new Padding(0, 0, 0, 0);
-                //flwRecentFiles.Controls.Add(noFilesLabel);
                 lblRecentFiles.Text = "No Recent Files Found";
                 lblRecentFiles.ForeColor = Color.White;
                 lblFilesMissing.ForeColor = Color.White;
@@ -428,7 +419,9 @@ namespace taskt.UI.Forms
                 foreach (var fil in recentFiles)
                 {
                     if (flwRecentFiles.Controls.Count == 7)
+                    {
                         break;
+                    }
 
                     LinkLabel newFileLink = new LinkLabel();
                     newFileLink.Text = fil;
@@ -448,22 +441,18 @@ namespace taskt.UI.Forms
         }
         private void lnkGitProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
             showGitProjectPage();
         }
         private void lnkGitLatestReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/releases");
             showGitReleasePage();
         }
         private void lnkGitIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/issues/new");
             showGitIssuePage();
         }
         private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://wiki.taskt.net/");
             showWikiPage();
         }
         private void linkGitter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -474,7 +463,6 @@ namespace taskt.UI.Forms
         {
             LinkLabel senderLink = (LinkLabel)sender;
             string targetScriptPath = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text;
-            //OpenFile(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text);
             OpenScriptFromFilePath(targetScriptPath, true);
         }
         #endregion
@@ -502,9 +490,6 @@ namespace taskt.UI.Forms
         }
         private void showThisCommandHelp(ScriptCommand command)
         {
-            //string page = command.SelectionName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
-            //string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-").Replace("/", "-");
-            //System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
             string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName;
             System.Diagnostics.Process.Start(Core.MyURLs.GetWikiURL(command.SelectionName, parent));
         }
@@ -516,7 +501,6 @@ namespace taskt.UI.Forms
             }
         }
         #endregion
-
 
         #region ListView Events
         #region ListView DragDrop
@@ -537,6 +521,7 @@ namespace taskt.UI.Forms
             }
             lstScriptActions.Invalidate();
         }
+
         private void lstScriptActions_DragEnter(object sender, DragEventArgs e)
         {
             int len = e.Data.GetFormats().Length - 1;
@@ -562,15 +547,8 @@ namespace taskt.UI.Forms
                     this.currentEditAction = CommandEditAction.Normal;
                 }
             }
-            //for (int i = 0; i <= len; i++)
-            //{
-            //    if (e.Data.GetFormats()[i].Equals("System.Windows.Forms.ListView+SelectedListViewItemCollection"))
-            //    {
-            //        //The data from the drag source is moved to the target.
-            //        e.Effect = DragDropEffects.Move;
-            //    }
-            //}
         }
+
         private void lstScriptActions_DragLeave(object sender, EventArgs e)
         {
             lstScriptActions.BackColor = Color.WhiteSmoke;
@@ -579,7 +557,6 @@ namespace taskt.UI.Forms
         private void lstScriptActions_DragDrop(object sender, DragEventArgs e)
         {
             lstScriptActions.BackColor = Color.WhiteSmoke;
-            //this.currentEditAction = CommandEditAction.Normal;
 
             string[] fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if ((fileNames != null) && (fileNames.Length > 0))
@@ -609,46 +586,14 @@ namespace taskt.UI.Forms
                 MoveCommands(e);
             }
         }
+
         private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
         {
             lstScriptActions.Invalidate();
-
-            //var hitPoint = e.Location;
-            //ListViewHitTestInfo info = lstScriptActions.HitTest(hitPoint);
-            //if (info.SubItem != null)
-            //{
-            //    //if (info.Item == currentHovered)
-            //    //{
-            //    //    if ((DateTime.Now - hoverStarted).TotalMilliseconds >= 500)
-            //    //    {
-            //    //        myToolTip.Show(info.Item.Text, lstScriptActions, hitPoint);
-            //    //    }
-
-            //    //}
-            //    //else
-            //    //{
-            //    //    myToolTip.Hide(lstScriptActions);
-            //    //    currentHovered = info.Item;
-            //    //    hoverStarted = DateTime.Now;
-            //    //}
-            //    myToolTip.SetToolTip(lstScriptActions, info.Item.Text);
-            //}
-            //else
-            //{
-            //    //myToolTip.Hide(lstScriptActions);
-            //    //currentHovered = null;
-            //    myToolTip.SetToolTip(lstScriptActions, "");
-            //}
         }
 
         private void MoveCommands(DragEventArgs e)
         {
-            ////Return if the items are not selected in the ListView control.
-            //if (lstScriptActions.SelectedItems.Count == 0)
-            //{
-            //    return;
-            //}
-
             CreateUndoSnapshot();
 
             //Returns the location of the mouse pointer in the ListView control.
@@ -676,19 +621,12 @@ namespace taskt.UI.Forms
                 }
 
                 //remove originals
-                //for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
-                //{
-                //    lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
-                //}
                 int[] indices = new int[lstScriptActions.SelectedIndices.Count];
                 lstScriptActions.SelectedIndices.CopyTo(indices, 0);
                 for (int i = indices.Length - 1; i>=0; i--)
                 {
                     lstScriptActions.Items.RemoveAt(indices[i]);
                 }
-                //lstScriptActions.EndUpdate();
-                //return back
-                //return;
             }
             else
             {
@@ -725,8 +663,6 @@ namespace taskt.UI.Forms
                     //Removes the item from the initial location while
                     //the item is moved to the new location.
                     lstScriptActions.Items.Remove(dragItem);
-                    //FormatCommandListView();
-                    //lstScriptActions.Invalidate();
                 }
             }
             this.currentEditAction = CommandEditAction.Normal;
@@ -782,6 +718,7 @@ namespace taskt.UI.Forms
                 SearchForItemInListView();
             }
         }
+
         private void txtCommandSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -797,7 +734,6 @@ namespace taskt.UI.Forms
             lblCurrentlyViewing.Hide();
             lblTotalResults.Hide();
         }
-
         private void SearchForItemInListView()
         {
             var searchCriteria = txtCommandSearch.Text;
@@ -806,59 +742,6 @@ namespace taskt.UI.Forms
             {
                 searchCriteria = tsSearchBox.Text;
             }
-
-            //var matchingItems = (from ListViewItem itm in lstScriptActions.Items
-            //                     where itm.Text.Contains(searchCriteria)
-            //                     select itm).ToList();
-
-
-            //int? matchCount = matchingItems.Count();
-            //int totalMatches = matchCount ?? 0;
-
-
-            //if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
-            //{
-            //    reqdIndex = 0;
-            //}
-
-            //lblTotalResults.Show();
-
-            //if (totalMatches == 0)
-            //{
-            //    currentScriptEditorMode = CommandEditorState.Normal;
-            //    reqdIndex = -1;
-            //    lblTotalResults.Text = "No Matches Found";
-            //    lblCurrentlyViewing.Hide();
-            //    //clear indexes
-            //    matchingSearchIndex.Clear();
-            //    reqdIndex = -1;
-            //    lstScriptActions.Invalidate();
-            //    return;
-            //}
-            //else
-            //{
-            //    currentScriptEditorMode = CommandEditorState.Search;
-            //    lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-            //    tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-            //    lblTotalResults.Text = totalMatches + " total results found";
-            //}
-
-            //ClearSelectedListViewItems();
-
-            //matchingSearchIndex = new List<int>();
-            //foreach (ListViewItem itm in matchingItems)
-            //{
-            //    matchingSearchIndex.Add(itm.Index);
-            //    //itm.BackColor = Color.LightGoldenrodYellow;
-            //}
-
-            //currentIndexInMatchItems = matchingItems[0].Index;
-            //lstScriptActions.Items[0].Selected = true;
-            ////currentIndexInMatchItems = matchingItems[reqdIndex].Index;
-
-            //lstScriptActions.Invalidate();
-
-            ////lstScriptActions.EnsureVisible(currentIndexInMatchItems);
 
             if (searchCriteria.Length > 0)
             {
@@ -891,8 +774,6 @@ namespace taskt.UI.Forms
 
         public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
         {
-            //matchingSearchIndex.Clear();
-            //matchingSearchIndex = new List<int>();
             int matchedCount = 0;
 
             this.currentIndexInMatchItems = -1;
@@ -904,16 +785,7 @@ namespace taskt.UI.Forms
                 if (cmd.CheckMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText, checkInstanceType, instanceType))
                 {
                     matchedCount++;
-                    //matchingSearchIndex.Add(itm.Index);
                 }
-                //else if (instanceName)
-                //{
-                //    if (cmd.checkInstanceMatched(keyword, instanceType, caseSensitive))
-                //    {
-                //        matchedCount++;
-                //        //matchingSearchIndex.Add(itm.Index);
-                //    }
-                //}
             }
             lstScriptActions.EndUpdate();
             lstScriptActions.ResumeLayout();
@@ -926,10 +798,6 @@ namespace taskt.UI.Forms
 
         public void MoveMostNearMatchedLine(bool backToTop)
         {
-            //if (this.currentScriptEditorMode != CommandEditorState.AdvencedSearch)
-            //{
-            //    return;
-            //}
             switch (this.currentScriptEditorMode)
             {
                 case CommandEditorState.Normal:
@@ -949,73 +817,6 @@ namespace taskt.UI.Forms
             {
                 return;
             }
-
-            //if (matchingSearchIndex.Count == 0)
-            //{
-            //    return;
-            //}
-
-            //if (this.currentIndexInMatchItems >= 0)
-            //{
-            //    // select matched item yet
-            //    int nextIndex = this.currentIndexInMatchItems + 1;
-            //    if (backToTop)
-            //    {
-            //        nextIndex %= matchingSearchIndex.Count;
-            //    }
-            //    else
-            //    {
-            //        if (nextIndex >= matchingSearchIndex.Count)
-            //        {
-            //            nextIndex--;
-            //        }
-            //    }
-            //    this.currentIndexInMatchItems = nextIndex;
-            //    ClearSelectedListViewItems();
-
-            //    lstScriptActions.Items[matchingSearchIndex[nextIndex]].Selected = true;
-            //}
-            //else
-            //{
-            //    if (lstScriptActions.SelectedIndices.Count > 0)
-            //    {
-            //        // some item selected yet. -> search near item
-            //        int currentIndex = lstScriptActions.SelectedIndices[0];
-            //        if (matchingSearchIndex[matchingSearchIndex.Count - 1] > currentIndex)
-            //        {
-            //            if (backToTop)
-            //            {
-            //                this.currentIndexInMatchItems = 0;
-            //                ClearSelectedListViewItems();
-            //                lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
-            //            }
-            //            else
-            //            {
-            //                ClearSelectedListViewItems();
-            //                return;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            int targetIndex = matchingSearchIndex.Count - 1;
-            //            while (currentIndex > matchingSearchIndex[targetIndex])
-            //            {
-            //                targetIndex--;
-            //            }
-            //            targetIndex++;
-            //            this.currentIndexInMatchItems = targetIndex;
-            //            ClearSelectedListViewItems();
-            //            lstScriptActions.Items[matchingSearchIndex[targetIndex]].Selected = true;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // no selected item -> select fist matched item
-            //        this.currentIndexInMatchItems = 0;
-            //        ClearSelectedListViewItems();
-            //        lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
-            //    }
-            //}
 
             int lines = lstScriptActions.Items.Count;
 
@@ -1080,6 +881,7 @@ namespace taskt.UI.Forms
                 this.currentScriptEditorMode = CommandEditorState.HighlightCommand;
             }
         }
+
         public int ReplaceSearchInItemCommands(string keyword, bool caseSensitive, string instanceType, bool allProperties, bool instanceName, bool comment)
         {
             int matchedCount = 0;
@@ -1252,9 +1054,7 @@ namespace taskt.UI.Forms
 
             return replaceCount;
         }
-
         #endregion
-
 
 
         #region ListView Copy, Paste, Edit, Delete
@@ -1281,7 +1081,6 @@ namespace taskt.UI.Forms
                     MessageBox.Show("Embedding Sequence Commands within Sequence Commands not yet supported.");
                     return;
                 }
-
 
                 //get sequence events
                 SequenceCommand sequence = (SequenceCommand)currentCommand;
@@ -1335,9 +1134,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                //Core.InstanceNameType nameType = instanceList.getInstanceNameType(currentCommand);
                 ScriptCommand cloneCommand = currentCommand.Clone();
-                //instanceList.removeInstance(currentCommand);
                 currentCommand.RemoveInstance(instanceList);
 
                 //create new command editor form
@@ -1346,7 +1143,6 @@ namespace taskt.UI.Forms
                     //creation mode edit locks form to current command
                     editCommand.creationMode = frmCommandEditor.CreationMode.Edit;
 
-                    //editCommand.defaultStartupCommand = currentCommand.SelectionName;
                     editCommand.editingCommand = currentCommand;
 
                     //create clone of current command so databinding does not affect if changes are not saved
@@ -1380,16 +1176,10 @@ namespace taskt.UI.Forms
 
                         editCommand.selectedCommand.IsDontSavedCommand = true;
 
-                        //instanceList.addInstance(editCommand.selectedCommand);
                         editCommand.selectedCommand.AddInstance(instanceList);
                     }
                     else
                     {
-                        //if (nameType != null)
-                        //{
-                        //    instanceList.addInstance(nameType);
-                        //}
-                        //instanceList.addInstance(cloneCommand);
                         cloneCommand.AddInstance(instanceList);
                     }
                 }
@@ -1398,19 +1188,12 @@ namespace taskt.UI.Forms
 
         private void SelectAllRows()
         {
-            // temp remove handle
-            //lstScriptActions.SelectedIndexChanged -= lstScriptActions_SelectedIndexChanged;
-
             lstScriptActions.BeginUpdate();
             foreach (ListViewItem itm in lstScriptActions.Items)
             {
                 itm.Selected = true;
             }
             lstScriptActions.EndUpdate();
-
-            // attach handle
-            //lstScriptActions.SelectedIndexChanged += lstScriptActions_SelectedIndexChanged;
-            //lstScriptActions_SelectedIndexChanged(null, null);
         }
 
         private void DeleteRows()
@@ -1419,10 +1202,6 @@ namespace taskt.UI.Forms
 
             int[] indices = new int[lstScriptActions.SelectedItems.Count];
             lstScriptActions.SelectedIndices.CopyTo(indices, 0);
-            //foreach (ListViewItem itm in lstScriptActions.SelectedItems)
-            //{
-            //    lstScriptActions.Items.Remove(itm);
-            //}
 
             // remove instance name
             List<ScriptCommand> removeCommands = new List<ScriptCommand>();
@@ -1445,22 +1224,10 @@ namespace taskt.UI.Forms
             IndentListViewItems();
 
             lstScriptActions.Invalidate();
-            //FormatCommandListView();
         }
 
         private void CutRows()
         {
-
-            //initialize list of items to copy   
-            //if (rowsSelectedForCopy == null)
-            //{
-            //    rowsSelectedForCopy = new List<ListViewItem>();
-            //}
-            //else
-            //{
-            //    rowsSelectedForCopy.Clear();
-            //}
-
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
@@ -1471,12 +1238,7 @@ namespace taskt.UI.Forms
                 lstScriptActions.BeginUpdate();
                 int[] indices = new int[lstScriptActions.SelectedItems.Count];
                 lstScriptActions.SelectedIndices.CopyTo(indices, 0);
-                //foreach (ListViewItem item in lstScriptActions.SelectedItems)
-                //{
-                //    commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
-                //    //rowsSelectedForCopy.Add(item);
-                //    //lstScriptActions.Items.Remove(item);
-                //}
+
                 for (int i = 0; i <indices.Length; i++)
                 {
                     commands.Add((ScriptCommand)lstScriptActions.Items[indices[i]].Tag);
@@ -1486,6 +1248,7 @@ namespace taskt.UI.Forms
                     lstScriptActions.Items.RemoveAt(indices[i]);
                 }
                 lstScriptActions.EndUpdate();
+
                 // set clipborad xml string
                 Clipboard.SetText(Core.Script.Script.SerializeScript(commands, scriptSerializer));
 
@@ -1497,7 +1260,6 @@ namespace taskt.UI.Forms
 
                 // release
                 commands.Clear();
-                commands = null;
 
                 // check indent
                 IndentListViewItems();
@@ -1506,17 +1268,6 @@ namespace taskt.UI.Forms
 
         private void CopyRows()
         {
-
-            //initialize list of items to copy   
-            //if (rowsSelectedForCopy == null)
-            //{
-            //    rowsSelectedForCopy = new List<ListViewItem>();
-            //}
-            //else
-            //{
-            //    rowsSelectedForCopy.Clear();
-            //}
-
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
@@ -1527,13 +1278,11 @@ namespace taskt.UI.Forms
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
                 {
                     commands.Add((ScriptCommand)item.Tag);
-                    //rowsSelectedForCopy.Add(item);
                 }
 
                 // set clipborad xml string
                 Clipboard.SetText(Core.Script.Script.SerializeScript(commands, scriptSerializer));
 
-                //Notify(rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
                 Notify(commands.Count + " item(s) copied to clipboard!");
 
                 // release
@@ -1543,35 +1292,6 @@ namespace taskt.UI.Forms
 
         private void PasteRows()
         {
-
-            //if (rowsSelectedForCopy != null)
-            //{
-
-            //    if (lstScriptActions.SelectedItems.Count == 0)
-            //    {
-            //        MessageBox.Show("In order to paste, you must first select a command to paste under.", "Select Command To Paste Under");
-            //        return;
-            //    }
-
-            //    //int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
-
-            //    //foreach (ListViewItem item in rowsSelectedForCopy)
-            //    //{
-            //    //    Core.Automation.Commands.ScriptCommand duplicatedCommand = (Core.Automation.Commands.ScriptCommand)Core.Common.Clone(item.Tag);
-            //    //    duplicatedCommand.GenerateID();
-            //    //    lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
-            //    //    destinationIndex += 1;                  
-            //    //}
-
-            //    //lstScriptActions.Invalidate();
-
-            //    //Notify(rowsSelectedForCopy.Count + " item(s) pasted!");
-
-            //    var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText());
-            //    //PopulateExecutionCommands(sc.Commands);
-            //    InsertExecutionCommands(sc.Commands);
-            //}
-
             var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText(), scriptSerializer);
             if (sc != null)
             {
@@ -1599,15 +1319,12 @@ namespace taskt.UI.Forms
 
         private void UndoChange()
         {
-
             if (undoList.Count > 0)
             {
-
                 if ((undoIndex < 0) || (undoIndex >= undoList.Count))
                 {
                     undoIndex = undoList.Count - 1;
                 }
-
 
                 lstScriptActions.Items.Clear();
 
@@ -1623,22 +1340,18 @@ namespace taskt.UI.Forms
 
                 lstScriptActions.Invalidate();
             }
-
         }
 
         private void RedoChange()
         {
             if (undoList.Count > 0)
             {
-
                 undoIndex++;
 
                 if (undoIndex > undoList.Count - 1)
                 {
                     undoIndex = undoList.Count - 1;
                 }
-
-
 
                 lstScriptActions.Items.Clear();
 
@@ -1647,17 +1360,14 @@ namespace taskt.UI.Forms
                     lstScriptActions.Items.Add(rowItem);
                 }
 
-
                 // check indent
                 IndentListViewItems();
 
                 lstScriptActions.Invalidate();
             }
-
         }
         private void SetSelectedCodeToCommented(bool setCommented)
         {
-
             //warn if nothing was selected
             if (lstScriptActions.SelectedItems.Count == 0)
             {
@@ -1673,16 +1383,12 @@ namespace taskt.UI.Forms
 
             ChangeSaveState(true);
 
-            //clear selection
-            //lstScriptActions.SelectedIndices.Clear();
-            //ClearSelectedListViewItems();
-
             //recolor
             lstScriptActions.Invalidate();
         }
+
         private void SetPauseBeforeExecution()
         {
-
             //warn if nothing was selected
             if (lstScriptActions.SelectedItems.Count == 0)
             {
@@ -1696,14 +1402,7 @@ namespace taskt.UI.Forms
                 selectedCommand.PauseBeforeExeucution = !selectedCommand.PauseBeforeExeucution;
             }
 
-            //recolor
-            //FormatCommandListView();
-
             ChangeSaveState(true);
-
-            //clear selection
-            //lstScriptActions.SelectedIndices.Clear();
-            //ClearSelectedListViewItems();
 
             lstScriptActions.Invalidate();
         }
@@ -1756,7 +1455,6 @@ namespace taskt.UI.Forms
             lstScriptActions.Invalidate();
             pnlCommandHelper.Hide();
 
-
             grpSaveClose.Location = grpFileActions.Location;
 
             grpRecordRun.Hide();
@@ -1767,8 +1465,6 @@ namespace taskt.UI.Forms
             grpSearch.Left = grpSaveClose.Right + 20;
 
             moveToParentToolStripMenuItem.Visible = true;
-            //lstContextStripSep3.Visible = true;
-            //lstContextStripSep4.Visible = false;
             showScriptInfoMenuItem.Visible = false;
         }
         #endregion
@@ -1777,9 +1473,6 @@ namespace taskt.UI.Forms
 
         private ListViewItem CreateScriptCommandListViewItem(ScriptCommand cmdDetails, bool isOpenFile = false)
         {
-            //cmdDetails.IsDontSavedCommand = true;
-            //cmdDetails.IsNewInsertedCommand = true;
-
             ListViewItem newCommand = new ListViewItem();
 
             string dispValue = cmdDetails.GetDisplayValue();
@@ -1790,25 +1483,14 @@ namespace taskt.UI.Forms
                 cmdDetails.IsNewInsertedCommand = true;
             }
 
-            //newCommand.Text = cmdDetails.GetDisplayValue();
-            //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-            //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-
             newCommand.Text = dispValue;
             newCommand.ToolTipText = dispValue;
 
-            //newCommand.SubItems.AddRange(new string[] { "", "" });
             newCommand.SubItems.AddRange(new string[] { "", "" });
-
-            //ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
-            //subItem.Text = dispValue;
-            //newCommand.SubItems.AddRange(new ListViewItem.ListViewSubItem[] { subItem, subItem, subItem });
 
             cmdDetails.RenderedControls = null;
             newCommand.Tag = cmdDetails;
-            //newCommand.ForeColor = cmdDetails.DisplayForeColor;
-            //newCommand.BackColor = Color.DimGray;
-            //newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
+
             newCommand.ImageIndex = Images.GetUIImageList(cmdDetails.GetType().Name);
             return newCommand;
         }
@@ -2056,7 +1738,6 @@ namespace taskt.UI.Forms
                     for (int j = startIndex; j < lastIndex; j++)
                     {
                         var command = (ScriptCommand)lstScriptActions.Items[j].Tag;
-                        //if ((lstScriptActions.Items[j].Selected) && (lstScriptActions.Items[j].Focused))
                         if (j == selectedIndex)
                         {
                             miniMap[i, 1] = (int)MiniMapState.Cursor;
@@ -2098,8 +1779,6 @@ namespace taskt.UI.Forms
                         miniMap[i, 0] = (int)MiniMapState.Normal;
                     }
 
-                    //if ((lstScriptActions.Items[i].Selected) && (lstScriptActions.Items[i].Focused))
-                    //if (lstScriptActions.Items[i].Selected)
                     if (i == selectedIndex)
                     {
                         miniMap[i, 1] = (int)MiniMapState.Cursor;
@@ -2129,7 +1808,6 @@ namespace taskt.UI.Forms
             }
             using (Graphics g = Graphics.FromImage(miniMapImg))
             {
-                //g.FillRectangle(new SolidBrush(Color.Black), 0, 0, 8, lstScriptActions.Height);
                 g.DrawLine(new Pen(Color.White), 0, 0, 0, miniMapImg.Height);
                 g.DrawLine(new Pen(Color.White), 4, 0, 4, miniMapImg.Height);
                 for (int i = 0; i < miniMapItems; i++)
@@ -2184,208 +1862,20 @@ namespace taskt.UI.Forms
 
         private void lstScriptActions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-
-            //handle indents
-            //IndentListViewItems();
-
-            //auto size line numbers based on command count
-            //AutoSizeLineNumberColumn();
-
-
-            //get listviewitem
-            //ListViewItem item = e.Item;
-
-            //get script command reference
-            //var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
-
-
-            //create modified bounds
-            //var modifiedBounds = e.Bounds;
-            //modifiedBounds.Y += 2;
-
             //switch between column index
             switch (e.ColumnIndex)
             {
                 case 0:
                     //draw row number
-                    //e.Graphics.DrawString((e.ItemIndex + 1).ToString(),
-                    //    lstScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
                     drawLineNumber(e);
                     break;
                 case 1:
                     //draw command icon
-                    //var img = uiImages.Images[command.GetType().Name];
-                    //var img = taskt.UI.Images.GetUIImage(command.GetType().Name);
-                    //if (img != null)
-                    //{
-                    //    e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
-                    //}
                     drawCommandIcon(e);
                     break;
 
                 case 2:
-                    ////write command text
-                    ////Brush commandNameBrush, commandBackgroundBrush;
-                    //taskt.Core.Theme.UIFont trg;
-
-                    //if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
-                    //{
-                    //    //debugging coloring
-                    //    //commandNameBrush = Brushes.White;
-                    //    //commandBackgroundBrush = Brushes.OrangeRed;
-                    //    trg = taskt.Core.Theme.scriptTexts["debug"];
-                    //}
-                    ////else if ((currentIndexInMatchItems >= 0) && (e.ItemIndex == currentIndexInMatchItems))
-                    ////{
-                    ////    //search primary item coloring
-                    ////    //commandNameBrush = Brushes.Black;
-                    ////    //commandBackgroundBrush = Brushes.Goldenrod;
-                    ////    trg = taskt.Core.Theme.scriptTexts["current"];
-                    ////}
-                    //else if (matchingSearchIndex.Contains(e.ItemIndex) && currentScriptEditMode == EditMode.Search)
-                    //{
-                    //    //search match item coloring
-                    //    //commandNameBrush = Brushes.Black;
-                    //    //commandBackgroundBrush = Brushes.LightYellow;
-                    //    if ((e.Item.Focused) || (e.Item.Selected))
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["current-match"];
-                    //    }
-                    //    else
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["match"];
-                    //    }
-                    //}
-                    //else if (this.currentScriptEditMode == EditMode.AdvencedSearch)
-                    //{
-                    //    if (command.IsMatched)
-                    //    {
-                    //        if ((e.Item.Focused) || (e.Item.Selected))
-                    //        {
-                    //            trg = taskt.Core.Theme.scriptTexts["current-match"];
-                    //        }
-                    //        else
-                    //        {
-                    //            trg = taskt.Core.Theme.scriptTexts["match"];
-                    //        }
-                    //    }
-                    //    else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["comment"];
-                    //    }
-                    //    else if (!command.IsValid)
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["invalid"];
-                    //    }
-                    //    else
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["normal"];
-                    //    }
-                    //}
-                    //else if ((e.Item.Focused) || (e.Item.Selected))
-                    //{
-                    //    //selected item coloring
-                    //    if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                    //    {
-                    //        // disable command
-                    //        //commandNameBrush = Brushes.LightGreen;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-comment"];
-                    //    }
-                    //    else if (command.PauseBeforeExeucution)
-                    //    {
-                    //        // pause
-                    //        //commandNameBrush = Brushes.Plum;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-pause"];
-                    //    }
-                    //    else if (!command.IsValid)
-                    //    {
-                    //        // invalid
-                    //        //commandNameBrush = Brushes.Crimson;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-invalid"];
-                    //    }
-                    //    else
-                    //    {
-                    //        //commandNameBrush = Brushes.White;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-normal"];
-                    //    }
-                    //    //commandBackgroundBrush = Brushes.DodgerBlue;
-                    //}
-                    //else if (command.PauseBeforeExeucution)
-                    //{
-                    //    //pause before execution coloring
-                    //    //commandNameBrush = Brushes.MediumPurple;
-                    //    //commandBackgroundBrush = Brushes.Lavender;
-                    //    trg = taskt.Core.Theme.scriptTexts["pause"];
-                    //}
-                    //else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                    //{
-                    //    //comments and commented command coloring
-                    //    //commandNameBrush = Brushes.ForestGreen;
-                    //    //commandBackgroundBrush = Brushes.WhiteSmoke;
-                    //    trg = taskt.Core.Theme.scriptTexts["comment"];
-                    //}
-                    //else if (!command.IsValid)
-                    //{
-                    //    //standard coloring
-                    //    //if (command.IsValid)
-                    //    //{
-                    //    //    //commandNameBrush = Brushes.SteelBlue;
-                    //    //    trg = taskt.Core.Theme.scriptTexts["normal"];
-
-                    //    //}
-                    //    //else
-                    //    //{
-                    //    //    //commandNameBrush = Brushes.Crimson;
-                    //    //    trg = taskt.Core.Theme.scriptTexts["invalid"];
-                    //    //}
-                    //    //commandBackgroundBrush = Brushes.WhiteSmoke;
-                    //    trg = taskt.Core.Theme.scriptTexts["invalid"];
-                    //}
-                    //else
-                    //{
-                    //    trg = taskt.Core.Theme.scriptTexts["normal"];
-                    //}
-
-                    ////fille with background color
-                    ////e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
-                    //e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
-
-                    ////get indent count
-                    //var indentPixels = (item.IndentCount * 15);
-
-                    ////set indented X position
-                    //modifiedBounds.X += indentPixels;
-
-                    ////draw string
-                    ////e.Graphics.DrawString(command.GetDisplayValue(),
-                    ////               lstScriptActions.Font, commandNameBrush, modifiedBounds);
-                    //e.Graphics.DrawString(command.GetDisplayValue(),
-                    //               new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
-
-                    //if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
-                    //{
-                    //    int offset;
-                    //    int i;
-                    //    if (item.IndentCount % 4 == 0)
-                    //    {
-                    //        offset = 30;
-                    //        i = item.IndentCount - 2;
-                    //    }
-                    //    else
-                    //    {
-                    //        offset = 0;
-                    //        i = item.IndentCount;
-                    //    }
-                    //    int bottomY = modifiedBounds.Y + modifiedBounds.Height;
-                    //    for (i = (item.IndentCount % 4 != 0 ? item.IndentCount - 2 : item.IndentCount); i > 0; i -= 4)
-                    //    {
-                    //        int x = modifiedBounds.X - (i * 15) + offset;
-                    //        e.Graphics.DrawLine(indentDashLine, x, modifiedBounds.Y, x, bottomY);
-                    //    }
-
-                    //    int baseX = modifiedBounds.X - (item.IndentCount * 15) + 2;
-                    //    e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
-                    //}
+                    //write command text
                     drawCommandText(e);
 
                     break;
@@ -2399,7 +1889,6 @@ namespace taskt.UI.Forms
 
             Core.Theme.UIFont trg = Core.Theme.scriptTexts[decideLineNumberText(command)];
 
-            //e.Graphics.DrawString((e.ItemIndex + 1).ToString(), lstScriptActions.Font, Brushes.LightSlateGray, e.Bounds);
             e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), e.Bounds);
             e.Graphics.DrawString((e.ItemIndex + 1).ToString(), new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), e.Bounds);
         }
@@ -2432,17 +1921,6 @@ namespace taskt.UI.Forms
             }
             else if ((currentScriptEditorMode == CommandEditorState.Search) || (currentScriptEditorMode == CommandEditorState.AdvencedSearch) || (currentScriptEditorMode == CommandEditorState.ReplaceSearch) || (currentScriptEditorMode == CommandEditorState.HighlightCommand))
             {
-                //if (matchingSearchIndex.Contains(e.ItemIndex))
-                //{ 
-                //    if ((e.Item.Focused) || (e.Item.Selected))
-                //    {
-                //        trg = taskt.Core.Theme.scriptTexts["current-match"];
-                //    }
-                //    else
-                //    {
-                //        trg = taskt.Core.Theme.scriptTexts["match"];
-                //    }
-                //}
                 if (command.IsMatched)
                 {
                     if ((e.Item.Focused) || (e.Item.Selected))
@@ -2478,6 +1956,7 @@ namespace taskt.UI.Forms
                            new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
 
             // Emphasis Drag&Drop Line
+            // DBG
             //Console.WriteLine("DRW " + this.currentEditAction + ", " + this.DnDIndex);
             if ((this.currentEditAction == CommandEditAction.Move) && (item.Index == this.DnDIndex))
             {
@@ -2511,66 +1990,6 @@ namespace taskt.UI.Forms
                 e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
             }
 
-            //if (miniMap == null)
-            //{
-            //    return;
-            //}
-
-            //int maxMapItems = miniMap.GetLength(0);
-            //int commmandItems = lstScriptActions.Items.Count;
-            //double itemRatio = maxMapItems / commmandItems;
-
-            //modifiedBounds.X -= indentPixels;
-            //int mapX = modifiedBounds.Width - 8;
-
-            //if (itemRatio < 1.0)
-            //{
-            //    // mada
-            //}
-            //else
-            //{
-            //    SolidBrush co;
-            //    switch ((MiniMapState)miniMap[e.ItemIndex, 0])
-            //    {
-            //        case MiniMapState.DontSave:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-dontsaved"].BackColor);
-            //            break;
-            //        case MiniMapState.NewInserted:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-newline"].BackColor);
-            //            break;
-            //        default:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-normal"].BackColor);
-            //            break;
-            //    }
-            //    int baseX = modifiedBounds.X + mapX;
-            //    e.Graphics.DrawLine(new Pen(Color.White), baseX, modifiedBounds.Y, baseX, modifiedBounds.Y + modifiedBounds.Height);
-            //    baseX += 1;
-            //    e.Graphics.FillRectangle(co, baseX, modifiedBounds.Y, 3, modifiedBounds.Height);
-
-            //    switch ((MiniMapState)miniMap[e.ItemIndex, 1])
-            //    {
-            //        case MiniMapState.Cursor:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["selected-normal"].BackColor);
-            //            break;
-            //        case MiniMapState.Matched:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["match"].FontColor);
-            //            break;
-            //        case MiniMapState.Error:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["invalid"].FontColor);
-            //            break;
-            //        case MiniMapState.Comment:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["comment"].FontColor);
-            //            break;
-            //        default:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["normal"].BackColor);
-            //            break;
-            //    }
-            //    baseX += 3;
-            //    e.Graphics.DrawLine(new Pen(Color.White), baseX, modifiedBounds.Y, baseX, modifiedBounds.Y + modifiedBounds.Height);
-            //    baseX += 1;
-            //    e.Graphics.FillRectangle(co, baseX, modifiedBounds.Y, 3, modifiedBounds.Height);
-            //}
-
             if (appSettings.ClientSettings.ShowScriptMiniMap)
             {
                 modifiedBounds.X -= indentPixels;
@@ -2579,6 +1998,7 @@ namespace taskt.UI.Forms
                                                     new Rectangle(0, modifiedBounds.Y, 8, modifiedBounds.Height), GraphicsUnit.Pixel);
             }
         }
+
         private string decideNormalCommandText(DrawListViewSubItemEventArgs e, ScriptCommand command)
         {
             string ret;
@@ -2650,11 +2070,8 @@ namespace taskt.UI.Forms
                 }
 
                 lstScriptActions.Invalidate();
-
-                //FormatCommandListView();
             }
         }
-
 
         #region lstScriptActions event
         private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
@@ -2678,7 +2095,6 @@ namespace taskt.UI.Forms
             if (lstScriptActions.SelectedItems.Count > 0)
             {
                 selectedIndex = lstScriptActions.SelectedItems[0].Index;
-                //FormatCommandListView();
             }
             else
             {
@@ -2738,10 +2154,6 @@ namespace taskt.UI.Forms
             }
             else if ((e.Control) && (e.KeyCode == Keys.A))
             {
-                //foreach (ListViewItem item in lstScriptActions.Items)
-                //{
-                //    item.Selected = true;
-                //}
                 SelectAllRows();
             }
             else if ((e.Control) && (e.Shift) && (e.KeyCode == Keys.F))
@@ -2757,6 +2169,7 @@ namespace taskt.UI.Forms
                 }
             }
         }
+
         private void lstScriptActions_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -2805,34 +2218,42 @@ namespace taskt.UI.Forms
         {
             SetSelectedCodeToCommented(true);
         }
+
         private void enableSelectedCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSelectedCodeToCommented(false);
         }
+
         private void pauseBeforeExecutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetPauseBeforeExecution();
         }
+
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SelectAllRows();
         }
+
         private void cutSelectedActionssToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CutRows();
         }
+
         private void copySelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyRows();
         }
+
         private void pasteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PasteRows();
         }
+
         private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteRows();
         }
+
         private void aboveHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstScriptActions.SelectedIndices.Count > 0)
@@ -2852,6 +2273,7 @@ namespace taskt.UI.Forms
                 appSettings.ClientSettings.InsertCommandsInline = currentInsertMode;
             }
         }
+
         private void belowHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstScriptActions.SelectedIndices.Count > 0)
@@ -2889,10 +2311,12 @@ namespace taskt.UI.Forms
             //add to parent
             commandList.ForEach(x => parentBuilder.AddCommandToListView(x));
         }
+
         private void editThisCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lstScriptActions_DoubleClick(null, null);
         }
+
         private void multiSendKeystrokesEditToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var commands = Supplement_Forms.frmMultiSendKeystrokes.GetConsecutiveSendKeystrokesCommands(lstScriptActions, appSettings);
@@ -2978,18 +2402,17 @@ namespace taskt.UI.Forms
         {
             ClearHighlightListViewItem();
         }
+
         private void helpThisCommandToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //if (lstScriptActions.SelectedItems.Count > 0)
-            //{
-            //    showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
-            //}
             BeginShowThisCommandHelpProcess();
         }
+
         private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
         {
             showScriptInformationForm();
         }
+
         private void variableManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showVariableManager();
@@ -3053,26 +2476,18 @@ namespace taskt.UI.Forms
         private void ShowNotification(string textToDisplay)
         {
             notificationText = textToDisplay;
-            //lblStatus.Left = 20;
-            //lblStatus.Text = textToDisplay;
 
             pnlStatus.SuspendLayout();
-            //for (int i = 0; i < 30; i++)
-            //{
-            //    tlpControls.RowStyles[3].Height = i;
-            //}
+
             ShowNotificationRow();
             pnlStatus.ResumeLayout();
 
             isDisplaying = true;
         }
+
         private void HideNotification()
         {
             pnlStatus.SuspendLayout();
-            //for (int i = 30; i > 0; i--)
-            //{
-            //    tlpControls.RowStyles[3].Height = i;
-            //}
             HideNotificationRow();
             pnlStatus.ResumeLayout();
 
@@ -3091,7 +2506,6 @@ namespace taskt.UI.Forms
         private void pnlStatus_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.Clear(Color.FromArgb(59, 59, 59));
-            //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(59, 59, 59)), e.ClipRectangle);
             e.Graphics.DrawString(notificationText, pnlStatus.Font, Brushes.White, 30, 4);
             e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
         }
@@ -3370,7 +2784,6 @@ namespace taskt.UI.Forms
             return position;
         }
 
-
         private void BeginSaveScriptProcess(bool SaveAs)
         {
             //clear selected items
@@ -3504,8 +2917,6 @@ namespace taskt.UI.Forms
             {
                 Notify("Save Error: " + ex.ToString());
             }
-
-
         }
 
         private void CheckValidateCommands(List<ScriptCommand> commands)
@@ -3532,7 +2943,6 @@ namespace taskt.UI.Forms
             OpenFile(filePath);
             if (normalFileOpen)
             {
-                //this.ScriptFilePath = System.IO.Path.GetFileName(filePath);
                 this.ScriptFilePath = filePath;
             }
             else
@@ -3547,7 +2957,6 @@ namespace taskt.UI.Forms
         {
             foreach(ScriptCommand command in items)
             {
-                //instanceList.addInstance(command);
                 command.AddInstance(instanceList);
             }
         }
@@ -3556,7 +2965,6 @@ namespace taskt.UI.Forms
         {
             foreach (ScriptCommand command in items)
             {
-                //instanceList.removeInstance(command);
                 command.RemoveInstance(instanceList);
             }
         }
@@ -3624,19 +3032,9 @@ namespace taskt.UI.Forms
         #region misc?
         private void btnManageVariables_Click(object sender, EventArgs e)
         {
-
-            //using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
-            //{
-            //    scriptVariableEditor.appSettings = this.appSettings;
-            //    scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //    if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //    {
-            //        this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //    }
-            //}
             showVariableManager();
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             using (Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder())
@@ -3652,6 +3050,7 @@ namespace taskt.UI.Forms
                 tlpControls.RowStyles[4].Height = i;
             }
         }
+
         private void uiBtnAbout_Click(object sender, EventArgs e)
         {
             using (Supplemental.frmAbout frmAboutForm = new Supplemental.frmAbout())
@@ -3719,22 +3118,7 @@ namespace taskt.UI.Forms
             {
                 return;
             }
-            //if (tvCommands.SelectedNode.Level == 1)
-            //{
-            //    if (tvCommands.SelectedNode.Nodes.Count > 0)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        AddNewCommand(tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text);
-            //    }
-            //}
-            //else
-            //{
-            //    // maybe level == 2
-            //    AddNewCommand(tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text);
-            //}
+
             string commandName = GetSelectedCommandFullName();
             if (commandName.Length > 0)
             {
@@ -3743,35 +3127,6 @@ namespace taskt.UI.Forms
         }
         private string GetSelectedCommandFullName()
         {
-            //switch (tvCommands.SelectedNode.Level)
-            //{
-            //    case 0:
-            //        return "";
-            //        break;
-
-            //    case 1:
-            //        if (tvCommands.SelectedNode.Nodes.Count > 0)
-            //        {
-            //            return "";
-            //        }
-            //        else if (tvCommands.SelectedNode.ImageIndex == 1)
-            //        {
-            //            return "";
-            //        }
-            //        else
-            //        {
-            //            return tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text;
-            //        }
-            //        break;
-
-            //    case 2:
-            //        return tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text;
-            //        break;
-
-            //    default:
-            //        return "";
-            //        break;
-            //}
             return Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
         }
         #endregion
@@ -3917,44 +3272,6 @@ namespace taskt.UI.Forms
             var tp = command.GetType();
             var group = (Core.Automation.Attributes.ClassAttributes.Group)tp.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group));
 
-            //TreeNode parentNode = null;
-            //foreach (TreeNode node in tvCommands.Nodes)
-            //{
-            //    if (node.Text == group.groupName)
-            //    {
-            //        parentNode = node;
-            //        break;
-            //    }
-            //}
-            //if (parentNode != null)
-            //{
-            //    parentNode.Expand();
-            //    foreach (TreeNode node in parentNode.Nodes)
-            //    {
-            //        if (node.Nodes.Count > 0)
-            //        {
-            //            foreach (TreeNode no in node.Nodes)
-            //            {
-            //                if (no.Text == command.SelectionName)
-            //                {
-            //                    node.Expand();
-            //                    tvCommands.SelectedNode = no;
-            //                    tvCommands.Focus();
-            //                    break;
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (node.Text == command.SelectionName)
-            //            {
-            //                tvCommands.SelectedNode = node;
-            //                tvCommands.Focus();
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
             Core.CommandsTreeControls.FocusCommand(group.groupName, command.SelectionName, tvCommands);
         }
 
@@ -3966,9 +3283,6 @@ namespace taskt.UI.Forms
         {
             using (frmScriptVariables scriptVariableEditor = new frmScriptVariables(this.scriptVariables, this.appSettings))
             {
-                //scriptVariableEditor.appSettings = this.appSettings;
-                //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
                     this.scriptVariables = scriptVariableEditor.scriptVariables.OrderBy(v => v.VariableName).ToList();
@@ -4072,54 +3386,43 @@ namespace taskt.UI.Forms
         {
             BeginNewScriptProcess();
         }
+
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
             BeginOpenScriptProcess();
         }
+
         private void uiBtnImport_Click(object sender, EventArgs e)
         {
             BeginImportProcess();
         }
+
         private void uiBtnSave_Click(object sender, EventArgs e)
         {
             BeginSaveScriptProcess(false);
         }
+
         private void uiBtnSaveAs_Click(object sender, EventArgs e)
         {
             BeginSaveScriptProcess(true);
         }
+
         private void uiBtnAddVariable_Click(object sender, EventArgs e)
         {
-            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //{
-            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //}
             showVariableManager();
         }
+
         private void uiBtnSettings_Click(object sender, EventArgs e)
         {
-            ////show settings dialog
-            //using (frmSettings newSettings = new frmSettings(this))
-            //{
-            //    newSettings.ShowDialog();
-
-            //    //reload app settings
-            //    appSettings = new Core.ApplicationSettings();
-            //    appSettings = appSettings.GetOrCreateApplicationSettings();
-
-            //    //reinit
-            //    Core.Server.HttpServerClient.Initialize();
-            //}
             showSettingForm();
         }
+
         private void uiBtnClearAll_Click(object sender, EventArgs e)
         {
             HideSearchInfo();
             lstScriptActions.Items.Clear();
         }
+
         private void uiBtnRecordSequence_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -4134,6 +3437,7 @@ namespace taskt.UI.Forms
             this.Show();
             this.BringToFront();
         }
+
         private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
         {
             using (frmScheduleManagement scheduleManager = new frmScheduleManagement())
@@ -4141,27 +3445,27 @@ namespace taskt.UI.Forms
                 scheduleManager.Show();
             }
         }
+
         private void uiBtnRunScript_Click(object sender, EventArgs e)
         {
             BeginRunScriptProcess();
         }
+
         private void pbSearch_Click(object sender, EventArgs e)
         {
-            //if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
-            //{
-            //    //reqdIndex++;
-            //    SearchForItemInListView();
-            //}
             SearchForItemInListView();
         }
+
         private void uiBtnKeep_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
         }
+
         private void uiBtnClose_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
+
         private void btnSequenceImport_Click(object sender, EventArgs e)
         {
             BeginImportProcess();
@@ -4292,8 +3596,6 @@ namespace taskt.UI.Forms
         }
         private void clearSearchHighlightsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //this.currentScriptEditMode = CommandEditorState.Normal;
-            //lstScriptActions.Invalidate();
             ClearHighlightListViewItem();
         }
 
@@ -4302,13 +3604,6 @@ namespace taskt.UI.Forms
         #region Options menu event handler
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //{
-            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //}
             showVariableManager();
         }
         private void scriptInformationsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4318,33 +3613,25 @@ namespace taskt.UI.Forms
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ////show settings dialog
-            //using (frmSettings newSettings = new frmSettings(this))
-            //{
-            //    newSettings.ShowDialog();
-            //}
-
-            ////reload app settings
-            //appSettings = new Core.ApplicationSettings();
-            //appSettings = appSettings.GetOrCreateApplicationSettings();
-
-            ////reinit
-            //Core.Server.HttpServerClient.Initialize();
             showSettingForm();
         }
+
         private void newSettigsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showNewSettingForm();
         }
+
         private void showScriptFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowScriptFolderProcess();
         }
 
+
         private void showLogFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowLogFolderProcess();
         }
+
         private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             appSettings.ClientSettings.ShowCommandSearchBar = !appSettings.ClientSettings.ShowCommandSearchBar;
@@ -4395,36 +3682,13 @@ namespace taskt.UI.Forms
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //string bk_ScriptFilePath = this.ScriptFilePath;
-
-            //// create templete script file
-            //string cur = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff");
-            //Random rnd = new Random();
-            //do
-            //{
-            //    int v = rnd.Next();
-            //    if (!System.IO.File.Exists(this.ScriptFilePath + cur + "-" + v.ToString() + ".xml"))
-            //    {
-            //        this.ScriptFilePath += cur + "-" + v.ToString() + ".xml";
-            //        break;
-            //    }
-            //} while (true);
-            //BeginSaveScriptProcess(false);
-
             BeginRunScriptProcess();
-
-            //// remove templete script file
-            //System.IO.File.Delete(this.ScriptFilePath);
-
-            //this.ScriptFilePath = bk_ScriptFilePath;
         }
         #endregion
 
         #region Save And Run menu event handler
         private void saveAndRunToolStripMenuItem_Clicked(object sender, EventArgs e)
         {
-            //saveToolStripMenuItem_Click(null, null);
-            //runToolStripMenuItem_Click(null, null);
             if (scriptInfo.RunTimes != int.MaxValue)
             {
                 scriptInfo.RunTimes++;
@@ -4445,6 +3709,7 @@ namespace taskt.UI.Forms
         {
             showWikiPage();
         }
+
         private void tasktGitterStripMenuItem_Click(object sender, EventArgs e)
         {
             showGitterPage();
@@ -4679,11 +3944,8 @@ namespace taskt.UI.Forms
             this.lastEditorSize = editor.Size;
             this.lastEditorPosition = editor.Location;
         }
-
-
         #endregion
 
     }
-
 }
 
