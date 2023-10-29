@@ -19,7 +19,9 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Data;
+using System.IO;
 using taskt.Core.Automation.Commands;
+using System.Reflection;
 
 namespace taskt.Core.Script
 {
@@ -146,7 +148,7 @@ namespace taskt.Core.Script
             if (scriptFilePath != "")
             {
                 //write to file
-                using (System.IO.FileStream fs = System.IO.File.Create(scriptFilePath))
+                using (System.IO.FileStream fs = File.Create(scriptFilePath))
                 {
                     using (XmlWriter writer = XmlWriter.Create(fs, settings))
                     {
@@ -251,12 +253,55 @@ namespace taskt.Core.Script
         /// <returns></returns>
         public static XmlSerializer CreateSerializer()
         {
-            var subClasses = System.Reflection.Assembly.GetAssembly(typeof(ScriptCommand))
+            var subClasses = Assembly.GetAssembly(typeof(ScriptCommand))
                                 .GetTypes()
                                 .Where(x => x.IsSubclassOf(typeof(ScriptCommand)) && !x.IsAbstract)
                                 .ToArray();
 
             return new XmlSerializer(typeof(Script), subClasses);
+        }
+
+        /// <summary>
+        /// get AutoSave Folder Path
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAutoSaveFolderPath()
+        {
+            var tasktExePath = Assembly.GetEntryAssembly().Location;
+            return Path.Combine(Path.GetDirectoryName(tasktExePath), "AutoSave");
+        }
+
+        /// <summary>
+        /// get autosave script file path
+        /// </summary>
+        /// <returns></returns>
+        public static (string path, string timeStump) GetAutoSaveScriptFilePath()
+        {
+            var savePath = GetAutoSaveFolderPath();
+            var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+
+            return (Path.Combine(savePath, "autosave-") + saveTime + ".xml", saveTime);
+        }
+
+        /// <summary>
+        /// get RunWithoutSaving Folder Path
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRunWithoutSavingFolderPath()
+        {
+            var tasktExePath = Assembly.GetEntryAssembly().Location;
+            return Path.Combine(Path.GetDirectoryName(tasktExePath), "RunWithoutSaving");
+        }
+
+        /// <summary>
+        /// get file path when use 'Run Without Saving'
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRunWithoutSavingScriptFilePath()
+        {
+            var runPath = GetRunWithoutSavingFolderPath();
+            var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            return Path.Combine(runPath, "run-") + saveTime + ".xml";
         }
 
         /// <summary>

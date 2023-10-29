@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using taskt.Core.IO;
 
@@ -29,16 +25,16 @@ namespace taskt.Core
         {
             //create settings directory
            
-            var settingsDir = Core.IO.Folders.GetFolder(Folders.FolderType.SettingsFolder);
+            var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
 
             //if directory does not exist then create directory
-            if (!System.IO.Directory.Exists(settingsDir))
+            if (!Directory.Exists(settingsDir))
             {
-                System.IO.Directory.CreateDirectory(settingsDir);
+                Directory.CreateDirectory(settingsDir);
             }
 
             //create file path
-            var filePath = System.IO.Path.Combine(settingsDir, "AppSettings.xml");
+            var filePath = Path.Combine(settingsDir, "AppSettings.xml");
 
             ////create filestream
             //var fileStream = System.IO.File.Create(filePath);
@@ -52,7 +48,7 @@ namespace taskt.Core
 
         public static void SaveAs(ApplicationSettings appSettings, string filePath)
         {
-            using (FileStream fileStream = System.IO.File.Create(filePath))
+            using (FileStream fileStream = File.Create(filePath))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(ApplicationSettings));
                 serializer.Serialize(fileStream, appSettings);
@@ -63,13 +59,13 @@ namespace taskt.Core
         public ApplicationSettings GetOrCreateApplicationSettings()
         {
             //create settings directory
-            var settingsDir = Core.IO.Folders.GetFolder(Folders.FolderType.SettingsFolder);
+            var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
 
             //create file path
-            var filePath = System.IO.Path.Combine(settingsDir, "AppSettings.xml");
+            var filePath = Path.Combine(settingsDir, "AppSettings.xml");
 
             ApplicationSettings appSettings;
-            if (System.IO.File.Exists(filePath))
+            if (File.Exists(filePath))
             {
                 ////open file and return it or return new settings on error
                 //var fileStream = System.IO.File.Open(filePath, FileMode.Open);
@@ -105,7 +101,7 @@ namespace taskt.Core
         public static ApplicationSettings Open(string filePath)
         {
             ApplicationSettings appSettings = null;
-            using (FileStream fileStream = System.IO.File.Open(filePath, FileMode.Open))
+            using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
                 try
                 {
@@ -364,7 +360,7 @@ namespace taskt.Core
             Core.Automation.Engine.AutomationEngineInstance engine = new Automation.Engine.AutomationEngineInstance(false);
             engine.engineSettings = this;
             engine.VariableList = variables;
-            return Core.ExtensionMethods.ConvertToUserVariable_Intermediate(targetString, engine);
+            return ExtensionMethods.ConvertToUserVariable_Intermediate(targetString, engine);
         }
 
         public string wrapVariableMarker(string variableName)
@@ -509,6 +505,56 @@ namespace taskt.Core
         public bool CheckForUpdateAtStartup { get; set; }
         public bool SkipBetaVersionUpdate { get; set; }
 
+        public bool EnabledAutoSave { get; set; }
+
+        private int _AutoSaveInterval;
+        public int AutoSaveInterval 
+        {
+            get
+            {
+                return _AutoSaveInterval;
+            }
+            set
+            {
+                if (value >= 1 && value <= 120)
+                {
+                    _AutoSaveInterval = value;
+                }
+            }
+        }
+
+        private int _RemoveAutoSaveFileDays;
+        public int RemoveAutoSaveFileDays
+        {
+            get
+            {
+                return _RemoveAutoSaveFileDays;
+            }
+            set
+            {
+                if (value > 1)
+                {
+                    _RemoveAutoSaveFileDays = value;
+                }
+            }
+        }
+
+        private int _RemoveRunWithoutSavingFileDays;
+        public int RemoveRunWithtoutSavingFileDays
+        {
+            get
+            {
+                return _RemoveRunWithoutSavingFileDays;
+            }
+            set
+            {
+                if (value > 1)
+                {
+                    _RemoveRunWithoutSavingFileDays = value;
+                }
+            }
+        }
+
         private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
         private static string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
@@ -520,9 +566,9 @@ namespace taskt.Core
         {
             MinimizeToTray = false;
             AntiIdleWhileOpen = false;
-            RootFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
+            RootFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt");
             StartupMode = "Builder Mode";
-            AttendedTasksFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
+            AttendedTasksFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "taskt", "My Scripts");
             PreloadBuilderCommands = false;
             UseSlimActionBar = true;
             InsertCommandsInline = true;
@@ -556,6 +602,12 @@ namespace taskt.Core
 
             CheckForUpdateAtStartup = true;
             SkipBetaVersionUpdate = true;
+
+            EnabledAutoSave = true;
+            AutoSaveInterval = 5;
+            RemoveAutoSaveFileDays = 7;
+
+            RemoveRunWithtoutSavingFileDays = 30;
         }
 
         public string replaceClientKeyword(string targetString)

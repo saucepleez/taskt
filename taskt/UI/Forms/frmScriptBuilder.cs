@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
 
 namespace taskt.UI.Forms
 {
@@ -74,7 +75,7 @@ namespace taskt.UI.Forms
         private XmlSerializer scriptSerializer = null;
 
         #region properties
-        private List<taskt.UI.CustomControls.AutomationCommand> automationCommands { get; set; }
+        private List<CustomControls.AutomationCommand> automationCommands { get; set; }
 
         public string ScriptFilePath
         {
@@ -146,10 +147,10 @@ namespace taskt.UI.Forms
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
             //load all commands
-            automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls();
+            automationCommands = CustomControls.CommandControls.GenerateCommandsandControls();
 
             // title
-            var info = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var info = System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
             this.Text = info.ProductName;
             lblMainLogo.Text = info.ProductName;
 
@@ -216,7 +217,7 @@ namespace taskt.UI.Forms
 
             if (!System.IO.Directory.Exists(rpaScriptsFolder))
             {
-                using (UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
+                using (Supplemental.frmDialog userDialog = new Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", Supplemental.frmDialog.DialogType.YesNo, 0))
                 {
                     if (userDialog.ShowDialog() == DialogResult.OK)
                     {
@@ -246,7 +247,7 @@ namespace taskt.UI.Forms
             }
 
             //instantiate and populate display icons for commands
-            scriptImages = UI.Images.UIImageList();
+            scriptImages = Images.UIImageList();
 
             //set image list
             lstScriptActions.SmallImageList = scriptImages;
@@ -296,26 +297,34 @@ namespace taskt.UI.Forms
                 }
             }
 
+            // set autosave timer
+            //autoSaveTimer.Enabled = false;
+            //autoSaveTimer.Interval = 300000;    // 5min
+
+            // remove old auto saved files
+            RemoveOldAutoSavedFiles();
+            RemoveOldRunWithoutSavingScriptFiles();
+
             // check update
             if ((appSettings.ClientSettings.CheckForUpdateAtStartup) && (this.parentBuilder == null))
             {
-                taskt.Core.Update.ApplicationUpdate.ShowUpdateResultAsync(appSettings.ClientSettings.SkipBetaVersionUpdate);
+                Core.Update.ApplicationUpdate.ShowUpdateResultAsync(appSettings.ClientSettings.SkipBetaVersionUpdate);
             }
         }
         
         private void frmScriptBuilder_Shown(object sender, EventArgs e)
         {
 
-            taskt.Program.SplashForm.Hide();
+            Program.SplashForm.Hide();
 
             if (editMode)
                 return;
 
             Notify("Welcome! Press 'Start Edit Script' to get started!");
         }
+
         private void pnlControlContainer_Paint(object sender, PaintEventArgs e)
         {
-
             //Rectangle rect = new Rectangle(0, 0, pnlControlContainer.Width, pnlControlContainer.Height);
             //using (LinearGradientBrush brush = new LinearGradientBrush(rect, Color.White, Color.WhiteSmoke, LinearGradientMode.Vertical))
             //{
@@ -327,7 +336,6 @@ namespace taskt.UI.Forms
             ////e.Graphics.DrawLine(steelBluePen, 0, 0, pnlControlContainer.Width, 0);
             //e.Graphics.DrawLine(lightSteelBluePen, 0, 0, pnlControlContainer.Width, 0);
             //e.Graphics.DrawLine(lightSteelBluePen, 0, pnlControlContainer.Height - 1, pnlControlContainer.Width, pnlControlContainer.Height - 1);
-
         }
         
         private void frmScriptBuilder_Resize(object sender, EventArgs e)
@@ -372,6 +380,7 @@ namespace taskt.UI.Forms
         {
             this.dontSaveFlag = dontSaveNow;
             UpdateWindowTitle();
+            SetAutoSaveState();
         }
         #endregion
 
@@ -394,8 +403,6 @@ namespace taskt.UI.Forms
                 return;
             }
 
-
-
             var directory = new System.IO.DirectoryInfo(scriptPath);
 
             var recentFiles = directory.GetFiles("*.xml")
@@ -404,13 +411,6 @@ namespace taskt.UI.Forms
 
             if (recentFiles.Count() == 0)
             {
-                //Label noFilesLabel = new Label();
-                //noFilesLabel.Text = "No Recent Files Found";
-                //noFilesLabel.AutoSize = true;
-                //noFilesLabel.ForeColor = Color.SteelBlue;
-                //noFilesLabel.Font = lnkGitIssue.Font;
-                //noFilesLabel.Margin = new Padding(0, 0, 0, 0);
-                //flwRecentFiles.Controls.Add(noFilesLabel);
                 lblRecentFiles.Text = "No Recent Files Found";
                 lblRecentFiles.ForeColor = Color.White;
                 lblFilesMissing.ForeColor = Color.White;
@@ -423,7 +423,9 @@ namespace taskt.UI.Forms
                 foreach (var fil in recentFiles)
                 {
                     if (flwRecentFiles.Controls.Count == 7)
+                    {
                         break;
+                    }
 
                     LinkLabel newFileLink = new LinkLabel();
                     newFileLink.Text = fil;
@@ -443,22 +445,18 @@ namespace taskt.UI.Forms
         }
         private void lnkGitProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt");
             showGitProjectPage();
         }
         private void lnkGitLatestReleases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/releases");
             showGitReleasePage();
         }
         private void lnkGitIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://github.com/saucepleez/taskt/issues/new");
             showGitIssuePage();
         }
         private void lnkGitWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("https://wiki.taskt.net/");
             showWikiPage();
         }
         private void linkGitter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -469,7 +467,6 @@ namespace taskt.UI.Forms
         {
             LinkLabel senderLink = (LinkLabel)sender;
             string targetScriptPath = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text;
-            //OpenFile(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder) + senderLink.Text);
             OpenScriptFromFilePath(targetScriptPath, true);
         }
         #endregion
@@ -495,11 +492,8 @@ namespace taskt.UI.Forms
         {
             System.Diagnostics.Process.Start(Core.MyURLs.GitterURL);
         }
-        private void showThisCommandHelp(Core.Automation.Commands.ScriptCommand command)
+        private void showThisCommandHelp(ScriptCommand command)
         {
-            //string page = command.SelectionName.ToLower().Replace(" ", "-").Replace("/", "-") + "-command.md";
-            //string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName.ToLower().Replace(" ", "-").Replace("/", "-");
-            //System.Diagnostics.Process.Start(Core.MyURLs.WikiBaseURL + parent + "/" + page);
             string parent = ((Core.Automation.Attributes.ClassAttributes.Group)command.GetType().GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group))).groupName;
             System.Diagnostics.Process.Start(Core.MyURLs.GetWikiURL(command.SelectionName, parent));
         }
@@ -507,11 +501,10 @@ namespace taskt.UI.Forms
         {
             if (lstScriptActions.SelectedItems.Count > 0)
             {
-                showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
+                showThisCommandHelp((ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
             }
         }
         #endregion
-
 
         #region ListView Events
         #region ListView DragDrop
@@ -532,6 +525,7 @@ namespace taskt.UI.Forms
             }
             lstScriptActions.Invalidate();
         }
+
         private void lstScriptActions_DragEnter(object sender, DragEventArgs e)
         {
             int len = e.Data.GetFormats().Length - 1;
@@ -557,15 +551,8 @@ namespace taskt.UI.Forms
                     this.currentEditAction = CommandEditAction.Normal;
                 }
             }
-            //for (int i = 0; i <= len; i++)
-            //{
-            //    if (e.Data.GetFormats()[i].Equals("System.Windows.Forms.ListView+SelectedListViewItemCollection"))
-            //    {
-            //        //The data from the drag source is moved to the target.
-            //        e.Effect = DragDropEffects.Move;
-            //    }
-            //}
         }
+
         private void lstScriptActions_DragLeave(object sender, EventArgs e)
         {
             lstScriptActions.BackColor = Color.WhiteSmoke;
@@ -574,7 +561,6 @@ namespace taskt.UI.Forms
         private void lstScriptActions_DragDrop(object sender, DragEventArgs e)
         {
             lstScriptActions.BackColor = Color.WhiteSmoke;
-            //this.currentEditAction = CommandEditAction.Normal;
 
             string[] fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if ((fileNames != null) && (fileNames.Length > 0))
@@ -593,7 +579,7 @@ namespace taskt.UI.Forms
                 }
                 else
                 {
-                    using (var fm = new UI.Forms.Supplemental.frmDialog("This file type can not open.", "File Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new Supplemental.frmDialog("This file type can not open.", "File Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -604,46 +590,14 @@ namespace taskt.UI.Forms
                 MoveCommands(e);
             }
         }
+
         private void lstScriptActions_MouseMove(object sender, MouseEventArgs e)
         {
             lstScriptActions.Invalidate();
-
-            //var hitPoint = e.Location;
-            //ListViewHitTestInfo info = lstScriptActions.HitTest(hitPoint);
-            //if (info.SubItem != null)
-            //{
-            //    //if (info.Item == currentHovered)
-            //    //{
-            //    //    if ((DateTime.Now - hoverStarted).TotalMilliseconds >= 500)
-            //    //    {
-            //    //        myToolTip.Show(info.Item.Text, lstScriptActions, hitPoint);
-            //    //    }
-
-            //    //}
-            //    //else
-            //    //{
-            //    //    myToolTip.Hide(lstScriptActions);
-            //    //    currentHovered = info.Item;
-            //    //    hoverStarted = DateTime.Now;
-            //    //}
-            //    myToolTip.SetToolTip(lstScriptActions, info.Item.Text);
-            //}
-            //else
-            //{
-            //    //myToolTip.Hide(lstScriptActions);
-            //    //currentHovered = null;
-            //    myToolTip.SetToolTip(lstScriptActions, "");
-            //}
         }
 
         private void MoveCommands(DragEventArgs e)
         {
-            ////Return if the items are not selected in the ListView control.
-            //if (lstScriptActions.SelectedItems.Count == 0)
-            //{
-            //    return;
-            //}
-
             CreateUndoSnapshot();
 
             //Returns the location of the mouse pointer in the ListView control.
@@ -658,32 +612,25 @@ namespace taskt.UI.Forms
             lstScriptActions.BeginUpdate();
 
             //drag and drop for sequence
-            if ((dragToItem.Tag is Core.Automation.Commands.SequenceCommand) && (appSettings.ClientSettings.EnableSequenceDragDrop))
+            if ((dragToItem.Tag is SequenceCommand) && (appSettings.ClientSettings.EnableSequenceDragDrop))
             {
                 //sequence command for drag drop
-                var sequence = (Core.Automation.Commands.SequenceCommand)dragToItem.Tag;
+                var sequence = (SequenceCommand)dragToItem.Tag;
 
                 //add command to script actions
                 for (int i = 0; i <= lstScriptActions.SelectedItems.Count - 1; i++)
                 {
-                    var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
+                    var command = (ScriptCommand)lstScriptActions.SelectedItems[i].Tag;
                     sequence.v_scriptActions.Add(command);
                 }
 
                 //remove originals
-                //for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
-                //{
-                //    lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
-                //}
                 int[] indices = new int[lstScriptActions.SelectedIndices.Count];
                 lstScriptActions.SelectedIndices.CopyTo(indices, 0);
                 for (int i = indices.Length - 1; i>=0; i--)
                 {
                     lstScriptActions.Items.RemoveAt(indices[i]);
                 }
-                //lstScriptActions.EndUpdate();
-                //return back
-                //return;
             }
             else
             {
@@ -712,7 +659,7 @@ namespace taskt.UI.Forms
                     //Insert the item at the mouse pointer.
                     ListViewItem insertItem = (ListViewItem)dragItem.Clone();
 
-                    var command = (Core.Automation.Commands.ScriptCommand)insertItem.Tag;
+                    var command = (ScriptCommand)insertItem.Tag;
                     command.IsDontSavedCommand = true;
                     command.IsNewInsertedCommand = true;
 
@@ -720,8 +667,6 @@ namespace taskt.UI.Forms
                     //Removes the item from the initial location while
                     //the item is moved to the new location.
                     lstScriptActions.Items.Remove(dragItem);
-                    //FormatCommandListView();
-                    //lstScriptActions.Invalidate();
                 }
             }
             this.currentEditAction = CommandEditAction.Normal;
@@ -777,6 +722,7 @@ namespace taskt.UI.Forms
                 SearchForItemInListView();
             }
         }
+
         private void txtCommandSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -792,7 +738,6 @@ namespace taskt.UI.Forms
             lblCurrentlyViewing.Hide();
             lblTotalResults.Hide();
         }
-
         private void SearchForItemInListView()
         {
             var searchCriteria = txtCommandSearch.Text;
@@ -801,59 +746,6 @@ namespace taskt.UI.Forms
             {
                 searchCriteria = tsSearchBox.Text;
             }
-
-            //var matchingItems = (from ListViewItem itm in lstScriptActions.Items
-            //                     where itm.Text.Contains(searchCriteria)
-            //                     select itm).ToList();
-
-
-            //int? matchCount = matchingItems.Count();
-            //int totalMatches = matchCount ?? 0;
-
-
-            //if ((reqdIndex == matchingItems.Count) || (reqdIndex < 0))
-            //{
-            //    reqdIndex = 0;
-            //}
-
-            //lblTotalResults.Show();
-
-            //if (totalMatches == 0)
-            //{
-            //    currentScriptEditorMode = CommandEditorState.Normal;
-            //    reqdIndex = -1;
-            //    lblTotalResults.Text = "No Matches Found";
-            //    lblCurrentlyViewing.Hide();
-            //    //clear indexes
-            //    matchingSearchIndex.Clear();
-            //    reqdIndex = -1;
-            //    lstScriptActions.Invalidate();
-            //    return;
-            //}
-            //else
-            //{
-            //    currentScriptEditorMode = CommandEditorState.Search;
-            //    lblCurrentlyViewing.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-            //    tsSearchResult.Text = "Viewing " + (reqdIndex + 1) + " of " + totalMatches + "";
-            //    lblTotalResults.Text = totalMatches + " total results found";
-            //}
-
-            //ClearSelectedListViewItems();
-
-            //matchingSearchIndex = new List<int>();
-            //foreach (ListViewItem itm in matchingItems)
-            //{
-            //    matchingSearchIndex.Add(itm.Index);
-            //    //itm.BackColor = Color.LightGoldenrodYellow;
-            //}
-
-            //currentIndexInMatchItems = matchingItems[0].Index;
-            //lstScriptActions.Items[0].Selected = true;
-            ////currentIndexInMatchItems = matchingItems[reqdIndex].Index;
-
-            //lstScriptActions.Invalidate();
-
-            ////lstScriptActions.EnsureVisible(currentIndexInMatchItems);
 
             if (searchCriteria.Length > 0)
             {
@@ -866,7 +758,6 @@ namespace taskt.UI.Forms
                 {
                     MoveMostNearMatchedLine(true);
                 }
-                
             }
             else
             {
@@ -886,8 +777,6 @@ namespace taskt.UI.Forms
 
         public int AdvancedSearchItemInCommands(string keyword, bool caseSensitive, bool checkParameters, bool checkCommandName, bool checkComment, bool checkDisplayText, bool checkInstanceType, string instanceType)
         {
-            //matchingSearchIndex.Clear();
-            //matchingSearchIndex = new List<int>();
             int matchedCount = 0;
 
             this.currentIndexInMatchItems = -1;
@@ -895,20 +784,11 @@ namespace taskt.UI.Forms
             lstScriptActions.BeginUpdate();
             foreach(ListViewItem itm in lstScriptActions.Items)
             {
-                Core.Automation.Commands.ScriptCommand cmd = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                ScriptCommand cmd = (ScriptCommand)itm.Tag;
                 if (cmd.CheckMatched(keyword, caseSensitive, checkParameters, checkCommandName, checkComment, checkDisplayText, checkInstanceType, instanceType))
                 {
                     matchedCount++;
-                    //matchingSearchIndex.Add(itm.Index);
                 }
-                //else if (instanceName)
-                //{
-                //    if (cmd.checkInstanceMatched(keyword, instanceType, caseSensitive))
-                //    {
-                //        matchedCount++;
-                //        //matchingSearchIndex.Add(itm.Index);
-                //    }
-                //}
             }
             lstScriptActions.EndUpdate();
             lstScriptActions.ResumeLayout();
@@ -921,10 +801,6 @@ namespace taskt.UI.Forms
 
         public void MoveMostNearMatchedLine(bool backToTop)
         {
-            //if (this.currentScriptEditorMode != CommandEditorState.AdvencedSearch)
-            //{
-            //    return;
-            //}
             switch (this.currentScriptEditorMode)
             {
                 case CommandEditorState.Normal:
@@ -945,73 +821,6 @@ namespace taskt.UI.Forms
                 return;
             }
 
-            //if (matchingSearchIndex.Count == 0)
-            //{
-            //    return;
-            //}
-
-            //if (this.currentIndexInMatchItems >= 0)
-            //{
-            //    // select matched item yet
-            //    int nextIndex = this.currentIndexInMatchItems + 1;
-            //    if (backToTop)
-            //    {
-            //        nextIndex %= matchingSearchIndex.Count;
-            //    }
-            //    else
-            //    {
-            //        if (nextIndex >= matchingSearchIndex.Count)
-            //        {
-            //            nextIndex--;
-            //        }
-            //    }
-            //    this.currentIndexInMatchItems = nextIndex;
-            //    ClearSelectedListViewItems();
-
-            //    lstScriptActions.Items[matchingSearchIndex[nextIndex]].Selected = true;
-            //}
-            //else
-            //{
-            //    if (lstScriptActions.SelectedIndices.Count > 0)
-            //    {
-            //        // some item selected yet. -> search near item
-            //        int currentIndex = lstScriptActions.SelectedIndices[0];
-            //        if (matchingSearchIndex[matchingSearchIndex.Count - 1] > currentIndex)
-            //        {
-            //            if (backToTop)
-            //            {
-            //                this.currentIndexInMatchItems = 0;
-            //                ClearSelectedListViewItems();
-            //                lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
-            //            }
-            //            else
-            //            {
-            //                ClearSelectedListViewItems();
-            //                return;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            int targetIndex = matchingSearchIndex.Count - 1;
-            //            while (currentIndex > matchingSearchIndex[targetIndex])
-            //            {
-            //                targetIndex--;
-            //            }
-            //            targetIndex++;
-            //            this.currentIndexInMatchItems = targetIndex;
-            //            ClearSelectedListViewItems();
-            //            lstScriptActions.Items[matchingSearchIndex[targetIndex]].Selected = true;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // no selected item -> select fist matched item
-            //        this.currentIndexInMatchItems = 0;
-            //        ClearSelectedListViewItems();
-            //        lstScriptActions.Items[matchingSearchIndex[0]].Selected = true;
-            //    }
-            //}
-
             int lines = lstScriptActions.Items.Count;
 
             if (this.currentIndexInMatchItems >= 0)
@@ -1021,7 +830,7 @@ namespace taskt.UI.Forms
                     for (int i = 1; i < lines; i++)
                     {
                         int idx = (i + this.currentIndexInMatchItems) % lines;
-                        if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[idx].Tag).IsMatched)
+                        if (((ScriptCommand)lstScriptActions.Items[idx].Tag).IsMatched)
                         {
                             ClearSelectedListViewItems();
                             this.currentIndexInMatchItems = idx;
@@ -1034,7 +843,7 @@ namespace taskt.UI.Forms
                 {
                     for (int i = this.currentIndexInMatchItems + 1; i < lines; i++)
                     {
-                        if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag).IsMatched)
+                        if (((ScriptCommand)lstScriptActions.Items[i].Tag).IsMatched)
                         {
                             ClearSelectedListViewItems();
                             this.currentIndexInMatchItems = i;
@@ -1048,7 +857,7 @@ namespace taskt.UI.Forms
             {
                 for (int i = 0; i < lines; i++)
                 {
-                    if (((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag).IsMatched)
+                    if (((ScriptCommand)lstScriptActions.Items[i].Tag).IsMatched)
                     {
                         ClearSelectedListViewItems();
                         this.currentIndexInMatchItems = i;
@@ -1070,11 +879,12 @@ namespace taskt.UI.Forms
         {
             if (lstScriptActions.SelectedIndices.Count > 0)
             {
-                string keyword = ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
+                string keyword = ((ScriptCommand)lstScriptActions.SelectedItems[0].Tag).SelectionName;
                 AdvancedSearchItemInCommands(keyword, false, false, true, false, false, false, "");
                 this.currentScriptEditorMode = CommandEditorState.HighlightCommand;
             }
         }
+
         public int ReplaceSearchInItemCommands(string keyword, bool caseSensitive, string instanceType, bool allProperties, bool instanceName, bool comment)
         {
             int matchedCount = 0;
@@ -1088,7 +898,7 @@ namespace taskt.UI.Forms
             {
                 foreach(ListViewItem itm in lstScriptActions.Items)
                 {
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                    var targetCommand = (ScriptCommand)itm.Tag;
                     if (targetCommand.CheckMatched(keyword, caseSensitive, true, false, false, false, false, ""))
                     {
                         matchedCount++;
@@ -1099,7 +909,7 @@ namespace taskt.UI.Forms
             {
                 foreach (ListViewItem itm in lstScriptActions.Items)
                 {
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                    var targetCommand = (ScriptCommand)itm.Tag;
                     if (targetCommand.CheckMatched(keyword, caseSensitive, false, false, false, false, true, instanceType))
                     {
                         matchedCount++;
@@ -1110,7 +920,7 @@ namespace taskt.UI.Forms
             {
                 foreach (ListViewItem itm in lstScriptActions.Items)
                 {
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)itm.Tag;
+                    var targetCommand = (ScriptCommand)itm.Tag;
                     if (targetCommand.CheckMatched(keyword, false, false, false, true, false, false, ""))
                     {
                         matchedCount++;
@@ -1140,7 +950,7 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < loopTimes; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    var targetCommand = (ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
                     if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Parameters, keyword, replacedText, caseSensitive))
                     {
                         newIndex = trgIdx;
@@ -1153,7 +963,7 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < loopTimes; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    var targetCommand = (ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
                     if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Instance, keyword, replacedText, caseSensitive, instanceType))
                     {
                         newIndex = trgIdx;
@@ -1166,7 +976,7 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < loopTimes; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    var targetCommand = (ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
                     if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Comment, keyword, replacedText, caseSensitive))
                     {
                         newIndex = trgIdx;
@@ -1205,7 +1015,7 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < rows; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    var targetCommand = (ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
                     if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Parameters, keyword, replacedText, caseSensitive))
                     {
                         replaceCount++;
@@ -1217,7 +1027,7 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < rows; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    var targetCommand = (ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
                     if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Instance, keyword, replacedText, caseSensitive, instanceType))
                     {
                         replaceCount++;
@@ -1229,7 +1039,7 @@ namespace taskt.UI.Forms
                 for (int i = 0; i < rows; i++)
                 {
                     int trgIdx = (i + currentIndex) % rows;
-                    var targetCommand = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
+                    var targetCommand = (ScriptCommand)lstScriptActions.Items[trgIdx].Tag;
                     if (targetCommand.Replace(SearchReplaceControls.ReplaceTarget.Comment, keyword, replacedText, caseSensitive))
                     {
                         replaceCount++;
@@ -1247,10 +1057,7 @@ namespace taskt.UI.Forms
 
             return replaceCount;
         }
-
         #endregion
-
-
 
         #region ListView Copy, Paste, Edit, Delete
 
@@ -1265,10 +1072,10 @@ namespace taskt.UI.Forms
             ListViewItem selectedCommandItem = lstScriptActions.SelectedItems[0];
 
             //set selected command from the listview item tag object which was assigned to the command
-            var currentCommand = (Core.Automation.Commands.ScriptCommand)selectedCommandItem.Tag;
+            var currentCommand = (ScriptCommand)selectedCommandItem.Tag;
 
             //check if editing a sequence
-            if (currentCommand is Core.Automation.Commands.SequenceCommand)
+            if (currentCommand is SequenceCommand)
             {
 
                 if (editMode)
@@ -1277,9 +1084,8 @@ namespace taskt.UI.Forms
                     return;
                 }
 
-
                 //get sequence events
-                Core.Automation.Commands.SequenceCommand sequence = (Core.Automation.Commands.SequenceCommand)currentCommand;
+                SequenceCommand sequence = (SequenceCommand)currentCommand;
 
                 using (frmScriptBuilder newBuilder = new frmScriptBuilder())
                 {
@@ -1310,12 +1116,12 @@ namespace taskt.UI.Forms
                         ChangeSaveState(true);
 
                         //create updated list
-                        List<Core.Automation.Commands.ScriptCommand> updatedList = new List<Core.Automation.Commands.ScriptCommand>();
+                        List<ScriptCommand> updatedList = new List<ScriptCommand>();
 
                         //update to list
                         for (int i = 0; i < newBuilder.lstScriptActions.Items.Count; i++)
                         {
-                            var command = (Core.Automation.Commands.ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
+                            var command = (ScriptCommand)newBuilder.lstScriptActions.Items[i].Tag;
                             updatedList.Add(command);
                         }
 
@@ -1330,18 +1136,15 @@ namespace taskt.UI.Forms
             }
             else
             {
-                //Core.InstanceNameType nameType = instanceList.getInstanceNameType(currentCommand);
-                Core.Automation.Commands.ScriptCommand cloneCommand = currentCommand.Clone();
-                //instanceList.removeInstance(currentCommand);
+                ScriptCommand cloneCommand = currentCommand.Clone();
                 currentCommand.RemoveInstance(instanceList);
 
                 //create new command editor form
-                using (UI.Forms.frmCommandEditor editCommand = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
+                using (frmCommandEditor editCommand = new frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
                 {
                     //creation mode edit locks form to current command
-                    editCommand.creationMode = UI.Forms.frmCommandEditor.CreationMode.Edit;
+                    editCommand.creationMode = frmCommandEditor.CreationMode.Edit;
 
-                    //editCommand.defaultStartupCommand = currentCommand.SelectionName;
                     editCommand.editingCommand = currentCommand;
 
                     //create clone of current command so databinding does not affect if changes are not saved
@@ -1375,16 +1178,10 @@ namespace taskt.UI.Forms
 
                         editCommand.selectedCommand.IsDontSavedCommand = true;
 
-                        //instanceList.addInstance(editCommand.selectedCommand);
                         editCommand.selectedCommand.AddInstance(instanceList);
                     }
                     else
                     {
-                        //if (nameType != null)
-                        //{
-                        //    instanceList.addInstance(nameType);
-                        //}
-                        //instanceList.addInstance(cloneCommand);
                         cloneCommand.AddInstance(instanceList);
                     }
                 }
@@ -1393,19 +1190,12 @@ namespace taskt.UI.Forms
 
         private void SelectAllRows()
         {
-            // temp remove handle
-            //lstScriptActions.SelectedIndexChanged -= lstScriptActions_SelectedIndexChanged;
-
             lstScriptActions.BeginUpdate();
             foreach (ListViewItem itm in lstScriptActions.Items)
             {
                 itm.Selected = true;
             }
             lstScriptActions.EndUpdate();
-
-            // attach handle
-            //lstScriptActions.SelectedIndexChanged += lstScriptActions_SelectedIndexChanged;
-            //lstScriptActions_SelectedIndexChanged(null, null);
         }
 
         private void DeleteRows()
@@ -1414,16 +1204,12 @@ namespace taskt.UI.Forms
 
             int[] indices = new int[lstScriptActions.SelectedItems.Count];
             lstScriptActions.SelectedIndices.CopyTo(indices, 0);
-            //foreach (ListViewItem itm in lstScriptActions.SelectedItems)
-            //{
-            //    lstScriptActions.Items.Remove(itm);
-            //}
 
             // remove instance name
-            List<Core.Automation.Commands.ScriptCommand> removeCommands = new List<Core.Automation.Commands.ScriptCommand>();
+            List<ScriptCommand> removeCommands = new List<ScriptCommand>();
             foreach(int i in indices)
             {
-                removeCommands.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag);
+                removeCommands.Add((ScriptCommand)lstScriptActions.Items[i].Tag);
             }
             RemoveInstanceName(removeCommands);
 
@@ -1440,49 +1226,33 @@ namespace taskt.UI.Forms
             IndentListViewItems();
 
             lstScriptActions.Invalidate();
-            //FormatCommandListView();
         }
 
         private void CutRows()
         {
-
-            //initialize list of items to copy   
-            //if (rowsSelectedForCopy == null)
-            //{
-            //    rowsSelectedForCopy = new List<ListViewItem>();
-            //}
-            //else
-            //{
-            //    rowsSelectedForCopy.Clear();
-            //}
-
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
                 ChangeSaveState(true);
 
-                var commands = new List<Core.Automation.Commands.ScriptCommand>();
+                var commands = new List<ScriptCommand>();
 
                 lstScriptActions.BeginUpdate();
                 int[] indices = new int[lstScriptActions.SelectedItems.Count];
                 lstScriptActions.SelectedIndices.CopyTo(indices, 0);
-                //foreach (ListViewItem item in lstScriptActions.SelectedItems)
-                //{
-                //    commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
-                //    //rowsSelectedForCopy.Add(item);
-                //    //lstScriptActions.Items.Remove(item);
-                //}
+
                 for (int i = 0; i <indices.Length; i++)
                 {
-                    commands.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[indices[i]].Tag);
+                    commands.Add((ScriptCommand)lstScriptActions.Items[indices[i]].Tag);
                 }
                 for (int i = indices.Length - 1; i >= 0; i--)
                 {
                     lstScriptActions.Items.RemoveAt(indices[i]);
                 }
                 lstScriptActions.EndUpdate();
+
                 // set clipborad xml string
-                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands, scriptSerializer));
+                Clipboard.SetText(Core.Script.Script.SerializeScript(commands, scriptSerializer));
 
                 // remove instance name
                 RemoveInstanceName(commands);
@@ -1492,7 +1262,6 @@ namespace taskt.UI.Forms
 
                 // release
                 commands.Clear();
-                commands = null;
 
                 // check indent
                 IndentListViewItems();
@@ -1501,73 +1270,30 @@ namespace taskt.UI.Forms
 
         private void CopyRows()
         {
-
-            //initialize list of items to copy   
-            //if (rowsSelectedForCopy == null)
-            //{
-            //    rowsSelectedForCopy = new List<ListViewItem>();
-            //}
-            //else
-            //{
-            //    rowsSelectedForCopy.Clear();
-            //}
-
             //copy into list for all selected            
             if (lstScriptActions.SelectedItems.Count >= 1)
             {
                 ChangeSaveState(true);
 
-                var commands = new List<Core.Automation.Commands.ScriptCommand>();
+                var commands = new List<ScriptCommand>();
 
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
                 {
-                    commands.Add((Core.Automation.Commands.ScriptCommand)item.Tag);
-                    //rowsSelectedForCopy.Add(item);
+                    commands.Add((ScriptCommand)item.Tag);
                 }
 
                 // set clipborad xml string
-                Clipboard.SetText(taskt.Core.Script.Script.SerializeScript(commands, scriptSerializer));
+                Clipboard.SetText(Core.Script.Script.SerializeScript(commands, scriptSerializer));
 
-                //Notify(rowsSelectedForCopy.Count + " item(s) copied to clipboard!");
                 Notify(commands.Count + " item(s) copied to clipboard!");
 
                 // release
                 commands.Clear();
-                commands = null;
             }
         }
 
         private void PasteRows()
         {
-
-            //if (rowsSelectedForCopy != null)
-            //{
-
-            //    if (lstScriptActions.SelectedItems.Count == 0)
-            //    {
-            //        MessageBox.Show("In order to paste, you must first select a command to paste under.", "Select Command To Paste Under");
-            //        return;
-            //    }
-
-            //    //int destinationIndex = lstScriptActions.SelectedItems[0].Index + 1;
-
-            //    //foreach (ListViewItem item in rowsSelectedForCopy)
-            //    //{
-            //    //    Core.Automation.Commands.ScriptCommand duplicatedCommand = (Core.Automation.Commands.ScriptCommand)Core.Common.Clone(item.Tag);
-            //    //    duplicatedCommand.GenerateID();
-            //    //    lstScriptActions.Items.Insert(destinationIndex, CreateScriptCommandListViewItem(duplicatedCommand));
-            //    //    destinationIndex += 1;                  
-            //    //}
-
-            //    //lstScriptActions.Invalidate();
-
-            //    //Notify(rowsSelectedForCopy.Count + " item(s) pasted!");
-
-            //    var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText());
-            //    //PopulateExecutionCommands(sc.Commands);
-            //    InsertExecutionCommands(sc.Commands);
-            //}
-
             var sc = Core.Script.Script.DeserializeXML(Clipboard.GetText(), scriptSerializer);
             if (sc != null)
             {
@@ -1595,15 +1321,12 @@ namespace taskt.UI.Forms
 
         private void UndoChange()
         {
-
             if (undoList.Count > 0)
             {
-
                 if ((undoIndex < 0) || (undoIndex >= undoList.Count))
                 {
                     undoIndex = undoList.Count - 1;
                 }
-
 
                 lstScriptActions.Items.Clear();
 
@@ -1619,22 +1342,18 @@ namespace taskt.UI.Forms
 
                 lstScriptActions.Invalidate();
             }
-
         }
 
         private void RedoChange()
         {
             if (undoList.Count > 0)
             {
-
                 undoIndex++;
 
                 if (undoIndex > undoList.Count - 1)
                 {
                     undoIndex = undoList.Count - 1;
                 }
-
-
 
                 lstScriptActions.Items.Clear();
 
@@ -1643,17 +1362,14 @@ namespace taskt.UI.Forms
                     lstScriptActions.Items.Add(rowItem);
                 }
 
-
                 // check indent
                 IndentListViewItems();
 
                 lstScriptActions.Invalidate();
             }
-
         }
         private void SetSelectedCodeToCommented(bool setCommented)
         {
-
             //warn if nothing was selected
             if (lstScriptActions.SelectedItems.Count == 0)
             {
@@ -1663,22 +1379,18 @@ namespace taskt.UI.Forms
             //get each item and set appropriately
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
-                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
+                var selectedCommand = (ScriptCommand)item.Tag;
                 selectedCommand.IsCommented = setCommented;
             }
 
             ChangeSaveState(true);
 
-            //clear selection
-            //lstScriptActions.SelectedIndices.Clear();
-            //ClearSelectedListViewItems();
-
             //recolor
             lstScriptActions.Invalidate();
         }
+
         private void SetPauseBeforeExecution()
         {
-
             //warn if nothing was selected
             if (lstScriptActions.SelectedItems.Count == 0)
             {
@@ -1688,18 +1400,11 @@ namespace taskt.UI.Forms
             //get each item and set appropriately
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
-                var selectedCommand = (Core.Automation.Commands.ScriptCommand)item.Tag;
+                var selectedCommand = (ScriptCommand)item.Tag;
                 selectedCommand.PauseBeforeExeucution = !selectedCommand.PauseBeforeExeucution;
             }
 
-            //recolor
-            //FormatCommandListView();
-
             ChangeSaveState(true);
-
-            //clear selection
-            //lstScriptActions.SelectedIndices.Clear();
-            //ClearSelectedListViewItems();
 
             lstScriptActions.Invalidate();
         }
@@ -1752,7 +1457,6 @@ namespace taskt.UI.Forms
             lstScriptActions.Invalidate();
             pnlCommandHelper.Hide();
 
-
             grpSaveClose.Location = grpFileActions.Location;
 
             grpRecordRun.Hide();
@@ -1763,19 +1467,14 @@ namespace taskt.UI.Forms
             grpSearch.Left = grpSaveClose.Right + 20;
 
             moveToParentToolStripMenuItem.Visible = true;
-            //lstContextStripSep3.Visible = true;
-            //lstContextStripSep4.Visible = false;
             showScriptInfoMenuItem.Visible = false;
         }
         #endregion
 
         #region ListView Create Item
 
-        private ListViewItem CreateScriptCommandListViewItem(Core.Automation.Commands.ScriptCommand cmdDetails, bool isOpenFile = false)
+        private ListViewItem CreateScriptCommandListViewItem(ScriptCommand cmdDetails, bool isOpenFile = false)
         {
-            //cmdDetails.IsDontSavedCommand = true;
-            //cmdDetails.IsNewInsertedCommand = true;
-
             ListViewItem newCommand = new ListViewItem();
 
             string dispValue = cmdDetails.GetDisplayValue();
@@ -1786,30 +1485,19 @@ namespace taskt.UI.Forms
                 cmdDetails.IsNewInsertedCommand = true;
             }
 
-            //newCommand.Text = cmdDetails.GetDisplayValue();
-            //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-            //newCommand.SubItems.Add(cmdDetails.GetDisplayValue());
-
             newCommand.Text = dispValue;
             newCommand.ToolTipText = dispValue;
 
-            //newCommand.SubItems.AddRange(new string[] { "", "" });
             newCommand.SubItems.AddRange(new string[] { "", "" });
-
-            //ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
-            //subItem.Text = dispValue;
-            //newCommand.SubItems.AddRange(new ListViewItem.ListViewSubItem[] { subItem, subItem, subItem });
 
             cmdDetails.RenderedControls = null;
             newCommand.Tag = cmdDetails;
-            //newCommand.ForeColor = cmdDetails.DisplayForeColor;
-            //newCommand.BackColor = Color.DimGray;
-            //newCommand.ImageIndex = uiImages.Images.IndexOfKey(cmdDetails.GetType().Name);
-            newCommand.ImageIndex = taskt.UI.Images.GetUIImageList(cmdDetails.GetType().Name);
+
+            newCommand.ImageIndex = Images.GetUIImageList(cmdDetails.GetType().Name);
             return newCommand;
         }
 
-        public void AddCommandToListView(Core.Automation.Commands.ScriptCommand selectedCommand)
+        public void AddCommandToListView(ScriptCommand selectedCommand)
         {
             if (pnlCommandHelper.Visible)
             {
@@ -1819,7 +1507,7 @@ namespace taskt.UI.Forms
             var command = CreateScriptCommandListViewItem(selectedCommand);
 
             // count instance name
-            AddInstanceName(new List<Core.Automation.Commands.ScriptCommand>() { selectedCommand });
+            AddInstanceName(new List<ScriptCommand>() { selectedCommand });
 
             //insert to end by default
             var insertionIndex = lstScriptActions.Items.Count;
@@ -1834,19 +1522,19 @@ namespace taskt.UI.Forms
             // insert comment above if, loop, try
             if (appSettings.ClientSettings.InsertCommentIfLoopAbove)
             {
-                if ((selectedCommand is Core.Automation.Commands.BeginListLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((selectedCommand is BeginListLoopCommand) || (selectedCommand is BeginContinousLoopCommand) || (selectedCommand is BeginNumberOfTimesLoopCommand) || (selectedCommand is BeginLoopCommand) || (selectedCommand is BeginMultiLoopCommand))
                 {
-                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Please enter a description of the loop here" }));
+                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Please enter a description of the loop here" }));
                     insertionIndex++;
                 }
-                else if((selectedCommand is Core.Automation.Commands.BeginIfCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiIfCommand))
+                else if((selectedCommand is BeginIfCommand) || (selectedCommand is BeginMultiIfCommand))
                 {
-                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Please enter a description of the if here" }));
+                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Please enter a description of the if here" }));
                     insertionIndex++;
                 }
-                else if(selectedCommand is Core.Automation.Commands.TryCommand)
+                else if(selectedCommand is TryCommand)
                 {
-                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Please enter a description of the error handling here" }));
+                    lstScriptActions.Items.Insert(insertionIndex, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Please enter a description of the error handling here" }));
                     insertionIndex++;
                 }
             }
@@ -1857,34 +1545,34 @@ namespace taskt.UI.Forms
             var focusIndex = insertionIndex;
 
             //special types also get a following command and comment
-            if ((selectedCommand is Core.Automation.Commands.BeginListLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginLoopCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+            if ((selectedCommand is BeginListLoopCommand) || (selectedCommand is BeginContinousLoopCommand) || (selectedCommand is BeginNumberOfTimesLoopCommand) || (selectedCommand is BeginLoopCommand) || (selectedCommand is BeginMultiLoopCommand))
             {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
-                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndLoopCommand()));
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Items in this section will run within the loop" }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new EndLoopCommand()));
                 focusIndex++;
             }
-            else if ((selectedCommand is Core.Automation.Commands.BeginIfCommand) || (selectedCommand is Core.Automation.Commands.BeginMultiIfCommand))
+            else if ((selectedCommand is BeginIfCommand) || (selectedCommand is BeginMultiIfCommand))
             {
                 if (appSettings.ClientSettings.InsertElseAutomatically)
                 {
-                    lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
-                    lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.ElseCommand()));
-                    lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run if the statement is false" }));
-                    lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndIfCommand()));
+                    lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
+                    lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new ElseCommand()));
+                    lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Items in this section will run if the statement is false" }));
+                    lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new EndIfCommand()));
                 }
                 else
                 {
-                    lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
-                    lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndIfCommand()));
+                    lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Items in this section will run if the statement is true" }));
+                    lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new EndIfCommand()));
                 }
                 focusIndex++;
             }
-            else if (selectedCommand is Core.Automation.Commands.TryCommand)
+            else if (selectedCommand is TryCommand)
             {
-                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Items in this section will be handled if error occurs" }));
-                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new Core.Automation.Commands.CatchExceptionCommand() { v_Comment = "Items in this section will run if error occurs" }));
-                lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "This section executes if error occurs above" }));
-                lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new Core.Automation.Commands.EndTryCommand()));
+                lstScriptActions.Items.Insert(insertionIndex + 1, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Items in this section will be handled if error occurs" }));
+                lstScriptActions.Items.Insert(insertionIndex + 2, CreateScriptCommandListViewItem(new CatchExceptionCommand() { v_Comment = "Items in this section will run if error occurs" }));
+                lstScriptActions.Items.Insert(insertionIndex + 3, CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "This section executes if error occurs above" }));
+                lstScriptActions.Items.Insert(insertionIndex + 4, CreateScriptCommandListViewItem(new EndTryCommand()));
                 focusIndex++;
             }
 
@@ -1924,13 +1612,13 @@ namespace taskt.UI.Forms
                     continue;
                 }
 
-                if ((rowItem.Tag is Core.Automation.Commands.BeginIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiIfCommand) || (rowItem.Tag is Core.Automation.Commands.BeginListLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginContinousLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (rowItem.Tag is Core.Automation.Commands.TryCommand) || (rowItem.Tag is Core.Automation.Commands.BeginLoopCommand) || (rowItem.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((rowItem.Tag is BeginIfCommand) || (rowItem.Tag is BeginMultiIfCommand) || (rowItem.Tag is BeginListLoopCommand) || (rowItem.Tag is BeginContinousLoopCommand) || (rowItem.Tag is BeginNumberOfTimesLoopCommand) || (rowItem.Tag is TryCommand) || (rowItem.Tag is BeginLoopCommand) || (rowItem.Tag is BeginMultiLoopCommand))
                 {
                     indent += 2;
                     rowItem.IndentCount = indent;
                     indent += 2;
                 }
-                else if ((rowItem.Tag is Core.Automation.Commands.EndLoopCommand) || (rowItem.Tag is Core.Automation.Commands.EndIfCommand) || (rowItem.Tag is Core.Automation.Commands.EndTryCommand))
+                else if ((rowItem.Tag is EndLoopCommand) || (rowItem.Tag is EndIfCommand) || (rowItem.Tag is EndTryCommand))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -1938,7 +1626,7 @@ namespace taskt.UI.Forms
                     indent -= 2;
                     if (indent < 0) indent = 0;
                 }
-                else if ((rowItem.Tag is Core.Automation.Commands.ElseCommand) || (rowItem.Tag is Core.Automation.Commands.CatchExceptionCommand) || (rowItem.Tag is Core.Automation.Commands.FinallyCommand))
+                else if ((rowItem.Tag is ElseCommand) || (rowItem.Tag is CatchExceptionCommand) || (rowItem.Tag is FinallyCommand))
                 {
                     indent -= 2;
                     if (indent < 0) indent = 0;
@@ -2037,7 +1725,7 @@ namespace taskt.UI.Forms
                     miniMap[i, 1] = (int)MiniMapState.Normal;
                     for (int j = startIndex; j < lastIndex; j++)
                     {
-                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[j].Tag;
+                        var command = (ScriptCommand)lstScriptActions.Items[j].Tag;
                         if (command.IsDontSavedCommand)
                         {
                             miniMap[i, 0] = (int)MiniMapState.DontSave;
@@ -2051,8 +1739,7 @@ namespace taskt.UI.Forms
                     }
                     for (int j = startIndex; j < lastIndex; j++)
                     {
-                        var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[j].Tag;
-                        //if ((lstScriptActions.Items[j].Selected) && (lstScriptActions.Items[j].Focused))
+                        var command = (ScriptCommand)lstScriptActions.Items[j].Tag;
                         if (j == selectedIndex)
                         {
                             miniMap[i, 1] = (int)MiniMapState.Cursor;
@@ -2068,7 +1755,7 @@ namespace taskt.UI.Forms
                             miniMap[i, 1] = (int)MiniMapState.Error;
                             break;
                         }
-                        else if (command.IsCommented || (command is Core.Automation.Commands.CommentCommand))
+                        else if (command.IsCommented || (command is CommentCommand))
                         {
                             miniMap[i, 1] = (int)MiniMapState.Comment;
                             break;
@@ -2080,7 +1767,7 @@ namespace taskt.UI.Forms
             {
                 for (int i = 0; i < commandsNum; i++)
                 {
-                    var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.Items[i].Tag;
+                    var command = (ScriptCommand)lstScriptActions.Items[i].Tag;
                     if (command.IsDontSavedCommand)
                     {
                         miniMap[i, 0] = (int)MiniMapState.DontSave;
@@ -2094,8 +1781,6 @@ namespace taskt.UI.Forms
                         miniMap[i, 0] = (int)MiniMapState.Normal;
                     }
 
-                    //if ((lstScriptActions.Items[i].Selected) && (lstScriptActions.Items[i].Focused))
-                    //if (lstScriptActions.Items[i].Selected)
                     if (i == selectedIndex)
                     {
                         miniMap[i, 1] = (int)MiniMapState.Cursor;
@@ -2108,7 +1793,7 @@ namespace taskt.UI.Forms
                     {
                         miniMap[i, 1] = (int)MiniMapState.Error;
                     }
-                    else if (command.IsCommented || (command is Core.Automation.Commands.CommentCommand))
+                    else if (command.IsCommented || (command is CommentCommand))
                     {
                         miniMap[i, 1] = (int)MiniMapState.Comment;
                     }
@@ -2125,7 +1810,6 @@ namespace taskt.UI.Forms
             }
             using (Graphics g = Graphics.FromImage(miniMapImg))
             {
-                //g.FillRectangle(new SolidBrush(Color.Black), 0, 0, 8, lstScriptActions.Height);
                 g.DrawLine(new Pen(Color.White), 0, 0, 0, miniMapImg.Height);
                 g.DrawLine(new Pen(Color.White), 4, 0, 4, miniMapImg.Height);
                 for (int i = 0; i < miniMapItems; i++)
@@ -2134,13 +1818,13 @@ namespace taskt.UI.Forms
                     switch ((MiniMapState)miniMap[i, 0])
                     {
                         case MiniMapState.DontSave:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-dontsaved"].BackColor);
+                            co = new SolidBrush(Core.Theme.scriptTexts["number-dontsaved"].BackColor);
                             break;
                         case MiniMapState.NewInserted:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-newline"].BackColor);
+                            co = new SolidBrush(Core.Theme.scriptTexts["number-newline"].BackColor);
                             break;
                         default:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["normal"].BackColor);
+                            co = new SolidBrush(Core.Theme.scriptTexts["normal"].BackColor);
                             break;
                     }
                     g.FillRectangle(co, 1, mapItemHeight * i, 3, mapItemHeight);
@@ -2151,16 +1835,16 @@ namespace taskt.UI.Forms
                         //    co = new SolidBrush(taskt.Core.Theme.scriptTexts["selected-normal"].BackColor);
                         //    break;
                         case MiniMapState.Matched:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["current-match"].BackColor);
+                            co = new SolidBrush(Core.Theme.scriptTexts["current-match"].BackColor);
                             break;
                         case MiniMapState.Error:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["invalid"].FontColor);
+                            co = new SolidBrush(Core.Theme.scriptTexts["invalid"].FontColor);
                             break;
                         case MiniMapState.Comment:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["comment"].FontColor);
+                            co = new SolidBrush(Core.Theme.scriptTexts["comment"].FontColor);
                             break;
                         default:
-                            co = new SolidBrush(taskt.Core.Theme.scriptTexts["normal"].BackColor);
+                            co = new SolidBrush(Core.Theme.scriptTexts["normal"].BackColor);
                             break;
                     }
                     g.FillRectangle(co, 5, mapItemHeight * i, 3, mapItemHeight);
@@ -2180,208 +1864,20 @@ namespace taskt.UI.Forms
 
         private void lstScriptActions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-
-            //handle indents
-            //IndentListViewItems();
-
-            //auto size line numbers based on command count
-            //AutoSizeLineNumberColumn();
-
-
-            //get listviewitem
-            //ListViewItem item = e.Item;
-
-            //get script command reference
-            //var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
-
-
-            //create modified bounds
-            //var modifiedBounds = e.Bounds;
-            //modifiedBounds.Y += 2;
-
             //switch between column index
             switch (e.ColumnIndex)
             {
                 case 0:
                     //draw row number
-                    //e.Graphics.DrawString((e.ItemIndex + 1).ToString(),
-                    //    lstScriptActions.Font, Brushes.LightSlateGray, modifiedBounds);
                     drawLineNumber(e);
                     break;
                 case 1:
                     //draw command icon
-                    //var img = uiImages.Images[command.GetType().Name];
-                    //var img = taskt.UI.Images.GetUIImage(command.GetType().Name);
-                    //if (img != null)
-                    //{
-                    //    e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
-                    //}
                     drawCommandIcon(e);
                     break;
 
                 case 2:
-                    ////write command text
-                    ////Brush commandNameBrush, commandBackgroundBrush;
-                    //taskt.Core.Theme.UIFont trg;
-
-                    //if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
-                    //{
-                    //    //debugging coloring
-                    //    //commandNameBrush = Brushes.White;
-                    //    //commandBackgroundBrush = Brushes.OrangeRed;
-                    //    trg = taskt.Core.Theme.scriptTexts["debug"];
-                    //}
-                    ////else if ((currentIndexInMatchItems >= 0) && (e.ItemIndex == currentIndexInMatchItems))
-                    ////{
-                    ////    //search primary item coloring
-                    ////    //commandNameBrush = Brushes.Black;
-                    ////    //commandBackgroundBrush = Brushes.Goldenrod;
-                    ////    trg = taskt.Core.Theme.scriptTexts["current"];
-                    ////}
-                    //else if (matchingSearchIndex.Contains(e.ItemIndex) && currentScriptEditMode == EditMode.Search)
-                    //{
-                    //    //search match item coloring
-                    //    //commandNameBrush = Brushes.Black;
-                    //    //commandBackgroundBrush = Brushes.LightYellow;
-                    //    if ((e.Item.Focused) || (e.Item.Selected))
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["current-match"];
-                    //    }
-                    //    else
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["match"];
-                    //    }
-                    //}
-                    //else if (this.currentScriptEditMode == EditMode.AdvencedSearch)
-                    //{
-                    //    if (command.IsMatched)
-                    //    {
-                    //        if ((e.Item.Focused) || (e.Item.Selected))
-                    //        {
-                    //            trg = taskt.Core.Theme.scriptTexts["current-match"];
-                    //        }
-                    //        else
-                    //        {
-                    //            trg = taskt.Core.Theme.scriptTexts["match"];
-                    //        }
-                    //    }
-                    //    else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["comment"];
-                    //    }
-                    //    else if (!command.IsValid)
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["invalid"];
-                    //    }
-                    //    else
-                    //    {
-                    //        trg = taskt.Core.Theme.scriptTexts["normal"];
-                    //    }
-                    //}
-                    //else if ((e.Item.Focused) || (e.Item.Selected))
-                    //{
-                    //    //selected item coloring
-                    //    if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                    //    {
-                    //        // disable command
-                    //        //commandNameBrush = Brushes.LightGreen;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-comment"];
-                    //    }
-                    //    else if (command.PauseBeforeExeucution)
-                    //    {
-                    //        // pause
-                    //        //commandNameBrush = Brushes.Plum;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-pause"];
-                    //    }
-                    //    else if (!command.IsValid)
-                    //    {
-                    //        // invalid
-                    //        //commandNameBrush = Brushes.Crimson;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-invalid"];
-                    //    }
-                    //    else
-                    //    {
-                    //        //commandNameBrush = Brushes.White;
-                    //        trg = taskt.Core.Theme.scriptTexts["selected-normal"];
-                    //    }
-                    //    //commandBackgroundBrush = Brushes.DodgerBlue;
-                    //}
-                    //else if (command.PauseBeforeExeucution)
-                    //{
-                    //    //pause before execution coloring
-                    //    //commandNameBrush = Brushes.MediumPurple;
-                    //    //commandBackgroundBrush = Brushes.Lavender;
-                    //    trg = taskt.Core.Theme.scriptTexts["pause"];
-                    //}
-                    //else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
-                    //{
-                    //    //comments and commented command coloring
-                    //    //commandNameBrush = Brushes.ForestGreen;
-                    //    //commandBackgroundBrush = Brushes.WhiteSmoke;
-                    //    trg = taskt.Core.Theme.scriptTexts["comment"];
-                    //}
-                    //else if (!command.IsValid)
-                    //{
-                    //    //standard coloring
-                    //    //if (command.IsValid)
-                    //    //{
-                    //    //    //commandNameBrush = Brushes.SteelBlue;
-                    //    //    trg = taskt.Core.Theme.scriptTexts["normal"];
-
-                    //    //}
-                    //    //else
-                    //    //{
-                    //    //    //commandNameBrush = Brushes.Crimson;
-                    //    //    trg = taskt.Core.Theme.scriptTexts["invalid"];
-                    //    //}
-                    //    //commandBackgroundBrush = Brushes.WhiteSmoke;
-                    //    trg = taskt.Core.Theme.scriptTexts["invalid"];
-                    //}
-                    //else
-                    //{
-                    //    trg = taskt.Core.Theme.scriptTexts["normal"];
-                    //}
-
-                    ////fille with background color
-                    ////e.Graphics.FillRectangle(commandBackgroundBrush, modifiedBounds);
-                    //e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), modifiedBounds);
-
-                    ////get indent count
-                    //var indentPixels = (item.IndentCount * 15);
-
-                    ////set indented X position
-                    //modifiedBounds.X += indentPixels;
-
-                    ////draw string
-                    ////e.Graphics.DrawString(command.GetDisplayValue(),
-                    ////               lstScriptActions.Font, commandNameBrush, modifiedBounds);
-                    //e.Graphics.DrawString(command.GetDisplayValue(),
-                    //               new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
-
-                    //if ((item.IndentCount > 0) && appSettings.ClientSettings.ShowIndentLine)
-                    //{
-                    //    int offset;
-                    //    int i;
-                    //    if (item.IndentCount % 4 == 0)
-                    //    {
-                    //        offset = 30;
-                    //        i = item.IndentCount - 2;
-                    //    }
-                    //    else
-                    //    {
-                    //        offset = 0;
-                    //        i = item.IndentCount;
-                    //    }
-                    //    int bottomY = modifiedBounds.Y + modifiedBounds.Height;
-                    //    for (i = (item.IndentCount % 4 != 0 ? item.IndentCount - 2 : item.IndentCount); i > 0; i -= 4)
-                    //    {
-                    //        int x = modifiedBounds.X - (i * 15) + offset;
-                    //        e.Graphics.DrawLine(indentDashLine, x, modifiedBounds.Y, x, bottomY);
-                    //    }
-
-                    //    int baseX = modifiedBounds.X - (item.IndentCount * 15) + 2;
-                    //    e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
-                    //}
+                    //write command text
                     drawCommandText(e);
 
                     break;
@@ -2391,20 +1887,19 @@ namespace taskt.UI.Forms
         private void drawLineNumber(DrawListViewSubItemEventArgs e)
         {
             //AutoSizeLineNumberColumn();
-            var command = (Core.Automation.Commands.ScriptCommand)e.Item.Tag;
+            var command = (ScriptCommand)e.Item.Tag;
 
-            taskt.Core.Theme.UIFont trg = taskt.Core.Theme.scriptTexts[decideLineNumberText(command)];
+            Core.Theme.UIFont trg = Core.Theme.scriptTexts[decideLineNumberText(command)];
 
-            //e.Graphics.DrawString((e.ItemIndex + 1).ToString(), lstScriptActions.Font, Brushes.LightSlateGray, e.Bounds);
             e.Graphics.FillRectangle(new SolidBrush(trg.BackColor), e.Bounds);
             e.Graphics.DrawString((e.ItemIndex + 1).ToString(), new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), e.Bounds);
         }
 
         private void drawCommandIcon(DrawListViewSubItemEventArgs e)
         {
-            var command = (Core.Automation.Commands.ScriptCommand)e.Item.Tag;
+            var command = (ScriptCommand)e.Item.Tag;
             var modifiedBounds = e.Bounds;
-            var img = taskt.UI.Images.GetUIImage(command.GetType().Name);
+            var img = Images.GetUIImage(command.GetType().Name);
             if (img != null)
             {
                 e.Graphics.DrawImage(img, modifiedBounds.Left, modifiedBounds.Top + 3);
@@ -2415,49 +1910,38 @@ namespace taskt.UI.Forms
         {
             //get listviewitem
             ListViewItem item = e.Item;
-            var command = (Core.Automation.Commands.ScriptCommand)item.Tag;
+            var command = (ScriptCommand)item.Tag;
             var modifiedBounds = e.Bounds;
 
-            taskt.Core.Theme.UIFont trg;
+            Core.Theme.UIFont trg;
 
             int indentWidth = appSettings.ClientSettings.IndentWidth;
 
             if ((debugLine > 0) && (e.ItemIndex == debugLine - 1))
             {
-                trg = taskt.Core.Theme.scriptTexts["debug"];
+                trg = Core.Theme.scriptTexts["debug"];
             }
             else if ((currentScriptEditorMode == CommandEditorState.Search) || (currentScriptEditorMode == CommandEditorState.AdvencedSearch) || (currentScriptEditorMode == CommandEditorState.ReplaceSearch) || (currentScriptEditorMode == CommandEditorState.HighlightCommand))
             {
-                //if (matchingSearchIndex.Contains(e.ItemIndex))
-                //{ 
-                //    if ((e.Item.Focused) || (e.Item.Selected))
-                //    {
-                //        trg = taskt.Core.Theme.scriptTexts["current-match"];
-                //    }
-                //    else
-                //    {
-                //        trg = taskt.Core.Theme.scriptTexts["match"];
-                //    }
-                //}
                 if (command.IsMatched)
                 {
                     if ((e.Item.Focused) || (e.Item.Selected))
                     {
-                        trg = taskt.Core.Theme.scriptTexts["current-match"];
+                        trg = Core.Theme.scriptTexts["current-match"];
                     }
                     else
                     {
-                        trg = taskt.Core.Theme.scriptTexts["match"];
+                        trg = Core.Theme.scriptTexts["match"];
                     }
                 }
                 else
                 {
-                    trg = taskt.Core.Theme.scriptTexts[decideNormalCommandText(e, command)];
+                    trg = Core.Theme.scriptTexts[decideNormalCommandText(e, command)];
                 }
             }
             else
             {
-                trg = taskt.Core.Theme.scriptTexts[decideNormalCommandText(e, command)];
+                trg = Core.Theme.scriptTexts[decideNormalCommandText(e, command)];
             }
 
             //fille with background color
@@ -2474,6 +1958,7 @@ namespace taskt.UI.Forms
                            new Font(trg.Font, trg.FontSize, trg.Style), new SolidBrush(trg.FontColor), modifiedBounds);
 
             // Emphasis Drag&Drop Line
+            // DBG
             //Console.WriteLine("DRW " + this.currentEditAction + ", " + this.DnDIndex);
             if ((this.currentEditAction == CommandEditAction.Move) && (item.Index == this.DnDIndex))
             {
@@ -2507,66 +1992,6 @@ namespace taskt.UI.Forms
                 e.Graphics.DrawLine(indentDashLine, baseX, modifiedBounds.Y, baseX, bottomY);
             }
 
-            //if (miniMap == null)
-            //{
-            //    return;
-            //}
-
-            //int maxMapItems = miniMap.GetLength(0);
-            //int commmandItems = lstScriptActions.Items.Count;
-            //double itemRatio = maxMapItems / commmandItems;
-
-            //modifiedBounds.X -= indentPixels;
-            //int mapX = modifiedBounds.Width - 8;
-
-            //if (itemRatio < 1.0)
-            //{
-            //    // mada
-            //}
-            //else
-            //{
-            //    SolidBrush co;
-            //    switch ((MiniMapState)miniMap[e.ItemIndex, 0])
-            //    {
-            //        case MiniMapState.DontSave:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-dontsaved"].BackColor);
-            //            break;
-            //        case MiniMapState.NewInserted:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-newline"].BackColor);
-            //            break;
-            //        default:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["number-normal"].BackColor);
-            //            break;
-            //    }
-            //    int baseX = modifiedBounds.X + mapX;
-            //    e.Graphics.DrawLine(new Pen(Color.White), baseX, modifiedBounds.Y, baseX, modifiedBounds.Y + modifiedBounds.Height);
-            //    baseX += 1;
-            //    e.Graphics.FillRectangle(co, baseX, modifiedBounds.Y, 3, modifiedBounds.Height);
-
-            //    switch ((MiniMapState)miniMap[e.ItemIndex, 1])
-            //    {
-            //        case MiniMapState.Cursor:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["selected-normal"].BackColor);
-            //            break;
-            //        case MiniMapState.Matched:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["match"].FontColor);
-            //            break;
-            //        case MiniMapState.Error:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["invalid"].FontColor);
-            //            break;
-            //        case MiniMapState.Comment:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["comment"].FontColor);
-            //            break;
-            //        default:
-            //            co = new SolidBrush(taskt.Core.Theme.scriptTexts["normal"].BackColor);
-            //            break;
-            //    }
-            //    baseX += 3;
-            //    e.Graphics.DrawLine(new Pen(Color.White), baseX, modifiedBounds.Y, baseX, modifiedBounds.Y + modifiedBounds.Height);
-            //    baseX += 1;
-            //    e.Graphics.FillRectangle(co, baseX, modifiedBounds.Y, 3, modifiedBounds.Height);
-            //}
-
             if (appSettings.ClientSettings.ShowScriptMiniMap)
             {
                 modifiedBounds.X -= indentPixels;
@@ -2575,7 +2000,8 @@ namespace taskt.UI.Forms
                                                     new Rectangle(0, modifiedBounds.Y, 8, modifiedBounds.Height), GraphicsUnit.Pixel);
             }
         }
-        private string decideNormalCommandText(DrawListViewSubItemEventArgs e, Core.Automation.Commands.ScriptCommand command)
+
+        private string decideNormalCommandText(DrawListViewSubItemEventArgs e, ScriptCommand command)
         {
             string ret;
             
@@ -2583,7 +2009,7 @@ namespace taskt.UI.Forms
             {
                 ret = "pause";
             }
-            else if ((command is Core.Automation.Commands.CommentCommand) || (command.IsCommented))
+            else if ((command is CommentCommand) || (command.IsCommented))
             {
                 ret = "comment";
             }
@@ -2603,7 +2029,7 @@ namespace taskt.UI.Forms
 
             return ret;
         }
-        private string decideLineNumberText(Core.Automation.Commands.ScriptCommand command)
+        private string decideLineNumberText(ScriptCommand command)
         {
             string ret;
 
@@ -2646,11 +2072,8 @@ namespace taskt.UI.Forms
                 }
 
                 lstScriptActions.Invalidate();
-
-                //FormatCommandListView();
             }
         }
-
 
         #region lstScriptActions event
         private void lstScriptActions_SelectedIndexChanged(object sender, EventArgs e)
@@ -2674,7 +2097,6 @@ namespace taskt.UI.Forms
             if (lstScriptActions.SelectedItems.Count > 0)
             {
                 selectedIndex = lstScriptActions.SelectedItems[0].Index;
-                //FormatCommandListView();
             }
             else
             {
@@ -2734,10 +2156,6 @@ namespace taskt.UI.Forms
             }
             else if ((e.Control) && (e.KeyCode == Keys.A))
             {
-                //foreach (ListViewItem item in lstScriptActions.Items)
-                //{
-                //    item.Selected = true;
-                //}
                 SelectAllRows();
             }
             else if ((e.Control) && (e.Shift) && (e.KeyCode == Keys.F))
@@ -2749,10 +2167,11 @@ namespace taskt.UI.Forms
             {
                 if (lstScriptActions.SelectedItems.Count > 0)
                 {
-                    showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
+                    showThisCommandHelp((ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
                 }
             }
         }
+
         private void lstScriptActions_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -2776,7 +2195,7 @@ namespace taskt.UI.Forms
                         insertCommentToolStripMenuItem.Visible = true;
                     }
 
-                    if ((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag is Core.Automation.Commands.EnterKeysCommand)
+                    if ((ScriptCommand)lstScriptActions.SelectedItems[0].Tag is EnterKeysCommand)
                     {
                         multiSendKeystrokesEditToolStripMenuItem.Visible = true;
                     }
@@ -2801,34 +2220,42 @@ namespace taskt.UI.Forms
         {
             SetSelectedCodeToCommented(true);
         }
+
         private void enableSelectedCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetSelectedCodeToCommented(false);
         }
+
         private void pauseBeforeExecutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetPauseBeforeExecution();
         }
+
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SelectAllRows();
         }
+
         private void cutSelectedActionssToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CutRows();
         }
+
         private void copySelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyRows();
         }
+
         private void pasteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PasteRows();
         }
+
         private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteRows();
         }
+
         private void aboveHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstScriptActions.SelectedIndices.Count > 0)
@@ -2848,6 +2275,7 @@ namespace taskt.UI.Forms
                 appSettings.ClientSettings.InsertCommandsInline = currentInsertMode;
             }
         }
+
         private void belowHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstScriptActions.SelectedIndices.Count > 0)
@@ -2866,13 +2294,13 @@ namespace taskt.UI.Forms
         {
 
             //create command list
-            var commandList = new List<Core.Automation.Commands.ScriptCommand>();
+            var commandList = new List<ScriptCommand>();
 
             //loop each
             for (int i = lstScriptActions.SelectedItems.Count - 1; i >= 0; i--)
             {
                 //add to list and remove existing
-                commandList.Add((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
+                commandList.Add((ScriptCommand)lstScriptActions.SelectedItems[i].Tag);
                 lstScriptActions.Items.Remove(lstScriptActions.SelectedItems[i]);
             }
 
@@ -2885,10 +2313,12 @@ namespace taskt.UI.Forms
             //add to parent
             commandList.ForEach(x => parentBuilder.AddCommandToListView(x));
         }
+
         private void editThisCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lstScriptActions_DoubleClick(null, null);
         }
+
         private void multiSendKeystrokesEditToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var commands = Supplement_Forms.frmMultiSendKeystrokes.GetConsecutiveSendKeystrokesCommands(lstScriptActions, appSettings);
@@ -2946,9 +2376,9 @@ namespace taskt.UI.Forms
 
         private void ViewXMLCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var currentCommand = (taskt.Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
+            var currentCommand = (ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
 
-            string scriptXML = taskt.Core.Script.Script.SerializeScript(new List<Core.Automation.Commands.ScriptCommand>() { currentCommand }, scriptSerializer);
+            string scriptXML = Core.Script.Script.SerializeScript(new List<ScriptCommand>() { currentCommand }, scriptSerializer);
 
             int startIdx = scriptXML.IndexOf("<ScriptCommand ");
 
@@ -2974,18 +2404,17 @@ namespace taskt.UI.Forms
         {
             ClearHighlightListViewItem();
         }
+
         private void helpThisCommandToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //if (lstScriptActions.SelectedItems.Count > 0)
-            //{
-            //    showThisCommandHelp((Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag);
-            //}
             BeginShowThisCommandHelpProcess();
         }
+
         private void showScriptInfoMenuItem_Click(object sender, EventArgs e)
         {
             showScriptInformationForm();
         }
+
         private void variableManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showVariableManager();
@@ -3049,26 +2478,18 @@ namespace taskt.UI.Forms
         private void ShowNotification(string textToDisplay)
         {
             notificationText = textToDisplay;
-            //lblStatus.Left = 20;
-            //lblStatus.Text = textToDisplay;
 
             pnlStatus.SuspendLayout();
-            //for (int i = 0; i < 30; i++)
-            //{
-            //    tlpControls.RowStyles[3].Height = i;
-            //}
+
             ShowNotificationRow();
             pnlStatus.ResumeLayout();
 
             isDisplaying = true;
         }
+
         private void HideNotification()
         {
             pnlStatus.SuspendLayout();
-            //for (int i = 30; i > 0; i--)
-            //{
-            //    tlpControls.RowStyles[3].Height = i;
-            //}
             HideNotificationRow();
             pnlStatus.ResumeLayout();
 
@@ -3087,7 +2508,6 @@ namespace taskt.UI.Forms
         private void pnlStatus_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.Clear(Color.FromArgb(59, 59, 59));
-            //e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(59, 59, 59)), e.ClipRectangle);
             e.Graphics.DrawString(notificationText, pnlStatus.Font, Brushes.White, 30, 4);
             e.Graphics.DrawImage(Properties.Resources.message, 5, 3, 24, 24);
         }
@@ -3108,7 +2528,7 @@ namespace taskt.UI.Forms
 
         private void pnlStatus_DoubleClick(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplemental.frmDialog(notificationText, "Status Message", Supplemental.frmDialog.DialogType.OkOnly, 0))
+            using (var fm = new Supplemental.frmDialog(notificationText, "Status Message", Supplemental.frmDialog.DialogType.OkOnly, 0))
             {
                 fm.ShowDialog();
             }
@@ -3124,6 +2544,87 @@ namespace taskt.UI.Forms
         {
             lstScriptActions.Columns[2].Width = this.Width - 340;
         }
+        #endregion
+
+        #region Auto Save Timer & Script File
+
+        private void autoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.dontSaveFlag)
+            {
+                // DBG
+                //Console.WriteLine("now autosave");
+
+                (var autoSavePath, var saveTime) = Script.GetAutoSaveScriptFilePath();
+
+                //serialize script
+                try
+                {
+                    scriptInfo.TasktVersion = Application.ProductVersion;
+                    Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, scriptSerializer, autoSavePath);
+                    Notify("Script automatically saved. (" + saveTime + ")");
+                }
+                catch (Exception ex)
+                {
+                    Notify("Auto Save Error: " + ex.ToString());
+                }
+            }
+        }
+
+        private void SetAutoSaveState()
+        {
+            if (appSettings.ClientSettings.EnabledAutoSave)
+            {
+                autoSaveTimer.Enabled = this.dontSaveFlag;
+                if (this.dontSaveFlag)
+                {
+                    autoSaveTimer.Interval = appSettings.ClientSettings.AutoSaveInterval * 60000;
+                    // DBG
+                    //autoSaveTimer.Interval = appSettings.ClientSettings.AutoSaveInterval * 1000;
+                    autoSaveTimer.Start();
+                }
+                else
+                {
+                    autoSaveTimer.Stop();
+                }
+            }
+        }
+
+        private void RemoveOldAutoSavedFiles()
+        {
+            //var autoSaveFolder = Script.GetAutoSaveFolderPath();
+            //var files = System.IO.Directory.GetFiles(autoSaveFolder, "*.xml");
+            //foreach(var fp in files)
+            //{
+            //    var info = new System.IO.FileInfo(fp);
+            //    var diff = DateTime.Now - info.CreationTime;
+            //    if (diff.TotalDays >= appSettings.ClientSettings.RemoveAutoSaveFileDays)
+            //    {
+            //        System.IO.File.Delete(fp);
+            //    }
+            //}
+            RemoveOldScriptFiles(Script.GetAutoSaveFolderPath(), appSettings.ClientSettings.RemoveAutoSaveFileDays);
+        }
+
+        private void RemoveOldRunWithoutSavingScriptFiles()
+        {
+            RemoveOldScriptFiles(Script.GetRunWithoutSavingFolderPath(), appSettings.ClientSettings.RemoveRunWithtoutSavingFileDays);
+        }
+
+        private void RemoveOldScriptFiles(string folderPath, int days)
+        {
+            var files = System.IO.Directory.GetFiles(folderPath, "*.xml");
+            foreach (var fp in files)
+            {
+                var info = new System.IO.FileInfo(fp);
+                var diff = DateTime.Now - info.CreationTime;
+                if (diff.TotalDays >= days)
+                {
+                    System.IO.File.Delete(fp);
+                }
+            }
+        }
+
         #endregion
 
         #region Open, Save, Parse, Import, Validate File
@@ -3164,7 +2665,7 @@ namespace taskt.UI.Forms
             // check file exists
             if (!System.IO.File.Exists(filePath))
             {
-                using(var fm = new UI.Forms.Supplemental.frmDialog(filePath + " does not exits.", "Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using(var fm = new Supplemental.frmDialog(filePath + " does not exits.", "Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                     return;
@@ -3261,7 +2762,7 @@ namespace taskt.UI.Forms
             // check file exists
             if (!System.IO.File.Exists(filePath))
             {
-                using (var fm = new UI.Forms.Supplemental.frmDialog(filePath + " does not exits.", "Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new Supplemental.frmDialog(filePath + " does not exits.", "Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                     return;
@@ -3285,7 +2786,7 @@ namespace taskt.UI.Forms
                 lstScriptActions.BeginUpdate();
 
                 //comment
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
                 //import
                 PopulateExecutionCommands(deserializedScript.Commands, false);
                 foreach (Core.Script.ScriptVariable var in deserializedScript.Variables)
@@ -3300,7 +2801,7 @@ namespace taskt.UI.Forms
                 CheckValidateCommands(deserializedScript.Commands.Select(t => t.ScriptCommand).ToList());
 
                 //comment
-                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new Core.Automation.Commands.CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
+                lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "End Import From " + fileName + " @ " + dateTimeNow }));
 
                 lstScriptActions.EndUpdate();
 
@@ -3366,7 +2867,6 @@ namespace taskt.UI.Forms
             return position;
         }
 
-
         private void BeginSaveScriptProcess(bool SaveAs)
         {
             //clear selected items
@@ -3374,12 +2874,12 @@ namespace taskt.UI.Forms
             SaveToFile(SaveAs);
         }
 
-        private List<Core.Automation.Commands.ScriptCommand> GetConfiguredCommands()
+        private List<ScriptCommand> GetConfiguredCommands()
         {
-            List<Core.Automation.Commands.ScriptCommand> ConfiguredCommands = new List<Core.Automation.Commands.ScriptCommand>();
+            List<ScriptCommand> ConfiguredCommands = new List<ScriptCommand>();
             foreach (ListViewItem item in lstScriptActions.Items)
             {
-                ConfiguredCommands.Add(item.Tag as Core.Automation.Commands.ScriptCommand);
+                ConfiguredCommands.Add(item.Tag as ScriptCommand);
             }
 
             return ConfiguredCommands;
@@ -3398,27 +2898,27 @@ namespace taskt.UI.Forms
             int tryCatchValidationCount = 0;
             foreach (ListViewItem item in lstScriptActions.Items)
             {
-                if ((item.Tag is Core.Automation.Commands.BeginListLoopCommand) || (item.Tag is Core.Automation.Commands.BeginContinousLoopCommand) ||(item.Tag is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (item.Tag is Core.Automation.Commands.BeginLoopCommand) || (item.Tag is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((item.Tag is BeginListLoopCommand) || (item.Tag is BeginContinousLoopCommand) ||(item.Tag is BeginNumberOfTimesLoopCommand) || (item.Tag is BeginLoopCommand) || (item.Tag is BeginMultiLoopCommand))
                 {
                     beginLoopValidationCount++;
                 }
-                else if (item.Tag is Core.Automation.Commands.EndLoopCommand)
+                else if (item.Tag is EndLoopCommand)
                 {
                     beginLoopValidationCount--;
                 }
-                else if ((item.Tag is Core.Automation.Commands.BeginIfCommand) || (item.Tag is Core.Automation.Commands.BeginMultiIfCommand))
+                else if ((item.Tag is BeginIfCommand) || (item.Tag is BeginMultiIfCommand))
                 {
                     beginIfValidationCount++;
                 }
-                else if (item.Tag is Core.Automation.Commands.EndIfCommand)
+                else if (item.Tag is EndIfCommand)
                 {
                     beginIfValidationCount--;
                 }
-                else if(item.Tag is Core.Automation.Commands.TryCommand)
+                else if(item.Tag is TryCommand)
                 {
                     tryCatchValidationCount++;
                 }
-                else if (item.Tag is Core.Automation.Commands.EndTryCommand)
+                else if (item.Tag is EndTryCommand)
                 {
                     tryCatchValidationCount--;
                 }
@@ -3500,13 +3000,11 @@ namespace taskt.UI.Forms
             {
                 Notify("Save Error: " + ex.ToString());
             }
-
-
         }
 
-        private void CheckValidateCommands(List<Core.Automation.Commands.ScriptCommand> commands)
+        private void CheckValidateCommands(List<ScriptCommand> commands)
         {
-            using (var fm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands()))
+            using (var fm = new frmCommandEditor(automationCommands, GetConfiguredCommands()))
             {
                 fm.appSettings = this.appSettings;
                 foreach (var cmd in commands)
@@ -3528,7 +3026,6 @@ namespace taskt.UI.Forms
             OpenFile(filePath);
             if (normalFileOpen)
             {
-                //this.ScriptFilePath = System.IO.Path.GetFileName(filePath);
                 this.ScriptFilePath = filePath;
             }
             else
@@ -3539,20 +3036,18 @@ namespace taskt.UI.Forms
             return true;
         }
 
-        private void AddInstanceName(List<Core.Automation.Commands.ScriptCommand> items)
+        private void AddInstanceName(List<ScriptCommand> items)
         {
-            foreach(Core.Automation.Commands.ScriptCommand command in items)
+            foreach(ScriptCommand command in items)
             {
-                //instanceList.addInstance(command);
                 command.AddInstance(instanceList);
             }
         }
 
-        private void RemoveInstanceName(List<Core.Automation.Commands.ScriptCommand> items)
+        private void RemoveInstanceName(List<ScriptCommand> items)
         {
-            foreach (Core.Automation.Commands.ScriptCommand command in items)
+            foreach (ScriptCommand command in items)
             {
-                //instanceList.removeInstance(command);
                 command.RemoveInstance(instanceList);
             }
         }
@@ -3606,36 +3101,21 @@ namespace taskt.UI.Forms
 
             Notify("Running Script..");
 
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(ScriptFilePath, this);
+            frmScriptEngine newEngine = new frmScriptEngine(ScriptFilePath, this);
             newEngine.callBackForm = this;
             newEngine.Show();
         }
         #endregion
 
-
-        #region Automation Engine Delegate
-
-        #endregion
-
         #region misc?
         private void btnManageVariables_Click(object sender, EventArgs e)
         {
-
-            //using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables())
-            //{
-            //    scriptVariableEditor.appSettings = this.appSettings;
-            //    scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //    if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //    {
-            //        this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //    }
-            //}
             showVariableManager();
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            using (UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder())
+            using (Supplemental.frmThickAppElementRecorder recorder = new Supplemental.frmThickAppElementRecorder())
             {
                 recorder.ShowDialog();
             }
@@ -3648,9 +3128,10 @@ namespace taskt.UI.Forms
                 tlpControls.RowStyles[4].Height = i;
             }
         }
+
         private void uiBtnAbout_Click(object sender, EventArgs e)
         {
-            using (UI.Forms.Supplemental.frmAbout frmAboutForm = new UI.Forms.Supplemental.frmAbout())
+            using (Supplemental.frmAbout frmAboutForm = new Supplemental.frmAbout())
             {
                 frmAboutForm.ShowDialog();
             }
@@ -3660,7 +3141,7 @@ namespace taskt.UI.Forms
         {
 
             lastAntiIdleEvent = DateTime.Now;
-            var mouseMove = new Core.Automation.Commands.MoveMouseCommand();
+            var mouseMove = new MoveMouseCommand();
             mouseMove.v_XMousePosition = (Cursor.Position.X + 1).ToString();
             mouseMove.v_YMousePosition = (Cursor.Position.Y + 1).ToString();
             Notify("Anti-Idle Triggered");
@@ -3674,9 +3155,9 @@ namespace taskt.UI.Forms
             //MessageBox.Show(specificCommand);
 
             //bring up new command configuration form
-            using (var newCommandForm = new UI.Forms.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
+            using (var newCommandForm = new frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
             {
-                newCommandForm.creationMode = UI.Forms.frmCommandEditor.CreationMode.Add;
+                newCommandForm.creationMode = frmCommandEditor.CreationMode.Add;
                 newCommandForm.scriptVariables = this.scriptVariables;
                 // set taskt settings
                 newCommandForm.appSettings = this.appSettings;
@@ -3702,7 +3183,7 @@ namespace taskt.UI.Forms
                     ChangeSaveState(true);
 
                     //add to listview
-                    var selectedComamnd = (Core.Automation.Commands.ScriptCommand)newCommandForm.selectedCommand;
+                    var selectedComamnd = (ScriptCommand)newCommandForm.selectedCommand;
                     selectedComamnd.IsDontSavedCommand = true;
                     selectedComamnd.IsNewInsertedCommand = true;
                     AddCommandToListView(selectedComamnd);
@@ -3715,22 +3196,7 @@ namespace taskt.UI.Forms
             {
                 return;
             }
-            //if (tvCommands.SelectedNode.Level == 1)
-            //{
-            //    if (tvCommands.SelectedNode.Nodes.Count > 0)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        AddNewCommand(tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text);
-            //    }
-            //}
-            //else
-            //{
-            //    // maybe level == 2
-            //    AddNewCommand(tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text);
-            //}
+
             string commandName = GetSelectedCommandFullName();
             if (commandName.Length > 0)
             {
@@ -3739,45 +3205,15 @@ namespace taskt.UI.Forms
         }
         private string GetSelectedCommandFullName()
         {
-            //switch (tvCommands.SelectedNode.Level)
-            //{
-            //    case 0:
-            //        return "";
-            //        break;
-
-            //    case 1:
-            //        if (tvCommands.SelectedNode.Nodes.Count > 0)
-            //        {
-            //            return "";
-            //        }
-            //        else if (tvCommands.SelectedNode.ImageIndex == 1)
-            //        {
-            //            return "";
-            //        }
-            //        else
-            //        {
-            //            return tvCommands.SelectedNode.Parent.Text + " - " + tvCommands.SelectedNode.Text;
-            //        }
-            //        break;
-
-            //    case 2:
-            //        return tvCommands.SelectedNode.Parent.Parent.Text + " - " + tvCommands.SelectedNode.Text;
-            //        break;
-
-            //    default:
-            //        return "";
-            //        break;
-            //}
-            return taskt.Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
+            return Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
         }
         #endregion
-
 
         #region TreeView Events
         private void GenerateTreeViewCommands()
         {
-            bufferedCommandList = taskt.Core.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
-            bufferedCommandTreeImages = taskt.Core.CommandsTreeControls.CreateCommandImageList();
+            bufferedCommandList = Core.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
+            bufferedCommandTreeImages = Core.CommandsTreeControls.CreateCommandImageList();
             tvCommands.ImageList = bufferedCommandTreeImages;
 
             ShowAllCommands();
@@ -3885,9 +3321,9 @@ namespace taskt.UI.Forms
         }
         private void ShowFilterCommands(string keyword)
         {
-            TreeNode[] filterdCommands = taskt.Core.CommandsTreeControls.FilterCommands(keyword, bufferedCommandList, appSettings.ClientSettings);
+            TreeNode[] filterdCommands = Core.CommandsTreeControls.FilterCommands(keyword, bufferedCommandList, appSettings.ClientSettings);
 
-            taskt.Core.CommandsTreeControls.ShowCommandsTree(tvCommands, filterdCommands, true);
+            Core.CommandsTreeControls.ShowCommandsTree(tvCommands, filterdCommands, true);
 
             clearCmdTVCommandMenuStrip.Enabled = true;
             clearRootTVCommandMenuStrip.Enabled = true;
@@ -3896,7 +3332,7 @@ namespace taskt.UI.Forms
         {
             txtCommandFilter.Text = "";
 
-            taskt.Core.CommandsTreeControls.ShowCommandsTree(tvCommands, bufferedCommandList);
+            Core.CommandsTreeControls.ShowCommandsTree(tvCommands, bufferedCommandList);
 
             clearCmdTVCommandMenuStrip.Enabled = false;
             clearRootTVCommandMenuStrip.Enabled = false;
@@ -3909,62 +3345,20 @@ namespace taskt.UI.Forms
                 return;
             }
 
-            var command = (Core.Automation.Commands.ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
+            var command = (ScriptCommand)lstScriptActions.SelectedItems[0].Tag;
             var tp = command.GetType();
             var group = (Core.Automation.Attributes.ClassAttributes.Group)tp.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group));
 
-            //TreeNode parentNode = null;
-            //foreach (TreeNode node in tvCommands.Nodes)
-            //{
-            //    if (node.Text == group.groupName)
-            //    {
-            //        parentNode = node;
-            //        break;
-            //    }
-            //}
-            //if (parentNode != null)
-            //{
-            //    parentNode.Expand();
-            //    foreach (TreeNode node in parentNode.Nodes)
-            //    {
-            //        if (node.Nodes.Count > 0)
-            //        {
-            //            foreach (TreeNode no in node.Nodes)
-            //            {
-            //                if (no.Text == command.SelectionName)
-            //                {
-            //                    node.Expand();
-            //                    tvCommands.SelectedNode = no;
-            //                    tvCommands.Focus();
-            //                    break;
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (node.Text == command.SelectionName)
-            //            {
-            //                tvCommands.SelectedNode = node;
-            //                tvCommands.Focus();
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-            taskt.Core.CommandsTreeControls.FocusCommand(group.groupName, command.SelectionName, tvCommands);
+            Core.CommandsTreeControls.FocusCommand(group.groupName, command.SelectionName, tvCommands);
         }
 
         #endregion
 
-
         #region Variable Edit, Settings form
         private void showVariableManager()
         {
-            using (UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables(this.scriptVariables, this.appSettings))
+            using (frmScriptVariables scriptVariableEditor = new frmScriptVariables(this.scriptVariables, this.appSettings))
             {
-                //scriptVariableEditor.appSettings = this.appSettings;
-                //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
                     this.scriptVariables = scriptVariableEditor.scriptVariables.OrderBy(v => v.VariableName).ToList();
@@ -4068,54 +3462,43 @@ namespace taskt.UI.Forms
         {
             BeginNewScriptProcess();
         }
+
         private void uiBtnOpen_Click(object sender, EventArgs e)
         {
             BeginOpenScriptProcess();
         }
+
         private void uiBtnImport_Click(object sender, EventArgs e)
         {
             BeginImportProcess();
         }
+
         private void uiBtnSave_Click(object sender, EventArgs e)
         {
             BeginSaveScriptProcess(false);
         }
+
         private void uiBtnSaveAs_Click(object sender, EventArgs e)
         {
             BeginSaveScriptProcess(true);
         }
+
         private void uiBtnAddVariable_Click(object sender, EventArgs e)
         {
-            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //{
-            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //}
             showVariableManager();
         }
+
         private void uiBtnSettings_Click(object sender, EventArgs e)
         {
-            ////show settings dialog
-            //using (frmSettings newSettings = new frmSettings(this))
-            //{
-            //    newSettings.ShowDialog();
-
-            //    //reload app settings
-            //    appSettings = new Core.ApplicationSettings();
-            //    appSettings = appSettings.GetOrCreateApplicationSettings();
-
-            //    //reinit
-            //    Core.Server.HttpServerClient.Initialize();
-            //}
             showSettingForm();
         }
+
         private void uiBtnClearAll_Click(object sender, EventArgs e)
         {
             HideSearchInfo();
             lstScriptActions.Items.Clear();
         }
+
         private void uiBtnRecordSequence_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -4130,34 +3513,35 @@ namespace taskt.UI.Forms
             this.Show();
             this.BringToFront();
         }
+
         private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
         {
-            using (UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement())
+            using (frmScheduleManagement scheduleManager = new frmScheduleManagement())
             {
                 scheduleManager.Show();
             }
         }
+
         private void uiBtnRunScript_Click(object sender, EventArgs e)
         {
             BeginRunScriptProcess();
         }
+
         private void pbSearch_Click(object sender, EventArgs e)
         {
-            //if (txtCommandSearch.Text != "" || tsSearchBox.Text != "")
-            //{
-            //    //reqdIndex++;
-            //    SearchForItemInListView();
-            //}
             SearchForItemInListView();
         }
+
         private void uiBtnKeep_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
         }
+
         private void uiBtnClose_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
+
         private void btnSequenceImport_Click(object sender, EventArgs e)
         {
             BeginImportProcess();
@@ -4184,7 +3568,7 @@ namespace taskt.UI.Forms
         }
         private void sampleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var fm = new Forms.frmSample(this))
+            using (var fm = new frmSample(this))
             {
                 fm.ShowDialog();
             }
@@ -4288,8 +3672,6 @@ namespace taskt.UI.Forms
         }
         private void clearSearchHighlightsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //this.currentScriptEditMode = CommandEditorState.Normal;
-            //lstScriptActions.Invalidate();
             ClearHighlightListViewItem();
         }
 
@@ -4298,13 +3680,6 @@ namespace taskt.UI.Forms
         #region Options menu event handler
         private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //UI.Forms.frmScriptVariables scriptVariableEditor = new UI.Forms.frmScriptVariables();
-            //scriptVariableEditor.scriptVariables = this.scriptVariables;
-
-            //if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
-            //{
-            //    this.scriptVariables = scriptVariableEditor.scriptVariables;
-            //}
             showVariableManager();
         }
         private void scriptInformationsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4314,33 +3689,25 @@ namespace taskt.UI.Forms
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ////show settings dialog
-            //using (frmSettings newSettings = new frmSettings(this))
-            //{
-            //    newSettings.ShowDialog();
-            //}
-
-            ////reload app settings
-            //appSettings = new Core.ApplicationSettings();
-            //appSettings = appSettings.GetOrCreateApplicationSettings();
-
-            ////reinit
-            //Core.Server.HttpServerClient.Initialize();
             showSettingForm();
         }
+
         private void newSettigsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showNewSettingForm();
         }
+
         private void showScriptFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowScriptFolderProcess();
         }
 
+
         private void showLogFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowLogFolderProcess();
         }
+
         private void showSearchBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             appSettings.ClientSettings.ShowCommandSearchBar = !appSettings.ClientSettings.ShowCommandSearchBar;
@@ -4361,7 +3728,7 @@ namespace taskt.UI.Forms
 
         private void showFormatCheckerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fm = new UI.Forms.Supplement_Forms.frmFormatChecker();
+            var fm = new Supplement_Forms.frmFormatChecker();
             fm.Show();
         }
         #endregion
@@ -4385,42 +3752,28 @@ namespace taskt.UI.Forms
 
         private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UI.Forms.frmScheduleManagement scheduleManager = new UI.Forms.frmScheduleManagement();
+            frmScheduleManagement scheduleManager = new frmScheduleManagement();
             scheduleManager.Show();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //string bk_ScriptFilePath = this.ScriptFilePath;
+            var tempFilePath = Script.GetRunWithoutSavingScriptFilePath();
+            var currentFilePath = this.ScriptFilePath;
+            var currentDontSaveFlag = this.dontSaveFlag;
 
-            //// create templete script file
-            //string cur = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff");
-            //Random rnd = new Random();
-            //do
-            //{
-            //    int v = rnd.Next();
-            //    if (!System.IO.File.Exists(this.ScriptFilePath + cur + "-" + v.ToString() + ".xml"))
-            //    {
-            //        this.ScriptFilePath += cur + "-" + v.ToString() + ".xml";
-            //        break;
-            //    }
-            //} while (true);
-            //BeginSaveScriptProcess(false);
+            this.ScriptFilePath = tempFilePath;
+            saveAndRunToolStripMenuItem_Clicked(null, null);
 
-            BeginRunScriptProcess();
-
-            //// remove templete script file
-            //System.IO.File.Delete(this.ScriptFilePath);
-
-            //this.ScriptFilePath = bk_ScriptFilePath;
+            this.ScriptFilePath = currentFilePath;
+            this.dontSaveFlag = currentDontSaveFlag;
+            UpdateWindowTitle();
         }
         #endregion
 
         #region Save And Run menu event handler
         private void saveAndRunToolStripMenuItem_Clicked(object sender, EventArgs e)
         {
-            //saveToolStripMenuItem_Click(null, null);
-            //runToolStripMenuItem_Click(null, null);
             if (scriptInfo.RunTimes != int.MaxValue)
             {
                 scriptInfo.RunTimes++;
@@ -4441,6 +3794,7 @@ namespace taskt.UI.Forms
         {
             showWikiPage();
         }
+
         private void tasktGitterStripMenuItem_Click(object sender, EventArgs e)
         {
             showGitterPage();
@@ -4485,7 +3839,7 @@ namespace taskt.UI.Forms
                 }
                 else
                 {
-                    using(var fm = new UI.Forms.Supplemental.frmDialog("This file type can not open.", "File Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using(var fm = new Supplemental.frmDialog("This file type can not open.", "File Open Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -4610,7 +3964,7 @@ namespace taskt.UI.Forms
             var cmd = automationCommands.Where(t => t.FullName == commandName).FirstOrDefault();
             if (cmd != null)
             {
-                AdvancedSearchItemInCommands(((Core.Automation.Commands.ScriptCommand)cmd.Command).SelectionName, false, false, true, false, false, false, "");
+                AdvancedSearchItemInCommands(((ScriptCommand)cmd.Command).SelectionName, false, false, true, false, false, false, "");
             }
         }
 
@@ -4665,7 +4019,7 @@ namespace taskt.UI.Forms
         #endregion
 
         #region CommandEditor
-        public void setCommandEditorSizeAndPosition(Forms.frmCommandEditor editor)
+        public void setCommandEditorSizeAndPosition(frmCommandEditor editor)
         {
             if (editor == null)
             {
@@ -4675,11 +4029,8 @@ namespace taskt.UI.Forms
             this.lastEditorSize = editor.Size;
             this.lastEditorPosition = editor.Location;
         }
-
-
         #endregion
 
     }
-
 }
 
