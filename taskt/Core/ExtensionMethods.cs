@@ -986,13 +986,13 @@ namespace taskt.Core
             //userVariable = parseVariableName(userVariable, engine);
             userVariable = VariableNameControls.GetVariableName(userVariable, engine);
 
-            var requiredVariable = lookupVariable(userVariable, engine);
+            var requiredVariable = LookupVariable(userVariable, engine);
 
             //if still not found and user has elected option, create variable at runtime
             if ((requiredVariable == null) && (engine.engineSettings.CreateMissingVariablesDuringExecution))
             {
                 engine.VariableList.Add(new Script.ScriptVariable() { VariableName = userVariable });
-                requiredVariable = lookupVariable(userVariable, engine);
+                requiredVariable = LookupVariable(userVariable, engine);
             }
 
             if (requiredVariable == null)
@@ -1001,9 +1001,9 @@ namespace taskt.Core
             }
             else
             {
-                if (parseValue && (variableValue is string))
+                if (parseValue && (variableValue is string str))
                 {
-                    requiredVariable.VariableValue = ((string)variableValue).ExpandValueOrUserVariable(engine);
+                    requiredVariable.VariableValue = str.ExpandValueOrUserVariable(engine);
                 }
                 else
                 {
@@ -1025,7 +1025,7 @@ namespace taskt.Core
             //string newName = parseVariableName(variableName, engine);
             var newName = VariableNameControls.GetVariableName(variableName, engine);
             newName = newName.ExpandValueOrUserVariable(engine);
-            Script.ScriptVariable searchedVaiable = lookupVariable(newName, engine);
+            Script.ScriptVariable searchedVaiable = LookupVariable(newName, engine);
             if (searchedVaiable == null)
             {
                 throw new Exception("Variable " + variableName + " does not exists.");
@@ -1036,7 +1036,7 @@ namespace taskt.Core
             }
         }
 
-        private static Script.ScriptVariable lookupVariable(string variableName, Automation.Engine.AutomationEngineInstance engine)
+        private static Script.ScriptVariable LookupVariable(string variableName, Automation.Engine.AutomationEngineInstance engine)
         {
             //search for the variable
             var requiredVariable = engine.VariableList.Where(var => var.VariableName == variableName).FirstOrDefault();
