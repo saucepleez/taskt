@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vValue = v_Value.ExpandValueOrUserVariable(sender);
+            var vValue = v_Value.ExpandValueOrUserVariable(engine);
 
             var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
             

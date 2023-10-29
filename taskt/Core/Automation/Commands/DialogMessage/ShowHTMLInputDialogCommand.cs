@@ -129,7 +129,7 @@ namespace taskt.Core.Automation.Commands
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
                 {
                     //sample for temp testing
-                    var htmlInput = v_InputHTML.ExpandValueOrUserVariable(sender);
+                    var htmlInput = v_InputHTML.ExpandValueOrUserVariable(engine);
 
                     var errorOnClose = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ErrorOnClose), engine);
 
@@ -142,7 +142,7 @@ namespace taskt.Core.Automation.Commands
                         //store each one into context
                         foreach (var variable in variables)
                         {
-                            variable.VariableValue.ToString().StoreInUserVariable(sender, variable.VariableName);
+                            variable.VariableValue.ToString().StoreInUserVariable(engine, variable.VariableName);
                         }
                     }
                     else if (errorOnClose == "Error On Close")

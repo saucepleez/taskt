@@ -96,10 +96,10 @@ namespace taskt.Core.Automation.Commands
 
             (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var vTargetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(sender);
-            var vTargetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(sender);
-            var vColumnName = v_ColumnName.ExpandValueOrUserVariable(sender);
-            var vOutputDirectory = v_OutputDirectory.ExpandValueOrUserVariable(sender);
+            var vTargetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(engine);
+            var vTargetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(engine);
+            var vColumnName = v_ColumnName.ExpandValueOrUserVariable(engine);
+            var vOutputDirectory = v_OutputDirectory.ExpandValueOrUserVariable(engine);
             
             excelInstance.Visible = false;
             excelInstance.DisplayAlerts = false;

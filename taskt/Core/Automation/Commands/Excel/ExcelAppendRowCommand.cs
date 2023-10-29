@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
                 lastUsedRow = 0;
             }
 
-            var targetText = v_TextToSet.ExpandValueOrUserVariable(sender);
+            var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
             splittext = targetText.Split(',');
 
             foreach (var item in splittext)

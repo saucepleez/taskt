@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> targetList = v_ListName.ExpandUserVariableAsList(engine);
 
-            var searchedValue = v_SearchItem.ExpandValueOrUserVariable(sender);
+            var searchedValue = v_SearchItem.ExpandValueOrUserVariable(engine);
 
             targetList.Contains(searchedValue).StoreInUserVariable(engine, v_Result);
         }

@@ -79,11 +79,11 @@ namespace taskt.Core.Automation.Commands
         {
             //get engine and preference
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-            var instance = v_InstanceName.ExpandValueOrUserVariable(sender);
-            var testPreference = v_TestConnection.ExpandValueOrUserVariable(sender);
+            var instance = v_InstanceName.ExpandValueOrUserVariable(engine);
+            var testPreference = v_TestConnection.ExpandValueOrUserVariable(engine);
 
             //create connection
-            var oleDBConnection = CreateConnection(sender);
+            var oleDBConnection = CreateConnection(engine);
 
             //attempt to open and close connection
             if (testPreference == "Yes")
@@ -95,10 +95,10 @@ namespace taskt.Core.Automation.Commands
             engine.AddAppInstance(instance, oleDBConnection);
 
         }
-        private OleDbConnection CreateConnection(object sender)
+        private OleDbConnection CreateConnection(Engine.AutomationEngineInstance engine)
         {
-            var connection = v_ConnectionString.ExpandValueOrUserVariable(sender);
-            var connectionPass = v_ConnectionStringPassword.ExpandValueOrUserVariable(sender);
+            var connection = v_ConnectionString.ExpandValueOrUserVariable(engine);
+            var connectionPass = v_ConnectionStringPassword.ExpandValueOrUserVariable(engine);
 
             if (connectionPass.StartsWith("!"))
             {

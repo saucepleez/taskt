@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
                 targetElement = targetElement.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Edit));
             }
 
-            string textValue = v_TextVariable.ExpandValueOrUserVariable(sender);
+            string textValue = v_TextVariable.ExpandValueOrUserVariable(engine);
 
             if (targetElement.TryGetCurrentPattern(ValuePattern.Pattern, out object valPtn))
             {

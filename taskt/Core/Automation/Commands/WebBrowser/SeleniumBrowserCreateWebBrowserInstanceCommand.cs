@@ -118,8 +118,8 @@ namespace taskt.Core.Automation.Commands
             var seleniumEngine = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_EngineType), engine);
 
             var driverPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), "Resources");
-            var browserPath = v_BrowserPath.ExpandValueOrUserVariable(sender);
-            var webDriverPath = v_WebDriverPath.ExpandValueOrUserVariable(sender);
+            var browserPath = v_BrowserPath.ExpandValueOrUserVariable(engine);
+            var webDriverPath = v_WebDriverPath.ExpandValueOrUserVariable(engine);
 
             OpenQA.Selenium.DriverService driverService;
             OpenQA.Selenium.IWebDriver webDriver;
@@ -133,7 +133,7 @@ namespace taskt.Core.Automation.Commands
 
                 if (!String.IsNullOrEmpty(v_SeleniumOptions))
                 {
-                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(sender);
+                    var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
                     options.AddArguments(convertedOptions);
                 }
 
@@ -197,7 +197,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //add app instance
-            var instanceName = v_InstanceName.ExpandValueOrUserVariable(sender);
+            var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
             engine.AddAppInstance(instanceName, webDriver);
 
             var instanceTracking = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_InstanceTracking), engine);

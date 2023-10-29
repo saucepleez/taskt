@@ -76,10 +76,10 @@ namespace taskt.Core.Automation.Commands
             }
 
             //get variablized input
-            var jsonText = v_InputValue.ExpandValueOrUserVariable(sender).Trim();
+            var jsonText = v_InputValue.ExpandValueOrUserVariable(engine).Trim();
 
             //get variablized token
-            var jsonSearchToken = v_JsonExtractor.ExpandValueOrUserVariable(sender);
+            var jsonSearchToken = v_JsonExtractor.ExpandValueOrUserVariable(engine);
 
             ////create objects
             //Newtonsoft.Json.Linq.JObject o;

@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var instanceName = v_InstanceName.ExpandValueOrUserVariable(sender);
+            var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             bool browserFound = false;
             var shellWindows = new ShellWindows();

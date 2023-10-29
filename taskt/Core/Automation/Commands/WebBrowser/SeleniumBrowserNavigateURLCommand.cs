@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var parsedURL = v_URL.ExpandValueOrUserVariable(sender);
+            var parsedURL = v_URL.ExpandValueOrUserVariable(engine);
             if (!parsedURL.StartsWith("http"))
             {
                 var useHttps = v_UseHttps.ExpandValueOrUserVariableAsBool("Use HTTPS", engine);

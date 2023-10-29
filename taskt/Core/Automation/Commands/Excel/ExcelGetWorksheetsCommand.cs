@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> sheetNames = new List<string>();
 
-            var targetSheetName = v_SheetName.ExpandValueOrUserVariable(sender);
+            var targetSheetName = v_SheetName.ExpandValueOrUserVariable(engine);
             
             if (String.IsNullOrEmpty(targetSheetName))
             {

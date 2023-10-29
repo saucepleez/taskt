@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
-            var newName = v_newSheetName.ExpandValueOrUserVariable(sender);
+            var newName = v_newSheetName.ExpandValueOrUserVariable(engine);
             if (!String.IsNullOrEmpty(newName))
             {
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;

@@ -70,8 +70,8 @@ namespace taskt.Core.Automation.Commands
 
             foreach (DataRow rw in v_AddDataDataTable.Rows)
             {
-                var columnName = rw.Field<string>("Column Name").ExpandValueOrUserVariable(sender);
-                var data = rw.Field<string>("Data").ExpandValueOrUserVariable(sender);
+                var columnName = rw.Field<string>("Column Name").ExpandValueOrUserVariable(engine);
+                var data = rw.Field<string>("Data").ExpandValueOrUserVariable(engine);
                 newRow.SetField(columnName, data); 
             }
 

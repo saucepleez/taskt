@@ -30,8 +30,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //User32Functions.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
-            ClipboardControls.GetClipboardText().StoreInUserVariable(sender, v_userVariableName);
+            ClipboardControls.GetClipboardText().StoreInUserVariable(engine, v_userVariableName);
         }
     }
 }

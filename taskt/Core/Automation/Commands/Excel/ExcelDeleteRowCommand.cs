@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
 
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            string rowToDelete = v_RowNumber.ExpandValueOrUserVariable(sender);
+            string rowToDelete = v_RowNumber.ExpandValueOrUserVariable(engine);
 
             var cells = excelSheet.Range["A" + rowToDelete, Type.Missing];
             var entireRow = cells.EntireRow;

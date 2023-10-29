@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
 
             var browserInstance = (SHDocVw.InternetExplorer)browserObject;
 
-            browserInstance.Navigate(v_URL.ExpandValueOrUserVariable(sender));
+            browserInstance.Navigate(v_URL.ExpandValueOrUserVariable(engine));
 
             IEBrowserCreateCommand.WaitForReadyState(browserInstance);
 

@@ -48,7 +48,9 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-            var systemVariable = v_OSVariableName.ExpandValueOrUserVariable(sender);
+            var engine = (Engine.AutomationEngineInstance)sender;
+
+            var systemVariable = v_OSVariableName.ExpandValueOrUserVariable(engine);
 
             ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
@@ -61,11 +63,10 @@ namespace taskt.Core.Automation.Commands
                     if (prop.Name == systemVariable)
                     {
                         var sysValue = prop.Value?.ToString() ?? "";
-                        sysValue.StoreInUserVariable(sender, v_applyToVariableName);
+                        sysValue.StoreInUserVariable(engine, v_applyToVariableName);
                         return;
                     }
                 }
-
             }
 
             throw new Exception("System Property '" + systemVariable + "' not found!");

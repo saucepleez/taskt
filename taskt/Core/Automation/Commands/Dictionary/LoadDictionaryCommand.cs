@@ -95,12 +95,12 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
             //var vInstance = DateTime.Now.ToString();
 
-            var vSheet = v_SheetName.ExpandValueOrUserVariable(sender);
-            var vKeyColumn = v_KeyColumn.ExpandValueOrUserVariable(sender);
-            var vValueColumn = v_ValueColumn.ExpandValueOrUserVariable(sender);
+            var vSheet = v_SheetName.ExpandValueOrUserVariable(engine);
+            var vKeyColumn = v_KeyColumn.ExpandValueOrUserVariable(engine);
+            var vValueColumn = v_ValueColumn.ExpandValueOrUserVariable(engine);
 
             //string vFilePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
-            var vFilePath = v_FilePath.ExpandValueOrUserVariable(sender);
+            var vFilePath = v_FilePath.ExpandValueOrUserVariable(engine);
 
             //Query required from workbook using OLEDB
             //DataTableControls dataSetCommand = new DataTableControls();

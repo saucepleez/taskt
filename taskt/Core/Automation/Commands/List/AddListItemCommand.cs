@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
             List<string> lst = v_ListName.ExpandUserVariableAsList(engine);
 
-            var variableInput = v_Input.ExpandValueOrUserVariable(sender);
+            var variableInput = v_Input.ExpandValueOrUserVariable(engine);
             lst.Add(variableInput);
         }
     }

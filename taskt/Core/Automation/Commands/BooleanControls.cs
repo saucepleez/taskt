@@ -32,12 +32,12 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="value"></param>
         /// <param name="parameterName"></param>
-        /// <param name="sender"></param>
+        /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception">value is not Boolean</exception>
-        public static bool ExpandValueOrUserVariableAsBool(this string value, string parameterName, object sender)
+        public static bool ExpandValueOrUserVariableAsBool(this string value, string parameterName, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            string convertedText = value.ExpandValueOrUserVariable(sender);
+            string convertedText = value.ExpandValueOrUserVariable(engine);
             if (bool.TryParse(convertedText, out bool v))
             {
                 return v;
@@ -48,9 +48,9 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void StoreInUserVariable(this bool value, Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this bool value, Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value ? "TRUE" : "FALSE", engine, false);
         }
     }
 }

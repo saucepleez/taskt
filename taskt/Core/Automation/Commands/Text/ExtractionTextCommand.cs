@@ -103,7 +103,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //store variable
-            extractedText.StoreInUserVariable(sender, v_applyToVariableName);
+            extractedText.StoreInUserVariable(engine, v_applyToVariableName);
         }
 
         private void cmbTextExtraction_SelectionChangeCommitted(object sender, EventArgs e)

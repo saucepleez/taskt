@@ -57,13 +57,13 @@ namespace taskt.Core.Automation.Commands
             int loopTimes;
             Script.ScriptVariable complexVarible = null;
 
-            var loopParameter = loopCommand.v_LoopParameter.ExpandValueOrUserVariable(sender);
+            var loopParameter = loopCommand.v_LoopParameter.ExpandValueOrUserVariable(engine);
 
             loopTimes = int.Parse(loopParameter);
 
 
             int startIndex = 0;
-            int.TryParse(v_LoopStart.ExpandValueOrUserVariable(sender), out startIndex);
+            int.TryParse(v_LoopStart.ExpandValueOrUserVariable(engine), out startIndex);
 
 
             for (int i = startIndex; i < loopTimes; i++)

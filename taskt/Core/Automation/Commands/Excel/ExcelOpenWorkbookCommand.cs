@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
 
             var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
-            var pass = v_Password.ExpandValueOrUserVariable(sender);
+            var pass = v_Password.ExpandValueOrUserVariable(engine);
 
             int worksheets;
             try

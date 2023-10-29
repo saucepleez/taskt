@@ -94,10 +94,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+
             //get file path
-            var filePath = v_FilePath.ExpandValueOrUserVariable(sender);
-            var className = v_ClassName.ExpandValueOrUserVariable(sender);
-            var methodName = v_MethodName.ExpandValueOrUserVariable(sender);
+            var filePath = v_FilePath.ExpandValueOrUserVariable(engine);
+            var className = v_ClassName.ExpandValueOrUserVariable(engine);
+            var methodName = v_MethodName.ExpandValueOrUserVariable(engine);
 
             //if file path does not exist
             if (!System.IO.File.Exists(filePath))
@@ -141,7 +143,7 @@ namespace taskt.Core.Automation.Commands
                     //get parameter value
                     var requiredParameterValue = (from rws in v_MethodParameters.AsEnumerable()
                                                  where rws.Field<string>("Parameter Name") == paramName
-                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault().ExpandValueOrUserVariable(sender);
+                                                 select rws.Field<string>("Parameter Value")).FirstOrDefault().ExpandValueOrUserVariable(engine);
 
               
                     //get type of parameter
@@ -236,7 +238,7 @@ namespace taskt.Core.Automation.Commands
             }
     
             //store result in variable
-            result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+            result.ToString().StoreInUserVariable(engine, v_applyToVariableName);
         }
 
         public override void BeforeValidate()

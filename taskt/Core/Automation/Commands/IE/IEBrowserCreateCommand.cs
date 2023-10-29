@@ -48,12 +48,12 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
-            var instanceName = v_InstanceName.ExpandValueOrUserVariable(sender);
+            var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             SHDocVw.InternetExplorer newBrowserSession = new SHDocVw.InternetExplorer();
             try
             {
-                newBrowserSession.Navigate(v_URL.ExpandValueOrUserVariable(sender));
+                newBrowserSession.Navigate(v_URL.ExpandValueOrUserVariable(engine));
                 WaitForReadyState(newBrowserSession);
                 newBrowserSession.Visible = true;
             }
