@@ -970,9 +970,9 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, str, engine, false);
         }
 
-        public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            StoreInUserVariable(targetVariable, value, sender, false);
+            StoreInUserVariable(targetVariable, value, engine, false);
         }
 
         /// <summary>
