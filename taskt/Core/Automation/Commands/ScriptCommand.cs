@@ -555,10 +555,14 @@ namespace taskt.Core.Automation.Commands
         {
             System.Threading.Thread.Sleep(DefaultPause);
         }
-        //public virtual void RunCommand(AutomationEngineInstance engine)
-        //{
-        //    System.Threading.Thread.Sleep(DefaultPause);
-        //}
+        public virtual void RunCommand(Engine.AutomationEngineInstance engine)
+        {
+            System.Threading.Thread.Sleep(DefaultPause);
+        }
+        public virtual void RunCommand(Engine.AutomationEngineInstance engine, Script.ScriptAction command)
+        {
+            System.Threading.Thread.Sleep(DefaultPause);
+        }
         #endregion
 
         #region GetDisplayValue
