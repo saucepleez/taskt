@@ -3737,7 +3737,16 @@ namespace taskt.UI.Forms
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BeginRunScriptProcess();
+            var tempFilePath = Script.GetRunWithoutSavingScriptFilePath();
+            var currentFilePath = this.ScriptFilePath;
+            var currentDontSaveFlag = this.dontSaveFlag;
+
+            this.ScriptFilePath = tempFilePath;
+            saveAndRunToolStripMenuItem_Clicked(null, null);
+
+            this.ScriptFilePath = currentFilePath;
+            this.dontSaveFlag = currentDontSaveFlag;
+            UpdateWindowTitle();
         }
         #endregion
 

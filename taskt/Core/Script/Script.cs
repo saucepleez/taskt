@@ -271,6 +271,10 @@ namespace taskt.Core.Script
             return Path.Combine(Path.GetDirectoryName(tasktExePath), "AutoSave");
         }
 
+        /// <summary>
+        /// get autosave script file path
+        /// </summary>
+        /// <returns></returns>
         public static (string path, string timeStump) GetAutoSaveScriptFilePath()
         {
             var savePath = GetAutoSaveFolderPath();
@@ -287,6 +291,17 @@ namespace taskt.Core.Script
         {
             var tasktExePath = Assembly.GetEntryAssembly().Location;
             return Path.Combine(Path.GetDirectoryName(tasktExePath), "RunWithoutSaving");
+        }
+
+        /// <summary>
+        /// get file path when use 'Run Without Saving'
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRunWithoutSavingScriptFilePath()
+        {
+            var runPath = GetRunWithoutSavingFolderPath();
+            var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            return Path.Combine(runPath, "run-") + saveTime + ".xml";
         }
 
         /// <summary>
