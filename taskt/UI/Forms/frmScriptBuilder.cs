@@ -303,6 +303,7 @@ namespace taskt.UI.Forms
 
             // remove old auto saved files
             RemoveOldAutoSavedFiles();
+            RemoveOldRunWithoutSavingScriptFiles();
 
             // check update
             if ((appSettings.ClientSettings.CheckForUpdateAtStartup) && (this.parentBuilder == null))
@@ -2545,7 +2546,7 @@ namespace taskt.UI.Forms
         }
         #endregion
 
-        #region Auto Save Timer
+        #region Auto Save Timer & Script File
 
         private void autoSaveTimer_Tick(object sender, EventArgs e)
         {
@@ -2591,13 +2592,33 @@ namespace taskt.UI.Forms
 
         private void RemoveOldAutoSavedFiles()
         {
-            var autoSaveFolder = Script.GetAutoSaveFolderPath();
-            var files = System.IO.Directory.GetFiles(autoSaveFolder, "*.xml");
-            foreach(var fp in files)
+            //var autoSaveFolder = Script.GetAutoSaveFolderPath();
+            //var files = System.IO.Directory.GetFiles(autoSaveFolder, "*.xml");
+            //foreach(var fp in files)
+            //{
+            //    var info = new System.IO.FileInfo(fp);
+            //    var diff = DateTime.Now - info.CreationTime;
+            //    if (diff.TotalDays >= appSettings.ClientSettings.RemoveAutoSaveFileDays)
+            //    {
+            //        System.IO.File.Delete(fp);
+            //    }
+            //}
+            RemoveOldScriptFiles(Script.GetAutoSaveFolderPath(), appSettings.ClientSettings.RemoveAutoSaveFileDays);
+        }
+
+        private void RemoveOldRunWithoutSavingScriptFiles()
+        {
+            RemoveOldScriptFiles(Script.GetRunWithoutSavingFolderPath(), appSettings.ClientSettings.RemoveRunWithtoutSavingFileDays);
+        }
+
+        private void RemoveOldScriptFiles(string folderPath, int days)
+        {
+            var files = System.IO.Directory.GetFiles(folderPath, "*.xml");
+            foreach (var fp in files)
             {
                 var info = new System.IO.FileInfo(fp);
                 var diff = DateTime.Now - info.CreationTime;
-                if (diff.TotalDays >= appSettings.ClientSettings.RemoveAutoSaveFileDays)
+                if (diff.TotalDays >= days)
                 {
                     System.IO.File.Delete(fp);
                 }
