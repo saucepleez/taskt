@@ -67,12 +67,9 @@ namespace taskt.Core.Automation.Commands
             this.v_Option = "Index";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;
-
 
             var valueIndex = v_DataValueIndex.ExpandValueOrUserVariable(engine);
 

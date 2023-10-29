@@ -59,10 +59,8 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //DataTable dataTable = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
             DataTable dataTable = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
