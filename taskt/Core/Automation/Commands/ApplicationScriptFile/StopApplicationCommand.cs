@@ -39,10 +39,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             string shortName = v_ProgramShortName.ExpandValueOrUserVariable(engine);
             var processes = System.Diagnostics.Process.GetProcessesByName(shortName);
 
