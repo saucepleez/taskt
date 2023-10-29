@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RestSharp;
+using static taskt.Core.Automation.Commands.TextControls;
 
 namespace taskt.Core.Server
 {
@@ -500,7 +498,7 @@ namespace taskt.Core.Server
                 }
 
                 //add script data
-                request.AddParameter("ScriptData", scriptData.ToBase64(), RestSharp.ParameterType.HttpHeader);
+                request.AddParameter("ScriptData", scriptData.ConvertToBase64(), RestSharp.ParameterType.HttpHeader);
             }
             else if (parameterType == "Run Local File")
             {
@@ -532,7 +530,7 @@ namespace taskt.Core.Server
                 }
 
                 //add script data
-                request.AddParameter("ScriptData", scriptData.ToBase64(), RestSharp.ParameterType.HttpHeader);
+                request.AddParameter("ScriptData", scriptData.ConvertToBase64(), RestSharp.ParameterType.HttpHeader);
 
             }
             else if (parameterType == "Run Remote File")
@@ -557,7 +555,7 @@ namespace taskt.Core.Server
                 request.Resource = "/ExecuteCommand";
 
                 //add script data
-                request.AddParameter("CommandData", scriptData.ToBase64(), RestSharp.ParameterType.HttpHeader);
+                request.AddParameter("CommandData", scriptData.ConvertToBase64(), RestSharp.ParameterType.HttpHeader);
 
             }
             else if (parameterType == "Get Engine Status")

@@ -1,4 +1,6 @@
-﻿using taskt.Core.Automation.Attributes.PropertyAttributes;
+﻿using System.Text;
+using System;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -69,5 +71,43 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
         public static string v_FilePath { get; }
+
+
+        public static string ConvertToBase64(this string text)
+        {
+            return ConvertToBase64(text, Encoding.UTF8);
+        }
+
+        public static string ConvertToBase64(this string text, Encoding encoding)
+        {
+            byte[] textAsBytes = encoding.GetBytes(text);
+            return Convert.ToBase64String(textAsBytes);
+        }
+
+        public static bool TryParseBase64(this string text, out string decodedText)
+        {
+            return TryParseBase64(text, Encoding.UTF8, out decodedText);
+        }
+
+        public static bool TryParseBase64(this string text, Encoding encoding, out string decodedText)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                decodedText = text;
+                return false;
+            }
+
+            try
+            {
+                byte[] textAsBytes = Convert.FromBase64String(text);
+                decodedText = encoding.GetString(textAsBytes);
+                return true;
+            }
+            catch (Exception)
+            {
+                decodedText = null;
+                return false;
+            }
+        }
     }
 }
