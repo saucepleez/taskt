@@ -45,9 +45,8 @@ namespace taskt.Core.Automation.Commands
 
             this.v_InstanceName = "";
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             var splittext = v_TextToSet.Split(',');
 
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);

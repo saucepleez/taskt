@@ -34,10 +34,8 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            
             var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             excelInstance.Worksheets.Add();
 

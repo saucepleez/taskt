@@ -62,10 +62,8 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "";
             this.v_AddHeaders = "Yes";
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             var dataSetVariable = LookupVariable(engine);

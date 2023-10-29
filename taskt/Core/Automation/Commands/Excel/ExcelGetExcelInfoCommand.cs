@@ -47,10 +47,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
 
             var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine);
