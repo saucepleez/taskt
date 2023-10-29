@@ -32,10 +32,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var pauseLength = this.ExpandValueOrUserVariableAsInteger(nameof(v_PauseLength), engine);
 
             System.Threading.Thread.Sleep(pauseLength);
