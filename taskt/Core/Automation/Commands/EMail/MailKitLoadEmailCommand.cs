@@ -46,10 +46,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //string path = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "eml", "msg", "txt" }, true);
             string path = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 

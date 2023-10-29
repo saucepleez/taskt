@@ -37,10 +37,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
             if (!dic.Remove(vKey))

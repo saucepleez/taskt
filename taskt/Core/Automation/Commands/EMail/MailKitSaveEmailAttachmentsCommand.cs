@@ -38,10 +38,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
             var path = v_SaveFolder.ExpandValueOrUserVariable(engine);

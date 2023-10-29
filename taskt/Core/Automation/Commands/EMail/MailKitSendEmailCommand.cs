@@ -115,10 +115,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             // from, to, cc, bcc, subject, body
             string from = v_SMTPFromEmail.ExpandValueOrUserVariable(engine);
             string to = v_SMTPToEmail.ExpandValueOrUserVariable(engine);

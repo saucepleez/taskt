@@ -31,10 +31,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
 
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(dic);
