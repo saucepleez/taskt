@@ -505,6 +505,40 @@ namespace taskt.Core
         public bool CheckForUpdateAtStartup { get; set; }
         public bool SkipBetaVersionUpdate { get; set; }
 
+        public bool EnabledAutoSave { get; set; }
+
+        private int _AutoSaveInterval;
+        public int AutoSaveInterval 
+        {
+            get
+            {
+                return _AutoSaveInterval;
+            }
+            set
+            {
+                if (value >= 1 && value <= 120)
+                {
+                    _AutoSaveInterval = value;
+                }
+            }
+        }
+
+        private int _RemoveAutoSaveFileDays;
+        public int RemoveAutoSaveFileDays
+        {
+            get
+            {
+                return _RemoveAutoSaveFileDays;
+            }
+            set
+            {
+                if (value > 1)
+                {
+                    _RemoveAutoSaveFileDays = value;
+                }
+            }
+        }
+
         private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
         private static string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
@@ -552,6 +586,10 @@ namespace taskt.Core
 
             CheckForUpdateAtStartup = true;
             SkipBetaVersionUpdate = true;
+
+            EnabledAutoSave = true;
+            AutoSaveInterval = 5;
+            RemoveAutoSaveFileDays = 7;
         }
 
         public string replaceClientKeyword(string targetString)
