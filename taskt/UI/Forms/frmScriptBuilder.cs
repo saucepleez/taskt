@@ -2554,14 +2554,6 @@ namespace taskt.UI.Forms
                 // DBG
                 //Console.WriteLine("now autosave");
 
-                //var tasktExePath = Assembly.GetEntryAssembly().Location;
-                //var autoSavePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(tasktExePath), "AutoSave");
-                //var autoSavePath = Script.GetAutoSaveFolderPath();
-
-                //var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-
-                //var autoSaveFile = System.IO.Path.Combine(autoSavePath, "autosave-") + saveTime + ".xml";
-
                 (var autoSavePath, var saveTime) = Script.GetAutoSaveScriptFilePath();
 
                 //serialize script
