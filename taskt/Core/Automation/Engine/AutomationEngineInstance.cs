@@ -14,10 +14,10 @@ namespace taskt.Core.Automation.Engine
     {
 
         //engine variables
-        public List<Core.Script.ScriptVariable> VariableList { get; set; }
+        public List<Script.ScriptVariable> VariableList { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
-        public Dictionary<string, Core.Script.Script> PreloadedTasks { get; set; }
-        public Core.Automation.Commands.ErrorHandlingCommand ErrorHandler;
+        public Dictionary<string, Script.Script> PreloadedTasks { get; set; }
+        public Commands.ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Engine
         public ServerSettings serverSettings { get; set; }
         public List<DataTable> DataTables { get; set; }
         public string FileName { get; set; }
-        public Core.Server.Task taskModel { get; set; }
+        public Task taskModel { get; set; }
         public bool serverExecution { get; set; }
         public List<RestResponse> ServiceResponses { get; set; }
         //events
@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Engine
             AutoCalculateVariables = engineSettings.AutoCalcVariables;
         }
 
-        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null, Dictionary<string, Core.Script.Script> preloadedTasks = null)
+        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Script.ScriptVariable> variables = null, Dictionary<string, Script.Script> preloadedTasks = null)
         {
             WriteLog("Client requesting to execute script using frmEngine");
 
@@ -146,9 +146,9 @@ namespace taskt.Core.Automation.Engine
                 {
                     preLoadedTask = PreloadedTasks.Any(f => f.Key == data);
                 }
-      
+
                 //get automation script
-                Core.Script.Script automationScript;
+                Script.Script automationScript;
                 if (dataIsFile && (!preLoadedTask))
                 {
                     ReportProgress("Deserializing File");
@@ -264,10 +264,10 @@ namespace taskt.Core.Automation.Engine
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
         }
-        public void ExecuteCommand(Core.Script.ScriptAction command)
+        public void ExecuteCommand(Script.ScriptAction command)
         {
             //get command
-            Core.Automation.Commands.ScriptCommand parentCommand = command.ScriptCommand;
+            Commands.ScriptCommand parentCommand = command.ScriptCommand;
 
            //update execution line numbers
             LineNumberChanged(parentCommand.LineNumber);
@@ -307,7 +307,7 @@ namespace taskt.Core.Automation.Engine
 
 
             //bypass comments
-            if (parentCommand is Core.Automation.Commands.CommentCommand || parentCommand.IsCommented)
+            if (parentCommand is Commands.CommentCommand || parentCommand.IsCommented)
             {
                 ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue().ExpandValueOrUserVariable(this));
                 return;
@@ -323,12 +323,12 @@ namespace taskt.Core.Automation.Engine
                 // todo: fix cast EngineInstance => object
 
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((parentCommand is Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Commands.BeginContinousLoopCommand) || (parentCommand is Commands.BeginListLoopCommand) || (parentCommand is Commands.BeginIfCommand) || (parentCommand is Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Commands.BeginLoopCommand) || (parentCommand is Commands.BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
                     parentCommand.RunCommand((object)this, command);
                 }
-                else if (parentCommand is Core.Automation.Commands.SequenceCommand)
+                else if (parentCommand is Commands.SequenceCommand)
                 {
                     // todo: execute runcommand
                     parentCommand.RunCommand((object)this, command);
