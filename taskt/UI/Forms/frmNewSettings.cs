@@ -345,8 +345,14 @@ namespace taskt.UI.Forms
             createTextBox("txtAutoSaveInterval", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AutoSaveInterval));
             createLabel("lblAutoSaveIntervalMin", "minute(s) [1-120]", FontSize.Normal, true);
 
-            createLabel("lblRemoveOldScriptFile", "Delete Auto Saved Script Files prior to Date ");
-            createTextBox("txtRemoveOldScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveAutoSaveFileDays), true);
+            createLabel("lblRemoveOldAutoSaveScriptFile", "Delete Auto Saved Script Files that are more than ");
+            createTextBox("txtRemoveOldAutoSaveScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveAutoSaveFileDays), false);
+            createLabel("lblRemoveOldAutoSaveScriptFile2", " days old", FontSize.Normal, true);
+
+            createLabel("lblRunWithoutSavingTitle", "Run Without Saving Script File", FontSize.NormalBold, true);
+            createLabel("lblRemoveOldRunwoSavingScriptFile", "Delete 'Run without Saving' Script Files that are more than ");
+            createTextBox("txtRemoveOldRunwoSavingScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveRunWithtoutSavingFileDays), false);
+            createLabel("lblRemoveOldRunwoSavingScriptFile2", " days old", FontSize.Normal, true);
         }
         private void showApplicationSettingsFile()
         {
