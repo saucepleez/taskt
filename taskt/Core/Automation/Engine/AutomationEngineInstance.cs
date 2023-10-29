@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Reflection;
 using taskt.Core.Server;
+
 namespace taskt.Core.Automation.Engine
 {
     public class AutomationEngineInstance
@@ -126,7 +126,7 @@ namespace taskt.Core.Automation.Engine
 
         public void ExecuteScript(string data, bool dataIsFile)
         {
-            Core.Client.EngineBusy = true;
+            Client.EngineBusy = true;
 
             try
             {
@@ -154,7 +154,7 @@ namespace taskt.Core.Automation.Engine
                     ReportProgress("Deserializing File");
                     WriteLog("Script Path: " + data);
                     FileName = data;              
-                    automationScript = Core.Script.Script.DeserializeFile(data, engineSettings);
+                    automationScript = Script.Script.DeserializeFile(data, engineSettings);
                 }
                 else if (dataIsFile && preLoadedTask)
                 {
@@ -166,7 +166,7 @@ namespace taskt.Core.Automation.Engine
                 else
                 {
                     ReportProgress("Deserializing XML");
-                    automationScript = Core.Script.Script.DeserializeXML(data);
+                    automationScript = Script.Script.DeserializeXML(data);
                 }
 
                 if (serverSettings.ServerConnectionEnabled && taskModel == null)
@@ -294,7 +294,7 @@ namespace taskt.Core.Automation.Engine
                 }
 
                 //wait
-                System.Threading.Thread.Sleep(2000);
+                Thread.Sleep(2000);
             }
 
             CurrentStatus = EngineStatus.Running;
@@ -320,16 +320,18 @@ namespace taskt.Core.Automation.Engine
             //handle any errors
             try
             {
+                // todo: fix cast EngineInstance => object
+
                 //determine type of command
                 if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
-                    parentCommand.RunCommand(this, command);
+                    parentCommand.RunCommand((object)this, command);
                 }
                 else if (parentCommand is Core.Automation.Commands.SequenceCommand)
                 {
                     // todo: execute runcommand
-                    parentCommand.RunCommand(this, command);
+                    parentCommand.RunCommand((object)this, command);
                 }
                 //else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
                 //{
@@ -357,10 +359,22 @@ namespace taskt.Core.Automation.Engine
                 else
                 {
                     //sleep required time
-                    System.Threading.Thread.Sleep(engineSettings.DelayBetweenCommands);
-                 
+                    Thread.Sleep(engineSettings.DelayBetweenCommands);
+
+                    var tp = parentCommand.GetType();
+                    var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance) });
+
+                    if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
+                    {
+                        parentCommand.RunCommand(this);
+                    }
+                    else
+                    {
+                        parentCommand.RunCommand((object)this);
+                    }
+
                     //run the command
-                    parentCommand.RunCommand(this);
+                    //parentCommand.RunCommand(this);
                 }
 
                 if (IsCancellationPending)
@@ -378,20 +392,16 @@ namespace taskt.Core.Automation.Engine
                     switch (ErrorHandler.v_ErrorHandlingAction)
                     {
                         case "Continue Processing":
-                        
                            ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString());
                            ReportProgress("Continuing Per Error Handling");
+                           break;
 
-                            break;
-
-                        default:
-                        
+                        default:       
                             throw ex;
                     }
                 }
                 else
                 {
-                
                     throw ex;
                 }
             }
@@ -400,6 +410,7 @@ namespace taskt.Core.Automation.Engine
                 ClearInnerVariables();
             }
         }
+
         public void AddAppInstance(string instanceName, object appObject) {
 
             if (AppInstances.ContainsKey(instanceName) && engineSettings.OverrideExistingAppInstances)
@@ -541,7 +552,7 @@ namespace taskt.Core.Automation.Engine
             ReportProgressEventArgs args = new ReportProgressEventArgs();
             args.ProgressUpdate = progress;
             //send log to server
-            Core.Server.SocketClient.SendExecutionLog(progress);
+            SocketClient.SendExecutionLog(progress);
 
             //invoke event
             ReportProgressEvent?.Invoke(this, args);
@@ -607,12 +618,12 @@ namespace taskt.Core.Automation.Engine
             args.ExecutionTime = sw.Elapsed;
             args.FileName = FileName;
 
-            Core.Server.SocketClient.SendExecutionLog("Result Code: " + result.ToString());
-            Core.Server.SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
+            SocketClient.SendExecutionLog("Result Code: " + result.ToString());
+            SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
 
 
             //convert to json
-            var serializedArguments = Newtonsoft.Json.JsonConvert.SerializeObject(args);
+            var serializedArguments = JsonConvert.SerializeObject(args);
 
             //write execution metrics
             if ((engineSettings.TrackExecutionMetrics) && (FileName != null))
@@ -623,7 +634,7 @@ namespace taskt.Core.Automation.Engine
             }
 
 
-            Core.Client.EngineBusy = false;
+            Client.EngineBusy = false;
 
 
             if (serverSettings.ServerConnectionEnabled)
