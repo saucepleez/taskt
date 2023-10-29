@@ -92,10 +92,8 @@ namespace taskt.Core.Automation.Commands
             //ParametersGridViewHelper.DataBindings.Add("DataSource", this, "v_MethodParameters", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             //get file path
             var filePath = v_FilePath.ExpandValueOrUserVariable(engine);
             var className = v_ClassName.ExpandValueOrUserVariable(engine);
