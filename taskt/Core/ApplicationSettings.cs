@@ -539,6 +539,22 @@ namespace taskt.Core
             }
         }
 
+        private int _RemoveRunWithoutSavingFileDays;
+        public int RemoveRunWithtoutSavingFileDays
+        {
+            get
+            {
+                return _RemoveRunWithoutSavingFileDays;
+            }
+            set
+            {
+                if (value > 1)
+                {
+                    _RemoveRunWithoutSavingFileDays = value;
+                }
+            }
+        }
+
         private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
         private static string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
@@ -590,6 +606,8 @@ namespace taskt.Core
             EnabledAutoSave = true;
             AutoSaveInterval = 5;
             RemoveAutoSaveFileDays = 7;
+
+            RemoveRunWithtoutSavingFileDays = 30;
         }
 
         public string replaceClientKeyword(string targetString)
