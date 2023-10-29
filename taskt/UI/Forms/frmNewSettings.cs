@@ -349,10 +349,16 @@ namespace taskt.UI.Forms
             createTextBox("txtRemoveOldAutoSaveScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveAutoSaveFileDays), false);
             createLabel("lblRemoveOldAutoSaveScriptFile2", " days old", FontSize.Normal, true);
 
+            var showAutoSave = createButton("btnShowAutoSaveFolder", "Show AutoSave Folder", 250, true);
+            showAutoSave.Click += btnShowAutoSaveFolder_Click;
+
             createLabel("lblRunWithoutSavingTitle", "Run Without Saving Script File", FontSize.NormalBold, true);
             createLabel("lblRemoveOldRunwoSavingScriptFile", "Delete 'Run without Saving' Script Files that are more than ");
             createTextBox("txtRemoveOldRunwoSavingScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveRunWithtoutSavingFileDays), false);
             createLabel("lblRemoveOldRunwoSavingScriptFile2", " days old", FontSize.Normal, true);
+
+            var showRunWithout = createButton("btnShowRunWithoutFolder", "Show RunWithoutSaving Folder", 250, true);
+            showRunWithout.Click += btnShowRunWithoutSavingFolder_Click;
         }
         private void showApplicationSettingsFile()
         {
@@ -1280,6 +1286,14 @@ namespace taskt.UI.Forms
                 newAppSettings = new taskt.Core.ApplicationSettings();
                 MessageBox.Show("Load Default Settings", "taskt", MessageBoxButtons.OK);
             }
+        }
+        private void btnShowAutoSaveFolder_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(taskt.Core.Script.Script.GetAutoSaveFolderPath());
+        }
+        private void btnShowRunWithoutSavingFolder_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(taskt.Core.Script.Script.GetRunWithoutSavingFolderPath());
         }
         #endregion
     }
