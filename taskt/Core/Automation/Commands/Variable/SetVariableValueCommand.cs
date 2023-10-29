@@ -24,13 +24,18 @@ namespace taskt.Core.Automation.Commands
         public string v_Input { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Convert Variables in Input Text Above")]
-        [PropertyUISelectionOption("Yes")]
-        [PropertyUISelectionOption("No")]
-        [InputSpecification("", true)]
         [Remarks("If **{{{vNum}}}** has **'1'** and You select **'Yes'**, Variable will be Assigned **'1'**. If You Select **'No'**, Variable will be assigned **'{{{vNum}}}'**.")]
         [PropertyIsOptional(true, "Yes")]
         public string v_ReplaceInputVariables { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Create New Variable when that Variable Does not Exist")]
+        [PropertyIsOptional(true, "Yes")]
+        [Remarks("This command ignores the 'Create Missing Variable During Execution' value in the Settings")]
+        public string v_CreateNewVariable { get; set; }
 
         public SetVariableValueCommand()
         {
@@ -46,9 +51,19 @@ namespace taskt.Core.Automation.Commands
             //get sending instance
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var isRepalce = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceInputVariables), engine);
+            //var isRepalce = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceInputVariables), engine);
+            //string variableValue;
+            //if (isRepalce == "yes")
+            //{
+            //    variableValue = v_Input.ExpandValueOrUserVariable(engine);
+            //}
+            //else
+            //{
+            //    variableValue = v_Input;
+            //}
+
             string variableValue;
-            if (isRepalce == "yes")
+            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ReplaceInputVariables), engine))
             {
                 variableValue = v_Input.ExpandValueOrUserVariable(engine);
             }
@@ -58,7 +73,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
-            if (VariableNameControls.IsVariableExists(variableName, engine))
+            if (VariableNameControls.IsVariableExists(variableName, engine) ||
+                    this.ExpandValueOrUserVariableAsYesNo(nameof(v_CreateNewVariable), engine))
             {
                 variableValue.StoreInUserVariable(engine, variableName);
             }
