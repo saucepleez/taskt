@@ -90,10 +90,9 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //create engine, instance, query
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var query = v_Query.ExpandValueOrUserVariable(engine);
 

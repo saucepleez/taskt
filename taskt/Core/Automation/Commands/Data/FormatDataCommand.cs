@@ -78,10 +78,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ToStringFormat = "MM/dd/yyyy";   
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             //get variablized string
             //var variableString = v_InputValue.ConvertToUserVariable(sender);
 

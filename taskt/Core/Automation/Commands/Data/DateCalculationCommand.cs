@@ -8,7 +8,6 @@ using taskt.UI.CustomControls;
 
 namespace taskt.Core.Automation.Commands
 {
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Data Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to build a date and apply it to a variable.")]
@@ -84,10 +83,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ToStringFormat = "MM/dd/yyyy hh:mm:ss";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get variablized string
             var variableDateTime = v_InputValue.ExpandValueOrUserVariable(engine);
 
