@@ -35,11 +35,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             DateTime myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
 
             double serial = myDT.ToOADate();

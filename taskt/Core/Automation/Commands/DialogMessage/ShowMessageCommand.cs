@@ -49,9 +49,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             string variableMessage = v_Message.ExpandValueOrUserVariable(engine);
 
             variableMessage = variableMessage.Replace("\\n", Environment.NewLine);
