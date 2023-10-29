@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Reflection;
 using taskt.Core.Server;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Engine
 {
@@ -320,18 +322,29 @@ namespace taskt.Core.Automation.Engine
             //handle any errors
             try
             {
-                // todo: fix cast EngineInstance => object
-
                 //determine type of command
                 if ((parentCommand is Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Commands.BeginContinousLoopCommand) || (parentCommand is Commands.BeginListLoopCommand) || (parentCommand is Commands.BeginIfCommand) || (parentCommand is Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Commands.BeginLoopCommand) || (parentCommand is Commands.BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
-                    parentCommand.RunCommand((object)this, command);
+
+                    var tp = parentCommand.GetType();
+                    var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance), typeof(ScriptAction) });
+
+                    if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
+                    {
+                        parentCommand.RunCommand(this, command);
+                    }
+                    else
+                    {
+                        parentCommand.RunCommand((object)this, command);
+                    }
+
+                    //parentCommand.RunCommand(this, command);
                 }
                 else if (parentCommand is Commands.SequenceCommand)
                 {
                     // todo: execute runcommand
-                    parentCommand.RunCommand((object)this, command);
+                    parentCommand.RunCommand(this, command);
                 }
                 //else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
                 //{
