@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
 
 namespace taskt.UI.Forms
 {
@@ -297,8 +298,11 @@ namespace taskt.UI.Forms
             }
 
             // set autosave timer
-            autoSaveTimer.Enabled = false;
-            autoSaveTimer.Interval = 300000;    // 5min
+            //autoSaveTimer.Enabled = false;
+            //autoSaveTimer.Interval = 300000;    // 5min
+
+            // remove old auto saved files
+            RemoveOldAutoSavedFiles();
 
             // check update
             if ((appSettings.ClientSettings.CheckForUpdateAtStartup) && (this.parentBuilder == null))
@@ -375,8 +379,7 @@ namespace taskt.UI.Forms
         {
             this.dontSaveFlag = dontSaveNow;
             UpdateWindowTitle();
-
-            autoSaveTimer.Enabled = !dontSaveNow;
+            SetAutoSaveState();
         }
         #endregion
 
@@ -2540,6 +2543,75 @@ namespace taskt.UI.Forms
         {
             lstScriptActions.Columns[2].Width = this.Width - 340;
         }
+        #endregion
+
+        #region Auto Save Timer
+
+        private void autoSaveTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.dontSaveFlag)
+            {
+                // DBG
+                //Console.WriteLine("now autosave");
+
+                //var tasktExePath = Assembly.GetEntryAssembly().Location;
+                //var autoSavePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(tasktExePath), "AutoSave");
+                //var autoSavePath = Script.GetAutoSaveFolderPath();
+
+                //var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+
+                //var autoSaveFile = System.IO.Path.Combine(autoSavePath, "autosave-") + saveTime + ".xml";
+
+                (var autoSavePath, var saveTime) = Script.GetAutoSaveScriptFilePath();
+
+                //serialize script
+                try
+                {
+                    scriptInfo.TasktVersion = Application.ProductVersion;
+                    Core.Script.Script.SerializeScript(lstScriptActions.Items, scriptVariables, scriptInfo, appSettings.EngineSettings, scriptSerializer, autoSavePath);
+                    Notify("Script automatically saved. (" + saveTime + ")");
+                }
+                catch (Exception ex)
+                {
+                    Notify("Auto Save Error: " + ex.ToString());
+                }
+            }
+        }
+
+        private void SetAutoSaveState()
+        {
+            if (appSettings.ClientSettings.EnabledAutoSave)
+            {
+                autoSaveTimer.Enabled = this.dontSaveFlag;
+                if (this.dontSaveFlag)
+                {
+                    autoSaveTimer.Interval = appSettings.ClientSettings.AutoSaveInterval * 60000;
+                    // DBG
+                    //autoSaveTimer.Interval = appSettings.ClientSettings.AutoSaveInterval * 1000;
+                    autoSaveTimer.Start();
+                }
+                else
+                {
+                    autoSaveTimer.Stop();
+                }
+            }
+        }
+
+        private void RemoveOldAutoSavedFiles()
+        {
+            var autoSaveFolder = Script.GetAutoSaveFolderPath();
+            var files = System.IO.Directory.GetFiles(autoSaveFolder, "*.xml");
+            foreach(var fp in files)
+            {
+                var info = new System.IO.FileInfo(fp);
+                var diff = DateTime.Now - info.CreationTime;
+                if (diff.TotalDays >= appSettings.ClientSettings.RemoveAutoSaveFileDays)
+                {
+                    System.IO.File.Delete(fp);
+                }
+            }
+        }
+
         #endregion
 
         #region Open, Save, Parse, Import, Validate File
