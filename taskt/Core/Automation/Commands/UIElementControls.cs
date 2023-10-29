@@ -210,11 +210,11 @@ namespace taskt.Core.Automation.Commands
         /// store AutomationElement
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="sender"></param>
+        /// <param name="engine"></param>
         /// <param name="targetVariable"></param>
-        public static void StoreInUserVariable(this AutomationElement value, Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this AutomationElement value, Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
         }
         #endregion
 

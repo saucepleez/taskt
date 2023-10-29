@@ -233,9 +233,9 @@ namespace taskt.Core.Automation.Commands
             return (dictionary, key);
         }
 
-        public static void StoreInUserVariable(this Dictionary<string, string> value, Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this Dictionary<string, string> value, Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
         }
 
         /// <summary>
