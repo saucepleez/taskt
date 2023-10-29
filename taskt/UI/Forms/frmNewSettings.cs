@@ -340,7 +340,17 @@ namespace taskt.UI.Forms
 
             createLabel("lblTitle", "Script File", FontSize.Large, true);
 
+            createLabel("lblIntermediateTitle", "Intermediate Script File", FontSize.NormalBold, true);
             createCheckBox("lblScriptIntermediate", "Export Intermediate Script File", newAppSettings.EngineSettings, "ExportIntermediateXML", true);
+
+            createLabel("lblAutoSaveTitle", "Auto Save Script File", FontSize.NormalBold, true);
+            createCheckBox("lblEnabledAutoSave", "Enable Auto Save Script File", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.EnabledAutoSave), true);
+            createLabel("lblAutoSaveInterval", "Auto Save Interval");
+            createTextBox("txtAutoSaveInterval", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.AutoSaveInterval));
+            createLabel("lblAutoSaveIntervalMin", "minute(s) [1-120]", FontSize.Normal, true);
+
+            createLabel("lblRemoveOldScriptFile", "Delete Auto Saved Script Files prior to Date ");
+            createTextBox("txtRemoveOldScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveAutoSaveFileDays), true);
         }
         private void showApplicationSettingsFile()
         {
