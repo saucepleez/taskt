@@ -142,11 +142,9 @@ namespace taskt.Core.Automation.Commands
         }
 
         [STAThread]
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             object browserObject = null;
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 

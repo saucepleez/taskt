@@ -101,10 +101,8 @@ namespace taskt.Core.Automation.Commands
             ifAction_SelectionChangeCommitted(null, null, editor);
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             bool ifResult = ConditionControls.DetermineStatementTruth(v_IfActionType, v_IfActionParameterTable, engine);
 
             int startIndex, endIndex, elseIndex;

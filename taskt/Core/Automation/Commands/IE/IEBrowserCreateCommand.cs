@@ -44,10 +44,8 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             var instanceName = v_InstanceName.ExpandValueOrUserVariable(engine);
 
             SHDocVw.InternetExplorer newBrowserSession = new SHDocVw.InternetExplorer();
