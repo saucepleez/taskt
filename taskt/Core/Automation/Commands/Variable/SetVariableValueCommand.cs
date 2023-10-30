@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Create New Variable when that Variable Does not Exist")]
-        [PropertyIsOptional(true, "Yes")]
+        [PropertyIsOptional(true, "No")]
         [Remarks("This command ignores the 'Create Missing Variable During Execution' value in the Settings")]
         public string v_CreateNewVariable { get; set; }
 
