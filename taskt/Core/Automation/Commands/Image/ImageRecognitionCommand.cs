@@ -106,10 +106,8 @@ namespace taskt.Core.Automation.Commands
             //v_TimeoutSeconds = "30";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             bool testMode = TestMode;
            
             //user image to bitmap

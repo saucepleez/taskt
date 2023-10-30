@@ -68,10 +68,8 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             ////get variablized input
             //var variableInput = v_InputValue.ConvertToUserVariable(sender);
 
