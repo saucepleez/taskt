@@ -46,10 +46,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             List<string> newList = new List<string>();
 
             newList.AddRange(v_ListValues.AsEnumerable().Select(r => r["Values"]?.ToString() ?? "").ToArray());

@@ -36,10 +36,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             ListControls.MathProcess(this, nameof(v_IfValueIsNotNumeric), v_InputList, engine,
                 new Func<System.Collections.Generic.List<decimal>, decimal>((lst) =>
                 {

@@ -49,10 +49,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             List<string> targetList = v_ListName.ExpandUserVariableAsList(engine);
 
             var searchedValue = v_SearchItem.ExpandValueOrUserVariable(engine);

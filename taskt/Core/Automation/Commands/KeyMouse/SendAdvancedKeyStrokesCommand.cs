@@ -71,10 +71,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
 
             if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
@@ -124,6 +122,7 @@ namespace taskt.Core.Automation.Commands
                             keysDown.Remove(oemKeyName);
                         }
                         break;
+
                     case "Key Down":
                         //simulate down
                         //User32Functions.KeyDown(oemKeyName);
@@ -134,8 +133,8 @@ namespace taskt.Core.Automation.Commands
                         {
                             keysDown.Add(oemKeyName);
                         }
-                    
                         break;
+
                     case "Key Up":
                         //simulate up
                         //User32Functions.KeyUp(oemKeyName);
@@ -146,7 +145,6 @@ namespace taskt.Core.Automation.Commands
                         {
                             keysDown.Remove(oemKeyName);
                         }
-
                         break;
 
                     default:
