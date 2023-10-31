@@ -16,10 +16,10 @@ namespace taskt.Core.Automation.Engine
     {
 
         //engine variables
-        public List<Script.ScriptVariable> VariableList { get; set; }
+        public List<ScriptVariable> VariableList { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
         public Dictionary<string, Script.Script> PreloadedTasks { get; set; }
-        public Commands.ErrorHandlingCommand ErrorHandler;
+        public ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Engine
             engineSettings = settings.EngineSettings;
             serverSettings = settings.ServerSettings;
 
-            VariableList = new List<Script.ScriptVariable>();
+            VariableList = new List<ScriptVariable>();
 
             if (PreloadedTasks is null)
             {
@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Engine
             AutoCalculateVariables = engineSettings.AutoCalcVariables;
         }
 
-        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Script.ScriptVariable> variables = null, Dictionary<string, Script.Script> preloadedTasks = null)
+        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<ScriptVariable> variables = null, Dictionary<string, Script.Script> preloadedTasks = null)
         {
             WriteLog("Client requesting to execute script using frmEngine");
 
@@ -203,24 +203,24 @@ namespace taskt.Core.Automation.Engine
 
                 // add hidden inner variable
                 VariableList.AddRange(
-                    new Script.ScriptVariable[]
+                    new ScriptVariable[]
                     {
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_0",
                             VariableValue = ""
                         },
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_1",
                             VariableValue = ""
                         },
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_2",
                             VariableValue = ""
                         },
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_3",
                             VariableValue = ""
@@ -266,10 +266,10 @@ namespace taskt.Core.Automation.Engine
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
         }
-        public void ExecuteCommand(Script.ScriptAction command)
+        public void ExecuteCommand(ScriptAction command)
         {
             //get command
-            Commands.ScriptCommand parentCommand = command.ScriptCommand;
+            ScriptCommand parentCommand = command.ScriptCommand;
 
            //update execution line numbers
             LineNumberChanged(parentCommand.LineNumber);
@@ -309,7 +309,7 @@ namespace taskt.Core.Automation.Engine
 
 
             //bypass comments
-            if (parentCommand is Commands.CommentCommand || parentCommand.IsCommented)
+            if (parentCommand is CommentCommand || parentCommand.IsCommented)
             {
                 ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue().ExpandValueOrUserVariable(this));
                 return;
@@ -323,25 +323,25 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Commands.BeginContinousLoopCommand) || (parentCommand is Commands.BeginListLoopCommand) || (parentCommand is Commands.BeginIfCommand) || (parentCommand is Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Commands.BeginLoopCommand) || (parentCommand is Commands.BeginMultiLoopCommand))
+                if ((parentCommand is BeginNumberOfTimesLoopCommand) || (parentCommand is BeginContinousLoopCommand) || (parentCommand is BeginListLoopCommand) || (parentCommand is BeginIfCommand) || (parentCommand is BeginMultiIfCommand) || (parentCommand is TryCommand) || (parentCommand is BeginLoopCommand) || (parentCommand is BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
 
-                    var tp = parentCommand.GetType();
-                    var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance), typeof(ScriptAction) });
+                    //var tp = parentCommand.GetType();
+                    //var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance), typeof(ScriptAction) });
 
-                    if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
-                    {
-                        parentCommand.RunCommand(this, command);
-                    }
-                    else
-                    {
-                        parentCommand.RunCommand((object)this, command);
-                    }
+                    //if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
+                    //{
+                    //    parentCommand.RunCommand(this, command);
+                    //}
+                    //else
+                    //{
+                    //    parentCommand.RunCommand((object)this, command);
+                    //}
 
-                    //parentCommand.RunCommand(this, command);
+                    parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Commands.SequenceCommand)
+                else if (parentCommand is SequenceCommand)
                 {
                     // todo: execute runcommand
                     parentCommand.RunCommand(this, command);
@@ -374,20 +374,20 @@ namespace taskt.Core.Automation.Engine
                     //sleep required time
                     Thread.Sleep(engineSettings.DelayBetweenCommands);
 
-                    var tp = parentCommand.GetType();
-                    var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance) });
+                    //var tp = parentCommand.GetType();
+                    //var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance) });
 
-                    if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
-                    {
-                        parentCommand.RunCommand(this);
-                    }
-                    else
-                    {
-                        parentCommand.RunCommand((object)this);
-                    }
+                    //if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
+                    //{
+                    //    parentCommand.RunCommand(this);
+                    //}
+                    //else
+                    //{
+                    //    parentCommand.RunCommand((object)this);
+                    //}
 
                     //run the command
-                    //parentCommand.RunCommand(this);
+                    parentCommand.RunCommand(this);
                 }
 
                 if (IsCancellationPending)
@@ -507,7 +507,7 @@ namespace taskt.Core.Automation.Engine
             else
             {
                 //add new variable
-                var newVariable = new Script.ScriptVariable();
+                var newVariable = new ScriptVariable();
                 newVariable.VariableName = variableName;
                 newVariable.VariableValue = variableValue;
                 VariableList.Add(newVariable);
@@ -517,12 +517,12 @@ namespace taskt.Core.Automation.Engine
 
         public void StoreComplexObjectInVariable(string variableName, object value)
         {
-            Script.ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+            ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
 
             if (storeVariable == null)
             {
                 //create and set variable
-                VariableList.Add(new Script.ScriptVariable
+                VariableList.Add(new ScriptVariable
                 {
                     VariableName = variableName,
                     VariableValue = value
@@ -539,7 +539,7 @@ namespace taskt.Core.Automation.Engine
         {
             for (int i = 0; i < INNER_VARIABLES; i++)
             {
-                Script.ScriptVariable v = VariableList.Where(x => x.VariableName == "__INNER_" + i.ToString()).FirstOrDefault();
+                ScriptVariable v = VariableList.Where(x => x.VariableName == "__INNER_" + i.ToString()).FirstOrDefault();
                 if (v != null)
                 {
                     v.VariableValue = "";
@@ -580,7 +580,7 @@ namespace taskt.Core.Automation.Engine
             //handle if variable is missing
             if (resultVar == null)
             {
-                resultVar = new Script.ScriptVariable() { VariableName = "taskt.Result", VariableValue = "" };
+                resultVar = new ScriptVariable() { VariableName = "taskt.Result", VariableValue = "" };
             }
 
             //check value
