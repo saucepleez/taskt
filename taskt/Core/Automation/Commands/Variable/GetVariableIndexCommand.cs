@@ -27,11 +27,8 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var variableName = VariableNameControls.GetVariableName(v_userVariableName, engine);
             var rawVarialbe = variableName.GetRawVariable(engine);
             rawVarialbe.CurrentPosition.ToString().StoreInUserVariable(engine, v_Result);

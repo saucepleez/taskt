@@ -36,10 +36,8 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var getAttribute = new SeleniumBrowserGetAttributeFromWebElementCommand()
             {
                 v_WebElement = this.v_WebElement,

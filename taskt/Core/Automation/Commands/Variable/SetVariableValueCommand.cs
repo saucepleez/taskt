@@ -46,11 +46,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ReplaceInputVariables = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var isRepalce = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceInputVariables), engine);
             //string variableValue;
             //if (isRepalce == "yes")

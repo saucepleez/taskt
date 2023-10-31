@@ -80,10 +80,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_CaseSensitiveMatch = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             var matchType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowMatchType), engine);

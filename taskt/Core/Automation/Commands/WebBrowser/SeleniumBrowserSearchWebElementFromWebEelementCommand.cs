@@ -45,10 +45,8 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var targetElement = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
             var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SeleniumSearchType), engine);

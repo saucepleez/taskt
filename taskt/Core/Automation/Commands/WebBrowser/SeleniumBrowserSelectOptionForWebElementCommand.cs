@@ -68,10 +68,8 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
             if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ScrollToElement), engine))

@@ -58,10 +58,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_SeleniumScreenshotFileNameParameter = "screenshot_001";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var seleniumInstance = v_InstanceName.ExpandValueOrUserVariableAsSeleniumBrowserInstance(engine);
 
             var screenshotPath = v_SeleniumScreenshotPathParameter.ExpandValueOrUserVariable(engine);

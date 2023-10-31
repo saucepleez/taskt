@@ -89,10 +89,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_CodeType = "Code";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var codeType = SelectionItemsControls.ExpandValueOrUserVariableAsSelectionItem(this, nameof(v_CodeType), engine);
 
             string script = "";
