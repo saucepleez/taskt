@@ -26,12 +26,9 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
             Core.Automation.Commands.BeginContinousLoopCommand loopCommand = (Core.Automation.Commands.BeginContinousLoopCommand)parentCommand.ScriptCommand;
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
 
             engine.ReportProgress("Starting Continous Loop From Line " + loopCommand.LineNumber);
 

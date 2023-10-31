@@ -49,10 +49,8 @@ namespace taskt.Core.Automation.Commands
             v_LoopConditionsTable.Columns.Add("CommandData");
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             bool isTrueStatement = DetermineMultiStatementTruth(sender);
 
             engine.ReportProgress("Starting Loop");

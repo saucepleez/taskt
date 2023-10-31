@@ -42,11 +42,9 @@ namespace taskt.Core.Automation.Commands
             this.v_LoopStart = "0";
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
             Core.Automation.Commands.BeginNumberOfTimesLoopCommand loopCommand = (Core.Automation.Commands.BeginNumberOfTimesLoopCommand)parentCommand.ScriptCommand;
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
             {

@@ -39,9 +39,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (taskt.Core.Automation.Engine.AutomationEngineInstance)sender;
             string sound = v_SoundType.ExpandValueOrUserVariableAsSelectionItem("v_SoundType", this, engine);
             switch (sound)
             {
