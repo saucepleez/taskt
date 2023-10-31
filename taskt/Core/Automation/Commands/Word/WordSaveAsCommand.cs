@@ -32,11 +32,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get engine context
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //string fileName;
             //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
             //{

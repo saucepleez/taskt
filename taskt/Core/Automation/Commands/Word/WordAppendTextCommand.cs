@@ -106,10 +106,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_FontUnderline = "No";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             (var _, var wordDocument) = v_InstanceName.ExpandValueOrUserVariableAsWordInstanceAndDocument(engine);
 
             var vText = v_TextToSet.ExpandValueOrUserVariable(engine);
