@@ -77,10 +77,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_RDPHeight = SystemInformation.PrimaryMonitorSize.Height.ToString();
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var machineName = v_MachineName.ExpandValueOrUserVariable(engine);
             var userName = v_UserName.ExpandValueOrUserVariable(engine);
             var password = v_Password.ExpandValueOrUserVariable(engine);

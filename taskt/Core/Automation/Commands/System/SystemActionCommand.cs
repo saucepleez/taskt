@@ -33,10 +33,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var action = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ActionName), engine);
 
             switch (action)

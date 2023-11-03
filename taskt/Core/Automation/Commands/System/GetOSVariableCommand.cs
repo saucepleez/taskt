@@ -46,10 +46,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var systemVariable = v_OSVariableName.ExpandValueOrUserVariable(engine);
 
             ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");

@@ -72,9 +72,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_StopwatchAction = "Start Stopwatch";
         }
 
-        public override void RunCommand(object sender)
-        {
-            var engine = (Engine.AutomationEngineInstance)sender;   
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        { 
             var instanceName = v_StopwatchName.ExpandValueOrUserVariable(engine);
             
             var action = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_StopwatchAction), engine);
