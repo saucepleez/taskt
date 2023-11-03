@@ -66,10 +66,8 @@ namespace taskt.Core.Automation.Commands
             this.v_BodyType = "Plain";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var vRecipients = v_Recipients.ExpandValueOrUserVariable(engine);
             var vAttachment = v_Attachment.ExpandValueOrUserVariable(engine);
             var vSubject = v_Subject.ExpandValueOrUserVariable(engine);

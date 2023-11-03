@@ -40,10 +40,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //decimal num = new PropertyConvertTag(v_Numeric, "Number").ConvertToUserVariableAsDecimal(engine);
             //var num = this.ConvertToUserVariableAsDecimal(nameof(v_Numeric), "Number", engine);
             var num = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Numeric), engine);
