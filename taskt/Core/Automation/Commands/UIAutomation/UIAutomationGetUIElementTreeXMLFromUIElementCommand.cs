@@ -41,10 +41,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
             //var xml = AutomationElementControls.GetElementXml(targetElement, out _);
             (var xml, _) = UIElementControls.GetElementXml(targetElement);

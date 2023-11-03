@@ -45,10 +45,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
 
             string windowName = UIElementControls.GetWindowName(targetElement);
@@ -58,7 +56,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     v_WindowName = windowName
                 };
-                activateWindow.RunCommand(sender);
+                activateWindow.RunCommand(engine);
             }
 
             System.Windows.Point point;
@@ -72,7 +70,7 @@ namespace taskt.Core.Automation.Commands
                         v_XWindowPosition = "0",
                         v_YWindowPosition = "0"
                     };
-                    moveWindow.RunCommand(sender);
+                    moveWindow.RunCommand(engine);
                     targetElement.TryGetClickablePoint(out point);
                 }
                 if ((point.X < 0.0) || (point.Y < 0.0))
@@ -83,7 +81,7 @@ namespace taskt.Core.Automation.Commands
                         v_XWindowPosition = "0",
                         v_YWindowPosition = "0"
                     };
-                    moveWindow.RunCommand(sender);
+                    moveWindow.RunCommand(engine);
 
                     if (!targetElement.TryGetClickablePoint(out point))
                     {
@@ -106,7 +104,7 @@ namespace taskt.Core.Automation.Commands
                 v_XMousePosition = (point.X + xAd).ToString(),
                 v_YMousePosition = (point.Y + yAd).ToString()
             };
-            mouseClick.RunCommand(sender);
+            mouseClick.RunCommand(engine);
         }
     }
 }

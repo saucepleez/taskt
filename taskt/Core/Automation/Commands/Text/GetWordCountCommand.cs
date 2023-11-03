@@ -32,11 +32,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get engine
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get input value
             var stringRequiringCount = v_InputValue.ExpandValueOrUserVariable(engine);
 

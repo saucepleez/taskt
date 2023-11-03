@@ -47,10 +47,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ReadOption = "Content";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //bool isURL = FilePathControls.IsURL(v_FilePath.ConvertToUserVariable(engine));
 
             //string result;

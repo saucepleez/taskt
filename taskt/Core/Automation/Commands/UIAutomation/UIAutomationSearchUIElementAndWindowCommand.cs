@@ -55,10 +55,8 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var winElem = AutomationElementControls.GetWindowAutomationElement(this, engine);
 
             //var waitTile = this.ConvertToUserVariableAsInteger(nameof(v_ElementWaitTime), engine);

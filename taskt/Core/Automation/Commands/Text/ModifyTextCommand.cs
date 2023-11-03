@@ -47,10 +47,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var stringValue = v_userVariableName.ExpandValueOrUserVariable(engine);
 
             //var caseType = v_ConvertType.ConvertToUserVariable(sender);

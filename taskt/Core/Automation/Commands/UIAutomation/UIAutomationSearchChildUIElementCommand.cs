@@ -52,10 +52,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var rootElement = v_RootElement.ExpandUserVariableAsUIElement(engine);
             int index = v_Index.ExpandValueOrUserVariableAsInteger("v_Index", engine);
 

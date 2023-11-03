@@ -76,10 +76,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_TextExtractionTable.Columns.Add("Parameter Value");
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get variablized input
             var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
 

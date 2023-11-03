@@ -60,10 +60,8 @@ namespace taskt.Core.Automation.Commands
             //v_MatchGroupIndex = "0";
         }
 
-        public override void RunCommand(object sender)
-        {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
+        { 
             ////get variablized strings
             //var variableInput = v_InputValue.ConvertToUserVariable(engine);
             //var variableExtractorPattern = v_RegExExtractor.ConvertToUserVariable(engine);
