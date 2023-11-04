@@ -88,7 +88,7 @@ namespace taskt.Core.Automation.Commands
             //string filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);
             var filePath = v_FilePath.ExpandValueOrUserVariable(engine);
 
-            DataTable requiredData = DataTableControls.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ExpandValueOrUserVariable(sender)};IMEX=1""", "Select * From [" + v_SheetName.ExpandValueOrUserVariable(sender) + "$]");
+            DataTable requiredData = DataTableControls.CreateDataTable(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + $@";Extended Properties=""Excel 12.0;HDR={v_ContainsHeaderRow.ExpandValueOrUserVariable(engine)};IMEX=1""", "Select * From [" + v_SheetName.ExpandValueOrUserVariable(engine) + "$]");
 
             requiredData.StoreInUserVariable(engine, v_DataSetName);
         }

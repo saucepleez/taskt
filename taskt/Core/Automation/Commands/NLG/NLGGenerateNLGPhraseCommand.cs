@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             Realiser realiser = new Realiser(lexicon);
 
             String phraseOutput = realiser.realiseSentence(p);
-            phraseOutput.StoreInUserVariable(sender, v_applyToVariableName);
+            phraseOutput.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

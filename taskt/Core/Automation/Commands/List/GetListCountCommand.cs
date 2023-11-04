@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             string count = listToCount.Count.ToString();
-            count.StoreInUserVariable(sender, v_UserVariableName);
+            count.StoreInUserVariable(engine, v_UserVariableName);
         }
     }
 }

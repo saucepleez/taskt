@@ -279,6 +279,8 @@ namespace taskt.Core.Automation.Commands
 
         private void RunCommandActions(IHTMLElement element, object sender, InternetExplorer browserInstance)
         {
+            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
+
             if (v_WebAction == "Fire onmousedown event")
             {
                 ((IHTMLElement3)element).FireEvent("onmousedown");
@@ -327,7 +329,7 @@ namespace taskt.Core.Automation.Commands
                                      where rw.Field<string>("Parameter Name") == "Value To Set"
                                      select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                valueToSet = valueToSet.ExpandValueOrUserVariable(sender);
+                valueToSet = valueToSet.ExpandValueOrUserVariable(engine);
 
                 element.setAttribute(attributeName, valueToSet);
             }
@@ -339,7 +341,7 @@ namespace taskt.Core.Automation.Commands
                                     where rw.Field<string>("Parameter Name") == "Text To Set"
                                     select rw.Field<string>("Parameter Value")).FirstOrDefault();
 
-                textToSet = textToSet.ExpandValueOrUserVariable(sender);
+                textToSet = textToSet.ExpandValueOrUserVariable(engine);
 
                 element.setAttribute(attributeName, textToSet);
             }
@@ -355,7 +357,7 @@ namespace taskt.Core.Automation.Commands
 
                 string convertedAttribute = Convert.ToString(element.getAttribute(attributeName));
 
-                convertedAttribute.StoreInUserVariable(sender, variableName);
+                convertedAttribute.StoreInUserVariable(engine, variableName);
             }
         }
 

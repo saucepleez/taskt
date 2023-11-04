@@ -50,13 +50,15 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(v_userVariableName.ExpandValueOrUserVariable(sender));
+            doc.LoadHtml(v_userVariableName.ExpandValueOrUserVariable(engine));
 
             var div = doc.DocumentNode.SelectSingleNode(v_xPathQuery);
             string divString = div.InnerText;
 
-            divString.StoreInUserVariable(sender, v_applyToVariableName);
+            divString.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

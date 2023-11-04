@@ -55,11 +55,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
             //get variable path or URL to source file
-            var vSourceFilePath = v_FilePath.ExpandValueOrUserVariable(sender);
+            var vSourceFilePath = v_FilePath.ExpandValueOrUserVariable(engine);
             // get source type of file either from a physical file or from a URL
-            var vSourceFileType = v_FileSourceType.ExpandValueOrUserVariable(sender);
+            var vSourceFileType = v_FileSourceType.ExpandValueOrUserVariable(engine);
             if (String.IsNullOrEmpty(vSourceFileType))
             {
                 vSourceFileType = "FilePath";
@@ -110,7 +111,7 @@ namespace taskt.Core.Automation.Commands
             var result = javaInterface.ExtractPDFText(vSourceFilePath);
 
             //apply to variable
-            result.StoreInUserVariable(sender, v_applyToVariableName);
+            result.StoreInUserVariable(engine, v_applyToVariableName);
         }
         public override List<Control> Render(frmCommandEditor editor)
         {

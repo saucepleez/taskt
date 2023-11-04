@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
                                  Microsoft.Office.Interop.Excel.XlSearchOrder.xlByRows, Microsoft.Office.Interop.Excel.XlSearchDirection.xlPrevious,
                                  false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
             var targetAddress = "A" + (lastUsedRow + 1);
-            var targetText = v_TextToSet.ExpandValueOrUserVariable(sender);
+            var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
             excelSheet.Range[targetAddress].Value = targetText;
         }
         public override List<Control> Render(frmCommandEditor editor)

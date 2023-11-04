@@ -68,12 +68,13 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
 
-            var vRecipients = v_Recipients.ExpandValueOrUserVariable(sender);
-            var vAttachment = v_Attachment.ExpandValueOrUserVariable(sender);
-            var vSubject = v_Subject.ExpandValueOrUserVariable(sender);
-            var vBody = v_Body.ExpandValueOrUserVariable(sender);
-            var vBodyType = v_BodyType.ExpandValueOrUserVariable(sender);
+            var vRecipients = v_Recipients.ExpandValueOrUserVariable(engine);
+            var vAttachment = v_Attachment.ExpandValueOrUserVariable(engine);
+            var vSubject = v_Subject.ExpandValueOrUserVariable(engine);
+            var vBody = v_Body.ExpandValueOrUserVariable(engine);
+            var vBodyType = v_BodyType.ExpandValueOrUserVariable(engine);
 
             var splittext = vRecipients.Split(';');
 

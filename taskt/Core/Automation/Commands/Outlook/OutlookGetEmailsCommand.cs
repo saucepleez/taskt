@@ -97,10 +97,10 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(object sender)
         {
             var engine = (Engine.AutomationEngineInstance)sender;
-            var vFolder = v_Folder.ExpandValueOrUserVariable(sender);
-            var vFilter = v_Filter.ExpandValueOrUserVariable(sender);
-            var vAttachmentDirectory = v_AttachmentDirectory.ExpandValueOrUserVariable(sender);
-            var vMessageDirectory = v_MessageDirectory.ExpandValueOrUserVariable(sender);
+            var vFolder = v_Folder.ExpandValueOrUserVariable(engine);
+            var vFilter = v_Filter.ExpandValueOrUserVariable(engine);
+            var vAttachmentDirectory = v_AttachmentDirectory.ExpandValueOrUserVariable(engine);
+            var vMessageDirectory = v_MessageDirectory.ExpandValueOrUserVariable(engine);
 
             if (vFolder == "") vFolder = "Inbox";
 

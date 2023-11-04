@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
 
             var func = ExcelControls.GetCellValueFunctionFromRange(valueType);
 
-            func(rg).StoreInUserVariable(sender, v_userVariableName);
+            func(rg).StoreInUserVariable(engine, v_userVariableName);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace taskt.Core.Automation.Commands
         {
             var engine = (Engine.AutomationEngineInstance)sender;
 
-            var targetWindow = v_WindowName.ExpandValueOrUserVariable(sender);
+            var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
 
             if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
             {

@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
 
             var count = dataTable.Rows.Count.ToString();
 
-            count.StoreInUserVariable(sender, v_UserVariableName);
+            count.StoreInUserVariable(engine, v_UserVariableName);
         }
         
         public override List<Control> Render(frmCommandEditor editor)

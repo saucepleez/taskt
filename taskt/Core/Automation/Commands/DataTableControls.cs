@@ -290,9 +290,9 @@ namespace taskt.Core.Automation.Commands
         }
 
 
-        public static void StoreInUserVariable(this DataTable value, Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this DataTable value, Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
         }
 
 

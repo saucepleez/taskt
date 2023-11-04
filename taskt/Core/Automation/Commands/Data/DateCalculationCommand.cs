@@ -86,8 +86,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //get variablized string
-            var variableDateTime = v_InputValue.ExpandValueOrUserVariable(sender);
+            var variableDateTime = v_InputValue.ExpandValueOrUserVariable(engine);
 
             //convert to date time
             DateTime requiredDateTime;
@@ -98,7 +100,7 @@ namespace taskt.Core.Automation.Commands
 
             //get increment value
             double requiredInterval;
-            var variableIncrement = v_Increment.ExpandValueOrUserVariable(sender);
+            var variableIncrement = v_Increment.ExpandValueOrUserVariable(engine);
 
             //convert to double
             if (!Double.TryParse(variableIncrement, out requiredInterval))
@@ -144,12 +146,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             //handle if formatter is required     
-            var formatting = v_ToStringFormat.ExpandValueOrUserVariable(sender);
+            var formatting = v_ToStringFormat.ExpandValueOrUserVariable(engine);
             var stringDateFormatted = requiredDateTime.ToString(formatting);
 
 
             //store string in variable
-            stringDateFormatted.StoreInUserVariable(sender, v_applyToVariableName);
+            stringDateFormatted.StoreInUserVariable(engine, v_applyToVariableName);
 
         }
         public override List<Control> Render(frmCommandEditor editor)

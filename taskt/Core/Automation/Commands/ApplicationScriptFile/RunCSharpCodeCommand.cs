@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
                 System.Diagnostics.Process scriptProc = new System.Diagnostics.Process();
                 scriptProc.StartInfo.FileName = result.PathToAssembly;
 
-                var arguments = v_Args.ExpandValueOrUserVariable(sender);
+                var arguments = v_Args.ExpandValueOrUserVariable(engine);
                 scriptProc.StartInfo.Arguments = arguments;
 
                 if (!String.IsNullOrEmpty(v_applyToVariableName))
@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
                 if (!String.IsNullOrEmpty(v_applyToVariableName))
                 {
                     var output = scriptProc.StandardOutput.ReadToEnd();
-                    output.StoreInUserVariable(sender, v_applyToVariableName);
+                    output.StoreInUserVariable(engine, v_applyToVariableName);
                 }
 
                 scriptProc.Close();

@@ -68,9 +68,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="sender"></param>
         /// <returns></returns>
         /// <exception cref="Exception">fail convert value to DateTime</exception>
-        public static DateTime ConvertValueToDateTime(this string str, string parameterName, object sender)
-        {
-            string convertedText = str.ExpandValueOrUserVariable(sender);
+        public static DateTime ConvertValueToDateTime(this string str, string parameterName, Core.Automation.Engine.AutomationEngineInstance engine)
+        { 
+            string convertedText = str.ExpandValueOrUserVariable(engine);
             if (DateTime.TryParse(convertedText, out DateTime v))
             {
                 return v;
@@ -81,9 +81,9 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void StoreInUserVariable(this DateTime value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this DateTime value, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, sender, false);
+            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine, false);
         }
     }
 }

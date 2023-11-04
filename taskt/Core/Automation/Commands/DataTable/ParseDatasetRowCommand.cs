@@ -89,14 +89,14 @@ namespace taskt.Core.Automation.Commands
 
             }
 
-            var columnName = v_ColumnParameter.ExpandValueOrUserVariable(sender);
-            var parseStrat = v_ColumnParseType.ExpandValueOrUserVariable(sender);
+            var columnName = v_ColumnParameter.ExpandValueOrUserVariable(engine);
+            var parseStrat = v_ColumnParseType.ExpandValueOrUserVariable(engine);
             //get datatable
             var dataTable = (DataTable)dataSourceVariable.VariableValue;
 
             int requiredRowNumber;
 
-            if (!int.TryParse(this.v_SpecifiedRow.ExpandValueOrUserVariable(sender), out requiredRowNumber))
+            if (!int.TryParse(this.v_SpecifiedRow.ExpandValueOrUserVariable(engine), out requiredRowNumber))
             {
                 requiredRowNumber = dataSourceVariable.CurrentPosition;
             }
@@ -117,7 +117,7 @@ namespace taskt.Core.Automation.Commands
 
 
             //store value in variable
-            requiredColumn.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+            requiredColumn.ToString().StoreInUserVariable(engine, v_applyToVariableName);
 
         }
         public override List<Control> Render(frmCommandEditor editor)

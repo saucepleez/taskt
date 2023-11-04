@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
 
             var lastRow = (int)excelSheet.Cells[excelSheet.Rows.Count, columnLetter].End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
-            lastRow.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+            lastRow.ToString().StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

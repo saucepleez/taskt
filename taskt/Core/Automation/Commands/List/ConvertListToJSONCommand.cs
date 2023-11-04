@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 string convertedList = Newtonsoft.Json.JsonConvert.SerializeObject(targetList);
-                convertedList.StoreInUserVariable(sender, v_applyToVariableName);
+                convertedList.StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch (Exception ex)
             {

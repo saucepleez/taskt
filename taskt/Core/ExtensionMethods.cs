@@ -105,15 +105,15 @@ namespace taskt.Core
         /// <param name="str"></param>
         /// <param name="sender"></param>
         /// <returns></returns>
-        public static string ExpandValueOrUserVariable(this string str, object sender)
+        public static string ExpandValueOrUserVariable(this string str, Core.Automation.Engine.AutomationEngineInstance engine)
         {
-            if (((Core.Automation.Engine.AutomationEngineInstance)sender).engineSettings.UseNewParser)
+            if (engine.engineSettings.UseNewParser)
             {
-                return str.ExpandValueOrUserVariable_new2022(sender);
+                return str.ExpandValueOrUserVariable_new2022(engine);
             }
             else
             {
-                return str.ConvertToUserVariable_Official(sender);
+                return str.ConvertToUserVariable_Official(engine);
             }
         }
 
@@ -123,19 +123,18 @@ namespace taskt.Core
         /// <param name="str"></param>
         /// <param name="sender"></param>
         /// <returns></returns>
-        public static string ExpandValueOrUserVariable_new2022(this String str, object sender)
+        public static string ExpandValueOrUserVariable_new2022(this string str, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
             {
                 return string.Empty;
             }
                 
-            if (sender == null)
+            if (engine == null)
             {
                 return str;
             }
 
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
 
@@ -524,7 +523,7 @@ namespace taskt.Core
             }
         }
 
-        public static string ConvertToUserVariable_Intermediate(this String str, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static string ConvertToUserVariable_Intermediate(this string str, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
             {
@@ -661,20 +660,18 @@ namespace taskt.Core
         }
 
         // official parser
-        public static string ConvertToUserVariable_Official(this String str, object sender)
+        public static string ConvertToUserVariable_Official(this string str, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
                 return string.Empty;
 
-            if (sender == null)
+            if (engine == null)
                 return str;
 
             if (str.Length < 2)
             {
                 return str;
             }
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var variableList = engine.VariableList;
             var systemVariables = Core.Common.GenerateSystemVariables();
@@ -958,9 +955,9 @@ namespace taskt.Core
         /// </summary>
         /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
-        public static void StoreInUserVariable(this String str, object sender, string targetVariable)
+        public static void StoreInUserVariable(this string str, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, true);
+            StoreInUserVariable(targetVariable, str, engine, true);
         }
 
         /// <summary>
@@ -968,21 +965,21 @@ namespace taskt.Core
         /// </summary>
         /// <param name="sender">The script engine instance (frmScriptEngine) which contains session variables.</param>
         /// <param name="targetVariable">the name of the user-defined variable to override with new value</param>
-        public static void StoreRawDataInUserVariable(this String str, object sender, string targetVariable)
+        public static void StoreRawDataInUserVariable(this string str, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            StoreInUserVariable(targetVariable, str, (Core.Automation.Engine.AutomationEngineInstance)sender, false);
+            StoreInUserVariable(targetVariable, str, engine, false);
         }
 
-        public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance sender, string targetVariable)
+        public static void StoreInUserVariable(this DataRow value, Core.Automation.Engine.AutomationEngineInstance engine, string targetVariable)
         {
-            StoreInUserVariable(targetVariable, value, sender, false);
+            StoreInUserVariable(targetVariable, value, engine, false);
         }
 
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
         /// </summary>
         /// <param name="str">The string to be wrapped as a variable</param>
-        public static string ApplyVariableFormatting(this String str, Core.Automation.Engine.AutomationEngineInstance engine)
+        public static string ApplyVariableFormatting(this string str, Core.Automation.Engine.AutomationEngineInstance engine)
         {
             //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
 

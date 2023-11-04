@@ -80,13 +80,11 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
-
-           
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var excelObject = engine.GetAppInstance(vInstance);
-            var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(sender);
-            var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(sender);
+            var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(engine);
+            var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(engine);
 
             Microsoft.Office.Interop.Excel.Application excelInstance = (Microsoft.Office.Interop.Excel.Application)excelObject;
             Microsoft.Office.Interop.Excel.Worksheet excelSheet = excelInstance.ActiveSheet;
@@ -183,10 +181,10 @@ namespace taskt.Core.Automation.Commands
                 string output = String.Join(",", lst);
 
                 //Store Strings of comma seperated values into user variable
-                output.StoreInUserVariable(sender, v_userVariableName);
+                output.StoreInUserVariable(engine, v_userVariableName);
             }
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

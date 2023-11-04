@@ -95,11 +95,11 @@ namespace taskt.Core.Automation.Commands
             //create engine, instance, query
             var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
-            var query = v_Query.ExpandValueOrUserVariable(sender);
+            var query = v_Query.ExpandValueOrUserVariable(engine);
 
             //define connection
             var databaseConnection = (OleDbConnection)engine.GetAppInstance(vInstance);
-            var queryExecutionType = v_QueryType.ExpandValueOrUserVariable(sender);
+            var queryExecutionType = v_QueryType.ExpandValueOrUserVariable(engine);
 
             //define commad
             var oleCommand = new System.Data.OleDb.OleDbCommand(query, databaseConnection);
@@ -107,9 +107,9 @@ namespace taskt.Core.Automation.Commands
             //add parameters
             foreach (DataRow rw in this.v_QueryParameters.Rows)
             {
-                var parameterName = rw.Field<string>("Parameter Name").ExpandValueOrUserVariable(sender);
-                var parameterValue = rw.Field<string>("Parameter Value").ExpandValueOrUserVariable(sender);
-                var parameterType = rw.Field<string>("Parameter Type").ExpandValueOrUserVariable(sender);
+                var parameterName = rw.Field<string>("Parameter Name").ExpandValueOrUserVariable(engine);
+                var parameterValue = rw.Field<string>("Parameter Value").ExpandValueOrUserVariable(engine);
+                var parameterType = rw.Field<string>("Parameter Type").ExpandValueOrUserVariable(engine);
 
                 object convertedValue = null;
                 //"STRING", "BOOLEAN", "DECIMAL", "INT16", "INT32", "INT64", "DATETIME", "DOUBLE", "SINGLE", "GUID", "BYTE", "BYTE[]"

@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             //store data
-            info.StoreInUserVariable(sender, v_applyToVariableName);
+            info.StoreInUserVariable(engine, v_applyToVariableName);
         }
     }
 }

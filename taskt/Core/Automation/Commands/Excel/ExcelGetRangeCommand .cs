@@ -64,8 +64,8 @@ namespace taskt.Core.Automation.Commands
 
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(sender);
-            var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(sender);
+            var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(engine);
+            var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(engine);
 
             Microsoft.Office.Interop.Excel.Range cellValue;
             if (targetAddress2 != "")
@@ -101,9 +101,9 @@ namespace taskt.Core.Automation.Commands
             string output = String.Join(",", lst);
             
             //Store Strings of comma seperated values into user variable
-            output.StoreInUserVariable(sender, v_userVariableName);
-
+            output.StoreInUserVariable(engine, v_userVariableName);
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

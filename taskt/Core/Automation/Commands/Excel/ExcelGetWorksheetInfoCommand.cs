@@ -97,7 +97,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            ret.StoreInUserVariable(sender, v_applyToVariable);
+            ret.StoreInUserVariable(engine, v_applyToVariable);
         }
     }
 }

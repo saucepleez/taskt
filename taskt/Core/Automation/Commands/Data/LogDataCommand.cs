@@ -43,15 +43,16 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //get text to log and log file name       
-            var textToLog = v_LogText.ExpandValueOrUserVariable(sender);
-            var logFile = v_LogFile.ExpandValueOrUserVariable(sender);
+            var textToLog = v_LogText.ExpandValueOrUserVariable(engine);
+            var logFile = v_LogFile.ExpandValueOrUserVariable(engine);
 
             //determine log file
             if (v_LogFile == "Engine Logs")
             {
                 //log to the standard engine logs
-                var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
                 //engine.engineLogger.Information(textToLog);
                 engine.WriteLog(textToLog);
             }
@@ -63,9 +64,8 @@ namespace taskt.Core.Automation.Commands
                     logger.Information(textToLog);
                 }
             }
-
-
         }
+
         public override List<Control> Render(frmCommandEditor editor)
         {
             base.Render(editor);

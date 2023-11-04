@@ -66,13 +66,15 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(object sender)
         {
+            var engine = (Engine.AutomationEngineInstance)sender;
+
             //get variablized string
-            var variableMath = v_InputValue.ExpandValueOrUserVariable(sender);
+            var variableMath = v_InputValue.ExpandValueOrUserVariable(engine);
 
             try
             {
-                var decimalSeperator = v_DecimalSeperator.ExpandValueOrUserVariable(sender);
-                var thousandSeperator = v_ThousandSeperator.ExpandValueOrUserVariable(sender);
+                var decimalSeperator = v_DecimalSeperator.ExpandValueOrUserVariable(engine);
+                var thousandSeperator = v_ThousandSeperator.ExpandValueOrUserVariable(engine);
 
                 //remove thousandths markers
                 if (thousandSeperator != "")
@@ -103,7 +105,7 @@ namespace taskt.Core.Automation.Commands
 
                
                 //store string in variable
-                result.ToString().StoreInUserVariable(sender, v_applyToVariableName);
+                result.ToString().StoreInUserVariable(engine, v_applyToVariableName);
             }
             catch (Exception ex)
             {

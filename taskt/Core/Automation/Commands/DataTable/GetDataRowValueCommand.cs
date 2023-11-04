@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;
 
 
-            var valueIndex = v_DataValueIndex.ExpandValueOrUserVariable(sender);
+            var valueIndex = v_DataValueIndex.ExpandValueOrUserVariable(engine);
 
             if (String.IsNullOrEmpty(v_Option))
             {
@@ -93,8 +93,7 @@ namespace taskt.Core.Automation.Commands
                 value = dataRow.Field<string>(index);
             }
 
-            value.StoreInUserVariable(sender, v_UserVariableName);
-
+            value.StoreInUserVariable(engine, v_UserVariableName);
         }
 
         public override List<Control> Render(frmCommandEditor editor)

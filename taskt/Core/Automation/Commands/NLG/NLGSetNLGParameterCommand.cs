@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var p = (SPhraseSpec)engine.GetAppInstance(vInstance);
 
-            var userInput = v_Parameter.ExpandValueOrUserVariable(sender);
+            var userInput = v_Parameter.ExpandValueOrUserVariable(engine);
 
             switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ParameterType), engine))
             {

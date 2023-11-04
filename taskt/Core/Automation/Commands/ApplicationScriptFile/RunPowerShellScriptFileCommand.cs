@@ -88,7 +88,7 @@ namespace taskt.Core.Automation.Commands
             if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceScriptVariables), engine) == "yes")
             {
                 //convert variables
-                psCommand = psCommand.ExpandValueOrUserVariable(sender);
+                psCommand = psCommand.ExpandValueOrUserVariable(engine);
             }
             
             //convert ps script
@@ -114,7 +114,7 @@ namespace taskt.Core.Automation.Commands
             if (!String.IsNullOrEmpty(v_applyToVariableName))
             {
                 string output = reader.ReadToEnd();
-                output.StoreRawDataInUserVariable(sender, v_applyToVariableName);
+                output.StoreRawDataInUserVariable(engine, v_applyToVariableName);
             }
         }
     }

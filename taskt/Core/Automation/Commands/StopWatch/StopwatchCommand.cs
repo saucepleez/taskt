@@ -116,7 +116,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        var format = v_ToStringFormat.ExpandValueOrUserVariable(sender);
+                        var format = v_ToStringFormat.ExpandValueOrUserVariable(engine);
                         elapsedTime = stopwatch.Elapsed.ToString(format);
                     }
 

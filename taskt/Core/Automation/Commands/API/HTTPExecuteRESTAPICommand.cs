@@ -171,8 +171,8 @@ namespace taskt.Core.Automation.Commands
             //for each api parameter
             foreach (var param in apiParameters)
             {
-                var paramName = ((string)param["Parameter Name"]).ExpandValueOrUserVariable(sender);
-                var paramValue = ((string)param["Parameter Value"]).ExpandValueOrUserVariable(sender);
+                var paramName = ((string)param["Parameter Name"]).ExpandValueOrUserVariable(engine);
+                var paramValue = ((string)param["Parameter Value"]).ExpandValueOrUserVariable(engine);
 
                 request.AddParameter(paramName, paramValue);
             }
@@ -180,8 +180,8 @@ namespace taskt.Core.Automation.Commands
             //for each header
             foreach (var header in apiHeaders)
             {
-                var paramName = ((string)header["Parameter Name"]).ExpandValueOrUserVariable(sender);
-                var paramValue = ((string)header["Parameter Value"]).ExpandValueOrUserVariable(sender);
+                var paramName = ((string)header["Parameter Name"]).ExpandValueOrUserVariable(engine);
+                var paramValue = ((string)header["Parameter Value"]).ExpandValueOrUserVariable(engine);
 
                 request.AddHeader(paramName, paramValue);
             }
@@ -193,7 +193,7 @@ namespace taskt.Core.Automation.Commands
             //add json body
             if (jsonBody != null)
             {
-                var json = jsonBody.ExpandValueOrUserVariable(sender);
+                var json = jsonBody.ExpandValueOrUserVariable(engine);
                 request.AddJsonBody(jsonBody);
             }
 
@@ -205,9 +205,9 @@ namespace taskt.Core.Automation.Commands
             //get file
             if (file != null)
             {
-                var paramName = ((string)file["Parameter Name"]).ExpandValueOrUserVariable(sender);
-                var paramValue = ((string)file["Parameter Value"]).ExpandValueOrUserVariable(sender);
-                var fileData = paramValue.ExpandValueOrUserVariable(sender);
+                var paramName = ((string)file["Parameter Name"]).ExpandValueOrUserVariable(engine);
+                var paramValue = ((string)file["Parameter Value"]).ExpandValueOrUserVariable(engine);
+                var fileData = paramValue.ExpandValueOrUserVariable(engine);
                 request.AddFile(paramName, fileData);
 
             }
@@ -215,10 +215,10 @@ namespace taskt.Core.Automation.Commands
             //add advanced parameters
             foreach (DataRow rw in this.v_AdvancedParameters.Rows)
             {
-                var paramName = rw.Field<string>("Parameter Name").ExpandValueOrUserVariable(sender);
-                var paramValue = rw.Field<string>("Parameter Value").ExpandValueOrUserVariable(sender);
-                var paramType = rw.Field<string>("Parameter Type").ExpandValueOrUserVariable(sender);
-                var contentType = rw.Field<string>("Content Type").ExpandValueOrUserVariable(sender);
+                var paramName = rw.Field<string>("Parameter Name").ExpandValueOrUserVariable(engine);
+                var paramValue = rw.Field<string>("Parameter Value").ExpandValueOrUserVariable(engine);
+                var paramType = rw.Field<string>("Parameter Type").ExpandValueOrUserVariable(engine);
+                var contentType = rw.Field<string>("Content Type").ExpandValueOrUserVariable(engine);
 
                 //var param = new Parameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
 
@@ -227,7 +227,7 @@ namespace taskt.Core.Automation.Commands
                 request.AddParameter(paramName, paramValue, (ParameterType)Enum.Parse(typeof(ParameterType), paramType));
             }
 
-            var requestFormat = v_RequestFormat.ExpandValueOrUserVariable(sender);
+            var requestFormat = v_RequestFormat.ExpandValueOrUserVariable(engine);
             if (string.IsNullOrEmpty(requestFormat))
             {
                 requestFormat = "Xml";

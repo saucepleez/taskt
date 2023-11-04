@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
             var engine = (Engine.AutomationEngineInstance)sender;
 
             //get variablized input
-            var variableInput = v_InputValue.ExpandValueOrUserVariable(sender);
+            var variableInput = v_InputValue.ExpandValueOrUserVariable(engine);
 
             //create objects
             Newtonsoft.Json.Linq.JArray arr;
