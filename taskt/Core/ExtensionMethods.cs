@@ -112,7 +112,7 @@ namespace taskt.Core
             }
             else
             {
-                return str.ConvertToUserVariable_Official(engine);
+                return str.ExpandValueOrUserVariable_Official(engine);
             }
         }
 
@@ -517,7 +517,13 @@ namespace taskt.Core
             }
         }
 
-        public static string ConvertToUserVariable_Intermediate(this string str, Automation.Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// convert user variable to Intermediate Notation (change wrap marker)
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static string ConvertUserVariableToIntermediateNotation(this string str, Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
             {
@@ -654,7 +660,7 @@ namespace taskt.Core
         }
 
         // official parser
-        public static string ConvertToUserVariable_Official(this string str, Automation.Engine.AutomationEngineInstance engine)
+        public static string ExpandValueOrUserVariable_Official(this string str, Automation.Engine.AutomationEngineInstance engine)
         {
             if (str == null)
                 return string.Empty;
@@ -1036,6 +1042,12 @@ namespace taskt.Core
             }
         }
 
+        /// <summary>
+        /// search and return variable that specified name
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
         private static Script.ScriptVariable LookupVariable(string variableName, Automation.Engine.AutomationEngineInstance engine)
         {
             //search for the variable
