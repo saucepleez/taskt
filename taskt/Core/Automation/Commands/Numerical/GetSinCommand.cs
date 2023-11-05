@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var value = NumberControls.ConvertAngleToRadian(this, nameof(v_Number), nameof(v_AngleType), engine);
+            var value = NumberControls.ConvertAngleValueToRadian(this, nameof(v_Number), nameof(v_AngleType), engine);
 
             Math.Sin(value).StoreInUserVariable(engine, v_Result);
         }

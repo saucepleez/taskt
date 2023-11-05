@@ -330,7 +330,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="typeName"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static double ConvertAngleToRadian(ScriptCommand command, string valueName, string typeName, Engine.AutomationEngineInstance engine)
+        public static double ConvertAngleValueToRadian(ScriptCommand command, string valueName, string typeName, Engine.AutomationEngineInstance engine)
         {
             var v = (double)command.ExpandValueOrUserVariableAsDecimal(valueName, engine);
             if (command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine) == "degree")
