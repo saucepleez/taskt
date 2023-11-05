@@ -55,9 +55,11 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-            var scrollbarType = v_ScrollBarType.ExpandValueOrUserVariableAsSelectionItem("v_ScrollBarType", this, engine);
+            //var scrollbarType = v_ScrollBarType.ExpandValueOrUserVariableAsSelectionItem("v_ScrollBarType", this, engine);
+            var scrollbarType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ScrollBarType), engine);
 
-            var dirAndAmo = v_DirectionAndAmount.ExpandValueOrUserVariableAsSelectionItem("v_DirectionAndAmount", this, engine);
+            //var dirAndAmo = v_DirectionAndAmount.ExpandValueOrUserVariableAsSelectionItem("v_DirectionAndAmount", this, engine);
+            var dirAndAmo = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_DirectionAndAmount), engine);
             ScrollAmount amount = ScrollAmount.NoAmount;
             switch (dirAndAmo)
             {

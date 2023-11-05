@@ -43,7 +43,8 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
-            var state = v_ItemsState.ExpandValueOrUserVariableAsSelectionItem("v_ItemsState", this, engine);
+            //var state = v_ItemsState.ExpandValueOrUserVariableAsSelectionItem("v_ItemsState", this, engine);
+            var state = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ItemsState), engine);
 
             if (targetElement.TryGetCurrentPattern(ExpandCollapsePattern.Pattern, out object exColPtn))
             {
