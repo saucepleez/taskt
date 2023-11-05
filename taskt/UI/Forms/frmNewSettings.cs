@@ -905,6 +905,19 @@ namespace taskt.UI.Forms
                 if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);
+
+                    var newFullPath = System.IO.Path.GetFullPath(newAttendedTaskFolder);
+                    if (newFullPath == Core.Script.Script.GetAutoSaveFolderPath())
+                    {
+                        MessageBox.Show("Selected folder is in the same location as the 'AutoSave' folder");
+                        return;
+                    }
+                    if (newFullPath == Core.Script.Script.GetRunWithoutSavingFolderPath())
+                    {
+                        MessageBox.Show("Selected folder is in the same location as the 'RunWithoutSaving' folder");
+                        return;
+                    }
+
                     txt.Text = newAttendedTaskFolder;
                 }
             }

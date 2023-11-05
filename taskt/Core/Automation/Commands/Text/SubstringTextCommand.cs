@@ -55,10 +55,8 @@ namespace taskt.Core.Automation.Commands
             //v_stringLength = "-1";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var variableName = v_userVariableName.ExpandValueOrUserVariable(engine);
 
             var startIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_startIndex), engine);

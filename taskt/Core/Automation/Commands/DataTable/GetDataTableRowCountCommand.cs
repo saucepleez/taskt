@@ -32,10 +32,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
 
             myDT.Rows.Count.ToString().StoreInUserVariable(engine, v_UserVariableName);

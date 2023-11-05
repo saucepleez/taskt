@@ -41,10 +41,8 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get text to log and log file name       
             var textToLog = v_LogText.ExpandValueOrUserVariable(engine);
             var logFile = v_LogFile.ExpandValueOrUserVariable(engine);

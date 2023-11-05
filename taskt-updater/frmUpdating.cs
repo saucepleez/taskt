@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.IO;
+using System.Reflection;
 
 namespace taskt_updater
 {
@@ -52,7 +48,8 @@ namespace taskt_updater
 
         private void frmUpdating_Load(object sender, EventArgs e)
         {
-
+            var asm = Assembly.GetExecutingAssembly();
+            this.Text += " v" + asm.GetName().Version;
         }
         #endregion
 

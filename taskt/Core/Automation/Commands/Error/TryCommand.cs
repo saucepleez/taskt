@@ -21,11 +21,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender, Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Script.ScriptAction parentCommand)
         {
-           //get engine
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             //get indexes of commands
             var startIndex = 0;
             var catchIndex = parentCommand.AdditionalScriptCommands.FindIndex(a => a.ScriptCommand is CatchExceptionCommand);

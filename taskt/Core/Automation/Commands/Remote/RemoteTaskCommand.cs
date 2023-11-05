@@ -80,9 +80,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_RequestTimeout = "120000";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             try
             {
                 var server = v_BaseURL.ExpandValueOrUserVariable(engine);

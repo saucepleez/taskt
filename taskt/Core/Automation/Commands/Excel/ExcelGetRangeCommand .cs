@@ -58,10 +58,8 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
             var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(engine);

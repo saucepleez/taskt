@@ -76,11 +76,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             Color co = v_Color.ExpandUserVariableAsColor(engine);
             string format = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Format), engine);
 

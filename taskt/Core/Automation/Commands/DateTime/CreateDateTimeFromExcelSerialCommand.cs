@@ -40,11 +40,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             decimal value = this.ExpandValueOrUserVariableAsDecimal(nameof(v_Serial), engine);
 
             try

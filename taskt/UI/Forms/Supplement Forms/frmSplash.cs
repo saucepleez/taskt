@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using taskt.Core.Script;
 
 namespace taskt.UI.Forms.Supplemental
 {
@@ -19,7 +14,18 @@ namespace taskt.UI.Forms.Supplemental
 
         private void frmSplash_Load(object sender, EventArgs e)
         {
+            // check exist or create AutoSave, RunWithoutSaving folders
+            var autoSavePath = Script.GetAutoSaveFolderPath();
+            if (!Directory.Exists(autoSavePath))
+            {
+                Directory.CreateDirectory(autoSavePath);
+            }
 
+            var runPath = Script.GetRunWithoutSavingFolderPath();
+            if (!Directory.Exists(runPath))
+            {
+                Directory.CreateDirectory(runPath);
+            }
         }
     }
 }

@@ -50,10 +50,8 @@ namespace taskt.Core.Automation.Commands
         }
 
        
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             bool isTrueStatement = true;
             foreach (DataRow rw in v_IfConditionsTable.Rows)
             {

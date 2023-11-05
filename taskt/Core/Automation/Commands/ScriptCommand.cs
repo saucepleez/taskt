@@ -546,19 +546,23 @@ namespace taskt.Core.Automation.Commands
         }
 
         #region RunCommand
-        public virtual void RunCommand(object sender)
-        {
-            //RunCommand((AutomationEngineInstance)sender);
-            System.Threading.Thread.Sleep(DefaultPause);
-        }
-        public virtual void RunCommand(object sender, Script.ScriptAction command)
-        {
-            System.Threading.Thread.Sleep(DefaultPause);
-        }
-        //public virtual void RunCommand(AutomationEngineInstance engine)
+        //public virtual void RunCommand(object sender)
+        //{
+        //    //RunCommand((AutomationEngineInstance)sender);
+        //    System.Threading.Thread.Sleep(DefaultPause);
+        //}
+        //public virtual void RunCommand(object sender, Script.ScriptAction command)
         //{
         //    System.Threading.Thread.Sleep(DefaultPause);
         //}
+        public virtual void RunCommand(Engine.AutomationEngineInstance engine)
+        {
+            System.Threading.Thread.Sleep(DefaultPause);
+        }
+        public virtual void RunCommand(Engine.AutomationEngineInstance engine, Script.ScriptAction command)
+        {
+            System.Threading.Thread.Sleep(DefaultPause);
+        }
         #endregion
 
         #region GetDisplayValue

@@ -40,10 +40,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             (var jsonText, _) = v_JsonValue.ExpandValueOrUserVariableAsJSON(engine);
             jsonText.StoreInUserVariable(engine, v_JsonVariable);
         }

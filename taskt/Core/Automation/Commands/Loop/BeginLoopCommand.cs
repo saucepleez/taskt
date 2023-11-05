@@ -96,9 +96,8 @@ namespace taskt.Core.Automation.Commands
         {
             loopAction_SelectionChangeCommitted(null, null, editor);
         }
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             //var loopResult = DetermineStatementTruth(sender);
 
             string actionType = v_LoopActionType.ExpandValueOrUserVariable(engine);

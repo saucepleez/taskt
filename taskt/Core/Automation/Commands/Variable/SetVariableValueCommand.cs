@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Create New Variable when that Variable Does not Exist")]
-        [PropertyIsOptional(true, "Yes")]
+        [PropertyIsOptional(true, "No")]
         [Remarks("This command ignores the 'Create Missing Variable During Execution' value in the Settings")]
         public string v_CreateNewVariable { get; set; }
 
@@ -46,11 +46,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ReplaceInputVariables = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var isRepalce = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ReplaceInputVariables), engine);
             //string variableValue;
             //if (isRepalce == "yes")

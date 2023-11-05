@@ -59,10 +59,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;  
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var mouseX = this.ExpandValueOrUserVariableAsInteger(nameof(v_XMousePosition), engine);
             var mouseY = this.ExpandValueOrUserVariableAsInteger(nameof(v_YMousePosition), engine);
 

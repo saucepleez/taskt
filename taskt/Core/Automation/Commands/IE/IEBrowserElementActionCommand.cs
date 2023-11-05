@@ -142,11 +142,9 @@ namespace taskt.Core.Automation.Commands
         }
 
         [STAThread]
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             object browserObject = null;
-
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
 
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
 
@@ -177,11 +175,11 @@ namespace taskt.Core.Automation.Commands
 
             if (doc == lastDocFound)
             {
-                qualifyingElementFound = InspectFrame(lastElementCollectionFound, elementSearchProperties, sender, browserInstance);
+                qualifyingElementFound = InspectFrame(lastElementCollectionFound, elementSearchProperties, engine, browserInstance);
             }
             if (!qualifyingElementFound)
             {
-                qualifyingElementFound = InspectFrame(doc.all, elementSearchProperties, sender, browserInstance);
+                qualifyingElementFound = InspectFrame(doc.all, elementSearchProperties, engine, browserInstance);
             }
             if (qualifyingElementFound)
             {
@@ -317,7 +315,7 @@ namespace taskt.Core.Automation.Commands
                 newMouseMove.v_XMousePosition = ((elementXposition + ieClientLocation.left + 10) + userXAdjust).ToString(); // + 10 gives extra padding
                 newMouseMove.v_YMousePosition = ((elementYposition + ieClientLocation.top + 90 + System.Windows.Forms.SystemInformation.CaptionHeight) + userYAdjust).ToString(); // +90 accounts for title bar height
                 newMouseMove.v_MouseClick = v_WebAction;
-                newMouseMove.RunCommand(sender);
+                newMouseMove.RunCommand(engine);
             }
             else if (v_WebAction == "Set Attribute")
             {

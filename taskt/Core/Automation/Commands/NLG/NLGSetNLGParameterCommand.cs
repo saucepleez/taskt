@@ -49,9 +49,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_InstanceName = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             var vInstance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var p = (SPhraseSpec)engine.GetAppInstance(vInstance);
 

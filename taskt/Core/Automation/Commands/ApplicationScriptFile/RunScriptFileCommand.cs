@@ -79,10 +79,8 @@ namespace taskt.Core.Automation.Commands
             //AssignmentsGridViewHelper.Hide();
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var startFile = v_taskPath.ConvertToUserVariable(sender);
             //string startFile = FilePathControls.FormatFilePath_NoFileCounter(v_taskPath, engine, "xml", true);
             var startFile = FilePathControls.WaitForFile(this, nameof(v_taskPath), nameof(v_WaitForFile), engine);

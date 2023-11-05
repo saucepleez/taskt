@@ -77,10 +77,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_InitialDirectory = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-            
             var filter = v_Filter.ExpandValueOrUserVariable(engine);
             if (!checkFileterProperty(filter))
             {

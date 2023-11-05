@@ -4,20 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Reflection;
 using taskt.Core.Server;
+using taskt.Core.Automation.Commands;
+using taskt.Core.Script;
+
 namespace taskt.Core.Automation.Engine
 {
     public class AutomationEngineInstance
     {
 
         //engine variables
-        public List<Core.Script.ScriptVariable> VariableList { get; set; }
+        public List<ScriptVariable> VariableList { get; set; }
         public Dictionary<string, object> AppInstances { get; set; }
-        public Dictionary<string, Core.Script.Script> PreloadedTasks { get; set; }
-        public Core.Automation.Commands.ErrorHandlingCommand ErrorHandler;
+        public Dictionary<string, Script.Script> PreloadedTasks { get; set; }
+        public ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
         public bool IsCancellationPending { get; set; }
         public bool CurrentLoopCancelled { get; set; }
@@ -31,7 +33,7 @@ namespace taskt.Core.Automation.Engine
         public ServerSettings serverSettings { get; set; }
         public List<DataTable> DataTables { get; set; }
         public string FileName { get; set; }
-        public Core.Server.Task taskModel { get; set; }
+        public Task taskModel { get; set; }
         public bool serverExecution { get; set; }
         public List<RestResponse> ServiceResponses { get; set; }
         //events
@@ -66,7 +68,7 @@ namespace taskt.Core.Automation.Engine
             engineSettings = settings.EngineSettings;
             serverSettings = settings.ServerSettings;
 
-            VariableList = new List<Script.ScriptVariable>();
+            VariableList = new List<ScriptVariable>();
 
             if (PreloadedTasks is null)
             {
@@ -81,7 +83,7 @@ namespace taskt.Core.Automation.Engine
             AutoCalculateVariables = engineSettings.AutoCalcVariables;
         }
 
-        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<Core.Script.ScriptVariable> variables = null, Dictionary<string, Core.Script.Script> preloadedTasks = null)
+        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<ScriptVariable> variables = null, Dictionary<string, Script.Script> preloadedTasks = null)
         {
             WriteLog("Client requesting to execute script using frmEngine");
 
@@ -126,7 +128,7 @@ namespace taskt.Core.Automation.Engine
 
         public void ExecuteScript(string data, bool dataIsFile)
         {
-            Core.Client.EngineBusy = true;
+            Client.EngineBusy = true;
 
             try
             {
@@ -146,15 +148,15 @@ namespace taskt.Core.Automation.Engine
                 {
                     preLoadedTask = PreloadedTasks.Any(f => f.Key == data);
                 }
-      
+
                 //get automation script
-                Core.Script.Script automationScript;
+                Script.Script automationScript;
                 if (dataIsFile && (!preLoadedTask))
                 {
                     ReportProgress("Deserializing File");
                     WriteLog("Script Path: " + data);
                     FileName = data;              
-                    automationScript = Core.Script.Script.DeserializeFile(data, engineSettings);
+                    automationScript = Script.Script.DeserializeFile(data, engineSettings);
                 }
                 else if (dataIsFile && preLoadedTask)
                 {
@@ -166,7 +168,7 @@ namespace taskt.Core.Automation.Engine
                 else
                 {
                     ReportProgress("Deserializing XML");
-                    automationScript = Core.Script.Script.DeserializeXML(data);
+                    automationScript = Script.Script.DeserializeXML(data);
                 }
 
                 if (serverSettings.ServerConnectionEnabled && taskModel == null)
@@ -201,24 +203,24 @@ namespace taskt.Core.Automation.Engine
 
                 // add hidden inner variable
                 VariableList.AddRange(
-                    new Script.ScriptVariable[]
+                    new ScriptVariable[]
                     {
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_0",
                             VariableValue = ""
                         },
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_1",
                             VariableValue = ""
                         },
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_2",
                             VariableValue = ""
                         },
-                        new Script.ScriptVariable()
+                        new ScriptVariable()
                         {
                             VariableName = "__INNER_3",
                             VariableValue = ""
@@ -264,10 +266,10 @@ namespace taskt.Core.Automation.Engine
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
         }
-        public void ExecuteCommand(Core.Script.ScriptAction command)
+        public void ExecuteCommand(ScriptAction command)
         {
             //get command
-            Core.Automation.Commands.ScriptCommand parentCommand = command.ScriptCommand;
+            ScriptCommand parentCommand = command.ScriptCommand;
 
            //update execution line numbers
             LineNumberChanged(parentCommand.LineNumber);
@@ -294,7 +296,7 @@ namespace taskt.Core.Automation.Engine
                 }
 
                 //wait
-                System.Threading.Thread.Sleep(2000);
+                Thread.Sleep(2000);
             }
 
             CurrentStatus = EngineStatus.Running;
@@ -307,7 +309,7 @@ namespace taskt.Core.Automation.Engine
 
 
             //bypass comments
-            if (parentCommand is Core.Automation.Commands.CommentCommand || parentCommand.IsCommented)
+            if (parentCommand is CommentCommand || parentCommand.IsCommented)
             {
                 ReportProgress("Skipping Line " + parentCommand.LineNumber + ": " + parentCommand.GetDisplayValue().ExpandValueOrUserVariable(this));
                 return;
@@ -321,12 +323,25 @@ namespace taskt.Core.Automation.Engine
             try
             {
                 //determine type of command
-                if ((parentCommand is Core.Automation.Commands.BeginNumberOfTimesLoopCommand) || (parentCommand is Core.Automation.Commands.BeginContinousLoopCommand) || (parentCommand is Core.Automation.Commands.BeginListLoopCommand) || (parentCommand is Core.Automation.Commands.BeginIfCommand) || (parentCommand is Core.Automation.Commands.BeginMultiIfCommand) || (parentCommand is Commands.TryCommand) || (parentCommand is Core.Automation.Commands.BeginLoopCommand) || (parentCommand is Core.Automation.Commands.BeginMultiLoopCommand))
+                if ((parentCommand is BeginNumberOfTimesLoopCommand) || (parentCommand is BeginContinousLoopCommand) || (parentCommand is BeginListLoopCommand) || (parentCommand is BeginIfCommand) || (parentCommand is BeginMultiIfCommand) || (parentCommand is TryCommand) || (parentCommand is BeginLoopCommand) || (parentCommand is BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
+
+                    //var tp = parentCommand.GetType();
+                    //var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance), typeof(ScriptAction) });
+
+                    //if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
+                    //{
+                    //    parentCommand.RunCommand(this, command);
+                    //}
+                    //else
+                    //{
+                    //    parentCommand.RunCommand((object)this, command);
+                    //}
+
                     parentCommand.RunCommand(this, command);
                 }
-                else if (parentCommand is Core.Automation.Commands.SequenceCommand)
+                else if (parentCommand is SequenceCommand)
                 {
                     // todo: execute runcommand
                     parentCommand.RunCommand(this, command);
@@ -357,8 +372,20 @@ namespace taskt.Core.Automation.Engine
                 else
                 {
                     //sleep required time
-                    System.Threading.Thread.Sleep(engineSettings.DelayBetweenCommands);
-                 
+                    Thread.Sleep(engineSettings.DelayBetweenCommands);
+
+                    //var tp = parentCommand.GetType();
+                    //var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance) });
+
+                    //if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
+                    //{
+                    //    parentCommand.RunCommand(this);
+                    //}
+                    //else
+                    //{
+                    //    parentCommand.RunCommand((object)this);
+                    //}
+
                     //run the command
                     parentCommand.RunCommand(this);
                 }
@@ -378,20 +405,16 @@ namespace taskt.Core.Automation.Engine
                     switch (ErrorHandler.v_ErrorHandlingAction)
                     {
                         case "Continue Processing":
-                        
                            ReportProgress("Error Occured at Line " + parentCommand.LineNumber + ":" + ex.ToString());
                            ReportProgress("Continuing Per Error Handling");
+                           break;
 
-                            break;
-
-                        default:
-                        
+                        default:       
                             throw ex;
                     }
                 }
                 else
                 {
-                
                     throw ex;
                 }
             }
@@ -400,6 +423,7 @@ namespace taskt.Core.Automation.Engine
                 ClearInnerVariables();
             }
         }
+
         public void AddAppInstance(string instanceName, object appObject) {
 
             if (AppInstances.ContainsKey(instanceName) && engineSettings.OverrideExistingAppInstances)
@@ -483,7 +507,7 @@ namespace taskt.Core.Automation.Engine
             else
             {
                 //add new variable
-                var newVariable = new Script.ScriptVariable();
+                var newVariable = new ScriptVariable();
                 newVariable.VariableName = variableName;
                 newVariable.VariableValue = variableValue;
                 VariableList.Add(newVariable);
@@ -493,12 +517,12 @@ namespace taskt.Core.Automation.Engine
 
         public void StoreComplexObjectInVariable(string variableName, object value)
         {
-            Script.ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+            ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
 
             if (storeVariable == null)
             {
                 //create and set variable
-                VariableList.Add(new Script.ScriptVariable
+                VariableList.Add(new ScriptVariable
                 {
                     VariableName = variableName,
                     VariableValue = value
@@ -515,7 +539,7 @@ namespace taskt.Core.Automation.Engine
         {
             for (int i = 0; i < INNER_VARIABLES; i++)
             {
-                Script.ScriptVariable v = VariableList.Where(x => x.VariableName == "__INNER_" + i.ToString()).FirstOrDefault();
+                ScriptVariable v = VariableList.Where(x => x.VariableName == "__INNER_" + i.ToString()).FirstOrDefault();
                 if (v != null)
                 {
                     v.VariableValue = "";
@@ -541,7 +565,7 @@ namespace taskt.Core.Automation.Engine
             ReportProgressEventArgs args = new ReportProgressEventArgs();
             args.ProgressUpdate = progress;
             //send log to server
-            Core.Server.SocketClient.SendExecutionLog(progress);
+            SocketClient.SendExecutionLog(progress);
 
             //invoke event
             ReportProgressEvent?.Invoke(this, args);
@@ -556,7 +580,7 @@ namespace taskt.Core.Automation.Engine
             //handle if variable is missing
             if (resultVar == null)
             {
-                resultVar = new Script.ScriptVariable() { VariableName = "taskt.Result", VariableValue = "" };
+                resultVar = new ScriptVariable() { VariableName = "taskt.Result", VariableValue = "" };
             }
 
             //check value
@@ -607,12 +631,12 @@ namespace taskt.Core.Automation.Engine
             args.ExecutionTime = sw.Elapsed;
             args.FileName = FileName;
 
-            Core.Server.SocketClient.SendExecutionLog("Result Code: " + result.ToString());
-            Core.Server.SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
+            SocketClient.SendExecutionLog("Result Code: " + result.ToString());
+            SocketClient.SendExecutionLog("Total Execution Time: " + sw.Elapsed);
 
 
             //convert to json
-            var serializedArguments = Newtonsoft.Json.JsonConvert.SerializeObject(args);
+            var serializedArguments = JsonConvert.SerializeObject(args);
 
             //write execution metrics
             if ((engineSettings.TrackExecutionMetrics) && (FileName != null))
@@ -623,7 +647,7 @@ namespace taskt.Core.Automation.Engine
             }
 
 
-            Core.Client.EngineBusy = false;
+            Client.EngineBusy = false;
 
 
             if (serverSettings.ServerConnectionEnabled)

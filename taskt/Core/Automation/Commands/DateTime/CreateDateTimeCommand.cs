@@ -116,11 +116,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             int year = this.ExpandValueOrUserVariableAsInteger(nameof(v_Year), engine);
 
             int month = this.ExpandValueOrUserVariableAsInteger(nameof(v_Month), engine);

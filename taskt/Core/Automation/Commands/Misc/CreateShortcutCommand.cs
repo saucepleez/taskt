@@ -61,10 +61,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             string targetPath = v_TargetPath.ExpandValueOrUserVariable(engine);
             //bool isURL = (targetPath.StartsWith("http:") || (targetPath.StartsWith("https:")));
 

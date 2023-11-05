@@ -45,10 +45,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var keyName = v_KeyName.ExpandValueOrUserVariable(engine);
             var keyValue = v_InputValue.ExpandValueOrUserVariable(engine);
 

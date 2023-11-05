@@ -59,10 +59,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             string sortOrder = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SortOrder), "Sort Order", engine);
 
             string targetType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_TargetType), "Target Type", engine);

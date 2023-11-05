@@ -32,11 +32,9 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
             Core.Automation.Commands.BeginListLoopCommand loopCommand = (Core.Automation.Commands.BeginListLoopCommand)parentCommand.ScriptCommand;
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
             Script.ScriptVariable complexVariable = null;
 
             //get variable by regular name

@@ -113,10 +113,8 @@ namespace taskt.Core.Automation.Commands
             this.v_EnableSSL = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //bypass ssl validation if requested
             if (v_SSLValidation.ExpandValueOrUserVariable(engine) == "Bypass SSL Validation")
             {

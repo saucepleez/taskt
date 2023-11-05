@@ -133,32 +133,32 @@ namespace taskt.Core.Automation.Commands
             return ExpandValueOrUserVariableAsSelectionItem(propInfo, propertyValue, propertyDescription, engine);
         }
 
-        /// <summary>
-        /// Get selected item value from PropertyConvertTag that specified property name, etc.  This method supports check selection value, first value, case sensitive.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
-        public static string ExpandValueOrUserVariableAsSelectionItem(this PropertyConvertTag p, ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            return ExpandValueOrUserVariableAsSelectionItem(command, p.Name, p.Description, engine);
-        }
+        ///// <summary>
+        ///// Get selected item value from PropertyConvertTag that specified property name, etc.  This method supports check selection value, first value, case sensitive.
+        ///// </summary>
+        ///// <param name="p"></param>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
+        //public static string ExpandValueOrUserVariableAsSelectionItem(this PropertyConvertTag p, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    return ExpandValueOrUserVariableAsSelectionItem(command, p.Name, p.Description, engine);
+        //}
 
-        /// <summary>
-        /// Get or Convert to selected item value by specified target value, target property name.  This method supports check selection value, first value, case sensitive.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="propertyName"></param>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
-        public static string ExpandValueOrUserVariableAsSelectionItem(this string text, string propertyName, ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            return new PropertyConvertTag(text, propertyName, "").ExpandValueOrUserVariableAsSelectionItem(command, engine);
-        }
+        ///// <summary>
+        ///// Get or Convert to selected item value by specified target value, target property name.  This method supports check selection value, first value, case sensitive.
+        ///// </summary>
+        ///// <param name="text"></param>
+        ///// <param name="propertyName"></param>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception">value is not PropertyUISelectionOption</exception>
+        //public static string ExpandValueOrUserVariableAsSelectionItem(this string text, string propertyName, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    return new PropertyConvertTag(text, propertyName, "").ExpandValueOrUserVariableAsSelectionItem(command, engine);
+        //}
 
         /// <summary>
         /// Get Yes/No item from Property Name. This method supports check selection value, first value, case sensitive.

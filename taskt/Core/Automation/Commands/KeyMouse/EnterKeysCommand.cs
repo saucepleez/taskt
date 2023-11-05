@@ -76,10 +76,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_EncryptionOption = "Not Encrypted";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
             if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
             {

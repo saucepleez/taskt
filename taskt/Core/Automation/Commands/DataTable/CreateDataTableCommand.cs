@@ -50,10 +50,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_ColumnNameDataTable.Columns.Add("Column Name");
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             DataTable newDT = new DataTable();
 
             // check column name is empty

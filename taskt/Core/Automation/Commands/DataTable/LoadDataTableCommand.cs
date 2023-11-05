@@ -79,10 +79,8 @@ namespace taskt.Core.Automation.Commands
             this.v_ContainsHeaderRow = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //DataTableControls dataSetCommand = new DataTableControls();
 
             //string filePath = FilePathControls.FormatFilePath_NoFileCounter(v_FilePath, engine, new List<string>() { "xlsx", "xlsm", "xls" }, true);

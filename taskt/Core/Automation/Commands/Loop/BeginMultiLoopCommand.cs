@@ -49,11 +49,9 @@ namespace taskt.Core.Automation.Commands
             v_LoopConditionsTable.Columns.Add("CommandData");
         }
 
-        public override void RunCommand(object sender, Core.Script.ScriptAction parentCommand)
+        public override void RunCommand(Engine.AutomationEngineInstance engine, Core.Script.ScriptAction parentCommand)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
-
-            bool isTrueStatement = DetermineMultiStatementTruth(sender);
+            bool isTrueStatement = DetermineMultiStatementTruth(engine);
 
             engine.ReportProgress("Starting Loop");
 
@@ -80,13 +78,12 @@ namespace taskt.Core.Automation.Commands
                         break;
                     }
                 }
-                isTrueStatement = DetermineMultiStatementTruth(sender);
+                isTrueStatement = DetermineMultiStatementTruth(engine);
             }
         }
 
-        private bool DetermineMultiStatementTruth(object sender)
+        private bool DetermineMultiStatementTruth(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             bool isTrueStatement = true;
             foreach (DataRow rw in v_LoopConditionsTable.Rows)
             {

@@ -360,7 +360,7 @@ namespace taskt.Core
             Core.Automation.Engine.AutomationEngineInstance engine = new Automation.Engine.AutomationEngineInstance(false);
             engine.engineSettings = this;
             engine.VariableList = variables;
-            return ExtensionMethods.ConvertToUserVariable_Intermediate(targetString, engine);
+            return ExtensionMethods.ConvertUserVariableToIntermediateNotation(targetString, engine);
         }
 
         public string wrapVariableMarker(string variableName)

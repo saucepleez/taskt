@@ -35,11 +35,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var rawValue = v_userVariableName.GetRawVariable(engine).VariableValue;
             string result;
             if (rawValue is List<string>)

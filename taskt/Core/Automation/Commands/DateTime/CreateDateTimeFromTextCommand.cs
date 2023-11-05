@@ -40,11 +40,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //get sending instance
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             string value = v_Text.ExpandValueOrUserVariable(engine);
 
             if (DateTime.TryParse(value, out DateTime tryDT))

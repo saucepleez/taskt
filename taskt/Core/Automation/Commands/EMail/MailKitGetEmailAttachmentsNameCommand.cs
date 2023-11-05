@@ -32,10 +32,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var mail = v_MailName.ExpandUserVariableAsEmail(engine);
 
             var attachments = mail.Attachments.Cast<MimeKit.MimePart>().Select(a => a.FileName).ToList();

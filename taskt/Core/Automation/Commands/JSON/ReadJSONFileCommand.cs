@@ -50,10 +50,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //string filePath;
             //if (!FilePathControls.IsURL(v_FilePath))
             //{
@@ -70,7 +68,7 @@ namespace taskt.Core.Automation.Commands
                 v_FilePath = filePath,
                 v_userVariableName = this.v_userVariableName
             };
-            readFile.RunCommand(sender);
+            readFile.RunCommand(engine);
         }
     }
 }

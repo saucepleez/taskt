@@ -36,10 +36,8 @@ namespace taskt.Core.Automation.Commands
             //this.v_EngineSpeed = "";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var delay = this.ExpandValueOrUserVariableAsInteger(nameof(v_EngineSpeed), engine);
             engine.engineSettings.DelayBetweenCommands = delay;
         }

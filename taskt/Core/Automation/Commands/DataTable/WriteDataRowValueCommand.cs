@@ -64,10 +64,8 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             var dataRowValue = v_DataRowValue.ExpandValueOrUserVariable(engine);
 
             DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;

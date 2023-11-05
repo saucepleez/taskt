@@ -47,10 +47,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             List<string> listA = v_InputListA.ExpandUserVariableAsList(engine);
             List<string> listB = v_InputListB.ExpandUserVariableAsList(engine);
 

@@ -35,10 +35,8 @@ namespace taskt.Core.Automation.Commands
             //this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //var t = v_RandomType.GetUISelectionValue("v_RandomType", this, engine);
             //var t = this.GetUISelectionValue(nameof(v_RandomType), "Random Type", engine);
             var t = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_RandomType), engine);

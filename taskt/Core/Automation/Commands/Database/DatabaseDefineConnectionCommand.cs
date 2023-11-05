@@ -75,10 +75,9 @@ namespace taskt.Core.Automation.Commands
             this.v_TestConnection = "Yes";
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //get engine and preference
-            var engine = (Core.Automation.Engine.AutomationEngineInstance)sender;
             var instance = v_InstanceName.ExpandValueOrUserVariable(engine);
             var testPreference = v_TestConnection.ExpandValueOrUserVariable(engine);
 

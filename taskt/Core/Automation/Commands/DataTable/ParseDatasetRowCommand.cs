@@ -69,10 +69,8 @@ namespace taskt.Core.Automation.Commands
             this.v_ColumnParseType = "By Column Name";   
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //try to find dataset based on variable name
             var dataSourceVariable = engine.VariableList.FirstOrDefault(f => engine.engineSettings.VariableStartMarker + f.VariableName + engine.engineSettings.VariableEndMarker == v_DatasetName);
 

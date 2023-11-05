@@ -94,9 +94,8 @@ namespace taskt.Core.Automation.Commands
             this.CommandEnabled = true;
             this.CustomRendering = true;
         }
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
             var vFolder = v_Folder.ExpandValueOrUserVariable(engine);
             var vFilter = v_Filter.ExpandValueOrUserVariable(engine);
             var vAttachmentDirectory = v_AttachmentDirectory.ExpandValueOrUserVariable(engine);

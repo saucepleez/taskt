@@ -53,10 +53,8 @@ namespace taskt.Core.Automation.Commands
             this.CustomRendering = true;
         }
 
-        public override void RunCommand(object sender)
+        public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var engine = (Engine.AutomationEngineInstance)sender;
-
             //get variable path or URL to source file
             var vSourceFilePath = v_FilePath.ExpandValueOrUserVariable(engine);
             // get source type of file either from a physical file or from a URL
