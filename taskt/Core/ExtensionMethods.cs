@@ -1030,7 +1030,10 @@ namespace taskt.Core
         {
             //string newName = parseVariableName(variableName, engine);
             var newName = VariableNameControls.GetVariableName(variableName, engine);
-            newName = newName.ExpandValueOrUserVariable(engine);
+            if (newName != variableName)
+            {
+                newName = newName.ExpandValueOrUserVariable(engine);
+            }
             Script.ScriptVariable searchedVaiable = LookupVariable(newName, engine);
             if (searchedVaiable == null)
             {
