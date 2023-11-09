@@ -295,6 +295,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Automation\Commands\Math\GetTanCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\GetCosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSinCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowCommand.cs" />
