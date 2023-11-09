@@ -5,7 +5,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Numerical Commands")]
+    [Attributes.ClassAttributes.Group("Math Commands")]
     [Attributes.ClassAttributes.CommandSettings("Get Sin")]
     [Attributes.ClassAttributes.Description("This command allows you to get sin.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get sin.")]
