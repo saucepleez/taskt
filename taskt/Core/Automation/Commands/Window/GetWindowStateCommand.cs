@@ -63,12 +63,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-            //var whnd = wins[0].Item1;
-
-            //var state = WindowNameControls.GetWindowState(whnd);
-            //state.ToString().StoreInUserVariable(engine, v_UserVariableName);
-
             WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {

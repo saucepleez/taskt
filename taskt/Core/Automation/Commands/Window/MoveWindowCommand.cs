@@ -91,45 +91,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-
-            //foreach(var win in wins)
-            //{
-            //    var pos = WindowNameControls.GetWindowPosition(win.Item1);
-
-            //    var variableXPosition = v_XWindowPosition.ConvertToUserVariable(engine);
-            //    int xPos;
-            //    if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
-            //    {
-            //        xPos = pos.left;
-            //    }
-            //    else if (variableXPosition == engine.engineSettings.CurrentWindowYPositionKeyword)
-            //    {
-            //        xPos = pos.top;
-            //    }
-            //    else
-            //    {
-            //        xPos = v_XWindowPosition.ConvertToUserVariableAsInteger("X Position", engine);
-            //    }
-
-            //    var variableYPosition = v_YWindowPosition.ConvertToUserVariable(engine);
-            //    int yPos;
-            //    if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
-            //    {
-            //        yPos = pos.top;
-            //    }
-            //    else if (variableYPosition == engine.engineSettings.CurrentWindowXPositionKeyword)
-            //    {
-            //        yPos = pos.left;
-            //    }
-            //    else
-            //    {
-            //        yPos = v_YWindowPosition.ConvertToUserVariableAsInteger("Y Position", engine);
-            //    }
-
-            //    WindowNameControls.SetWindowPosition(win.Item1, xPos, yPos);
-            //}
-
             WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {

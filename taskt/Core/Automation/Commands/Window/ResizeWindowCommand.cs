@@ -81,15 +81,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-
-            //var width = this.ConvertToUserVariableAsInteger(nameof(v_XWindowSize), engine);
-            //var height = this.ConvertToUserVariableAsInteger(nameof(v_YWindowSize), engine);
-            //foreach (var win in wins)
-            //{
-            //    WindowNameControls.SetWindowSize(win.Item1, width, height);
-            //}
-
             WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
