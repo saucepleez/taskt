@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
-        public string v_Number { get; set; }
+        public string v_Value { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_AngleType))]
@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var value = NumberControls.ConvertAngleValueToRadian(this, nameof(v_Number), nameof(v_AngleType), engine);
+            var value = NumberControls.ConvertAngleValueToRadian(this, nameof(v_Value), nameof(v_AngleType), engine);
 
             Math.Sin(value).StoreInUserVariable(engine, v_Result);
         }
