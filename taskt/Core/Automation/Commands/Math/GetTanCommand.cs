@@ -35,8 +35,9 @@ namespace taskt.Core.Automation.Commands
             //var value = NumberControls.ConvertAngleValueToRadian(this, nameof(v_Value), nameof(v_AngleType), engine);
 
             //Math.Tan(value).StoreInUserVariable(engine, v_Result);
-            MathControls.TrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType), nameof(v_Result),
+            var r = MathControls.TrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType),
                 Math.Tan, engine);
+            r.StoreInUserVariable(engine, v_Result);
         }
     }
 }

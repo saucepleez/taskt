@@ -60,10 +60,11 @@ namespace taskt.Core.Automation.Commands
         /// <param name="resultName"></param>
         /// <param name="func"></param>
         /// <param name="engine"></param>
-        public static void TrignometicFunctionAction(ScriptCommand command, string valueName, string typeName, string resultName, Func<double, double> func, Engine.AutomationEngineInstance engine)
+        /// <returns></returns>
+        public static double TrignometicFunctionAction(ScriptCommand command, string valueName, string typeName, Func<double, double> func, Engine.AutomationEngineInstance engine)
         {
             var v = ConvertAngleValueToRadian(command, valueName, typeName, engine);
-            func(v).StoreInUserVariable(engine, resultName);
+            return func(v);
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="rangeFunc">when out of range, return value is false</param>
         /// <param name="engine"></param>
         /// <exception cref="Exception"></exception>
-        public static void InverseTrignometicFunctionAction(ScriptCommand command, string valueName, string resultName, string typeName, string whenErrorName, Func<double, double> actionFunc, Func<double, bool> rangeFunc, Engine.AutomationEngineInstance engine)
+        public static double InverseTrignometicFunctionAction(ScriptCommand command, string valueName, string typeName, string whenErrorName, Func<double, double> actionFunc, Func<double, bool> rangeFunc, Engine.AutomationEngineInstance engine)
         {
             var v = (double)command.ExpandValueOrUserVariableAsDecimal(valueName, engine);
 
@@ -91,15 +92,11 @@ namespace taskt.Core.Automation.Commands
             }
 
             var r = actionFunc(v);
-            switch(command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine))
+            if (command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine) == "degree")
             {
-                case "radian":
-                    r.StoreInUserVariable(engine, resultName);
-                    break;
-                case "degree":
-                    (r * 180.0 / Math.PI).StoreInUserVariable(engine, resultName);
-                    break;
+                r = r * 180.0 / Math.PI;
             }
+            return r;
         }
 
     }

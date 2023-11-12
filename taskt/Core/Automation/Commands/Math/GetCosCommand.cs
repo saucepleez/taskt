@@ -36,8 +36,9 @@ namespace taskt.Core.Automation.Commands
 
             //Math.Cos(value).StoreInUserVariable(engine, v_Result);
 
-            MathControls.TrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType), nameof(v_Result),
+            var r = MathControls.TrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType), 
                 Math.Cos, engine);
+            r.StoreInUserVariable(engine, v_Result);
         }
     }
 }
