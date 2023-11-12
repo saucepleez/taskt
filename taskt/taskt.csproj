@@ -297,6 +297,7 @@
   <ItemGroup>
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\GetLogarithmCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSquareRootCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetPowerCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetExponentialCommand.cs" />
