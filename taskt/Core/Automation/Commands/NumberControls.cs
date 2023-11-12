@@ -42,20 +42,6 @@ namespace taskt.Core.Automation.Commands
         public static string v_Value { get; }
 
         /// <summary>
-        /// angle type
-        /// </summary>
-        [PropertyDescription("Angle Value Type")]
-        [InputSpecification("Angle Value Type", true)]
-        [Remarks("")]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyUISelectionOption("Radian")]
-        [PropertyUISelectionOption("Degree")]
-        [PropertyDisplayText(true, "Angle Value Type")]
-        [PropertyIsOptional(true, "Radian")]
-        public static string v_AngleType { get; }
-
-
-        /// <summary>
         /// expand value or user variable as Integer specified by parameterName. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
         /// <param name="command"></param>
@@ -320,24 +306,6 @@ namespace taskt.Core.Automation.Commands
         public static void StoreInUserVariable(this decimal value, Engine.AutomationEngineInstance engine, string targetVariable)
         {
             ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
-        }
-
-        /// <summary>
-        /// convert angle value to radian
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="valueName"></param>
-        /// <param name="typeName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static double ConvertAngleValueToRadian(ScriptCommand command, string valueName, string typeName, Engine.AutomationEngineInstance engine)
-        {
-            var v = (double)command.ExpandValueOrUserVariableAsDecimal(valueName, engine);
-            if (command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine) == "degree")
-            {
-                v = v * Math.PI / 180.0;
-            }
-            return v;
         }
     }
 }
