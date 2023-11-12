@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Value { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_AngleType))]
+        [PropertyVirtualProperty(nameof(MathControls), nameof(MathControls.v_AngleType))]
         public string v_AngleType { get; set; }
 
         [XmlAttribute]
