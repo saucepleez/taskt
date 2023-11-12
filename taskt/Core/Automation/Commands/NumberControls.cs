@@ -45,14 +45,14 @@ namespace taskt.Core.Automation.Commands
         /// angle type
         /// </summary>
         [PropertyDescription("Angle Value Type")]
-        [InputSpecification("Numerical Value", true)]
+        [InputSpecification("Angle Value Type", true)]
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Radian")]
         [PropertyUISelectionOption("Degree")]
         [PropertyDisplayText(true, "Angle Value Type")]
         [PropertyIsOptional(true, "Radian")]
-        public static string v_angleType { get; }
+        public static string v_AngleType { get; }
 
 
         /// <summary>
