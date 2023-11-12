@@ -296,6 +296,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
+    <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\GetSquareRootCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\GetPowerCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\GetExponentialCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetArctanCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetArccosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetArcsinCommand.cs" />
