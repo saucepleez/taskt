@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     var whnd = wins[0].Item1;
 
-                    var pos = WindowNameControls.GetWindowPosition(whnd);
+                    var pos = WindowNameControls.GetWindowRect(whnd);
 
                     int x = 0, y = 0;
                     switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))

@@ -135,7 +135,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     foreach (var win in wins)
                     {
-                        var pos = WindowNameControls.GetWindowPosition(win.Item1);
+                        var pos = WindowNameControls.GetWindowRect(win.Item1);
 
                         var variableXPosition = v_XWindowPosition.ExpandValueOrUserVariable(engine);
                         int xPos;
