@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using System.Security.Principal;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -154,11 +153,11 @@ namespace taskt.Core.Automation.Commands
                             y = (pos.top + pos.bottom) / 2;
                             break;
                     }
-                    if (!String.IsNullOrEmpty(v_VariablePositionX))
+                    if (!string.IsNullOrEmpty(v_VariablePositionX))
                     {
                         x.ToString().StoreInUserVariable(engine, v_VariablePositionX);
                     }
-                    if (!String.IsNullOrEmpty(v_VariablePositionY))
+                    if (!string.IsNullOrEmpty(v_VariablePositionY))
                     {
                         y.ToString().StoreInUserVariable(engine, v_VariablePositionY);
                     }
