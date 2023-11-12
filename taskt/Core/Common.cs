@@ -124,7 +124,7 @@ namespace taskt.Core
                           .Where(t => t.IsAbstract == false)
                           .Where(t => t.BaseType.Name == "ScriptCommand")
                           .Where(t => CommandEnabled(t))
-                          .GroupBy(t => t.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group)))
+                          .GroupBy(t => t.GetCustomAttribute(typeof(Automation.Attributes.ClassAttributes.Group)))
                           .ToList();
 
             return groupedCommands;
@@ -134,51 +134,54 @@ namespace taskt.Core
         /// </summary>
         private static bool CommandEnabled(Type cmd)
         {
-            var scriptCommand = (Core.Automation.Commands.ScriptCommand)Activator.CreateInstance(cmd);
+            var scriptCommand = (ScriptCommand)Activator.CreateInstance(cmd);
             return scriptCommand.CommandEnabled;
         }
         /// <summary>
         /// Returns a list of system-generated variables for use with automation.
         /// </summary>
-        public static List<Core.Script.ScriptVariable> GenerateSystemVariables()
+        public static List<Script.ScriptVariable> GenerateSystemVariables()
         {
-            List<Core.Script.ScriptVariable> systemVariableList = new List<Core.Script.ScriptVariable>();
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.ScriptsFolder) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.RootFolder)});
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM")});
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Year", VariableValue = DateTime.Now.ToString("yy") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.YearLong", VariableValue = DateTime.Now.ToString("yyyy") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Hour", VariableValue = DateTime.Now.ToString("HH") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Minute", VariableValue = DateTime.Now.ToString("mm") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.Second", VariableValue = DateTime.Now.ToString("ss") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "System.InputLanguage", VariableValue = InputLanguage.CurrentInputLanguage.Culture.Name });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "System.KeyboardLayout", VariableValue = InputLanguage.CurrentInputLanguage.LayoutName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Message", VariableValue = "An Error Occured!" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.Line", VariableValue = "1" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "An Error Occured + StackTrace" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = WindowNameControls.GetActiveWindowTitle() });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "taskt.Location", VariableValue = System.Reflection.Assembly.GetEntryAssembly().Location });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Cr", VariableValue = "\r" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Lf", VariableValue = "\n" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Tab", VariableValue = "\t" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Char.Space", VariableValue = " " });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F0", VariableValue = "1" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F00", VariableValue = "01" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "FileCounter.F000", VariableValue = "001" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "File.CurrentScriptFile", VariableValue = "" });
-            systemVariableList.Add(new Core.Script.ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            List<Script.ScriptVariable> systemVariableList = new List<Script.ScriptVariable>
+            {
+                new Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) },
+                new Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) },
+                new Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) },
+                new Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.ScriptsFolder) },
+                new Script.ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.RootFolder) },
+                new Script.ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) },
+                new Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM") },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.Year", VariableValue = DateTime.Now.ToString("yy") },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.YearLong", VariableValue = DateTime.Now.ToString("yyyy") },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.Hour", VariableValue = DateTime.Now.ToString("HH") },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.Minute", VariableValue = DateTime.Now.ToString("mm") },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.Second", VariableValue = DateTime.Now.ToString("ss") },
+                new Script.ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss") },
+                new Script.ScriptVariable { VariableName = "System.InputLanguage", VariableValue = InputLanguage.CurrentInputLanguage.Culture.Name },
+                new Script.ScriptVariable { VariableName = "System.KeyboardLayout", VariableValue = InputLanguage.CurrentInputLanguage.LayoutName },
+                new Script.ScriptVariable { VariableName = "Error.Message", VariableValue = "An Error Occured!" },
+                new Script.ScriptVariable { VariableName = "Error.Line", VariableValue = "1" },
+                new Script.ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "An Error Occured + StackTrace" },
+                new Script.ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName },
+                new Script.ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName },
+                new Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName },
+                new Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = WindowNameControls.GetActiveWindowTitle() },
+                new Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" },
+                new Script.ScriptVariable { VariableName = "taskt.Location", VariableValue = System.Reflection.Assembly.GetEntryAssembly().Location },
+                new Script.ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine },
+                new Script.ScriptVariable { VariableName = "Char.Cr", VariableValue = "\r" },
+                new Script.ScriptVariable { VariableName = "Char.Lf", VariableValue = "\n" },
+                new Script.ScriptVariable { VariableName = "Char.Tab", VariableValue = "\t" },
+                new Script.ScriptVariable { VariableName = "Char.Space", VariableValue = " " },
+                new Script.ScriptVariable { VariableName = "FileCounter.F0", VariableValue = "1" },
+                new Script.ScriptVariable { VariableName = "FileCounter.F00", VariableValue = "01" },
+                new Script.ScriptVariable { VariableName = "FileCounter.F000", VariableValue = "001" },
+                new Script.ScriptVariable { VariableName = "File.CurrentScriptFile", VariableValue = "" },
+                new Script.ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" },
+
+            };
             return systemVariableList;
         }
         public static string ImageToBase64(Image image)
@@ -198,7 +201,7 @@ namespace taskt.Core
             byte[] imageBytes = Convert.FromBase64String(base64String);
             MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
             ms.Write(imageBytes, 0, imageBytes.Length);
-            System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
+            Image image = System.Drawing.Image.FromStream(ms, true);
             return image;
         }
 
