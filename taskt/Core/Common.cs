@@ -147,9 +147,9 @@ namespace taskt.Core
                 new Script.ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) },
                 new Script.ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) },
                 new Script.ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) },
-                new Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.ScriptsFolder) },
-                new Script.ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.RootFolder) },
-                new Script.ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Core.IO.Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) },
+                new Script.ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Folders.GetFolder(Folders.FolderType.ScriptsFolder) },
+                new Script.ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Folders.GetFolder(Folders.FolderType.RootFolder) },
+                new Script.ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) },
                 new Script.ScriptVariable { VariableName = "DateTime.Now", VariableValue = DateTime.Now.ToString() },
                 new Script.ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = DateTime.Now.ToString("MM") },
                 new Script.ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = DateTime.Now.ToString("dd") },
@@ -169,7 +169,7 @@ namespace taskt.Core
                 new Script.ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName },
                 new Script.ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = WindowNameControls.GetActiveWindowTitle() },
                 new Script.ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "{JsonContext}" },
-                new Script.ScriptVariable { VariableName = "taskt.Location", VariableValue = System.Reflection.Assembly.GetEntryAssembly().Location },
+                new Script.ScriptVariable { VariableName = "taskt.Location", VariableValue = Assembly.GetEntryAssembly().Location },
                 new Script.ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine },
                 new Script.ScriptVariable { VariableName = "Char.Cr", VariableValue = "\r" },
                 new Script.ScriptVariable { VariableName = "Char.Lf", VariableValue = "\n" },
@@ -180,7 +180,8 @@ namespace taskt.Core
                 new Script.ScriptVariable { VariableName = "FileCounter.F000", VariableValue = "001" },
                 new Script.ScriptVariable { VariableName = "File.CurrentScriptFile", VariableValue = "" },
                 new Script.ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" },
-
+                new Script.ScriptVariable { VariableName = "Math.PI", VariableValue = Math.PI.ToString() },
+                new Script.ScriptVariable { VariableName = "Math.E", VariableValue = Math.E.ToString() },
             };
             return systemVariableList;
         }
@@ -201,7 +202,7 @@ namespace taskt.Core
             byte[] imageBytes = Convert.FromBase64String(base64String);
             MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
             ms.Write(imageBytes, 0, imageBytes.Length);
-            Image image = System.Drawing.Image.FromStream(ms, true);
+            Image image = Image.FromStream(ms, true);
             return image;
         }
 
@@ -552,7 +553,7 @@ namespace taskt.Core
                 var keyValue = (Keys)value;
 
                
-                string description = Core.Common.GetKeyDescription((Keys)value);
+                string description = GetKeyDescription((Keys)value);
 
                 if (description != null)
                 {
