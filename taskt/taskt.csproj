@@ -326,6 +326,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClearTextInWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowSizeCommand.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
