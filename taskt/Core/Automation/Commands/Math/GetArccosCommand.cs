@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Math Commands")]
-    [Attributes.ClassAttributes.CommandSettings("Get Arcsin")]
+    [Attributes.ClassAttributes.CommandSettings("Get Arccos")]
     [Attributes.ClassAttributes.Description("This command allows you to get arccos.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get arccos.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
