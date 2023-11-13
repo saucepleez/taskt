@@ -308,6 +308,8 @@
     <Compile Include="Core\Automation\Commands\Math\GetCosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSinCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementPositionCommand.cs" />
+    <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationSearchUIElementAndWindowCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationUIElementActionByXPathCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserCheckWebElementExistsCommand.cs" />
