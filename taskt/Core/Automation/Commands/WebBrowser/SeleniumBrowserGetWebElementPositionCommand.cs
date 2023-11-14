@@ -5,30 +5,33 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("UIAutomation Commands")]
-    [Attributes.ClassAttributes.SubGruop("Get From UIElement")]
-    [Attributes.ClassAttributes.CommandSettings("Get UIElement Position")]
-    [Attributes.ClassAttributes.Description("This command allows you to get UIElement Position.")]
-    [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement Position.")]
+    [Attributes.ClassAttributes.Group("Web Browser Commands")]
+    [Attributes.ClassAttributes.SubGruop("Get From WebElement")]
+    [Attributes.ClassAttributes.CommandSettings("Get WebElement Position")]
+    [Attributes.ClassAttributes.Description("This command allows you to Get WebElement Position.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Get WebElement Position.")]
+    [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class UIAutomationGetUIElementPositionCommand : ScriptCommand
+    public class SeleniumWebElementPositionCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_InputUIElementName))]
-        public string v_TargetElement { get; set; }
+        [PropertyVirtualProperty(nameof(SeleniumBrowserControls), nameof(SeleniumBrowserControls.v_InputWebElementName))]
+        public string v_WebElement { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store X Position")]
+        [InputSpecification("X Position")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.None)]
-        [PropertyDisplayText(true, "X")]
+        [PropertyDisplayText(true, "X Position")]
         public string v_XPosition { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Y Position")]
+        [InputSpecification("Y Position")]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(true, "Y Position")]
@@ -48,38 +51,39 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Top Left")]
         public string v_PositionBase { get; set; }
 
-        public UIAutomationGetUIElementPositionCommand()
+        public SeleniumWebElementPositionCommand()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetElement = v_TargetElement.ExpandUserVariableAsUIElement(engine);
+            var elem = v_WebElement.ExpandUserVariableAsWebElement("WebElement", engine);
 
-            var rct = targetElement.Current.BoundingRectangle;
+            var loc = elem.Location;
+            var size = elem.Size;
 
-            double x = 0.0, y = 0.0;
+            int x = 0, y = 0;
             switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
             {
                 case "top left":
-                    x = rct.Left;
-                    y = rct.Top;
+                    x = loc.X;
+                    y = loc.Y;
                     break;
                 case "bottom right":
-                    x = rct.Right;
-                    y = rct.Bottom;
+                    x = loc.X + size.Width;
+                    y = loc.Y + size.Height;
                     break;
                 case "top right":
-                    x = rct.Right;
-                    y = rct.Top;
+                    x = loc.X + size.Width;
+                    y = loc.Y;
                     break;
                 case "bottom left":
-                    x = rct.Left;
-                    y = rct.Bottom;
+                    x = loc.X;
+                    y = loc.Y + size.Height;
                     break;
                 case "center":
-                    x = (rct.Right - rct.Left) / 2.0;
-                    y = (rct.Bottom - rct.Top) / 2.0;
+                    x = (loc.X + size.Width) / 2;
+                    y = (loc.Y + size.Height) / 2;
                     break;
             }
 
