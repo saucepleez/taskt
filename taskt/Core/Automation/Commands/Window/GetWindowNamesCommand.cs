@@ -68,41 +68,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //try
-            //{
-            //    var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
-            //    wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
-            //}
-            //catch (Exception ex)
-            //{
-            //    var whenNotFound = this.GetUISelectionValue(nameof(v_WhenWindowNotFound), engine);
-            //    switch(whenNotFound)
-            //    {
-            //        case "ignore":
-            //            new List<string>().StoreInUserVariable(engine, v_UserVariableName);
-            //            break;
-            //        case "error":
-            //            throw ex;
-            //    }
-            //}
-            //WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine,
-            //    new Action<List<(IntPtr, string)>>(wins =>
-            //    {
-            //        wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);
-            //    }), nameof(v_NameResult), nameof(v_HandleResult),
-            //    new Action<Exception>(ex =>
-            //    {
-            //        var whenNotFound = this.GetUISelectionValue(nameof(v_WhenWindowNotFound), engine);
-            //        switch (whenNotFound)
-            //        {
-            //            case "ignore":
-            //                new List<string>().StoreInUserVariable(engine, v_UserVariableName);
-            //                break;
-            //            case "error":
-            //                throw ex;
-            //        }
-            //    })
-            //);
             WindowNameControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {

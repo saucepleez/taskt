@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using System.Security.Principal;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -85,50 +84,12 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitTime), engine);
-            //var whnd = wins[0].Item1;
-
-            //var pos = WindowNameControls.GetWindowPosition(whnd);
-
-            //int x = 0, y = 0;
-            //switch(this.GetUISelectionValue(nameof(v_PositionBase), engine))
-            //{
-            //    case "top left":
-            //        x = pos.left;
-            //        y = pos.top;
-            //        break;
-            //    case "bottom right":
-            //        x = pos.right;
-            //        y = pos.bottom;
-            //        break;
-            //    case "top right":
-            //        x = pos.right;
-            //        y = pos.top;
-            //        break;
-            //    case "bottom left":
-            //        x = pos.left;
-            //        y = pos.bottom;
-            //        break;
-            //    case "center":
-            //        x = (pos.right + pos.left) / 2;
-            //        y = (pos.top + pos.bottom) / 2;
-            //        break;
-            //}
-            //if (!String.IsNullOrEmpty(v_VariablePositionX))
-            //{
-            //    x.ToString().StoreInUserVariable(engine, v_VariablePositionX);
-            //}
-            //if (!String.IsNullOrEmpty(v_VariablePositionY))
-            //{
-            //    y.ToString().StoreInUserVariable(engine, v_VariablePositionY);
-            //}
-
             WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
                     var whnd = wins[0].Item1;
 
-                    var pos = WindowNameControls.GetWindowPosition(whnd);
+                    var pos = WindowNameControls.GetWindowRect(whnd);
 
                     int x = 0, y = 0;
                     switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))
@@ -154,11 +115,11 @@ namespace taskt.Core.Automation.Commands
                             y = (pos.top + pos.bottom) / 2;
                             break;
                     }
-                    if (!String.IsNullOrEmpty(v_VariablePositionX))
+                    if (!string.IsNullOrEmpty(v_VariablePositionX))
                     {
                         x.ToString().StoreInUserVariable(engine, v_VariablePositionX);
                     }
-                    if (!String.IsNullOrEmpty(v_VariablePositionY))
+                    if (!string.IsNullOrEmpty(v_VariablePositionY))
                     {
                         y.ToString().StoreInUserVariable(engine, v_VariablePositionY);
                     }

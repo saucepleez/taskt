@@ -4,20 +4,19 @@ using System.Xml.Serialization;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using System.Security.Principal;
 
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window State")]
-    [Attributes.ClassAttributes.CommandSettings("Get Window State")]
-    [Attributes.ClassAttributes.Description("This command returns a state of window name.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a window state.")]
+    [Attributes.ClassAttributes.CommandSettings("Get Window Size")]
+    [Attributes.ClassAttributes.Description("This command returns window size.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want window size.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetWindowStateCommand : ScriptCommand
+    public class GetWindowSizeCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
@@ -29,8 +28,17 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [Remarks("Restore is **1**, Minimize is **2**, Maximize is **3**")]
-        public string v_UserVariableName { get; set; }
+        [PropertyDescription("Variable Name to Recieve the Window Width")]
+        [PropertyIsOptional(true)]
+        [PropertyDisplayText(false, "")]
+        public string v_With { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Recieve the Window Height")]
+        [PropertyIsOptional(true)]
+        [PropertyDisplayText(false, "")]
+        public string v_Height { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
@@ -53,14 +61,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowHandleResult))]
         public string v_HandleResult { get; set; }
 
-        public GetWindowStateCommand()
+        public GetWindowSizeCommand()
         {
-            //this.CommandName = "GetWindowStateCommand";
-            //this.SelectionName = "Get Window State";
-            //this.CommandEnabled = true;
-            //this.CustomRendering = true;
         }
-
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             WindowNameControls.WindowAction(this, engine,
@@ -68,8 +71,16 @@ namespace taskt.Core.Automation.Commands
                 {
                     var whnd = wins[0].Item1;
 
-                    var state = WindowNameControls.GetWindowState(whnd);
-                    state.ToString().StoreInUserVariable(engine, v_UserVariableName);
+                    var rct = WindowNameControls.GetWindowRect(whnd);
+
+                    if (!string.IsNullOrEmpty(v_With))
+                    {
+                        (rct.right - rct.left).StoreInUserVariable(engine, v_With);
+                    }
+                    if (!string.IsNullOrEmpty(v_Height))
+                    {
+                        (rct.bottom - rct.top).StoreInUserVariable(engine, v_Height);
+                    }
                 })
             );
         }

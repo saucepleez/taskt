@@ -55,25 +55,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //try
-            //{
-            //    var handles = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine);
-
-            //    (handles.Count > 0).StoreInUserVariable(engine, v_UserVariableName);
-            //}
-            //catch
-            //{
-            //    false.StoreInUserVariable(engine, v_UserVariableName);
-            //}
-            //WindowNameControls.WindowAction(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_WaitTime), engine,
-            //    new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
-            //    {
-            //        (wins.Count > 0).StoreInUserVariable(engine, v_UserVariableName);
-            //    }), nameof(v_NameResult), nameof(v_HandleResult), new Action<Exception>(ex =>
-            //    {
-            //        false.StoreInUserVariable(engine, v_UserVariableName);
-            //    })
-            //);
             WindowNameControls.WindowAction(this, engine,
                 new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
                 {
