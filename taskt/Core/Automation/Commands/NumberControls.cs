@@ -41,7 +41,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Value")]
         public static string v_Value { get; }
 
-
         /// <summary>
         /// expand value or user variable as Integer specified by parameterName. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>
@@ -292,6 +291,21 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             return true;
+        }
+
+        public static void StoreInUserVariable(this int value, Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
+        }
+
+        public static void StoreInUserVariable(this double value, Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
+        }
+
+        public static void StoreInUserVariable(this decimal value, Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
         }
     }
 }

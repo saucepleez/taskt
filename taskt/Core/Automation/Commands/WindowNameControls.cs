@@ -296,10 +296,9 @@ namespace taskt.Core.Automation.Commands
             SetForegroundWindowNative(hWnd);
         }
 
-        public static RECT GetWindowPosition(IntPtr hWnd)
+        public static RECT GetWindowRect(IntPtr hWnd)
         {
-            RECT clientArea = new RECT();
-            GetWindowRect(hWnd, out clientArea);
+            GetWindowRect(hWnd, out RECT clientArea);
             return clientArea;
         }
 
