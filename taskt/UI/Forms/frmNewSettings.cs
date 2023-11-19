@@ -487,6 +487,7 @@ namespace taskt.UI.Forms
 
             createLabel("lblGrouping", "Command List", FontSize.NormalBold, true);
             createCheckBox("chkGroupBySubgroup", "Gruoping by subgroup (Restart required)", newAppSettings.ClientSettings, "GroupingBySubgroup", true);
+            createCheckBox("chkSupportIECommands", "Support IE Commands (Restart required)", newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.SupportIECommand), true);
 
             createLabel("lblSearch", "Command Search", FontSize.NormalBold, true);
 
