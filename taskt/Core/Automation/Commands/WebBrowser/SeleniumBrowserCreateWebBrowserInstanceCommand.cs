@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("We bBrowser Command Line Options")]
+        [PropertyDescription("Web Browser Command Line Options")]
         [InputSpecification("Command Line Options", true)]
         [SampleUsage("user-data-dir=c:\\users\\public\\SeleniumTasktProfile")]
         [Remarks("")]
