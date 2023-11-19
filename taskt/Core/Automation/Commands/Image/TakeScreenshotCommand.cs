@@ -84,7 +84,6 @@ namespace taskt.Core.Automation.Commands
 
         public override void Refresh(frmCommandEditor editor)
         {
-            base.Refresh();
             //ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
             //cmb.AddWindowNames();
             ControlsList.GetPropertyControl<ComboBox>(nameof(v_ScreenshotWindowName)).AddWindowNames();

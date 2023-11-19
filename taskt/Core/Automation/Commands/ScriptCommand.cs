@@ -619,7 +619,7 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        public virtual void Refresh(UI.Forms.frmCommandEditor editor = null)
+        public virtual void Refresh(UI.Forms.frmCommandEditor editor)
         {
 
         }

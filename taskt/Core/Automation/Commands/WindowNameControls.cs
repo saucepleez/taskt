@@ -558,7 +558,7 @@ namespace taskt.Core.Automation.Commands
             SetForegroundWindow(handle);
         }
 
-        public static IntPtr ConvertPidToWinHandle(int pid)
+        public static IntPtr ConvertProcessIdToWinHandle(int pid)
         {
             var whnds = GetAllWindowHandles();
             foreach(var whnd in whnds)
