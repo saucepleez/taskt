@@ -329,7 +329,9 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             Color,
             MailKitEMail,
             MailKitEMailList,
-            WebElement
+            WebElement,
+            WindowHandle,
+            Numeric,
         }
     }
 
