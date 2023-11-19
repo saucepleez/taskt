@@ -592,61 +592,6 @@ namespace taskt.Core.Automation.Commands
             return screenshot;
         }
 
-        //public static string GetMatchedWindowName(string windowName, string searchMethod, Automation.Engine.AutomationEngineInstance engine)
-        //{
-        //    if (windowName == engine.engineSettings.CurrentWindowKeyword)
-        //    {
-        //        return GetCurrentWindowName();
-        //    }
-        //    else
-        //    {
-        //        var wins = GetAllWindowNamesAndHandles();
-        //        var method = GetWindowNameCompareMethod(searchMethod);
-        //        try
-        //        {
-        //            var win = wins.Where(w => method(w.Item2, windowName)).First();
-        //            return win.Item2;
-        //        }
-        //        catch
-        //        {
-        //            // not found
-        //            throw new Exception("Window Name '" + windowName + "' not found");
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// expand variable as Window Name
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        private static string ConvertToUserVariableAsWindowName(this string value, Engine.AutomationEngineInstance engine)
-        {
-            if ((value == engine.engineSettings.CurrentWindowKeyword) || (value == engine.engineSettings.AllWindowsKeyword))
-            {
-                return value;
-            }
-            else
-            {
-                return value.ExpandValueOrUserVariable(engine);
-            }
-        }
-
-        /// <summary>
-        /// expand specified property value as Window Name 
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="windowName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        private static string ConvertToUserVariableAsWindowName(this ScriptCommand command, string windowName, Engine.AutomationEngineInstance engine)
-        {
-            var prop = command.GetProperty(windowName);
-            var value = prop.GetValue(command)?.ToString() ?? "";
-            return value.ConvertToUserVariableAsWindowName(engine);
-        }
-
         /// <summary>
         /// search & wait window name. this method use argument values, DON'T convert variable.
         /// </summary>
@@ -707,7 +652,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string matchTypeName, string indexName, string waitName, Engine.AutomationEngineInstance engine)
         {
-            var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
+            var window = command.ExpandValueOrUserVariableAsWindowName(windowName, engine);
             var compareMethod = command.ExpandValueOrUserVariableAsSelectionItem(compareMethodName, engine);
             var matchType = command.ExpandValueOrUserVariableAsSelectionItem(matchTypeName, engine);
             var index = command.ExpandValueOrUserVariableAsInteger(indexName, engine);
@@ -727,7 +672,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static List<(IntPtr, string)> FindWindows(ScriptCommand command, string windowName, string compareMethodName, string waitName, Engine.AutomationEngineInstance engine)
         {
-            var window = command.ConvertToUserVariableAsWindowName(windowName, engine);
+            var window = command.ExpandValueOrUserVariableAsWindowName(windowName, engine);
             var compareMethod = command.ExpandValueOrUserVariableAsSelectionItem(compareMethodName, engine);
             var waitTime = command.ExpandValueOrUserVariableAsInteger(waitName, engine);
 
@@ -851,16 +796,6 @@ namespace taskt.Core.Automation.Commands
         /// <param name="errorFunc"></param>
         public static void WindowAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
         {
-            //var windowName = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowName)))?.Name ?? "";
-            //var compareMethod = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_CompareMethod)))?.Name ?? "";
-            //var waitTime = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
-            //var nameResult = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowNameResult)))?.Name ?? "";
-            //var handleResult = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowHandleResult)))?.Name ?? "";
-
-            //var matchType = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod)))?.Name ??
-            //                    command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
-            //var index = command.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_TargetWindowIndex)))?.Name ?? "";
-
             var props = command.GetParameterProperties();
             var windowName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowName)))?.Name ?? "";
             var compareMethod = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_CompareMethod)))?.Name ?? "";
@@ -883,6 +818,43 @@ namespace taskt.Core.Automation.Commands
         }
         #endregion
 
+        #region variable
+
+
+        /// <summary>
+        /// expand variable as Window Name
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static string ExpandValueOrUserVariableAsWindowName(this string value, Engine.AutomationEngineInstance engine)
+        {
+            if ((value == engine.engineSettings.CurrentWindowKeyword) || (value == engine.engineSettings.AllWindowsKeyword))
+            {
+                return value;
+            }
+            else
+            {
+                return value.ExpandValueOrUserVariable(engine);
+            }
+        }
+
+        /// <summary>
+        /// expand specified property value as Window Name 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static string ExpandValueOrUserVariableAsWindowName(this ScriptCommand command, string windowName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(windowName);
+            var value = prop.GetValue(command)?.ToString() ?? "";
+            return value.ExpandValueOrUserVariableAsWindowName(engine);
+        }
+
+        #endregion
+
         #region Events
 
         public static void lnkWindowNameUpToDate_Click(object sender, EventArgs e)
@@ -895,10 +867,6 @@ namespace taskt.Core.Automation.Commands
 
             var winList = GetAllWindowTitles();
 
-            //foreach (var title in winList)
-            //{
-            //    cmb.Items.Add(title);
-            //}
             cmb.Items.AddRange(winList.ToArray());
 
             cmb.EndUpdate();
