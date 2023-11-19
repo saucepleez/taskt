@@ -108,10 +108,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         public string v_WebDriverPath { get; set; }
 
-
-        // fields
-        private bool supportIECommands;
-
         public SeleniumBrowserCreateWebBrowserInstanceCommand()
         {
             //this.CommandName = "SeleniumBrowserCreateCommand";
