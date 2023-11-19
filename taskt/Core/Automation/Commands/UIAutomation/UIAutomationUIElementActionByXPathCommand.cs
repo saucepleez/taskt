@@ -238,7 +238,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.frmCommandEditor editor)
         {
             var cmb = PropertyControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_AutomationType));
             var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));

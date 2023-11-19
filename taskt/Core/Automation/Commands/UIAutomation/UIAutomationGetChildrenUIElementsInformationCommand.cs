@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
             result.Trim().StoreInUserVariable(engine, v_ResultVariable);
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.frmCommandEditor editor)
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
             UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));

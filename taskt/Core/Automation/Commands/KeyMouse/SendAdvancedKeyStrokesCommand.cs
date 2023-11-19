@@ -169,7 +169,7 @@ namespace taskt.Core.Automation.Commands
             WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.frmCommandEditor editor)
         {
             //var dgv = (DataGridView)ControlsList[nameof(v_KeyActions)];
             var dgv = ControlsList.GetPropertyControl<DataGridView>(nameof(v_KeyActions));

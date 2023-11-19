@@ -89,7 +89,7 @@ namespace taskt.Core.Automation.Commands
             ConditionControls.RenderFilter(v_ReplaceActionParameterTable, ReplaceParametersGridViewHelper, ReplaceActionComboboxHelper, TargetTypeComboboxHelper);
         }
 
-        public override void AfterShown()
+        public override void AfterShown(UI.Forms.frmCommandEditor editor)
         {
             var ReplaceParametersGridViewHelper = (DataGridView)ControlsList[nameof(v_ReplaceActionParameterTable)];
             var TargetTypeComboboxHelper = (ComboBox)ControlsList[nameof(v_TargetType)];

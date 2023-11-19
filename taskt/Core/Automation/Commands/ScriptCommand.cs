@@ -614,7 +614,7 @@ namespace taskt.Core.Automation.Commands
             RenderedControls = new List<Control>();
             return RenderedControls;
         }
-        public virtual void AfterShown()
+        public virtual void AfterShown(UI.Forms.frmCommandEditor editor)
         {
 
         }

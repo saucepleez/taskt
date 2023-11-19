@@ -376,7 +376,7 @@ namespace taskt.UI.Forms
             flw_InputVariables.ResumeLayout();
 
             // when resize, selectedCommand has null
-            selectedCommand?.AfterShown();
+            selectedCommand?.AfterShown(this);
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
