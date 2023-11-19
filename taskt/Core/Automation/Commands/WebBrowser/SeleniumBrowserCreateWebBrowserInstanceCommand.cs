@@ -76,6 +76,13 @@ namespace taskt.Core.Automation.Commands
         public string v_EngineType { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Window Handle")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Window Handle", PropertyValidationRule.ValidationRuleFlags.None)]
+        public string v_Handle { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
         [PropertyDescription("Web Browser Binary Path")]
         [InputSpecification("Web Browser Binary Path", true)]
@@ -100,6 +107,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Empty")]
         [PropertyDisplayText(false, "")]
         public string v_WebDriverPath { get; set; }
+
+
+        // fields
+        private bool supportIECommands;
 
         public SeleniumBrowserCreateWebBrowserInstanceCommand()
         {
@@ -208,6 +219,101 @@ namespace taskt.Core.Automation.Commands
             if (browserWindowOption == "maximize")
             {
                 webDriver.Manage().Window.Maximize();
+            }
+
+            if (!string.IsNullOrEmpty(v_Handle))
+            {
+                var procId = ProcessControls.GetChildProcessId(driverService.ProcessId, 1);
+                if (seleniumEngine == "firefox")
+                {
+                    procId = ProcessControls.GetChildProcessId(procId, 0);
+                }
+                var whnd = WindowNameControls.ConvertProcessIdToWinHandle(procId);
+                whnd.ToInt32().StoreInUserVariable(engine, v_Handle);
+            }
+
+            //var whnd = WindowNameControls.ConvertPidToWinHandle(driverService.ProcessId);
+            //int x = 1;
+
+            //var query = "select processid from win32_process where parentprocessid = " + driverService.ProcessId;
+            //using (var searcher = new ManagementObjectSearcher(query))
+            //{
+            //    foreach (var obj in searcher.Get())
+            //    {
+            //        var prop = obj.Properties;
+            //        var str = "";
+            //        foreach(var p in prop)
+            //        {
+            //            str += p.Name + ", ";
+            //        }
+
+            //        Console.WriteLine("ChildProc: " + str + " : ProcID: " + obj.Properties["ProcessId"].Value);
+            //    }
+            //}
+
+            //var query = "select processid from win32_process where parentprocessid = " + driverService.ProcessId;
+            //using (var searcher = new ManagementObjectSearcher(query))
+            //{
+            //    var mos = searcher.Get();
+            //    if (mos.Count >= 2)
+            //    {
+            //        int idx = 0;
+            //        foreach(var m in mos)
+            //        {
+            //            if (idx == 1)
+            //            {
+            //                var p = int.Parse(m.Properties["ProcessId"].Value.ToString());
+            //                IntPtr whnd = (IntPtr)0;
+            //                if (seleniumEngine == "firefox")
+            //                {
+            //                    var query2 = "select processid from win32_process where parentprocessid = " + p;
+            //                    using (var searcher2 = new ManagementObjectSearcher(query2))
+            //                    {
+            //                        var mos2 = searcher2.Get();
+            //                        if (mos2.Count >= 1)
+            //                        {
+            //                            int idx2 = 0;
+            //                            foreach(var o in mos2)
+            //                            {
+            //                                p = int.Parse(o.Properties["ProcessId"].Value.ToString());
+            //                                whnd = WindowNameControls.ConvertPidToWinHandle(p);
+            //                                break;
+            //                            }
+            //                        }
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    whnd = WindowNameControls.ConvertPidToWinHandle(p);
+            //                }
+                            
+            //                Console.WriteLine("atta! Pid: " + p + ", whnd: " + whnd);
+            //            }
+            //            idx++;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Error");
+            //    }
+            //}
+
+            //int x = 1;
+        }
+
+        public override void AfterShown(UI.Forms.frmCommandEditor editor)
+        {
+            if (!editor.appSettings.ClientSettings.SupportIECommand)
+            {
+                var cmd = ControlsList.GetPropertyControl<ComboBox>(nameof(v_EngineType));
+                for (int i = cmd.Items.Count - 1; i >= 0; i--)
+                {
+                    if (cmd.Items[i].ToString() == "IE")
+                    {
+                        cmd.Items.RemoveAt(i);
+                        break;
+                    }
+                }
             }
         }
     }
