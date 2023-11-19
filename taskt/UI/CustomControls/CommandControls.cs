@@ -1009,6 +1009,7 @@ namespace taskt.UI.CustomControls
             // cursor position events
             inputBox.KeyUp += (sender, e) => ComboBoxKeyUp_SaveCursorPosition(sender, e);
             inputBox.Click += (sender, e) => ComboBoxClick_SaveCursorPosition(sender, e);
+            inputBox.MouseClick += (sender, e) => ComboBoxClick_ShowItems(sender, e);
 
             return inputBox;
         }
@@ -1561,6 +1562,22 @@ namespace taskt.UI.CustomControls
         {
             ComboBox trg = (ComboBox)sender;
             trg.Tag = trg.SelectionStart;
+        }
+        /// <summary>
+        /// show combobox items when ctrl+click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void ComboBoxClick_ShowItems(object sender, MouseEventArgs e)
+        {
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                ComboBox trg = (ComboBox)sender;
+                if (!trg.DroppedDown)
+                {
+                    trg.DroppedDown = true;
+                }
+            }
         }
         #endregion
 
