@@ -557,6 +557,21 @@ namespace taskt.Core.Automation.Commands
             }
             SetForegroundWindow(handle);
         }
+
+        public static IntPtr ConvertPidToWinHandle(int pid)
+        {
+            var whnds = GetAllWindowHandles();
+            foreach(var whnd in whnds)
+            {
+                int myPid;
+                GetWindowThreadProcessId(whnd, out myPid);
+                if (myPid == pid)
+                {
+                    return whnd;
+                }
+            }
+            throw new Exception("ProcessID: " + pid + " does not found.");
+        }
         
         public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
         {
@@ -819,7 +834,6 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region variable
-
 
         /// <summary>
         /// expand variable as Window Name
