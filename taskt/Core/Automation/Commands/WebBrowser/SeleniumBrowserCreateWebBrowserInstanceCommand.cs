@@ -124,18 +124,18 @@ namespace taskt.Core.Automation.Commands
             if (seleniumEngine == "chrome")
             {
                 OpenQA.Selenium.Chrome.ChromeOptions options = new OpenQA.Selenium.Chrome.ChromeOptions();
-                if (!String.IsNullOrEmpty(browserPath))
+                if (!string.IsNullOrEmpty(browserPath))
                 {
                     options.BinaryLocation = browserPath;
                 }
 
-                if (!String.IsNullOrEmpty(v_SeleniumOptions))
+                if (!string.IsNullOrEmpty(v_SeleniumOptions))
                 {
                     var convertedOptions = v_SeleniumOptions.ExpandValueOrUserVariable(engine);
                     options.AddArguments(convertedOptions);
                 }
 
-                if (!String.IsNullOrEmpty(webDriverPath))
+                if (!string.IsNullOrEmpty(webDriverPath))
                 {
                     driverService = OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
                 }
@@ -150,7 +150,7 @@ namespace taskt.Core.Automation.Commands
             {
                 OpenQA.Selenium.Edge.EdgeOptions options = new OpenQA.Selenium.Edge.EdgeOptions();
 
-                if (!String.IsNullOrEmpty(webDriverPath))
+                if (!string.IsNullOrEmpty(webDriverPath))
                 {
                     driverService = OpenQA.Selenium.Edge.EdgeDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
                 }
@@ -164,7 +164,7 @@ namespace taskt.Core.Automation.Commands
             else if (seleniumEngine == "firefox")
             {
                 OpenQA.Selenium.Firefox.FirefoxOptions options = new OpenQA.Selenium.Firefox.FirefoxOptions();
-                if (!String.IsNullOrEmpty(browserPath))
+                if (!string.IsNullOrEmpty(browserPath))
                 {
                     options.BrowserExecutableLocation = browserPath;
                 }
@@ -173,7 +173,7 @@ namespace taskt.Core.Automation.Commands
                     options.BrowserExecutableLocation = @"c:\Program Files\Mozilla Firefox\firefox.exe";
                 }
 
-                if (!String.IsNullOrEmpty(webDriverPath))
+                if (!string.IsNullOrEmpty(webDriverPath))
                 {
                     driverService = OpenQA.Selenium.Firefox.FirefoxDriverService.CreateDefaultService(System.IO.Path.GetDirectoryName(webDriverPath), System.IO.Path.GetFileName(webDriverPath));
                 }
