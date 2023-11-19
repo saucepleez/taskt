@@ -37,6 +37,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Get Text From UIElement")]
         [PropertyUISelectionOption("Get Selected State From UIElement")]
         [PropertyUISelectionOption("Get Text From Table UIElement")]
+        [PropertyUISelectionOption("Get UIElement Position")]
+        [PropertyUISelectionOption("Get UIElement Size")]
+        [PropertyUISelectionOption("Wait For UIElement To Exists")]
         [PropertyUISelectionOption("Wait For UIElement To Exists")]
         [PropertySelectionChangeEvent(nameof(cmbActionType_SelectedItemChange))]
         [PropertyDisplayText(true, "Action")]
@@ -213,6 +216,25 @@ namespace taskt.Core.Automation.Commands
                     };
                     getTableCmd.RunCommand(engine);
                     break;
+                case "get uielement position":
+                    var getElemPosCmd = new UIAutomationGetUIElementPositionCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_XPosition = p["X Variable"],
+                        v_YPosition = p["Y Variable"],
+                        v_PositionBase = p["Base Position"],
+                    };
+                    getElemPosCmd.RunCommand(engine);
+                    break;
+                case "get uielement size":
+                    var getElemSizeCmd = new UIAutomationGetUIElementSizeCommand()
+                    {
+                        v_TargetElement = trgElemVar,
+                        v_Width = p["Width Variable"],
+                        v_Height = p["Height Variable"],
+                    };
+                    getElemSizeCmd.RunCommand(engine);
+                    break;
             }
         }
 
@@ -236,38 +258,53 @@ namespace taskt.Core.Automation.Commands
                     table.Rows.Add(new string[] { "Click Type", "" });
                     table.Rows.Add(new string[] { "X Offset", "" });
                     table.Rows.Add(new string[] { "Y Offset", "" });
-
                     break;
+
                 case "expand collapse items in uielement":
                     table.Rows.Add(new string[] { "Items State", "" });
-
                     break;
+
                 case "scroll uielement":
                     table.Rows.Add(new string[] { "ScrollBar Type", "" });
                     table.Rows.Add(new string[] { "Scroll Method", "" });
-
                     break;
+
                 case "select item in uielement":
                     table.Rows.Add(new string[] { "Item Value", "" });
                     break;
+
                 case "set text to uielement":
                     table.Rows.Add(new string[] { "Text To Set", "" });
                     break;
+
                 case "get property value from uielement":
                     table.Rows.Add(new string[] { "Property Name", "" });
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
-
                     break;
+
                 case "get text from table uielement":
                     table.Rows.Add(new string[] { "Row", "" });
                     table.Rows.Add(new string[] { "Column", "" });
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
                     break;
+
+                case "get uielement position":
+                    table.Rows.Add(new string[] { "X Variable", "" });
+                    table.Rows.Add(new string[] { "Y Variable", "" });
+                    table.Rows.Add(new string[] { "Base Position", "" });
+                    break;
+
+                case "get uielement size":
+                    table.Rows.Add(new string[] { "Width Variable", "" });
+                    table.Rows.Add(new string[] { "Height Variable", "" });
+                    break;
+
                 case "check uielement exists":
                 case "get text from uielement":
                 case "get selected state from uielement":
                     table.Rows.Add(new string[] { "Apply To Variable", "" });
                     break;
+
                 case "select uielement":
                 case "wait for uielement to exists":
                     // nothing
@@ -353,6 +390,18 @@ namespace taskt.Core.Automation.Commands
                         "NativeWindowHandle",
                     });
                     dgv.Rows[0].Cells[1] = propNames;
+                    break;
+                case "get uielement position":
+                    var positionName = new DataGridViewComboBoxCell();
+                    positionName.Items.AddRange(new string[]
+                    {
+                        "Top Left",
+                        "Bottom Right",
+                        "Top Right",
+                        "Bottom Left",
+                        "Center",
+                    });
+                    dgv.Rows[2].Cells[1] = positionName;
                     break;
             }
         }
