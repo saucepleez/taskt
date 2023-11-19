@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.ModelBinding;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -233,12 +234,12 @@ namespace taskt.Core.Automation.Commands
         {
             if (!editor.appSettings.ClientSettings.SupportIECommand)
             {
-                var cmd = ControlsList.GetPropertyControl<ComboBox>(nameof(v_EngineType));
-                for (int i = cmd.Items.Count - 1; i >= 0; i--)
+                var cmb = ControlsList.GetPropertyControl<ComboBox>(nameof(v_EngineType));
+                for (int i = cmb.Items.Count - 1; i >= 0; i--)
                 {
-                    if (cmd.Items[i].ToString() == "IE")
+                    if (cmb.Items[i].ToString() == "IE")
                     {
-                        cmd.Items.RemoveAt(i);
+                        cmb.Items.RemoveAt(i);
                         break;
                     }
                 }
