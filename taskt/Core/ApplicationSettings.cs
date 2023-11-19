@@ -555,6 +555,8 @@ namespace taskt.Core
             }
         }
 
+        public bool SupportIECommand { get; set; }
+
         private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
         private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
         private static string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
@@ -608,6 +610,8 @@ namespace taskt.Core
             RemoveAutoSaveFileDays = 7;
 
             RemoveRunWithtoutSavingFileDays = 30;
+
+            SupportIECommand = false;
         }
 
         public string replaceClientKeyword(string targetString)
