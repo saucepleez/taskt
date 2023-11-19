@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.Core
 {
-    internal class CommandsTreeControls
+    static internal class CommandsTreeControls
     {
+        /// <summary>
+        /// create all commands tree array
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public static TreeNode[] CreateAllCommandsArray(ClientSettings settings)
         {
             List<taskt.UI.CustomControls.AutomationCommand> automationCommands = UI.CustomControls.CommandControls.GenerateCommandsandControls();
@@ -22,6 +24,13 @@ namespace taskt.Core
             else
             {
                 CommandsSortByGroup(commandsTreeList, automationCommands);
+            }
+
+            // remove ie
+            if (!settings.SupportIECommand)
+            {
+                var t = commandsTreeList.Where(n => (n.Text == "IE Browser Commands")).First();
+                commandsTreeList.Remove(t);
             }
 
             return commandsTreeList.ToArray();
