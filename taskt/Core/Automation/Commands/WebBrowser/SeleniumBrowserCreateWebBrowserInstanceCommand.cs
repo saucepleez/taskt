@@ -25,6 +25,20 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
+        [PropertyDescription("Web Browser Type")]
+        [PropertyUISelectionOption("Edge")]
+        [PropertyUISelectionOption("Chrome")]
+        [PropertyUISelectionOption("Firefox")]
+        [PropertyUISelectionOption("IE")]
+        [InputSpecification("", true)]
+        [Remarks("")]
+        [PropertyIsOptional(true, "Chrome")]
+        [PropertyFirstValue("Chrome")]
+        [PropertyDisplayText(true, "Web Browser Type")]
+        public string v_EngineType { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
         [PropertyDescription("Instance Tracking (After task ends)")]
         [PropertyUISelectionOption("Forget Instance")]
         [PropertyUISelectionOption("Keep Instance Alive")]
@@ -60,20 +74,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
         public string v_SeleniumOptions { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_ComboBox))]
-        [PropertyDescription("Web Browser Type")]
-        [PropertyUISelectionOption("Edge")]
-        [PropertyUISelectionOption("Chrome")]
-        [PropertyUISelectionOption("Firefox")]
-        [PropertyUISelectionOption("IE")]
-        [InputSpecification("", true)]
-        [Remarks("")]
-        [PropertyIsOptional(true, "Chrome")]
-        [PropertyFirstValue("Chrome")]
-        [PropertyDisplayText(true, "Web Browser Type")]
-        public string v_EngineType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
