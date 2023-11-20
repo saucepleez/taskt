@@ -27,6 +27,22 @@ namespace taskt.Core.Automation.Commands
         public static string v_BothNumericalVariableName { get; }
 
         /// <summary>
+        /// for output numerical variable name
+        /// </summary>
+        [PropertyDescription("Numerical Variable Name to Store Result")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyDetailSampleUsage("**vNum**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vNum}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyIsVariablesList(true)]
+        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(true, "Result")]
+        public static string v_OutputNumericalVariableName { get; }
+
+        /// <summary>
         /// for numerical value
         /// </summary>
         [PropertyDescription("Numerical Value")]
