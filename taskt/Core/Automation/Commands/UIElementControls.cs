@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
         /// output UIElement property
         /// </summary>
         [PropertyDescription("UIElement Variable Name")]
-        [InputSpecification("    Variable Name", true)]
+        [InputSpecification("UIElement Variable Name", true)]
         [PropertyDetailSampleUsage("**vElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
@@ -76,7 +76,7 @@ namespace taskt.Core.Automation.Commands
         /// New output UIElement name
         /// </summary>
         [PropertyDescription("UIElement Variable Name")]
-        [InputSpecification("    Variable Name", true)]
+        [InputSpecification("UIElement Variable Name", true)]
         [PropertyDetailSampleUsage("**vNewElement**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [PropertyDetailSampleUsage("**{{{vNewElement}}}**", PropertyDetailSampleUsage.ValueType.VariableValue)]
         [Remarks("")]
