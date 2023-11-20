@@ -74,7 +74,7 @@ namespace taskt.Core
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
         };
-        private Dictionary<string, Dictionary<string, int>> automationElementInstance = new Dictionary<string, Dictionary<string, int>>
+        private Dictionary<string, Dictionary<string, int>> uiElementInstance = new Dictionary<string, Dictionary<string, int>>
         {
             { "created", new Dictionary<string, int>() },
             { "used", new Dictionary<string, int>() }
@@ -178,9 +178,6 @@ namespace taskt.Core
             Dictionary<string, Dictionary<string, int>> targetDic;
             switch (instanceType)
             {
-                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement:
-                    targetDic = automationElementInstance;
-                    break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean:
                     targetDic = booleanInstance;
                     break;
@@ -223,6 +220,9 @@ namespace taskt.Core
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch:
                     targetDic = stopWatchInstance;
                     break;
+                case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement:
+                    targetDic = uiElementInstance;
+                    break;
                 case Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser:
                     targetDic = webBrowserInstance;
                     break;
@@ -242,8 +242,6 @@ namespace taskt.Core
         {
             switch (instanceType.ToLower())
             {
-                case "automationelement":
-                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement;
                 case "boolean":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean;
                 case "color":
@@ -270,6 +268,8 @@ namespace taskt.Core
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.MailKitEMailList;
                 case "stopwatch":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.StopWatch;
+                case "uielement":
+                    return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.UIElement;
                 case "web browser":
                     return Automation.Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser;
                 case "webelement":
