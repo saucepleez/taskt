@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         public string v_RoundType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         public string v_Result { get; set; }
 
         public RoundNumberCommand()

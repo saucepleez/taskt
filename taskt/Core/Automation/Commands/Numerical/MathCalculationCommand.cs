@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         public string v_DecimalSeperator { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         public string v_applyToVariableName { get; set; }
 
         public MathCalculationCommand()

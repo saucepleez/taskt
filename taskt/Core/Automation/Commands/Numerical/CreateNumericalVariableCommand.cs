@@ -15,8 +15,7 @@ namespace taskt.Core.Automation.Commands
     public class CreateNumericalVariableCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_BothNumericalVariableName))]
-        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         public string v_VariableName { get; set; }
 
         [XmlAttribute]
