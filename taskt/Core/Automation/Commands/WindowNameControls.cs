@@ -133,7 +133,7 @@ namespace taskt.Core.Automation.Commands
         public static string v_WindowNameResult { get; }
 
         /// <summary>
-        /// window handle result
+        /// output window handle result
         /// </summary>
         [PropertyDescription("Variable Name to Store Window Handle Result")]
         [InputSpecification("Variable Name", true)]
@@ -144,10 +144,28 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyIsOptional(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, false)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
-        public static string v_WindowHandleResult { get; }
+        public static string v_OutputWindowHandleResult { get; }
+
+        /// <summary>
+        /// input window handle result
+        /// </summary>
+        [PropertyDescription("Window Handle Variable Name")]
+        [InputSpecification("Variable Name", true)]
+        [PropertyDetailSampleUsage("**vHandle**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [PropertyDetailSampleUsage("**{{{vHandle}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyIsVariablesList(true)]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, false)]
+        [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyDisplayText(false, "Window Handle")]
+        public static string v_InputWindowHandleResult { get; }
 
         #endregion
 
@@ -816,7 +834,7 @@ namespace taskt.Core.Automation.Commands
             var compareMethod = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_CompareMethod)))?.Name ?? "";
             var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
             var nameResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowNameResult)))?.Name ?? "";
-            var handleResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowHandleResult)))?.Name ?? "";
+            var handleResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_OutputWindowHandleResult)))?.Name ?? "";
 
             var matchType = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod)))?.Name ??
                                 props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
@@ -865,6 +883,55 @@ namespace taskt.Core.Automation.Commands
             var prop = command.GetProperty(windowName);
             var value = prop.GetValue(command)?.ToString() ?? "";
             return value.ExpandValueOrUserVariableAsWindowName(engine);
+        }
+
+        /// <summary>
+        /// expand variable as WindowHandle specified by parameter value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static IntPtr ExpandUserVariableAsWindowHandle(this string value, Engine.AutomationEngineInstance engine)
+        {
+            var v = value.GetRawVariable(engine);
+            var vv = v.VariableValue;
+            string handleStr;
+            if (vv is string str)
+            {
+                handleStr = str;
+            }
+            else if (vv is List<string> lst)
+            {
+                handleStr = lst[v.CurrentPosition];
+            }
+            else
+            {
+                throw new Exception($"Value '{value}' is not Window Handle value type.");
+            }
+
+            if (int.TryParse(handleStr, out int whnd))
+            {
+                return (IntPtr)whnd;
+            }
+            else
+            {
+                throw new Exception($"Value '{value}' is not Window Handle value type.");
+            }
+        }
+
+        /// <summary>
+        /// expand variable as WindowHanle specified by parameter name
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="windowName"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static IntPtr ExpandUserVariableAsWindowHandle(this ScriptCommand command, string windowName, Engine.AutomationEngineInstance engine)
+        {
+            var prop = command.GetProperty(windowName);
+            var value = prop.GetValue(command)?.ToString() ?? "";
+            return value.ExpandUserVariableAsWindowHandle(engine);
         }
 
         #endregion
