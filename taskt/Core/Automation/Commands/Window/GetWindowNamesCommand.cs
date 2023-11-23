@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         public string v_NameResult { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandleResult))]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
         public string v_HandleResult { get; set; }
 
         public GetWindowNamesCommand()
