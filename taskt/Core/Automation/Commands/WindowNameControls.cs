@@ -758,7 +758,8 @@ namespace taskt.Core.Automation.Commands
                         }
                         else
                         {
-                            wins[0].Item1.ToString().StoreInUserVariable(engine, handleResult);
+                            //wins[0].Item1.ToString().StoreInUserVariable(engine, handleResult);
+                            wins[0].Item1.StoreInUserVariable(engine, handleResult);
                         }
                     }
                 }
@@ -932,6 +933,17 @@ namespace taskt.Core.Automation.Commands
             var prop = command.GetProperty(windowName);
             var value = prop.GetValue(command)?.ToString() ?? "";
             return value.ExpandUserVariableAsWindowHandle(engine);
+        }
+
+        /// <summary>
+        /// store IntPtr In User Variable
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="engine"></param>
+        /// <param name="targetVariable"></param>
+        public static void StoreInUserVariable(this IntPtr value, Engine.AutomationEngineInstance engine, string targetVariable)
+        {
+            ExtensionMethods.StoreInUserVariable(targetVariable, value.ToString(), engine, false);
         }
 
         #endregion
