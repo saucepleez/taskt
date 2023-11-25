@@ -159,7 +159,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vHandle}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
-        [PropertyIsVariablesList(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, false)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
