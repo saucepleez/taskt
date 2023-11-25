@@ -7,13 +7,13 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Window Commands")]
     [Attributes.ClassAttributes.SubGruop("Window Handle Actions")]
-    [Attributes.ClassAttributes.CommandSettings("Close Window By Window Handle")]
-    [Attributes.ClassAttributes.Description("This command closes an open window.")]
-    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to close an existing window by name.")]
+    [Attributes.ClassAttributes.CommandSettings("Activate Window By Window Handle")]
+    [Attributes.ClassAttributes.Description("This command activates a window and brings it to the front.")]
+    [Attributes.ClassAttributes.UsesDescription("Use this command when you want to active a window by name or bring it to attention.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CloseWindowByWindowHandle : ScriptCommand
+    public class ActivateWindowByWindowHandleCommand : ScriptCommand
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
@@ -23,16 +23,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitTime { get; set; }
 
-        public CloseWindowByWindowHandle()
+        public ActivateWindowByWindowHandleCommand()
         {
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine, 
+            WindowNameControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>((whnd) =>
                 {
-                    WindowNameControls.CloseWindow(whnd);
+                    WindowNameControls.ActivateWindow(whnd);
                 })
             );
         }
