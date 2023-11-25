@@ -224,7 +224,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     procId = ProcessControls.GetChildProcessId(procId, 0);
                 }
-                var whnd = WindowNameControls.ConvertProcessIdToWinHandle(procId);
+                var whnd = WindowNameControls.ConvertProcessIdToWindowHandle(procId);
                 whnd.ToInt32().StoreInUserVariable(engine, v_Handle);
             }
         }
