@@ -30,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             WindowNameControls.WindowHandleAction(this, engine,
-                new Action<IntPtr>((whnd) =>
+                new Action<IntPtr>(whnd =>
                 {
                     WindowNameControls.ActivateWindow(whnd);
                 })
