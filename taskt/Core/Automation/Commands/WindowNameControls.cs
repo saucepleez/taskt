@@ -160,10 +160,10 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, false)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        [PropertyDisplayText(false, "Window Handle")]
+        [PropertyDisplayText(true, "Window Handle")]
         public static string v_InputWindowHandle { get; }
 
         #endregion
