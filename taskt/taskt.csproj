@@ -332,8 +332,16 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\CheckWindowHandleExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowNameFromWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowPositionFromWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowSizeFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetWindowStateFromWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\MoveWindowByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\ResizeWindowByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
