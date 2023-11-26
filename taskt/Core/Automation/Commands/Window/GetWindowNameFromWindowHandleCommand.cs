@@ -16,11 +16,12 @@ namespace taskt.Core.Automation.Commands
     public class GetWindowNameFromWindowHandleCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
         public string v_WindowHandle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Window Name")]
         public string v_Result { get; set; }
 
         [XmlAttribute]
