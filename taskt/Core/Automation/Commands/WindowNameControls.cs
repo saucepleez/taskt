@@ -308,7 +308,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        private static string GetWindowTitle(IntPtr hWnd)
+        public static string GetWindowTitle(IntPtr hWnd)
         {
             int titleLengthA = GetWindowTextLengthW(hWnd);
             StringBuilder title = new StringBuilder(titleLengthA + 1);
