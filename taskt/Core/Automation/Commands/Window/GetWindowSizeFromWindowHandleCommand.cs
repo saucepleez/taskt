@@ -16,7 +16,7 @@ namespace taskt.Core.Automation.Commands
     public class GetWindowSizeFromWindowHandleCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
         public string v_WindowHandle { get; set; }
 
 
