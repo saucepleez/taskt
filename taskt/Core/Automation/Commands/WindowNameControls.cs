@@ -144,7 +144,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyIsOptional(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, false)]
+        [PropertyInstanceType(PropertyInstanceType.InstanceType.WindowHandle, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
@@ -979,7 +979,8 @@ namespace taskt.Core.Automation.Commands
         /// <param name="errorFunc"></param>
         public static void WindowHandleAction(ScriptCommand command, string handleName, string waitTimeName, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
         {
-            var handle = command.ExpandValueOrUserVariable(handleName, "Window Handle", engine);
+            //var handle = command.ExpandValueOrUserVariable(handleName, "Window Handle", engine);
+            var handle = command.GetRawPropertyValueAsString(handleName, "Window Handle");
             var waitTime = command.ExpandValueOrUserVariableAsInteger(waitTimeName, "Wait Time", engine);
             WindowHandleAction(handle, waitTime, engine, actionFunc, errorFunc);
         }
