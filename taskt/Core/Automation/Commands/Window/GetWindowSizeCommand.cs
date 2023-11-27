@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -67,7 +68,7 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             WindowNameControls.WindowAction(this, engine,
-                new Action<System.Collections.Generic.List<(IntPtr, string)>>(wins =>
+                new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var whnd = wins[0].Item1;
 
