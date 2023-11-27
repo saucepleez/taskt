@@ -76,10 +76,7 @@ namespace taskt.Core.Automation.Commands
         public string v_SeleniumOptions { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        [PropertyDescription("Variable Name to Store Window Handle")]
-        [PropertyIsOptional(true)]
-        [PropertyValidationRule("Window Handle", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
         public string v_Handle { get; set; }
 
         [XmlAttribute]
