@@ -22,6 +22,10 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         public string v_InstanceName { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        public string v_WindowHandle { get; set; }
+
         public ExcelCreateExcelInstanceCommand()
         {
             //this.CommandName = "ExcelOpenApplicationCommand";
@@ -40,6 +44,11 @@ namespace taskt.Core.Automation.Commands
             };
 
             engine.AddAppInstance(vInstance, newExcelSession);
+
+            if (!string.IsNullOrEmpty(v_WindowHandle))
+            {
+                newExcelSession.Hwnd.StoreInUserVariable(engine, v_WindowHandle);
+            }
         }
     }
 }
