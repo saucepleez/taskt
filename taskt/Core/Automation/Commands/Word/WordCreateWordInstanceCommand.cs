@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Automation.Provider;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -55,14 +56,20 @@ namespace taskt.Core.Automation.Commands
                 var newCaption = "rpa_word_" + rnd.Next() + "_" + rnd.Next();
                 newWordSession.Application.Caption = newCaption;
 
+                bool isFound = false;
                 foreach(var p in Process.GetProcessesByName("winword"))
                 {
                     if (p.MainWindowTitle == newCaption)
                     {
                         p.MainWindowHandle.StoreInUserVariable(engine, v_WindowHandle);
                         newWordSession.Application.Caption = currentCaption;
+                        isFound = true;
                         break;
                     }
+                }
+                if (!isFound)
+                {
+                    throw new Exception("Fail to Get Word Instance Window Handle");
                 }
             }
 
