@@ -332,9 +332,11 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetProcessNameFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowHandleFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\CheckWindowHandleExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\GetProcessNameFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowNameFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizeFromWindowHandleCommand.cs" />
