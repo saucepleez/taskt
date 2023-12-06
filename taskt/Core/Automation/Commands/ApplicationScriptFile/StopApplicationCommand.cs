@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Application Name")]
+        [PropertyDescription("Application Process Name")]
         [InputSpecification("Application Name", true)]
         [PropertyDetailSampleUsage("**notepad**", "Stop Notepad")]
         [PropertyDetailSampleUsage("**myapp**", PropertyDetailSampleUsage.ValueType.Value, "Application Name")]

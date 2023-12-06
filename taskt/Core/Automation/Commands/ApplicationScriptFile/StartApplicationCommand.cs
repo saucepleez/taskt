@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
-        [PropertyDescription("Path to the Application")]
+        [PropertyDescription("Path to the Application or Application Name")]
         [InputSpecification("Path", true)]
         [PropertyDetailSampleUsage("**notepad**", "Run Notepad")]
         [PropertyDetailSampleUsage("**C:\\Apps\\myapp.exe**", PropertyDetailSampleUsage.ValueType.Value, "Path")]
