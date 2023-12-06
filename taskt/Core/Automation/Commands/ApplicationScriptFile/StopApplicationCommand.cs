@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("Application/Script Commands")]
     [Attributes.ClassAttributes.SubGruop("Application")]
     [Attributes.ClassAttributes.CommandSettings("Stop Application")]
-    [Attributes.ClassAttributes.Description("This command allows you to stop a program or a process.")]
+    [Attributes.ClassAttributes.Description("This command allows you to Stop a Application.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to close an application by its name such as 'chrome'. Alternatively, you may use the Close Window or Thick App Command instead.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Process.CloseMainWindow'.")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
