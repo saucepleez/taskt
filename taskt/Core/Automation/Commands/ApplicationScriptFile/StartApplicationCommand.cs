@@ -54,9 +54,38 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Application Process Name")]
         [PropertyIsOptional(true)]
-        [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyValidationRule("Process Name", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
         public string v_StartedProcessName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        [PropertyDescription("Variable Name to Store Window Name")]
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.None)]
+        public string v_WindowName { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        public string v_WindowHandle { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
+        [PropertyDescription("Wait Time until Application Starts (ms)")]
+        [PropertyIsOptional(true, "2000")]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyFirstValue("2000")]
+        [PropertyDisplayText(false, "")]
+        public string v_WaitTimeForExecute { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
+        [PropertyDescription("Wait Time before Executing Next Command (ms)")]
+        [PropertyIsOptional(true, "2000")]
+        [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyFirstValue("2000")]
+        [PropertyDisplayText(false, "")]
+        public string v_WaitTimeBeforeNext { get; set; }
 
         public StartApplicationCommand()
         {
@@ -72,7 +101,7 @@ namespace taskt.Core.Automation.Commands
             var vProgramArgs = v_ProgramArgs.ExpandValueOrUserVariable(engine);
 
             System.Diagnostics.Process p;
-            if (String.IsNullOrEmpty(vProgramArgs))
+            if (string.IsNullOrEmpty(vProgramArgs))
             {
                 p = System.Diagnostics.Process.Start(vProgramName);
             }
@@ -81,9 +110,23 @@ namespace taskt.Core.Automation.Commands
                 p = System.Diagnostics.Process.Start(vProgramName, vProgramArgs);
             }
 
-            if (!String.IsNullOrEmpty(v_StartedProcessName))
+            var waitTimeUntil = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeForExecute), engine);
+            System.Threading.Thread.Sleep(waitTimeUntil);
+
+            // process name
+            if (!string.IsNullOrEmpty(v_StartedProcessName))
             {
                 p.ProcessName.StoreInUserVariable(engine, v_StartedProcessName);
+            }
+            // window name
+            if (!string.IsNullOrEmpty(v_WindowName))
+            {
+                p.MainWindowTitle.StoreInUserVariable(engine, v_WindowName);
+            }
+            // window handle
+            if (!string.IsNullOrEmpty(v_WindowHandle))
+            {
+                p.MainWindowHandle.StoreInUserVariable(engine, v_WindowHandle);
             }
 
             var waitForExit = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WaitForExit), engine);
@@ -93,7 +136,9 @@ namespace taskt.Core.Automation.Commands
                 p.WaitForExit();
             }
 
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
+            var waitTimeBeforeNext = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeBeforeNext), engine);
+            System.Threading.Thread.Sleep(waitTimeBeforeNext);
         }
     }
 }
