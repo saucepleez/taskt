@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Specify required output format")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyCustomUIHelper("Format Checker", "lnkFormatChecker_Click")]
+        [PropertyCustomUIHelper("Format Checker", nameof(lnkFormatChecker_Click))]
         [InputSpecification("Specify if a specific string format is required.")]
         [SampleUsage("**MM/dd/yy** or **hh:mm** or **#.0** or **file** etc.")]
         [Remarks("Path supports **file**, **folder**, **filewithoutextension**, **extension**, **drive**")]
@@ -121,13 +121,6 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkFormatChecker_Click(object sender, EventArgs e)
         {
-            //using (var fm = new UI.Forms.Supplement_Forms.frmFormatChecker())
-            //{
-            //    if (fm.ShowDialog() == DialogResult.OK)
-            //    {
-            //        ((TextBox)((CommandItemControl)sender).Tag).Text = fm.Format;
-            //    }
-            //}
             TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
             UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt);
         }
