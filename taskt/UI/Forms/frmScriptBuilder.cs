@@ -297,10 +297,6 @@ namespace taskt.UI.Forms
                 }
             }
 
-            // set autosave timer
-            //autoSaveTimer.Enabled = false;
-            //autoSaveTimer.Interval = 300000;    // 5min
-
             // remove old auto saved files
             RemoveOldAutoSavedFiles();
             RemoveOldRunWithoutSavingScriptFiles();
