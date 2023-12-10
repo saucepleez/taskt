@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
@@ -16,6 +9,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
             cmbType.SelectedIndex = 0;
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         public frmFormatChecker(string valueType) : this()
@@ -24,7 +18,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void frmFormatChecker_Load(object sender, EventArgs e)
         {
-
+            SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         #region value, value buttons
@@ -192,23 +186,36 @@ namespace taskt.UI.Forms.Supplement_Forms
         #endregion
 
         #region self call
-        public static void ShowFormatCheckerFormLinkClicked(TextBox formatTextBox, string type = "")
+        //public static void ShowFormatCheckerFormLinkClicked(TextBox formatTextBox, string type = "")
+        //{
+        //    using (var fm = new frmFormatChecker(type))
+        //    {
+        //        if (fm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            formatTextBox.Text = fm.Format;
+        //        }
+        //    }
+        //}
+        //public static void ShowFormatCheckerFormLinkClicked(ComboBox formatComboBox, string type = "")
+        //{
+        //    using (var fm = new frmFormatChecker(type))
+        //    {
+        //        if (fm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            formatComboBox.Text = fm.Format;
+        //        }
+        //    }
+        //}
+        public static void ShowFormatCheckerFormLinkClicked(Control ctrl, string type = "")
         {
-             using (var fm = new frmFormatChecker(type))
+            if ((ctrl is TextBox) || (ctrl is ComboBox))
             {
-                if (fm.ShowDialog() == DialogResult.OK)
+                using (var fm = new frmFormatChecker(type))
                 {
-                    formatTextBox.Text = fm.Format;
-                }
-            }
-        }
-        public static void ShowFormatCheckerFormLinkClicked(ComboBox formatComboBox, string type = "")
-        {
-            using (var fm = new frmFormatChecker(type))
-            {
-                if (fm.ShowDialog() == DialogResult.OK)
-                {
-                    formatComboBox.Text = fm.Format;
+                    if (fm.ShowDialog(ctrl.FindForm()) == DialogResult.OK)
+                    {
+                        ctrl.Text = fm.Format;
+                    }
                 }
             }
         }
