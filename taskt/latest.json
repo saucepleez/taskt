@@ -1,7 +1,7 @@
 {
   "RemoteVersion": "3.5.0.0",
-  "RemoteBetaVersion": "3.5.0.1",
+  "RemoteBetaVersion": "3.5.0.0",
   "Beta": false,
-  "PackageURL": "https://github.com/saucepleez/taskt/releases/download/v3.5.0.0/taskt.v3.5.0.0,
+  "PackageURL": "https://github.com/saucepleez/taskt/releases/download/v3.5.0.0/taskt.v3.5.0.0",
   "PackageURL2": "%release_url%/download/v%version%/taskt.v%version%.zip"
 }
