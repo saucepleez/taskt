@@ -25,7 +25,7 @@ namespace taskt.UI.Forms.Supplemental
         private string[] bufferdItems;
 
         #region form events
-        public frmItemSelector()
+        private frmItemSelector()
         {
             InitializeComponent();
             this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
