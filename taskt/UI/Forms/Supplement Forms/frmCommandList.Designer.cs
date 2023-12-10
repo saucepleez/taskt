@@ -126,6 +126,7 @@
             this.tvCommands.Size = new System.Drawing.Size(371, 185);
             this.tvCommands.TabIndex = 1;
             this.tvCommands.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCommands_NodeMouseDoubleClick);
+            this.tvCommands.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tvCommands_MouseClick);
             // 
             // panelHeader
             // 
