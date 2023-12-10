@@ -251,8 +251,6 @@ namespace taskt.UI.Forms
             {
                 f.setCommandEditorSizeAndPosition(this);
             }
-
-            //((frmScriptBuilder)this.Owner).setCommandEditorSizeAndPosition(this);
         }
 
         #endregion Form Events
