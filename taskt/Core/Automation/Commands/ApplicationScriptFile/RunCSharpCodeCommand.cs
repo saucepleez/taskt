@@ -109,7 +109,7 @@ namespace taskt.Core.Automation.Commands
             var targetTextbox = (TextBox)((CommandItemControl)sender).Tag;
             using (UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new UI.Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
             {
-                if (codeBuilder.ShowDialog() == DialogResult.OK)
+                if (codeBuilder.ShowDialog(targetTextbox.FindForm()) == DialogResult.OK)
                 {
                     targetTextbox.Text = codeBuilder.rtbCode.Text;
                 }

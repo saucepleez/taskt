@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.UI.Forms.Supplemental
 {
@@ -16,29 +11,27 @@ namespace taskt.UI.Forms.Supplemental
         public frmCodeBuilder()
         {
             InitializeComponent();
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
-        public frmCodeBuilder(string code)
-        {
-            InitializeComponent();
 
+        public frmCodeBuilder(string code) : this()
+        {
             if (code != "")
             {
                 rtbCode.Text = code;
                 rtbCode_TextChanged(null, null);
             }
-
         }
 
         private void frmCodeBuilder_Load(object sender, EventArgs e)
         {
-           
+            SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         private void rtbCode_TextChanged(object sender, EventArgs e)
         {
             //Credits to Apex for RegEx Highlighting Sample
             //http://www.codingvision.net/interface/c-simple-syntax-highlighting
-
 
             // getting keywords/functions
             string keywords = @"\b(public|private|partial|static|namespace|class|using|void|foreach|in)\b";
@@ -130,13 +123,10 @@ namespace taskt.UI.Forms.Supplemental
                 lstCompilerResults.Items.Add("Compiled Successfully!");
 
                 if (chkRunAfterCompile.Checked)
+                {
                     System.Diagnostics.Process.Start(result.PathToAssembly);
-              
-
+                }
             }
-
-
-
         }
 
         private void uiBtnSave_Click(object sender, EventArgs e)
