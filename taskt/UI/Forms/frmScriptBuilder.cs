@@ -33,8 +33,8 @@ namespace taskt.UI.Forms
         private TreeNode[] bufferedCommandList;
         private ImageList bufferedCommandTreeImages;
 
-        private List<Core.Script.ScriptVariable> scriptVariables;
-        private Core.Script.ScriptInformation scriptInfo;
+        private List<ScriptVariable> scriptVariables;
+        private ScriptInformation scriptInfo;
         
         private bool editMode { get; set; }
 
@@ -242,8 +242,8 @@ namespace taskt.UI.Forms
             //instantiate for script variables
             if (!editMode)
             {
-                scriptVariables = new List<Core.Script.ScriptVariable>();
-                scriptInfo = new Core.Script.ScriptInformation();
+                scriptVariables = new List<ScriptVariable>();
+                scriptInfo = new ScriptInformation();
             }
 
             //instantiate and populate display icons for commands
@@ -1087,7 +1087,7 @@ namespace taskt.UI.Forms
                 {
                     //add variables
 
-                    newBuilder.scriptVariables = new List<Core.Script.ScriptVariable>();
+                    newBuilder.scriptVariables = new List<ScriptVariable>();
                     newBuilder.instanceList = instanceList;
 
                     foreach (var variable in this.scriptVariables)
@@ -2588,17 +2588,6 @@ namespace taskt.UI.Forms
 
         private void RemoveOldAutoSavedFiles()
         {
-            //var autoSaveFolder = Script.GetAutoSaveFolderPath();
-            //var files = System.IO.Directory.GetFiles(autoSaveFolder, "*.xml");
-            //foreach(var fp in files)
-            //{
-            //    var info = new System.IO.FileInfo(fp);
-            //    var diff = DateTime.Now - info.CreationTime;
-            //    if (diff.TotalDays >= appSettings.ClientSettings.RemoveAutoSaveFileDays)
-            //    {
-            //        System.IO.File.Delete(fp);
-            //    }
-            //}
             RemoveOldScriptFiles(Script.GetAutoSaveFolderPath(), appSettings.ClientSettings.RemoveAutoSaveFileDays);
         }
 
@@ -2672,12 +2661,12 @@ namespace taskt.UI.Forms
             {
                 //reinitialize
                 lstScriptActions.Items.Clear();
-                scriptVariables = new List<Core.Script.ScriptVariable>();
+                scriptVariables = new List<ScriptVariable>();
                 scriptInfo = null;
                 instanceList = new Core.InstanceCounter(appSettings);
 
                 //get deserialized script
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
+                Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -2694,7 +2683,7 @@ namespace taskt.UI.Forms
                 scriptInfo = deserializedScript.Info;
                 if (scriptInfo == null)
                 {
-                    scriptInfo = new Core.Script.ScriptInformation();
+                    scriptInfo = new ScriptInformation();
                 }
 
                 lstScriptActions.BeginUpdate();
@@ -2768,7 +2757,7 @@ namespace taskt.UI.Forms
             try
             {
                 //deserialize file      
-                Core.Script.Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
+                Script deserializedScript = Core.Script.Script.DeserializeFile(filePath, appSettings.EngineSettings, scriptSerializer);
 
                 if (deserializedScript.Commands.Count == 0)
                 {
@@ -2785,7 +2774,7 @@ namespace taskt.UI.Forms
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(new CommentCommand() { v_Comment = "Imported From " + fileName + " @ " + dateTimeNow }));
                 //import
                 PopulateExecutionCommands(deserializedScript.Commands, false);
-                foreach (Core.Script.ScriptVariable var in deserializedScript.Variables)
+                foreach (ScriptVariable var in deserializedScript.Variables)
                 {
                     if (scriptVariables.Find(alreadyExists => alreadyExists.VariableName == var.VariableName) == null)
                     {
@@ -2822,9 +2811,9 @@ namespace taskt.UI.Forms
             }
         }
 
-        public void PopulateExecutionCommands(List<Core.Script.ScriptAction> commandDetails, bool isOpen = true)
+        public void PopulateExecutionCommands(List<ScriptAction> commandDetails, bool isOpen = true)
         {
-            foreach (Core.Script.ScriptAction item in commandDetails)
+            foreach (ScriptAction item in commandDetails)
             {
                 lstScriptActions.Items.Add(CreateScriptCommandListViewItem(item.ScriptCommand, isOpen));
                 if (item.AdditionalScriptCommands.Count > 0)
@@ -2838,7 +2827,7 @@ namespace taskt.UI.Forms
                 pnlCommandHelper.Hide();
             }
         }
-        public int InsertExecutionCommands(List<Core.Script.ScriptAction> commandDetails, int position = -1)
+        public int InsertExecutionCommands(List<ScriptAction> commandDetails, int position = -1)
         {
             if (position < 0)
             {
@@ -2851,7 +2840,7 @@ namespace taskt.UI.Forms
                     position = lstScriptActions.SelectedIndices[0];
                 }
             }
-            foreach (Core.Script.ScriptAction item in commandDetails)
+            foreach (ScriptAction item in commandDetails)
             {
                 lstScriptActions.Items.Insert(position + 1, CreateScriptCommandListViewItem(item.ScriptCommand));
                 position++;
@@ -3066,8 +3055,8 @@ namespace taskt.UI.Forms
         {
             this.ScriptFilePath = null;
             lstScriptActions.Items.Clear();
-            scriptVariables = new List<Core.Script.ScriptVariable>();
-            scriptInfo = new Core.Script.ScriptInformation();
+            scriptVariables = new List<ScriptVariable>();
+            scriptInfo = new ScriptInformation();
             instanceList = new Core.InstanceCounter(appSettings);
 
             ChangeSaveState(false);
