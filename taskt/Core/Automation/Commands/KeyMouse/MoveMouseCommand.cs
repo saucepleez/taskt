@@ -51,6 +51,13 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterMouseClick))]
         public string v_WaitTimeAfterClick { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Ignore Wait Time When Click Type is 'None'")]
+        [PropertyIsOptional(true, "Yes")]
+        [PropertyFirstValue("Yes")]
+        public string v_IgnoreWaitTime { get; set; }
+
         public MoveMouseCommand()
         {
             //this.CommandName = "SendMouseMoveCommand";
@@ -66,19 +73,18 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                //var xLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseX)));
-                //var yLocation = Convert.ToInt32(Math.Floor(Convert.ToDouble(mouseY)));
-
-                //User32Functions.SetCursorPosition(xLocation, yLocation);
-                //User32Functions.SetCursorPosition(mouseX, mouseY);
                 KeyMouseControls.SetCursorPosition(mouseX, mouseY);
 
                 if (!String.IsNullOrEmpty(v_MouseClick))
                 {
+                    // because default value is different from Click Mouse
+                    var ignoreWaitTime = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IgnoreWaitTime), engine);
+
                     var clickCommand = new ClickMouseCommand
                     {
                         v_MouseClick = v_MouseClick,
-                        v_WaitTimeAfterClick = v_WaitTimeAfterClick
+                        v_WaitTimeAfterClick = v_WaitTimeAfterClick,
+                        v_IgnoreWaitTime = ignoreWaitTime,
                     };
                     clickCommand.RunCommand(engine);
                 }
