@@ -980,6 +980,7 @@
     <Compile Include="UI\Forms\Supplement Forms\frmUpdate.Designer.cs">
       <DependentUpon>frmUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\Supplement Forms\SupplementFormsEvents.cs" />
     <Compile Include="UI\Forms\ThemedForm.cs">
       <SubType>Form</SubType>
     </Compile>

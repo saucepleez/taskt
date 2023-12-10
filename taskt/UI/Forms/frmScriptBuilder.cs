@@ -53,11 +53,18 @@ namespace taskt.UI.Forms
         private int[,] miniMap = null;
         private Bitmap miniMapImg = null;
 
+        #region CommandEditor form variables
         public CommandEditorState currentScriptEditorMode = CommandEditorState.Normal;
         public CommandEditAction currentEditAction = CommandEditAction.Normal;
 
         private Size lastEditorSize = new Size { Height = 0, Width = 0 };
         private Point lastEditorPosition;
+        #endregion
+
+        #region variables for Child form of CommandEditor form
+        private bool isRememberChildCommandEditorPosition = false;
+        private Point lastChildCommandEditorPosition;
+        #endregion
 
         // search & replace
         private int currentIndexInMatchItems = -1;
@@ -4026,7 +4033,7 @@ namespace taskt.UI.Forms
         #endregion
 
         #region CommandEditor
-        public void setCommandEditorSizeAndPosition(frmCommandEditor editor)
+        public void SetCommandEditorSizeAndPosition(frmCommandEditor editor)
         {
             if (editor == null)
             {
@@ -4038,6 +4045,21 @@ namespace taskt.UI.Forms
         }
         #endregion
 
+        #region Child Form of CommandEditor
+        public void SetPositionChildFormOfCommandEditor(Form fm)
+        {
+            if (isRememberChildCommandEditorPosition)
+            {
+                fm.Location = lastChildCommandEditorPosition;
+            }
+        }
+
+        public void StorePositionChildFormOfCommandEditor(Form fm)
+        {
+            this.lastChildCommandEditorPosition = fm.Location;
+            isRememberChildCommandEditorPosition = true;
+        }
+        #endregion
     }
 }
 

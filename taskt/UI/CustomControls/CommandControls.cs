@@ -1599,7 +1599,7 @@ namespace taskt.UI.CustomControls
 
             using (Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList))
             {
-                if (newVariableSelector.ShowDialog() == DialogResult.OK)
+                if (newVariableSelector.ShowDialog(editor) == DialogResult.OK)
                 {
                     //ensure that a variable was actually selected
                     if (newVariableSelector.selectedItem == null)
@@ -1715,7 +1715,7 @@ namespace taskt.UI.CustomControls
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                if (ofd.ShowDialog() == DialogResult.OK)
+                if (ofd.ShowDialog(editor) == DialogResult.OK)
                 {
                     SetControlValue((Control)((CommandItemControl)sender).Tag, ofd.FileName);
                 }
@@ -1732,7 +1732,7 @@ namespace taskt.UI.CustomControls
         {
             using (FolderBrowserDialog fbd = new FolderBrowserDialog())
             {
-                if (fbd.ShowDialog() == DialogResult.OK)
+                if (fbd.ShowDialog(editor) == DialogResult.OK)
                 {
                     SetControlValue((Control)((CommandItemControl)sender).Tag, fbd.SelectedPath);
                 }

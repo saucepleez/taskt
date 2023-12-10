@@ -249,7 +249,7 @@ namespace taskt.UI.Forms
             // set Size, Position
             if (this.Owner is frmScriptBuilder f)
             {
-                f.setCommandEditorSizeAndPosition(this);
+                f.SetCommandEditorSizeAndPosition(this);
             }
         }
 
