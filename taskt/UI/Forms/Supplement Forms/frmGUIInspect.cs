@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
 using System.Xml.Linq;
@@ -397,7 +392,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void txtXPath_DoubleClick(object sender, EventArgs e)
         {
             txtXPath.SelectAll();
-            if (!String.IsNullOrEmpty(txtXPath.Text))
+            if (!string.IsNullOrEmpty(txtXPath.Text))
             {
                 Clipboard.SetText(txtXPath.Text);
                 //lblMessage.Text = "XPath Copied!!";
