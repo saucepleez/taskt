@@ -175,6 +175,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDLLExplorer";
             this.Text = "DLL Explorer";
+            this.Load += new System.EventHandler(this.frmDLLExplorer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.uiPictureButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOk)).EndInit();
             this.ResumeLayout(false);

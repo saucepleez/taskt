@@ -317,7 +317,7 @@ namespace taskt.Core.Automation.Commands
             using (UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer())
             {
                 //show dialog
-                if (dllExplorer.ShowDialog() == DialogResult.OK)
+                if (dllExplorer.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
                     //user accepted the selections
                     //declare command

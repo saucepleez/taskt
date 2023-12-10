@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using taskt.UI.Forms.Supplement_Forms;
 
 namespace taskt.UI.Forms.Supplemental
 {
@@ -16,9 +13,16 @@ namespace taskt.UI.Forms.Supplemental
         public List<Class> Classes { get; set; } = new List<Class>();
         public string FileName { get; set; }
         public List<string> SelectedParameters { get; set;}
+
         public frmDLLExplorer()
         {
             InitializeComponent();
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+        }
+
+        private void frmDLLExplorer_Load(object sender, EventArgs e)
+        {
+            SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         private void lstClasses_SelectedIndexChanged(object sender, EventArgs e)
@@ -27,13 +31,10 @@ namespace taskt.UI.Forms.Supplemental
 
             var availableMethods = Classes.Where(f => f.ClassName == (string)lstClasses.SelectedItem).Select(f => f.Methods).FirstOrDefault();
 
-
             foreach (var method in availableMethods)
             {
                 lstMethods.Items.Add(method.MethodName);
             }
-
-
         }
 
         private void lstMethods_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,7 +57,6 @@ namespace taskt.UI.Forms.Supplemental
                     SelectedParameters.Add(param.ParameterName);
                 }
             }
-
         }
 
         private void uiPictureButton1_Click(object sender, EventArgs e)
@@ -64,9 +64,8 @@ namespace taskt.UI.Forms.Supplemental
             try
             {
                 OpenFileDialog ofd = new OpenFileDialog();
-                if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (ofd.ShowDialog() == DialogResult.OK)
                 {
-
                     if (!ofd.FileName.ToLower().Contains(".dll"))
                     {
                         MessageBox.Show("Please select a valid DLL file!", "Invalid File Extension Selected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -76,7 +75,6 @@ namespace taskt.UI.Forms.Supplemental
                     //track filename
                     FileName = ofd.FileName;
 
-
                     //add class list
                     Classes = new List<Class>();
 
@@ -85,7 +83,6 @@ namespace taskt.UI.Forms.Supplemental
 
                     //get classes
                     var ClassTypes = requiredAssembly.GetTypes();
-
 
                     //load each class found
                     foreach (var classType in ClassTypes)
@@ -110,14 +107,10 @@ namespace taskt.UI.Forms.Supplemental
                             }
 
                             newClass.Methods.Add(newMethod);
-
                         }
 
                         Classes.Add(newClass);
-
                     }
-
-
                 }
 
                 //populate class listbox
@@ -126,11 +119,10 @@ namespace taskt.UI.Forms.Supplemental
                 {
                     lstClasses.Items.Add(className.ClassName);
                 }
-
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("There was an error: " + ex.ToString(), "Error");
+                MessageBox.Show("There was an error: " + ex.ToString(), "Error");
             }
         }
 
