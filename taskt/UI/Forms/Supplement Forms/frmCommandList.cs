@@ -13,10 +13,14 @@ namespace taskt.UI.Forms.Supplement_Forms
         private string firstGroup;
         private string firstCommand;
 
-        public frmCommandList(Core.ApplicationSettings appSettings,TreeNode[] commands, ImageList commandsImage, string selectedCommand)
+        private frmCommandList()
         {
             InitializeComponent();
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+        }
 
+        public frmCommandList(Core.ApplicationSettings appSettings,TreeNode[] commands, ImageList commandsImage, string selectedCommand) : this()
+        {
             this.appSettings = appSettings;
             treeAllCommands = (TreeNode[])commands.Clone();
             treeAllCommandsImage = commandsImage;
@@ -35,6 +39,8 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void frmCommandList_Load(object sender, EventArgs e)
         {
+            SupplementFormsEvents.SupplementFormLoad(this);
+
             tvCommands.SuspendLayout();
             tvCommands.BeginUpdate();
 
