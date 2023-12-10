@@ -3223,7 +3223,8 @@ namespace taskt.UI.Forms
         {
             BeforeAddNewCommandProcess();
         }
-       private void tvCommands_KeyPress(object sender, KeyPressEventArgs e)
+
+        private void tvCommands_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -3246,6 +3247,7 @@ namespace taskt.UI.Forms
             {
                 return;
             }
+
             if (e.Button == MouseButtons.Right)
             {
                 if (tvCommands.SelectedNode.Level == 0)
@@ -3283,6 +3285,26 @@ namespace taskt.UI.Forms
                         cmdTVCommandMenuStrip.Show(Cursor.Position);
                     }
                 }
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                var trg = tvCommands.HitTest(e.X, e.Y);
+                if (trg.Location.ToString() == "Image")
+                {
+                    var node = trg.Node;
+                    if (node.Nodes.Count > 0)
+                    {
+                        if (node.IsExpanded)
+                        {
+                            node.Collapse();
+                        }
+                        else
+                        {
+                            node.Expand();
+                        }
+                    }
+                }
+                //Console.WriteLine(trg.Location.ToString() + ", " + trg.Node.Text);
             }
         }
         private void picCommandSearch_Click(object sender, EventArgs e)
