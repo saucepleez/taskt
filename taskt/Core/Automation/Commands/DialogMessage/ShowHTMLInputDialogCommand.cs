@@ -158,7 +158,7 @@ namespace taskt.Core.Automation.Commands
                 var htmlInput = (TextBox)ControlsList[nameof(v_InputHTML)];
                 htmlForm.rtbHTML.Text = htmlInput.Text;
 
-                if (htmlForm.ShowDialog() == DialogResult.OK)
+                if (htmlForm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
                     htmlInput.Text = htmlForm.rtbHTML.Text;
                 }

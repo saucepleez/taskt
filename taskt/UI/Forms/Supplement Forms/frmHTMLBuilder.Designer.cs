@@ -134,6 +134,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmHTMLBuilder";
             this.Text = "HTML Builder";
+            this.Load += new System.EventHandler(this.frmHTMLBuilder_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flwAcceptIcons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnOK)).EndInit();
