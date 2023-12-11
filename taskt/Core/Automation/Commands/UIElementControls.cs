@@ -120,8 +120,8 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewColumnSettings("Enabled", "Enabled", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.CheckBox)]
         [PropertyDataGridViewColumnSettings("ParameterName", "Parameter Name", true, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
         [PropertyDataGridViewColumnSettings("ParameterValue", "Parameter Value", false, PropertyDataGridViewColumnSettings.DataGridViewColumnType.TextBox)]
-        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIElementControls.UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
-        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIElementControls.UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
+        [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDataGridViewInitMethod(nameof(UIElementControls) + "+" + nameof(CreateEmptyParamters))]
         public static string v_SearchParameters { get; }
 
@@ -361,7 +361,7 @@ namespace taskt.Core.Automation.Commands
         {
             using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
             {
-                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (frm.ShowDialog() == DialogResult.OK)
                 {
                     parseInspectToolResult(frm.inspectResult, table, windowNames);
                 }
@@ -1314,9 +1314,10 @@ namespace taskt.Core.Automation.Commands
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
-                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                var trgCtrl = (Control)sender;
+                if (fm.ShowDialog(trgCtrl.FindForm()) == DialogResult.OK)
                 {
-                    object ctrl = ((Control)sender).Tag;
+                    object ctrl = trgCtrl.Tag;
                     if (ctrl is TextBox txt)
                     {
                         txt.Text = fm.XPath;
@@ -1359,7 +1360,7 @@ namespace taskt.Core.Automation.Commands
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
             {
-                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
                     dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
                     {
@@ -1391,7 +1392,7 @@ namespace taskt.Core.Automation.Commands
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmInspectParser())
             {
-                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (fm.ShowDialog() == DialogResult.OK)
                 {
                     dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
                     {
@@ -1401,27 +1402,28 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void GUIInspectTool_UsedByXPath_Clicked(TextBox txtXPath)
-        {
-            using(var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
-            {
-                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    txtXPath.Text = fm.XPath;
-                }
-            }
-        }
-        public static void GUIInspectTool_UsedByInspectResult_Clicked(DataTable searchParams)
-        {
-            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
-            {
-                if (fm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    string result = fm.InspectResult;
-                    parseInspectToolResult(result, searchParams);
-                }
-            }
-        }
+        //public static void GUIInspectTool_UsedByXPath_Clicked(TextBox txtXPath)
+        //{
+        //    using(var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
+        //    {
+        //        if (fm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            txtXPath.Text = fm.XPath;
+        //        }
+        //    }
+        //}
+        //public static void GUIInspectTool_UsedByInspectResult_Clicked(DataTable searchParams)
+        //{
+        //    using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
+        //    {
+        //        if (fm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            string result = fm.InspectResult;
+        //            parseInspectToolResult(result, searchParams);
+        //        }
+        //    }
+        //}
+
         public static void UIAutomationDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             var myDGV = (DataGridView)sender;

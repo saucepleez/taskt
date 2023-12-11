@@ -17,12 +17,14 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
             engine = new Core.Automation.Engine.AutomationEngineInstance();
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         #region form events
         private void frmGUIInspect_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
+            SupplementFormsEvents.SupplementFormLoad(this);
             reloadWindowNames();
         }
         #endregion
