@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplemental
@@ -35,6 +29,7 @@ namespace taskt.UI.Forms.Supplemental
             Result = DialogResult.OK;
             this.Close();
         }
+
         public void Cancel()
         {
             //Todo: figure out why return DialogResult not working for some reason
@@ -45,7 +40,6 @@ namespace taskt.UI.Forms.Supplemental
 
         public List<Core.Script.ScriptVariable> GetVariablesFromHTML(string tagSearch)
         {
-
             var varList = new List<Core.Script.ScriptVariable>();
   
             HtmlElementCollection collection = webBrowserHTML.Document.GetElementsByTagName(tagSearch);
@@ -56,10 +50,8 @@ namespace taskt.UI.Forms.Supplemental
                 if (!string.IsNullOrEmpty(variableName))
                 {
                     var parentElement = collection[i];
-
                     if (tagSearch == "select")
                     {
-                      
                         foreach (HtmlElement item in parentElement.Children)
                         {
                             if (item.GetAttribute("selected") == "True")
@@ -80,23 +72,10 @@ namespace taskt.UI.Forms.Supplemental
                             var inputValue = collection[i].GetAttribute("value");
                             varList.Add(new Core.Script.ScriptVariable() { VariableName = variableName, VariableValue = inputValue });
                         }
-
-                      
                     }
-
-
-                    
-
-
-
-
                 }
-
-               
             }
-
             return varList;
-
         }
     }
 }
