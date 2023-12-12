@@ -163,10 +163,11 @@ namespace taskt.Core.Automation.Commands
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
             {
-                if (fm.ShowDialog() == DialogResult.OK)
+                var item = (CommandItemControl)sender;
+                if (fm.ShowDialog(item.FindForm()) == DialogResult.OK)
                 {
                     //v_JsonExtractor = fm.JSONPath;
-                    ((TextBox)((CommandItemControl)sender).Tag).Text = fm.JSONPath;
+                    ((TextBox)(item.Tag)).Text = fm.JSONPath;
                 }
             }
         }

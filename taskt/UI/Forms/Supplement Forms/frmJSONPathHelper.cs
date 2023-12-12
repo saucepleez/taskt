@@ -10,10 +10,12 @@ namespace taskt.UI.Forms.Supplement_Forms
         public frmJSONPathHelper()
         {
             InitializeComponent();
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         private void frmJSONPathHelper_Load(object sender, EventArgs e)
         {
+            SupplementFormsEvents.SupplementFormLoad(this);
             lblMessage.Text = "";
         }
 

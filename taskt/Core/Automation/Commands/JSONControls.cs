@@ -373,9 +373,10 @@ namespace taskt.Core.Automation.Commands
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
             {
-                if (fm.ShowDialog() == DialogResult.OK)
+                var item = (CommandItemControl)sender;
+                if (fm.ShowDialog(item.FindForm()) == DialogResult.OK)
                 {
-                    var ctrl = ((CommandItemControl)sender).Tag;
+                    var ctrl = item.Tag;
                     if (ctrl is TextBox txt)
                     {
                         txt.Text = fm.JSONPath;
