@@ -1,12 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
@@ -62,6 +56,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 lblMessage.Text = "Fail Open File.";
             }
         }
+
         private void OpenFromURLProcess(string url)
         {
             try
@@ -95,9 +90,11 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 // root is object ?
                 JObject json = JObject.Parse(txtRawJSON.Text);
-                
-                TreeNode node = new TreeNode("\"\" - Object");
-                node.Tag = json.ToString();
+
+                TreeNode node = new TreeNode("\"\" - Object")
+                {
+                    Tag = json.ToString()
+                };
 
                 createJSONTree(json, node);
 
@@ -116,8 +113,10 @@ namespace taskt.UI.Forms.Supplement_Forms
 
                     tvJSON.Nodes.Clear();
 
-                    TreeNode node = new TreeNode("\"\" - Array");
-                    node.Tag = jary.ToString();
+                    TreeNode node = new TreeNode("\"\" - Array")
+                    {
+                        Tag = jary.ToString()
+                    };
 
                     createJSONTree(jary, node);
 
@@ -145,19 +144,18 @@ namespace taskt.UI.Forms.Supplement_Forms
                 TreeNode tnode = new TreeNode();
 
                 object tryValue = node.Value<object>();
-                Console.WriteLine(tryValue.GetType().FullName);
+                
+                // DBG
+                //Console.WriteLine(tryValue.GetType().FullName);
 
-                if (tryValue is JProperty)
+                if (tryValue is JProperty prop)
                 {
-                    JProperty prop = (JProperty)tryValue;
-
                     if (prop.HasValues)
                     {
                         JToken value = prop.Value;
 
-                        if (value is JValue)
+                        if (value is JValue v)
                         {
-                            JValue v = (JValue)value;
                             tnode.Text = "\"" + parsePath(v.Path) + "\" - Value";
 
                             if (v.Value == null)
@@ -169,33 +167,29 @@ namespace taskt.UI.Forms.Supplement_Forms
                                 tnode.Tag = ((JValue)value).Value.ToString();
                             }
                         }
-                        else if (value is JArray)
+                        else if (value is JArray ary)
                         {
-                            JArray ary = (JArray)value;
                             tnode.Text = "\"" + parsePath(ary.Path) + "\" - Array";
                             tnode.Tag = ary.ToString();
 
                             createJSONTree(ary, tnode);
                         }
-                        else if (value is JObject)
+                        else if (value is JObject obj)
                         {
-                            JObject obj = (JObject)value;
                             tnode.Text = "\"" + parsePath(obj.Path) + "\" - Object";
                             tnode.Tag = obj.ToString();
                             createJSONTree(obj, tnode);
                         }
                     }
                 }
-                else if (tryValue is JObject)
+                else if (tryValue is JObject obj)
                 {
-                    JObject obj = (JObject)tryValue;
                     tnode.Text = "\"" + parsePath(obj.Path) + "\" - Object";
                     tnode.Tag = obj.ToString();
                     createJSONTree(obj, tnode);
                 }
-                else if (tryValue is JValue)
+                else if (tryValue is JValue jv)
                 {
-                    JValue jv = (JValue)tryValue;
                     tnode.Text = "\"" + parsePath(jv.Path) + "\" - Value";
                     tnode.Tag = jv.ToString();
                 }
@@ -288,7 +282,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void txtJSONPath_DoubleClick(object sender, EventArgs e)
         {
             txtJSONPath.SelectAll();
-            if (!String.IsNullOrEmpty(txtJSONPath.Text))
+            if (!string.IsNullOrEmpty(txtJSONPath.Text))
             {
                 Clipboard.SetText(txtJSONPath.Text);
                 lblMessage.Text = "JSONPath Copied.";
@@ -298,7 +292,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void txtJSONPathResult_DoubleClick(object sender, EventArgs e)
         {
             txtJSONPathResult.SelectAll();
-            if (!String.IsNullOrEmpty(txtJSONPathResult.Text))
+            if (!string.IsNullOrEmpty(txtJSONPathResult.Text))
             {
                 Clipboard.SetText(txtJSONPathResult.Text);
                 lblMessage.Text = "Result Copied.";
@@ -326,7 +320,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             this.Close();
         }
         #endregion
-
 
         #region Properties
         public string JSONPath
@@ -357,7 +350,5 @@ namespace taskt.UI.Forms.Supplement_Forms
             OpenFromFileProcess(fileNames[0]);
         }
         #endregion
-
-
     }
 }
