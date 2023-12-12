@@ -30,10 +30,11 @@ namespace taskt.UI.Forms.Supplemental
             public int X;
             public int Y;
 
-            public static implicit operator Point(POINT point)
-            {
-                return new Point(point.X, point.Y);
-            }
+            // not used this implicit operator
+            //public static implicit operator Point(POINT point)
+            //{
+            //    return new Point(point.X, point.Y);
+            //}
         }
 
         [DllImport("user32.dll")]
