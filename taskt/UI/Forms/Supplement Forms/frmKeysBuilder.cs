@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
@@ -16,7 +9,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
 
-            var keys = Enum.GetValues(typeof(Keys));
+            //var keys = Enum.GetValues(typeof(Keys));
             string[] keysList = new string[]
             {
                 "",
@@ -171,8 +164,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 return;
             }
 
-            int times;
-            if (int.TryParse(txtTimes.Text, out times))
+            if (int.TryParse(txtTimes.Text, out int times))
             {
                 if (times > 1)
                 {
@@ -182,7 +174,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                 {
                     if (chkWin.Checked)
                     {
-                        if (String.IsNullOrEmpty(key))
+                        if (string.IsNullOrEmpty(key))
                         {
                             result = "{WIN_KEY}";
                         }
@@ -206,7 +198,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 if (chkWin.Checked)
                 {
-                    if (String.IsNullOrEmpty(key))
+                    if (string.IsNullOrEmpty(key))
                     {
                         result = "{WIN_KEY}";
                     }
