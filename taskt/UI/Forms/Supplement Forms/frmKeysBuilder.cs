@@ -9,6 +9,8 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
 
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+
             //var keys = Enum.GetValues(typeof(Keys));
             string[] keysList = new string[]
             {
@@ -32,6 +34,11 @@ namespace taskt.UI.Forms.Supplement_Forms
                 "Scroll Lock",
             };
             cmbKey.Items.AddRange(keysList);
+        }
+
+        private void frmKeysBuilder_Load(object sender, EventArgs e)
+        {
+            SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         #region footer buttons
@@ -283,6 +290,5 @@ namespace taskt.UI.Forms.Supplement_Forms
             }
         }
         #endregion
-
     }
 }

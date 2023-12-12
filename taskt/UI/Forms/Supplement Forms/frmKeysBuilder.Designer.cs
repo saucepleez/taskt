@@ -327,6 +327,7 @@
             this.MinimizeBox = false;
             this.Name = "frmKeysBuilder";
             this.Text = "Keys Builder";
+            this.Load += new System.EventHandler(this.frmKeysBuilder_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelFooter.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).EndInit();

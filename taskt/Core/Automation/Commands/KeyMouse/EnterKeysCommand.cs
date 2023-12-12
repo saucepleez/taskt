@@ -165,7 +165,7 @@ namespace taskt.Core.Automation.Commands
         {
             using (var fm = new taskt.UI.Forms.Supplement_Forms.frmKeysBuilder())
             {
-                if (fm.ShowDialog() == DialogResult.OK)
+                if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
                     //var InputText = (TextBox)ControlsList[nameof(v_TextToSend)];
                     var InputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
