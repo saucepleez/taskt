@@ -94,7 +94,6 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ShowCursorPosition_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ShowCursorPosition_KeyDown);
-            this.MouseEnter += new System.EventHandler(this.frmShowCursorPosition_MouseEnter);
             this.ResumeLayout(false);
             this.PerformLayout();
 

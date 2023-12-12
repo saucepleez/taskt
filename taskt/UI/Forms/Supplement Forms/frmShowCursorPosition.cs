@@ -12,14 +12,8 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplemental
@@ -29,20 +23,7 @@ namespace taskt.UI.Forms.Supplemental
         public POINT lpPoint;
         public int xPos { get; set; }
         public int yPos { get; set; }
-        public frmShowCursorPosition()
-        {
-            InitializeComponent();
-        }
-        [DllImport("user32.dll")]
-        public static extern bool GetCursorPos(out POINT lpPoint);
-        private void tmrGetPosition_Tick(object sender, EventArgs e)
-        {
-            GetCursorPos(out lpPoint);
-            lblXPosition.Text = "X Position: " + lpPoint.X;
-            lblYPosition.Text = "Y Position: " + lpPoint.Y;
-            xPos = lpPoint.X;
-            yPos = lpPoint.Y;
-        }
+
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
@@ -55,6 +36,28 @@ namespace taskt.UI.Forms.Supplemental
             }
         }
 
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out POINT lpPoint);
+
+        public frmShowCursorPosition()
+        {
+            InitializeComponent();
+        }
+
+        private void ShowCursorPosition_Load(object sender, EventArgs e)
+        {
+            MoveFormToBottomRight(this);
+        }
+
+        private void tmrGetPosition_Tick(object sender, EventArgs e)
+        {
+            GetCursorPos(out lpPoint);
+            lblXPosition.Text = "X Position: " + lpPoint.X;
+            lblYPosition.Text = "Y Position: " + lpPoint.Y;
+            xPos = lpPoint.X;
+            yPos = lpPoint.Y;
+        }
+        
         private void ShowCursorPosition_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
@@ -63,14 +66,10 @@ namespace taskt.UI.Forms.Supplemental
             }
         }
 
-        private void ShowCursorPosition_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void frmShowCursorPosition_MouseEnter(object sender, EventArgs e)
-        {
-            //move to bottom right if form is in the way
-            MoveFormToBottomRight(this);
-        }
+        //private void frmShowCursorPosition_MouseEnter(object sender, EventArgs e)
+        //{
+        //    //move to bottom right if form is in the way
+            
+        //}
     }
 }
