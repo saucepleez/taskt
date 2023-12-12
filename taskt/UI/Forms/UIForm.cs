@@ -12,16 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms
 {
-    public class UIForm : System.Windows.Forms.Form
+    public class UIForm : Form
     {
         private int backgroundChangeIndex;
         public int BackgroundChangeIndex
@@ -44,7 +40,7 @@ namespace taskt.UI.Forms
             }
         }
 
-        protected override void OnPaintBackground(System.Windows.Forms.PaintEventArgs e)
+        protected override void OnPaintBackground(PaintEventArgs e)
         {
             base.OnPaintBackground(e);
 
@@ -82,17 +78,17 @@ namespace taskt.UI.Forms
             // 
             // UIForm
             // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.ClientSize = new Size(284, 261);
+            this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UIForm";
-            this.Load += new System.EventHandler(this.UIForm_Load);
+            this.Load += new EventHandler(this.UIForm_Load);
             this.ResumeLayout(false);
-
         }
 
         private void UIForm_Load(object sender, EventArgs e)
         {
         }
+
         public static void MoveFormToBottomRight(Form sender)
         {
             sender.Location = new Point(Screen.FromPoint(sender.Location).WorkingArea.Right - sender.Width, Screen.FromPoint(sender.Location).WorkingArea.Bottom - sender.Height);
