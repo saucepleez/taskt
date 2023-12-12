@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace taskt.UI.Forms.Supplement_Forms
 {
     public partial class frmImageCapture : Form
     {
-        public frmImageCapture()
-        {
-            InitializeComponent();
-        }
         //These variables control the mouse position
         int selectX;
         int selectY;
@@ -28,9 +18,14 @@ namespace taskt.UI.Forms.Supplement_Forms
         public Bitmap userSelectedBitmap;
         //This variable control when you start the right click
         bool start = false;
+
+        public frmImageCapture()
+        {
+            InitializeComponent();
+        }
+
         private void frmImageCapture_Load(object sender, EventArgs e)
         {
-
             if (pbTaggedImage.Image != null)
             {
                 pnlMouseContainer.Hide();
@@ -40,9 +35,6 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 tabTestMode.Hide();
             }
-
-
-
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.Location = new Point(0, 0);
@@ -74,7 +66,6 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-
             if (uiAccept.Visible == false)
             {
                 return;
@@ -125,7 +116,10 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 //validate if there is image
                 if (pictureBox1.Image == null)
+                {
                     return;
+                }
+                    
                 //same functionality when mouse is over
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
@@ -134,35 +128,31 @@ namespace taskt.UI.Forms.Supplement_Forms
                     selectHeight = e.Y - selectY;
                     pictureBox1.CreateGraphics().DrawRectangle(selectPen, selectX,
                              selectY, selectWidth, selectHeight);
-
                 }
                 start = false;
                 //function save image to clipboard
                 //SaveToClipboard();
             }
         }
+
         private void CreateCaptureImage()
         {
             //validate if something selected
-
-
-                Rectangle rect = new Rectangle(selectX, selectY, selectWidth, selectHeight);
-                //create bitmap with original dimensions
-                Bitmap OriginalImage = new Bitmap(pictureBox1.Image, pictureBox1.Width, pictureBox1.Height);
-                //create bitmap with selected dimensions
-                Bitmap _img = new Bitmap(selectWidth, selectHeight);
-                //create graphic variable
-                Graphics g = Graphics.FromImage(_img);
-                //set graphic attributes
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                g.DrawImage(OriginalImage, 0, 0, rect, GraphicsUnit.Pixel);
-                //insert image stream into clipboard
-                //Clipboard.SetImage(_img);
-                userSelectedBitmap = _img;
-
-
+            Rectangle rect = new Rectangle(selectX, selectY, selectWidth, selectHeight);
+            //create bitmap with original dimensions
+            Bitmap OriginalImage = new Bitmap(pictureBox1.Image, pictureBox1.Width, pictureBox1.Height);
+            //create bitmap with selected dimensions
+            Bitmap _img = new Bitmap(selectWidth, selectHeight);
+            //create graphic variable
+            Graphics g = Graphics.FromImage(_img);
+            //set graphic attributes
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            g.DrawImage(OriginalImage, 0, 0, rect, GraphicsUnit.Pixel);
+            //insert image stream into clipboard
+            //Clipboard.SetImage(_img);
+            userSelectedBitmap = _img;
         }
 
         private void uiClose_Click(object sender, EventArgs e)
@@ -172,7 +162,6 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void uiAccept_Click(object sender, EventArgs e)
         {
-
             if (selectWidth == 0)
             {
                 MessageBox.Show("Please capture before accepting!");
