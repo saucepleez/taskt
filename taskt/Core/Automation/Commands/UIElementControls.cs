@@ -357,16 +357,16 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static void InspectToolParserClicked(DataTable table, ComboBox windowNames = null)
-        {
-            using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
-            {
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    parseInspectToolResult(frm.inspectResult, table, windowNames);
-                }
-            }
-        }
+        //public static void InspectToolParserClicked(DataTable table, ComboBox windowNames = null)
+        //{
+        //    using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
+        //    {
+        //        if (frm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            parseInspectToolResult(frm.inspectResult, table, windowNames);
+        //        }
+        //    }
+        //}
 
         private static string parseControlTypeInspectToolResult(string value)
         {
@@ -1392,7 +1392,7 @@ namespace taskt.Core.Automation.Commands
         {
             using (var fm = new UI.Forms.Supplement_Forms.frmInspectParser())
             {
-                if (fm.ShowDialog() == DialogResult.OK)
+                if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
                     dgvUpdateProcess(sender, new Action<DataTable>((tbl) =>
                     {
