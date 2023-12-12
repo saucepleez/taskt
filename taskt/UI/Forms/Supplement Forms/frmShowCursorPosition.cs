@@ -21,8 +21,8 @@ namespace taskt.UI.Forms.Supplemental
     public partial class frmShowCursorPosition : UIForm
     {
         public POINT lpPoint;
-        public int xPos { get; set; }
-        public int yPos { get; set; }
+        public int xPos { get; private set; }
+        public int yPos { get; private set; }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
