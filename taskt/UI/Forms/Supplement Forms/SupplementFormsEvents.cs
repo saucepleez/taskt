@@ -11,7 +11,10 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 if (editor.Owner is frmScriptBuilder builder)
                 {
-                    builder.SetPositionChildFormOfCommandEditor(fm);
+                    if (builder.appSettings.ClientSettings.RememberSupplementFormsForCommandEditorPosition)
+                    {
+                        builder.SetPositionChildFormOfCommandEditor(fm);
+                    }
                 }
             }
         }

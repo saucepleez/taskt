@@ -86,6 +86,8 @@ namespace taskt.Core
 
         public bool RememberCommandEditorSizeAndPosition { get; set; }
 
+        public bool RememberSupplementFormsForCommandEditorPosition { get; set; }
+
         public bool CheckForUpdateAtStartup { get; set; }
         public bool SkipBetaVersionUpdate { get; set; }
 
@@ -185,6 +187,7 @@ namespace taskt.Core
             ShowCommandSearchBar = false;
             HideNotifyAutomatically = true;
             RememberCommandEditorSizeAndPosition = true;
+            RememberSupplementFormsForCommandEditorPosition = true;
 
             CheckForUpdateAtStartup = true;
             SkipBetaVersionUpdate = true;
