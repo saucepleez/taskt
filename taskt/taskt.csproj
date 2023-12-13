@@ -295,6 +295,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ApplicationSettings\ClientSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\EngineSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\LocalListenerSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\ServerSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\WhiteListIP.cs" />
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetLogarithmCommand.cs" />
@@ -346,7 +351,7 @@
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
-    <Compile Include="Core\ApplicationSettings.cs" />
+    <Compile Include="Core\ApplicationSettings\ApplicationSettings.cs" />
     <Compile Include="Core\Automation\Attributes\PropertyAttributes.cs" />
     <Compile Include="Core\Automation\Commands\UIElementControls.cs" />
     <Compile Include="Core\Automation\Commands\BooleanControls.cs" />
