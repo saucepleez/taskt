@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms
+﻿namespace taskt.UI.Forms.AttendedMode
 {
     partial class frmAttendedMode
     {

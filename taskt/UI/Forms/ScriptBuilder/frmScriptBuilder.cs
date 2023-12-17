@@ -76,7 +76,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         // forms
         private Supplemental.frmSearchCommands frmSearch = null;
-        private frmAttendedMode frmAttended = null;
+        private AttendedMode.frmAttendedMode frmAttended = null;
 
         private string _scriptFilePath = null;
         private XmlSerializer scriptSerializer = null;
@@ -3995,7 +3995,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             {
                 if (this.frmAttended == null)
                 {
-                    this.frmAttended = new frmAttendedMode();
+                    this.frmAttended = new AttendedMode.frmAttendedMode();
                     this.frmAttended.Show();
                 }
                 else
@@ -4006,7 +4006,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             catch 
             {
                 this.frmAttended = null;
-                this.frmAttended = new frmAttendedMode();
+                this.frmAttended = new AttendedMode.frmAttendedMode();
                 this.frmAttended.Show();
             }
         }

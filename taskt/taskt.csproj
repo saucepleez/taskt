@@ -811,10 +811,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Core\Automation\Commands\ExcelControls.cs" />
-    <Compile Include="UI\Forms\frmAttendedMode.cs">
+    <Compile Include="UI\Forms\AttendedMode\frmAttendedMode.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\frmAttendedMode.Designer.cs">
+    <Compile Include="UI\Forms\AttendedMode\frmAttendedMode.Designer.cs">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmNewSettings.cs">
@@ -1061,7 +1061,7 @@
     <EmbeddedResource Include="UI\CustomControls\CustomControls.resx">
       <DependentUpon>CustomControls.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmAttendedMode.resx">
+    <EmbeddedResource Include="UI\Forms\AttendedMode\frmAttendedMode.resx">
       <DependentUpon>frmAttendedMode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmNewSettings.resx">
