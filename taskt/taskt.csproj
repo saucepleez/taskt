@@ -1051,6 +1051,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Images\Images.cs" />
     <EmbeddedResource Include="UI\CustomControls\CommandGroupControl.resx">
       <DependentUpon>CommandGroupControl.cs</DependentUpon>
     </EmbeddedResource>
