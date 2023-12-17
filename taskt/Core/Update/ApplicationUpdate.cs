@@ -158,7 +158,7 @@ namespace taskt.Core.Update
         /// <param name="manifestConfig"></param>
         private static void ShowUpdateForm(UpdateManifest manifestConfig)
         {
-            using (var frmUpdate = new taskt.UI.Forms.Supplement_Forms.frmUpdate(manifestConfig))
+            using (var frmUpdate = new UI.Forms.ScriptBuilder.Supplemental.frmUpdate(manifestConfig))
             {
                 if (frmUpdate.ShowDialog() == DialogResult.OK)
                 {
