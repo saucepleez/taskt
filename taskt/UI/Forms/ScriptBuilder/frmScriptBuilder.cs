@@ -3406,7 +3406,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         }
         private void showNewSettingForm()
         {
-            using (frmNewSettings newSettings = new frmNewSettings(this))
+            using (Supplemental.frmNewSettings newSettings = new Supplemental.frmNewSettings(this))
             {
                 newSettings.ShowDialog();
 

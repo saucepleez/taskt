@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmNewSettings : ThemedForm
     {
@@ -1141,7 +1141,7 @@ namespace taskt.UI.Forms
         {
             if (MessageBox.Show("Close Settings form to launch Display Manager.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Display Manager now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Supplemental.frmDisplayManager displayManager = new Supplemental.frmDisplayManager();
+                Forms.Supplemental.frmDisplayManager displayManager = new Forms.Supplemental.frmDisplayManager();
                 displayManager.Show();
                 this.Close();
             }   
