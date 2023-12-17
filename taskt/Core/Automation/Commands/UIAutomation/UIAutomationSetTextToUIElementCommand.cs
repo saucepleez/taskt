@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Set Text To UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to set Text Value from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to set Text Value from UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationSetTextToUIElementCommand : ScriptCommand

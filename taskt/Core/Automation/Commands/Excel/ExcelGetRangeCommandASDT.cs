@@ -17,6 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command gets text from a specified Excel Range and put it into a DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific range.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class ExcelGetRangeCommandAsDT : ScriptCommand
     {
         [XmlAttribute]

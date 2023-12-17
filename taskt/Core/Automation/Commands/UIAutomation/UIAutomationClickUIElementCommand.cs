@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Click UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to Click UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to Click UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationClickUIElementCommand : ScriptCommand

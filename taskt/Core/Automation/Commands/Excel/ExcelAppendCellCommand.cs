@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("Append input to last row of sheet into the first cell.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class ExcelAppendCellCommand : ScriptCommand
     {
         [XmlAttribute]

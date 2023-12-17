@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to split a Text")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to split a single Text or variable into multiple items")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses the String.Split method to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class SplitTextCommand : ScriptCommand

@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to write a Value to a DataRow")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to write a Value to a DataRow.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class WriteDataRowValueCommand : ScriptCommand
     {
         [XmlAttribute]

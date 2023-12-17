@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command stops the current task.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to stop the current running task.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_stop_process))]
     [Attributes.ClassAttributes.EnableAutomateRender(true, true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
 

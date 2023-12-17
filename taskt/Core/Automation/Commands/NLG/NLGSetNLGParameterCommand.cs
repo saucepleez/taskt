@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Set NLG Parameter")]
     [Attributes.ClassAttributes.Description("This command allows you to define a NLG parameter")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to define NLG parameters")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_nlg))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class NLGSetNLGParameterCommand : ScriptCommand

@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Load Script File")]
     [Attributes.ClassAttributes.Description("This command pre-loads tasks for future execution.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load a task but not immediately execute it.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_script))]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]

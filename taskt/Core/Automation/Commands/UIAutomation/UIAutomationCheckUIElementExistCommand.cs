@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Check UIElement Exist")]
     [Attributes.ClassAttributes.Description("This command allows you to to check UIElement existence.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to check UIElement existence")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationCheckUIElementExistCommand : ScriptCommand

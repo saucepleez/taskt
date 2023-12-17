@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command Reads a Config file and stores it into a Dictionary.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to load a config file.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop and OLEDB to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class LoadDictionaryCommand : ScriptCommand

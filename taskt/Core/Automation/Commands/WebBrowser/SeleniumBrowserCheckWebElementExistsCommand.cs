@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Check WebElement Exists")]
     [Attributes.ClassAttributes.Description("This command allows you to check WebElement existance.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check WebElement existance.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]

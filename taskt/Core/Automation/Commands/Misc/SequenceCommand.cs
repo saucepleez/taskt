@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("Command that groups multiple actions")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to group multiple commands together.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements many commands in a list.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_sequence))]
     [Attributes.ClassAttributes.EnableAutomateRender(true, true)]
     public class SequenceCommand : ScriptCommand
     {

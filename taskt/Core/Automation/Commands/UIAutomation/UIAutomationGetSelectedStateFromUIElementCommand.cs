@@ -12,6 +12,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Get Selected State From UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get Selected State from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get Selected State from UIElement.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetSelectedStateFromUIElementCommand : ScriptCommand

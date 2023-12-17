@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Set Column Values From DataTable")]
     [Attributes.ClassAttributes.Description("This command set Column values from DataTable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set Column values from DataTable.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]

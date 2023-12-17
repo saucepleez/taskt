@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to parse a dataset row column into a variable.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to extract data from a dataset variable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class ParseDatasetRowCommand : ScriptCommand
     {
         [XmlAttribute]

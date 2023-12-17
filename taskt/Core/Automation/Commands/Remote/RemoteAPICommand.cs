@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to execute automation against another taskt Client.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to automate against a taskt instance that enables Local Listener.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command uses Core.Server.LocalTCPListener")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_remote))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RemoteAPICommand : ScriptCommand

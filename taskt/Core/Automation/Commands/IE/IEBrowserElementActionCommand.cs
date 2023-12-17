@@ -19,6 +19,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Group("IE Browser Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to manipulate (get or set) elements within the HTML document of the associated IE web browser.  Features an assisting element capture form")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements the 'InternetExplorer' application object from SHDocVw.dll and MSHTML.dll to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_web))]
     public class IEBrowserElementActionCommand : ScriptCommand
     {
         [XmlAttribute]

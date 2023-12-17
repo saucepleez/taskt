@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to execute a task remotely on another taskt instance")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to execute a command on another client that has local listener enabled")]
     [Attributes.ClassAttributes.ImplementationDescription("This command interfaces against Core.Server.LocalTCPListener")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_remote))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class RemoteTaskCommand : ScriptCommand

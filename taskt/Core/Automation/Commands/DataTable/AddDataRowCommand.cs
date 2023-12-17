@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to add a datarow to a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a datarow to a DataTable.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class AddDataRowCommand : ScriptCommand
     {
         [XmlAttribute]

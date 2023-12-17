@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you remove specified data rows.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete a specific row.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command attempts to delete a DataTable Row")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class RemoveDataRowCommand : ScriptCommand
     {
         [XmlAttribute]

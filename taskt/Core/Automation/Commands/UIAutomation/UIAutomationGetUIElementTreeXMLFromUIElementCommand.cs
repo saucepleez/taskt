@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandSettings("Get UIElement Tree XML From UIElement")]
     [Attributes.ClassAttributes.Description("This command allows you to get UIElement Tree XML from UIElement.")]
     [Attributes.ClassAttributes.ImplementationDescription("Use this command when you want to get UIElement Tree XML from UIElement. XML content is based on WinAppDriver UI Recorder.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class UIAutomationGetUIElementTreeXMLFromUIElementCommand : ScriptCommand

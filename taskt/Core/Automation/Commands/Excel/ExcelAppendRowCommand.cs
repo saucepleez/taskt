@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("Append to last row of sheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command will take in a comma seprerated value and append it to the end of an excel sheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automations.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     public class ExcelAppendRowCommand : ScriptCommand
     {
         [XmlAttribute]

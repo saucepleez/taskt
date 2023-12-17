@@ -13,6 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to send emails with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to send emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_smtp))]
     public class OutlookEmailCommand : ScriptCommand
     {
         [XmlAttribute]

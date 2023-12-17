@@ -7,14 +7,12 @@ using taskt.UI.Forms;
 namespace taskt.Core.Automation.Commands
 {
 
-
-
-
     [Serializable]
     [Attributes.ClassAttributes.Group("Loop Commands")]
     [Attributes.ClassAttributes.Description("This command allows you to repeat actions continuously.  Any 'Begin Loop' command must have a following 'End Loop' command.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to perform a series of commands an endless amount of times.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command recursively calls the underlying 'BeginLoop' Command to achieve automation.")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_startloop))]
     public class BeginContinousLoopCommand : ScriptCommand
     {
 

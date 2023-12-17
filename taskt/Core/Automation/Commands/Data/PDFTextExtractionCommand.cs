@@ -22,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.InputSpecification("Enter or Select the path to the applicable file or enter file URL.")]
         [Attributes.PropertyAttributes.SampleUsage("**C:\\temp\\myfile.pdf** or **{{{vFilePath}}}* or **https://temp.com/myfile.pdf**")]
         [Attributes.PropertyAttributes.Remarks("")]
+        [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
         [Attributes.PropertyAttributes.PropertyShowSampleUsageInDescription(true)]
         public string v_FilePath { get; set; }
 

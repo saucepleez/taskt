@@ -16,6 +16,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to reply to emails with outlook")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to reply to emails with your currenty logged in outlook account")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_smtp))]
     public class OutlookReplyToEmailsCommand : ScriptCommand
     {
         [XmlAttribute]

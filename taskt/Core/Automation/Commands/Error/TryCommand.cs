@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows embedding commands and will automatically move to the 'catch' handler")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to handle potential errors that could occur.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_try))]
     [Attributes.ClassAttributes.EnableAutomateRender(true, true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class TryCommand : ScriptCommand

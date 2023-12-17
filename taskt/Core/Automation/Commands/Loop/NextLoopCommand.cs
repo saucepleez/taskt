@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command enables user to break and exit from the current loop")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to break from the current loop")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_nextloop))]
     public class NextLoopCommand : ScriptCommand
     {
         public NextLoopCommand()

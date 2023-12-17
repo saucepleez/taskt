@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command specifies the end of a try/catch block.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command to enclose your try/catch block.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_try))]
     [Attributes.ClassAttributes.EnableAutomateRender(true, true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class EndTryCommand : ScriptCommand

@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.Description("This command allows you to get data from tasktServer.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to retrieve data from tasktServer")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
+    [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_server))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     public class GetBotStoreDataCommand : ScriptCommand
