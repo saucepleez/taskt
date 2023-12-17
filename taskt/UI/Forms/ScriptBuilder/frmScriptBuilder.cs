@@ -3392,7 +3392,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void showSettingForm()
         {
             //show settings dialog
-            using (frmSettings newSettings = new frmSettings(this))
+            using (Supplemental.frmSettings newSettings = new Supplemental.frmSettings(this))
             {
                 newSettings.ShowDialog();
 

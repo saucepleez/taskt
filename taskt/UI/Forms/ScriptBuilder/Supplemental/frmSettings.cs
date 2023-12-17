@@ -17,7 +17,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmSettings : ThemedForm
     {
@@ -450,7 +450,7 @@ namespace taskt.UI.Forms
 
         private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
         {
-            Supplemental.frmDisplayManager displayManager = new Supplemental.frmDisplayManager();
+            Forms.Supplemental.frmDisplayManager displayManager = new Forms.Supplemental.frmDisplayManager();
             displayManager.Show();
             this.Close();
         }
