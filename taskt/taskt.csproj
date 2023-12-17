@@ -1394,6 +1394,7 @@
     <Folder Include="External Dependencies\" />
     <Folder Include="Sample Scripts\" />
     <Folder Include="Samples\" />
+    <Folder Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\" />
     <Folder Include="UI\Utilities\" />
   </ItemGroup>
   <ItemGroup>
