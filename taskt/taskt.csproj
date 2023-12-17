@@ -1001,10 +1001,10 @@
     <Compile Include="UI\Forms\Supplement Forms\frmDialog.Designer.cs">
       <DependentUpon>frmDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\frmScheduleManagement.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmScheduleManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\frmScheduleManagement.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmScheduleManagement.Designer.cs">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmAbout.cs">
@@ -1070,7 +1070,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmSample.resx">
       <DependentUpon>frmSample.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmScheduleManagement.resx">
       <DependentUpon>frmScheduleManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\frmScriptBuilder.ru.resx">

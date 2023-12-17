@@ -3530,7 +3530,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void uiBtnScheduleManagement_Click(object sender, EventArgs e)
         {
-            using (frmScheduleManagement scheduleManager = new frmScheduleManagement())
+            using (var scheduleManager = new Supplemental.frmScheduleManagement())
             {
                 scheduleManager.Show();
             }
@@ -3766,7 +3766,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmScheduleManagement scheduleManager = new frmScheduleManagement();
+            var scheduleManager = new Supplemental.frmScheduleManagement();
             scheduleManager.Show();
         }
 
