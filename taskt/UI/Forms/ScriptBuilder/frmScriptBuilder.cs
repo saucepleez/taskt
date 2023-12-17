@@ -3516,7 +3516,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void uiBtnRecordSequence_Click(object sender, EventArgs e)
         {
             this.Hide();
-            using (var sequenceRecorder = new frmSequenceRecorder())
+            using (var sequenceRecorder = new Supplemental.frmSequenceRecorder())
             {
                 sequenceRecorder.callBackForm = this;
                 sequenceRecorder.ShowDialog();
@@ -3752,7 +3752,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         {
             this.Hide();
 
-            using (var sequenceRecorder = new frmSequenceRecorder())
+            using (var sequenceRecorder = new Supplemental.frmSequenceRecorder())
             {
                 sequenceRecorder.callBackForm = this;
                 sequenceRecorder.ShowDialog();

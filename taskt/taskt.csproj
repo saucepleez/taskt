@@ -835,10 +835,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmScriptInformations.Designer.cs">
       <DependentUpon>frmScriptInformations.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\frmSequenceRecorder.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSequenceRecorder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\frmSequenceRecorder.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSequenceRecorder.Designer.cs">
       <DependentUpon>frmSequenceRecorder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSettings.cs">
@@ -1079,7 +1079,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmScriptInformations.resx">
       <DependentUpon>frmScriptInformations.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmSequenceRecorder.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmSequenceRecorder.resx">
       <DependentUpon>frmSequenceRecorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmSettings.resx">

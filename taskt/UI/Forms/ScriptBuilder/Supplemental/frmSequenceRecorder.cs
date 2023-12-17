@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
 using static taskt.Core.Automation.User32.User32Functions;
 
-namespace taskt.UI.Forms
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmSequenceRecorder : UIForm
     {
@@ -20,6 +11,7 @@ namespace taskt.UI.Forms
         public static List<Core.Automation.Commands.ScriptCommand> commandList;
         public ScriptBuilder.frmScriptBuilder callBackForm { get; set; }
         private bool isRecording { get; set; }
+
         public frmSequenceRecorder()
         {
             InitializeComponent();
@@ -27,10 +19,8 @@ namespace taskt.UI.Forms
 
         private void btnStartRecording_Click(object sender, EventArgs e)
         {
-
-
-
         }
+
         void OnHookStopped(object sender, EventArgs e)
         {
 
@@ -52,12 +42,9 @@ namespace taskt.UI.Forms
 
         private void FinalizeRecording()
         {
-
             var commandList = GlobalHook.generatedCommands;
 
-
             var outputList = new List<Core.Automation.Commands.ScriptCommand>();
-
 
             if (chkGroupIntoSequence.Checked)
             {
@@ -68,11 +55,10 @@ namespace taskt.UI.Forms
                     newSequence.v_scriptActions.Add(cmd);
                 }
 
-
                 if (newSequence.v_scriptActions.Count > 0)
+                {
                     outputList.Add(newSequence);
-
-
+                }
             }
             else if (chkGroupMovesIntoSequences.Checked)
             {
@@ -80,7 +66,6 @@ namespace taskt.UI.Forms
 
                 foreach (Core.Automation.Commands.ScriptCommand cmd in commandList)
                 {
-
                     if (cmd is Core.Automation.Commands.MoveMouseCommand)
                     {
                         var sendMouseCmd = (Core.Automation.Commands.MoveMouseCommand)cmd;
@@ -105,25 +90,17 @@ namespace taskt.UI.Forms
                     {
                         newSequence.v_scriptActions.Add(cmd);
                     }
-
-
                 }
 
                 if (newSequence.v_scriptActions.Count > 0)
+                {
                     outputList.Add(newSequence);
-
-
+                }
             }
-
             else
             {
                 outputList = commandList;
             }
-
-
-
-
-
 
             var commentCommand = new Core.Automation.Commands.CommentCommand();
             commentCommand.v_Comment = "Sequence Recorded " + DateTime.Now.ToString();
@@ -139,24 +116,16 @@ namespace taskt.UI.Forms
 
         private void btnStopRecording_Click(object sender, EventArgs e)
         {
-
-
-
             GlobalHook.StopHook();
             //FinalizeRecording();
-
-
         }
 
         private void frmSequenceRecorder_Load(object sender, EventArgs e)
         {
-           
         }
 
         private void chkGroupIntoSequences_CheckedChanged(object sender, EventArgs e)
         {
-
-
         }
 
         private void chkCaptureMouse_CheckedChanged(object sender, EventArgs e)
@@ -182,20 +151,15 @@ namespace taskt.UI.Forms
 
                 int.TryParse(txtHookResolution.Text, out int samplingResolution);
 
-
                 GlobalHook.HookStopped += new EventHandler(OnHookStopped);
                 GlobalHook.StartScreenRecordingHook(chkCaptureClicks.Checked, chkCaptureMouse.Checked, chkGroupMovesIntoSequences.Checked, chkCaptureKeyboard.Checked, chkCaptureWindowEvents.Checked, chkActivateTopLeft.Checked, chkTrackWindowSize.Checked, chkTrackWindowsOpenLocation.Checked, samplingResolution, txtHookStop.Text);
                 lblRecording.Text = "Press '" + txtHookStop.Text + "' key to stop recording!";
                // WindowHook.StartHook();
 
-
-
                 commandList = new List<Core.Automation.Commands.ScriptCommand>();
-
 
                 uiBtnRecord.DisplayText = "Stop";
                 uiBtnRecord.Image = taskt.Properties.Resources.various_stop_button;
-
             }
             else
             {
@@ -206,24 +170,17 @@ namespace taskt.UI.Forms
         private void chkActivateTopLeft_CheckedChanged(object sender, EventArgs e)
         {
             if (chkActivateTopLeft.Checked)
+            {
                 chkTrackWindowsOpenLocation.Checked = false;
+            }
         }
 
         private void chkTrackWindowsOpenLocation_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTrackWindowsOpenLocation.Checked)
+            {
                 chkActivateTopLeft.Checked = false;
+            }
         }
     }
 }
-
-
-    
-
-
-    
-
-
-
-
-
