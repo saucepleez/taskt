@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace taskt.Core.IO
+﻿namespace taskt.Core.IO
 {
     public class JavaInterface
     {
@@ -16,7 +10,6 @@ namespace taskt.Core.IO
             {
                 throw new System.IO.FileNotFoundException("JAR Library was not found at " + jarLibary);
             }
-
 
             System.Diagnostics.Process javaProc = new System.Diagnostics.Process();
             javaProc.StartInfo.FileName = "java";
@@ -30,7 +23,6 @@ namespace taskt.Core.IO
 
         public string ExtractPDFText(string pdfFilePath)
         {
-
             //create pdf path
             var pdfPath = "\"" + pdfFilePath + "\"";
             
@@ -54,14 +46,6 @@ namespace taskt.Core.IO
 
             //return data
             return output;
-
-
         }
-
-
-       
-        
-     
-
     }
 }
