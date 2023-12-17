@@ -823,10 +823,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmNewSettings.Designer.cs">
       <DependentUpon>frmNewSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\frmSample.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSample.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\frmSample.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSample.Designer.cs">
       <DependentUpon>frmSample.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\frmScriptInformations.cs">
@@ -1067,7 +1067,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmNewSettings.resx">
       <DependentUpon>frmNewSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmSample.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmSample.resx">
       <DependentUpon>frmSample.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScheduleManagement.resx">

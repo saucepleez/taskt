@@ -3582,7 +3582,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         }
         private void sampleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var fm = new frmSample(this))
+            using (var fm = new Supplemental.frmSample(this))
             {
                 fm.ShowDialog();
             }
@@ -3958,7 +3958,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 return;
             }
             string commandName = GetSelectedCommandFullName().Split('-')[1].Trim();
-            using (var frm = new frmSample(this, commandName))
+            using (var frm = new Supplemental.frmSample(this, commandName))
             {
                 frm.ShowDialog();
             }

@@ -1,29 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 
-namespace taskt.UI.Forms
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmSample : ThemedForm
     {
         private string samplePath;
-        private UI.Forms.ScriptBuilder.frmScriptBuilder parentForm;
+        private frmScriptBuilder parentForm;
         private TreeNode[] bufferdSampleNodes;
 
-        public frmSample(UI.Forms.ScriptBuilder.frmScriptBuilder parentForm)
+        public frmSample(frmScriptBuilder parentForm)
         {
             InitializeComponent();
             this.parentForm = parentForm;
         }
 
-        public frmSample(UI.Forms.ScriptBuilder.frmScriptBuilder parentForm, string searchKeyword) : this(parentForm)
+        public frmSample(frmScriptBuilder parentForm, string searchKeyword) : this(parentForm)
         {
             txtSearchBox.Text = searchKeyword;
         }
