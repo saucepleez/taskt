@@ -75,7 +75,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         private Pen indentDashLine;
 
         // forms
-        private Supplement_Forms.frmSearchCommands frmSearch = null;
+        private Supplemental.frmSearchCommands frmSearch = null;
         private frmAttendedMode frmAttended = null;
 
         private string _scriptFilePath = null;
@@ -278,7 +278,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             this.dontSaveFlag = false;
 
             // set searchform
-            frmSearch = new Supplement_Forms.frmSearchCommands(this);
+            frmSearch = new Supplemental.frmSearchCommands(this);
 
             // instance count
             instanceList = new Core.InstanceCounter(appSettings);
@@ -3668,14 +3668,14 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void SearchStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmSearch.CurrentMode = Supplement_Forms.frmSearchCommands.SearchReplaceMode.Search;
+            frmSearch.CurrentMode = Supplemental.frmSearchCommands.SearchReplaceMode.Search;
             frmSearch.variables = getAllVariablesNames();
             frmSearch.Show();
         }
 
         private void ReplaceStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmSearch.CurrentMode = Supplement_Forms.frmSearchCommands.SearchReplaceMode.Replace;
+            frmSearch.CurrentMode = Supplemental.frmSearchCommands.SearchReplaceMode.Replace;
             frmSearch.variables = getAllVariablesNames();
             frmSearch.Show();
             //MessageBox.Show("sorry, work in process ;-)");

@@ -1,5 +1,5 @@
 ﻿
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     partial class frmSearchCommands
     {

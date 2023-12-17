@@ -949,10 +949,10 @@
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.Designer.cs">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmSearchCommands.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSearchCommands.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmSearchCommands.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSearchCommands.Designer.cs">
       <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmSplash.cs">
@@ -1158,7 +1158,7 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">
       <DependentUpon>frmRemoteDesktopViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmSearchCommands.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmSearchCommands.resx">
       <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmShowCursorPosition.resx">
