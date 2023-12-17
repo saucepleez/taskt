@@ -3420,7 +3420,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         }
         private void showScriptInformationForm()
         {
-            using (frmScriptInformations frm = new frmScriptInformations())
+            using (var frm = new Supplemental.frmScriptInformations())
             {
                 frm.infos = scriptInfo;
                 frm.ShowDialog();
