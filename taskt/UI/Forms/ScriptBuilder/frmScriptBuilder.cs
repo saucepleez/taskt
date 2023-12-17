@@ -224,7 +224,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             if (!System.IO.Directory.Exists(rpaScriptsFolder))
             {
-                using (UI.Forms.Supplemental.frmDialog userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
+                using (var userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
                 {
                     if (userDialog.ShowDialog() == DialogResult.OK)
                     {
@@ -1090,7 +1090,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 //get sequence events
                 SequenceCommand sequence = (SequenceCommand)currentCommand;
 
-                using (frmScriptBuilder newBuilder = new frmScriptBuilder())
+                using (var newBuilder = new frmScriptBuilder())
                 {
                     //add variables
 
@@ -1143,7 +1143,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 currentCommand.RemoveInstance(instanceList);
 
                 //create new command editor form
-                using (frmCommandEditor editCommand = new frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
+                using (var editCommand = new frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
                 {
                     //creation mode edit locks form to current command
                     editCommand.creationMode = frmCommandEditor.CreationMode.Edit;
@@ -2625,7 +2625,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             CheckAndSaveScriptIfForget();
 
             //show ofd
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
                 openFileDialog.RestoreDirectory = true;
@@ -2733,7 +2733,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void BeginImportProcess()
         {
             //show ofd
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
                 openFileDialog.RestoreDirectory = true;
@@ -2958,7 +2958,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             //define default output path
             if ((this.ScriptFilePath == null) || (saveAs))
             {
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                using (var saveFileDialog = new SaveFileDialog())
                 {
                     saveFileDialog.InitialDirectory = Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
                     saveFileDialog.RestoreDirectory = true;
@@ -3107,7 +3107,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (UI.Forms.Supplemental.frmThickAppElementRecorder recorder = new UI.Forms.Supplemental.frmThickAppElementRecorder())
+            using (var recorder = new UI.Forms.Supplemental.frmThickAppElementRecorder())
             {
                 recorder.ShowDialog();
             }
@@ -3123,7 +3123,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void uiBtnAbout_Click(object sender, EventArgs e)
         {
-            using (Supplemental.frmAbout frmAboutForm = new Supplemental.frmAbout())
+            using (var frmAboutForm = new Supplemental.frmAbout())
             {
                 frmAboutForm.ShowDialog();
             }
@@ -3371,7 +3371,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         #region Variable Edit, Settings form
         private void showVariableManager()
         {
-            using (frmScriptVariables scriptVariableEditor = new frmScriptVariables(this.scriptVariables, this.appSettings))
+            using (var scriptVariableEditor = new frmScriptVariables(this.scriptVariables, this.appSettings))
             {
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
@@ -3392,7 +3392,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void showSettingForm()
         {
             //show settings dialog
-            using (Supplemental.frmSettings newSettings = new Supplemental.frmSettings(this))
+            using (var newSettings = new Supplemental.frmSettings(this))
             {
                 newSettings.ShowDialog();
 
@@ -3406,7 +3406,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         }
         private void showNewSettingForm()
         {
-            using (Supplemental.frmNewSettings newSettings = new Supplemental.frmNewSettings(this))
+            using (var newSettings = new Supplemental.frmNewSettings(this))
             {
                 newSettings.ShowDialog();
 
@@ -3457,7 +3457,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         #region taskt About Form
         private void showAboutForm()
         {
-            using (Supplemental.frmAbout aboutForm = new Supplemental.frmAbout())
+            using (var aboutForm = new Supplemental.frmAbout())
             {
                 aboutForm.ShowDialog();
             }
@@ -3516,7 +3516,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void uiBtnRecordSequence_Click(object sender, EventArgs e)
         {
             this.Hide();
-            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
+            using (var sequenceRecorder = new frmSequenceRecorder())
             {
                 sequenceRecorder.callBackForm = this;
                 sequenceRecorder.ShowDialog();
@@ -3752,7 +3752,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         {
             this.Hide();
 
-            using (frmSequenceRecorder sequenceRecorder = new frmSequenceRecorder())
+            using (var sequenceRecorder = new frmSequenceRecorder())
             {
                 sequenceRecorder.callBackForm = this;
                 sequenceRecorder.ShowDialog();
