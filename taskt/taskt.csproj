@@ -937,10 +937,10 @@
     <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.Designer.cs">
       <DependentUpon>frmKeysBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmMultiSendKeystrokes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmMultiSendKeystrokes.Designer.cs">
       <DependentUpon>frmMultiSendKeystrokes.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.cs">
@@ -1152,7 +1152,7 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmKeysBuilder.resx">
       <DependentUpon>frmKeysBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmMultiSendKeystrokes.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmMultiSendKeystrokes.resx">
       <DependentUpon>frmMultiSendKeystrokes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmRemoteDesktopViewer.resx">

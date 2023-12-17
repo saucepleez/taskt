@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
 
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmMultiSendKeystrokes : ThemedForm
     {
@@ -191,12 +191,12 @@ namespace taskt.UI.Forms.Supplement_Forms
             cmbWindowName.EndUpdate();
         }
 
-        private Supplemental.frmItemSelector CreateVariableSelectForm()
+        private Forms.Supplemental.frmItemSelector CreateVariableSelectForm()
         {
             var variableList = scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
 
-            return (new Supplemental.frmItemSelector(variableList, "Select Variable", "Select Variable"));
+            return (new Forms.Supplemental.frmItemSelector(variableList, "Select Variable", "Select Variable"));
         }
 
         private static void ConcatenateVariableName(string variableName, TextBox txt, Core.ApplicationSettings settings)
