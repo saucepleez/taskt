@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.IO;
 using taskt.Core.Script;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.Splash
 {
     public partial class frmSplash : Form
     {

@@ -94,7 +94,7 @@ namespace taskt
                 }
                 else
                 {
-                    SplashForm = new UI.Forms.Supplemental.frmSplash();
+                    SplashForm = new UI.Forms.Splash.frmSplash();
                     SplashForm.Show();
 
                     Application.DoEvents();
@@ -112,7 +112,7 @@ namespace taskt
                     System.IO.File.Delete(updaterExecutableDestination);
                 }
 
-                SplashForm = new UI.Forms.Supplemental.frmSplash();
+                SplashForm = new UI.Forms.Splash.frmSplash();
                 SplashForm.Show();
 
                 Application.DoEvents();
@@ -128,8 +128,6 @@ namespace taskt
             MessageBox.Show("An unhandled exception occured: " + (e.ExceptionObject as Exception).ToString(), "Oops");
         }
 
-        public static UI.Forms.Supplemental.frmSplash SplashForm { get; set; }
-
-
+        public static UI.Forms.Splash.frmSplash SplashForm { get; set; }
     }
 }

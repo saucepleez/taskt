@@ -955,10 +955,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmSearchCommands.Designer.cs">
       <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmSplash.cs">
+    <Compile Include="UI\Forms\Splash\frmSplash.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmSplash.Designer.cs">
+    <Compile Include="UI\Forms\Splash\frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.cs">
@@ -1169,7 +1169,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmSplash.resx">
+    <EmbeddedResource Include="UI\Forms\Splash\frmSplash.resx">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.resx">
