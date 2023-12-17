@@ -35,7 +35,6 @@ namespace taskt.Core.Server
 
             if (appSettings.ServerSettings.ServerConnectionEnabled)
             {
-
                 //handle for reinitialization
                 if (heartbeatTimer != null)
                 {
@@ -72,9 +71,8 @@ namespace taskt.Core.Server
             {
                 httpLogger.Information("Heartbeat Error:" + ex.ToString());
             }
-
-
         }
+
         /// <summary>
         /// Attempts to retrieve a GUID from tasktServer.
         /// </summary>
@@ -85,13 +83,11 @@ namespace taskt.Core.Server
             try
             {
                 if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                {
                     return false;
+                }
 
                 httpLogger.Information("Client attempting to retrieve a GUID from the server, override " + overrideExisting);
-
-
-
-
 
                 if (appSettings.ServerSettings.HTTPGuid == Guid.Empty || overrideExisting)
                 {
@@ -121,6 +117,7 @@ namespace taskt.Core.Server
                 return false;
             }
         }
+
         /// <summary>
         /// Checks in the client with the server
         /// </summary>
@@ -130,10 +127,11 @@ namespace taskt.Core.Server
             try
             {
                 if (!(appSettings.ServerSettings.ServerConnectionEnabled) || associatedBuilder == null)
+                {
                     return false;
+                }
 
                 httpLogger.Information("Client is attempting to check in with the server");
-
 
                 var workerID = appSettings.ServerSettings.HTTPGuid;
 
@@ -147,11 +145,8 @@ namespace taskt.Core.Server
 
                     if (deserialized.ScheduledTask != null)
                     {
-
                         associatedBuilder.Invoke(new MethodInvoker(delegate ()
                         {
-
-
                             if (deserialized.ScheduledTask.ExecutionType == "Local")
                             {
                                 UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
@@ -167,13 +162,8 @@ namespace taskt.Core.Server
                                 newEngine.serverExecution = true;
                                 newEngine.Show();
                             }
-        
-                           
                         }));
-                 
                     }
-
-
                     return true;
                 }
                 else
@@ -187,8 +177,8 @@ namespace taskt.Core.Server
                 httpLogger.Information("Error Checking In: " + ex.ToString());
                 return false;
             }
-
         }
+
         /// <summary>
         /// Used to test the connection to the API ensuring provided credentials were correct
         /// </summary>
@@ -199,10 +189,11 @@ namespace taskt.Core.Server
             try
             {
                 if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                {
                     return false;
+                }
 
                 httpLogger.Information("Client is testing connection to server");
-
 
                 var client = new WebClient();
                 var content = client.DownloadString(HTTPServerURL + "/api/Test");
@@ -221,8 +212,8 @@ namespace taskt.Core.Server
                 httpLogger.Information("Error Testing Connection: " + ex.ToString());
                 return false;
             }
-
         }
+
         /// <summary>
         /// Adds a new Task to the server
         /// </summary>
@@ -233,11 +224,11 @@ namespace taskt.Core.Server
             try
             {
                 if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                {
                     return null;
-
+                }
+                    
                 httpLogger.Information("Client is attempting to add task data to server");
-
-
 
                 var workerID = appSettings.ServerSettings.HTTPGuid;
 
@@ -257,8 +248,8 @@ namespace taskt.Core.Server
                 httpLogger.Information("Error Adding Task: " + ex.ToString());
                 return null;
             }
-
         }
+
         /// <summary>
         /// Updates an existing task on the server
         /// </summary>
@@ -270,7 +261,9 @@ namespace taskt.Core.Server
             try
             {
                 if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                {
                     return null;
+                }
 
                 httpLogger.Information("Client is update a previously added task to server");
 
@@ -291,8 +284,6 @@ namespace taskt.Core.Server
                 httpLogger.Information("Error Updating Task: " + ex.ToString());
                 return null;
             }
-
-
         }
 
        public static void PublishScript(string scriptPath, PublishedScript.PublishType publishType)
@@ -300,17 +291,16 @@ namespace taskt.Core.Server
             try
             {
                 if (!(appSettings.ServerSettings.ServerConnectionEnabled))
+                {
                     return;
+                }
 
                 httpLogger.Information("Client is publishing a script to the server");
-
 
                 var script = new PublishedScript();
                 script.WorkerID = appSettings.ServerSettings.HTTPGuid;
                 script.ScriptType = publishType;
                 script.FriendlyName = new System.IO.FileInfo(scriptPath).Name;
-
-
 
                 WebClient webClient = new WebClient();
                 var content = webClient.DownloadString(appSettings.ServerSettings.HTTPServerURL + "/api/Scripts/Exists?workerID=" + script.WorkerID + "&friendlyName=" + script.FriendlyName);
@@ -328,14 +318,12 @@ namespace taskt.Core.Server
                     else
                     {
                         script.OverwriteExisting = false;
-                    }
-                   
+                    }  
                 }
                 else
                 {
                     script.OverwriteExisting = false;
                 }
-
 
                 //based on publish type upload local reference or whole task
                 if (publishType == PublishedScript.PublishType.ClientReference)
@@ -359,20 +347,17 @@ namespace taskt.Core.Server
 
                 webClient.UploadStringAsync(api, "POST", scriptJson);
 
-
                 return;
-
             }
             catch (Exception ex)
             {
                 httpLogger.Information("Publish Error: " + ex.ToString());
                 MessageBox.Show("Publish Error: " + ex.ToString());
             }
+       }
 
-
-        }
        private static void PublishTaskCompleted(object sender, UploadStringCompletedEventArgs e)
-        {
+       {
             try
             {
                var result = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(e.Result);
@@ -382,7 +367,6 @@ namespace taskt.Core.Server
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Publish Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
         }
 
@@ -404,8 +388,8 @@ namespace taskt.Core.Server
            var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Add");
 
            return webClient.UploadString(api, "POST", scriptJson);
-
         }
+
         public static string GetData(string key, BotStoreRequest.RequestType requestType)
         {
             var botStoreRequest = new BotStoreRequest();
@@ -421,12 +405,7 @@ namespace taskt.Core.Server
             var api = new Uri(appSettings.ServerSettings.HTTPServerURL + "/api/BotStore/Get");
 
             return webClient.UploadString(api, "POST", scriptJson);
-
-
-
         }
-
-
     }
 
     #region tasktServer Models
