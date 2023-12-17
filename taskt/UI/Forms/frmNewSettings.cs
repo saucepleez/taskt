@@ -9,7 +9,7 @@ namespace taskt.UI.Forms
     public partial class frmNewSettings : ThemedForm
     {
         Core.ApplicationSettings newAppSettings;
-        frmScriptBuilder scriptBuilderForm;
+        ScriptBuilder.frmScriptBuilder scriptBuilderForm;
 
         private string prevPage = "";
 
@@ -38,7 +38,7 @@ namespace taskt.UI.Forms
         }
 
         #region form events
-        public frmNewSettings(frmScriptBuilder fm)
+        public frmNewSettings(ScriptBuilder.frmScriptBuilder fm)
         {
             InitializeComponent();
             this.scriptBuilderForm = fm;

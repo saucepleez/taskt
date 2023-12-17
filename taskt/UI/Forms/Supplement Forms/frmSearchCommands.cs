@@ -13,7 +13,7 @@ namespace taskt.UI.Forms.Supplement_Forms
     public partial class frmSearchCommands : ThemedForm
     {
         public List<string> variables { set; get; }
-        private taskt.UI.Forms.frmScriptBuilder parentForm = null;
+        private taskt.UI.Forms.ScriptBuilder.frmScriptBuilder parentForm = null;
 
         private SearchReplaceMode _currentMode = SearchReplaceMode.Search;
         public SearchReplaceMode CurrentMode
@@ -44,7 +44,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             Replace
         }
 
-        public frmSearchCommands(UI.Forms.frmScriptBuilder parentForm)
+        public frmSearchCommands(UI.Forms.ScriptBuilder.frmScriptBuilder parentForm)
         {
             InitializeComponent();
             this.parentForm = parentForm;
@@ -59,7 +59,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private void frmSearchCommands_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            parentForm.currentScriptEditorMode = frmScriptBuilder.CommandEditorState.Normal;
+            parentForm.currentScriptEditorMode = ScriptBuilder.frmScriptBuilder.CommandEditorState.Normal;
             this.Hide();
         }
         private void frmSearchCommands_Activated(object sender, EventArgs e)
@@ -82,7 +82,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             if (e.KeyCode == Keys.Escape)
             {
-                parentForm.currentScriptEditorMode = frmScriptBuilder.CommandEditorState.Normal;
+                parentForm.currentScriptEditorMode = ScriptBuilder.frmScriptBuilder.CommandEditorState.Normal;
                 this.Hide();
             }
         }
@@ -101,7 +101,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void btnClearAndClose_Click(object sender, EventArgs e)
         {
-            parentForm.currentScriptEditorMode = frmScriptBuilder.CommandEditorState.Normal;
+            parentForm.currentScriptEditorMode = ScriptBuilder.frmScriptBuilder.CommandEditorState.Normal;
             this.Hide();
         }
         #endregion

@@ -18,7 +18,7 @@ namespace taskt.UI.Forms
     {
 
         public static List<Core.Automation.Commands.ScriptCommand> commandList;
-        public frmScriptBuilder callBackForm { get; set; }
+        public ScriptBuilder.frmScriptBuilder callBackForm { get; set; }
         private bool isRecording { get; set; }
         public frmSequenceRecorder()
         {

@@ -247,7 +247,7 @@ namespace taskt.UI.Forms
         private void frmCommandEditor_FormClosed(object sender, FormClosedEventArgs e)
         {
             // set Size, Position
-            if (this.Owner is frmScriptBuilder f)
+            if (this.Owner is ScriptBuilder.frmScriptBuilder f)
             {
                 f.SetCommandEditorSizeAndPosition(this);
             }

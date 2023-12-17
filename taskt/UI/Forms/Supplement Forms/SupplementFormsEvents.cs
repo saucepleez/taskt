@@ -9,7 +9,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             if (fm.Owner is frmCommandEditor editor)
             {
-                if (editor.Owner is frmScriptBuilder builder)
+                if (editor.Owner is ScriptBuilder.frmScriptBuilder builder)
                 {
                     if (builder.appSettings.ClientSettings.RememberSupplementFormsForCommandEditorPosition)
                     {
@@ -25,7 +25,7 @@ namespace taskt.UI.Forms.Supplement_Forms
             {
                 if (fm.Owner is frmCommandEditor editor)
                 {
-                    if (editor.Owner is frmScriptBuilder builder)
+                    if (editor.Owner is ScriptBuilder.frmScriptBuilder builder)
                     {
                         builder.StorePositionChildFormOfCommandEditor(fm);
                     }

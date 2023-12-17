@@ -20,7 +20,7 @@ namespace taskt.Core.Server
         private static Serilog.Core.Logger automationLogger;
         public static TcpListener automationListener;
         private static LocalListenerSettings listenerSettings;
-        public static UI.Forms.frmScriptBuilder associatedBuilder;
+        public static UI.Forms.ScriptBuilder.frmScriptBuilder associatedBuilder;
         public static int Port;
         public static bool IsListening { get; set; }
 
@@ -33,7 +33,7 @@ namespace taskt.Core.Server
             ExecuteCommandEngine = new Automation.Engine.AutomationEngineInstance();
         }
 
-        public static void Initialize(UI.Forms.frmScriptBuilder builder)
+        public static void Initialize(UI.Forms.ScriptBuilder.frmScriptBuilder builder)
         {
             associatedBuilder = builder;
             automationLogger.Information("Automation Listener Initializing");

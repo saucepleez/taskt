@@ -99,7 +99,7 @@ namespace taskt
 
                     Application.DoEvents();
 
-                    Application.Run(new UI.Forms.frmScriptBuilder(filePath));
+                    Application.Run(new UI.Forms.ScriptBuilder.frmScriptBuilder(filePath));
                 }
             }
             else
@@ -117,7 +117,7 @@ namespace taskt
 
                 Application.DoEvents();
 
-                Application.Run(new UI.Forms.frmScriptBuilder());
+                Application.Run(new UI.Forms.ScriptBuilder.frmScriptBuilder());
             }
         }
         [System.Runtime.InteropServices.DllImport("user32.dll")]

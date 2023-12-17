@@ -22,10 +22,10 @@ namespace taskt.UI.Forms
     public partial class frmSettings : ThemedForm
     {
         Core.ApplicationSettings newAppSettings;
-        public frmScriptBuilder scriptBuilderForm;
+        public ScriptBuilder.frmScriptBuilder scriptBuilderForm;
 
         #region form events
-        public frmSettings(frmScriptBuilder sender)
+        public frmSettings(ScriptBuilder.frmScriptBuilder sender)
         {
             scriptBuilderForm = sender;
             InitializeComponent();

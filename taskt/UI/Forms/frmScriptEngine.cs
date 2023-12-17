@@ -34,7 +34,7 @@ namespace taskt.UI.Forms
 
         public bool serverExecution { get; set; }
 
-        public frmScriptBuilder callBackForm { get; set; }
+        public ScriptBuilder.frmScriptBuilder callBackForm { get; set; }
 
         private bool advancedDebug { get; set; }
 
@@ -51,7 +51,7 @@ namespace taskt.UI.Forms
 
         //events and methods
         #region Form Events/Methods
-        public frmScriptEngine(string pathToFile, frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false, Dictionary<string, Core.Script.Script> preloadedTasks = null)
+        public frmScriptEngine(string pathToFile, ScriptBuilder.frmScriptBuilder builderForm, List<Core.Script.ScriptVariable> variables = null, bool blnCloseWhenDone = false, Dictionary<string, Core.Script.Script> preloadedTasks = null)
         {
             InitializeComponent();
 

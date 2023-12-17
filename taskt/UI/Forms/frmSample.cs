@@ -14,16 +14,16 @@ namespace taskt.UI.Forms
     public partial class frmSample : ThemedForm
     {
         private string samplePath;
-        private UI.Forms.frmScriptBuilder parentForm;
+        private UI.Forms.ScriptBuilder.frmScriptBuilder parentForm;
         private TreeNode[] bufferdSampleNodes;
 
-        public frmSample(UI.Forms.frmScriptBuilder parentForm)
+        public frmSample(UI.Forms.ScriptBuilder.frmScriptBuilder parentForm)
         {
             InitializeComponent();
             this.parentForm = parentForm;
         }
 
-        public frmSample(UI.Forms.frmScriptBuilder parentForm, string searchKeyword) : this(parentForm)
+        public frmSample(UI.Forms.ScriptBuilder.frmScriptBuilder parentForm, string searchKeyword) : this(parentForm)
         {
             txtSearchBox.Text = searchKeyword;
         }

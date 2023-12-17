@@ -15,7 +15,7 @@ namespace taskt.Core.Server
     /// </summary>
    public static class SocketClient
     {
-        public static UI.Forms.frmScriptBuilder associatedBuilder;
+        public static UI.Forms.ScriptBuilder.frmScriptBuilder associatedBuilder;
         private static string publicKey;
         private static string serverURI;
         private static DateTime connectionOpened;

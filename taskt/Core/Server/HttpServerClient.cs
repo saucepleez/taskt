@@ -14,7 +14,7 @@ namespace taskt.Core.Server
     /// </summary>
     public static class HttpServerClient
     {
-        public static UI.Forms.frmScriptBuilder associatedBuilder;
+        public static UI.Forms.ScriptBuilder.frmScriptBuilder associatedBuilder;
         private static Serilog.Core.Logger httpLogger;
         private static System.Timers.Timer heartbeatTimer { get; set; }
         private static ApplicationSettings appSettings { get; set; }
