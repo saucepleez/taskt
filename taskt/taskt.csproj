@@ -1025,10 +1025,10 @@
     <Compile Include="UI\Forms\frmScriptVariables.Designer.cs">
       <DependentUpon>frmScriptVariables.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\frmCommandEditor.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\frmCommandEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\frmCommandEditor.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\frmCommandEditor.Designer.cs">
       <DependentUpon>frmCommandEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\frmScriptEngine.cs">
@@ -1094,7 +1094,7 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmBrowserElementBuilder.resx">
       <DependentUpon>frmBrowserElementBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\frmCommandEditor.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\frmCommandEditor.resx">
       <DependentUpon>frmCommandEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScriptEngine.resx">

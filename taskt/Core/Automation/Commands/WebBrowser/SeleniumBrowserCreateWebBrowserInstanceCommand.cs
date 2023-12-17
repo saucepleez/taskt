@@ -227,7 +227,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void AfterShown(UI.Forms.frmCommandEditor editor)
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             if (!editor.appSettings.ClientSettings.SupportIECommand)
             {

@@ -103,7 +103,7 @@ namespace taskt.Core.Automation.Commands
             return isTrueStatement;
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -158,11 +158,11 @@ namespace taskt.Core.Automation.Commands
                     var loopCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginLoopCommand>(commandData);
 
                     var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
-                    frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
+                    var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
                     editor.selectedCommand = loopCommand;
                     editor.editingCommand = loopCommand;
                     editor.originalCommand = loopCommand;
-                    editor.creationMode = frmCommandEditor.CreationMode.Edit;
+                    editor.creationMode = UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor.CreationMode.Edit;
                     editor.scriptVariables = ScriptVariables;
                     editor.appSettings = this.appSettings;
 
@@ -192,7 +192,7 @@ namespace taskt.Core.Automation.Commands
         {
             var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
 
-            frmCommandEditor editor = new frmCommandEditor(automationCommands, null);
+            var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
             editor.selectedCommand = new BeginLoopCommand();
             editor.appSettings = this.appSettings;
             var res = editor.ShowDialog();

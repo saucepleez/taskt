@@ -19,7 +19,7 @@ namespace taskt.UI.CustomControls
         public ScriptCommand Command { get; set; }
         public List<Control> UIControls { get; set; }
 
-        public void RenderUIComponents(frmCommandEditor editorForm)
+        public void RenderUIComponents(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editorForm)
         {
             if (Command == null)
             {
@@ -97,7 +97,7 @@ namespace taskt.UI.CustomControls
             }
         }
 
-        public void Bind(frmCommandEditor editor)
+        public void Bind(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             //preference to preload is false
             //if (UIControls is null)

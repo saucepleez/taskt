@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms
+﻿namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 {
     partial class frmCommandEditor
     {

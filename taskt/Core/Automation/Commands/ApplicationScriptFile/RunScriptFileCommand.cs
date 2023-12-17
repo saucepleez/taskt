@@ -163,7 +163,7 @@ namespace taskt.Core.Automation.Commands
             var engine = new Engine.AutomationEngineInstance();
 
             var cmb = (ComboBox)sender;
-            var engineSettings = ((frmCommandEditor)cmb.FindForm()).appSettings.EngineSettings;
+            var engineSettings = ((UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor)cmb.FindForm()).appSettings.EngineSettings;
 
             bool isVisible = (cmb.SelectedItem?.ToString().Trim().ToLower() == "yes");
             foreach(var item in ControlsList.Where(c => (c.Key.Contains(nameof(v_VariableAssignments)))))

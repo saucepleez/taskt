@@ -112,7 +112,7 @@ namespace taskt.Core.Automation.Commands
             outputDT.StoreInUserVariable(engine, v_OutputDTName);
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 

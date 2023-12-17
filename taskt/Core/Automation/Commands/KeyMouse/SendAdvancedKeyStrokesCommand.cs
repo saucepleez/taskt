@@ -170,7 +170,7 @@ namespace taskt.Core.Automation.Commands
             WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
-        public override void AfterShown(UI.Forms.frmCommandEditor editor)
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             //var dgv = (DataGridView)ControlsList[nameof(v_KeyActions)];
             var dgv = ControlsList.GetPropertyControl<DataGridView>(nameof(v_KeyActions));
@@ -179,7 +179,7 @@ namespace taskt.Core.Automation.Commands
             column.DataSource = Common.GetAvailableKeys();
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 

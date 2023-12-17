@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public override void AfterShown(UI.Forms.frmCommandEditor editor)
+        public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             //AutomationElementControls.RenderSearchParameterDataGridView((DataGridView)ControlsList[nameof(v_SearchParameters)]);
             UIElementControls.RenderSearchParameterDataGridView(ControlsList.GetPropertyControl<DataGridView>(nameof(v_SearchParameters)));

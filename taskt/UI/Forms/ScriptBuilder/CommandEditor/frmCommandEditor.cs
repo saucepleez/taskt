@@ -20,7 +20,7 @@ using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Commands;
 
-namespace taskt.UI.Forms
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 {
     public partial class frmCommandEditor : ThemedForm
     {
@@ -337,7 +337,7 @@ namespace taskt.UI.Forms
             {
                 if (!appSettings.ClientSettings.DontShowValidationMessage)
                 {
-                    using(Supplemental.frmDialog fm = new Supplemental.frmDialog(selectedCommand.validationResult, selectedCommand.SelectionName, Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using(var fm = new Forms.Supplemental.frmDialog(selectedCommand.validationResult, selectedCommand.SelectionName, Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }

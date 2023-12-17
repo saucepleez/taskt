@@ -152,7 +152,7 @@ namespace taskt.Core.Automation.Commands
             stringDateFormatted.StoreInUserVariable(engine, v_applyToVariableName);
 
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -212,7 +212,7 @@ namespace taskt.Core.Automation.Commands
 
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             this.IsValid = true;
             this.validationResult = "";

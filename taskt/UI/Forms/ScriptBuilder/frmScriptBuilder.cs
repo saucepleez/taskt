@@ -1143,10 +1143,10 @@ namespace taskt.UI.Forms.ScriptBuilder
                 currentCommand.RemoveInstance(instanceList);
 
                 //create new command editor form
-                using (var editCommand = new frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
+                using (var editCommand = new CommandEditor.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
                 {
                     //creation mode edit locks form to current command
-                    editCommand.creationMode = frmCommandEditor.CreationMode.Edit;
+                    editCommand.creationMode = CommandEditor.frmCommandEditor.CreationMode.Edit;
 
                     editCommand.editingCommand = currentCommand;
 
@@ -2996,7 +2996,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void CheckValidateCommands(List<ScriptCommand> commands)
         {
-            using (var fm = new frmCommandEditor(automationCommands, GetConfiguredCommands()))
+            using (var fm = new CommandEditor.frmCommandEditor(automationCommands, GetConfiguredCommands()))
             {
                 fm.appSettings = this.appSettings;
                 foreach (var cmd in commands)
@@ -3147,9 +3147,9 @@ namespace taskt.UI.Forms.ScriptBuilder
             //MessageBox.Show(specificCommand);
 
             //bring up new command configuration form
-            using (var newCommandForm = new frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
+            using (var newCommandForm = new CommandEditor.frmCommandEditor(automationCommands, GetConfiguredCommands(), this.bufferedCommandList, this.bufferedCommandTreeImages))
             {
-                newCommandForm.creationMode = frmCommandEditor.CreationMode.Add;
+                newCommandForm.creationMode = CommandEditor.frmCommandEditor.CreationMode.Add;
                 newCommandForm.scriptVariables = this.scriptVariables;
                 // set taskt settings
                 newCommandForm.appSettings = this.appSettings;
@@ -4033,7 +4033,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         #endregion
 
         #region CommandEditor
-        public void SetCommandEditorSizeAndPosition(frmCommandEditor editor)
+        public void SetCommandEditorSizeAndPosition(CommandEditor.frmCommandEditor editor)
         {
             if (editor == null)
             {

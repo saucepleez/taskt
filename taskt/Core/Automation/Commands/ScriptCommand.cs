@@ -579,7 +579,7 @@ namespace taskt.Core.Automation.Commands
         //    return RenderedControls;
         //}
 
-        public virtual List<Control> Render(UI.Forms.frmCommandEditor editor)
+        public virtual List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             RenderedControls = new List<Control>();
 
@@ -614,12 +614,12 @@ namespace taskt.Core.Automation.Commands
             RenderedControls = new List<Control>();
             return RenderedControls;
         }
-        public virtual void AfterShown(UI.Forms.frmCommandEditor editor)
+        public virtual void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
 
         }
 
-        public virtual void Refresh(UI.Forms.frmCommandEditor editor)
+        public virtual void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
 
         }
@@ -630,7 +630,7 @@ namespace taskt.Core.Automation.Commands
         {
         }
 
-        public virtual bool IsValidate(UI.Forms.frmCommandEditor editor)
+        public virtual bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             (this.IsValid, this.IsWarning, this.validationResult) = ValidationControls.CheckValidation(this);
 

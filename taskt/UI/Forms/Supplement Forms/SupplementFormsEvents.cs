@@ -7,7 +7,7 @@ namespace taskt.UI.Forms.Supplement_Forms
     {
         public static void SupplementFormLoad(Form fm)
         {
-            if (fm.Owner is frmCommandEditor editor)
+            if (fm.Owner is ScriptBuilder.CommandEditor.frmCommandEditor editor)
             {
                 if (editor.Owner is ScriptBuilder.frmScriptBuilder builder)
                 {
@@ -23,7 +23,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             if (sender is Form fm)
             {
-                if (fm.Owner is frmCommandEditor editor)
+                if (fm.Owner is ScriptBuilder.CommandEditor.frmCommandEditor editor)
                 {
                     if (editor.Owner is ScriptBuilder.frmScriptBuilder builder)
                     {

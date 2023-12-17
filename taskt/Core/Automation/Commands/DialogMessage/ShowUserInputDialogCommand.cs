@@ -133,7 +133,7 @@ namespace taskt.Core.Automation.Commands
             v_UserInputConfig.Rows.Add(newRow);
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 

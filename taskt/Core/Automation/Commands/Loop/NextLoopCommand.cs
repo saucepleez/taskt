@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
             engine.CurrentLoopContinuing = true;
         }
 
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 

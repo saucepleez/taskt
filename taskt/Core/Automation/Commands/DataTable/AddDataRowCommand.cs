@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
             dataTable.Rows.Add(newRow);
         }
         
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 

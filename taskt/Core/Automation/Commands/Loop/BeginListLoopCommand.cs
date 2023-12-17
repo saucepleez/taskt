@@ -144,7 +144,7 @@ namespace taskt.Core.Automation.Commands
                 engine.ReportProgress("Finished Loop From Line " + loopCommand.LineNumber);
             }
         }
-        public override List<Control> Render(frmCommandEditor editor)
+        public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
 
@@ -158,7 +158,7 @@ namespace taskt.Core.Automation.Commands
             return "Loop List Variable '" + v_LoopParameter + "'";
         }
 
-        public override bool IsValidate(frmCommandEditor editor)
+        public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.IsValidate(editor);
 
