@@ -315,7 +315,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkShowDLLExplorer_Clicked(object sender, EventArgs e)
         {
             //create form
-            using (UI.Forms.Supplemental.frmDLLExplorer dllExplorer = new UI.Forms.Supplemental.frmDLLExplorer())
+            using (var dllExplorer = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmDLLExplorer())
             {
                 //show dialog
                 if (dllExplorer.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)

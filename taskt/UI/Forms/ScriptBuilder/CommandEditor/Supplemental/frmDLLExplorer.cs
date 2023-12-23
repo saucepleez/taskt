@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using taskt.UI.Forms.Supplement_Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmDLLExplorer : UIForm
     {
