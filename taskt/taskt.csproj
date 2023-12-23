@@ -859,10 +859,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCodeBuilder.Designer.cs">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmCommandList.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCommandList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmCommandList.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCommandList.Designer.cs">
       <DependentUpon>frmCommandList.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmDisplayManager.cs">
@@ -1107,7 +1107,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCodeBuilder.resx">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCommandList.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCommandList.resx">
       <DependentUpon>frmCommandList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDialog.resx">

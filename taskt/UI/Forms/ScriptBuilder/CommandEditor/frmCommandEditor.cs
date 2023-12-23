@@ -438,7 +438,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
         #region command list
         private void cboSelectedCommand_Click(object sender, EventArgs e)
         {
-            using(var fm = new Supplement_Forms.frmCommandList(appSettings, treeAllCommands, treeAllCommandsImage, cboSelectedCommand.Text))
+            using(var fm = new Supplemental.frmCommandList(appSettings, treeAllCommands, treeAllCommandsImage, cboSelectedCommand.Text))
             {
                 if (fm.ShowDialog(this) == DialogResult.OK)
                 {

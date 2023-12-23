@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmCommandList : ThemedForm
     {
@@ -16,7 +16,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         private frmCommandList()
         {
             InitializeComponent();
-            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
         }
 
         public frmCommandList(Core.ApplicationSettings appSettings,TreeNode[] commands, ImageList commandsImage, string selectedCommand) : this()
@@ -39,7 +39,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void frmCommandList_Load(object sender, EventArgs e)
         {
-            SupplementFormsEvents.SupplementFormLoad(this);
+            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
 
             tvCommands.SuspendLayout();
             tvCommands.BeginUpdate();
