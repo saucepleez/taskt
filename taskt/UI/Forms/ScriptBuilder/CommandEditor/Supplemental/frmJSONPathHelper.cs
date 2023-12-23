@@ -3,6 +3,9 @@ using System;
 using System.Text;
 using System.Windows.Forms;
 
+/*
+ * NOTE: This form is called primarily by frmCommandEditor, so the namespace looks like this
+ */
 namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmJSONPathHelper : ThemedForm
