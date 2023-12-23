@@ -29,7 +29,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void picOpenFromURL_Click(object sender, EventArgs e)
         {
-            using (var fm = new frmInputBox("Input URL", "Please specify JSON URL", "https://"))
+            using (var fm = new ScriptBuilder.CommandEditor.Supplemental.frmInputBox("Input URL", "Please specify JSON URL", "https://"))
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
