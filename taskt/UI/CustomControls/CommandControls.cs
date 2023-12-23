@@ -1596,7 +1596,7 @@ namespace taskt.UI.CustomControls
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
 
-            using (Forms.Supplemental.frmItemSelector newVariableSelector = new Forms.Supplemental.frmItemSelector(variableList))
+            using (var newVariableSelector = new Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(variableList))
             {
                 if (newVariableSelector.ShowDialog(editor) == DialogResult.OK)
                 {

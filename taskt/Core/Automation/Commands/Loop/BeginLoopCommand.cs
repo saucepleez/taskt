@@ -952,7 +952,7 @@ namespace taskt.Core.Automation.Commands
         {
             var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.WebBrowser);
 
-            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
+            using (var frm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -982,7 +982,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            using (var frm = new UI.Forms.Supplemental.frmItemSelector(windowNames))
+            using (var frm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(windowNames))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -998,7 +998,7 @@ namespace taskt.Core.Automation.Commands
         {
             var instances = editor.instanceList.getInstanceClone(Attributes.PropertyAttributes.PropertyInstanceType.InstanceType.Boolean);
 
-            using (var frm = new UI.Forms.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
+            using (var frm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(instances.Keys.ToList<string>()))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {

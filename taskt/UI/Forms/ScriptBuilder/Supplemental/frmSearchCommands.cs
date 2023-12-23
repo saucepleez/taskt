@@ -248,7 +248,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
         private void InsertVariableToTextBoxProcess(TextBox targetTextBox)
         {
-            using (var fm = new UI.Forms.Supplemental.frmItemSelector(this.variables))
+            using (var fm = new CommandEditor.Supplemental.frmItemSelector(this.variables))
             {
                 var settings = parentForm.appSettings;
                 this.TopMost = false;

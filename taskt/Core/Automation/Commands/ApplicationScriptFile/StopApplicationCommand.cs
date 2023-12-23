@@ -57,7 +57,7 @@ namespace taskt.Core.Automation.Commands
 
             var ps = System.Diagnostics.Process.GetProcesses()
                 .OrderByDescending(p => p.Id).Select(p => p.ProcessName).ToList();
-            using (var fm = new UI.Forms.Supplemental.frmItemSelector(ps))
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(ps))
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {

@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
             {
                 items.Add(item.v_DataTableName);
             }
-            UI.Forms.Supplemental.frmItemSelector selectionForm = new UI.Forms.Supplemental.frmItemSelector(items, "Load Schema", "Select a table from the list");
+            var selectionForm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(items, "Load Schema", "Select a table from the list");
 
             var result = selectionForm.ShowDialog();
 

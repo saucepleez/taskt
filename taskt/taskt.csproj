@@ -973,10 +973,10 @@
     <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmItemSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmItemSelector.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmItemSelector.Designer.cs">
       <DependentUpon>frmItemSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmUpdate.cs">
@@ -1178,7 +1178,7 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmItemSelector.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmItemSelector.resx">
       <DependentUpon>frmItemSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmUpdate.resx">

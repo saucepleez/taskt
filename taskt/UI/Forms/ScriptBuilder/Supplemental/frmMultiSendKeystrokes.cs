@@ -191,12 +191,12 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             cmbWindowName.EndUpdate();
         }
 
-        private Forms.Supplemental.frmItemSelector CreateVariableSelectForm()
+        private CommandEditor.Supplemental.frmItemSelector CreateVariableSelectForm()
         {
             var variableList = scriptVariables.Select(f => f.VariableName).ToList();
             variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
 
-            return (new Forms.Supplemental.frmItemSelector(variableList, "Select Variable", "Select Variable"));
+            return (new CommandEditor.Supplemental.frmItemSelector(variableList, "Select Variable", "Select Variable"));
         }
 
         private static void ConcatenateVariableName(string variableName, TextBox txt, Core.ApplicationSettings settings)
