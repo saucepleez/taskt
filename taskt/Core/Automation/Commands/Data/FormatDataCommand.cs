@@ -123,7 +123,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkFormatChecker_Click(object sender, EventArgs e)
         {
             TextBox txt = (TextBox)((CommandItemControl)sender).Tag;
-            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt);
+            UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker.ShowFormatCheckerFormLinkClicked(txt);
         }
     }
 }

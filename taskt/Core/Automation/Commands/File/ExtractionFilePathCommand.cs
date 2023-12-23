@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkFormatChecker_Click(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)((CommandItemControl)sender).Tag;
-            UI.Forms.Supplement_Forms.frmFormatChecker.ShowFormatCheckerFormLinkClicked(cmb, "File Folder");
+            UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmFormatChecker.ShowFormatCheckerFormLinkClicked(cmb, "File Folder");
         }
     }
 }

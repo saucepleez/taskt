@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmFormatChecker : ThemedForm
     {
@@ -9,7 +9,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
             cmbType.SelectedIndex = 0;
-            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
         }
 
         public frmFormatChecker(string valueType) : this()
@@ -18,7 +18,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         }
         private void frmFormatChecker_Load(object sender, EventArgs e)
         {
-            SupplementFormsEvents.SupplementFormLoad(this);
+            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         #region value, value buttons
@@ -122,7 +122,7 @@ namespace taskt.UI.Forms.Supplement_Forms
                     System.Diagnostics.Process.Start(Core.MyURLs.DateTimeFormatURL2);
                     break;
                 case "File Folder":
-                    using (var fm = new Supplemental.frmDialog(Core.Automation.Commands.FilePathControls.GetFormatHelp(), "File Folder Formats", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new Forms.Supplemental.frmDialog(Core.Automation.Commands.FilePathControls.GetFormatHelp(), "File Folder Formats", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }

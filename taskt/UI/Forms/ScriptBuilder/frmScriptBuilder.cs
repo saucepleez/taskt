@@ -3742,7 +3742,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void showFormatCheckerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fm = new Supplement_Forms.frmFormatChecker();
+            var fm = new CommandEditor.Supplemental.frmFormatChecker();
             fm.Show();
         }
         #endregion
