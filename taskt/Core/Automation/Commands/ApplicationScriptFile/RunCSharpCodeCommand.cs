@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
         private void lnkShowCodeBuilderLink_Clicked(object sender, EventArgs e)
         {
             var targetTextbox = (TextBox)((CommandItemControl)sender).Tag;
-            using (UI.Forms.Supplemental.frmCodeBuilder codeBuilder = new UI.Forms.Supplemental.frmCodeBuilder(targetTextbox.Text))
+            using (var codeBuilder = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmCodeBuilder(targetTextbox.Text))
             {
                 if (codeBuilder.ShowDialog(targetTextbox.FindForm()) == DialogResult.OK)
                 {

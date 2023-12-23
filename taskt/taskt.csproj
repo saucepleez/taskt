@@ -853,10 +853,10 @@
     <Compile Include="UI\Forms\Supplement Forms\frmAddVariable.Designer.cs">
       <DependentUpon>frmAddVariable.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmCodeBuilder.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCodeBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmCodeBuilder.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCodeBuilder.Designer.cs">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmCommandList.cs">
@@ -1104,7 +1104,7 @@
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCodeBuilder.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCodeBuilder.resx">
       <DependentUpon>frmCodeBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmCommandList.resx">
@@ -1394,7 +1394,6 @@
     <Folder Include="External Dependencies\" />
     <Folder Include="Sample Scripts\" />
     <Folder Include="Samples\" />
-    <Folder Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\" />
     <Folder Include="UI\Utilities\" />
   </ItemGroup>
   <ItemGroup>
