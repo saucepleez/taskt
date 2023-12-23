@@ -1312,7 +1312,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="e"></param>
         public static void lnkGUIInspectTool_UsedByXPath_Click(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspect())
             {
                 var trgCtrl = (Control)sender;
                 if (fm.ShowDialog(trgCtrl.FindForm()) == DialogResult.OK)
@@ -1358,7 +1358,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="e"></param>
         public static void lnkGUIInspectTool_UsedByInspectResult_Click(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmGUIInspect())
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {

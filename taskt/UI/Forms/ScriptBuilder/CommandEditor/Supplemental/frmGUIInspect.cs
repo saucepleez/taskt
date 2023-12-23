@@ -6,7 +6,10 @@ using taskt.Core.Automation.Commands;
 using System.Xml.Linq;
 using System.Windows.Automation;
 
-namespace taskt.UI.Forms.Supplement_Forms
+/*
+ * NOTE: This form is called primarily by frmCommandEditor, so the namespace looks like this
+ */
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmGUIInspect : ThemedForm
     {
@@ -17,14 +20,14 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
             engine = new Core.Automation.Engine.AutomationEngineInstance();
-            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
         }
 
         #region form events
         private void frmGUIInspect_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
-            SupplementFormsEvents.SupplementFormLoad(this);
+            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
             reloadWindowNames();
         }
         #endregion

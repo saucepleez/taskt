@@ -3730,7 +3730,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void guiInspectToolToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fm = new Supplement_Forms.frmGUIInspect();
+            var fm = new CommandEditor.Supplemental.frmGUIInspect();
             fm.Show();
         }
 
