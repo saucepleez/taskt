@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-//TODO: fix name space
 namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmFormatChecker : ThemedForm
