@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmKeysBuilder : ThemedForm
     {
@@ -9,7 +9,7 @@ namespace taskt.UI.Forms.Supplement_Forms
         {
             InitializeComponent();
 
-            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
 
             //var keys = Enum.GetValues(typeof(Keys));
             string[] keysList = new string[]
@@ -38,7 +38,7 @@ namespace taskt.UI.Forms.Supplement_Forms
 
         private void frmKeysBuilder_Load(object sender, EventArgs e)
         {
-            SupplementFormsEvents.SupplementFormLoad(this);
+            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         #region footer buttons

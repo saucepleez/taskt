@@ -164,7 +164,7 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkKeysBulider_Click(object sender, EventArgs e)
         {
-            using (var fm = new taskt.UI.Forms.Supplement_Forms.frmKeysBuilder())
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmKeysBuilder())
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
