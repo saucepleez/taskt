@@ -3736,7 +3736,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void jsonPathHelperToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fm = new Supplement_Forms.frmJSONPathHelper();
+            var fm = new CommandEditor.Supplemental.frmJSONPathHelper();
             fm.Show();
         }
 

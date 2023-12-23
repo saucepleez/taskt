@@ -371,7 +371,7 @@ namespace taskt.Core.Automation.Commands
 
         public static void lnkJsonPathHelper_Click(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplement_Forms.frmJSONPathHelper())
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmJSONPathHelper())
             {
                 var item = (CommandItemControl)sender;
                 if (fm.ShowDialog(item.FindForm()) == DialogResult.OK)

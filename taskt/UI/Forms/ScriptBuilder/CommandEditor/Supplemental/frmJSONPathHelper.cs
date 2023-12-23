@@ -3,19 +3,19 @@ using System;
 using System.Text;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmJSONPathHelper : ThemedForm
     {
         public frmJSONPathHelper()
         {
             InitializeComponent();
-            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
         }
 
         private void frmJSONPathHelper_Load(object sender, EventArgs e)
         {
-            SupplementFormsEvents.SupplementFormLoad(this);
+            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
             lblMessage.Text = "";
         }
 

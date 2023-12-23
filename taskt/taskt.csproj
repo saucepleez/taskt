@@ -925,10 +925,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.Designer.cs">
       <DependentUpon>frmInspectParser.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmJSONPathHelper.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmJSONPathHelper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmJSONPathHelper.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmJSONPathHelper.Designer.cs">
       <DependentUpon>frmJSONPathHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmKeysBuilder.cs">
@@ -1146,7 +1146,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.resx">
       <DependentUpon>frmInspectParser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmJSONPathHelper.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmJSONPathHelper.resx">
       <DependentUpon>frmJSONPathHelper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmKeysBuilder.resx">
