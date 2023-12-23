@@ -1043,10 +1043,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\frmScriptBuilder.Designer.cs">
       <DependentUpon>frmScriptBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmShowCursorPosition.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmShowCursorPosition.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmShowCursorPosition.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmShowCursorPosition.Designer.cs">
       <DependentUpon>frmShowCursorPosition.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -1161,7 +1161,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmSearchCommands.resx">
       <DependentUpon>frmSearchCommands.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmShowCursorPosition.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmShowCursorPosition.resx">
       <DependentUpon>frmShowCursorPosition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

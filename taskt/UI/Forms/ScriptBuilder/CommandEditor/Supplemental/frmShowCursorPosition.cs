@@ -15,7 +15,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmShowCursorPosition : UIForm
     {

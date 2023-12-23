@@ -97,7 +97,7 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkMouseCapture_Clicked(object sender, EventArgs e)
         {
-            using (UI.Forms.Supplemental.frmShowCursorPosition frmShowCursorPos = new UI.Forms.Supplemental.frmShowCursorPosition())
+            using (var frmShowCursorPos = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmShowCursorPosition())
             {
                 if (frmShowCursorPos.ShowDialog() == DialogResult.OK)
                 {
