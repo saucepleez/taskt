@@ -901,10 +901,10 @@
     <Compile Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.Designer.cs">
       <DependentUpon>frmHTMLDisplayForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmImageCapture.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmImageCapture.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmImageCapture.Designer.cs">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmGUIInspect.cs">
@@ -1131,7 +1131,7 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.resx">
       <DependentUpon>frmHTMLDisplayForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmImageCapture.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmImageCapture.resx">
       <DependentUpon>frmImageCapture.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\frmScriptVariables.resx">

@@ -288,7 +288,7 @@ namespace taskt.Core.Automation.Commands
 
                 //screenShotUpdate.DrawImage(sampleOut, desktopOutput.Width - sampleOut.Width, 0);
 
-                UI.Forms.Supplement_Forms.frmImageCapture captureOutput = new UI.Forms.Supplement_Forms.frmImageCapture();
+                var captureOutput = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture();
                 captureOutput.pbTaggedImage.Image = sampleOut;
                 captureOutput.pbSearchResult.Image = desktopOutput;
                 captureOutput.Show();
@@ -322,7 +322,7 @@ namespace taskt.Core.Automation.Commands
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
-                    using (UI.Forms.Supplement_Forms.frmImageCapture imageCaptureForm = new UI.Forms.Supplement_Forms.frmImageCapture())
+                    using (var imageCaptureForm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmImageCapture())
                     {
                         if (imageCaptureForm.ShowDialog() == DialogResult.OK)
                         {
