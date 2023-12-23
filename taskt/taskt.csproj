@@ -919,10 +919,10 @@
     <Compile Include="UI\Forms\Supplement Forms\frmInputBox.designer.cs">
       <DependentUpon>frmInputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmInspectParser.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmInspectParser.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.Designer.cs">
       <DependentUpon>frmInspectParser.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmJSONPathHelper.cs">
@@ -1143,7 +1143,7 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInputBox.resx">
       <DependentUpon>frmInputBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmInspectParser.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmInspectParser.resx">
       <DependentUpon>frmInspectParser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmJSONPathHelper.resx">

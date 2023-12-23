@@ -1390,7 +1390,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="e"></param>
         public static void lnkInspectToolParser_Click(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplement_Forms.frmInspectParser())
+            using (var fm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmInspectParser())
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {

@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     public partial class frmInspectParser : ThemedForm
     {
         public frmInspectParser()
         {
             InitializeComponent();
-            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
         }
 
         private void frmInspectParser_Load(object sender, EventArgs e)
         {
-            SupplementFormsEvents.SupplementFormLoad(this);
+            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         private void uiBtnAdd_Click(object sender, EventArgs e)
