@@ -154,7 +154,7 @@ namespace taskt.Core.Automation.Commands
 
         private void ShowHTMLBuilder(object sender, EventArgs e)
         {
-            using (var htmlForm = new UI.Forms.Supplemental.frmHTMLBuilder())
+            using (var htmlForm = new UI.Forms.ScriptBuilder.CommandEditor.Supplemental.frmHTMLBuilder())
             {
                 var htmlInput = (TextBox)ControlsList[nameof(v_InputHTML)];
                 htmlForm.rtbHTML.Text = htmlInput.Text;

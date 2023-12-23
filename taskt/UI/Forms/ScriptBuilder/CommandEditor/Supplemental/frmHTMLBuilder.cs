@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using taskt.UI.Forms.Supplement_Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class frmHTMLBuilder : Form

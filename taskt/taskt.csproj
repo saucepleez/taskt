@@ -889,10 +889,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmFormatChecker.Designer.cs">
       <DependentUpon>frmFormatChecker.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmHTMLBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmHTMLBuilder.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmHTMLBuilder.Designer.cs">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.cs">
@@ -1125,7 +1125,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmFormatChecker.resx">
       <DependentUpon>frmFormatChecker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLBuilder.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmHTMLBuilder.resx">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.resx">
