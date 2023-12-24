@@ -318,6 +318,7 @@
     <Compile Include="Core\Automation\Commands\Math\GetArctanCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetArccosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetArcsinCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\ATrignometricCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetTanCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetCosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSinCommand.cs" />
