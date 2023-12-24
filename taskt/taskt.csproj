@@ -312,6 +312,7 @@
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
     <Compile Include="Core\Automation\Commands\Math\AMathValueResultCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\AInverseTrignometricCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetLogarithmCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSquareRootCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetPowerCommand.cs" />
