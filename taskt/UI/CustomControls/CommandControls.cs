@@ -46,19 +46,6 @@ namespace taskt.UI.CustomControls
             int count = 0;
             foreach (var prop in props)
             {
-                //FlowLayoutPanel flowPanel = new FlowLayoutPanel
-                //{
-                //    Name = GroupPrefix + prop.Name,
-                //    FlowDirection = FlowDirection.TopDown,
-                //    WrapContents = false,
-                //    AutoSize = true,
-                //    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                //    BackColor = paramColors[count % 8],
-                //};
-                //var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
-                //flowPanel.Controls.AddRange(ctrls.ToArray());
-                //flowPanel.Click += flowLayoutPanel_Click;
-                //flowPanel.DoubleClick += flowLayoutPanel_DblClick;
                 var flowPanel = CreateStandardGroupFlowLayoutPanel(prop.Name, count);
                 var ctrls = CreateInferenceDefaultControlGroupFor(prop, command, editor);
                 flowPanel.Controls.AddRange(ctrls.ToArray());
@@ -86,20 +73,6 @@ namespace taskt.UI.CustomControls
             int count = 0;
             foreach (var propertyName in propartiesName)
             {
-                //FlowLayoutPanel flowPanel = new FlowLayoutPanel
-                //{
-                //    Name = GroupPrefix + propertyName,
-                //    FlowDirection = FlowDirection.TopDown,
-                //    WrapContents = false,
-                //    AutoSize = true,
-                //    Padding = new Padding(0, (count == 0) ? 0 : 8, 0, 16),
-                //    BackColor = paramColors[count % 8],
-                //};
-                //var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
-                //flowPanel.Controls.AddRange(ctrls);
-                //flowPanel.Click += flowLayoutPanel_Click;
-                //flowPanel.DoubleClick += flowLayoutPanel_DblClick;
-
                 var flowPanel = CreateStandardGroupFlowLayoutPanel(propertyName, count);
                 var ctrls = CreateInferenceDefaultControlGroupFor(propertyName, command, editor).ToArray();
                 flowPanel.Controls.AddRange(ctrls);
@@ -108,7 +81,6 @@ namespace taskt.UI.CustomControls
 
                 controlList.Add(flowPanel);
 
-                //controlList.AddRange(CreateInferenceDefaultControlGroupFor(propertyName, command, editor));
                 count++;
             }
 

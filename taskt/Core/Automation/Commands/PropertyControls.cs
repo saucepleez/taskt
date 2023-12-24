@@ -27,14 +27,16 @@ namespace taskt.Core.Automation.Commands
         public static List<PropertyInfo> GetParameterProperties(this ScriptCommand command, bool containsComment = false)
         {
             var props = command.GetType().GetProperties();
+            IEnumerable<PropertyInfo> ps;
             if (containsComment)
             {
-                return props.Where(p => (p.Name.StartsWith("v_"))).ToList();
+                ps = props.Where(p => (p.Name.StartsWith("v_")));
             }
             else
             {
-                return props.Where(p => (p.Name.StartsWith("v_") && (p.Name != "v_Comment"))).ToList();
+                ps = props.Where(p => (p.Name.StartsWith("v_") && (p.Name != "v_Comment")));
             }
+            return ps.OrderBy(p => p.GetCustomAttribute<PropertyParameterOrder>()?.order ?? new PropertyParameterOrder().order).ToList();
         }
 
 
