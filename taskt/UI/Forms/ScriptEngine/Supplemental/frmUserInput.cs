@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.ScriptEngine.Supplemental
 {
     public partial class frmUserInput : UIForm
     {

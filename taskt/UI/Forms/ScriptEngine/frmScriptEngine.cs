@@ -404,7 +404,7 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                using (var inputForm = new Forms.Supplemental.frmUserInput())
+                using (var inputForm = new Supplemental.frmUserInput())
                 {
                     inputForm.InputCommand = inputs;
 

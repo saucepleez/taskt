@@ -967,10 +967,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.Designer.cs">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmUserInput.cs">
+    <Compile Include="UI\Forms\ScriptEngine\Supplemental\frmUserInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmUserInput.Designer.cs">
+    <Compile Include="UI\Forms\ScriptEngine\Supplemental\frmUserInput.Designer.cs">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmItemSelector.cs">
@@ -1175,7 +1175,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.resx">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptEngine\Supplemental\frmUserInput.resx">
       <DependentUpon>frmUserInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmItemSelector.resx">
