@@ -13,15 +13,13 @@
 //limitations under the License.
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms
+/*
+ * NOTE: This form is called primarily by frmScriptBuilder, so the namespace looks like this
+ */
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmScriptVariables : ThemedForm
     {
@@ -191,11 +189,11 @@ namespace taskt.UI.Forms
 
         private void AddOrEditVaiableProcess(TreeNode targetVariable = null)
         {
-            Supplement_Forms.frmAddVariable addVariableForm;
+            ScriptBuilder.Supplemental.frmAddVariable addVariableForm;
             string variableName = "", variableValue = "";
             if (targetVariable == null)
             {
-                addVariableForm = new Supplement_Forms.frmAddVariable(appSettings);
+                addVariableForm = new ScriptBuilder.Supplemental.frmAddVariable(appSettings);
             }
             else
             {
@@ -203,7 +201,7 @@ namespace taskt.UI.Forms
                 {
                     return;
                 }
-                addVariableForm = new Supplement_Forms.frmAddVariable(variableName, variableValue, appSettings);
+                addVariableForm = new ScriptBuilder.Supplemental.frmAddVariable(variableName, variableValue, appSettings);
             }
 
             tvScriptVariables.BeginUpdate();
@@ -224,7 +222,7 @@ namespace taskt.UI.Forms
                         if (!isVariableExists(newVariableName))
                         {
                             // variable doesnt exists
-                            if (addVariableForm.editMode == Supplement_Forms.frmAddVariable.frmAddVariablesEditMode.Edit)
+                            if (addVariableForm.editMode == ScriptBuilder.Supplemental.frmAddVariable.frmAddVariablesEditMode.Edit)
                             {
                                 //targetVariable.Remove();
                                 RemoveUserVariableNode(bufferedUserVariableParentNode, variableName);
@@ -237,7 +235,7 @@ namespace taskt.UI.Forms
                         else
                         {
                             // variable exists
-                            if ((addVariableForm.editMode == Supplement_Forms.frmAddVariable.frmAddVariablesEditMode.Edit) && (variableName == newVariableName))
+                            if ((addVariableForm.editMode == ScriptBuilder.Supplemental.frmAddVariable.frmAddVariablesEditMode.Edit) && (variableName == newVariableName))
                             {
                                 //targetVariable.Remove();
                                 RemoveUserVariableNode(bufferedUserVariableParentNode, variableName);
@@ -249,7 +247,7 @@ namespace taskt.UI.Forms
                             }
                             else
                             {
-                                using (var fm = new Forms.Supplemental.frmDialog("'" + newVariableName + "' is already exists.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                                using (var fm = new Forms.Supplemental.frmDialog("'" + newVariableName + "' is already exists.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                                 {
                                     fm.ShowDialog();
                                 }
@@ -259,7 +257,7 @@ namespace taskt.UI.Forms
                     }
                     else
                     {
-                        using (var fm = new Forms.Supplemental.frmDialog("'" + newVariableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                        using (var fm = new Forms.Supplemental.frmDialog("'" + newVariableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                         {
                             fm.ShowDialog();
                         }
@@ -276,7 +274,7 @@ namespace taskt.UI.Forms
             variableName = variableName.Trim();
             if (variableName.Length == 0)
             {
-                using (var fm = new Forms.Supplemental.frmDialog("Variable Name is empty.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new Forms.Supplemental.frmDialog("Variable Name is empty.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }
@@ -296,7 +294,7 @@ namespace taskt.UI.Forms
                 }
                 else
                 {
-                    using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' is already exists.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' is already exists.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -304,7 +302,7 @@ namespace taskt.UI.Forms
             }
             else
             {
-                using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }

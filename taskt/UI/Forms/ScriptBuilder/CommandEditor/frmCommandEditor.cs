@@ -386,7 +386,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
 
         private void uiButtonVariable_Click(object sender, EventArgs e)
         {
-            using (frmScriptVariables scriptVariableEditor = new frmScriptVariables(this.scriptVariables, this.appSettings))
+            using (var scriptVariableEditor = new ScriptBuilder.Supplemental.frmScriptVariables(this.scriptVariables, this.appSettings))
             {
                 //scriptVariableEditor.appSettings = this.appSettings;
                 //scriptVariableEditor.scriptVariables = this.scriptVariables;

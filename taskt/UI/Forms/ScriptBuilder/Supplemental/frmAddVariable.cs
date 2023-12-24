@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 
+/*
+ * This form is called primarily by frmScriptBuilder, so the namespace looks like this
+ */
 namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmAddVariable : ThemedForm

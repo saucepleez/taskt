@@ -3371,7 +3371,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         #region Variable Edit, Settings form
         private void showVariableManager()
         {
-            using (var scriptVariableEditor = new frmScriptVariables(this.scriptVariables, this.appSettings))
+            using (var scriptVariableEditor = new Supplemental.frmScriptVariables(this.scriptVariables, this.appSettings))
             {
                 if (scriptVariableEditor.ShowDialog() == DialogResult.OK)
                 {
