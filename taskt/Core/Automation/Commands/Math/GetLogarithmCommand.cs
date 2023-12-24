@@ -18,7 +18,6 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
-
         public string v_Value { get; set; }
 
         [XmlAttribute]

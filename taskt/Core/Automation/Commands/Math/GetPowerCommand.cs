@@ -27,7 +27,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Power")]
         [InputSpecification("Power", true)]
         [PropertyDisplayText(true, "Power")]
-
         public string v_Power { get; set; }
 
         [XmlAttribute]
