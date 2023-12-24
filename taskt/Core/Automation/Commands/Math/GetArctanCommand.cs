@@ -13,15 +13,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public class GetArctanCommand : ScriptCommand
+    public class GetArctanCommand : AMathValueResultCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
-        public string v_Value { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
+        //public string v_Value { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
-        public string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
+        //public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(MathControls), nameof(MathControls.v_AngleType))]
