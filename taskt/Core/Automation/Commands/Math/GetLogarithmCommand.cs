@@ -13,12 +13,12 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public class GetLogarithmCommand : ScriptCommand
+    public class GetLogarithmCommand : AMathValueResultCommand
     {
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
-        public string v_Value { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
+        //public string v_Value { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
@@ -28,11 +28,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Base", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyIsOptional(true, "10")]
         [PropertyFirstValue("10")]
+        [PropertyParameterOrder(5500)]
         public string v_Base { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
-        public string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
+        //public string v_Result { get; set; }
 
         public GetLogarithmCommand()
         {
