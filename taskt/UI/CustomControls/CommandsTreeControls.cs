@@ -13,7 +13,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static TreeNode[] CreateAllCommandsArray(Core.ClientSettings settings)
         {
-            List<taskt.UI.CustomControls.AutomationCommand> automationCommands = UI.CustomControls.CommandControls.GenerateCommandsandControls();
+            List<AutomationCommand> automationCommands = CommandControls.GenerateCommandsAndControls();
 
             List<TreeNode> commandsTreeList = new List<TreeNode>();
 
@@ -36,7 +36,7 @@ namespace taskt.UI.CustomControls
             return commandsTreeList.ToArray();
         }
 
-        private static void CommandsSortByGroup(List<TreeNode> treeCommands, List<taskt.UI.CustomControls.AutomationCommand> commands)
+        private static void CommandsSortByGroup(List<TreeNode> treeCommands, List<AutomationCommand> commands)
         {
             var groupedCommands = commands.GroupBy(f => f.DisplayGroup);
 
@@ -58,7 +58,7 @@ namespace taskt.UI.CustomControls
                 treeCommands.Add(newGroup);
             }
         }
-        private static void CommandsSortBySubGroupAndGroup(List<TreeNode> treeCommands, List<taskt.UI.CustomControls.AutomationCommand> commands)
+        private static void CommandsSortBySubGroupAndGroup(List<TreeNode> treeCommands, List<AutomationCommand> commands)
         {
             var groupedCommands = commands.GroupBy(f => new { f.DisplayGroup, f.DisplaySubGroup })
                                     .OrderBy(f => f.Key.DisplayGroup);

@@ -154,7 +154,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void frmScriptBuilder_Load(object sender, EventArgs e)
         {
             //load all commands
-            automationCommands = CustomControls.CommandControls.GenerateCommandsandControls();
+            automationCommands = CustomControls.CommandControls.GenerateCommandsAndControls();
 
             // title
             var info = System.Diagnostics.FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);

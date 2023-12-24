@@ -1782,17 +1782,21 @@ namespace taskt.UI.CustomControls
         }
         #endregion
 
-        public static List<AutomationCommand> GenerateCommandsandControls()
+        public static List<AutomationCommand> GenerateCommandsAndControls()
         {
             var commandList = new List<AutomationCommand>();
 
-            var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
-                                 .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
-                                 .Where(t => t.Name != "ScriptCommand")
-                                 .Where(t => t.IsAbstract == false)
-                                 .Where(t => t.BaseType.Name == "ScriptCommand")
-                                 .ToList();
-
+            //var commandClasses = Assembly.GetExecutingAssembly().GetTypes()
+            //                     .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+            //                     .Where(t => t.Name != "ScriptCommand")
+            //                     .Where(t => t.IsAbstract == false)
+            //                     .Where(t => t.BaseType.Name == "ScriptCommand")
+            //                     .ToList();
+            var commandClasses = Assembly.GetAssembly(typeof(ScriptCommand)).GetTypes()
+                .Where(t =>
+                {
+                    return t.IsSubclassOf(typeof(ScriptCommand)) && !t.IsAbstract;
+                }).ToList();
 
             var userPrefs = new ApplicationSettings().GetOrCreateApplicationSettings();
 
@@ -1830,7 +1834,6 @@ namespace taskt.UI.CustomControls
 
                     //call RenderUIComponents to render UI controls              
                     commandList.Add(newAutomationCommand);
-
                 }
             }
 

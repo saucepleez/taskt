@@ -157,7 +157,7 @@ namespace taskt.Core.Automation.Commands
 
                     var loopCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginLoopCommand>(commandData);
 
-                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
+                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsAndControls().Where(f => f.Command is BeginLoopCommand).ToList();
                     var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
                     editor.selectedCommand = loopCommand;
                     editor.editingCommand = loopCommand;
@@ -190,7 +190,7 @@ namespace taskt.Core.Automation.Commands
 
         private void CreateLoopCondition(object sender, EventArgs e)
         {
-            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginLoopCommand).ToList();
+            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsAndControls().Where(f => f.Command is BeginLoopCommand).ToList();
 
             var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
             editor.selectedCommand = new BeginLoopCommand();

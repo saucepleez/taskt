@@ -168,7 +168,7 @@ namespace taskt.Core.Automation.Commands
 
                     var ifCommand = Newtonsoft.Json.JsonConvert.DeserializeObject<Commands.BeginIfCommand>(commandData);
 
-                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
+                    var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsAndControls().Where(f => f.Command is BeginIfCommand).ToList();
                     var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
                     editor.selectedCommand = ifCommand;
                     editor.editingCommand = ifCommand;
@@ -201,7 +201,7 @@ namespace taskt.Core.Automation.Commands
 
         private void CreateIfCondition(object sender, EventArgs e)
         {
-            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsandControls().Where(f => f.Command is BeginIfCommand).ToList();
+            var automationCommands = taskt.UI.CustomControls.CommandControls.GenerateCommandsAndControls().Where(f => f.Command is BeginIfCommand).ToList();
 
             var editor = new UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor(automationCommands, null);
             editor.selectedCommand = new BeginIfCommand();
