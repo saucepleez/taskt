@@ -389,7 +389,7 @@ namespace taskt.UI.Forms.ScriptEngine
                 this.Invoke((Action)(() => LaunchRDPSession(machineName, userName, password, width, height)));
             }
 
-            var remoteDesktopForm = new UI.Forms.Supplemental.frmRemoteDesktopViewer(machineName, userName, password, width, height, false, false);
+            var remoteDesktopForm = new Supplemental.frmRemoteDesktopViewer(machineName, userName, password, width, height, false, false);
             remoteDesktopForm.Show();
         }
 

@@ -88,7 +88,7 @@ namespace taskt.UI.Forms.Supplemental
                     machine.LastKnownStatus = "Attempting to login";
                     machine.NextConnectionDue = DateTime.Now.AddMinutes(2);
                     LogEvent("Next Connection for Machine '" + machine.MachineName + "' due at '" + machine.NextConnectionDue + "'");
-                    Supplemental.frmRemoteDesktopViewer viewer = new Supplemental.frmRemoteDesktopViewer(machine.MachineName, machine.UserName, machine.Password, windowWidth, windowHeight, chkHideScreen.Checked, chkStartMinimized.Checked);
+                    var viewer = new ScriptEngine.Supplemental.frmRemoteDesktopViewer(machine.MachineName, machine.UserName, machine.Password, windowWidth, windowHeight, chkHideScreen.Checked, chkStartMinimized.Checked);
                     viewer.LoginUpdateEvent += Viewer_LoginUpdateEvent;
                     viewer.Show();
                 }
@@ -96,7 +96,7 @@ namespace taskt.UI.Forms.Supplemental
 
         }
 
-        private void Viewer_LoginUpdateEvent(object sender, Supplemental.LoginResultArgs e)
+        private void Viewer_LoginUpdateEvent(object sender, ScriptEngine.Supplemental.LoginResultArgs e)
         {
             //var frmViewer = (Supplement_Forms.frmRemoteDesktopViewer)sender;
             var connResult = e.Result.ToString();
@@ -114,9 +114,9 @@ namespace taskt.UI.Forms.Supplemental
             machine.LastKnownStatus = status;
 
 
-            if (e.Result == Supplemental.LoginResultArgs.LoginResultCode.Failed)
+            if (e.Result == ScriptEngine.Supplemental.LoginResultArgs.LoginResultCode.Failed)
             {
-                var frmSender = (Supplemental.frmRemoteDesktopViewer)sender;
+                var frmSender = (ScriptEngine.Supplemental.frmRemoteDesktopViewer)sender;
                 frmSender.Close();
             }
 
