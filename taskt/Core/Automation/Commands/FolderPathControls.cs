@@ -62,7 +62,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(false, "")]
         [PropertyParameterOrder(5000)]
         public static string v_FolderPathResult { get; }
-        #region
+        #endregion
 
         /// <summary>
         /// Wait For Folder
