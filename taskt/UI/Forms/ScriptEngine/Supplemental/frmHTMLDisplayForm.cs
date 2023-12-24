@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace taskt.UI.Forms.Supplemental
+namespace taskt.UI.Forms.ScriptEngine.Supplemental
 {
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class frmHTMLDisplayForm : Form

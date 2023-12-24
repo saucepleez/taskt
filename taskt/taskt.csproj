@@ -895,10 +895,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmHTMLBuilder.Designer.cs">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.cs">
+    <Compile Include="UI\Forms\ScriptEngine\Supplemental\frmHTMLDisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.Designer.cs">
+    <Compile Include="UI\Forms\ScriptEngine\Supplemental\frmHTMLDisplayForm.Designer.cs">
       <DependentUpon>frmHTMLDisplayForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmImageCapture.cs">
@@ -1128,7 +1128,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmHTMLBuilder.resx">
       <DependentUpon>frmHTMLBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmHTMLDisplayForm.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptEngine\Supplemental\frmHTMLDisplayForm.resx">
       <DependentUpon>frmHTMLDisplayForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmImageCapture.resx">

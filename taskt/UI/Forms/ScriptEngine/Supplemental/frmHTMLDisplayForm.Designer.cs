@@ -1,4 +1,4 @@
-﻿namespace taskt.UI.Forms.Supplemental
+﻿namespace taskt.UI.Forms.ScriptEngine.Supplemental
 {
     partial class frmHTMLDisplayForm
     {

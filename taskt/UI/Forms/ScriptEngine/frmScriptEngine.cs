@@ -447,7 +447,7 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                using (var inputForm = new Forms.Supplemental.frmHTMLDisplayForm())
+                using (var inputForm = new Supplemental.frmHTMLDisplayForm())
                 {
                     inputForm.TemplateHTML = htmlTemplate;
 
