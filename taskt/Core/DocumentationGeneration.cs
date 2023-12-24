@@ -172,7 +172,8 @@ namespace taskt.Core
             sb.AppendLine("## Command Parameters");
 
             // get propertyLists
-            List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
+            //List<PropertyInfo> propInfos = commandClass.GetProperties().Where(f => f.Name.StartsWith("v_")).ToList();
+            var propInfos = PropertyControls.GetParameterProperties(command, true);
 
             // create Parameters List
             int maxCount = 0;
