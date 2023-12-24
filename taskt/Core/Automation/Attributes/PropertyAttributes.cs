@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web.UI.HtmlControls;
 
 namespace taskt.Core.Automation.Attributes.PropertyAttributes
 {
@@ -12,6 +11,21 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     }
     #endregion
 
+    #region Parameter Order
+
+    #endregion
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyParameterOrder : Attribute
+    {
+        public int order = 3000;
+        public PropertyParameterOrder()
+        {
+        }
+        public PropertyParameterOrder(int order)
+        {
+            this.order = order;
+        }
+    }
     #region Virtual Property
     [AttributeUsage(AttributeTargets.Property)]
     public class PropertyVirtualProperty : Attribute
