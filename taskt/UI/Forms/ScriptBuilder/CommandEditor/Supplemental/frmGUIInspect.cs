@@ -20,14 +20,14 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             InitializeComponent();
             engine = new Core.Automation.Engine.AutomationEngineInstance();
-            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         #region form events
         private void frmGUIInspect_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
-            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
+            SupplementFormsEvents.SupplementFormLoad(this);
             reloadWindowNames();
         }
         #endregion

@@ -9,7 +9,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             InitializeComponent();
 
-            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
 
             //var keys = Enum.GetValues(typeof(Keys));
             string[] keysList = new string[]
@@ -38,7 +38,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
         private void frmKeysBuilder_Load(object sender, EventArgs e)
         {
-            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
+            SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         #region footer buttons

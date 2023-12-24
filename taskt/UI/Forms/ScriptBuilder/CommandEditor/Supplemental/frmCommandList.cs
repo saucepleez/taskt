@@ -16,7 +16,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         private frmCommandList()
         {
             InitializeComponent();
-            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         public frmCommandList(Core.ApplicationSettings appSettings,TreeNode[] commands, ImageList commandsImage, string selectedCommand) : this()
@@ -39,7 +39,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         }
         private void frmCommandList_Load(object sender, EventArgs e)
         {
-            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
+            SupplementFormsEvents.SupplementFormLoad(this);
 
             tvCommands.SuspendLayout();
             tvCommands.BeginUpdate();

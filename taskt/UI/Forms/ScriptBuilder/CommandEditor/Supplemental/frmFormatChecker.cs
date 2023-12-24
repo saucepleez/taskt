@@ -12,7 +12,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             InitializeComponent();
             cmbType.SelectedIndex = 0;
-            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         public frmFormatChecker(string valueType) : this()
@@ -21,7 +21,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         }
         private void frmFormatChecker_Load(object sender, EventArgs e)
         {
-            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
+            SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         #region value, value buttons

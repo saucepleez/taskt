@@ -8,12 +8,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         public frmInspectParser()
         {
             InitializeComponent();
-            this.FormClosed += Supplement_Forms.SupplementFormsEvents.SupplementFormClosed;
+            this.FormClosed += SupplementFormsEvents.SupplementFormClosed;
         }
 
         private void frmInspectParser_Load(object sender, EventArgs e)
         {
-            Supplement_Forms.SupplementFormsEvents.SupplementFormLoad(this);
+            SupplementFormsEvents.SupplementFormLoad(this);
         }
 
         private void uiBtnAdd_Click(object sender, EventArgs e)
