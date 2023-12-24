@@ -721,7 +721,7 @@ namespace taskt.UI
                             .Where(t =>
                             {
                                 return t.IsSubclassOf(typeof(ScriptCommand)) && !t.IsAbstract;
-                            });
+                            }).ToList();
 
             foreach (var c in classes)
             {
