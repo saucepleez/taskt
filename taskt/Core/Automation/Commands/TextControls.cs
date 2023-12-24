@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class TextControls
     {
+        #region Virtual Property
         /// <summary>
         /// text
         /// </summary>
@@ -21,6 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyDisplayText(true, "Text")]
+        [PropertyParameterOrder(5000)]
         public static string v_Text { get; }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyDisplayText(true, "Text")]
+        [PropertyParameterOrder(5000)]
         public static string v_Text_MultiLine { get; }
 
         /// <summary>
@@ -52,6 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Variable")]
+        [PropertyParameterOrder(5000)]
 
         public static string v_OutputTextVariableName { get; set; }
 
@@ -70,8 +74,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
+        [PropertyParameterOrder(5000)]
         public static string v_FilePath { get; }
-
+        #endregion
 
         public static string ConvertToBase64(this string text)
         {

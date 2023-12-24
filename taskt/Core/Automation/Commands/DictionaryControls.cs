@@ -28,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputDictionaryName { get; }
 
         /// <summary>
@@ -45,6 +46,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("New Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_NewOutputDictionaryName { get; }
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputDictionaryName { get; }
 
         /// <summary>
@@ -79,6 +82,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Dictionary", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothDictionaryName { get; }
 
         /// <summary>
@@ -94,6 +98,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Key", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Key")]
+        [PropertyParameterOrder(5000)]
         public static string v_Key { get; }
 
         /// <summary>
@@ -121,6 +126,7 @@ namespace taskt.Core.Automation.Commands
 | Keys | Values |
 |---|---|
 | **{{{vKey}}}** | **{{{vValue}}}** |", "Add an item whose key is Value of Variable **vKey** and value is Value of Variable **vValue**")]
+        [PropertyParameterOrder(5000)]
         public static string v_KeyAndValue { get; }
 
         /// <summary>
@@ -133,6 +139,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Error")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenKeyDoesNotExists { get; }
 
         /// <summary>
@@ -147,6 +154,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_Value { get; }
 
         /// <summary>

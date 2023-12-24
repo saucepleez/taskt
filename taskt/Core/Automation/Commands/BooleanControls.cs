@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Boolean, true)]
+        [PropertyParameterOrder(5000)]
         public static string v_Result { get; }
 
         /// <summary>

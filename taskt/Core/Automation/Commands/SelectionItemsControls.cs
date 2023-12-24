@@ -20,6 +20,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Yes")]
         [PropertyUISelectionOption("No")]
+        [PropertyParameterOrder(5000)]
         public static string v_YesNoComboBox { get; }
 
         /// <summary>

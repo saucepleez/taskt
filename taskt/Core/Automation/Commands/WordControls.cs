@@ -24,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
         [PropertyFirstValue("%kwd_default_word_instance%")]
+        [PropertyParameterOrder(5000)]
         public static string v_InstanceName { get; }
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
+        [PropertyParameterOrder(5000)]
         public static string v_FilePath { get; }
 
         /// <summary>

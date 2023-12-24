@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class SeleniumBrowserControls
     {
+        #region Virtual Property
         /// <summary>
         /// instance property
         /// </summary>
@@ -29,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("WebBrowser Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputInstanceName { get; }
 
         /// <summary>
@@ -56,6 +58,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Search Method", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Search Method")]
+        [PropertyParameterOrder(5000)]
         public static string v_SearchMethod { get; }
 
         /// <summary>
@@ -69,6 +72,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Search Parameter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Search Parameter")]
+        [PropertyParameterOrder(5000)]
         public static string v_SearchParameter { get; }
 
         /// <summary>
@@ -83,6 +87,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterOrder(5000)]
         public static string v_ElementIndex { get; }
 
         /// <summary>
@@ -107,6 +112,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewSetting(true, true, true)]
         [PropertyDataGridViewColumnSettings("AttributeName", "Attribute Name")]
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
+        [PropertyParameterOrder(5000)]
         public static string v_AttributesName { get; }
 
         /// <summary>
@@ -129,6 +135,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Attribute", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyParameterOrder(5000)]
         public static string v_AttributeName { get; }
 
         /// <summary>
@@ -143,6 +150,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "120")]
         [PropertyFirstValue("120")]
+        [PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
 
         /// <summary>
@@ -159,6 +167,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Element")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputWebElementName { get; }
 
         /// <summary>
@@ -174,6 +183,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("WebElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Element")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputWebElementName { get; }
 
         /// <summary>
@@ -186,7 +196,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Yes")]
         [PropertyUISelectionOption("No")]
         [PropertyIsOptional(true, "No")]
+        [PropertyParameterOrder(5000)]
         public static string v_ScrollToElement { get; }
+        #endregion
 
         #region methods
 

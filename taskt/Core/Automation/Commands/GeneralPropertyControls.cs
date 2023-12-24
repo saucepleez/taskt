@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class GeneralPropertyControls
     {
+        #region Virtual Property
         /// <summary>
         /// specify variable name to store result property
         /// </summary>
@@ -23,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]
+        [PropertyParameterOrder(5000)]
         public static string v_Result { get; }
 
         /// <summary>
@@ -35,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_DisallowNewLine_OneLineTextBox { get; }
 
         /// <summary>
@@ -46,6 +49,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.TextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_OneLineTextBox { get; }
 
         /// <summary>
@@ -57,6 +61,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_MultiLinesTextBox { get; }
 
         /// <summary>
@@ -67,7 +72,9 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_ComboBox { get; }
+        #endregion
 
         /// <summary>
         /// show/hide Command parameter groups

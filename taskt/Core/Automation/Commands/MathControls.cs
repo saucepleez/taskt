@@ -17,6 +17,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Degree")]
         [PropertyDisplayText(true, "Angle Value Type")]
         [PropertyIsOptional(true, "Radian")]
+        [PropertyParameterOrder(5000)]
         public static string v_AngleType { get; }
 
         /// <summary>
@@ -31,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyDisplayText(false, "")]
         [PropertyIsOptional(true, "Ignore")]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenValueIsOutOfRange { get; }
 
         /// <summary>

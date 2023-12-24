@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputDataTableName { get; }
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputDataTableName { get; }
 
         /// <summary>
@@ -59,6 +61,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("New DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New DataTable")]
+        [PropertyParameterOrder(5000)]
         public static string v_NewOutputDataTableName { get; }
 
         /// <summary>
@@ -76,6 +79,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothDataTableName { get; }
 
         /// <summary>
@@ -90,6 +94,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Ignore")]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenColumnNotExists { get; }
 
         /// <summary>
@@ -105,6 +110,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Column Name")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyDisplayText(true, "Column Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_ColumnType { get; }
 
         /// <summary>
@@ -121,6 +127,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Column")]
+        [PropertyParameterOrder(5000)]
         public static string v_ColumnNameIndex { get; }
 
         /// <summary>
@@ -137,6 +144,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "Current Row")]
         [PropertyDisplayText(true, "Row")]
+        [PropertyParameterOrder(5000)]
         public static string v_RowIndex { get; }
 
         /// <summary>
@@ -153,6 +161,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Add Rows")]
         [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Ignore")]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenLessRows { get; }
 
         /// <summary>
@@ -167,6 +176,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Error")]
         [PropertyIsOptional(true, "Ignore")]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenGreaterRows { set; get; }
 
         /// <summary>

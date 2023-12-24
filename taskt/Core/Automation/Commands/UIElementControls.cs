@@ -53,6 +53,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Element")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputUIElementName { get; }
 
         /// <summary>
@@ -70,6 +71,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Element")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputUIElementName { get; }
 
         /// <summary>
@@ -87,6 +89,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("New UIElement", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New UIElement")]
+        [PropertyParameterOrder(5000)]
         public static string v_NewOutputUIElementName { get; }
 
         /// <summary>
@@ -103,6 +106,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("XPath", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "XPath")]
         [PropertyCustomUIHelper("GUI Inspect Tool", nameof(UIElementControls) + "+" + nameof(lnkGUIInspectTool_UsedByXPath_Click))]
+        [PropertyParameterOrder(5000)]
         public static string v_XPath { get; }
 
         /// <summary>
@@ -123,6 +127,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellBeginEdit), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellBeginEdit)]
         [PropertyDataGridViewCellEditEvent(nameof(UIElementControls) + "+" + nameof(UIAutomationDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         [PropertyDataGridViewInitMethod(nameof(UIElementControls) + "+" + nameof(CreateEmptyParamters))]
+        [PropertyParameterOrder(5000)]
         public static string v_SearchParameters { get; }
 
         /// <summary>
@@ -137,6 +142,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "10")]
         [PropertyFirstValue("10")]
+        [PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
         #endregion
 

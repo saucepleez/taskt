@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class NumberControls
     {
+        #region Virtual Property
         /// <summary>
         /// for both numerical variable name
         /// </summary>
@@ -24,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Numerical Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Numerical Name")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothNumericalVariableName { get; }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Numerical Variable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Numerical Name")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputNumericalVariableName { get; }
 
         /// <summary>
@@ -56,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsVariablesList(true)]
         [PropertyValidationRule("Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Result")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputNumericalVariableName { get; }
 
         /// <summary>
@@ -71,7 +75,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("Value", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_Value { get; }
+        #endregion
 
         /// <summary>
         /// expand value or user variable as Integer specified by parameterName. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.

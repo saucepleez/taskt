@@ -23,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("500")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        [PropertyParameterOrder(5000)]
         public static string v_WaitTimeAfterKeyEnter { get; }
 
         /// <summary>
@@ -46,6 +47,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyValidationRule("Mouse Click", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Mouse Click")]
+        [PropertyParameterOrder(5000)]
         public static string v_MouseClickType { get; }
 
         /// <summary>
@@ -61,6 +63,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("500")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Wait Time", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
+        [PropertyParameterOrder(5000)]
         public static string v_WaitTimeAfterMouseClick { get; }
 
         /// <summary>
@@ -77,6 +80,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         [PropertyDisplayText(true, "Offset X")]
+        [PropertyParameterOrder(5000)]
         public static string v_XOffsetAdjustment { get; }
 
         /// <summary>
@@ -93,6 +97,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
         [PropertyDisplayText(true, "Offset Y")]
+        [PropertyParameterOrder(5000)]
         public static string v_YOffsetAdjustment { get; }
         #endregion
 

@@ -8,6 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     static internal class JSONControls
     {
+        #region Virtual Property
         /// <summary>
         /// input JSON Variable or Value
         /// </summary>
@@ -23,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputJSONName { get; }
 
         /// <summary>
@@ -38,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputJSONVariableName { get; }
 
         /// <summary>
@@ -55,6 +58,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputJSONName { get; }
 
         /// <summary>
@@ -72,6 +76,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.JSON, true)]
         [PropertyValidationRule("JSON", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "JSON")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothJSONName { get; }
 
         /// <summary>
@@ -87,6 +92,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("JSONPath Helper", nameof(JSONControls) + "+" + nameof(lnkJsonPathHelper_Click))]
         [PropertyValidationRule("JSON Extractor", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Extractor")]
+        [PropertyParameterOrder(5000)]
         public static string v_JSONPath { get; }
 
         /// <summary>
@@ -111,6 +117,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Array**", "Specify Array Object for Value Type")]
         [PropertyIsOptional(true, "Auto")]
         [PropertyDisplayText(true, "Value Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_ValueType { get; }
 
         /// <summary>
@@ -127,6 +134,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
         public static string v_ValueToAdd { get; }
 
         /// <summary>
@@ -141,6 +149,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Property Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Property Name")]
+        [PropertyParameterOrder(5000)]
         public static string v_PropertyName { get; }
 
         /// <summary>
@@ -156,7 +165,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Last Item")]
         [PropertyDisplayText(true, "Index")]
+        [PropertyParameterOrder(5000)]
         public static string v_ArrayIndex { get; }
+        #endregion
 
         /// <summary>
         /// expand value or user variable as JSON. this method returns root type "object" or "array".

@@ -9,6 +9,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class FolderPathControls
     {
+        #region Virtual Property
         /// <summary>
         /// folder path
         /// </summary>
@@ -24,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("Folder Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Folder")]
+        [PropertyParameterOrder(5000)]
         public static string v_FolderPath { get; }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "10")]
         [PropertyFirstValue("10")]
         [PropertyDisplayText(true, "Wait", "s")]
+        [PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
 
         /// <summary>
@@ -57,7 +60,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Folder Path Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5000)]
         public static string v_FolderPathResult { get; }
+        #region
 
         /// <summary>
         /// Wait For Folder

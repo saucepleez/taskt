@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.ClassAttributes;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -482,6 +483,7 @@ namespace taskt.Core.Automation.Commands
         [Attributes.PropertyAttributes.PropertyRecommendedUIControl(Attributes.PropertyAttributes.PropertyRecommendedUIControl.RecommendeUIControlType.MultiLineTextBox)]
         [Attributes.PropertyAttributes.PropertyTextBoxSetting(3, true)]
         [Attributes.PropertyAttributes.PropertyIsOptional(true)]
+        [PropertyParameterOrder(9999)]
         public string v_Comment { get; set; }
         
         [XmlAttribute]

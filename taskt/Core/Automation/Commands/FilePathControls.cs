@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
+        [PropertyParameterOrder(5000)]
         public static string v_FilePath { get; }
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("File Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
+        [PropertyParameterOrder(5000)]
         public static string v_NoSample_FilePath { get; }
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Error")]
         [PropertyDisplayText(false, "")]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenFileDoesNotExists { get; }
 
         /// <summary>
@@ -74,6 +77,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "10")]
         [PropertyFirstValue("10")]
         [PropertyDisplayText(true, "Wait", "s")]
+        [PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
 
         /// <summary>
@@ -91,6 +95,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("File Path Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5000)]
         public static string v_FilePathResult { get; }
         #endregion
 

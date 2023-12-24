@@ -24,6 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyDisplayText(true, "EMail")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputEMailName { get; }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMail, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyDisplayText(true, "EMail")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputEMailName { get; }
 
         /// <summary>
@@ -57,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.MailKitEMailList, true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyDisplayText(true, "EMailList")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputMailListName { get; }
 
         /// <summary>
@@ -78,6 +81,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Resent-Reply-To")]
         [PropertyValidationRule("Address Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_AddressType { get; }
 
         /// <summary>
@@ -92,6 +96,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Host", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Host")]
+        [PropertyParameterOrder(5000)]
         public static string v_Host { get; set; }
 
         /// <summary>
@@ -105,6 +110,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValueRange(0, 65535)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "Port")]
+        [PropertyParameterOrder(5000)]
         public static string v_Port { get; }
 
         /// <summary>
@@ -119,6 +125,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "User")]
+        [PropertyParameterOrder(5000)]
         public static string v_UserName { get; }
 
         /// <summary>
@@ -132,6 +139,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Password", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
+        [PropertyParameterOrder(5000)]
         public static string v_Password { get; set; }
 
         /// <summary>
@@ -149,6 +157,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Use SSL or TLS")]
         [PropertyUISelectionOption("STARTTLS")]
         [PropertyUISelectionOption("STARTTLS When Available")]
+        [PropertyParameterOrder(5000)]
         public static string v_SecureOption { get; }
 
         /// <summary>
@@ -163,6 +172,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("EMail Address", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyDisplayText(true, "EMail Address")]
+        [PropertyParameterOrder(5000)]
         public static string v_EmailAddress { get; }
 
         /// <summary>
@@ -178,6 +188,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Path", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Path")]
+        [PropertyParameterOrder(5000)]
         public static string v_EMailPath { get; }
 
         /// <summary>

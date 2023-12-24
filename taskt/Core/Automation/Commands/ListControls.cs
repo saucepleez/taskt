@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class ListControls
     {
+        #region Virtual Property
         /// <summary>
         /// input List variable property
         /// </summary>
@@ -24,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputListName { get; }
 
         /// <summary>
@@ -41,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputListName { get; }
 
         /// <summary>
@@ -58,6 +61,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("New List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New List")]
+        [PropertyParameterOrder(5000)]
         public static string v_NewOutputListName { get; }
 
         /// <summary>
@@ -75,6 +79,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Both)]
         [PropertyValidationRule("List", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "List")]
+        [PropertyParameterOrder(5000)]
         public static string v_BothListName { get; }
 
         /// <summary>
@@ -95,6 +100,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Comman Separated**", "Enter like **A,B,C**")]
         [PropertyDetailSampleUsage("**Space Separated**", "Enter like **A B C**")]
         [PropertyDetailSampleUsage("**Tab Separated**", "Enter like **A\tB\tC**")]
+        [PropertyParameterOrder(5000)]
         public static string v_AType { get; }
 
 
@@ -110,6 +116,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Error")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5000)]
         public static string v_ANotEnough { get; }
 
         /// <summary>
@@ -125,6 +132,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyUISelectionOption("Insert Empty Value")]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5000)]
         public static string v_ListItemNotEnough { get; }
 
         /// <summary>
@@ -139,6 +147,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Ignore")]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenValueIsNotNumeric { get; }
 
         /// <summary>
@@ -153,6 +162,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Current Position")]
         [PropertyDisplayText(true, "Index")]
+        [PropertyParameterOrder(5000)]
         public static string v_ListIndex { get; }
 
         /// <summary>
@@ -167,7 +177,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "Empty")]
         [PropertyDisplayText(true, "Value to Search")]
+        [PropertyParameterOrder(5000)]
         public static string v_SearchValue { get; }
+        #endregion
 
         /// <summary>
         /// expand user variable as List&lt;string&gt;

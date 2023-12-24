@@ -11,6 +11,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class ExcelControls
     {
+        #region virtual property
         /// <summary>
         /// excel instance property
         /// </summary>
@@ -26,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyFirstValue("%kwd_default_excel_instance%")]
         [PropertyValidationRule("Instance", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Instance")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputInstanceName { get; }
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Sheet")]
         [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateExcelSheet), nameof(ApplicationSettings.EngineSettings.convertToRawExcelSheet))]
+        [PropertyParameterOrder(5000)]
         public static string v_SheetName { get; }
 
         /// <summary>
@@ -57,6 +60,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Cell Location", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Cell")]
+        [PropertyParameterOrder(5000)]
         public static string v_CellRangeLocation { get; }
 
         /// <summary>
@@ -72,6 +76,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Row", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Row")]
+        [PropertyParameterOrder(5000)]
         public static string v_RowLocation { get; }
 
         /// <summary>
@@ -87,6 +92,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Column")]
+        [PropertyParameterOrder(5000)]
         public static string v_ColumnLocation { get; }
 
         /// <summary>
@@ -108,6 +114,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Cell")]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_ValueType { get; }
 
         /// <summary>
@@ -126,6 +133,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyAddtionalParameterInfo("Formula", "Check the Cell has Formula or Not")]
         [PropertyAddtionalParameterInfo("Back Color", "Check the Cell Background Color is Not White")]
         [PropertyDisplayText(true, "Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_CheckableValueType { get; }
 
         /// <summary>
@@ -142,6 +150,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("RC")]
         [PropertySelectionValueSensitive(false)]
         [PropertyDisplayText(true, "Column Type")]
+        [PropertyParameterOrder(5000)]
         public static string v_ColumnType { get; }
 
         /// <summary>
@@ -157,6 +166,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         [PropertyDisplayText(true, "Column")]
+        [PropertyParameterOrder(5000)]
         public static string v_ColumnNameOrIndex { get; }
 
         /// <summary>
@@ -172,6 +182,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true, "1")]
         [PropertyDisplayText(true, "Start Row")]
+        [PropertyParameterOrder(5000)]
         public static string v_RowStart { get; }
 
         /// <summary>
@@ -187,6 +198,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "Last Row")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "End Row")]
+        [PropertyParameterOrder(5000)]
         public static string v_RowEnd { get; }
 
         /// <summary>
@@ -203,6 +215,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Start Column", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.EqualsZero)]
         [PropertyDisplayText(true, "Start Column")]
+        [PropertyParameterOrder(5000)]
         public static string v_ColumnStart { get; }
 
         /// <summary>
@@ -219,6 +232,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyDisplayText(true, "End Column")]
+        [PropertyParameterOrder(5000)]
         public static string v_ColumnEnd { get; }
 
         /// <summary>
@@ -233,6 +247,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Error")]
+        [PropertyParameterOrder(5000)]
         public static string v_WhenItemNotEnough { get; }
 
         /// <summary>
@@ -249,8 +264,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("File", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "File")]
+        [PropertyParameterOrder(5000)]
         public static string v_FilePath { get; }
-
+        #endregion
 
         #region instance, worksheet methods
         /// <summary>

@@ -35,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowName), nameof(ApplicationSettings.EngineSettings.convertToRawWindowName))]
         [PropertyValidationRule("Window Name", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Name")]
+        [PropertyParameterOrder(5000)]
         public static string v_WindowName { get; }
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
         [PropertyDisplayText(true, "Search Method")]
+        [PropertyParameterOrder(5000)]
         public static string v_CompareMethod { get; }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Specify when there are Multiple Matching Windows")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "First")]
+        [PropertyParameterOrder(5000)]
         public static string v_MatchMethod { get; }
 
         /// <summary>
@@ -84,6 +87,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("Specify when there are Multiple Matching Windows")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "First")]
+        [PropertyParameterOrder(5000)]
         public static string v_MatchMethod_Single { get; }
 
         /// <summary>
@@ -99,6 +103,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
+        [PropertyParameterOrder(5000)]
         public static string v_TargetWindowIndex { get; }
 
         /// <summary>
@@ -113,6 +118,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyIsOptional(true, "60")]
         [PropertyFirstValue("60")]
+        [PropertyParameterOrder(5000)]
         public static string v_WaitTime { get; }
 
         /// <summary>
@@ -130,6 +136,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Window Name Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5000)]
         public static string v_WindowNameResult { get; }
 
         /// <summary>
@@ -148,6 +155,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
         [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5000)]
         public static string v_OutputWindowHandle { get; }
 
         /// <summary>
@@ -164,6 +172,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Input)]
         [PropertyValidationRule("Window Handle Result", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Window Handle")]
+        [PropertyParameterOrder(5000)]
         public static string v_InputWindowHandle { get; }
 
         #endregion
