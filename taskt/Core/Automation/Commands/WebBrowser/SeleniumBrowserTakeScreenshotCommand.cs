@@ -69,7 +69,8 @@ namespace taskt.Core.Automation.Commands
             // take the screenshot
             Screenshot image = ((ITakesScreenshot)seleniumInstance).GetScreenshot();
             // save the screenshot to the entered folder by provided name for the screenshot file name
-            image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png", ScreenshotImageFormat.Png);
+            //image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png", ScreenshotImageFormat.Png);
+            image.SaveAsFile(screenshotPath + "/" + screenshotFileName + ".png");
         }
     }
 }
