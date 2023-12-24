@@ -760,7 +760,7 @@
     <Compile Include="Core\Automation\Commands\DataTable\WriteDataRowValueCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\WriteTextFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\DateTimeControls.cs" />
-    <Compile Include="Core\CommandsTreeControls.cs" />
+    <Compile Include="UI\CustomControls\CommandsTreeControls.cs" />
     <Compile Include="Core\DocumentationGeneration.cs" />
     <Compile Include="Core\EncryptionServices.cs" />
     <Compile Include="Core\Automation\Commands\FilePathControls.cs" />

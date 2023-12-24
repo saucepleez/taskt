@@ -59,7 +59,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
             if ((firstGroup != "") && (firstCommand != ""))
             {
-                Core.CommandsTreeControls.FocusCommand(firstGroup, firstCommand, tvCommands);
+                CustomControls.CommandsTreeControls.FocusCommand(firstGroup, firstCommand, tvCommands);
             }
         }
 
@@ -139,12 +139,12 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             string keyword = txtSearchKeyword.Text.Trim().ToLower();
             if (keyword == "")
             {
-                Core.CommandsTreeControls.ShowCommandsTree(tvCommands, treeAllCommands);
+                CustomControls.CommandsTreeControls.ShowCommandsTree(tvCommands, treeAllCommands);
             }
             else
             {
-                var filterdCommands = Core.CommandsTreeControls.FilterCommands(keyword, treeAllCommands, appSettings.ClientSettings);
-                Core.CommandsTreeControls.ShowCommandsTree(tvCommands, filterdCommands, true);
+                var filterdCommands = CustomControls.CommandsTreeControls.FilterCommands(keyword, treeAllCommands, appSettings.ClientSettings);
+                CustomControls.CommandsTreeControls.ShowCommandsTree(tvCommands, filterdCommands, true);
             }
         }
         #endregion
@@ -153,7 +153,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
         {
             get
             {
-                return Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
+                return CustomControls.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
             }
         }
 

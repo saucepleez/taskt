@@ -3197,15 +3197,15 @@ namespace taskt.UI.Forms.ScriptBuilder
         }
         private string GetSelectedCommandFullName()
         {
-            return Core.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
+            return CustomControls.CommandsTreeControls.GetSelectedFullCommandName(tvCommands);
         }
         #endregion
 
         #region TreeView Events
         private void GenerateTreeViewCommands()
         {
-            bufferedCommandList = Core.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
-            bufferedCommandTreeImages = Core.CommandsTreeControls.CreateCommandImageList();
+            bufferedCommandList = CustomControls.CommandsTreeControls.CreateAllCommandsArray(appSettings.ClientSettings);
+            bufferedCommandTreeImages = CustomControls.CommandsTreeControls.CreateCommandImageList();
             tvCommands.ImageList = bufferedCommandTreeImages;
 
             ShowAllCommands();
@@ -3335,9 +3335,9 @@ namespace taskt.UI.Forms.ScriptBuilder
         }
         private void ShowFilterCommands(string keyword)
         {
-            TreeNode[] filterdCommands = Core.CommandsTreeControls.FilterCommands(keyword, bufferedCommandList, appSettings.ClientSettings);
+            TreeNode[] filterdCommands = CustomControls.CommandsTreeControls.FilterCommands(keyword, bufferedCommandList, appSettings.ClientSettings);
 
-            Core.CommandsTreeControls.ShowCommandsTree(tvCommands, filterdCommands, true);
+            CustomControls.CommandsTreeControls.ShowCommandsTree(tvCommands, filterdCommands, true);
 
             clearCmdTVCommandMenuStrip.Enabled = true;
             clearRootTVCommandMenuStrip.Enabled = true;
@@ -3346,7 +3346,7 @@ namespace taskt.UI.Forms.ScriptBuilder
         {
             txtCommandFilter.Text = "";
 
-            Core.CommandsTreeControls.ShowCommandsTree(tvCommands, bufferedCommandList);
+            CustomControls.CommandsTreeControls.ShowCommandsTree(tvCommands, bufferedCommandList);
 
             clearCmdTVCommandMenuStrip.Enabled = false;
             clearRootTVCommandMenuStrip.Enabled = false;
@@ -3363,7 +3363,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             var tp = command.GetType();
             var group = (Core.Automation.Attributes.ClassAttributes.Group)tp.GetCustomAttribute(typeof(Core.Automation.Attributes.ClassAttributes.Group));
 
-            Core.CommandsTreeControls.FocusCommand(group.groupName, command.SelectionName, tvCommands);
+            CustomControls.CommandsTreeControls.FocusCommand(group.groupName, command.SelectionName, tvCommands);
         }
 
         #endregion

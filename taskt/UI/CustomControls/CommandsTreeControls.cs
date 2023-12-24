@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace taskt.Core
+namespace taskt.UI.CustomControls
 {
     static internal class CommandsTreeControls
     {
@@ -11,7 +11,7 @@ namespace taskt.Core
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static TreeNode[] CreateAllCommandsArray(ClientSettings settings)
+        public static TreeNode[] CreateAllCommandsArray(Core.ClientSettings settings)
         {
             List<taskt.UI.CustomControls.AutomationCommand> automationCommands = UI.CustomControls.CommandControls.GenerateCommandsandControls();
 
@@ -155,7 +155,7 @@ namespace taskt.Core
             tvCommands.EndUpdate();
         }
 
-        public static TreeNode[] FilterCommands(string keyword, TreeNode[] allCommands, ClientSettings settings)
+        public static TreeNode[] FilterCommands(string keyword, TreeNode[] allCommands, Core.ClientSettings settings)
         {
             List<TreeNode> matchedCommands = new List<TreeNode>();
 
