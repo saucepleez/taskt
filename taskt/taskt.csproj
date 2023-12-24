@@ -310,6 +310,7 @@
     <Compile Include="Core\ApplicationSettings\ServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\WhiteListIP.cs" />
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
+    <Compile Include="Core\Automation\Commands\Math\AMathValueResultCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetLogarithmCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSquareRootCommand.cs" />
