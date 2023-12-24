@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Engine
         public bool CurrentLoopContinuing { get; set; }
         private bool IsScriptPaused { get; set; }
         [JsonIgnore]
-        public UI.Forms.frmScriptEngine tasktEngineUI { get; set; }
+        public UI.Forms.ScriptEngine.frmScriptEngine tasktEngineUI { get; set; }
         private System.Diagnostics.Stopwatch sw { get; set; }
         public EngineStatus CurrentStatus { get; set; }
         public EngineSettings engineSettings { get; set; }
@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Engine
             AutoCalculateVariables = engineSettings.AutoCalcVariables;
         }
 
-        public void ExecuteScriptAsync(UI.Forms.frmScriptEngine scriptEngine, string filePath, List<ScriptVariable> variables = null, Dictionary<string, Script.Script> preloadedTasks = null)
+        public void ExecuteScriptAsync(UI.Forms.ScriptEngine.frmScriptEngine scriptEngine, string filePath, List<ScriptVariable> variables = null, Dictionary<string, Script.Script> preloadedTasks = null)
         {
             WriteLog("Client requesting to execute script using frmEngine");
 

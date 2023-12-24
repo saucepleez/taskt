@@ -90,7 +90,7 @@ namespace taskt
 
                 if (type == "run")
                 {
-                    Application.Run(new UI.Forms.frmScriptEngine(filePath, null, null, true));
+                    Application.Run(new UI.Forms.ScriptEngine.frmScriptEngine(filePath, null, null, true));
                 }
                 else
                 {

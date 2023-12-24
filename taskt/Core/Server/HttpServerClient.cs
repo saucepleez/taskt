@@ -149,14 +149,14 @@ namespace taskt.Core.Server
                         {
                             if (deserialized.ScheduledTask.ExecutionType == "Local")
                             {
-                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
+                                var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine(deserialized.PublishedScript.ScriptData, null);
                                 newEngine.remoteTask = deserialized.ScheduledTask;
                                 newEngine.serverExecution = true;
                                 newEngine.Show();
                             }
                             else
                             {
-                                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                                var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine();
                                 newEngine.xmlData = deserialized.PublishedScript.ScriptData;
                                 newEngine.remoteTask = deserialized.ScheduledTask;
                                 newEngine.serverExecution = true;

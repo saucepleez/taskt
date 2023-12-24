@@ -124,7 +124,7 @@ namespace taskt.UI.Forms.AttendedMode
 
             //build script path and execute
             var scriptFilePath = System.IO.Path.Combine(attendedScriptWatcher.Path, cboSelectedScript.Text);
-            UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine(scriptFilePath, null);
+            var newEngine = new ScriptEngine.frmScriptEngine(scriptFilePath, null);
             newEngine.Show();
         }
 

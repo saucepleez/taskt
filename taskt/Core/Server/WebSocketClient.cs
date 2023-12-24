@@ -338,7 +338,7 @@ namespace taskt.Core.Server
 
             associatedBuilder.Invoke(new MethodInvoker(delegate ()
             {
-                UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine();
                 newEngine.xmlData = scriptData;
                 newEngine.callBackForm = null;
                 newEngine.Show();

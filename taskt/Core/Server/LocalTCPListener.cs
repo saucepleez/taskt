@@ -307,7 +307,7 @@ namespace taskt.Core.Server
                 //invoke builder and pass it script data to execute
                 associatedBuilder.Invoke(new MethodInvoker(delegate ()
                 {
-                    UI.Forms.frmScriptEngine newEngine = new UI.Forms.frmScriptEngine();
+                    var newEngine = new UI.Forms.ScriptEngine.frmScriptEngine();
                     newEngine.xmlData = dataParameter;
                     newEngine.callBackForm = null;
                     //instance = newEngine.engineInstance;

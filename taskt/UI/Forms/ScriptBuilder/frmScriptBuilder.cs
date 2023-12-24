@@ -3093,7 +3093,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             Notify("Running Script..");
 
-            frmScriptEngine newEngine = new frmScriptEngine(ScriptFilePath, this);
+            var newEngine = new Forms.ScriptEngine.frmScriptEngine(ScriptFilePath, this);
             newEngine.callBackForm = this;
             newEngine.Show();
         }
