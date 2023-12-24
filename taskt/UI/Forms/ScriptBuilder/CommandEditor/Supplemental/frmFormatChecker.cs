@@ -125,7 +125,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
                     System.Diagnostics.Process.Start(Core.MyURLs.DateTimeFormatURL2);
                     break;
                 case "File Folder":
-                    using (var fm = new Forms.Supplemental.frmDialog(Core.Automation.Commands.FilePathControls.GetFormatHelp(), "File Folder Formats", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new General.frmDialog(Core.Automation.Commands.FilePathControls.GetFormatHelp(), "File Folder Formats", General.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }

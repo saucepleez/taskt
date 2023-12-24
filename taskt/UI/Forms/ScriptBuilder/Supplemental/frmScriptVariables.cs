@@ -189,11 +189,11 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
         private void AddOrEditVaiableProcess(TreeNode targetVariable = null)
         {
-            ScriptBuilder.Supplemental.frmAddVariable addVariableForm;
+            frmAddVariable addVariableForm;
             string variableName = "", variableValue = "";
             if (targetVariable == null)
             {
-                addVariableForm = new ScriptBuilder.Supplemental.frmAddVariable(appSettings);
+                addVariableForm = new frmAddVariable(appSettings);
             }
             else
             {
@@ -201,7 +201,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 {
                     return;
                 }
-                addVariableForm = new ScriptBuilder.Supplemental.frmAddVariable(variableName, variableValue, appSettings);
+                addVariableForm = new frmAddVariable(variableName, variableValue, appSettings);
             }
 
             tvScriptVariables.BeginUpdate();
@@ -247,7 +247,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                             }
                             else
                             {
-                                using (var fm = new Forms.Supplemental.frmDialog("'" + newVariableName + "' is already exists.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                                using (var fm = new General.frmDialog("'" + newVariableName + "' is already exists.", "Variable Error", Forms.General.frmDialog.DialogType.OkOnly, 0))
                                 {
                                     fm.ShowDialog();
                                 }
@@ -257,7 +257,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     }
                     else
                     {
-                        using (var fm = new Forms.Supplemental.frmDialog("'" + newVariableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                        using (var fm = new General.frmDialog("'" + newVariableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Forms.General.frmDialog.DialogType.OkOnly, 0))
                         {
                             fm.ShowDialog();
                         }
@@ -274,7 +274,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             variableName = variableName.Trim();
             if (variableName.Length == 0)
             {
-                using (var fm = new Forms.Supplemental.frmDialog("Variable Name is empty.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new General.frmDialog("Variable Name is empty.", "Variable Error", Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }
@@ -294,7 +294,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 }
                 else
                 {
-                    using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' is already exists.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new General.frmDialog("'" + variableName + "' is already exists.", "Variable Error", Forms.General.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -302,7 +302,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             }
             else
             {
-                using (var fm = new Forms.Supplemental.frmDialog("'" + variableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new General.frmDialog("'" + variableName + "' contains bad character(ex. { } [ ] + - * /)." + Environment.NewLine + "Or equals reserved keyword.", "Variable Error", Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }

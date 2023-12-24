@@ -318,7 +318,7 @@ namespace taskt.Core.Automation.Commands
             HideAllForms();
 
             //var userAcceptance = MessageBox.Show("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.  You may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish. The image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", MessageBoxButtons.YesNo);
-            using (var fm = new UI.Forms.Supplemental.frmDialog("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.\nYou may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish.\nThe image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
+            using (var fm = new UI.Forms.General.frmDialog("The image capture process will now begin and display a screenshot of the current desktop in a custom full-screen window.\nYou may stop the capture process at any time by pressing the 'ESC' key, or selecting 'Close' at the top left. Simply create the image by clicking once to start the rectangle and clicking again to finish.\nThe image will be cropped to the boundary within the red rectangle. Shall we proceed?", "Image Capture", UI.Forms.General.frmDialog.DialogType.YesNo, 0))
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {
@@ -364,7 +364,7 @@ namespace taskt.Core.Automation.Commands
             // image is empty
             if (string.IsNullOrEmpty(imageSource))
             {
-                using (var fm = new UI.Forms.Supplemental.frmDialog("Please capture an image before attempting to test!", "Image Recognition", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new UI.Forms.General.frmDialog("Please capture an image before attempting to test!", "Image Recognition", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                     return;
@@ -386,7 +386,7 @@ namespace taskt.Core.Automation.Commands
             }
             catch (Exception ex)
             {
-                using (var fm = new UI.Forms.Supplemental.frmDialog("Error: " + ex.Message, "Image Recognition", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new UI.Forms.General.frmDialog("Error: " + ex.Message, "Image Recognition", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }

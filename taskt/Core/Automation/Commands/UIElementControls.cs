@@ -352,7 +352,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                var f = new UI.Forms.Supplemental.frmDialog("No Inspect Tool Results", "Fail Parse", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0);
+                var f = new UI.Forms.General.frmDialog("No Inspect Tool Results", "Fail Parse", UI.Forms.General.frmDialog.DialogType.OkOnly, 0);
                 f.ShowDialog();
             }
         }

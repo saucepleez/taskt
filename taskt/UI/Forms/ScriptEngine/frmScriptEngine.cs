@@ -337,11 +337,11 @@ namespace taskt.UI.Forms.ScriptEngine
         /// Delegate for showing message box
         /// </summary>
         /// <param name="message"></param>
-        public delegate void ShowMessageDelegate(string message, string title, UI.Forms.Supplemental.frmDialog.DialogType dialogType, int closeAfter);
+        public delegate void ShowMessageDelegate(string message, string title, Forms.General.frmDialog.DialogType dialogType, int closeAfter);
         /// <summary>
         /// Used by the automation engine to show a message to the user on-screen. If UI is not available, a standard messagebox will be invoked instead.
         /// </summary>
-        public void ShowMessage(string message, string title, UI.Forms.Supplemental.frmDialog.DialogType dialogType, int closeAfter)
+        public void ShowMessage(string message, string title, General.frmDialog.DialogType dialogType, int closeAfter)
         {
             if (InvokeRequired)
             {
@@ -350,7 +350,7 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                using (var confirmationForm = new UI.Forms.Supplemental.frmDialog(message, title, dialogType, closeAfter))
+                using (var confirmationForm = new Forms.General.frmDialog(message, title, dialogType, closeAfter))
                 {
                     confirmationForm.ShowDialog();
                 }

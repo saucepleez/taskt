@@ -7,7 +7,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
     public partial class frmSearchCommands : ThemedForm
     {
         public List<string> variables { set; get; }
-        private taskt.UI.Forms.ScriptBuilder.frmScriptBuilder parentForm = null;
+        private frmScriptBuilder parentForm = null;
 
         private SearchReplaceMode _currentMode = SearchReplaceMode.Search;
         public SearchReplaceMode CurrentMode
@@ -38,7 +38,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             Replace
         }
 
-        public frmSearchCommands(UI.Forms.ScriptBuilder.frmScriptBuilder parentForm)
+        public frmSearchCommands(frmScriptBuilder parentForm)
         {
             InitializeComponent();
             this.parentForm = parentForm;
@@ -106,7 +106,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             string kwd = txtSearchKeyword.Text;
             if (kwd.Length == 0)
             {
-                using (var frm = new Forms.Supplemental.frmDialog("Keyword is empty.", "Search Commands", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var frm = new General.frmDialog("Keyword is empty.", "Search Commands", Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     frm.ShowDialog();
                     return;
@@ -115,7 +115,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             if (!(chkSearchTargetIsParameter.Checked || chkSearchTargetIsName.Checked || chkSearchTargetIsComment.Checked || chkSearchTargetIsDisplayText.Checked || chkSearchTargetIsInstance.Checked))
             {
-                using (var frm = new Forms.Supplemental.frmDialog("No target.", "Search Commands", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var frm = new General.frmDialog("No target.", "Search Commands", Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     frm.ShowDialog();
                     return;
@@ -184,7 +184,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             string kwd = txtReplaceSearch.Text;
             if (kwd.Length == 0)
             {
-                using (var frm = new Forms.Supplemental.frmDialog("Keyword is empty.", "Search Commands", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var frm = new General.frmDialog("Keyword is empty.", "Search Commands", Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     frm.ShowDialog();
                     return;
@@ -201,7 +201,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             string kwd = txtReplaceSearch.Text;
             if (kwd.Length == 0)
             {
-                using (var frm = new Forms.Supplemental.frmDialog("Keyword is empty.", "Search Commands", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var frm = new General.frmDialog("Keyword is empty.", "Search Commands", Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     frm.ShowDialog();
                     return;
@@ -218,7 +218,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             string kwd = txtReplaceSearch.Text;
             if (kwd.Length == 0)
             {
-                using (var frm = new Forms.Supplemental.frmDialog("Keyword is empty.", "Search Commands", Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var frm = new General.frmDialog("Keyword is empty.", "Search Commands", Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     frm.ShowDialog();
                     return;

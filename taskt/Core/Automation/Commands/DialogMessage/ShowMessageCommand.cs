@@ -74,7 +74,7 @@ namespace taskt.Core.Automation.Commands
             // TODO: support OK/cancel etc buttons
             var result = engine.tasktEngineUI.Invoke(new Action(() =>
             {
-                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, closeAfter);
+                engine.tasktEngineUI.ShowMessage(variableMessage, "MessageBox Command", UI.Forms.General.frmDialog.DialogType.OkOnly, closeAfter);
             }
             ));
         }

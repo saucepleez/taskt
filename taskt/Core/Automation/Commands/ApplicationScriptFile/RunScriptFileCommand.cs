@@ -178,7 +178,7 @@ namespace taskt.Core.Automation.Commands
             // check file exists
             if (!System.IO.File.Exists(startFile))
             {
-                using(var fm = new taskt.UI.Forms.Supplemental.frmDialog("Script File Not Found. Name: " + startFile, "error", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using(var fm = new UI.Forms.General.frmDialog("Script File Not Found. Name: " + startFile, "error", UI.Forms.General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                 }

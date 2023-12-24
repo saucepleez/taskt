@@ -337,7 +337,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
             {
                 if (!appSettings.ClientSettings.DontShowValidationMessage)
                 {
-                    using(var fm = new Forms.Supplemental.frmDialog(selectedCommand.validationResult, selectedCommand.SelectionName, Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using(var fm = new General.frmDialog(selectedCommand.validationResult, selectedCommand.SelectionName, General.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }

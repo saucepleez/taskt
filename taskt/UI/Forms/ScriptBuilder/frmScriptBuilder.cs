@@ -224,7 +224,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             if (!System.IO.Directory.Exists(rpaScriptsFolder))
             {
-                using (var userDialog = new UI.Forms.Supplemental.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", UI.Forms.Supplemental.frmDialog.DialogType.YesNo, 0))
+                using (var userDialog = new General.frmDialog("Would you like to create a folder to save your scripts in now? A script folder is required to save scripts generated with this application. The new script folder path would be '" + rpaScriptsFolder + "'.", "Unable to locate Script Folder!", General.frmDialog.DialogType.YesNo, 0))
                 {
                     if (userDialog.ShowDialog() == DialogResult.OK)
                     {
@@ -582,7 +582,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 }
                 else
                 {
-                    using (var fm = new UI.Forms.Supplemental.frmDialog("This file type can not open.", "File Open Error", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using (var fm = new General.frmDialog("This file type can not open.", "File Open Error", General.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }
@@ -2371,7 +2371,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             var jsonText = Newtonsoft.Json.JsonConvert.SerializeObject(currentCommand, new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All });
 
-            using (var dialog = new UI.Forms.Supplemental.frmDialog(jsonText, "JSON Command Code", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+            using (var dialog = new General.frmDialog(jsonText, "JSON Command Code", General.frmDialog.DialogType.OkOnly, 0))
             {
                 dialog.ShowDialog();
             }
@@ -2393,7 +2393,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
             string commandXML = scriptXML.Substring(startIdx, endIdx - startIdx - 1).Trim();
 
-            using (var dialog = new UI.Forms.Supplemental.frmDialog(commandXML, "XML Command Code", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+            using (var dialog = new General.frmDialog(commandXML, "XML Command Code", General.frmDialog.DialogType.OkOnly, 0))
             {
                 dialog.ShowDialog();
             }
@@ -2531,7 +2531,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void pnlStatus_DoubleClick(object sender, EventArgs e)
         {
-            using (var fm = new UI.Forms.Supplemental.frmDialog(notificationText, "Status Message", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+            using (var fm = new General.frmDialog(notificationText, "Status Message", General.frmDialog.DialogType.OkOnly, 0))
             {
                 fm.ShowDialog();
             }
@@ -2657,7 +2657,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             // check file exists
             if (!System.IO.File.Exists(filePath))
             {
-                using(var fm = new UI.Forms.Supplemental.frmDialog(filePath + " does not exits.", "Open Error", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using(var fm = new General.frmDialog(filePath + " does not exits.", "Open Error", General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                     return;
@@ -2754,7 +2754,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             // check file exists
             if (!System.IO.File.Exists(filePath))
             {
-                using (var fm = new UI.Forms.Supplemental.frmDialog(filePath + " does not exits.", "Open Error", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                using (var fm = new General.frmDialog(filePath + " does not exits.", "Open Error", General.frmDialog.DialogType.OkOnly, 0))
                 {
                     fm.ShowDialog();
                     return;
@@ -3853,7 +3853,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 }
                 else
                 {
-                    using(var fm = new UI.Forms.Supplemental.frmDialog("This file type can not open.", "File Open Error", UI.Forms.Supplemental.frmDialog.DialogType.OkOnly, 0))
+                    using(var fm = new General.frmDialog("This file type can not open.", "File Open Error", General.frmDialog.DialogType.OkOnly, 0))
                     {
                         fm.ShowDialog();
                     }

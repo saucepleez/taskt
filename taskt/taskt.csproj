@@ -995,10 +995,10 @@
     <Compile Include="UI\Forms\UIForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmDialog.cs">
+    <Compile Include="UI\Forms\General\frmDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmDialog.Designer.cs">
+    <Compile Include="UI\Forms\General\frmDialog.Designer.cs">
       <DependentUpon>frmDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmScheduleManagement.cs">
@@ -1110,7 +1110,7 @@
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCommandList.resx">
       <DependentUpon>frmCommandList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDialog.resx">
+    <EmbeddedResource Include="UI\Forms\General\frmDialog.resx">
       <DependentUpon>frmDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmDisplayManager.resx">
