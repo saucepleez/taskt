@@ -374,7 +374,7 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                using (var contextForm = new UI.Forms.Supplement_Forms.frmEngineContextViewer(context, closeAfter))
+                using (var contextForm = new Supplemental.frmEngineContextViewer(context, closeAfter))
                 {
                     contextForm.ShowDialog();
                 }
@@ -404,7 +404,7 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                using (var inputForm = new Supplemental.frmUserInput())
+                using (var inputForm = new Forms.Supplemental.frmUserInput())
                 {
                     inputForm.InputCommand = inputs;
 
@@ -447,7 +447,7 @@ namespace taskt.UI.Forms.ScriptEngine
             }
             else
             {
-                using (var inputForm = new Supplemental.frmHTMLDisplayForm())
+                using (var inputForm = new Forms.Supplemental.frmHTMLDisplayForm())
                 {
                     inputForm.TemplateHTML = htmlTemplate;
 

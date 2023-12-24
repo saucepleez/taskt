@@ -1,15 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
 
-namespace taskt.UI.Forms.Supplement_Forms
+namespace taskt.UI.Forms.ScriptEngine.Supplemental
 {
     public partial class frmEngineContextViewer : ThemedForm
     {
