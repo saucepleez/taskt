@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.User32;
 
-namespace taskt.UI.Forms.Supplemental
+/*
+ * NOTE: not using ?
+ */
+namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
     public partial class frmThickAppElementRecorder : UIForm
     {

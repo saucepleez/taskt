@@ -3107,7 +3107,7 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (var recorder = new UI.Forms.Supplemental.frmThickAppElementRecorder())
+            using (var recorder = new Supplemental.frmThickAppElementRecorder())
             {
                 recorder.ShowDialog();
             }

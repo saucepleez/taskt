@@ -961,10 +961,10 @@
     <Compile Include="UI\Forms\Splash\frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.Designer.cs">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\Supplement Forms\frmUserInput.cs">
@@ -1172,7 +1172,7 @@
     <EmbeddedResource Include="UI\Forms\Splash\frmSplash.resx">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmThickAppElementRecorder.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmThickAppElementRecorder.resx">
       <DependentUpon>frmThickAppElementRecorder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmUserInput.resx">
