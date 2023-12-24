@@ -865,10 +865,10 @@
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmCommandList.Designer.cs">
       <DependentUpon>frmCommandList.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmDisplayManager.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmDisplayManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\Supplement Forms\frmDisplayManager.Designer.cs">
+    <Compile Include="UI\Forms\ScriptBuilder\Supplemental\frmDisplayManager.Designer.cs">
       <DependentUpon>frmDisplayManager.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmDLLExplorer.cs">
@@ -1113,7 +1113,7 @@
     <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDialog.resx">
       <DependentUpon>frmDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Supplement Forms\frmDisplayManager.resx">
+    <EmbeddedResource Include="UI\Forms\ScriptBuilder\Supplemental\frmDisplayManager.resx">
       <DependentUpon>frmDisplayManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ScriptBuilder\CommandEditor\Supplemental\frmDLLExplorer.resx">

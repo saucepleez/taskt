@@ -450,7 +450,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
         private void btnLaunchDisplayManager_Click(object sender, EventArgs e)
         {
-            Forms.Supplemental.frmDisplayManager displayManager = new Forms.Supplemental.frmDisplayManager();
+            var displayManager = new frmDisplayManager();
             displayManager.Show();
             this.Close();
         }

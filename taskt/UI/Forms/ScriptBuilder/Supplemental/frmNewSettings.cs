@@ -1141,7 +1141,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             if (MessageBox.Show("Close Settings form to launch Display Manager.\nIf you have changed the settings, click the 'OK' button to save the changes.\nLaunch Display Manager now ?", "Settings", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Forms.Supplemental.frmDisplayManager displayManager = new Forms.Supplemental.frmDisplayManager();
+                var displayManager = new frmDisplayManager();
                 displayManager.Show();
                 this.Close();
             }   
