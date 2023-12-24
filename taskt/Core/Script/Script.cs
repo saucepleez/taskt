@@ -256,6 +256,7 @@ namespace taskt.Core.Script
             var subClasses = Assembly.GetAssembly(typeof(ScriptCommand))
                                 .GetTypes()
                                 .Where(x => x.IsSubclassOf(typeof(ScriptCommand)) && !x.IsAbstract)
+                                //.Where(x => x.IsSubclassOf(typeof(ScriptCommand)))
                                 .ToArray();
 
             return new XmlSerializer(typeof(Script), subClasses);
