@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -13,15 +11,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public class GetAbsoluteCommand : ScriptCommand
+    public class GetAbsoluteCommand : AMathValueResultCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
-        public string v_Value { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
+        //public string v_Value { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
-        public string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
+        //public string v_Result { get; set; }
 
         public GetAbsoluteCommand()
         {
