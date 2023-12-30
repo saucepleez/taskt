@@ -113,7 +113,7 @@ namespace taskt.Core.Automation.Commands
             bool testMode = TestMode;
            
             //user image to bitmap
-            Bitmap userImage = new Bitmap(Base64ToImage(v_ImageCapture));
+            Bitmap userImage = new Bitmap(ConvertBase64ToImage(v_ImageCapture));
 
             //take screenshot
             Size shotSize = Screen.PrimaryScreen.Bounds.Size;
@@ -330,7 +330,7 @@ namespace taskt.Core.Automation.Commands
                             var targetPictureBox = (UIPictureBox)((CommandItemControl)sender).Tag;
 
                             targetPictureBox.Image = imageCaptureForm.userSelectedBitmap;
-                            var convertedImage = ImageToBase64(imageCaptureForm.userSelectedBitmap);
+                            var convertedImage = ConvertImageToBase64(imageCaptureForm.userSelectedBitmap);
                             var convertedLength = convertedImage.Length;
                             targetPictureBox.EncodedImage = convertedImage;
 
@@ -445,13 +445,13 @@ namespace taskt.Core.Automation.Commands
                 {
                     if (c is UIPictureBox pic)
                     {
-                        pic.Image = Base64ToImage(v_ImageCapture);
+                        pic.Image = ConvertBase64ToImage(v_ImageCapture);
                     }
                 }
             }
         }
 
-        private static string ImageToBase64(Image image)
+        private static string ConvertImageToBase64(Image image)
         {
             using (MemoryStream m = new MemoryStream())
             {
@@ -462,7 +462,7 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        private static Image Base64ToImage(string base64String)
+        private static Image ConvertBase64ToImage(string base64String)
         {
             byte[] imageBytes = Convert.FromBase64String(base64String);
             MemoryStream ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
