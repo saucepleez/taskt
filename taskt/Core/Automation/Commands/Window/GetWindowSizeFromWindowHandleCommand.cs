@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetWindowSizeFromWindowHandleCommand : ScriptCommand
+    public class GetWindowSizeFromWindowHandleCommand : AWindowHandleCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
-        public string v_WindowHandle { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
+        //public string v_WindowHandle { get; set; }
 
 
         [XmlAttribute]
@@ -26,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Variable Name to Recieve the Window Width")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5500)]
         public string v_Width { get; set; }
 
         [XmlAttribute]
@@ -33,11 +34,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Variable Name to Recieve the Window Height")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(5500)]
         public string v_Height { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //public string v_WaitTime { get; set; }
 
         public GetWindowSizeFromWindowHandleCommand()
         {

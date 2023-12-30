@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ResizeWindowByWindowHandleCommand : ScriptCommand
+    public class ResizeWindowByWindowHandleCommand : AWindowHandleCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
-        public string v_WindowHandle { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
+        //public string v_WindowHandle { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Window Width (Pixcel)")]
@@ -30,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Width")]
+        [PropertyParameterOrder(5500)]
         public string v_XWindowSize { get; set; }
 
         [XmlAttribute]
@@ -42,11 +43,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Height")]
+        [PropertyParameterOrder(5500)]
         public string v_YWindowSize { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //public string v_WaitTime { get; set; }
 
         public ResizeWindowByWindowHandleCommand()
         {
