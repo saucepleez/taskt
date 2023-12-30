@@ -358,6 +358,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_56(doc);
             convertTo3_5_1_58(doc);
             convertTo3_5_1_62(doc);
+            convertTo3_5_1_72(doc);
 
             return doc;
         }
@@ -1822,6 +1823,27 @@ namespace taskt.Core.Script
         {
             // CreateTextVariable -> CreateTextVariableCommand
             ChangeCommandName(doc, "CreateTextVariable", "CreateTextVariableCommand", "Create Text Variable");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_72(XDocument doc)
+        {
+            var macroCommands = new List<XElement>();
+            var cmds = GetCommands(doc, "ExcelAddWorkbookCommand");
+            foreach (var cmd in cmds)
+            {
+                var vMacro = cmd.Attribute("v_MacroName");
+                if (vMacro != null)
+                {
+                    macroCommands.Add(cmd);
+                }
+            }
+
+            if (cmds.Count() > 0)
+            {
+                ChangeCommandName(macroCommands, "ExcelRunMacroCommand", "Run Macro");
+            }
 
             return doc;
         }
