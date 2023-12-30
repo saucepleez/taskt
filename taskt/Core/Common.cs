@@ -38,12 +38,10 @@ namespace taskt.Core
                 throw new ArgumentException("The type must be serializable.", "source");
             }
 
-
             if (source == null)
             {
                 return default(T);
             }
-
 
             using (MemoryStream ms = new MemoryStream())
             {
@@ -53,9 +51,6 @@ namespace taskt.Core
                 ms.Position = 0;
                 return (T)formatter.Deserialize(ms);
             }
-
-
-
 
             ////output to xml file
             //XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -86,6 +81,7 @@ namespace taskt.Core
             //    return (T)formatter.Deserialize(stream);
             //}
         }
+
         ///// <summary>
         ///// Returns a path to the underlying Script folder where script file objects are loaded and saved. Used when saved or loading files.
         ///// </summary>
@@ -113,30 +109,32 @@ namespace taskt.Core
         //    return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\taskt\\";
         //}
 
-        /// <summary>
-        /// Returns commands from the AutomationCommands.cs file grouped by Custom 'Group' attribute.
-        /// </summary>
-        public static List<IGrouping<Attribute, Type>> GetGroupedCommands()
-        {
-            var groupedCommands = Assembly.GetExecutingAssembly().GetTypes()
-                          .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
-                          .Where(t => t.Name != "ScriptCommand")
-                          .Where(t => t.IsAbstract == false)
-                          .Where(t => t.BaseType.Name == "ScriptCommand")
-                          .Where(t => CommandEnabled(t))
-                          .GroupBy(t => t.GetCustomAttribute(typeof(Automation.Attributes.ClassAttributes.Group)))
-                          .ToList();
+        ///// <summary>
+        ///// Returns commands from the AutomationCommands.cs file grouped by Custom 'Group' attribute.
+        ///// </summary>
+        //public static List<IGrouping<Attribute, Type>> GetGroupedCommands()
+        //{
+        //    var groupedCommands = Assembly.GetExecutingAssembly().GetTypes()
+        //                  .Where(t => t.Namespace == "taskt.Core.Automation.Commands")
+        //                  .Where(t => t.Name != "ScriptCommand")
+        //                  .Where(t => t.IsAbstract == false)
+        //                  .Where(t => t.BaseType.Name == "ScriptCommand")
+        //                  .Where(t => CommandEnabled(t))
+        //                  .GroupBy(t => t.GetCustomAttribute(typeof(Automation.Attributes.ClassAttributes.Group)))
+        //                  .ToList();
 
-            return groupedCommands;
-        }
-        /// <summary>
-        /// Returns boolean indicating if the current command is enabled for use in automation.
-        /// </summary>
-        private static bool CommandEnabled(Type cmd)
-        {
-            var scriptCommand = (ScriptCommand)Activator.CreateInstance(cmd);
-            return scriptCommand.CommandEnabled;
-        }
+        //    return groupedCommands;
+        //}
+
+        ///// <summary>
+        ///// Returns boolean indicating if the current command is enabled for use in automation.
+        ///// </summary>
+        //private static bool CommandEnabled(Type cmd)
+        //{
+        //    var scriptCommand = (ScriptCommand)Activator.CreateInstance(cmd);
+        //    return scriptCommand.CommandEnabled;
+        //}
+
         /// <summary>
         /// Returns a list of system-generated variables for use with automation.
         /// </summary>
@@ -185,6 +183,7 @@ namespace taskt.Core
             };
             return systemVariableList;
         }
+
         public static string ImageToBase64(Image image)
         {
 
@@ -197,6 +196,7 @@ namespace taskt.Core
             }
 
         }
+
         public static Image Base64ToImage(string base64String)
         {
             byte[] imageBytes = Convert.FromBase64String(base64String);
@@ -547,19 +547,14 @@ namespace taskt.Core
 
             foreach (string name in Enum.GetNames(typeof(Keys)))
             {
-
                 object value = Enum.Parse(typeof(Keys), name);
-
                 var keyValue = (Keys)value;
-
-               
                 string description = GetKeyDescription((Keys)value);
 
                 if (description != null)
                 {
                     keyDescriptionList.Add(string.Concat(description, " [", keyValue, "]"));
                 }
-
             }
 
             return keyDescriptionList;
