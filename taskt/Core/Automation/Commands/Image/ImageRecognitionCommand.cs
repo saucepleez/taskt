@@ -4,9 +4,9 @@ using System.Linq;
 using System.Xml.Serialization;
 using System.Drawing;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.UI.Forms.ScriptBuilder.CommandEditor;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -431,6 +431,23 @@ namespace taskt.Core.Automation.Commands
             RenderedControls.AddRange(ctrls);
 
             return RenderedControls;
+        }
+
+        public override void AfterShown(frmCommandEditor editor)
+        {
+            if (!string.IsNullOrEmpty(v_ImageCapture))
+            {
+                //var pic = ControlsList.GetPropertyControl<UIPictureBox>(nameof(v_ImageCapture));
+                //pic.Image = Common.Base64ToImage(v_ImageCapture);
+                var ctrls = editor.flw_InputVariables.Controls;
+                foreach(var c in ctrls)
+                {
+                    if (c is UIPictureBox pic)
+                    {
+                        pic.Image = Common.Base64ToImage(v_ImageCapture);
+                    }
+                }
+            }
         }
     }
 }

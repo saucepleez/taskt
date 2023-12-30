@@ -135,18 +135,18 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor
                         b.ReadValue();
                     }
 
-                    //helper for box
-                    if (c is UIPictureBox pic)
-                    {
-                        //var typedControl = (UIPictureBox)c;
+                    ////helper for box
+                    //if (c is UIPictureBox pic)
+                    //{
+                    //    //var typedControl = (UIPictureBox)c;
 
-                        var cmd = (ImageRecognitionCommand)selectedCommand;
+                    //    var cmd = (ImageRecognitionCommand)selectedCommand;
 
-                        if (!string.IsNullOrEmpty(cmd.v_ImageCapture))
-                        {
-                            pic.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
-                        }
-                    }
+                    //    if (!string.IsNullOrEmpty(cmd.v_ImageCapture))
+                    //    {
+                    //        pic.Image = Core.Common.Base64ToImage(cmd.v_ImageCapture);
+                    //    }
+                    //}
                 });
 
                 //update bindings

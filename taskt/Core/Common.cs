@@ -186,7 +186,6 @@ namespace taskt.Core
 
         public static string ImageToBase64(Image image)
         {
-
             using (MemoryStream m = new MemoryStream())
             {
                 image.Save(m, System.Drawing.Imaging.ImageFormat.Bmp);
@@ -194,7 +193,6 @@ namespace taskt.Core
                 var base64String = Convert.ToBase64String(imageBytes);
                 return base64String;
             }
-
         }
 
         public static Image Base64ToImage(string base64String)
