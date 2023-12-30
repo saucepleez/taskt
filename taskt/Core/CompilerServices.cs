@@ -1,9 +1,4 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.CodeDom.Compiler;
 
 namespace taskt.Core
 {
@@ -11,13 +6,12 @@ namespace taskt.Core
     {
         public CompilerResults CompileInput(string codeInput)
         {
-
             //define file output
             string Output = "tasktOnTheFly.exe";
 
             //create provider
             CodeDomProvider codeProvider = CodeDomProvider.CreateProvider("CSharp");
-      
+
             //create compile parameters
             CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateExecutable = true;
@@ -26,8 +20,6 @@ namespace taskt.Core
             //compile
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, codeInput);
             return results;
-   
         }
     }
-
-   }
+}
