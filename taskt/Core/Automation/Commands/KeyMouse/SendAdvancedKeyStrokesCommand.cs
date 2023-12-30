@@ -176,7 +176,8 @@ namespace taskt.Core.Automation.Commands
             var dgv = ControlsList.GetPropertyControl<DataGridView>(nameof(v_KeyActions));
 
             var column = (DataGridViewComboBoxColumn)dgv.Columns[0];
-            column.DataSource = Common.GetAvailableKeys();
+            //column.DataSource = Common.GetAvailableKeys();
+            column.DataSource = KeyMouseControls.KeysList;
         }
 
         public override bool IsValidate(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
