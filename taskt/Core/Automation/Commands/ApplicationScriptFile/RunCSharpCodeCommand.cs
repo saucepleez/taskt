@@ -66,7 +66,7 @@ namespace taskt.Core.Automation.Commands
             //var compilerSvc = new CompilerServices();
 
             //compile custom code
-            var result = CompilerServices.CompileInput(customCode);
+            var result = CSharpCodeCompilerControls.CompileInput(customCode);
 
             //check for errors
             if (result.Errors.HasErrors)

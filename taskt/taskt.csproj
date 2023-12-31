@@ -781,7 +781,7 @@
     <Compile Include="Core\GlobalAppInstances.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Common.cs" />
-    <Compile Include="Core\CompilerServices.cs" />
+    <Compile Include="Core\Automation\Commands\CSharpCodeCompilerControls.cs" />
     <Compile Include="Core\Automation\Commands\DataTableControls.cs" />
     <Compile Include="Core\Automation\Engine\AutomationEngineInstance.cs" />
     <Compile Include="Core\ExtensionMethods.cs" />

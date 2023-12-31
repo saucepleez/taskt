@@ -1,8 +1,8 @@
 ﻿using System.CodeDom.Compiler;
 
-namespace taskt.Core
+namespace taskt.Core.Automation.Commands
 {
-    public static class CompilerServices
+    public static class CSharpCodeCompilerControls
     {
         private const string compilerName = "tasktOnTheFly.exe";
 
