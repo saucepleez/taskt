@@ -726,7 +726,22 @@ namespace taskt.Core.Automation.Commands
 
         public ScriptCommand Clone()
         {
-            return (ScriptCommand)MemberwiseClone();
+            var newCommand = (ScriptCommand)MemberwiseClone();
+            var currentProps = this.GetParameterProperties();
+
+            var newProps = newCommand.GetParameterProperties();
+
+            for (int i = currentProps.Count - 1; i >=0 ; i--)
+            {
+                var v = currentProps[i].GetValue(this);
+                if (v is System.Data.DataTable table)
+                {
+                    newProps[i].SetValue(newCommand, table.Copy());
+                }
+            }
+
+            //return (ScriptCommand)MemberwiseClone();
+            return newCommand;
         }
 
         #region Math Replace
