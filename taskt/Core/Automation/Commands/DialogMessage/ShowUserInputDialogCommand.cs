@@ -75,7 +75,8 @@ namespace taskt.Core.Automation.Commands
             }
 
             //create clone of original
-            var clonedCommand = Common.Clone(this);
+            //var clonedCommand = Common.Clone(this);
+            var clonedCommand = (ShowUserInputDialogCommand)this.Clone();
 
             //translate variable
             clonedCommand.v_InputHeader = clonedCommand.v_InputHeader.ExpandValueOrUserVariable(engine);

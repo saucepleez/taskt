@@ -153,7 +153,8 @@ namespace taskt.Core.Automation.Commands
 
             var browserInstance = (SHDocVw.InternetExplorer)browserObject;
 
-            DataTable searchTable = Core.Common.Clone<DataTable>(v_WebSearchParameter);
+            //DataTable searchTable = Core.Common.Clone<DataTable>(v_WebSearchParameter);
+            DataTable searchTable = v_WebSearchParameter.Copy();
 
             DataColumn matchFoundColumn = new DataColumn();
             matchFoundColumn.ColumnName = "Match Found";

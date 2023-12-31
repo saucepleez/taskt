@@ -28,59 +28,59 @@ namespace taskt.Core
 {
     public static class Common
     {
-        /// <summary>
-        /// Creates a unique 'clone' of an item. Used to create unique clones of commands when changing/updating new parameters.
-        /// </summary>
-        public static T Clone<T>(T source)
-        {
-            if (!typeof(T).IsSerializable)
-            {
-                throw new ArgumentException("The type must be serializable.", "source");
-            }
+        ///// <summary>
+        ///// Creates a unique 'clone' of an item. Used to create unique clones of commands when changing/updating new parameters.
+        ///// </summary>
+        //public static T Clone<T>(T source)
+        //{
+        //    if (!typeof(T).IsSerializable)
+        //    {
+        //        throw new ArgumentException("The type must be serializable.", "source");
+        //    }
 
-            if (source == null)
-            {
-                return default(T);
-            }
+        //    if (source == null)
+        //    {
+        //        return default(T);
+        //    }
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Context = new StreamingContext(StreamingContextStates.Clone);
-                formatter.Serialize(ms, source);
-                ms.Position = 0;
-                return (T)formatter.Deserialize(ms);
-            }
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        BinaryFormatter formatter = new BinaryFormatter();
+        //        formatter.Context = new StreamingContext(StreamingContextStates.Clone);
+        //        formatter.Serialize(ms, source);
+        //        ms.Position = 0;
+        //        return (T)formatter.Deserialize(ms);
+        //    }
 
-            ////output to xml file
-            //XmlSerializer serializer = new XmlSerializer(typeof(T));
-            //var settings = new XmlWriterSettings
-            //{
-            //    NewLineHandling = NewLineHandling.Entitize,
-            //    Indent = true
-            //};
+        //    ////output to xml file
+        //    //XmlSerializer serializer = new XmlSerializer(typeof(T));
+        //    //var settings = new XmlWriterSettings
+        //    //{
+        //    //    NewLineHandling = NewLineHandling.Entitize,
+        //    //    Indent = true
+        //    //};
 
-            //StringBuilder xml = new StringBuilder();
-            //XmlWriter xmlWriter = XmlWriter.Create(xml);
+        //    //StringBuilder xml = new StringBuilder();
+        //    //XmlWriter xmlWriter = XmlWriter.Create(xml);
 
-            //serializer.Serialize(xmlWriter, source);
+        //    //serializer.Serialize(xmlWriter, source);
 
 
-            //using (TextReader reader = new StringReader(xml.ToString()))
-            //{
-            //    T deserializedData = (T)serializer.Deserialize(reader);
-            //    return deserializedData;
-            //}
+        //    //using (TextReader reader = new StringReader(xml.ToString()))
+        //    //{
+        //    //    T deserializedData = (T)serializer.Deserialize(reader);
+        //    //    return deserializedData;
+        //    //}
 
-            //System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            //Stream stream = new MemoryStream();
-            //using (stream)
-            //{
-            //    formatter.Serialize(stream, source);
-            //    stream.Seek(0, SeekOrigin.Begin);
-            //    return (T)formatter.Deserialize(stream);
-            //}
-        }
+        //    //System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        //    //Stream stream = new MemoryStream();
+        //    //using (stream)
+        //    //{
+        //    //    formatter.Serialize(stream, source);
+        //    //    stream.Seek(0, SeekOrigin.Begin);
+        //    //    return (T)formatter.Deserialize(stream);
+        //    //}
+        //}
 
         ///// <summary>
         ///// Returns a path to the underlying Script folder where script file objects are loaded and saved. Used when saved or loading files.
