@@ -63,10 +63,10 @@ namespace taskt.Core.Automation.Commands
             var customCode = v_Code.ExpandValueOrUserVariable(engine);
 
             //create compiler service
-            var compilerSvc = new CompilerServices();
+            //var compilerSvc = new CompilerServices();
 
             //compile custom code
-            var result = compilerSvc.CompileInput(customCode);
+            var result = CompilerServices.CompileInput(customCode);
 
             //check for errors
             if (result.Errors.HasErrors)
