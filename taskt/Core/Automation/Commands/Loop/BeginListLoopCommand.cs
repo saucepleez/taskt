@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using taskt.UI.Forms;
 using taskt.UI.CustomControls;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -42,10 +43,10 @@ namespace taskt.Core.Automation.Commands
             complexVariable = engine.VariableList.Where(x => x.VariableName == v_LoopParameter).FirstOrDefault();
 
 
-            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
-            }
+            //if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            //}
 
             //user may potentially include brackets []
             if (complexVariable == null)
@@ -122,7 +123,8 @@ namespace taskt.Core.Automation.Commands
                         return;
                     }
 
-                    (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    //(i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    SystemVariables.Update_LoopCurrentIndex(i + 1);
 
                     engine.ExecuteCommand(cmd);
 

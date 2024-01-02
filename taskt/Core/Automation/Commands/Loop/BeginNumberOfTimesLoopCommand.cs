@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core;
+using taskt.Core.Automation.Engine;
 using taskt.UI.CustomControls;
 using taskt.UI.Forms;
 
@@ -47,10 +48,10 @@ namespace taskt.Core.Automation.Commands
         {
             Core.Automation.Commands.BeginNumberOfTimesLoopCommand loopCommand = (Core.Automation.Commands.BeginNumberOfTimesLoopCommand)parentCommand.ScriptCommand;
 
-            if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
-            {
-                engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
-            }
+            //if (!engine.VariableList.Any(f => f.VariableName == "Loop.CurrentIndex"))
+            //{
+            //    engine.VariableList.Add(new Script.ScriptVariable() { VariableName = "Loop.CurrentIndex", VariableValue = "0" });
+            //}
 
 
             int loopTimes;
@@ -68,18 +69,23 @@ namespace taskt.Core.Automation.Commands
             for (int i = startIndex; i < loopTimes; i++)
             {
                 if (complexVarible != null)
+                {
                     complexVarible.CurrentPosition = i;
+                }
 
-              //  (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                // (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
 
                 engine.ReportProgress("Starting Loop Number " + (i + 1) + "/" + loopTimes + " From Line " + loopCommand.LineNumber);
 
                 foreach (var cmd in parentCommand.AdditionalScriptCommands)
                 {
                     if (engine.IsCancellationPending)
+                    {
                         return;
+                    }
 
-                    (i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    //(i + 1).ToString().StoreInUserVariable(engine, "Loop.CurrentIndex");
+                    SystemVariables.Update_LoopCurrentIndex(i + 1);
 
                     engine.ExecuteCommand(cmd);
 
