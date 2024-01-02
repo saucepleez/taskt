@@ -148,6 +148,7 @@ namespace taskt.Core.Automation.Engine
             DateTime_Now_FileSafe.VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss");
 
             Env_ActiveWindowTitle.VariableValue = WindowNameControls.GetActiveWindowTitle();
+
             Window_CurrentWindowName.VariableValue = WindowNameControls.GetActiveWindowTitle();
             Window_CurrentWindowHandle.VariableValue = WindowNameControls.GetActiveWindowHandle().ToString();
 
