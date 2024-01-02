@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using taskt.Core.Automation.Engine;
 
 /*
  * NOTE: This form is called primarily by frmScriptBuilder, so the namespace looks like this
@@ -27,12 +28,12 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         TreeNode bufferedUserVariableParentNode = new TreeNode();
         TreeNode bufferedSystemVariableParentNode = new TreeNode();
 
-        private string leadingValue = "Default Value: ";
-        private string emptyValue = "(no default value)";
+        private readonly string leadingValue = "Default Value: ";
+        private readonly string emptyValue = "(no default value)";
         public Core.ApplicationSettings appSettings;
 
-        static string User_Variables_Text = "My Task Variables";
-        static string System_Variables_Text = "Default Task Variables";
+        static readonly string User_Variables_Text = "My Task Variables";
+        static readonly string System_Variables_Text = "Default Task Variables";
 
         #region Initialization and Form Load
 
@@ -82,7 +83,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             // System Variables
             bufferedSystemVariableParentNode.Nodes.Clear();
             bufferedSystemVariableParentNode.Text = System_Variables_Text;
-            List<Core.Script.ScriptVariable> systemVars = Core.Common.GenerateSystemVariables();
+            //List<Core.Script.ScriptVariable> systemVars = Core.Common.GenerateSystemVariables();
+            var systemVars = SystemVariables.GetSystemVariables(new AutomationEngineInstance());
             foreach(var item in systemVars)
             {
                 AddUserVariableNode(bufferedSystemVariableParentNode, item.VariableName, (string)item.VariableValue);

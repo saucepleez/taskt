@@ -194,7 +194,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private CommandEditor.Supplemental.frmItemSelector CreateVariableSelectForm()
         {
             var variableList = scriptVariables.Select(f => f.VariableName).ToList();
-            variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
+            //variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
+            variableList.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
 
             return (new CommandEditor.Supplemental.frmItemSelector(variableList, "Select Variable", "Select Variable"));
         }

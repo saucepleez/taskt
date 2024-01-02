@@ -3386,7 +3386,8 @@ namespace taskt.UI.Forms.ScriptBuilder
         {
             List<string> variables = new List<string>();
             variables.AddRange(scriptVariables.Select(f => f.VariableName));
-            variables.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
+            //variables.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
+            variables.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
             return variables;
         }
 

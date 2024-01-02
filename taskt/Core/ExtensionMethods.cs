@@ -135,7 +135,8 @@ namespace taskt.Core
             }
 
             var variableList = engine.VariableList;
-            var systemVariables = Core.Common.GenerateSystemVariables();
+            //var systemVariables = Core.Common.GenerateSystemVariables();
+            var systemVariables = Automation.Engine.SystemVariables.GetSystemVariables(engine);
 
             var searchList = new List<Script.ScriptVariable>();
             searchList.AddRange(variableList);
@@ -471,19 +472,19 @@ namespace taskt.Core
             //    return true;
             //}
 
-            switch (variableName)
-            {
-                case "taskt.EngineContext":
-                    result = engine.GetEngineContext();
-                    return true;
+            //switch (variableName)
+            //{
+            //    case "taskt.EngineContext":
+            //        result = engine.GetEngineContext();
+            //        return true;
 
-                case "File.CurrentScriptFile":
-                    result = engine.FileName;
-                    return true;
+            //    case "File.CurrentScriptFile":
+            //        result = engine.FileName;
+            //        return true;
 
-                default:
-                    break;
-            }
+            //    default:
+            //        break;
+            //}
 
             if (ExpandVariableNormal(variableName, variables, out result))
             {
@@ -536,7 +537,8 @@ namespace taskt.Core
             }
 
             var variableList = engine.VariableList;
-            var systemVariables = Core.Common.GenerateSystemVariables();
+            //var systemVariables = Core.Common.GenerateSystemVariables();
+            var systemVariables = Automation.Engine.SystemVariables.GetSystemVariables(engine);
 
             var searchList = new List<Script.ScriptVariable>();
             searchList.AddRange(variableList);
@@ -674,7 +676,8 @@ namespace taskt.Core
             }
 
             var variableList = engine.VariableList;
-            var systemVariables = Core.Common.GenerateSystemVariables();
+            //var systemVariables = Core.Common.GenerateSystemVariables();
+            var systemVariables = Automation.Engine.SystemVariables.GetSystemVariables(engine);
 
             var searchList = new List<Script.ScriptVariable>();
             searchList.AddRange(variableList);
@@ -800,16 +803,16 @@ namespace taskt.Core
                 //{
                 //    varCheck.VariableValue = engine.GetEngineContext();
                 //}
-                switch (potentialVariable)
-                {
-                    case "taskt.EngineContext":
-                        varCheck.VariableValue = engine.GetEngineContext();
-                        break;
+                //switch (potentialVariable)
+                //{
+                //    case "taskt.EngineContext":
+                //        varCheck.VariableValue = engine.GetEngineContext();
+                //        break;
 
-                    case "File.CurrentScriptFile":
-                        varCheck.VariableValue = engine.FileName;
-                        break;
-                }
+                //    case "File.CurrentScriptFile":
+                //        varCheck.VariableValue = engine.FileName;
+                //        break;
+                //}
 
                 if (varCheck != null)
                 {
