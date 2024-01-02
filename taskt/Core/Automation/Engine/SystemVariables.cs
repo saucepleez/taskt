@@ -14,7 +14,6 @@ namespace taskt.Core.Automation.Engine
     /// </summary>
     public static class SystemVariables
     {
-
         private static readonly ScriptVariable Folder_Desktop = new ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
         private static readonly ScriptVariable Folder_Documents = new ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) };
         private static readonly ScriptVariable Folder_AppData = new ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
@@ -44,7 +43,9 @@ namespace taskt.Core.Automation.Engine
         private static readonly ScriptVariable PC_DomainName = new ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName };
 
         private static readonly ScriptVariable Env_ActiveWindowTitle = new ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = "" };
-        
+        private static readonly ScriptVariable Window_CurrentWindowName = new ScriptVariable { VariableName = "Window.CurrentWindowName", VariableValue = "" };
+        private static readonly ScriptVariable Window_CurrentWindowHandle = new ScriptVariable { VariableName = "Window.CurrentWindowHandle", VariableValue = "" };
+
         private static readonly ScriptVariable Taskt_EngineContext = new ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "" };
         private static readonly ScriptVariable Taskt_Location = new ScriptVariable { VariableName = "taskt.Location", VariableValue = Assembly.GetEntryAssembly().Location };
         
@@ -101,6 +102,9 @@ namespace taskt.Core.Automation.Engine
 
             // Active Window Title (not recommended)
             Env_ActiveWindowTitle,
+            // Window
+            Window_CurrentWindowName,
+            Window_CurrentWindowHandle,
 
             // taskt
             Taskt_EngineContext,
@@ -144,6 +148,8 @@ namespace taskt.Core.Automation.Engine
             DateTime_Now_FileSafe.VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss");
 
             Env_ActiveWindowTitle.VariableValue = WindowNameControls.GetActiveWindowTitle();
+            Window_CurrentWindowName.VariableValue = WindowNameControls.GetActiveWindowTitle();
+            Window_CurrentWindowHandle.VariableValue = WindowNameControls.GetActiveWindowHandle().ToString();
 
             Taskt_EngineContext.VariableValue = engine.GetEngineContext();
 
