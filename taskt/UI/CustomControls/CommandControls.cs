@@ -552,7 +552,8 @@ namespace taskt.UI.CustomControls
             var attrIsWin = GetCustomAttributeWithVirtual<PropertyIsWindowNamesList>(propInfo, virtualPropInfo);
             if (attrIsWin?.isWindowNamesList ?? false)
             {
-                uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+                //uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+                uiOptions.AddRange(WindowNameControls.GetAllWindowTitles(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
             }
 
             // variable names list & instance name list
@@ -1306,7 +1307,7 @@ namespace taskt.UI.CustomControls
         public static ComboBox AddWindowNames(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>( () => {
-                return GetWindowNames(editor, addCurrentWindow, addAllWindows, addDesktop);
+                return WindowNameControls.GetAllWindowTitles(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
             }));
         }
 
@@ -1339,6 +1340,13 @@ namespace taskt.UI.CustomControls
             }));
         }
 
+        /// <summary>
+        /// add combobox items by specified Func
+        /// </summary>
+        /// <param name="cbo"></param>
+        /// <param name="editor"></param>
+        /// <param name="itemsFunc"></param>
+        /// <returns></returns>
         public static ComboBox AddComoboBoxItems(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor, Func<List<string>> itemsFunc)
         {
             if ((cbo == null) || (editor == null))
@@ -1357,35 +1365,35 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        /// <summary>
-        /// get Window Names list
-        /// </summary>
-        /// <param name="editor"></param>
-        /// <param name="addCurrentWindow"></param>
-        /// <param name="addAllWindows"></param>
-        /// <param name="addDesktop"></param>
-        /// <returns></returns>
-        public static List<string> GetWindowNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        {
-            var lst = new List<string>();
+        ///// <summary>
+        ///// get Window Names list
+        ///// </summary>
+        ///// <param name="editor"></param>
+        ///// <param name="addCurrentWindow"></param>
+        ///// <param name="addAllWindows"></param>
+        ///// <param name="addDesktop"></param>
+        ///// <returns></returns>
+        //public static List<string> GetWindowNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        //{
+        //    var lst = new List<string>();
 
-            if (addCurrentWindow)
-            {
-                lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
-            }
+        //    if (addCurrentWindow)
+        //    {
+        //        lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
+        //    }
 
-            if (addAllWindows)
-            {
-                lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
-            }
-            if (addDesktop)
-            {
-                lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
-            }
-            lst.AddRange(WindowNameControls.GetAllWindowTitles());
+        //    if (addAllWindows)
+        //    {
+        //        lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
+        //    }
+        //    if (addDesktop)
+        //    {
+        //        lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
+        //    }
+        //    lst.AddRange(WindowNameControls.GetAllWindowTitles());
 
-            return lst;
-        }
+        //    return lst;
+        //}
 
         #region create ComboBox items list
         /// <summary>

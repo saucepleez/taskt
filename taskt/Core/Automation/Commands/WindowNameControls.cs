@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -636,6 +637,39 @@ namespace taskt.Core.Automation.Commands
         public static List<IntPtr> GetAllWindowHandles()
         {
             return GetAllWindowNamesAndHandles().Select(w => w.Item1).ToList();
+        }
+
+        /// <summary>
+        /// get all window names for frmCommandEditor ComboBox
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <param name="addCurrentWindow"></param>
+        /// <param name="addAllWindows"></param>
+        /// <param name="addDesktop"></param>
+        /// <returns></returns>
+        public static List<string> GetAllWindowTitles(ApplicationSettings settings, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
+        {
+            var lst = new List<string>();
+
+            if (addCurrentWindow)
+            {
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_CurrentWindowName.VariableName, settings));
+            }
+
+            // TODO: use system variable like keyword
+            if (addAllWindows)
+            {
+                lst.Add(settings?.EngineSettings.AllWindowsKeyword ?? "All Windows");
+            }
+            
+            if (addDesktop)
+            {
+                lst.Add(settings?.EngineSettings.DesktopKeyword ?? "Desktop");
+            }
+
+            lst.AddRange(GetAllWindowTitles());
+
+            return lst;
         }
 
         /// <summary>

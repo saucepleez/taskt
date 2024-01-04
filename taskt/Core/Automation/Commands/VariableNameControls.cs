@@ -87,7 +87,29 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static bool IsWrapVariableMarker(string name, Engine.AutomationEngineInstance engine)
         {
-            return (name.StartsWith(engine.engineSettings.VariableStartMarker) && name.EndsWith(engine.engineSettings.VariableEndMarker));
+            return IsWrapVariableMarker(name, engine.engineSettings);
+        }
+
+        /// <summary>
+        /// check string starts variable start maker and ends variable ends marker
+        /// </summary>
+        /// <param name="name">name is not converted</param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        public static bool IsWrapVariableMarker(string name, ApplicationSettings settings)
+        {
+            return IsWrapVariableMarker(name, settings.EngineSettings);
+        }
+
+        /// <summary>
+        /// check string starts variable start maker and ends variable ends marker
+        /// </summary>
+        /// <param name="name">name is not converted</param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        private static bool IsWrapVariableMarker(string name, EngineSettings settings)
+        {
+            return (name.StartsWith(settings.VariableStartMarker) && name.EndsWith(settings.VariableEndMarker));
         }
 
         /// <summary>
@@ -104,8 +126,37 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                return engine.engineSettings.VariableStartMarker + name + engine.engineSettings.VariableEndMarker;
+                return GetWrappedVariableName(name, engine.engineSettings);
             }
+        }
+
+        /// <summary>
+        /// get wrapped variable name.
+        /// </summary>
+        /// <param name="name">name is not converted</param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        public static string GetWrappedVariableName(string name, ApplicationSettings settings)
+        {
+            if (IsWrapVariableMarker(name, settings))
+            {
+                return name;
+            }
+            else
+            {
+                return GetWrappedVariableName(name, settings.EngineSettings);
+            }
+        }
+
+        /// <summary>
+        /// get wrapped variable name.
+        /// </summary>
+        /// <param name="name">name is not converted</param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        private static string GetWrappedVariableName(string name, EngineSettings settings)
+        {
+            return settings.VariableStartMarker + name + settings.VariableEndMarker;
         }
         #endregion
 

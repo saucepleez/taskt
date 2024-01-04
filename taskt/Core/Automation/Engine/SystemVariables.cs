@@ -14,56 +14,56 @@ namespace taskt.Core.Automation.Engine
     /// </summary>
     public static class SystemVariables
     {
-        private static readonly ScriptVariable Folder_Desktop = new ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
-        private static readonly ScriptVariable Folder_Documents = new ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) };
-        private static readonly ScriptVariable Folder_AppData = new ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
-        private static readonly ScriptVariable Folder_ScriptPath = new ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Folders.GetFolder(Folders.FolderType.ScriptsFolder) };
-        private static readonly ScriptVariable Folder_RootPath = new ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Folders.GetFolder(Folders.FolderType.RootFolder) };
-        private static readonly ScriptVariable Folder_AttendedTasksPath = new ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) };
+        public static readonly ScriptVariable Folder_Desktop = new ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
+        public static readonly ScriptVariable Folder_Documents = new ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) };
+        public static readonly ScriptVariable Folder_AppData = new ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
+        public static readonly ScriptVariable Folder_ScriptPath = new ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Folders.GetFolder(Folders.FolderType.ScriptsFolder) };
+        public static readonly ScriptVariable Folder_RootPath = new ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Folders.GetFolder(Folders.FolderType.RootFolder) };
+        public static readonly ScriptVariable Folder_AttendedTasksPath = new ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) };
 
-        private static readonly ScriptVariable DateTime_Now = new ScriptVariable { VariableName = "DateTime.Now", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_Month = new ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_Day = new ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_Year = new ScriptVariable { VariableName = "DateTime.Now.Year", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_YearLong = new ScriptVariable { VariableName = "DateTime.Now.YearLong", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_Hour = new ScriptVariable { VariableName = "DateTime.Now.Hour", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_Minute = new ScriptVariable { VariableName = "DateTime.Now.Minute", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_Second = new ScriptVariable { VariableName = "DateTime.Now.Second", VariableValue = "" };
-        private static readonly ScriptVariable DateTime_Now_FileSafe = new ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now = new ScriptVariable { VariableName = "DateTime.Now", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_Month = new ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_Day = new ScriptVariable { VariableName = "DateTime.Now.Day", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_Year = new ScriptVariable { VariableName = "DateTime.Now.Year", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_YearLong = new ScriptVariable { VariableName = "DateTime.Now.YearLong", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_Hour = new ScriptVariable { VariableName = "DateTime.Now.Hour", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_Minute = new ScriptVariable { VariableName = "DateTime.Now.Minute", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_Second = new ScriptVariable { VariableName = "DateTime.Now.Second", VariableValue = "" };
+        public static readonly ScriptVariable DateTime_Now_FileSafe = new ScriptVariable { VariableName = "DateTime.Now.FileSafe", VariableValue = "" };
 
-        private static readonly ScriptVariable System_InputLanguage = new ScriptVariable { VariableName = "System.InputLanguage", VariableValue = InputLanguage.CurrentInputLanguage.Culture.Name };
-        private static readonly ScriptVariable System_KeyboardLayout = new ScriptVariable { VariableName = "System.KeyboardLayout", VariableValue = InputLanguage.CurrentInputLanguage.LayoutName };
+        public static readonly ScriptVariable System_InputLanguage = new ScriptVariable { VariableName = "System.InputLanguage", VariableValue = InputLanguage.CurrentInputLanguage.Culture.Name };
+        public static readonly ScriptVariable System_KeyboardLayout = new ScriptVariable { VariableName = "System.KeyboardLayout", VariableValue = InputLanguage.CurrentInputLanguage.LayoutName };
 
-        private static readonly ScriptVariable Error_Message = new ScriptVariable { VariableName = "Error.Message", VariableValue = "" };
-        private static readonly ScriptVariable Error_Line = new ScriptVariable { VariableName = "Error.Line", VariableValue = "" };
-        private static readonly ScriptVariable Error_StackTrace = new ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "" };
+        public static readonly ScriptVariable Error_Message = new ScriptVariable { VariableName = "Error.Message", VariableValue = "" };
+        public static readonly ScriptVariable Error_Line = new ScriptVariable { VariableName = "Error.Line", VariableValue = "" };
+        public static readonly ScriptVariable Error_StackTrace = new ScriptVariable { VariableName = "Error.StackTrace", VariableValue = "" };
 
-        private static readonly ScriptVariable PC_MachineName = new ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName };
-        private static readonly ScriptVariable PC_UserName = new ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName };
-        private static readonly ScriptVariable PC_DomainName = new ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName };
+        public static readonly ScriptVariable PC_MachineName = new ScriptVariable { VariableName = "PC.MachineName", VariableValue = Environment.MachineName };
+        public static readonly ScriptVariable PC_UserName = new ScriptVariable { VariableName = "PC.UserName", VariableValue = Environment.UserName };
+        public static readonly ScriptVariable PC_DomainName = new ScriptVariable { VariableName = "PC.DomainName", VariableValue = Environment.UserDomainName };
 
-        private static readonly ScriptVariable Env_ActiveWindowTitle = new ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = "" };
-        private static readonly ScriptVariable Window_CurrentWindowName = new ScriptVariable { VariableName = "Window.CurrentWindowName", VariableValue = "" };
-        private static readonly ScriptVariable Window_CurrentWindowHandle = new ScriptVariable { VariableName = "Window.CurrentWindowHandle", VariableValue = "" };
+        public static readonly ScriptVariable Env_ActiveWindowTitle = new ScriptVariable { VariableName = "Env.ActiveWindowTitle", VariableValue = "" };
+        public static readonly ScriptVariable Window_CurrentWindowName = new ScriptVariable { VariableName = "Window.CurrentWindowName", VariableValue = "" };
+        public static readonly ScriptVariable Window_CurrentWindowHandle = new ScriptVariable { VariableName = "Window.CurrentWindowHandle", VariableValue = "" };
 
-        private static readonly ScriptVariable Taskt_EngineContext = new ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "" };
-        private static readonly ScriptVariable Taskt_Location = new ScriptVariable { VariableName = "taskt.Location", VariableValue = Assembly.GetEntryAssembly().Location };
+        public static readonly ScriptVariable Taskt_EngineContext = new ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "" };
+        public static readonly ScriptVariable Taskt_Location = new ScriptVariable { VariableName = "taskt.Location", VariableValue = Assembly.GetEntryAssembly().Location };
         
-        private static readonly ScriptVariable Char_NewLine = new ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine };
-        private static readonly ScriptVariable Char_Cr = new ScriptVariable { VariableName = "Char.Cr", VariableValue = "\r" };
-        private static readonly ScriptVariable Char_Lf = new ScriptVariable { VariableName = "Char.Lf", VariableValue = "\n" };
-        private static readonly ScriptVariable Char_Tab = new ScriptVariable { VariableName = "Char.Tab", VariableValue = "\t" };
-        private static readonly ScriptVariable Char_Space = new ScriptVariable { VariableName = "Char.Space", VariableValue = " " };
+        public static readonly ScriptVariable Char_NewLine = new ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine };
+        public static readonly ScriptVariable Char_Cr = new ScriptVariable { VariableName = "Char.Cr", VariableValue = "\r" };
+        public static readonly ScriptVariable Char_Lf = new ScriptVariable { VariableName = "Char.Lf", VariableValue = "\n" };
+        public static readonly ScriptVariable Char_Tab = new ScriptVariable { VariableName = "Char.Tab", VariableValue = "\t" };
+        public static readonly ScriptVariable Char_Space = new ScriptVariable { VariableName = "Char.Space", VariableValue = " " };
         
-        private static readonly ScriptVariable FileCounter_F0 = new ScriptVariable { VariableName = "FileCounter.F0", VariableValue = "1" };
-        private static readonly ScriptVariable FileCounter_F00 = new ScriptVariable { VariableName = "FileCounter.F00", VariableValue = "01" };
-        private static readonly ScriptVariable FileCounter_F000 = new ScriptVariable { VariableName = "FileCounter.F000", VariableValue = "001" };
-        private static readonly ScriptVariable File_CurrentScriptPath = new ScriptVariable { VariableName = "File.CurrentScriptFile", VariableValue = "" };
+        public static readonly ScriptVariable FileCounter_F0 = new ScriptVariable { VariableName = "FileCounter.F0", VariableValue = "1" };
+        public static readonly ScriptVariable FileCounter_F00 = new ScriptVariable { VariableName = "FileCounter.F00", VariableValue = "01" };
+        public static readonly ScriptVariable FileCounter_F000 = new ScriptVariable { VariableName = "FileCounter.F000", VariableValue = "001" };
+        public static readonly ScriptVariable File_CurrentScriptPath = new ScriptVariable { VariableName = "File.CurrentScriptFile", VariableValue = "" };
 
-        private static readonly ScriptVariable Loop_CurrentIndex = new ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" };
+        public static readonly ScriptVariable Loop_CurrentIndex = new ScriptVariable { VariableName = "Loop.CurrentIndex", VariableValue = "0" };
 
-        private static readonly ScriptVariable Math_PI = new ScriptVariable { VariableName = "Math.PI", VariableValue = Math.PI.ToString() };
-        private static readonly ScriptVariable Math_E = new ScriptVariable { VariableName = "Math.E", VariableValue = Math.E.ToString() };
+        public static readonly ScriptVariable Math_PI = new ScriptVariable { VariableName = "Math.PI", VariableValue = Math.PI.ToString() };
+        public static readonly ScriptVariable Math_E = new ScriptVariable { VariableName = "Math.E", VariableValue = Math.E.ToString() };
 
         private static readonly List<ScriptVariable> systemVariables = new List<ScriptVariable>()
         {
