@@ -158,6 +158,16 @@ namespace taskt.Core.Automation.Commands
         {
             return settings.VariableStartMarker + name + settings.VariableEndMarker;
         }
+
+        /// <summary>
+        /// get variable names
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static List<string> GetVariableNames(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        {
+            return editor?.scriptVariables.Select(t => t.VariableName).ToList() ?? new List<string>();
+        }
         #endregion
 
         #region inner variable methods

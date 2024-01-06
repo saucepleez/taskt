@@ -561,7 +561,7 @@ namespace taskt.UI.CustomControls
             var attrIsInstance = GetCustomAttributeWithVirtual<PropertyInstanceType>(propInfo, virtualPropInfo);
             if (attrIsVar?.isVariablesList ?? false)
             {
-                uiOptions.AddRange(GetVariableNames(editor));
+                uiOptions.AddRange(VariableNameControls.GetVariableNames(editor));
             }
             else
             {
@@ -570,7 +570,7 @@ namespace taskt.UI.CustomControls
                 {
                     if ((attrDirection?.porpose ?? PropertyParameterDirection.ParameterDirection.Unknown) == PropertyParameterDirection.ParameterDirection.Output)
                     {
-                        uiOptions.AddRange(GetVariableNames(editor));
+                        uiOptions.AddRange(VariableNameControls.GetVariableNames(editor));
                     }
                     else
                     {
@@ -1321,7 +1321,7 @@ namespace taskt.UI.CustomControls
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>(() =>
             {
-                return GetVariableNames(editor);
+                return VariableNameControls.GetVariableNames(editor);
             }));
         }
 
@@ -1396,15 +1396,15 @@ namespace taskt.UI.CustomControls
         //}
 
         #region create ComboBox items list
-        /// <summary>
-        /// get variable names list
-        /// </summary>
-        /// <param name="editor"></param>
-        /// <returns></returns>
-        public static List<string> GetVariableNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        {
-            return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
-        }
+        ///// <summary>
+        ///// get variable names list
+        ///// </summary>
+        ///// <param name="editor"></param>
+        ///// <returns></returns>
+        //public static List<string> GetVariableNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
+        //}
 
         /// <summary>
         /// get instance names list
