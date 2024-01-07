@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using System.Collections.Generic;
-using taskt.UI.Forms;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Linq;
 

@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
