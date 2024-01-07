@@ -17,7 +17,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetWindowHandleFromWindowNameCommand : ScriptCommand
+    public class GetWindowHandleFromWindowNameCommand : ScriptCommand, IWindowNameProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyIsOptional(false)]
         [PropertyValidationRule("Window Handle", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_WindowHandle { get; set; }
+        public string v_HandleResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
             WindowNameControls.WindowAction( this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    wins[0].Item1.StoreInUserVariable(engine, v_WindowHandle);
+                    wins[0].Item1.StoreInUserVariable(engine, v_HandleResult);
                 })
             );
         }

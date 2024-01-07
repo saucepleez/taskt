@@ -1852,6 +1852,7 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_1_74(XDocument doc)
         {
             ChangeAttributeName(doc, "WaitForWindowToExistsCommand", "v_LengthToWait", "v_WaitTime");
+            ChangeAttributeName(doc, "GetWindowHandleFromWindowNameCommand", "v_WindowHandle", "v_HandleResult");
 
             return doc;
         }
