@@ -350,6 +350,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AAnyWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\AWindowNameCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetProcessNameFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowHandleFromWindowName.cs" />
