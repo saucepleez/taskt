@@ -24,9 +24,9 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         //public string v_SearchMethod { get; set; }
 
-        [XmlAttribute]
+        //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public override string v_WaitTime { get; set; }
+        //public override string v_WaitTime { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]

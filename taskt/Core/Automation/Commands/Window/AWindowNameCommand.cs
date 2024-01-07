@@ -25,15 +25,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         [PropertyParameterOrder(7000)]
-        public string v_MatchMethod { get; set; }
+        public virtual string v_MatchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
         [PropertyParameterOrder(7100)]
-        public string v_TargetWindowIndex { get; set; }
+        public virtual string v_TargetWindowIndex { get; set; }
 
-        [XmlAttribute]
-        public override string v_WaitTime { get; set; }
+        //[XmlAttribute]
+        //public override string v_WaitTime { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]

@@ -13,12 +13,12 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
         [PropertyParameterOrder(5000)]
-        public string v_WindowHandle { get; set; }
+        public virtual string v_WindowHandle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyParameterOrder(6000)]
-        public string v_WaitTime { get; set; }
+        public  virtual string v_WaitTime { get; set; }
 
         public AWindowHandleCommand()
         {
