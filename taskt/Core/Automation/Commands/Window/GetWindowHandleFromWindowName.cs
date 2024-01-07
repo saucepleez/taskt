@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Collections.Generic;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -17,39 +15,38 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetWindowHandleFromWindowNameCommand : ScriptCommand, IWindowNameProperties
+    public class GetWindowHandleFromWindowNameCommand : AWindowNameCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        //public string v_SearchMethod { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
+        //public string v_MatchMethod { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
-        [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        public string v_MatchMethod { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
-        public string v_TargetWindowIndex { get; set; }
-
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
-        [Remarks("")]
         [PropertyIsOptional(false)]
         [PropertyValidationRule("Window Handle", PropertyValidationRule.ValidationRuleFlags.Empty)]
-        public string v_HandleResult { get; set; }
+        [PropertyParameterOrder(6500)]
+        public override string v_HandleResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //public string v_WaitTime { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
-        public string v_NameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        //public string v_NameResult { get; set; }
 
         public GetWindowHandleFromWindowNameCommand()
         {
@@ -65,14 +62,14 @@ namespace taskt.Core.Automation.Commands
             );
         }
 
-        private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
-        }
+        //private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        //{
+        //    WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+        //}
 
-        public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        {
-            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
-        }
+        //public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
+        //}
     }
 }
