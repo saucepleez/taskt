@@ -25,20 +25,19 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         //public string v_SearchMethod { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
-        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        //public string v_MatchMethod { get; set; }
-
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
-        //public string v_TargetWindowIndex { get; set; }
-
         [XmlAttribute]
         [PropertyIsOptional(false)]
         [PropertyValidationRule("Window Handle", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyParameterOrder(6500)]
         public override string v_HandleResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        public override string v_MatchMethod { get; set; }
+
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        //public string v_TargetWindowIndex { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]

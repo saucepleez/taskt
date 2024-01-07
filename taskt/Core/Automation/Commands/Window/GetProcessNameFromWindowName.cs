@@ -38,6 +38,10 @@ namespace taskt.Core.Automation.Commands
         //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         //public string v_MatchMethod { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        public override string v_MatchMethod { get; set; }
+
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
         //public string v_TargetWindowIndex { get; set; }

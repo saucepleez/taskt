@@ -41,10 +41,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6500)]
         public string v_Height { get; set; }
 
-        //[XmlAttribute]
-        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
-        //[PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
-        //public string v_MatchMethod { get; set; }
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        public override string v_MatchMethod { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
