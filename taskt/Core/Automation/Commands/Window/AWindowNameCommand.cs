@@ -6,11 +6,11 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// Abstract class for Window Name commands 
+    /// </summary>
     [Serializable]
-    /*
-     * Abstract class for Window Name commands
-     */
-    public abstract class AWindowNameCommand : ScriptCommand
+    public abstract class AWindowNameCommand : ScriptCommand, IWindowNameProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
