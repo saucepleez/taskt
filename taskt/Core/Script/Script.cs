@@ -359,6 +359,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_58(doc);
             convertTo3_5_1_62(doc);
             convertTo3_5_1_72(doc);
+            convertTo3_5_1_74(doc);
 
             return doc;
         }
@@ -1848,6 +1849,14 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_74(XDocument doc)
+        {
+            ChangeAttributeName(doc, "WaitForWindowToExistsCommand", "v_LengthToWait", "v_WaitTime");
+
+            return doc;
+        }
+
+
         /// <summary>
         /// get specfied commands
         /// </summary>
@@ -2276,7 +2285,7 @@ namespace taskt.Core.Script
         {
             return ChangeAttributeName(doc, new Func<XElement, bool>(el =>
             {
-                return el.Attribute("CommandName").Value == targetAttribute;
+                return el.Attribute("CommandName").Value == targetCommand;
             }), targetAttribute, newAttribute);
         }
     }
