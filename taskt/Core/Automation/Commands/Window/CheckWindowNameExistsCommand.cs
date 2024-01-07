@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Collections.Generic;
-using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -17,34 +15,35 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CheckWindowNameExistsCommand : ScriptCommand, IAnyWindowNameProperties
+    public class CheckWindowNameExistsCommand : AAnyWindowNameCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
-        public string v_WindowName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        //public string v_WindowName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        //public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When Window Exists, Result is **True**")]
+        [PropertyParameterOrder(6100)]
         public string v_UserVariableName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
-        public string v_WaitTime { get; set; }
+        public override string v_WaitTime { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
-        public string v_NameResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        //public string v_NameResult { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
-        public string v_HandleResult { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        //public string v_HandleResult { get; set; }
 
         public CheckWindowNameExistsCommand()
         {
@@ -68,11 +67,11 @@ namespace taskt.Core.Automation.Commands
             );
         }
 
-        public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        {
-            //ComboBox cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
-            //cmb.AddWindowNames();
-            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
-        }
+        //public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
+        //{
+        //    //ComboBox cmb = (ComboBox)ControlsList[nameof(v_WindowName)];
+        //    //cmb.AddWindowNames();
+        //    ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
+        //}
     }
 }
