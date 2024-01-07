@@ -13,6 +13,6 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(MathControls), nameof(MathControls.v_AngleType))]
         [PropertyParameterOrder(5500)]
-        public string v_AngleType { get; set; }
+        public virtual string v_AngleType { get; set; }
     }
 }

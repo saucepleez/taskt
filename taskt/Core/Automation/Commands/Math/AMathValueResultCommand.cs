@@ -13,11 +13,11 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
         [PropertyParameterOrder(5000)]
-        public string v_Value { get; set; }
+        public virtual string v_Value { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_OutputNumericalVariableName))]
         [PropertyParameterOrder(6000)]
-        public string v_Result { get; set; }
+        public virtual string v_Result { get; set; }
     }
 }
