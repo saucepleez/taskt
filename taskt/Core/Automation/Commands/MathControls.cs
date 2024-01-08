@@ -88,9 +88,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="value"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static double ConvertAngleValueToRadian(ATrignometricCommand command, double value, Engine.AutomationEngineInstance engine)
+        private static double ConvertAngleValueToRadian(ITrignometricProperties command, double value, Engine.AutomationEngineInstance engine)
         {
-            if (command.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
+            if (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
             {
                 value = value * Math.PI / 180.0;
             }
@@ -185,11 +185,12 @@ namespace taskt.Core.Automation.Commands
             }
 
             var r = actionFunc(v);
-            if (command.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
-            {
-                r = r * 180.0 / Math.PI;
-                //r = ConvertRadianToDegree(r);
-            }
+            //if (command.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
+            //{
+            //    r = r * 180.0 / Math.PI;
+            //    //r = ConvertRadianToDegree(r);
+            //}
+            r = ConvertAngleValueToRadian(command, r, engine);
             return r;
         }
 

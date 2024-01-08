@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     /// Abstract Class for Trignometric Commands
     /// </summary>
     [Serializable]
-    public abstract class ATrignometricCommand : AMathValueResultCommand
+    public abstract class ATrignometricCommand : AMathValueResultCommand, ITrignometricProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(MathControls), nameof(MathControls.v_AngleType))]
