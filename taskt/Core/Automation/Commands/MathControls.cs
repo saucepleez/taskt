@@ -35,57 +35,148 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(5000)]
         public static string v_WhenValueIsOutOfRange { get; }
 
+
+        ///// <summary>
+        ///// convert radian to degree
+        ///// </summary>
+        ///// <param name="radian"></param>
+        ///// <returns></returns>
+        //private static double ConvertRadianToDegree(double radian)
+        //{
+        //    return (radian * Math.PI) / 180.0;
+        //}
+
+        ///// <summary>
+        ///// convert angle value to radian
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="valueName"></param>
+        ///// <param name="typeName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //private static double ConvertAngleValueToRadian(ScriptCommand command, string valueName, string typeName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var v = (double)command.ExpandValueOrUserVariableAsDecimal(valueName, engine);
+        //    if (command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine) == "degree")
+        //    {
+        //        v = v * Math.PI / 180.0;
+        //    }
+        //    return v;
+        //}
+
         /// <summary>
-        /// convert angle value to radian
+        ///// convert angle value to radian
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //private static double ConvertAngleValueToRadian(ATrignometricCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    var v = (double)command.ExpandValueOrUserVariableAsDecimal(nameof(command.v_Value), engine);
+        //    if (command.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
+        //    {
+        //        //v = v * Math.PI / 180.0;
+        //        v = ConvertRadianToDegree(v);
+        //    }
+        //    return v;
+        //}
+
+        /// <summary>
+        /// convert angle value to radian value
         /// </summary>
         /// <param name="command"></param>
-        /// <param name="valueName"></param>
-        /// <param name="typeName"></param>
+        /// <param name="value"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static double ConvertAngleValueToRadian(ScriptCommand command, string valueName, string typeName, Engine.AutomationEngineInstance engine)
+        private static double ConvertAngleValueToRadian(ATrignometricCommand command, double value, Engine.AutomationEngineInstance engine)
         {
-            var v = (double)command.ExpandValueOrUserVariableAsDecimal(valueName, engine);
-            if (command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine) == "degree")
+            if (command.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
             {
-                v = v * Math.PI / 180.0;
+                value = value * Math.PI / 180.0;
             }
-            return v;
+            return value;
         }
+
+        ///// <summary>
+        ///// Trignometic Function Action
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="valueName"></param>
+        ///// <param name="typeName"></param>
+        ///// <param name="resultName"></param>
+        ///// <param name="func"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static double TrignometicFunctionAction(ScriptCommand command, string valueName, string typeName, Func<double, double> func, Engine.AutomationEngineInstance engine)
+        //{
+        //    var v = ConvertAngleValueToRadian(command, valueName, typeName, engine);
+        //    return func(v);
+        //}
 
         /// <summary>
         /// Trignometic Function Action
         /// </summary>
         /// <param name="command"></param>
-        /// <param name="valueName"></param>
-        /// <param name="typeName"></param>
-        /// <param name="resultName"></param>
         /// <param name="func"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static double TrignometicFunctionAction(ScriptCommand command, string valueName, string typeName, Func<double, double> func, Engine.AutomationEngineInstance engine)
+        public static double TrignometicFunctionAction(ATrignometricCommand command, Func<double, double> func, Engine.AutomationEngineInstance engine)
         {
-            var v = ConvertAngleValueToRadian(command, valueName, typeName, engine);
+            var v = (double)command.ExpandValueOrUserVariableAsDecimal(nameof(command.v_Value), engine);
+
+            //var v = ConvertAngleValueToRadian(command, engine);
+
+            v = ConvertAngleValueToRadian(command, v, engine);
+
             return func(v);
         }
+
+        ///// <summary>
+        ///// Inverse Trignometic Function Action
+        ///// </summary>
+        ///// <param name="command"></param>
+        ///// <param name="valueName"></param>
+        ///// <param name="resultName"></param>
+        ///// <param name="typeName"></param>
+        ///// <param name="whenErrorName"></param>
+        ///// <param name="actionFunc"></param>
+        ///// <param name="rangeFunc">when out of range, rise a exception</param>
+        ///// <param name="engine"></param>
+        ///// <exception cref="Exception"></exception>
+        //public static double InverseTrignometicFunctionAction(ScriptCommand command, string valueName, string typeName, string whenErrorName, Func<double, double> actionFunc, Func<double, bool> rangeFunc, Engine.AutomationEngineInstance engine)
+        //{
+        //    var v = (double)command.ExpandValueOrUserVariableAsDecimal(valueName, engine);
+
+        //    if (command.ExpandValueOrUserVariableAsSelectionItem(whenErrorName, engine) == "error")
+        //    {
+        //        if (!rangeFunc(v))
+        //        {
+        //            throw new Exception("Value is Out of Range");
+        //        }
+        //    }
+
+        //    var r = actionFunc(v);
+        //    if (command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine) == "degree")
+        //    {
+        //        r = r * 180.0 / Math.PI;
+        //    }
+        //    return r;
+        //}
 
         /// <summary>
         /// Inverse Trignometic Function Action
         /// </summary>
         /// <param name="command"></param>
-        /// <param name="valueName"></param>
-        /// <param name="resultName"></param>
-        /// <param name="typeName"></param>
-        /// <param name="whenErrorName"></param>
         /// <param name="actionFunc"></param>
-        /// <param name="rangeFunc">when out of range, return value is false</param>
+        /// <param name="rangeFunc">when out of range, rise a exception</param>
         /// <param name="engine"></param>
+        /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static double InverseTrignometicFunctionAction(ScriptCommand command, string valueName, string typeName, string whenErrorName, Func<double, double> actionFunc, Func<double, bool> rangeFunc, Engine.AutomationEngineInstance engine)
+        public static double InverseTrignometicFunctionAction(AInverseTrignometricCommand command, Func<double, double> actionFunc, Func<double, bool> rangeFunc, Engine.AutomationEngineInstance engine)
         {
-            var v = (double)command.ExpandValueOrUserVariableAsDecimal(valueName, engine);
+            var v = (double)command.ExpandValueOrUserVariableAsDecimal(nameof(command.v_Value), engine);
 
-            if (command.ExpandValueOrUserVariableAsSelectionItem(whenErrorName, engine) == "error")
+            if (command.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenValueIsOutOfRange), engine) == "error")
             {
                 if (!rangeFunc(v))
                 {
@@ -94,12 +185,22 @@ namespace taskt.Core.Automation.Commands
             }
 
             var r = actionFunc(v);
-            if (command.ExpandValueOrUserVariableAsSelectionItem(typeName, engine) == "degree")
+            if (command.ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
             {
                 r = r * 180.0 / Math.PI;
+                //r = ConvertRadianToDegree(r);
             }
             return r;
         }
 
+        /// <summary>
+        /// Acos, Asin range check
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public static bool CheckAcosAsinRange(double v)
+        {
+            return (v >= -1 && v <= 1);
+        }
     }
 }

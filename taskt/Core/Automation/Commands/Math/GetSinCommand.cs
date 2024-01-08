@@ -34,8 +34,10 @@ namespace taskt.Core.Automation.Commands
             //var value = NumberControls.ConvertAngleValueToRadian(this, nameof(v_Value), nameof(v_AngleType), engine);
 
             //Math.Sin(value).StoreInUserVariable(engine, v_Result);
-            var r = MathControls.TrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType), 
-                Math.Sin, engine);
+            //var r = MathControls.TrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType), 
+            //    Math.Sin, engine);
+
+            var r = MathControls.TrignometicFunctionAction(this, Math.Sin, engine);
             r.StoreInUserVariable(engine, v_Result);
         }
     }

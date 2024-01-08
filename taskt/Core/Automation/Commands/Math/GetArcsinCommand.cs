@@ -35,11 +35,17 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var r = MathControls.InverseTrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType), nameof(v_WhenValueIsOutOfRange),
-                Math.Asin, new Func<double, bool>(v =>
-                {
-                    return (v >= -1 && v <= 1);
-                }), engine);
+            //var r = MathControls.InverseTrignometicFunctionAction(this, nameof(v_Value), nameof(v_AngleType), nameof(v_WhenValueIsOutOfRange),
+            //    Math.Asin, new Func<double, bool>(v =>
+            //    {
+            //        return (v >= -1 && v <= 1);
+            //    }), engine);
+            //var r = MathControls.InverseTrignometicFunctionAction(this, Math.Asin,
+            //        new Func<double, bool>(v =>
+            //        {
+            //            return (v >= -1 && v <= 1);
+            //        }), engine);
+            var r = MathControls.InverseTrignometicFunctionAction(this, Math.Asin, MathControls.CheckAcosAsinRange, engine);
             r.StoreInUserVariable(engine, v_Result);
         }
     }
