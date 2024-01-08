@@ -937,7 +937,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter from the value of PropertyVirtualProperty
+        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter names from the value of PropertyVirtualProperty
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
@@ -964,6 +964,35 @@ namespace taskt.Core.Automation.Commands
             {
                 WindowAction(command, windowName, compareMethod, matchType, index, waitTime, engine, actionFunc, nameResult, handleResult, errorFunc);
             }
+        }
+
+        /// <summary>
+        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter names from interface
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void WindowAction(AWindowNameCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
+        {
+            WindowAction(command, 
+                nameof(command.v_WindowName), nameof(command.v_SearchMethod), nameof(command.v_MatchMethod), 
+                nameof(command.v_TargetWindowIndex), nameof(command.v_WaitTime), engine, actionFunc, 
+                nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
+        }
+
+        /// <summary>
+        /// window general action. This method search window before execute actionFunc, and try store Found Window Name and Handle after execute actionFunc. This method specifies the parameter names from interface
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="actionFunc"></param>
+        /// <param name="errorFunc"></param>
+        public static void WindowAction(AAnyWindowNameCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
+        {
+            WindowAction(command, 
+                nameof(command.v_WindowName), nameof(command.v_SearchMethod), nameof(command.v_WaitTime), 
+                engine, actionFunc, nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
         }
 
         /// <summary>
