@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public class GetArctanCommand : AMathValueResultCommand
+    public class GetArctanCommand : AMathValueResultCommand, ITrignometricProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
@@ -36,15 +36,17 @@ namespace taskt.Core.Automation.Commands
             var v = (double)this.ExpandValueOrUserVariableAsDecimal(nameof(v_Value), engine);
 
             var r = Math.Atan(v);
-            switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_AngleType), engine))
-            {
-                case "radian":
-                    r.StoreInUserVariable(engine, v_Result);
-                    break;
-                case "degree":
-                    (r * 180.0 / Math.PI).StoreInUserVariable(engine, v_Result);
-                    break;
-            }
+            //switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_AngleType), engine))
+            //{
+            //    case "radian":
+            //        r.StoreInUserVariable(engine, v_Result);
+            //        break;
+            //    case "degree":
+            //        (r * 180.0 / Math.PI).StoreInUserVariable(engine, v_Result);
+            //        break;
+            //}
+            r = MathControls.ConvertAngleValueToRadian(this, r, engine);
+            r.StoreInUserVariable(engine, v_Result);
         }
     }
 }
