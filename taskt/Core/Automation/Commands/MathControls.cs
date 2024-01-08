@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="value"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static double ConvertAngleValueToRadian(ITrignometricProperties command, double value, Engine.AutomationEngineInstance engine)
+        public static double ConvertAngleValueToRadian(ITrignometricProperties command, double value, Engine.AutomationEngineInstance engine)
         {
             if (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_AngleType), engine) == "degree")
             {
