@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [Remarks("Restore is **1**, Minimize is **2**, Maximize is **3**")]
         [PropertyParameterOrder(5500)]
-        public string v_Result { get; set; }
+        public string v_WindowState { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
                 new Action<IntPtr>(whnd =>
                 {
                     var state = WindowNameControls.GetWindowState(whnd);
-                    state.StoreInUserVariable(engine, v_Result);
+                    state.StoreInUserVariable(engine, v_WindowState);
                 })
             );
         }

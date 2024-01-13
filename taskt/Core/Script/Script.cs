@@ -1898,6 +1898,9 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_XWindowSize", "v_Width");
             ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_YWindowSize", "v_Height");
 
+            ChangeAttributeName(doc, "GetWindowStateCommand", "v_UserVariableName", "v_WindowState");
+            ChangeAttributeName(doc, "GetWindowStateFromWindowHandleCommand", "v_Result", "v_WindowState");
+
             return doc;
         }
 

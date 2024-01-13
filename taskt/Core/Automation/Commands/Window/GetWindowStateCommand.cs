@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [Remarks("Restore is **1**, Minimize is **2**, Maximize is **3**")]
         [PropertyParameterOrder(6500)]
-        public string v_UserVariableName { get; set; }
+        public string v_WindowState { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
@@ -67,7 +67,7 @@ namespace taskt.Core.Automation.Commands
                     var whnd = wins[0].Item1;
 
                     var state = WindowNameControls.GetWindowState(whnd);
-                    state.ToString().StoreInUserVariable(engine, v_UserVariableName);
+                    state.ToString().StoreInUserVariable(engine, v_WindowState);
                 })
             );
         }
