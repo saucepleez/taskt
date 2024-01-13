@@ -744,6 +744,7 @@ namespace taskt.Core.Script
 
             return doc;
         }
+
         private static XDocument fixUIAutomationSearchEnableParameterValue(XDocument doc)
         {
             // UI Automation Boolean Fix
