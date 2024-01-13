@@ -1854,7 +1854,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "WaitForWindowToExistsCommand", "v_LengthToWait", "v_WaitTime");
             ChangeAttributeName(doc, "GetWindowHandleFromWindowNameCommand", "v_WindowHandle", "v_HandleResult");
 
-            var winPositionCommandsSearch = new Func<XElement, bool>(el =>
+            var getWinPositionCommandsSearch = new Func<XElement, bool>(el =>
             {
                 switch (el.Attribute("CommandName").Value)
                 {
@@ -1866,8 +1866,8 @@ namespace taskt.Core.Script
                 }
             });
 
-            ChangeAttributeName(doc, winPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
-            ChangeAttributeName(doc, winPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
+            ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
+            ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
 
             return doc;
         }
