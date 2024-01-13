@@ -1854,6 +1854,21 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "WaitForWindowToExistsCommand", "v_LengthToWait", "v_WaitTime");
             ChangeAttributeName(doc, "GetWindowHandleFromWindowNameCommand", "v_WindowHandle", "v_HandleResult");
 
+            var winPositionCommandsSearch = new Func<XElement, bool>(el =>
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "GetWindowPositionCommand":
+                    case "GetWindowPositionFromWindowHandleCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+
+            ChangeAttributeName(doc, winPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
+            ChangeAttributeName(doc, winPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
+
             return doc;
         }
 
@@ -1867,6 +1882,32 @@ namespace taskt.Core.Script
         private static IEnumerable<XElement> GetCommands(XDocument doc, Func<XElement, bool> searchFunc)
         {
             return doc.Descendants("ScriptCommand").Where(searchFunc);
+        }
+
+        ///// <summary>
+        ///// get command search Func. targetCommands is command name List
+        ///// </summary>
+        ///// <param name="targetCommands"></param>
+        ///// <returns></returns>
+        //private static Func<XElement, bool> GetSearchCommandsFunc(List<string> targetCommands)
+        //{
+        //    return new Func<XElement, bool>(el =>
+        //    {
+        //        return targetCommands.Contains(el.Attribute("ComamndName").Value);
+        //    });
+        //}
+
+        /// <summary>
+        /// get command search Func. targetCommand is string (command name)
+        /// </summary>
+        /// <param name="targetCommand"></param>
+        /// <returns></returns>
+        private static Func<XElement, bool> GetSearchCommandsFunc(string targetCommand)
+        {
+            return new Func<XElement, bool>(el =>
+            {
+                return (el.Attribute("CommandName").Value == targetCommand);
+            });
         }
 
         /// <summary>
@@ -1908,16 +1949,22 @@ namespace taskt.Core.Script
         private static XDocument ChangeCommandName(XDocument doc, Func<XElement, bool> searchFunc, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
-            //XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
-            //foreach (var cmd in commands)
-            //{
-            //    cmd.SetAttributeValue("CommandName", newName);
-            //    cmd.SetAttributeValue(ns + "type", newName);
-            //    cmd.SetAttributeValue("SelectionName", newSelectioName);
-            //}
             ChangeCommandName(commands, newName, newSelectioName);
             return doc;
         }
+
+        ///// <summary>
+        ///// change command name. target commands is specified List.
+        ///// </summary>
+        ///// <param name="doc"></param>
+        ///// <param name="targetName"></param>
+        ///// <param name="newName"></param>
+        ///// <param name="newSelectioName"></param>
+        ///// <returns></returns>
+        //private static XDocument ChangeCommandName(XDocument doc, List<string> targetName, string newName, string newSelectioName)
+        //{
+        //    return ChangeCommandName(doc, GetSearchCommandsFunc(targetName), newName, newSelectioName);
+        //}
 
         /// <summary>
         /// change command name. a target command is specified command name.
@@ -1929,10 +1976,12 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
-            return ChangeCommandName(doc, new Func<XElement, bool>(el =>
-            {
-                return (el.Attribute("CommandName").Value == targetName);
-            }), newName, newSelectioName);
+            //return ChangeCommandName(doc, new Func<XElement, bool>(el =>
+            //{
+            //    return (el.Attribute("CommandName").Value == targetName);
+            //}), newName, newSelectioName);
+
+            return ChangeCommandName(doc, GetSearchCommandsFunc(targetName), newName, newSelectioName);
         }
 
         /// <summary>
@@ -1954,6 +2003,19 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        ///// <summary>
+        ///// change attribute value. target commands are specified List
+        ///// </summary>
+        ///// <param name="doc"></param>
+        ///// <param name="targetCommands"></param>
+        ///// <param name="targetAttribute"></param>
+        ///// <param name="changeFunc"></param>
+        ///// <returns></returns>
+        //private static XDocument ChangeAttributeValue(XDocument doc, List<string> targetCommands, string targetAttribute, Action<XAttribute> changeFunc)
+        //{
+        //    return ChangeAttributeValue(doc, GetSearchCommandsFunc(targetCommands), targetAttribute, changeFunc);
+        //}
+
         /// <summary>
         /// change attribute value. target commands are specified command name
         /// </summary>
@@ -1964,10 +2026,12 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
         {
-            return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
-            {
-                return (el.Attribute("CommandName").Value == targetCommand);
-            }), targetAttribute, changeFunc);
+            //return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
+            //{
+            //    return (el.Attribute("CommandName").Value == targetCommand);
+            //}), targetAttribute, changeFunc);
+
+            return ChangeAttributeValue(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, changeFunc);
         }
 
         /// <summary>
@@ -2017,11 +2081,13 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
-            ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
-            {
-                return el.Attribute("CommandName").Value == commandName;
-            }), tableParameterName, tableCellName, changeFunc, defaultCellValue);
-            return doc;
+            //ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
+            //{
+            //    return el.Attribute("CommandName").Value == commandName;
+            //}), tableParameterName, tableCellName, changeFunc, defaultCellValue);
+            //return doc;
+
+            return ChangeTableCellValue(doc, GetSearchCommandsFunc(commandName), tableParameterName, tableCellName, changeFunc, defaultCellValue);
         }
 
         /// <summary>
@@ -2097,11 +2163,13 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ModifyTable(XDocument doc, string targetCommand, string tableParameterName, Action<XElement, XElement, List<XElement>, string> modifyFunc)
         {
-            ModifyTable(doc, new Func<XElement, bool>(el =>
-            {
-                return el.Attribute("CommandName").Value == targetCommand;
-            }), tableParameterName, modifyFunc);
-            return doc;
+            //ModifyTable(doc, new Func<XElement, bool>(el =>
+            //{
+            //    return el.Attribute("CommandName").Value == targetCommand;
+            //}), tableParameterName, modifyFunc);
+            //return doc;
+
+            return ModifyTable(doc, GetSearchCommandsFunc(targetCommand), tableParameterName, modifyFunc);
         }
 
         /// <summary>
@@ -2254,8 +2322,8 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand")
-                .Where(searchFunc);
+            var commands = doc.Descendants("ScriptCommand")
+                .Where(searchFunc).ToList();
 
             foreach(var cmd in commands)
             {
@@ -2274,6 +2342,19 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        ///// <summary>
+        ///// change attribute name. target command is specified command name List
+        ///// </summary>
+        ///// <param name="doc"></param>
+        ///// <param name="targetCommands"></param>
+        ///// <param name="targetAttribute"></param>
+        ///// <param name="newAttribute"></param>
+        ///// <returns></returns>
+        //private static XDocument ChangeAttributeName(XDocument doc, List<string> targetCommands, string targetAttribute, string newAttribute)
+        //{
+        //    return ChangeAttributeName(doc, GetSearchCommandsFunc(targetCommands), targetAttribute, newAttribute);
+        //}
+
         /// <summary>
         /// change attribute name. target command is specified command name
         /// </summary>
@@ -2284,10 +2365,12 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeName(XDocument doc, string targetCommand, string targetAttribute, string newAttribute)
         {
-            return ChangeAttributeName(doc, new Func<XElement, bool>(el =>
-            {
-                return el.Attribute("CommandName").Value == targetCommand;
-            }), targetAttribute, newAttribute);
+            //return ChangeAttributeName(doc, new Func<XElement, bool>(el =>
+            //{
+            //    return el.Attribute("CommandName").Value == targetCommand;
+            //}), targetAttribute, newAttribute);
+
+            return ChangeAttributeName(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, newAttribute);
         }
     }
 }
