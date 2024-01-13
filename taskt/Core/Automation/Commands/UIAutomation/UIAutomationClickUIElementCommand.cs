@@ -68,8 +68,8 @@ namespace taskt.Core.Automation.Commands
                     var moveWindow = new MoveWindowCommand()
                     {
                         v_WindowName = windowName,
-                        v_XWindowPosition = "0",
-                        v_YWindowPosition = "0"
+                        v_XPosition = "0",
+                        v_YPosition = "0"
                     };
                     moveWindow.RunCommand(engine);
                     targetElement.TryGetClickablePoint(out point);
@@ -79,8 +79,8 @@ namespace taskt.Core.Automation.Commands
                     var moveWindow = new MoveWindowCommand()
                     {
                         v_WindowName = windowName,
-                        v_XWindowPosition = "0",
-                        v_YWindowPosition = "0"
+                        v_XPosition = "0",
+                        v_YPosition = "0"
                     };
                     moveWindow.RunCommand(engine);
 

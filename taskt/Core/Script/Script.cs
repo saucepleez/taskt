@@ -1865,11 +1865,24 @@ namespace taskt.Core.Script
                         return false;
                 }
             });
-
             ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
             ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
 
             ChangeAttributeName(doc, "GetWindowSizeCommand", "v_With", "v_Width");
+
+            var moveWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "MoveWindowCommand":
+                    case "MoveWindowByWindowHandleCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_XWindowPosition", "v_XPosition");
+            ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_YWindowPosition", "v_YPosition");
 
             return doc;
         }

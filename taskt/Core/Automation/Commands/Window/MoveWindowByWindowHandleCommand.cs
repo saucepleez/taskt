@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "X Position")]
         [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
         [PropertyParameterOrder(5500)]
-        public string v_XWindowPosition { get; set; }
+        public string v_XPosition { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Y Position")]
         [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
         [PropertyParameterOrder(5500)]
-        public string v_YWindowPosition { get; set; }
+        public string v_YPosition { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
                 {
                     var pos = WindowNameControls.GetWindowRect(whnd);
 
-                    var variableXPosition = v_XWindowPosition.ExpandValueOrUserVariable(engine);
+                    var variableXPosition = v_XPosition.ExpandValueOrUserVariable(engine);
                     int xPos;
                     if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
                     {
@@ -83,10 +83,10 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        xPos = v_XWindowPosition.ExpandValueOrUserVariableAsInteger("X Position", engine);
+                        xPos = v_XPosition.ExpandValueOrUserVariableAsInteger("X Position", engine);
                     }
 
-                    var variableYPosition = v_YWindowPosition.ExpandValueOrUserVariable(engine);
+                    var variableYPosition = v_YPosition.ExpandValueOrUserVariable(engine);
                     int yPos;
                     if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
                     {
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
                     }
                     else
                     {
-                        yPos = v_YWindowPosition.ExpandValueOrUserVariableAsInteger("Y Position", engine);
+                        yPos = v_YPosition.ExpandValueOrUserVariableAsInteger("Y Position", engine);
                     }
 
                     WindowNameControls.SetWindowPosition(whnd, xPos, yPos);
