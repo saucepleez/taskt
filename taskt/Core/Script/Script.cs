@@ -683,6 +683,7 @@ namespace taskt.Core.Script
 
             return doc;
         }
+
         private static XDocument convertTo3_5_0_78(XDocument doc)
         {
             var modFunc = new Action<XElement, XElement, List<XElement>, string>((table, before, rows, rowName) =>
