@@ -1916,19 +1916,6 @@ namespace taskt.Core.Script
             return doc.Descendants("ScriptCommand").Where(searchFunc);
         }
 
-        ///// <summary>
-        ///// get command search Func. targetCommands is command name List
-        ///// </summary>
-        ///// <param name="targetCommands"></param>
-        ///// <returns></returns>
-        //private static Func<XElement, bool> GetSearchCommandsFunc(List<string> targetCommands)
-        //{
-        //    return new Func<XElement, bool>(el =>
-        //    {
-        //        return targetCommands.Contains(el.Attribute("ComamndName").Value);
-        //    });
-        //}
-
         /// <summary>
         /// get command search Func. targetCommand is string (command name)
         /// </summary>
@@ -1985,19 +1972,6 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        ///// <summary>
-        ///// change command name. target commands is specified List.
-        ///// </summary>
-        ///// <param name="doc"></param>
-        ///// <param name="targetName"></param>
-        ///// <param name="newName"></param>
-        ///// <param name="newSelectioName"></param>
-        ///// <returns></returns>
-        //private static XDocument ChangeCommandName(XDocument doc, List<string> targetName, string newName, string newSelectioName)
-        //{
-        //    return ChangeCommandName(doc, GetSearchCommandsFunc(targetName), newName, newSelectioName);
-        //}
-
         /// <summary>
         /// change command name. a target command is specified command name.
         /// </summary>
@@ -2034,19 +2008,6 @@ namespace taskt.Core.Script
             }
             return doc;
         }
-
-        ///// <summary>
-        ///// change attribute value. target commands are specified List
-        ///// </summary>
-        ///// <param name="doc"></param>
-        ///// <param name="targetCommands"></param>
-        ///// <param name="targetAttribute"></param>
-        ///// <param name="changeFunc"></param>
-        ///// <returns></returns>
-        //private static XDocument ChangeAttributeValue(XDocument doc, List<string> targetCommands, string targetAttribute, Action<XAttribute> changeFunc)
-        //{
-        //    return ChangeAttributeValue(doc, GetSearchCommandsFunc(targetCommands), targetAttribute, changeFunc);
-        //}
 
         /// <summary>
         /// change attribute value. target commands are specified command name
@@ -2373,19 +2334,6 @@ namespace taskt.Core.Script
 
             return doc;
         }
-
-        ///// <summary>
-        ///// change attribute name. target command is specified command name List
-        ///// </summary>
-        ///// <param name="doc"></param>
-        ///// <param name="targetCommands"></param>
-        ///// <param name="targetAttribute"></param>
-        ///// <param name="newAttribute"></param>
-        ///// <returns></returns>
-        //private static XDocument ChangeAttributeName(XDocument doc, List<string> targetCommands, string targetAttribute, string newAttribute)
-        //{
-        //    return ChangeAttributeName(doc, GetSearchCommandsFunc(targetCommands), targetAttribute, newAttribute);
-        //}
 
         /// <summary>
         /// change attribute name. target command is specified command name
