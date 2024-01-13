@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Width")]
         [PropertyParameterOrder(6500)]
-        public string v_XWindowSize { get; set; }
+        public string v_Width { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Window Height (Pixcel)")]
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Height")]
         [PropertyParameterOrder(6500)]
-        public string v_YWindowSize { get; set; }
+        public string v_Height { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
@@ -85,8 +85,8 @@ namespace taskt.Core.Automation.Commands
             WindowNameControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_XWindowSize), engine);
-                    var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_YWindowSize), engine);
+                    var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
+                    var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
                     foreach (var win in wins)
                     {
                         WindowNameControls.SetWindowSize(win.Item1, width, height);

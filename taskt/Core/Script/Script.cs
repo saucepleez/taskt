@@ -1884,6 +1884,20 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_XWindowPosition", "v_XPosition");
             ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_YWindowPosition", "v_YPosition");
 
+            var resizeWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "ResizeWindowCommand":
+                    case "ResizeWindowByWindowHandleCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_XWindowSize", "v_Width");
+            ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_YWindowSize", "v_Height");
+
             return doc;
         }
 
