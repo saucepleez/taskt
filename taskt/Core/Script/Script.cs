@@ -1869,6 +1869,8 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
             ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
 
+            ChangeAttributeName(doc, "GetWindowSizeCommand", "v_With", "v_Width");
+
             return doc;
         }
 
