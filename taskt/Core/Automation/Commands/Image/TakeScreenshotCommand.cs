@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -49,6 +50,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         public string v_WaitForWindow { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public virtual string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        public virtual string v_HandleResult { get; set; }
+
         public TakeScreenshotCommand()
         {
             //this.CommandName = "ScreenshotCommand";
@@ -59,23 +68,36 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            string targetWindowName;
-            if (v_WindowName == "Desktop")
-            {
-                targetWindowName = "Desktop";
-            }
-            else
-            {
-                var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitForWindow), engine);
-                targetWindowName = wins[0].Item2;
-            }
+            //string targetWindowName;
+            //if (v_WindowName == "Desktop")
+            //{
+            //    targetWindowName = "Desktop";
+            //}
+            //else
+            //{
+            //    var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitForWindow), engine);
+            //    targetWindowName = wins[0].Item2;
+            //}
 
-            //var image = User32Functions.CaptureWindow(targetWindowName);
-            var image = WindowNameControls.CaptureWindow(targetWindowName, engine);
+            ////var image = User32Functions.CaptureWindow(targetWindowName);
+            //var image = WindowNameControls.CaptureWindow(targetWindowName, engine);
 
-            var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
+            //var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
 
-            image.Save(outputFile);
+            //image.Save(outputFile);
+
+            WindowNameControls.WindowAction(this, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
+                {
+                    var whnd = wins[0].Item1;
+
+                    var image = WindowNameControls.CaptureWindow(whnd);
+                    var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
+
+                    image.Save(outputFile);
+                })
+            );
+
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
