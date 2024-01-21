@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using static taskt.Core.Automation.Commands.PropertyControls;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -10,6 +9,13 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class IntermediateControls
     {
+        public const string INTERMEDIATE_VALIABLE_START_MARKER = "\u2983";  // like {
+        public const string INTERMEDIATE_VALIABLE_END_MARKER = "\u2984";    // like }
+
+        // TODO: To be discontinued eventually
+        public const string INTERMEDIATE_KEYWORD_START_MARKER = "\U0001D542";   // like k
+        public const string INTERMEDIATE_KEYWORD_END_MARKER = "\U0001D54E"; // like w
+
         /// <summary>
         /// proprety value convert to intermediate. this method use default convert method.
         /// </summary>
