@@ -10,8 +10,38 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class VariableNameControls
     {
-        #region
+        #region const, properties
         private const string InnerVariablePrefix = "__INNER_";
+
+        public static readonly List<string> DisallowVariableCharList = new List<string>()
+        {
+            "+", "-", "*", "%",
+            "[", "]", "{", "}",
+            ".",
+            " ",
+            IntermediateControls.INTERMEDIATE_VALIABLE_START_MARKER, IntermediateControls.INTERMEDIATE_VALIABLE_END_MARKER,
+            IntermediateControls.INTERMEDIATE_KEYWORD_START_MARKER, IntermediateControls.INTERMEDIATE_VALIABLE_END_MARKER,
+        };
+        public static readonly List<string> ReservedKeyNameList = new List<string>()
+        {
+            "BACKSPACE", "BS", "BKSP",
+            "BREAK",
+            "CAPSLOCK",
+            "DELETE", "DEL",
+            "UP", "DOWN", "LEFT", "RIGHT",
+            "END",
+            "ENTER",
+            "INSERT", "INS",
+            "NUMLOCK",
+            "PGDN",
+            "PGUP",
+            "SCROLLROCK",
+            "TAB",
+            "F1", "F2", "F3", "F4", "F5", "F6",
+            "F7", "F8", "F9", "F10", "F11", "F12",
+            "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE",
+            "WIN_KEY",
+        };
         #endregion
 
         #region virtual properties
