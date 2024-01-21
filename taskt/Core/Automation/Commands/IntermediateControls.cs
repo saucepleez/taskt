@@ -9,12 +9,26 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class IntermediateControls
     {
+        #region fields
+        /// <summary>
+        /// intermediate start variable marker
+        /// </summary>
         public const string INTERMEDIATE_VALIABLE_START_MARKER = "\u2983";  // like {
+        /// <summary>
+        /// intermediate end variable marker
+        /// </summary>
         public const string INTERMEDIATE_VALIABLE_END_MARKER = "\u2984";    // like }
 
         // TODO: To be discontinued eventually
+        /// <summary>
+        /// intermediate start keyword marker
+        /// </summary>
         public const string INTERMEDIATE_KEYWORD_START_MARKER = "\U0001D542";   // like k
+        /// <summary>
+        /// intermediate end keywrod marker
+        /// </summary>
         public const string INTERMEDIATE_KEYWORD_END_MARKER = "\U0001D54E"; // like w
+        #endregion
 
         /// <summary>
         /// proprety value convert to intermediate. this method use default convert method.
