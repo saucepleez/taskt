@@ -22,6 +22,7 @@ using System.Data;
 using System.IO;
 using taskt.Core.Automation.Commands;
 using System.Reflection;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Script
 {
@@ -360,6 +361,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_62(doc);
             convertTo3_5_1_72(doc);
             convertTo3_5_1_74(doc);
+            convertTo3_5_1_75(doc);
 
             return doc;
         }
@@ -1902,6 +1904,45 @@ namespace taskt.Core.Script
 
             ChangeAttributeName(doc, "GetWindowStateCommand", "v_UserVariableName", "v_WindowState");
             ChangeAttributeName(doc, "GetWindowStateFromWindowHandleCommand", "v_Result", "v_WindowState");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_75(XDocument doc)
+        {
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowNameControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
+            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
+
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ActivateWindowCommand":
+                        case "CheckWindowNameExistsCommand":
+                        case "CloseWindowCommand":
+                        case "GetProcessNameFromWindowNameCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionCommand":
+                        case "GetWindowSizeCommand":
+                        case "GetWindowStateCommand":
+                        case "MoveWindowCommand":
+                        case "ResizeWindowCommand":
+                        case "SetWindowStateCommand":
+                        case "WaitForWindowToExistsCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WindowName",
+                new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value == oldKW)
+                    {
+                        attr.SetValue(newKW);
+                    }
+                })
+            );
 
             return doc;
         }
