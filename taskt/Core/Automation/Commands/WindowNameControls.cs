@@ -786,12 +786,7 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         public static Bitmap CaptureWindow(IntPtr whnd)
         {
-            RECT r;
-
-            // TODO: what is this?
-            //System.Threading.Thread.Sleep(500);
-
-            if (GetWindowRect(whnd, out r))
+            if (GetWindowRect(whnd, out RECT r))
             {
                 var bounds = new Rectangle(r.left, r.top, r.right - r.left, r.bottom - r.top);
                 var screenshot = new Bitmap(bounds.Width, bounds.Height);
