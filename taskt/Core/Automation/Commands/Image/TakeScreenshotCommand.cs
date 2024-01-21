@@ -77,6 +77,7 @@ namespace taskt.Core.Automation.Commands
 
             image.Save(outputFile);
         }
+
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
