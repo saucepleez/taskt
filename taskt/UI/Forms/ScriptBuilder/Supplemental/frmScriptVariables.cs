@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Engine;
 
 /*
@@ -725,7 +726,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             //    }
             //}
             //return true;
-            return appSettings.EngineSettings.isValidVariableName(variableName);
+            //return appSettings.EngineSettings.isValidVariableName(variableName);
+
+            return VariableNameControls.IsValidVariableName(variableName);
         }
         #endregion
 

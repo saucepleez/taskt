@@ -254,27 +254,27 @@ namespace taskt.Core
             return "\U0001D542" + kw + "\U0001D54E";
         }
 
-        public bool isValidVariableName(string vName)
-        {
-            foreach (string s in m_KeyNameList)
-            {
-                if (vName == s)
-                {
-                    return false;
-                }
-            }
-            foreach (string s in m_DisallowVariableCharList)
-            {
-                if (vName.Contains(s))
-                {
-                    return false;
-                }
-            }
-            if (vName.StartsWith("__INNER_"))
-            {
-                return false;
-            }
-            return true;
-        }
+        //public bool isValidVariableName(string vName)
+        //{
+        //    foreach (string s in m_KeyNameList)
+        //    {
+        //        if (vName == s)
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    foreach (string s in m_DisallowVariableCharList)
+        //    {
+        //        if (vName.Contains(s))
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    if (vName.StartsWith("__INNER_"))
+        //    {
+        //        return false;
+        //    }
+        //    return true;
+        //}
     }
 }

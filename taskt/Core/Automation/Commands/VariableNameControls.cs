@@ -198,6 +198,40 @@ namespace taskt.Core.Automation.Commands
         {
             return editor?.scriptVariables.Select(t => t.VariableName).ToList() ?? new List<string>();
         }
+
+        /// <summary>
+        /// check valid variable name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsValidVariableName(string name)
+        {
+            //foreach (string s in ReservedKeyNameList)
+            //{
+            //    if (name == s)
+            //    {
+            //        return false;
+            //    }
+            //}
+            if (ReservedKeyNameList.Contains(name))
+            {
+                return false;
+            }
+
+            foreach (string s in DisallowVariableCharList)
+            {
+                if (name.Contains(s))
+                {
+                    return false;
+                }
+            }
+
+            if (name.StartsWith("__INNER_"))
+            {
+                return false;
+            }
+            return true;
+        }
         #endregion
 
         #region inner variable methods
