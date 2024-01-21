@@ -744,40 +744,46 @@ namespace taskt.Core.Automation.Commands
             throw new Exception("ProcessID: " + pid + " does not found.");
         }
         
-        public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
-        {
-            IntPtr hWnd;
-            if (windowName == "Desktop")
-            {
-                hWnd = GetDesktopWindow();
-            }
-            else
-            {
-                //hWnd = FindWindow(windowName);
-                var wins = FindWindows(windowName, "", "", 0, 60, engine);
-                hWnd = wins[0].Item1;
+        //public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
+        //{
+        //    IntPtr hWnd;
+        //    if (windowName == "Desktop")
+        //    {
+        //        hWnd = GetDesktopWindow();
+        //    }
+        //    else
+        //    {
+        //        //hWnd = FindWindow(windowName);
+        //        var wins = FindWindows(windowName, "", "", 0, 60, engine);
+        //        hWnd = wins[0].Item1;
 
-                SetWindowState(hWnd, WindowState.SW_RESTORE);
-                SetToForegroundWindow(hWnd);
-            }
+        //        SetWindowState(hWnd, WindowState.SW_RESTORE);
+        //        SetToForegroundWindow(hWnd);
+        //    }
 
-            var rect = new RECT();
+        //    var rect = new RECT();
 
-            //sleep to allow repaint
-            System.Threading.Thread.Sleep(500);
+        //    //sleep to allow repaint
+        //    System.Threading.Thread.Sleep(500);
 
-            GetWindowRect(hWnd, out rect);
-            var bounds = new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
-            var screenshot = new Bitmap(bounds.Width, bounds.Height);
+        //    GetWindowRect(hWnd, out rect);
+        //    var bounds = new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+        //    var screenshot = new Bitmap(bounds.Width, bounds.Height);
 
-            using (var graphics = Graphics.FromImage(screenshot))
-            {
-                graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
-            }
+        //    using (var graphics = Graphics.FromImage(screenshot))
+        //    {
+        //        graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+        //    }
 
-            return screenshot;
-        }
+        //    return screenshot;
+        //}
 
+        /// <summary>
+        /// capture window
+        /// </summary>
+        /// <param name="whnd"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Bitmap CaptureWindow(IntPtr whnd)
         {
             RECT r;
