@@ -34,6 +34,22 @@ namespace taskt.Core.Automation.Commands
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Activate Window Before Capture")]
+        [PropertyIsOptional(true, "No")]
+        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "")]
+        public string v_ActivateWindowBeforeCapture { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
+        [PropertyDescription("Wait Time before Capture")]
+        [PropertyIsOptional(true, "500")]
+        [PropertyValidationRule("", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyFirstValue("500")]
+        public string v_WaitTimeBeforeCapture { get; set; }
+
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
 
@@ -90,6 +106,15 @@ namespace taskt.Core.Automation.Commands
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var whnd = wins[0].Item1;
+
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeCapture), engine))
+                    {
+                        WindowNameControls.ActivateWindow(whnd);
+                    }
+
+                    // wait time
+                    var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeBeforeCapture), engine);
+                    System.Threading.Thread.Sleep(waitTime);
 
                     var image = WindowNameControls.CaptureWindow(whnd);
                     var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
