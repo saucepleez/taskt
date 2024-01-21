@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         [PropertyIsWindowNamesList(true, true, false, true)]
-        public string v_ScreenshotWindowName { get; set; }
+        public string v_WindowName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_FilePath))]
@@ -60,13 +60,13 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             string targetWindowName;
-            if (v_ScreenshotWindowName == "Desktop")
+            if (v_WindowName == "Desktop")
             {
                 targetWindowName = "Desktop";
             }
             else
             {
-                var wins = WindowNameControls.FindWindows(this, nameof(v_ScreenshotWindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitForWindow), engine);
+                var wins = WindowNameControls.FindWindows(this, nameof(v_WindowName), nameof(v_SearchMethod), nameof(v_MatchMethod), nameof(v_TargetWindowIndex), nameof(v_WaitForWindow), engine);
                 targetWindowName = wins[0].Item2;
             }
 
@@ -86,7 +86,7 @@ namespace taskt.Core.Automation.Commands
         {
             //ComboBox cmb = (ComboBox)ControlsList[nameof(v_ScreenshotWindowName)];
             //cmb.AddWindowNames();
-            ControlsList.GetPropertyControl<ComboBox>(nameof(v_ScreenshotWindowName)).AddWindowNames();
+            ControlsList.GetPropertyControl<ComboBox>(nameof(v_WindowName)).AddWindowNames();
         }
     }
 }

@@ -1969,6 +1969,9 @@ namespace taskt.Core.Script
                 elem?.Remove();
             }
 
+            // TakeScreenShot attr v_ScreenshotWindowName -> v_WindowName
+            ChangeAttributeName(doc, "TakeScreenshotCommand", "v_ScreenshotWindowName", "v_WindowName");
+
             return doc;
         }
 
