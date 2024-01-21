@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
 using System.Collections.Generic;
 
 namespace taskt.Core.Automation.Commands
