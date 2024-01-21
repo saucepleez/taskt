@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Reflection;
 
 namespace taskt.Core.Automation.Commands
@@ -246,5 +247,58 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// check value is wrapped intermediate keyword marker
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static bool isWrappedIntermediateKeywordMarker(string value)
+        {
+            return (value.StartsWith(INTERMEDIATE_KEYWORD_END_MARKER) && value.EndsWith(INTERMEDIATE_KEYWORD_END_MARKER));
+        }
+
+        /// <summary>
+        /// get wrapped intermediate keyword
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        public static string GetWrappedIntermediateKeyword(string keyword)
+        {
+            if (isWrappedIntermediateKeywordMarker(keyword))
+            {
+                return keyword;
+            }
+            else
+            {
+                return string.Concat(INTERMEDIATE_KEYWORD_START_MARKER, keyword, INTERMEDIATE_KEYWORD_END_MARKER);
+            }
+        }
+
+        /// <summary>
+        /// check value is wrapped intermediate variable marker
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static bool isWrappedIntermediateVariableMarker(string value)
+        {
+            return (value.StartsWith(INTERMEDIATE_VALIABLE_START_MARKER) && value.EndsWith(INTERMEDIATE_VALIABLE_END_MARKER));
+        }
+
+        /// <summary>
+        /// get wrapped intermediate variable marker
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <returns></returns>
+        public static string GetWrappedIntermediateVariable(string variableName)
+        {
+            if (isWrappedIntermediateVariableMarker(variableName))
+            {
+                return variableName;
+            }
+            else
+            {
+                return string.Concat(INTERMEDIATE_VALIABLE_START_MARKER, variableName, INTERMEDIATE_VALIABLE_END_MARKER);
+            }
+        }
     }
 }
