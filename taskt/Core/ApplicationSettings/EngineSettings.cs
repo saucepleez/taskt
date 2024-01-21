@@ -133,6 +133,7 @@ namespace taskt.Core
         {
             return m_DisallowVariableCharList;
         }
+
         public string replaceEngineKeyword(string targetString)
         {
             return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker)
