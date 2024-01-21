@@ -131,7 +131,9 @@ namespace taskt.Core
                 return;
             }
 
-            if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            //if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            if ((instanceType.autoWrapVariableMarker) &&
+                    !(VariableNameControls.IsWrappedVariableMarker(instanceName, appSettings)))
             {
                 //instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
                 instanceName = VariableNameControls.GetWrappedVariableName(instanceName, appSettings);
@@ -161,7 +163,9 @@ namespace taskt.Core
                 return;
             }
 
-            if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            //if ((instanceType.autoWrapVariableMarker) && !(this.appSettings.EngineSettings.isWrappedVariableMarker(instanceName)))
+            if ((instanceType.autoWrapVariableMarker) && 
+                    !(VariableNameControls.IsWrappedVariableMarker(instanceName, appSettings)))
             {
                 //instanceName = this.appSettings.EngineSettings.wrapVariableMarker(instanceName);
                 instanceName = VariableNameControls.GetWrappedVariableName(instanceName, appSettings);
