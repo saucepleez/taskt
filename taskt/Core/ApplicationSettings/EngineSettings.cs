@@ -239,10 +239,10 @@ namespace taskt.Core
         //    }
         //}
 
-        public bool isWrappedVariableMarker(string variableName)
-        {
-            return (variableName.StartsWith(this.VariableStartMarker) && variableName.EndsWith(this.VariableEndMarker));
-        }
+        //public bool isWrappedVariableMarker(string variableName)
+        //{
+        //    return (variableName.StartsWith(this.VariableStartMarker) && variableName.EndsWith(this.VariableEndMarker));
+        //}
 
         public string wrapIntermediateVariableMaker(string variableName)
         {
