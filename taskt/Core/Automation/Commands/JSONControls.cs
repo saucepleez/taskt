@@ -252,7 +252,8 @@ namespace taskt.Core.Automation.Commands
         public static void JSONModifyByJSONPath(this ScriptCommand command, string jsonName, string extractorName, Action<JToken> objectAction, Action<JToken> arrayAction, Engine.AutomationEngineInstance engine)
         {
             string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
-            if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+            //if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+            if (!VariableNameControls.IsWrapVariableMarker(jsonVariableName, engine))
             {
                 //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
                 jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
@@ -297,7 +298,8 @@ namespace taskt.Core.Automation.Commands
             string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
             if (forceJSONVariable)
             {
-                if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+                //if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
+                if (!VariableNameControls.IsWrapVariableMarker(jsonVariableName, engine))
                 {
                     //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
                     jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
