@@ -987,7 +987,9 @@ namespace taskt.Core
             //var settings = new ApplicationSettings().GetOrCreateApplicationSettings();
 
             //return str.Insert(0, settings.EngineSettings.VariableStartMarker).Insert(str.Length + 1, settings.EngineSettings.VariableEndMarker);
-            return engine.engineSettings.wrapVariableMarker(str);
+            //return engine.engineSettings.wrapVariableMarker(str);
+
+            return VariableNameControls.GetWrappedVariableName(str, engine);
         }
 
         public static void StoreInUserVariable(string userVariable, object variableValue, Automation.Engine.AutomationEngineInstance engine, bool parseValue = true)
