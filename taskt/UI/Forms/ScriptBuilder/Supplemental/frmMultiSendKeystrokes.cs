@@ -70,7 +70,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             {
                 if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
                 {
-                    string variableName = appSetttings.EngineSettings.wrapVariableMarker((string)fm.selectedItem);
+                    //string variableName = appSetttings.EngineSettings.wrapVariableMarker((string)fm.selectedItem);
+                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.selectedItem, appSetttings);
                     if (appSetttings.ClientSettings.InsertVariableAtCursor)
                     {
                         string currentValue = cmbWindowName.Text;
@@ -202,7 +203,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
         private static void ConcatenateVariableName(string variableName, TextBox txt, Core.ApplicationSettings settings)
         {
-            variableName = settings.EngineSettings.wrapVariableMarker(variableName);
+            //variableName = settings.EngineSettings.wrapVariableMarker(variableName);
+            variableName = VariableNameControls.GetWrappedVariableName(variableName, settings);
             if (settings.ClientSettings.InsertVariableAtCursor)
             {
                 string current = txt.Text;
@@ -301,7 +303,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 return true;
             }
             else if ((bottomCommand.v_WindowName == appSettings.EngineSettings.CurrentWindowKeyword) || 
-                    (bottomCommand.v_WindowName == appSettings.EngineSettings.wrapVariableMarker("Env.ActiveWindowTitle")))
+                    //(bottomCommand.v_WindowName == appSettings.EngineSettings.wrapVariableMarker("Env.ActiveWindowTitle")))
+                    (bottomCommand.v_WindowName == VariableNameControls.GetWrappedVariableName(Core.Automation.Engine.SystemVariables.Env_ActiveWindowTitle.VariableName, appSettings)) ||
+                    (bottomCommand.v_WindowName == VariableNameControls.GetWrappedVariableName(Core.Automation.Engine.SystemVariables.Window_CurrentWindowName.VariableName, appSettings)))
             {
                 return true;
             }
