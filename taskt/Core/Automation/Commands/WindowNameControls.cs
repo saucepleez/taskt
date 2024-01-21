@@ -789,7 +789,7 @@ namespace taskt.Core.Automation.Commands
             RECT r;
 
             // TODO: what is this?
-            System.Threading.Thread.Sleep(500);
+            //System.Threading.Thread.Sleep(500);
 
             if (GetWindowRect(whnd, out r))
             {
