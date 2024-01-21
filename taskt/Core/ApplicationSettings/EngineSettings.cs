@@ -63,35 +63,35 @@ namespace taskt.Core
         private static readonly string InterNextWorksheetKeyword = "%kwd_next_worksheet%";
         private static readonly string InterPreviousWorksheetKeyword = "%kwd_previous_worksheet%";
 
-        private static readonly string[] m_KeyNameList = new string[]
-        {
-            "BACKSPACE", "BS", "BKSP",
-            "BREAK",
-            "CAPSLOCK",
-            "DELETE", "DEL",
-            "UP", "DOWN", "LEFT", "RIGHT",
-            "END",
-            "ENTER",
-            "INSERT", "INS",
-            "NUMLOCK",
-            "PGDN",
-            "PGUP",
-            "SCROLLROCK",
-            "TAB",
-            "F1", "F2", "F3", "F4", "F5", "F6",
-            "F7", "F8", "F9", "F10", "F11", "F12",
-            "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE",
-            "WIN_KEY"
-        };
-        private static readonly string[] m_DisallowVariableCharList = new string[]
-        {
-            "+", "-", "*", "%",
-            "[", "]", "{", "}",
-            ".",
-            " ",
-            "\u2983", "\u2984",
-            "\U0001D542", "\U0001D54E"
-        };
+        //private static readonly string[] m_KeyNameList = new string[]
+        //{
+        //    "BACKSPACE", "BS", "BKSP",
+        //    "BREAK",
+        //    "CAPSLOCK",
+        //    "DELETE", "DEL",
+        //    "UP", "DOWN", "LEFT", "RIGHT",
+        //    "END",
+        //    "ENTER",
+        //    "INSERT", "INS",
+        //    "NUMLOCK",
+        //    "PGDN",
+        //    "PGUP",
+        //    "SCROLLROCK",
+        //    "TAB",
+        //    "F1", "F2", "F3", "F4", "F5", "F6",
+        //    "F7", "F8", "F9", "F10", "F11", "F12",
+        //    "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE",
+        //    "WIN_KEY"
+        //};
+        //private static readonly string[] m_DisallowVariableCharList = new string[]
+        //{
+        //    "+", "-", "*", "%",
+        //    "[", "]", "{", "}",
+        //    ".",
+        //    " ",
+        //    "\u2983", "\u2984",
+        //    "\U0001D542", "\U0001D54E"
+        //};
 
         public EngineSettings()
         {
@@ -124,15 +124,15 @@ namespace taskt.Core
             MaxFileCounter = 999;
         }
 
-        public string[] KeyNameList()
-        {
-            return m_KeyNameList;
-        }
+        //public string[] KeyNameList()
+        //{
+        //    return m_KeyNameList;
+        //}
 
-        public string[] DisallowVariableCharList()
-        {
-            return m_DisallowVariableCharList;
-        }
+        //public string[] DisallowVariableCharList()
+        //{
+        //    return m_DisallowVariableCharList;
+        //}
 
         public string replaceEngineKeyword(string targetString)
         {
