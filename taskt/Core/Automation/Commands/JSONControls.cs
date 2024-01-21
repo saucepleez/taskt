@@ -253,7 +253,7 @@ namespace taskt.Core.Automation.Commands
         {
             string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
             //if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
-            if (!VariableNameControls.IsWrapVariableMarker(jsonVariableName, engine))
+            if (!VariableNameControls.IsWrappedVariableMarker(jsonVariableName, engine))
             {
                 //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
                 jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
@@ -299,7 +299,7 @@ namespace taskt.Core.Automation.Commands
             if (forceJSONVariable)
             {
                 //if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
-                if (!VariableNameControls.IsWrapVariableMarker(jsonVariableName, engine))
+                if (!VariableNameControls.IsWrappedVariableMarker(jsonVariableName, engine))
                 {
                     //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
                     jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
