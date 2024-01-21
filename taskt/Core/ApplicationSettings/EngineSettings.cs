@@ -244,10 +244,10 @@ namespace taskt.Core
         //    return (variableName.StartsWith(this.VariableStartMarker) && variableName.EndsWith(this.VariableEndMarker));
         //}
 
-        public string wrapIntermediateVariableMaker(string variableName)
-        {
-            return "\u2983" + variableName + "\u2984";
-        }
+        //public string wrapIntermediateVariableMaker(string variableName)
+        //{
+        //    return "\u2983" + variableName + "\u2984";
+        //}
 
         private static string wrapIntermediateKeyword(string kw)
         {
