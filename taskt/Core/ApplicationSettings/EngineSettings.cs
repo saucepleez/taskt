@@ -221,23 +221,23 @@ namespace taskt.Core
             return ExtensionMethods.ConvertUserVariableToIntermediateNotation(targetString, engine);
         }
 
-        public string wrapVariableMarker(string variableName)
-        {
-            return this.VariableStartMarker + variableName + this.VariableEndMarker;
-        }
+        //public string wrapVariableMarker(string variableName)
+        //{
+        //    return this.VariableStartMarker + variableName + this.VariableEndMarker;
+        //}
 
-        public string unwrapVariableMarker(string variableName)
-        {
-            if (this.isWrappedVariableMarker(variableName))
-            {
-                string rmvSt = variableName.Substring(this.VariableStartMarker.Length);
-                return rmvSt.Substring(0, rmvSt.Length - this.VariableEndMarker.Length);
-            }
-            else
-            {
-                return variableName;
-            }
-        }
+        //public string unwrapVariableMarker(string variableName)
+        //{
+        //    if (this.isWrappedVariableMarker(variableName))
+        //    {
+        //        string rmvSt = variableName.Substring(this.VariableStartMarker.Length);
+        //        return rmvSt.Substring(0, rmvSt.Length - this.VariableEndMarker.Length);
+        //    }
+        //    else
+        //    {
+        //        return variableName;
+        //    }
+        //}
 
         public bool isWrappedVariableMarker(string variableName)
         {
