@@ -569,7 +569,6 @@ namespace taskt.Core.Automation.Commands
             if (window == engine.engineSettings.CurrentWindowKeyword)
             {
                 // current window
-
                 var whnd = GetActiveWindowHandle();
                 var title = GetWindowTitle(whnd);
 
@@ -578,7 +577,18 @@ namespace taskt.Core.Automation.Commands
                     return new List<(IntPtr, string)>() { (whnd, title) };
                 });
             }
-            else if (window == engine.engineSettings.AllWindowsKeyword)
+            else if ((window == engine.engineSettings.DesktopKeyword) ||
+                     (window == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, engine)))
+            {
+                // Desktop
+                var whnd = GetDesktopWindow();
+                return new Func<List<(IntPtr, string)>>(() =>
+                {
+                    return new List<(IntPtr, string)>() { (whnd, "") };
+                });
+            }
+            else if ((window == engine.engineSettings.AllWindowsKeyword) ||
+                     (window == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, engine)))
             {
                 // all windows & match-type
                 return new Func<List<(IntPtr, string)>>(() =>
@@ -766,6 +776,31 @@ namespace taskt.Core.Automation.Commands
             }
 
             return screenshot;
+        }
+
+        public static Bitmap CaptureWindow(IntPtr whnd)
+        {
+            RECT r;
+
+            // TODO: what is this?
+            System.Threading.Thread.Sleep(500);
+
+            if (GetWindowRect(whnd, out r))
+            {
+                var bounds = new Rectangle(r.left, r.top, r.right - r.left, r.bottom - r.top);
+                var screenshot = new Bitmap(bounds.Width, bounds.Height);
+
+                using (var graphics = Graphics.FromImage(screenshot))
+                {
+                    graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+                }
+
+                return screenshot;
+            }
+            else
+            {
+                throw new Exception($"Fail Capture Window. WindowHandle: {whnd}");
+            }
         }
 
         /// <summary>
@@ -1113,7 +1148,11 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         private static string ExpandValueOrUserVariableAsWindowName(this string value, Engine.AutomationEngineInstance engine)
         {
-            if ((value == engine.engineSettings.CurrentWindowKeyword) || (value == engine.engineSettings.AllWindowsKeyword))
+            if ((value == engine.engineSettings.CurrentWindowKeyword) || 
+                (value == engine.engineSettings.AllWindowsKeyword) ||
+                (value == engine.engineSettings.DesktopKeyword) ||
+                (value == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, engine)) ||
+                (value == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, engine)))
             {
                 return value;
             }
