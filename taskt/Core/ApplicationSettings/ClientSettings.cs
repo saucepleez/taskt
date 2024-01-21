@@ -143,12 +143,12 @@ namespace taskt.Core
 
         public bool SupportIECommand { get; set; }
 
-        private static string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
-        private static string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
-        private static string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
-        private static string InterDefaultWordInstanceNameKeyword = "%kwd_default_word_instance%";
-        private static string InterDefaultDBInstanceNameKeyword = "%kwd_default_db_instance%";
-        private static string InterDefaultNLGInstanceNameKeyword = "%kwd_default_nlg_instance%";
+        private static readonly string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
+        private static readonly string InterDefaultStopWatchInstanceNameKeyword = "%kwd_default_stopwatch_instance%";
+        private static readonly string InterDefaultExcelInstanceNameKeyword = "%kwd_default_excel_instance%";
+        private static readonly string InterDefaultWordInstanceNameKeyword = "%kwd_default_word_instance%";
+        private static readonly string InterDefaultDBInstanceNameKeyword = "%kwd_default_db_instance%";
+        private static readonly string InterDefaultNLGInstanceNameKeyword = "%kwd_default_nlg_instance%";
 
         public ClientSettings()
         {
