@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
             "+", "-", "*", "%",
             "[", "]", "{", "}",
             ".",
-            " ",
+            " ", "\t", "\r", "\n",
             IntermediateControls.INTERMEDIATE_VALIABLE_START_MARKER, IntermediateControls.INTERMEDIATE_VALIABLE_END_MARKER,
             IntermediateControls.INTERMEDIATE_KEYWORD_START_MARKER, IntermediateControls.INTERMEDIATE_VALIABLE_END_MARKER,
         };
