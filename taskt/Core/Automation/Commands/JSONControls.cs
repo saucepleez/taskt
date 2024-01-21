@@ -254,7 +254,8 @@ namespace taskt.Core.Automation.Commands
             string jsonVariableName = command.ExpandValueOrUserVariable(jsonName, "JSON", engine);
             if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
             {
-                jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
             }
             string extractor = command.ExpandValueOrUserVariable(extractorName, "Extractor", engine);
             (var jsonText, var rootType) = jsonVariableName.ExpandValueOrUserVariableAsJSON(engine);
@@ -298,7 +299,8 @@ namespace taskt.Core.Automation.Commands
             {
                 if (!engine.engineSettings.isWrappedVariableMarker(jsonVariableName))
                 {
-                    jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                    //jsonVariableName = engine.engineSettings.wrapVariableMarker(jsonVariableName);
+                    jsonVariableName = VariableNameControls.GetWrappedVariableName(jsonVariableName, engine);
                 }
             }
             (var jsonText, var rootType) = jsonVariableName.ExpandValueOrUserVariableAsJSON(engine);
