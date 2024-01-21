@@ -1913,6 +1913,7 @@ namespace taskt.Core.Script
             var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowNameControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
             var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
 
+            // keyword "Current Window" -> {Window.CurrentWindowName}
             ChangeAttributeValue(doc,
                 new Func<XElement, bool>(el =>
                 {
