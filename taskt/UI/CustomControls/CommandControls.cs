@@ -1574,7 +1574,7 @@ namespace taskt.UI.CustomControls
         {
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            //variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
+            
             variableList.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
 
             using (var newVariableSelector = new Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(variableList))
