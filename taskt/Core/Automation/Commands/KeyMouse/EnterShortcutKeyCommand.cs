@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
@@ -177,13 +176,7 @@ namespace taskt.Core.Automation.Commands
 
         private void cmbHotkey_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //var searchedKey = parameterHotkey.Text;
             var searchedKey = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
-
-            //var dic = (Dictionary<string, string>)((Label)ControlsList["lbl_" + nameof(v_Hotkey)]).Tag;
-
-            //var hotkey2ndLabel = (Label)ControlsList["lbl2_" + nameof(v_Hotkey)];
-            //hotkey2ndLabel.Text = dic.ContainsKey(searchedKey) ? dic[searchedKey] : "";
 
             ControlsList.SecondLabelProcess(nameof(v_Hotkey), nameof(v_Hotkey), searchedKey);
         }

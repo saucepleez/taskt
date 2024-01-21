@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using taskt.Core.Automation.User32;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -27,7 +26,6 @@ namespace taskt.Core.Automation.Commands
         [PropertyCustomUIHelper("Keys Builder", nameof(lnkKeysBulider_Click))]
         [PropertyCustomUIHelper("Encrypt Text", nameof(lnkEncryptText_Click))]
         [InputSpecification("Text to Send", true)]
-        //[SampleUsage("**Hello, World!** or **^s** or **{{{vEntryText}}}** or **{WIN_KEY}** or **{WIN_KEY+R}**")]
         [PropertyDetailSampleUsage("**Hello, World!**", PropertyDetailSampleUsage.ValueType.Value, "Text")]
         [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Text")]
         [PropertyDetailSampleUsage("**^s**", "Specify **Ctrl+S** for Enter Keys")]
@@ -103,31 +101,25 @@ namespace taskt.Core.Automation.Commands
 
             if (textToSend == "{WIN_KEY}")
             {
-                //User32Functions.KeyDown(Keys.LWin);
-                //User32Functions.KeyUp(Keys.LWin);
                 KeyMouseControls.KeyDown(Keys.LWin);
                 KeyMouseControls.KeyUp(Keys.LWin);
             }
             else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
             {
-                //User32Functions.KeyDown(Keys.LWin);
                 KeyMouseControls.KeyDown(Keys.LWin);
                 var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
 
                 foreach (var c in remainingText)
                 {
                     Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                    //User32Functions.KeyDown(key);
                     KeyMouseControls.KeyDown(key);
                 }
 
-                //User32Functions.KeyUp(Keys.LWin);
                 KeyMouseControls.KeyUp(Keys.LWin);
 
                 foreach (var c in remainingText)
                 {
                     Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                    //User32Functions.KeyUp(key);
                     KeyMouseControls.KeyUp(key);
                 }
             }
@@ -147,7 +139,6 @@ namespace taskt.Core.Automation.Commands
 
         private void lnkEncryptText_Click(object sender, EventArgs e)
         {
-            //var InputText = (TextBox)ControlsList[nameof(v_TextToSend)];
             var InputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
 
             if (string.IsNullOrEmpty(InputText.Text))
@@ -168,7 +159,6 @@ namespace taskt.Core.Automation.Commands
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
-                    //var InputText = (TextBox)ControlsList[nameof(v_TextToSend)];
                     var InputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
                     InputText.Text = fm.Result;
                 }

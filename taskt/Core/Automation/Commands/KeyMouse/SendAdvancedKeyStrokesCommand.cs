@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Data;
-using taskt.Core.Automation.User32;
-using taskt.UI.Forms;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -112,8 +110,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     case "Key Press (Down + Up)":
                         //simulate press
-                        //User32Functions.KeyDown(oemKeyName);
-                        //User32Functions.KeyUp(oemKeyName);
                         KeyMouseControls.KeyDown(oemKeyName);
                         KeyMouseControls.KeyUp(oemKeyName);
                         
@@ -126,7 +122,6 @@ namespace taskt.Core.Automation.Commands
 
                     case "Key Down":
                         //simulate down
-                        //User32Functions.KeyDown(oemKeyName);
                         KeyMouseControls.KeyDown(oemKeyName);
 
                         //track via keys down list
@@ -138,7 +133,6 @@ namespace taskt.Core.Automation.Commands
 
                     case "Key Up":
                         //simulate up
-                        //User32Functions.KeyUp(oemKeyName);
                         KeyMouseControls.KeyUp(oemKeyName);
 
                         //remove from key down
@@ -151,7 +145,6 @@ namespace taskt.Core.Automation.Commands
                     default:
                         break;
                 }
-
             }
 
             //return key to up position if requested
@@ -159,7 +152,6 @@ namespace taskt.Core.Automation.Commands
             {
                 foreach (var key in keysDown)
                 {
-                    //User32Functions.KeyUp(key);
                     KeyMouseControls.KeyUp(key);
                 }
             }
@@ -172,11 +164,9 @@ namespace taskt.Core.Automation.Commands
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            //var dgv = (DataGridView)ControlsList[nameof(v_KeyActions)];
             var dgv = ControlsList.GetPropertyControl<DataGridView>(nameof(v_KeyActions));
 
             var column = (DataGridViewComboBoxColumn)dgv.Columns[0];
-            //column.DataSource = Common.GetAvailableKeys();
             column.DataSource = KeyMouseControls.KeysList;
         }
 
