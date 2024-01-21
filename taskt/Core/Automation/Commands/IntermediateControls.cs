@@ -252,7 +252,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static bool isWrappedIntermediateKeywordMarker(string value)
+        private static bool IsWrappedIntermediateKeywordMarker(string value)
         {
             return (value.StartsWith(INTERMEDIATE_KEYWORD_END_MARKER) && value.EndsWith(INTERMEDIATE_KEYWORD_END_MARKER));
         }
@@ -264,7 +264,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string GetWrappedIntermediateKeyword(string keyword)
         {
-            if (isWrappedIntermediateKeywordMarker(keyword))
+            if (IsWrappedIntermediateKeywordMarker(keyword))
             {
                 return keyword;
             }
@@ -279,7 +279,7 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static bool isWrappedIntermediateVariableMarker(string value)
+        private static bool IsWrappedIntermediateVariableMarker(string value)
         {
             return (value.StartsWith(INTERMEDIATE_VALIABLE_START_MARKER) && value.EndsWith(INTERMEDIATE_VALIABLE_END_MARKER));
         }
@@ -291,7 +291,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string GetWrappedIntermediateVariable(string variableName)
         {
-            if (isWrappedIntermediateVariableMarker(variableName))
+            if (IsWrappedIntermediateVariableMarker(variableName))
             {
                 return variableName;
             }
