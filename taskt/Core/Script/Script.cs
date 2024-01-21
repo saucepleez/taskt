@@ -362,6 +362,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_72(doc);
             convertTo3_5_1_74(doc);
             convertTo3_5_1_75(doc);
+            convertTo3_5_1_76(doc);
 
             return doc;
         }
@@ -1975,6 +1976,42 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_76(XDocument doc)
+        {
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowNameControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
+            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
+
+            // keyword "Current Window" -> {Window.CurrentWindowName}
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "TakeScreenshotCommand":
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WindowName",
+                new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value == oldKW)
+                    {
+                        attr.SetValue(newKW);
+                    }
+                })
+            );
+
+            return doc;
+        }
 
         /// <summary>
         /// get specfied commands
