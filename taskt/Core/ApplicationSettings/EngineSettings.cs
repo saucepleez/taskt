@@ -51,19 +51,19 @@ namespace taskt.Core
         public bool IgnoreFirstVariableMarkerInOutputParameter { get; set; }
         public int MaxFileCounter { get; set; }
 
-        private static string InterStartVariableMaker = "{{{";
-        private static string InterEndVariableMaker = "}}}";
-        private static string InterCurrentWindowKeyword = "%kwd_current_window%";
-        private static string InterDesktopKeyword = "%kwd_desktop%";
-        private static string InterAllWindowsKeyword = "%kwd_all_windows%";
-        private static string InterCurrentWindowPositionKeyword = "%kwd_current_position%";
-        private static string InterCurrentWindowXPositionKeyword = "%kwd_current_xposition%";
-        private static string InterCurrentWindowYPositionKeyword = "%kwd_current_yposition%";
-        private static string InterCurrentWorksheetKeyword = "%kwd_current_worksheet%";
-        private static string InterNextWorksheetKeyword = "%kwd_next_worksheet%";
-        private static string InterPreviousWorksheetKeyword = "%kwd_previous_worksheet%";
+        private static readonly string InterStartVariableMaker = "{{{";
+        private static readonly string InterEndVariableMaker = "}}}";
+        private static readonly string InterCurrentWindowKeyword = "%kwd_current_window%";
+        private static readonly string InterDesktopKeyword = "%kwd_desktop%";
+        private static readonly string InterAllWindowsKeyword = "%kwd_all_windows%";
+        private static readonly string InterCurrentWindowPositionKeyword = "%kwd_current_position%";
+        private static readonly string InterCurrentWindowXPositionKeyword = "%kwd_current_xposition%";
+        private static readonly string InterCurrentWindowYPositionKeyword = "%kwd_current_yposition%";
+        private static readonly string InterCurrentWorksheetKeyword = "%kwd_current_worksheet%";
+        private static readonly string InterNextWorksheetKeyword = "%kwd_next_worksheet%";
+        private static readonly string InterPreviousWorksheetKeyword = "%kwd_previous_worksheet%";
 
-        private static string[] m_KeyNameList = new string[]
+        private static readonly string[] m_KeyNameList = new string[]
         {
             "BACKSPACE", "BS", "BKSP",
             "BREAK",
@@ -83,7 +83,7 @@ namespace taskt.Core
             "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE",
             "WIN_KEY"
         };
-        private static string[] m_DisallowVariableCharList = new string[]
+        private static readonly string[] m_DisallowVariableCharList = new string[]
         {
             "+", "-", "*", "%",
             "[", "]", "{", "}",
