@@ -606,7 +606,8 @@ namespace taskt.Core
                                 string variableValue;
                                 if (ExpandVariable(variableName, variables, engine, out variableValue))
                                 {
-                                    ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                    //ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                    ret = IntermediateControls.GetWrappedIntermediateVariable(variableName);
                                     state = 2;
                                 }
                                 else
@@ -625,7 +626,8 @@ namespace taskt.Core
                             string variableValue;
                             if (ExpandVariable(variableName, variables, engine, out variableValue))
                             {
-                                ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                //ret = engine.engineSettings.wrapIntermediateVariableMaker(variableName);
+                                ret = IntermediateControls.GetWrappedIntermediateKeyword(variableName);
                                 state = 2;
                             }
                             else
