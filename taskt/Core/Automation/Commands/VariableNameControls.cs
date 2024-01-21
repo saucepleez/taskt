@@ -118,7 +118,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string GetVariableName(string name, Engine.AutomationEngineInstance engine)
         {
-            if (IsWrapVariableMarker(name, engine) && engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
+            if (IsWrappedVariableMarker(name, engine) && engine.engineSettings.IgnoreFirstVariableMarkerInOutputParameter)
             {
                 var len = name.Length;
                 var s = engine.engineSettings.VariableStartMarker.Length;
@@ -136,9 +136,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="name">name is not converted</param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static bool IsWrapVariableMarker(string name, Engine.AutomationEngineInstance engine)
+        public static bool IsWrappedVariableMarker(string name, Engine.AutomationEngineInstance engine)
         {
-            return IsWrapVariableMarker(name, engine.engineSettings);
+            return IsWrappedVariableMarker(name, engine.engineSettings);
         }
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="name">name is not converted</param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static bool IsWrapVariableMarker(string name, ApplicationSettings settings)
+        public static bool IsWrappedVariableMarker(string name, ApplicationSettings settings)
         {
-            return IsWrapVariableMarker(name, settings.EngineSettings);
+            return IsWrappedVariableMarker(name, settings.EngineSettings);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="name">name is not converted</param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        private static bool IsWrapVariableMarker(string name, EngineSettings settings)
+        private static bool IsWrappedVariableMarker(string name, EngineSettings settings)
         {
             return (name.StartsWith(settings.VariableStartMarker) && name.EndsWith(settings.VariableEndMarker));
         }
@@ -171,7 +171,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string GetWrappedVariableName(string name, Engine.AutomationEngineInstance engine)
         {
-            if (IsWrapVariableMarker(name, engine))
+            if (IsWrappedVariableMarker(name, engine))
             {
                 return name;
             }
@@ -189,7 +189,7 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         public static string GetWrappedVariableName(string name, ApplicationSettings settings)
         {
-            if (IsWrapVariableMarker(name, settings))
+            if (IsWrappedVariableMarker(name, settings))
             {
                 return name;
             }
