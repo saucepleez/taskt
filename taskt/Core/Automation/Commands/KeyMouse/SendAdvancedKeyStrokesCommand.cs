@@ -23,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
+        [XmlElement]
         [PropertyDescription("Keys and Action Type")]
         [InputSpecification("")]
         [SampleUsage("")]
@@ -34,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDataGridViewCellEditEvent(nameof(DataTableControls) + "+" + nameof(DataTableControls.AllEditableDataGridView_CellClick), PropertyDataGridViewCellEditEvent.DataGridViewCellEvent.CellClick)]
         public DataTable v_KeyActions { get; set; }
 
-        [XmlElement]
+        [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Return all keys to 'UP' position after execution")]
         [PropertyIsOptional(true, "No")]

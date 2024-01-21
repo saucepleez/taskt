@@ -1945,6 +1945,30 @@ namespace taskt.Core.Script
                 })
             );
 
+            // SendAdvancedKeyStrokesCommand strange element "v_KeyUpDefault"
+            var cmds = GetCommands(doc, "SendAdvancedKeyStrokesCommand");
+            foreach(var cmd in cmds)
+            {
+                var elem = cmd.Element("v_KeyUpDefault");
+                var attr = cmd.Attribute("v_KeyUpDefault");
+
+                // attribute v_KeyUpDefault not exists
+                if (attr == null)
+                {
+                    //if (elem != null)
+                    //{
+                    //    cmd.SetAttributeValue("v_KeyUpDefault", elem.Value ?? "");
+                    //}
+                    //else
+                    //{
+                    //    cmd.SetAttributeValue("v_KeyUpDefault", "");
+                    //}
+                    cmd.SetAttributeValue("v_KeyUpDefault", elem?.Value ?? "");
+                }
+
+                elem?.Remove();
+            }
+
             return doc;
         }
 
