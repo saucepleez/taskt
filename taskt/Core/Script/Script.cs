@@ -362,7 +362,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_72(doc);
             convertTo3_5_1_74(doc);
             convertTo3_5_1_75(doc);
-            convertTo3_5_1_76(doc);
+            convertTo3_5_1_77(doc);
 
             return doc;
         }
@@ -1976,7 +1976,7 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_1_76(XDocument doc)
+        private static XDocument convertTo3_5_1_77(XDocument doc)
         {
             var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowNameControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
             var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
