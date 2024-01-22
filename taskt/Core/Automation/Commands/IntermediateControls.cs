@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Reflection;
 
 namespace taskt.Core.Automation.Commands
