@@ -87,6 +87,14 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         public string v_WaitAfterKeyEnter { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public virtual string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        public virtual string v_HandleResult { get; set; }
+
         public EnterShortcutKeyCommand()
         {
             //this.CommandName = "SendHotkeyCommand";
@@ -158,13 +166,15 @@ namespace taskt.Core.Automation.Commands
 
             var enterKeysCommand = new EnterKeysCommand
             {
-                v_WindowName = v_WindowName,
-                v_SearchMethod = v_SearchMethod,
+                v_WindowName = this.v_WindowName,
+                v_SearchMethod = this.v_SearchMethod,
                 v_TextToSend = sendKey,
-                v_MatchMethod = v_MatchMethod,
-                v_TargetWindowIndex = v_TargetWindowIndex,
-                v_WaitForWindow = v_WaitForWindow,
-                v_WaitTime = v_WaitAfterKeyEnter
+                v_MatchMethod = this.v_MatchMethod,
+                v_TargetWindowIndex = this.v_TargetWindowIndex,
+                v_WaitForWindow = this.v_WaitForWindow,
+                v_WaitTime = this.v_WaitAfterKeyEnter,
+                v_NameResult = this.v_NameResult,
+                v_HandleResult = this.v_HandleResult,
             };
             enterKeysCommand.RunCommand(engine);
         }
