@@ -81,7 +81,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitForWindow { get; set; }
+        public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
@@ -171,7 +171,7 @@ namespace taskt.Core.Automation.Commands
                 v_TextToSend = sendKey,
                 v_MatchMethod = this.v_MatchMethod,
                 v_TargetWindowIndex = this.v_TargetWindowIndex,
-                v_WaitForWindow = this.v_WaitForWindow,
+                v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                 v_WaitTime = this.v_WaitAfterKeyEnter,
                 v_NameResult = this.v_NameResult,
                 v_HandleResult = this.v_HandleResult,
