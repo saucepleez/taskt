@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// windows name compare(search) method
         /// </summary>
-        [PropertyDescription("Search Method for the Window Name")]
+        [PropertyDescription("Compare Method for the Window Name")]
         [InputSpecification("", true)]
         [PropertyUISelectionOption("Contains")]
         [PropertyUISelectionOption("Starts with")]
@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
-        [PropertyDisplayText(true, "Search Method")]
+        [PropertyDisplayText(true, "Compare Method")]
         [PropertyParameterOrder(5000)]
         public static string v_CompareMethod { get; }
 
