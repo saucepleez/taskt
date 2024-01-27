@@ -89,11 +89,11 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
-        public virtual string v_NameResult { get; set; }
+        public string v_NameResult { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
-        public virtual string v_HandleResult { get; set; }
+        public string v_HandleResult { get; set; }
 
         public EnterShortcutKeyCommand()
         {
