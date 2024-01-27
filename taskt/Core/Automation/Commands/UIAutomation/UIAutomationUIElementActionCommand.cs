@@ -78,6 +78,15 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_ElementWaitTime { get; set; }
 
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        public string v_HandleResult { get; set; }
+
         public UIAutomationUIElementActionCommand()
         {
         }
@@ -95,6 +104,8 @@ namespace taskt.Core.Automation.Commands
                 v_TargetWindowIndex = this.v_TargetWindowIndex,
                 v_WindowWaitTime = this.v_WindowWaitTime,
                 v_AutomationElementVariable = winElemVar,
+                v_NameResult = this.v_NameResult,
+                v_HandleResult = this.v_HandleResult,
             };
             winElem.RunCommand(engine);
 
