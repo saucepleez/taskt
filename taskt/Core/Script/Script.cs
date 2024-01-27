@@ -2010,6 +2010,43 @@ namespace taskt.Core.Script
                 })
             );
 
+            // v_WaitTime -> v_WaitTimeForWindow
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ActivateWindowByWindowHandleCommand":
+                        case "ActivateWindowCommand":
+                        case "CheckWindowHandleExistsCommand":
+                        case "CheckWindowNameExistsCommand":
+                        case "CloseWindowByWindowHandle":
+                        case "CloseWindowCommand":
+                        case "GetProcessNameFromWindowHandleCommand":
+                        case "GetProcessNameFromWindowNameCommand":
+                        case "GetWindowHandleFromWindowNameCommand":
+                        case "GetWindowNameFromWindowHandleCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionCommand":
+                        case "GetWindowPositionFromWindowHandleCommand":
+                        case "GetWindowSizeCommand":
+                        case "GetWindowSizeFromWindowHandleCommand":
+                        case "GetWindowStateCommand":
+                        case "GetWindowStateFromWindowHandleCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                        case "MoveWindowCommand":
+                        case "ResizeWindowByWindowHandleCommand":
+                        case "ResizeWindowCommand":
+                        case "SetWindowStateByWindowHandleCommand":
+                        case "SetWindowStateCommand":
+                        case "WaitForWindowToExistsCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WaitTime", "v_WaitTimeForWindow"
+            );
+
             return doc;
         }
 

@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
-        public string v_WaitTime { get; set; }
+        public string v_WaitTimeForWindow { get; set; }
 
         public GetProcessNameFromWindowHandleCommand()
         {

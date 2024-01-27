@@ -18,7 +18,7 @@
         /// <summary>
         /// wait time for window
         /// </summary>
-        string v_WaitTime { get; set; }
+        string v_WaitTimeForWindow { get; set; }
 
         /// <summary>
         /// found window name

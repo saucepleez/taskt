@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyParameterOrder(6000)]
-        public  virtual string v_WaitTime { get; set; }
+        public  virtual string v_WaitTimeForWindow { get; set; }
 
         public AWindowHandleCommand()
         {
