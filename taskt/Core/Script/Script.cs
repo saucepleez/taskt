@@ -2084,7 +2084,7 @@ namespace taskt.Core.Script
                 }), "v_WindowWaitTime", "v_WaitTimeForWindow"
             );
 
-            // v_SearchMethod -> v_CompareMethod (Window, Image, KeyMouse)
+            // v_SearchMethod -> v_CompareMethod (Window, Image, KeyMouse, UIAutomation)
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
@@ -2110,6 +2110,12 @@ namespace taskt.Core.Script
                         case "EnterKeysCommand":
                         case "EnterShortcutKeyCommand":
                         case "SendAdvancedKeyStrokesCommand":
+                        // UIAutomation
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
                             return true;
                         default:
                             return false;

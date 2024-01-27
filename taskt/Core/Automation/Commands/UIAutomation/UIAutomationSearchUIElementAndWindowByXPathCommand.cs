@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
+        public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
             var winSearch = new UIAutomationSearchUIElementFromWindowCommand()
             {
                 v_WindowName = this.v_WindowName,
-                v_SearchMethod = this.v_SearchMethod,
+                v_CompareMethod = this.v_CompareMethod,
                 v_MatchMethod = this.v_MatchMethod,
                 v_TargetWindowIndex = this.v_TargetWindowIndex,
                 v_WaitTimeForWindow = this.v_WaitTimeForWindow,
