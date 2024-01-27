@@ -38,12 +38,16 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Return all keys to 'UP' position after execution")]
-        [PropertyIsOptional(true, "No")]
+        [PropertyIsOptional(true, "Yes")]
         public string v_KeyUpDefault { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
         public string v_SearchMethod { get; set; }
+        
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
+        public string v_WaitAfterKeyEnter { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
@@ -59,8 +63,12 @@ namespace taskt.Core.Automation.Commands
         public string v_WaitForWindow { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
-        public string v_WaitAfterKeyEnter { get; set; }
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        public virtual string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        public virtual string v_HandleResult { get; set; }
 
         public SendAdvancedKeyStrokesCommand()
         {
@@ -72,89 +80,166 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
-
-            if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
-            {
-                var activateWindow = new ActivateWindowCommand
+            WindowNameControls.WindowAction(this, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    v_WindowName = v_WindowName,
-                    v_SearchMethod = v_SearchMethod,
-                    v_MatchMethod = v_MatchMethod,
-                    v_TargetWindowIndex = v_TargetWindowIndex,
-                    v_WaitTime = v_WaitForWindow
-                };
-                activateWindow.RunCommand(engine);
-            }
+                    var whnd = wins[0].Item1;
+                    WindowNameControls.ActivateWindow(whnd);
 
-            //track all keys down
-            var keysDown = new List<Keys>();
+                    //track all keys down
+                    var keysDown = new List<Keys>();
 
-            //run each selected item
-            foreach (DataRow rw in v_KeyActions.Rows)
-            {
-                //get key name
-                var keyName = rw.Field<string>("Key");
+                    //run each selected item
+                    foreach (DataRow rw in v_KeyActions.Rows)
+                    {
+                        //get key name
+                        var keyName = rw.Field<string>("Key");
 
-                //get key action
-                var action = rw.Field<string>("Action");
+                        //get key action
+                        var action = rw.Field<string>("Action");
 
-                //parse OEM key name
-                string oemKeyString = keyName.Split('[', ']')[1];
+                        //parse OEM key name
+                        string oemKeyString = keyName.Split('[', ']')[1];
 
-                var oemKeyName = (Keys)Enum.Parse(typeof(Keys), oemKeyString);
+                        var oemKeyName = (Keys)Enum.Parse(typeof(Keys), oemKeyString);
+
+
+                        //"Key Press (Down + Up)", "Key Down", "Key Up"
+                        switch (action)
+                        {
+                            case "Key Press (Down + Up)":
+                                //simulate press
+                                KeyMouseControls.KeyDown(oemKeyName);
+                                KeyMouseControls.KeyUp(oemKeyName);
+
+                                //key returned to UP position so remove if we added it to the keys down list
+                                if (keysDown.Contains(oemKeyName))
+                                {
+                                    keysDown.Remove(oemKeyName);
+                                }
+                                break;
+
+                            case "Key Down":
+                                //simulate down
+                                KeyMouseControls.KeyDown(oemKeyName);
+
+                                //track via keys down list
+                                if (!keysDown.Contains(oemKeyName))
+                                {
+                                    keysDown.Add(oemKeyName);
+                                }
+                                break;
+
+                            case "Key Up":
+                                //simulate up
+                                KeyMouseControls.KeyUp(oemKeyName);
+
+                                //remove from key down
+                                if (keysDown.Contains(oemKeyName))
+                                {
+                                    keysDown.Remove(oemKeyName);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+
+                    //return key to up position if requested
+                    if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_KeyUpDefault), engine))
+                    {
+                        foreach (var key in keysDown)
+                        {
+                            KeyMouseControls.KeyUp(key);
+                        }
+                    }
+                })
+            );
+
+            //var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
+
+            //if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
+            //{
+            //    var activateWindow = new ActivateWindowCommand
+            //    {
+            //        v_WindowName = v_WindowName,
+            //        v_SearchMethod = v_SearchMethod,
+            //        v_MatchMethod = v_MatchMethod,
+            //        v_TargetWindowIndex = v_TargetWindowIndex,
+            //        v_WaitTime = v_WaitForWindow
+            //    };
+            //    activateWindow.RunCommand(engine);
+            //}
+
+            ////track all keys down
+            //var keysDown = new List<Keys>();
+
+            ////run each selected item
+            //foreach (DataRow rw in v_KeyActions.Rows)
+            //{
+            //    //get key name
+            //    var keyName = rw.Field<string>("Key");
+
+            //    //get key action
+            //    var action = rw.Field<string>("Action");
+
+            //    //parse OEM key name
+            //    string oemKeyString = keyName.Split('[', ']')[1];
+
+            //    var oemKeyName = (Keys)Enum.Parse(typeof(Keys), oemKeyString);
 
             
-                //"Key Press (Down + Up)", "Key Down", "Key Up"
-                switch (action)
-                {
-                    case "Key Press (Down + Up)":
-                        //simulate press
-                        KeyMouseControls.KeyDown(oemKeyName);
-                        KeyMouseControls.KeyUp(oemKeyName);
+            //    //"Key Press (Down + Up)", "Key Down", "Key Up"
+            //    switch (action)
+            //    {
+            //        case "Key Press (Down + Up)":
+            //            //simulate press
+            //            KeyMouseControls.KeyDown(oemKeyName);
+            //            KeyMouseControls.KeyUp(oemKeyName);
                         
-                        //key returned to UP position so remove if we added it to the keys down list
-                        if (keysDown.Contains(oemKeyName))
-                        {
-                            keysDown.Remove(oemKeyName);
-                        }
-                        break;
+            //            //key returned to UP position so remove if we added it to the keys down list
+            //            if (keysDown.Contains(oemKeyName))
+            //            {
+            //                keysDown.Remove(oemKeyName);
+            //            }
+            //            break;
 
-                    case "Key Down":
-                        //simulate down
-                        KeyMouseControls.KeyDown(oemKeyName);
+            //        case "Key Down":
+            //            //simulate down
+            //            KeyMouseControls.KeyDown(oemKeyName);
 
-                        //track via keys down list
-                        if (!keysDown.Contains(oemKeyName))
-                        {
-                            keysDown.Add(oemKeyName);
-                        }
-                        break;
+            //            //track via keys down list
+            //            if (!keysDown.Contains(oemKeyName))
+            //            {
+            //                keysDown.Add(oemKeyName);
+            //            }
+            //            break;
 
-                    case "Key Up":
-                        //simulate up
-                        KeyMouseControls.KeyUp(oemKeyName);
+            //        case "Key Up":
+            //            //simulate up
+            //            KeyMouseControls.KeyUp(oemKeyName);
 
-                        //remove from key down
-                        if (keysDown.Contains(oemKeyName))
-                        {
-                            keysDown.Remove(oemKeyName);
-                        }
-                        break;
+            //            //remove from key down
+            //            if (keysDown.Contains(oemKeyName))
+            //            {
+            //                keysDown.Remove(oemKeyName);
+            //            }
+            //            break;
 
-                    default:
-                        break;
-                }
-            }
+            //        default:
+            //            break;
+            //    }
+            //}
 
-            //return key to up position if requested
-            if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_KeyUpDefault), engine))
-            {
-                foreach (var key in keysDown)
-                {
-                    KeyMouseControls.KeyUp(key);
-                }
-            }
+            ////return key to up position if requested
+            //if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_KeyUpDefault), engine))
+            //{
+            //    foreach (var key in keysDown)
+            //    {
+            //        KeyMouseControls.KeyUp(key);
+            //    }
+            //}
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
