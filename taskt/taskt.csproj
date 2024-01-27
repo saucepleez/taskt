@@ -368,6 +368,7 @@
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\IAnyWindowNameProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowHandleProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowNameProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowByWindowHandleCommand.cs" />
