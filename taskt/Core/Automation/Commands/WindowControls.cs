@@ -13,7 +13,7 @@ using taskt.Core.Automation.Engine;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// for window name methods
+    /// for window methods
     /// </summary>
     internal static class WindowControls
     {
