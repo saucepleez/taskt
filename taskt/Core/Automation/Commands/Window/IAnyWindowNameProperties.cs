@@ -11,7 +11,7 @@
         string v_WindowName { get; set; }
 
         /// <summary>
-        /// search method (contains, starts-with, ...)
+        /// compare method (contains, starts-with, ...)
         /// </summary>
         string v_SearchMethod { get; set; }
 
