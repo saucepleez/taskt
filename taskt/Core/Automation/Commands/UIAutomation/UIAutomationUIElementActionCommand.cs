@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 using System.Windows.Forms;
+using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -72,12 +71,11 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WindowWaitTime { get; set; }
+        public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(UIElementControls), nameof(UIElementControls.v_WaitTime))]
         public string v_ElementWaitTime { get; set; }
-
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
@@ -102,7 +100,7 @@ namespace taskt.Core.Automation.Commands
                 v_SearchMethod = this.v_SearchMethod,
                 v_MatchMethod = this.v_MatchMethod,
                 v_TargetWindowIndex = this.v_TargetWindowIndex,
-                v_WindowWaitTime = this.v_WindowWaitTime,
+                v_WaitTimeForWindow = this.v_WaitTimeForWindow,
                 v_AutomationElementVariable = winElemVar,
                 v_NameResult = this.v_NameResult,
                 v_HandleResult = this.v_HandleResult,

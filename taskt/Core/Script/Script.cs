@@ -2064,6 +2064,24 @@ namespace taskt.Core.Script
                 }), "v_WaitForWindow", "v_WaitTimeForWindow"
             );
 
+            // v_WindowWaitTime -> v_WaitForWindow (UIAutomation)
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "UIAutomationSearchUIElementAndWindowByXPathCommand":
+                        case "UIAutomationSearchUIElementAndWindowCommand":
+                        case "UIAutomationSearchUIElementFromWindowCommand":
+                        case "UIAutomationUIElementActionByXPathCommand":
+                        case "UIAutomationUIElementActionCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WindowWaitTime", "v_WaitTimeForWindow"
+            );
+
             return doc;
         }
 
