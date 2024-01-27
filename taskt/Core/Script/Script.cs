@@ -2082,6 +2082,32 @@ namespace taskt.Core.Script
                 }), "v_WindowWaitTime", "v_WaitTimeForWindow"
             );
 
+            // v_SearchMethod -> v_CompareMethod (Window)
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ActivateWindowCommand":
+                        case "CheckWindowNameExistsCommand":
+                        case "CloseWindowCommand":
+                        case "GetProcessNameFromWindowNameCommand":
+                        case "GetWindowHandleFromWindowNameCommand":
+                        case "GetWindowNamesCommand":
+                        case "GetWindowPositionCommand":
+                        case "GetWindowSizeCommand":
+                        case "GetWindowStateCommand":
+                        case "MoveWindowCommand":
+                        case "ResizeWindowCommand":
+                        case "SetWindowStateCommand":
+                        case "WaitForWindowToExistsCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_SearchMethod", "v_CompareMethod"
+            );
+
             return doc;
         }
 

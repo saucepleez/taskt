@@ -13,7 +13,7 @@
         /// <summary>
         /// compare method (contains, starts-with, ...)
         /// </summary>
-        string v_SearchMethod { get; set; }
+        string v_CompareMethod { get; set; }
 
         /// <summary>
         /// wait time for window

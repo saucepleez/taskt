@@ -1040,7 +1040,7 @@ namespace taskt.Core.Automation.Commands
         public static void WindowAction(AWindowNameCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
         {
             WindowAction(command, 
-                nameof(command.v_WindowName), nameof(command.v_SearchMethod), nameof(command.v_MatchMethod), 
+                nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_MatchMethod), 
                 nameof(command.v_TargetWindowIndex), nameof(command.v_WaitTimeForWindow), engine, actionFunc, 
                 nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
         }
@@ -1055,7 +1055,7 @@ namespace taskt.Core.Automation.Commands
         public static void WindowAction(AAnyWindowNameCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
         {
             WindowAction(command, 
-                nameof(command.v_WindowName), nameof(command.v_SearchMethod), nameof(command.v_WaitTimeForWindow), 
+                nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_WaitTimeForWindow), 
                 engine, actionFunc, nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
         }
 
