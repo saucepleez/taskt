@@ -2053,7 +2053,9 @@ namespace taskt.Core.Script
                 {
                     switch (el.Attribute("CommandName").Value)
                     {
+                        // Image
                         case "TakeScreenshotCommand":
+                        // KeyMouse
                         case "EnterKeysCommand":
                         case "EnterShortcutKeyCommand":
                         case "SendAdvancedKeyStrokesCommand":
@@ -2082,12 +2084,13 @@ namespace taskt.Core.Script
                 }), "v_WindowWaitTime", "v_WaitTimeForWindow"
             );
 
-            // v_SearchMethod -> v_CompareMethod (Window)
+            // v_SearchMethod -> v_CompareMethod (Window, Image, KeyMouse)
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
                     switch (el.Attribute("CommandName").Value)
                     {
+                        // Window
                         case "ActivateWindowCommand":
                         case "CheckWindowNameExistsCommand":
                         case "CloseWindowCommand":
@@ -2101,6 +2104,12 @@ namespace taskt.Core.Script
                         case "ResizeWindowCommand":
                         case "SetWindowStateCommand":
                         case "WaitForWindowToExistsCommand":
+                        // Image
+                        case "TakeScreenshotCommand":
+                        // KeyMouse
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
                             return true;
                         default:
                             return false;

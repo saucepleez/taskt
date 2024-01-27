@@ -40,7 +40,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                 EnterKeysCommand firstKeystroke = (EnterKeysCommand)keyCommands[0];
                 cmbWindowName.Text = firstKeystroke.v_WindowName;
-                cmbSearchMethod.Text = firstKeystroke.v_SearchMethod;
+                cmbSearchMethod.Text = firstKeystroke.v_CompareMethod;
                 txtWaitTime.Text = firstKeystroke.v_WaitTime;
 
                 string keystrokes = "";
@@ -151,7 +151,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     new EnterKeysCommand()
                     {
                         v_WindowName = cmbWindowName.Text,
-                        v_SearchMethod = cmbSearchMethod.Text,
+                        v_CompareMethod = cmbSearchMethod.Text,
                         v_TextToSend = s,
                         v_EncryptionOption = "",
                         v_WaitTime = txtWaitTime.Text
