@@ -2010,7 +2010,7 @@ namespace taskt.Core.Script
                 })
             );
 
-            // v_WaitTime -> v_WaitTimeForWindow
+            // v_WaitTime -> v_WaitTimeForWindow (Window Commands group)
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
@@ -2045,6 +2045,23 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_WaitTime", "v_WaitTimeForWindow"
+            );
+
+            // v_WaitForWindow -> v_WaitTimeForWindow (KeyMouse, Image)
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "TakeScreenshotCommand":
+                        case "EnterKeysCommand":
+                        case "EnterShortcutKeyCommand":
+                        case "SendAdvancedKeyStrokesCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_WaitForWindow", "v_WaitTimeForWindow"
             );
 
             return doc;
