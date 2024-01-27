@@ -22,13 +22,13 @@ namespace taskt.Core.Automation.Commands
         //public string v_SearchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         [PropertyParameterOrder(7000)]
         public virtual string v_MatchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
         [PropertyParameterOrder(7100)]
         public virtual string v_TargetWindowIndex { get; set; }
 
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
         protected void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
         //public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)

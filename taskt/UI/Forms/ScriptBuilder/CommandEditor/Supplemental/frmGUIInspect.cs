@@ -48,7 +48,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
         private void reloadWindowNames()
         {
-            List<string> windows = WindowNameControls.GetAllWindowTitles();
+            List<string> windows = WindowControls.GetAllWindowTitles();
 
             string currentWindow = cmbWindowList.Text;
 

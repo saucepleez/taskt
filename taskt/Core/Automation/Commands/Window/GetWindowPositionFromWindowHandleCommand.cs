@@ -60,10 +60,10 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
-                    var pos = WindowNameControls.GetWindowRect(whnd);
+                    var pos = WindowControls.GetWindowRect(whnd);
 
                     int x = 0, y = 0;
                     switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_PositionBase), engine))

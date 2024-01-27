@@ -38,10 +38,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
-                    var n = WindowNameControls.GetWindowTitle(whnd);
+                    var n = WindowControls.GetWindowTitle(whnd);
                     n.StoreInUserVariable(engine, v_Result);
                 })
             );

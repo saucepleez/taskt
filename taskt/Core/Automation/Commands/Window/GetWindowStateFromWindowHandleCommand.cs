@@ -36,10 +36,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
-                    var state = WindowNameControls.GetWindowState(whnd);
+                    var state = WindowControls.GetWindowState(whnd);
                     state.StoreInUserVariable(engine, v_WindowState);
                 })
             );

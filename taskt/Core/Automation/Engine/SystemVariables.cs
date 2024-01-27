@@ -163,10 +163,10 @@ namespace taskt.Core.Automation.Engine
             DateTime_Now_Second.VariableValue = DateTime.Now.ToString("ss");
             DateTime_Now_FileSafe.VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss");
 
-            Env_ActiveWindowTitle.VariableValue = WindowNameControls.GetActiveWindowTitle();
+            Env_ActiveWindowTitle.VariableValue = WindowControls.GetActiveWindowTitle();
 
-            Window_CurrentWindowName.VariableValue = WindowNameControls.GetActiveWindowTitle();
-            Window_CurrentWindowHandle.VariableValue = WindowNameControls.GetActiveWindowHandle().ToString();
+            Window_CurrentWindowName.VariableValue = WindowControls.GetActiveWindowTitle();
+            Window_CurrentWindowHandle.VariableValue = WindowControls.GetActiveWindowHandle().ToString();
 
             Taskt_EngineContext.VariableValue = engine.GetEngineContext();
 

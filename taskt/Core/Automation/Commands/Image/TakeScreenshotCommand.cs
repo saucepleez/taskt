@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
     public class TakeScreenshotCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
         [PropertyIsWindowNamesList(true, true, false, true)]
         public string v_WindowName { get; set; }
 
@@ -50,28 +50,28 @@ namespace taskt.Core.Automation.Commands
         public string v_WaitTimeBeforeCapture { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
         public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         public string v_MatchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
         public string v_TargetWindowIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
         public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
         public string v_NameResult { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_OutputWindowHandle))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
         public string v_HandleResult { get; set; }
 
         public TakeScreenshotCommand()
@@ -102,21 +102,21 @@ namespace taskt.Core.Automation.Commands
 
             //image.Save(outputFile);
 
-            WindowNameControls.WindowAction(this, engine,
+            WindowControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var whnd = wins[0].Item1;
 
                     if (this.ExpandValueOrUserVariableAsYesNo(nameof(v_ActivateWindowBeforeCapture), engine))
                     {
-                        WindowNameControls.ActivateWindow(whnd);
+                        WindowControls.ActivateWindow(whnd);
                     }
 
                     // wait time
                     var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTimeBeforeCapture), engine);
                     System.Threading.Thread.Sleep(waitTime);
 
-                    var image = WindowNameControls.CaptureWindow(whnd);
+                    var image = WindowControls.CaptureWindow(whnd);
                     var outputFile = this.ExpandValueOrUserVariableAsFilePath(nameof(v_FilePath), engine);
 
                     image.Save(outputFile);
@@ -127,7 +127,7 @@ namespace taskt.Core.Automation.Commands
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
         public override void Refresh(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)

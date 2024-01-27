@@ -46,10 +46,10 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
-                    var rct = WindowNameControls.GetWindowRect(whnd);
+                    var rct = WindowControls.GetWindowRect(whnd);
 
                     if (!string.IsNullOrEmpty(v_Width))
                     {

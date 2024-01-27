@@ -66,10 +66,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
-                    var pos = WindowNameControls.GetWindowRect(whnd);
+                    var pos = WindowControls.GetWindowRect(whnd);
 
                     var variableXPosition = v_XPosition.ExpandValueOrUserVariable(engine);
                     int xPos;
@@ -101,7 +101,7 @@ namespace taskt.Core.Automation.Commands
                         yPos = v_YPosition.ExpandValueOrUserVariableAsInteger("Y Position", engine);
                     }
 
-                    WindowNameControls.SetWindowPosition(whnd, xPos, yPos);
+                    WindowControls.SetWindowPosition(whnd, xPos, yPos);
                 })
             );
         }

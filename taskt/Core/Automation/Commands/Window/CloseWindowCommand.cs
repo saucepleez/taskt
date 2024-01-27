@@ -54,12 +54,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowAction(this, engine,
+            WindowControls.WindowAction(this, engine,
                     new Action<List<(IntPtr, string)>>(wins =>
                 {
                     foreach (var win in wins)
                     {
-                        WindowNameControls.CloseWindow(win.Item1);
+                        WindowControls.CloseWindow(win.Item1);
                     }
                 })
             );

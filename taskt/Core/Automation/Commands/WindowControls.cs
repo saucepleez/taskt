@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for window name methods
     /// </summary>
-    internal static class WindowNameControls
+    internal static class WindowControls
     {
 
         #region fields
@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vWindow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Name")]
         [Remarks("")]
         [PropertyIsWindowNamesList(true)]
-        [PropertyCustomUIHelper("Up-to-date", nameof(WindowNameControls) + "+" + nameof(WindowNameControls.lnkWindowNameUpToDate_Click))]
+        [PropertyCustomUIHelper("Up-to-date", nameof(WindowControls) + "+" + nameof(WindowControls.lnkWindowNameUpToDate_Click))]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowName), nameof(ApplicationSettings.EngineSettings.convertToRawWindowName))]
@@ -1010,15 +1010,15 @@ namespace taskt.Core.Automation.Commands
         public static void WindowAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
         {
             var props = command.GetParameterProperties();
-            var windowName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowName)))?.Name ?? "";
-            var compareMethod = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_CompareMethod)))?.Name ?? "";
-            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
-            var nameResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowNameResult)))?.Name ?? "";
-            var handleResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_OutputWindowHandle)))?.Name ?? "";
+            var windowName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WindowName)))?.Name ?? "";
+            var compareMethod = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_CompareMethod)))?.Name ?? "";
+            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WaitTime)))?.Name ?? "";
+            var nameResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WindowNameResult)))?.Name ?? "";
+            var handleResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_OutputWindowHandle)))?.Name ?? "";
 
-            var matchType = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod)))?.Name ??
-                                props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
-            var index = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_TargetWindowIndex)))?.Name ?? "";
+            var matchType = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_MatchMethod)))?.Name ??
+                                props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
+            var index = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_TargetWindowIndex)))?.Name ?? "";
 
             if (matchType == "")
             {
@@ -1131,8 +1131,8 @@ namespace taskt.Core.Automation.Commands
         public static void WindowHandleAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
         {
             var props = command.GetParameterProperties();
-            var handleName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_InputWindowHandle)))?.Name ?? "";
-            var waitTimeName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
+            var handleName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_InputWindowHandle)))?.Name ?? "";
+            var waitTimeName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WaitTime)))?.Name ?? "";
             WindowHandleAction(command, handleName, waitTimeName, engine, actionFunc, errorFunc);
         }
         

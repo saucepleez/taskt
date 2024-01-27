@@ -176,7 +176,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             string currentWindow = cmbWindowName.Text;
 
-            var windowNames = Core.Automation.Commands.WindowNameControls.GetAllWindowTitles();
+            var windowNames = Core.Automation.Commands.WindowControls.GetAllWindowTitles();
 
             cmbWindowName.BeginUpdate();
             cmbWindowName.Items.Clear();

@@ -82,14 +82,14 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowAction(this, engine,
+            WindowControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
                     var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
                     foreach (var win in wins)
                     {
-                        WindowNameControls.SetWindowSize(win.Item1, width, height);
+                        WindowControls.SetWindowSize(win.Item1, width, height);
                     }
                 })
             );
