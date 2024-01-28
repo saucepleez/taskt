@@ -1268,14 +1268,16 @@ namespace taskt.UI.CustomControls
                 }
             }
 
-            if (planeText)
-            {
-                return GetSampleUsageTextForLabel(sampleText, setting);
-            }
-            else
-            {
-                return setting.replaceApplicationKeyword(sampleText);
-            }
+            //if (planeText)
+            //{
+            //    return GetSampleUsageTextForLabel(sampleText, setting);
+            //}
+            //else
+            //{
+            //    //return setting.replaceApplicationKeyword(sampleText);
+            //    return GetSampleUsageTextForLabel(sampleText, setting, false);
+            //}
+            return GetSampleUsageTextForLabel(sampleText, setting, planeText);
         }
 
         #region keyword md format
@@ -1286,9 +1288,23 @@ namespace taskt.UI.CustomControls
         /// <param name="sample"></param>
         /// <param name="setting"></param>
         /// <returns></returns>
-        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
+        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting, bool planeText = true)
         {
-            return setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim()).Replace(" or ", ", ");
+            if (planeText)
+            {
+                sample = Markdig.Markdown.ToPlainText(sample).Trim();
+            }
+            sample = sample.Replace(WindowControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Core.Automation.Engine.SystemVariables.Window_CurrentWindowName.VariableName, setting));
+            var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
+
+            if (planeText)
+            {
+                return replacedSample.Replace(" or ", ", ");
+            }
+            else
+            {
+                return replacedSample;
+            }
         }
         #endregion
         #endregion
