@@ -134,10 +134,12 @@ namespace taskt.Core
         //    return m_DisallowVariableCharList;
         //}
 
+        // TODO: fix it...
         public string replaceEngineKeyword(string targetString)
         {
             return targetString.Replace(InterStartVariableMaker, this.VariableStartMarker)
                     .Replace(InterEndVariableMaker, this.VariableEndMarker)
+                    //.Replace(InterCurrentWindowKeyword, taskt.Core.Automation.Commands.VariableNameControls.GetWrappedVariableName(taskt.Core.Automation.Engine.SystemVariables.Window_CurrentWindowName.VariableName, this))
                     .Replace(InterCurrentWindowKeyword, this.CurrentWindowKeyword)
                     .Replace(InterCurrentWindowPositionKeyword, this.CurrentWindowPositionKeyword)
                     .Replace(InterCurrentWindowXPositionKeyword, this.CurrentWindowXPositionKeyword)

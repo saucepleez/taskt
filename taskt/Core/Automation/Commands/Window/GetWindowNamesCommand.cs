@@ -48,7 +48,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
-        public override string v_WaitTime { get; set; }
+        public override string v_WaitTimeForWindow { get; set; }
 
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowNameResult))]
@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowAction(this, engine,
+            WindowControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     wins.Select(w => w.Item2).ToList().StoreInUserVariable(engine, v_UserVariableName);

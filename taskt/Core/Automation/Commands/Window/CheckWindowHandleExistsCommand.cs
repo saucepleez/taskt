@@ -14,22 +14,23 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CheckWindowHandleExistsCommand : ScriptCommand
+    public class CheckWindowHandleExistsCommand : AWindowHandleCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
-        public string v_WindowHandle { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
+        //public string v_WindowHandle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When Window Exists, Result is **True**")]
+        [PropertyParameterOrder(5500)]
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
-        public string v_WaitTime { get; set; }
+        public override string v_WaitTimeForWindow { get; set; }
 
         public CheckWindowHandleExistsCommand()
         {
@@ -37,7 +38,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
                     true.StoreInUserVariable(engine, v_Result);

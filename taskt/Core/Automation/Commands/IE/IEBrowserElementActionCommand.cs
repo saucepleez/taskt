@@ -310,7 +310,7 @@ namespace taskt.Core.Automation.Commands
                                                    select rw.Field<string>("Parameter Value")).FirstOrDefault());
 
                 //var ieClientLocation = User32Functions.GetWindowPosition(new IntPtr(browserInstance.HWND));
-                var ieClientLocation = WindowNameControls.GetWindowRect(new IntPtr(browserInstance.HWND));
+                var ieClientLocation = WindowControls.GetWindowRect(new IntPtr(browserInstance.HWND));
 
                 MoveMouseCommand newMouseMove = new MoveMouseCommand();
 

@@ -24,7 +24,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             //create data source from windows
             //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
+            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
         }
 
         private void pbRecord_Click(object sender, EventArgs e)
@@ -58,10 +58,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             //IntPtr hWnd = User32Functions.FindWindow(windowName);
             try
             {
-                IntPtr hWnd = WindowNameControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
-                WindowNameControls.ActivateWindow(hWnd);
+                IntPtr hWnd = WindowControls.FindWindowHandle(windowName, "exact match", new Core.Automation.Engine.AutomationEngineInstance());
+                WindowControls.ActivateWindow(hWnd);
                 //User32Functions.SetWindowPosition(hWnd, 0, 0);
-                WindowNameControls.SetWindowPosition(hWnd, 0, 0);
+                WindowControls.SetWindowPosition(hWnd, 0, 0);
 
                 //start global hook and wait for left mouse down event
                 User32Functions.GlobalHook.StartEngineCancellationHook(Keys.F2);
@@ -151,7 +151,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             //handle window refresh requests
             //cboWindowTitle.DataSource = Core.Common.GetAvailableWindowNames();
-            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowNameControls.GetAllWindowTitles().ToArray());
+            cboWindowTitle.Items.AddRange(taskt.Core.Automation.Commands.WindowControls.GetAllWindowTitles().ToArray());
         }
 
         //private void uiBtnOk_Click(object sender, EventArgs e)

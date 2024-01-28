@@ -16,22 +16,23 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetProcessNameFromWindowHandleCommand : ScriptCommand
+    public class GetProcessNameFromWindowHandleCommand : AWindowHandleCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
-        public string v_WindowHandle { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
+        //public string v_WindowHandle { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Process Name")]
+        [PropertyParameterOrder(5500)]
         public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
         [PropertyIsOptional(true, "0")]
         [PropertyFirstValue("0")]
-        public string v_WaitTime { get; set; }
+        public override string v_WaitTimeForWindow { get; set; }
 
         public GetProcessNameFromWindowHandleCommand()
         {
@@ -39,7 +40,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
                     var proc = Process.GetProcesses().Where(p => (p.MainWindowHandle == whnd)).First();

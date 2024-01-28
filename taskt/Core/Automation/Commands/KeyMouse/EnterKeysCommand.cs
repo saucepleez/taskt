@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -18,7 +19,7 @@ namespace taskt.Core.Automation.Commands
     public class EnterKeysCommand : ScriptCommand
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
         public string v_WindowName { get; set; }
 
         [XmlAttribute]
@@ -46,25 +47,33 @@ namespace taskt.Core.Automation.Commands
         public string v_EncryptionOption { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_CompareMethod))]
-        public string v_SearchMethod { get; set; }
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_CompareMethod))]
+        public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
         [PropertySelectionChangeEvent(nameof(MatchMethodComboBox_SelectionChangeCommitted))]
         public string v_MatchMethod { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_TargetWindowIndex))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_TargetWindowIndex))]
         public string v_TargetWindowIndex { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
-        public string v_WaitForWindow { get; set; }
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
+        public string v_WaitTimeForWindow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(KeyMouseControls), nameof(KeyMouseControls.v_WaitTimeAfterKeyEnter))]
         public string v_WaitTime { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowNameResult))]
+        public string v_NameResult { get; set; }
+
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_OutputWindowHandle))]
+        public string v_HandleResult { get; set; }
 
         public EnterKeysCommand()
         {
@@ -77,80 +86,127 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
-            if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
-            {
-                var activateWindow = new ActivateWindowCommand
+            //var targetWindow = v_WindowName.ExpandValueOrUserVariable(engine);
+            //if (targetWindow != engine.engineSettings.CurrentWindowKeyword)
+            //{
+            //    var activateWindow = new ActivateWindowCommand
+            //    {
+            //        v_WindowName = v_WindowName,
+            //        v_SearchMethod = v_SearchMethod,
+            //        v_MatchMethod= v_MatchMethod,
+            //        v_TargetWindowIndex = v_TargetWindowIndex,
+            //        v_WaitTime = v_WaitForWindow
+            //    };
+            //    activateWindow.RunCommand(engine);
+            //}
+
+            //var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
+
+            //var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
+            //if (encryptOption == "encrypted")
+            //{
+            //    textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+            //}
+
+            //if (textToSend == "{WIN_KEY}")
+            //{
+            //    KeyMouseControls.KeyDown(Keys.LWin);
+            //    KeyMouseControls.KeyUp(Keys.LWin);
+            //}
+            //else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
+            //{
+            //    KeyMouseControls.KeyDown(Keys.LWin);
+            //    var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
+
+            //    foreach (var c in remainingText)
+            //    {
+            //        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+            //        KeyMouseControls.KeyDown(key);
+            //    }
+
+            //    KeyMouseControls.KeyUp(Keys.LWin);
+
+            //    foreach (var c in remainingText)
+            //    {
+            //        Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+            //        KeyMouseControls.KeyUp(key);
+            //    }
+            //}
+            //else
+            //{
+            //    SendKeys.SendWait(textToSend);
+            //}
+
+            //var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
+            //System.Threading.Thread.Sleep(waitTime);
+
+            WindowControls.WindowAction(this, engine,
+                new Action<List<(IntPtr, string)>>(wins =>
                 {
-                    v_WindowName = v_WindowName,
-                    v_SearchMethod = v_SearchMethod,
-                    v_MatchMethod= v_MatchMethod,
-                    v_TargetWindowIndex = v_TargetWindowIndex,
-                    v_WaitTime = v_WaitForWindow
-                };
-                activateWindow.RunCommand(engine);
-            }
+                    WindowControls.ActivateWindow(wins[0].Item1);
 
-            var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
+                    var textToSend = v_TextToSend.ExpandValueOrUserVariable(engine);
 
-            var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
-            if (encryptOption == "encrypted")
-            {
-                textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
-            }
+                    var encryptOption = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_EncryptionOption), engine);
+                    if (encryptOption == "encrypted")
+                    {
+                        textToSend = EncryptionServices.DecryptString(textToSend, "TASKT");
+                    }
 
-            if (textToSend == "{WIN_KEY}")
-            {
-                KeyMouseControls.KeyDown(Keys.LWin);
-                KeyMouseControls.KeyUp(Keys.LWin);
-            }
-            else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
-            {
-                KeyMouseControls.KeyDown(Keys.LWin);
-                var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}","");
+                    if (textToSend == "{WIN_KEY}")
+                    {
+                        KeyMouseControls.KeyDown(Keys.LWin);
+                        KeyMouseControls.KeyUp(Keys.LWin);
+                    }
+                    else if (textToSend.StartsWith("{WIN_KEY+") && textToSend.EndsWith("}"))
+                    {
+                        KeyMouseControls.KeyDown(Keys.LWin);
+                        var remainingText = textToSend.Replace("{WIN_KEY+", "").Replace("}", "");
 
-                foreach (var c in remainingText)
-                {
-                    Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                    KeyMouseControls.KeyDown(key);
-                }
+                        foreach (var c in remainingText)
+                        {
+                            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+                            KeyMouseControls.KeyDown(key);
+                        }
 
-                KeyMouseControls.KeyUp(Keys.LWin);
+                        KeyMouseControls.KeyUp(Keys.LWin);
 
-                foreach (var c in remainingText)
-                {
-                    Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
-                    KeyMouseControls.KeyUp(key);
-                }
-            }
-            else
-            {
-                SendKeys.SendWait(textToSend);
-            }
+                        foreach (var c in remainingText)
+                        {
+                            Keys key = (Keys)Enum.Parse(typeof(Keys), c.ToString());
+                            KeyMouseControls.KeyUp(key);
+                        }
+                    }
+                    else
+                    {
+                        SendKeys.SendWait(textToSend);
+                    }
 
-            var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
-            System.Threading.Thread.Sleep(waitTime);
+                    var waitTime = this.ExpandValueOrUserVariableAsInteger(nameof(v_WaitTime), engine);
+                    System.Threading.Thread.Sleep(waitTime);
+                })
+            );
         }
 
         private void MatchMethodComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            WindowNameControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
+            WindowControls.MatchMethodComboBox_SelectionChangeCommitted(ControlsList, (ComboBox)sender, nameof(v_TargetWindowIndex));
         }
 
         private void lnkEncryptText_Click(object sender, EventArgs e)
         {
-            var InputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
+            var inputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
 
-            if (string.IsNullOrEmpty(InputText.Text))
+            if (string.IsNullOrEmpty(inputText.Text))
             {
                 MessageBox.Show("Text to send is empty.", "Notice");
                 return;
             }
 
-            var encrypted = EncryptionServices.EncryptString(InputText.Text, "TASKT");
+            var encrypted = EncryptionServices.EncryptString(inputText.Text, "TASKT");
             this.v_EncryptionOption = "Encrypted";
 
-            InputText.Text = encrypted;
+            inputText.Text = encrypted;
         }
 
         private void lnkKeysBulider_Click(object sender, EventArgs e)
@@ -159,8 +215,8 @@ namespace taskt.Core.Automation.Commands
             {
                 if (fm.ShowDialog(((Control)sender).FindForm()) == DialogResult.OK)
                 {
-                    var InputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
-                    InputText.Text = fm.Result;
+                    var inputText = ControlsList.GetPropertyControl<TextBox>(nameof(v_TextToSend));
+                    inputText.Text = fm.Result;
                 }
             }
         }

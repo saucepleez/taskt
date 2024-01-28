@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class GetWindowSizeCommand : AWindowNameCommand
+    public class GetWindowSizeCommand : AWindowNameCommand, IWindowSizeProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WindowName))]
@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         public string v_Height { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
         public override string v_MatchMethod { get; set; }
 
         //[XmlAttribute]
@@ -66,12 +66,12 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowAction(this, engine,
+            WindowControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var whnd = wins[0].Item1;
 
-                    var rct = WindowNameControls.GetWindowRect(whnd);
+                    var rct = WindowControls.GetWindowRect(whnd);
 
                     if (!string.IsNullOrEmpty(v_Width))
                     {

@@ -68,29 +68,29 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowAction(this, engine,
+            WindowControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var windowState = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WindowState), engine);
-                    var state = WindowNameControls.WindowState.SW_RESTORE;
+                    var state = WindowControls.WindowState.SW_RESTORE;
                     switch (windowState.ToLower())
                     {
                         case "maximize":
-                            state = WindowNameControls.WindowState.SW_MAXIMIZE;
+                            state = WindowControls.WindowState.SW_MAXIMIZE;
                             break;
                         case "minimize":
-                            state = WindowNameControls.WindowState.SW_MINIMIZE;
+                            state = WindowControls.WindowState.SW_MINIMIZE;
                             break;
                     }
 
                     foreach (var win in wins)
                     {
                         var whnd = win.Item1;
-                        if (WindowNameControls.IsIconic(whnd) && (state != WindowNameControls.WindowState.SW_MINIMIZE))
+                        if (WindowControls.IsIconic(whnd) && (state != WindowControls.WindowState.SW_MINIMIZE))
                         {
-                            WindowNameControls.ShowIconicWindow(whnd);
+                            WindowControls.ShowIconicWindow(whnd);
                         }
-                        WindowNameControls.SetWindowState(whnd, state);
+                        WindowControls.SetWindowState(whnd, state);
                     }
                 })
             );

@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
         public string v_WindowState { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_MatchMethod_Single))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_MatchMethod_Single))]
         public override string v_MatchMethod { get; set; }
 
         //[XmlAttribute]
@@ -61,12 +61,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowAction(this, engine,
+            WindowControls.WindowAction(this, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     var whnd = wins[0].Item1;
 
-                    var state = WindowNameControls.GetWindowState(whnd);
+                    var state = WindowControls.GetWindowState(whnd);
                     state.ToString().StoreInUserVariable(engine, v_WindowState);
                 })
             );

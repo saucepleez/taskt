@@ -13,9 +13,9 @@ using taskt.Core.Automation.Engine;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// for window name methods
+    /// for window methods
     /// </summary>
-    internal static class WindowNameControls
+    internal static class WindowControls
     {
 
         #region fields
@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vWindow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Window Name")]
         [Remarks("")]
         [PropertyIsWindowNamesList(true)]
-        [PropertyCustomUIHelper("Up-to-date", nameof(WindowNameControls) + "+" + nameof(WindowNameControls.lnkWindowNameUpToDate_Click))]
+        [PropertyCustomUIHelper("Up-to-date", nameof(WindowControls) + "+" + nameof(WindowControls.lnkWindowNameUpToDate_Click))]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowName), nameof(ApplicationSettings.EngineSettings.convertToRawWindowName))]
@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// windows name compare(search) method
         /// </summary>
-        [PropertyDescription("Search Method for the Window Name")]
+        [PropertyDescription("Compare Method for the Window Name")]
         [InputSpecification("", true)]
         [PropertyUISelectionOption("Contains")]
         [PropertyUISelectionOption("Starts with")]
@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
-        [PropertyDisplayText(true, "Search Method")]
+        [PropertyDisplayText(true, "Compare Method")]
         [PropertyParameterOrder(5000)]
         public static string v_CompareMethod { get; }
 
@@ -569,7 +569,6 @@ namespace taskt.Core.Automation.Commands
             if (window == engine.engineSettings.CurrentWindowKeyword)
             {
                 // current window
-
                 var whnd = GetActiveWindowHandle();
                 var title = GetWindowTitle(whnd);
 
@@ -578,7 +577,18 @@ namespace taskt.Core.Automation.Commands
                     return new List<(IntPtr, string)>() { (whnd, title) };
                 });
             }
-            else if (window == engine.engineSettings.AllWindowsKeyword)
+            else if ((window == engine.engineSettings.DesktopKeyword) ||
+                     (window == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, engine)))
+            {
+                // Desktop
+                var whnd = GetDesktopWindow();
+                return new Func<List<(IntPtr, string)>>(() =>
+                {
+                    return new List<(IntPtr, string)>() { (whnd, "") };
+                });
+            }
+            else if ((window == engine.engineSettings.AllWindowsKeyword) ||
+                     (window == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, engine)))
             {
                 // all windows & match-type
                 return new Func<List<(IntPtr, string)>>(() =>
@@ -734,38 +744,64 @@ namespace taskt.Core.Automation.Commands
             throw new Exception("ProcessID: " + pid + " does not found.");
         }
         
-        public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
+        //public static Bitmap CaptureWindow(string windowName, Engine.AutomationEngineInstance engine)
+        //{
+        //    IntPtr hWnd;
+        //    if (windowName == "Desktop")
+        //    {
+        //        hWnd = GetDesktopWindow();
+        //    }
+        //    else
+        //    {
+        //        //hWnd = FindWindow(windowName);
+        //        var wins = FindWindows(windowName, "", "", 0, 60, engine);
+        //        hWnd = wins[0].Item1;
+
+        //        SetWindowState(hWnd, WindowState.SW_RESTORE);
+        //        SetToForegroundWindow(hWnd);
+        //    }
+
+        //    var rect = new RECT();
+
+        //    //sleep to allow repaint
+        //    System.Threading.Thread.Sleep(500);
+
+        //    GetWindowRect(hWnd, out rect);
+        //    var bounds = new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+        //    var screenshot = new Bitmap(bounds.Width, bounds.Height);
+
+        //    using (var graphics = Graphics.FromImage(screenshot))
+        //    {
+        //        graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+        //    }
+
+        //    return screenshot;
+        //}
+
+        /// <summary>
+        /// capture window
+        /// </summary>
+        /// <param name="whnd"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static Bitmap CaptureWindow(IntPtr whnd)
         {
-            IntPtr hWnd;
-            if (windowName == "Desktop")
+            if (GetWindowRect(whnd, out RECT r))
             {
-                hWnd = GetDesktopWindow();
+                var bounds = new Rectangle(r.left, r.top, r.right - r.left, r.bottom - r.top);
+                var screenshot = new Bitmap(bounds.Width, bounds.Height);
+
+                using (var graphics = Graphics.FromImage(screenshot))
+                {
+                    graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+                }
+
+                return screenshot;
             }
             else
             {
-                //hWnd = FindWindow(windowName);
-                var wins = FindWindows(windowName, "", "", 0, 60, engine);
-                hWnd = wins[0].Item1;
-
-                SetWindowState(hWnd, WindowState.SW_RESTORE);
-                SetToForegroundWindow(hWnd);
+                throw new Exception($"Fail Capture Window. WindowHandle: {whnd}");
             }
-
-            var rect = new RECT();
-
-            //sleep to allow repaint
-            System.Threading.Thread.Sleep(500);
-
-            GetWindowRect(hWnd, out rect);
-            var bounds = new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
-            var screenshot = new Bitmap(bounds.Width, bounds.Height);
-
-            using (var graphics = Graphics.FromImage(screenshot))
-            {
-                graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
-            }
-
-            return screenshot;
         }
 
         /// <summary>
@@ -974,15 +1010,15 @@ namespace taskt.Core.Automation.Commands
         public static void WindowAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
         {
             var props = command.GetParameterProperties();
-            var windowName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowName)))?.Name ?? "";
-            var compareMethod = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_CompareMethod)))?.Name ?? "";
-            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
-            var nameResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WindowNameResult)))?.Name ?? "";
-            var handleResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_OutputWindowHandle)))?.Name ?? "";
+            var windowName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WindowName)))?.Name ?? "";
+            var compareMethod = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_CompareMethod)))?.Name ?? "";
+            var waitTime = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WaitTime)))?.Name ?? "";
+            var nameResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WindowNameResult)))?.Name ?? "";
+            var handleResult = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_OutputWindowHandle)))?.Name ?? "";
 
-            var matchType = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod)))?.Name ??
-                                props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
-            var index = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_TargetWindowIndex)))?.Name ?? "";
+            var matchType = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_MatchMethod)))?.Name ??
+                                props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_MatchMethod_Single)))?.Name ?? "";
+            var index = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_TargetWindowIndex)))?.Name ?? "";
 
             if (matchType == "")
             {
@@ -1004,8 +1040,8 @@ namespace taskt.Core.Automation.Commands
         public static void WindowAction(AWindowNameCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
         {
             WindowAction(command, 
-                nameof(command.v_WindowName), nameof(command.v_SearchMethod), nameof(command.v_MatchMethod), 
-                nameof(command.v_TargetWindowIndex), nameof(command.v_WaitTime), engine, actionFunc, 
+                nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_MatchMethod), 
+                nameof(command.v_TargetWindowIndex), nameof(command.v_WaitTimeForWindow), engine, actionFunc, 
                 nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
         }
 
@@ -1019,7 +1055,7 @@ namespace taskt.Core.Automation.Commands
         public static void WindowAction(AAnyWindowNameCommand command, Engine.AutomationEngineInstance engine, Action<List<(IntPtr, string)>> actionFunc, Action<Exception> errorFunc = null)
         {
             WindowAction(command, 
-                nameof(command.v_WindowName), nameof(command.v_SearchMethod), nameof(command.v_WaitTime), 
+                nameof(command.v_WindowName), nameof(command.v_CompareMethod), nameof(command.v_WaitTimeForWindow), 
                 engine, actionFunc, nameof(command.v_NameResult), nameof(command.v_HandleResult), errorFunc);
         }
 
@@ -1095,8 +1131,8 @@ namespace taskt.Core.Automation.Commands
         public static void WindowHandleAction(ScriptCommand command, Engine.AutomationEngineInstance engine, Action<IntPtr> actionFunc, Action<Exception> errorFunc = null)
         {
             var props = command.GetParameterProperties();
-            var handleName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_InputWindowHandle)))?.Name ?? "";
-            var waitTimeName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowNameControls), nameof(v_WaitTime)))?.Name ?? "";
+            var handleName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_InputWindowHandle)))?.Name ?? "";
+            var waitTimeName = props.GetProperty(new PropertyVirtualProperty(nameof(WindowControls), nameof(v_WaitTime)))?.Name ?? "";
             WindowHandleAction(command, handleName, waitTimeName, engine, actionFunc, errorFunc);
         }
         
@@ -1113,7 +1149,11 @@ namespace taskt.Core.Automation.Commands
         /// <returns></returns>
         private static string ExpandValueOrUserVariableAsWindowName(this string value, Engine.AutomationEngineInstance engine)
         {
-            if ((value == engine.engineSettings.CurrentWindowKeyword) || (value == engine.engineSettings.AllWindowsKeyword))
+            if ((value == engine.engineSettings.CurrentWindowKeyword) || 
+                (value == engine.engineSettings.AllWindowsKeyword) ||
+                (value == engine.engineSettings.DesktopKeyword) ||
+                (value == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, engine)) ||
+                (value == VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, engine)))
             {
                 return value;
             }

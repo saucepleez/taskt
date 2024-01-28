@@ -88,6 +88,10 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AxInterop.MSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>obj\Debug\AxInterop.MSTSCLib.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -364,10 +368,15 @@
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\IAnyWindowNameProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowHandleProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowNameProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowPositionProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\IWindowSizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\MoveWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\_General\IPositionProperties.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ISizeProperties.cs" />
     <Compile Include="Core\Automation\Engine\SystemVariables.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
     <Compile Include="Core\ApplicationSettings\ApplicationSettings.cs" />
@@ -583,7 +592,7 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserGetWebElementsValueAsListCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserResizeWebBrowserCommand.cs" />
-    <Compile Include="Core\Automation\Commands\WindowNameControls.cs" />
+    <Compile Include="Core\Automation\Commands\WindowControls.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowPositionCommand.cs" />
     <Compile Include="Core\Automation\Commands\WordControls.cs" />

@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_window))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ResizeWindowByWindowHandleCommand : AWindowHandleCommand
+    public class ResizeWindowByWindowHandleCommand : AWindowHandleCommand, IWindowSizeProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
@@ -56,12 +56,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            WindowNameControls.WindowHandleAction(this, engine,
+            WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
                     var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
                     var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
-                    WindowNameControls.SetWindowSize(whnd, width, height);
+                    WindowControls.SetWindowSize(whnd, width, height);
                 })
             );
         }

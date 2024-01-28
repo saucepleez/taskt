@@ -8,17 +8,17 @@ namespace taskt.Core.Automation.Commands
     /// Abstract class for Window Handle command
     /// </summary>
     [Serializable]
-    public abstract class AWindowHandleCommand : ScriptCommand
+    public abstract class AWindowHandleCommand : ScriptCommand, IWindowHandleProperties
     {
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_InputWindowHandle))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_InputWindowHandle))]
         [PropertyParameterOrder(5000)]
         public virtual string v_WindowHandle { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(WindowNameControls), nameof(WindowNameControls.v_WaitTime))]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WaitTime))]
         [PropertyParameterOrder(6000)]
-        public  virtual string v_WaitTime { get; set; }
+        public  virtual string v_WaitTimeForWindow { get; set; }
 
         public AWindowHandleCommand()
         {

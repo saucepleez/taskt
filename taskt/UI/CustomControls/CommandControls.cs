@@ -553,7 +553,7 @@ namespace taskt.UI.CustomControls
             if (attrIsWin?.isWindowNamesList ?? false)
             {
                 //uiOptions.AddRange(GetWindowNames(editor, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
-                uiOptions.AddRange(WindowNameControls.GetAllWindowTitles(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
+                uiOptions.AddRange(WindowControls.GetAllWindowTitles(editor?.appSettings, attrIsWin.allowCurrentWindow, attrIsWin.allowAllWindows, attrIsWin.allowDesktop));
             }
 
             // variable names list & instance name list
@@ -1268,14 +1268,16 @@ namespace taskt.UI.CustomControls
                 }
             }
 
-            if (planeText)
-            {
-                return GetSampleUsageTextForLabel(sampleText, setting);
-            }
-            else
-            {
-                return setting.replaceApplicationKeyword(sampleText);
-            }
+            //if (planeText)
+            //{
+            //    return GetSampleUsageTextForLabel(sampleText, setting);
+            //}
+            //else
+            //{
+            //    //return setting.replaceApplicationKeyword(sampleText);
+            //    return GetSampleUsageTextForLabel(sampleText, setting, false);
+            //}
+            return GetSampleUsageTextForLabel(sampleText, setting, planeText);
         }
 
         #region keyword md format
@@ -1286,9 +1288,23 @@ namespace taskt.UI.CustomControls
         /// <param name="sample"></param>
         /// <param name="setting"></param>
         /// <returns></returns>
-        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting)
+        private static string GetSampleUsageTextForLabel(string sample, ApplicationSettings setting, bool planeText = true)
         {
-            return setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim()).Replace(" or ", ", ");
+            if (planeText)
+            {
+                sample = Markdig.Markdown.ToPlainText(sample).Trim();
+            }
+            sample = sample.Replace(WindowControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Core.Automation.Engine.SystemVariables.Window_CurrentWindowName.VariableName, setting));
+            var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
+
+            if (planeText)
+            {
+                return replacedSample.Replace(" or ", ", ");
+            }
+            else
+            {
+                return replacedSample;
+            }
         }
         #endregion
         #endregion
@@ -1307,7 +1323,7 @@ namespace taskt.UI.CustomControls
         public static ComboBox AddWindowNames(this ComboBox cbo, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
         {
             return cbo.AddComoboBoxItems(editor, new Func<List<string>>( () => {
-                return WindowNameControls.GetAllWindowTitles(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
+                return WindowControls.GetAllWindowTitles(editor?.appSettings, addCurrentWindow, addAllWindows, addDesktop);
             }));
         }
 
@@ -1574,7 +1590,7 @@ namespace taskt.UI.CustomControls
         {
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            //variableList.AddRange(Common.GenerateSystemVariables().Select(f => f.VariableName));
+            
             variableList.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
 
             using (var newVariableSelector = new Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(variableList))

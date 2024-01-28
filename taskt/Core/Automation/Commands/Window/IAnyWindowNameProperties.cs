@@ -11,14 +11,14 @@
         string v_WindowName { get; set; }
 
         /// <summary>
-        /// search method (contains, starts-with, ...)
+        /// compare method (contains, starts-with, ...)
         /// </summary>
-        string v_SearchMethod { get; set; }
+        string v_CompareMethod { get; set; }
 
         /// <summary>
         /// wait time for window
         /// </summary>
-        string v_WaitTime { get; set; }
+        string v_WaitTimeForWindow { get; set; }
 
         /// <summary>
         /// found window name

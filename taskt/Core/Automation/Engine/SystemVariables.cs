@@ -14,6 +14,7 @@ namespace taskt.Core.Automation.Engine
     /// </summary>
     public static class SystemVariables
     {
+        #region normal system variables
         public static readonly ScriptVariable Folder_Desktop = new ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
         public static readonly ScriptVariable Folder_Documents = new ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) };
         public static readonly ScriptVariable Folder_AppData = new ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
@@ -64,6 +65,21 @@ namespace taskt.Core.Automation.Engine
 
         public static readonly ScriptVariable Math_PI = new ScriptVariable { VariableName = "Math.PI", VariableValue = Math.PI.ToString() };
         public static readonly ScriptVariable Math_E = new ScriptVariable { VariableName = "Math.E", VariableValue = Math.E.ToString() };
+        #endregion
+
+        #region limited system variables
+        
+        /// <summary>
+        /// specify desktop
+        /// </summary>
+        public static readonly ScriptVariable Window_Desktop = new ScriptVariable { VariableName = "Window.Desktop", VariableValue = "" };
+
+        /// <summary>
+        /// specify all windows
+        /// </summary>
+        public static readonly ScriptVariable Window_AllWindows = new ScriptVariable { VariableName = "Window.AllWindows", VariableValue = "" };
+        
+        #endregion
 
         private static readonly List<ScriptVariable> systemVariables = new List<ScriptVariable>()
         {
@@ -147,10 +163,10 @@ namespace taskt.Core.Automation.Engine
             DateTime_Now_Second.VariableValue = DateTime.Now.ToString("ss");
             DateTime_Now_FileSafe.VariableValue = DateTime.Now.ToString("MM-dd-yy hh.mm.ss");
 
-            Env_ActiveWindowTitle.VariableValue = WindowNameControls.GetActiveWindowTitle();
+            Env_ActiveWindowTitle.VariableValue = WindowControls.GetActiveWindowTitle();
 
-            Window_CurrentWindowName.VariableValue = WindowNameControls.GetActiveWindowTitle();
-            Window_CurrentWindowHandle.VariableValue = WindowNameControls.GetActiveWindowHandle().ToString();
+            Window_CurrentWindowName.VariableValue = WindowControls.GetActiveWindowTitle();
+            Window_CurrentWindowHandle.VariableValue = WindowControls.GetActiveWindowHandle().ToString();
 
             Taskt_EngineContext.VariableValue = engine.GetEngineContext();
 

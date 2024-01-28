@@ -248,7 +248,7 @@ namespace taskt.Core.Automation.Commands
                 // try window handle
                 try
                 {
-                    IntPtr wHnd = WindowNameControls.FindWindowHandle(windowName, "exact match", engine);
+                    IntPtr wHnd = WindowControls.FindWindowHandle(windowName, "exact match", engine);
                     windowElement = AutomationElement.FromHandle(wHnd);
                 }
                 catch
@@ -675,7 +675,7 @@ namespace taskt.Core.Automation.Commands
         {
             AutomationElement ret = null;
 
-            WindowNameControls.WindowAction(command, engine,
+            WindowControls.WindowAction(command, engine,
                 new Action<List<(IntPtr, string)>>(wins =>
                 {
                     ret = AutomationElement.FromHandle(wins[0].Item1);
@@ -794,7 +794,7 @@ namespace taskt.Core.Automation.Commands
             catch
             {
                 // try other method
-                var windowNames = WindowNameControls.GetAllWindowTitles();
+                var windowNames = WindowControls.GetAllWindowTitles();
                 if ((targetElement.Current.NativeWindowHandle != 0) && (windowNames.Contains(targetElement.Current.Name)))
                 {
                     return targetElement.Current.Name;
