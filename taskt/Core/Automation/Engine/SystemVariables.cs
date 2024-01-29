@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Engine
         public static readonly ScriptVariable Window_CurrentWindowName = new ScriptVariable { VariableName = "Window.CurrentWindowName", VariableValue = "" };
         public static readonly ScriptVariable Window_CurrentWindowHandle = new ScriptVariable { VariableName = "Window.CurrentWindowHandle", VariableValue = "" };
 
-        public static readonly ScriptVariable Taskt_EngineContext = new ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "" };
+        public static readonly ScriptVariable Taskt_EngineContext = new ScriptVariable { VariableName = "taskt.EngineContext", VariableValue = "" };    // post expand
         public static readonly ScriptVariable Taskt_Location = new ScriptVariable { VariableName = "taskt.Location", VariableValue = Assembly.GetEntryAssembly().Location };
         
         public static readonly ScriptVariable Char_NewLine = new ScriptVariable { VariableName = "Char.NewLine", VariableValue = Environment.NewLine };
@@ -168,7 +168,8 @@ namespace taskt.Core.Automation.Engine
             Window_CurrentWindowName.VariableValue = WindowControls.GetActiveWindowTitle();
             Window_CurrentWindowHandle.VariableValue = WindowControls.GetActiveWindowHandle().ToString();
 
-            Taskt_EngineContext.VariableValue = engine.GetEngineContext();
+            // NOTE: Keep it commented out as this is where it slows down the script execution.
+            //Taskt_EngineContext.VariableValue = engine.GetEngineContext();
 
             File_CurrentScriptPath.VariableValue = engine.FileName;
         }
