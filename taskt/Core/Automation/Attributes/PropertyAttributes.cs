@@ -12,8 +12,6 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
     #endregion
 
     #region Parameter Order
-
-    #endregion
     [AttributeUsage(AttributeTargets.Property)]
     public class PropertyParameterOrder : Attribute
     {
@@ -26,6 +24,8 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
             this.order = order;
         }
     }
+    #endregion
+    
     #region Virtual Property
     [AttributeUsage(AttributeTargets.Property)]
     public class PropertyVirtualProperty : Attribute
@@ -281,6 +281,20 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         public PropertyCustomUIHelperBehavior(MultiAttributesBehavior behavior)
         {
             this.behavior = behavior;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = true)]
+    public class PropertyAvailableSystemVariable : Attribute
+    {
+        public Engine.SystemVariables.LimitedSystemVariableNames variable = Engine.SystemVariables.LimitedSystemVariableNames.None;
+        public PropertyAvailableSystemVariable()
+        {
+
+        }
+        public PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames variable)
+        {
+            this.variable = variable;
         }
     }
     #endregion
