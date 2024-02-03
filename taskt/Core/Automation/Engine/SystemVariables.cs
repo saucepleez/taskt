@@ -86,11 +86,11 @@ namespace taskt.Core.Automation.Engine
         /// <summary>
         /// specify current window x position
         /// </summary>
-        public static readonly ScriptVariable Window_CurrentXPosition = new ScriptVariable { VariableName = "Window.CurrentPosition", VariableValue = "" };
+        public static readonly ScriptVariable Window_CurrentXPosition = new ScriptVariable { VariableName = "Window.CurrentXPosition", VariableValue = "" };
         /// <summary>
         /// specify current window y position
         /// </summary>
-        public static readonly ScriptVariable Window_CurrentYPosition = new ScriptVariable { VariableName = "Window.CurrentPosition", VariableValue = "" };
+        public static readonly ScriptVariable Window_CurrentYPosition = new ScriptVariable { VariableName = "Window.CurrentYPosition", VariableValue = "" };
         /// <summary>
         /// specify current window size
         /// </summary>
