@@ -112,12 +112,8 @@ namespace taskt.Core.Automation.Engine
             None,
             Window_Desktop,
             Window_AllWindows,
-            Window_CurrentPosition,
-            Window_CurrentXPosition,
-            Window_CurrentYPosition,
-            Window_CurrentSize,
-            Window_CurrentWidth,
-            Window_CurrentHeight,
+            Window_Position,
+            Window_Size,
         };
 
         #endregion
