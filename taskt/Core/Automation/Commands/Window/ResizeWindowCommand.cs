@@ -90,12 +90,15 @@ namespace taskt.Core.Automation.Commands
                 {
                     //var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
                     //var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
-                    var width = this.ExpandValueOrVariableAsWindowWidth(wins[0].Item1, engine);
-                    var height = this.ExpandValueOrVariableAsWindowHeight(wins[0].Item1, engine);
-
+                    
                     foreach (var win in wins)
                     {
-                        WindowControls.SetWindowSize(win.Item1, width, height);
+                        var whnd = win.Item1;
+
+                        var width = this.ExpandValueOrVariableAsWindowWidth(whnd, engine);
+                        var height = this.ExpandValueOrVariableAsWindowHeight(whnd, engine);
+
+                        WindowControls.SetWindowSize(whnd, width, height);
                     }
                 })
             );
