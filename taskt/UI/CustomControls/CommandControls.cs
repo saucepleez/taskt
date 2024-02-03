@@ -16,11 +16,11 @@ namespace taskt.UI.CustomControls
     public static class CommandControls
     {
         #region const
-        public const string LabelPrefix = "lbl_";
-        public const string Label2ndPrefix = "lbl2_";
-        public const string HelperInfix = "_helper_";
-        public const string CustomHelperInfix = "_customhelper_";
-        public const string GroupPrefix = "group_";
+        public const string LABEL_PREFIX = "lbl_";
+        public const string LABEL_2ND_PREFIX = "lbl2_";
+        public const string HELPER_INFIX = "_helper_";
+        public const string CUSTOM_HELPER_INFIX = "_customhelper_";
+        public const string GROUP_PREFIX = "group_";
         #endregion
 
         public static Forms.ScriptBuilder.CommandEditor.frmCommandEditor CurrentEditor { get; set; }
@@ -292,7 +292,7 @@ namespace taskt.UI.CustomControls
             if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
-                label2.Name = Label2ndPrefix + propertyName;
+                label2.Name = LABEL_2ND_PREFIX + propertyName;
                 controlList.Add(label2);
             }
 
@@ -325,7 +325,7 @@ namespace taskt.UI.CustomControls
                 if (attrInto.secondLabelName != "")
                 {
                     var field = tp.GetField(attrInto.secondLabelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as 2nd-Label does not Exists. Name: '" + attrInto.bodyName + "'");
-                    var label2nd = controlList.Where(c => (c.Name == Label2ndPrefix + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
+                    var label2nd = controlList.Where(c => (c.Name == LABEL_2ND_PREFIX + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
                     field.SetValue(command, label2nd);
                 }
             }
@@ -402,7 +402,7 @@ namespace taskt.UI.CustomControls
             var inputLabel = CreateSimpleLabel();
 
             inputLabel.Text = labelText;
-            inputLabel.Name = LabelPrefix + propertyName;
+            inputLabel.Name = LABEL_PREFIX + propertyName;
 
             if (additionalParams != null)
             {
@@ -887,7 +887,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + HelperInfix + num, targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + HELPER_INFIX + num, targetControl);
             uiHelper.HelperType = setting.additionalHelper;
             switch (setting.additionalHelper)
             {
@@ -929,7 +929,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + CustomHelperInfix + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + CUSTOM_HELPER_INFIX + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
             uiHelper.CommandDisplay = setting.labelText;
             (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
 
@@ -1080,7 +1080,7 @@ namespace taskt.UI.CustomControls
         {
             FlowLayoutPanel flowPanel = new FlowLayoutPanel
             {
-                Name = GroupPrefix + name,
+                Name = GROUP_PREFIX + name,
                 FlowDirection = FlowDirection.TopDown,
                 WrapContents = false,
                 AutoSize = true,

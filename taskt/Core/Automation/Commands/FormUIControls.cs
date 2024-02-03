@@ -16,15 +16,15 @@ namespace taskt.Core.Automation.Commands
             List<Control> ret = new List<Control>();
 
             int index;
-            index = ctrls.FindIndex(t => (t.Name == GroupPrefix + parameterName));
+            index = ctrls.FindIndex(t => (t.Name == GROUP_PREFIX + parameterName));
             if (index >= 0)
             {
                 ret.Add(ctrls[index]);
             }
             else
             {
-                index = ctrls.FindIndex(t => (t.Name == LabelPrefix + parameterName));
-                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == LabelPrefix + nextParameterName));
+                index = ctrls.FindIndex(t => (t.Name == LABEL_PREFIX + parameterName));
+                int last = (nextParameterName == "") ? ctrls.Count : ctrls.FindIndex(t => (t.Name == LABEL_PREFIX + nextParameterName));
 
                 for (int i = index; i < last; i++)
                 {
@@ -49,25 +49,25 @@ namespace taskt.Core.Automation.Commands
 
         public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string parameterName)
         {
-            if (controls.ContainsKey(LabelPrefix + parameterName))
+            if (controls.ContainsKey(LABEL_PREFIX + parameterName))
             {
-                return (Label)controls[LabelPrefix + parameterName];
+                return (Label)controls[LABEL_PREFIX + parameterName];
             }
             else
             {
-                throw new Exception("Label '" + LabelPrefix + parameterName + "' does not exists.");
+                throw new Exception("Label '" + LABEL_PREFIX + parameterName + "' does not exists.");
             }
         }
 
         public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string parameterName)
         {
-            if (controls.ContainsKey(Label2ndPrefix + parameterName))
+            if (controls.ContainsKey(LABEL_2ND_PREFIX + parameterName))
             {
-                return (Label)controls[Label2ndPrefix + parameterName];
+                return (Label)controls[LABEL_2ND_PREFIX + parameterName];
             }
             else
             {
-                throw new Exception("2nd Label '" + Label2ndPrefix + parameterName + "' does not exists.");
+                throw new Exception("2nd Label '" + LABEL_2ND_PREFIX + parameterName + "' does not exists.");
             }
         }
 
