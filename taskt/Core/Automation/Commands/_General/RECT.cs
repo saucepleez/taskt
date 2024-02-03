@@ -12,12 +12,12 @@
 
         public int GetWidth()
         {
-            return left - right;
+            return (right - left);
         }
 
         public int GetHeight()
         {
-            return top - bottom;
+            return (bottom - top);
         }
 
         public (int, int) GetWidthAndHeight()
