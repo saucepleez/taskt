@@ -104,7 +104,7 @@ namespace taskt.Core.Automation.Commands
                     //}
 
                     var xPos = this.ExpandValueOrVariableAsWindowXPosition(whnd, engine);
-                    var yPos = this.ExpandValueOrVariableAsWindowXPosition(whnd, engine);
+                    var yPos = this.ExpandValueOrVariableAsWindowYPosition(whnd, engine);
 
                     WindowControls.SetWindowPosition(whnd, xPos, yPos);
                 })
