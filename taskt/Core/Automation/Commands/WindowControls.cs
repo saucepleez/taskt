@@ -204,6 +204,36 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(5000)]
         public static string v_InputWindowHandle { get; }
 
+        /// <summary>
+        /// input window width
+        /// </summary>
+        [PropertyDescription("Window Width (Pixcel)")]
+        [InputSpecification("Window Width", true)]
+        [PropertyDetailSampleUsage("**640**", PropertyDetailSampleUsage.ValueType.Value, "Width")]
+        [PropertyDetailSampleUsage("**{{{vWidth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Width")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Width")]
+        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Window_Size)]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputWidth { get; }
+
+        /// <summary>
+        /// input window height
+        /// </summary>
+        [PropertyDescription("Window Height (Pixcel)")]
+        [InputSpecification("Window Height", true)]
+        [PropertyDetailSampleUsage("**480**", PropertyDetailSampleUsage.ValueType.Value, "Height")]
+        [PropertyDetailSampleUsage("**{{{vHeight}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Height")]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Height")]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputHeight { get; }
         #endregion
 
         #region enum, struct
@@ -237,10 +267,16 @@ namespace taskt.Core.Automation.Commands
             SW_SHOWNORMAL = 1,
         }
 
-        public struct RECT
-        {
-            public int left, top, right, bottom;
-        }
+        ///// <summary>
+        ///// Window Rect
+        ///// </summary>
+        //public struct RECT
+        //{
+        //    public int left;
+        //    public int top;
+        //    public int right;
+        //    public int bottom;
+        //}
 
         public struct WINDOWPLACEMENT
         {
