@@ -21,28 +21,30 @@ namespace taskt.Core.Automation.Commands
         //public string v_WindowHandle { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Window Width (Pixcel)")]
-        [InputSpecification("Window Width", true)]
-        [PropertyDetailSampleUsage("**640**", PropertyDetailSampleUsage.ValueType.Value, "Width")]
-        [PropertyDetailSampleUsage("**{{{vWidth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Width")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Width")]
+        //[PropertyDescription("Window Width (Pixcel)")]
+        //[InputSpecification("Window Width", true)]
+        //[PropertyDetailSampleUsage("**640**", PropertyDetailSampleUsage.ValueType.Value, "Width")]
+        //[PropertyDetailSampleUsage("**{{{vWidth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Width")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyDisplayText(true, "Width")]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_InputWidth))]
         [PropertyParameterOrder(5500)]
         public string v_Width { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Window Height (Pixcel)")]
-        [InputSpecification("Window Height", true)]
-        [PropertyDetailSampleUsage("**480**", PropertyDetailSampleUsage.ValueType.Value, "Height")]
-        [PropertyDetailSampleUsage("**{{{vHeight}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Height")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyTextBoxSetting(1, false)]
-        [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyDisplayText(true, "Height")]
+        //[PropertyDescription("Window Height (Pixcel)")]
+        //[InputSpecification("Window Height", true)]
+        //[PropertyDetailSampleUsage("**480**", PropertyDetailSampleUsage.ValueType.Value, "Height")]
+        //[PropertyDetailSampleUsage("**{{{vHeight}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Height")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyTextBoxSetting(1, false)]
+        //[PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        //[PropertyDisplayText(true, "Height")]
+        [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_InputHeight))]
         [PropertyParameterOrder(5500)]
         public string v_Height { get; set; }
 
@@ -59,8 +61,11 @@ namespace taskt.Core.Automation.Commands
             WindowControls.WindowHandleAction(this, engine,
                 new Action<IntPtr>(whnd =>
                 {
-                    var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
-                    var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
+                    //var width = this.ExpandValueOrUserVariableAsInteger(nameof(v_Width), engine);
+                    //var height = this.ExpandValueOrUserVariableAsInteger(nameof(v_Height), engine);
+                    var width = this.ExpandValueOrVariableAsWindowWidth(whnd, engine);
+                    var height = this.ExpandValueOrVariableAsWindowHeight(whnd, engine);
+
                     WindowControls.SetWindowSize(whnd, width, height);
                 })
             );
