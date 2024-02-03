@@ -8,6 +8,14 @@ namespace taskt.Core.Automation.Commands
     public static class FormUIControls
     {
         #region control search method
+
+        /// <summary>
+        /// get parameter group controls
+        /// </summary>
+        /// <param name="ctrls"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="nextParameterName"></param>
+        /// <returns></returns>
         public static List<Control> GetControlGroup(this List<Control> ctrls, string parameterName, string nextParameterName = "")
         {
             List<Control> ret = new List<Control>();
@@ -32,6 +40,14 @@ namespace taskt.Core.Automation.Commands
             return ret;
         }
 
+        /// <summary>
+        /// get paramter body control
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="controls"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static T GetPropertyControl<T>(this Dictionary<string, Control> controls, string parameterName) where T : Control
         {
             if (controls.ContainsKey(parameterName))
@@ -44,6 +60,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get paramter label
+        /// </summary>
+        /// <param name="controls"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Label GetPropertyControlLabel(this Dictionary<string, Control> controls, string parameterName)
         {
             if (controls.ContainsKey(LABEL_PREFIX + parameterName))
@@ -56,6 +79,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get parameter 2nd label
+        /// </summary>
+        /// <param name="controls"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Label GetPropertyControl2ndLabel(this Dictionary<string, Control> controls, string parameterName)
         {
             if (controls.ContainsKey(LABEL_2ND_PREFIX + parameterName))
@@ -68,6 +98,15 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// get all paramter controls
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="controls"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="throwWhenLabelNotExists"></param>
+        /// <param name="throwWhen2ndLabelNotExists"></param>
+        /// <returns></returns>
         public static (T body, Label label, Label label2nd) GetAllPropertyControl<T>(this Dictionary<string, Control> controls, string parameterName, bool throwWhenLabelNotExists = true, bool throwWhen2ndLabelNotExists = false) where T : Control
         {
             T body = controls.GetPropertyControl<T>(parameterName);
@@ -107,11 +146,23 @@ namespace taskt.Core.Automation.Commands
             return (body, label, label2nd);
         }
 
+        /// <summary>
+        /// get 2nd label text
+        /// </summary>
+        /// <param name="controls"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
         public static Dictionary<string, string> Get2ndLabelText(this Dictionary<string, Control> controls, string parameterName)
         {
             return controls.GetPropertyControlLabel(parameterName).Get2ndLabelTexts();
         }
 
+        /// <summary>
+        /// get 2nd label text
+        /// </summary>
+        /// <param name="lbl"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Dictionary<string, string> Get2ndLabelTexts(this Label lbl)
         {
             if (lbl.Tag is Dictionary<string, string> dic)
@@ -124,6 +175,13 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
+        /// <summary>
+        /// create 2nd label text
+        /// </summary>
+        /// <param name="controls"></param>
+        /// <param name="labelTextName"></param>
+        /// <param name="label2ndName"></param>
+        /// <param name="key"></param>
         public static void SecondLabelProcess(this Dictionary<string, Control> controls, string labelTextName, string label2ndName, string key)
         {
             var dic = controls.Get2ndLabelText(labelTextName);
