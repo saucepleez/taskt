@@ -284,7 +284,7 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class PropertyAvailableSystemVariable : Attribute
     {
         public Engine.SystemVariables.LimitedSystemVariableNames variable = Engine.SystemVariables.LimitedSystemVariableNames.None;
