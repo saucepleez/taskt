@@ -249,8 +249,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var cmb = PropertyControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_AutomationType));
-            var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
+            var cmb = FormUIControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_AutomationType));
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
             actionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
         }
 
@@ -258,7 +258,7 @@ namespace taskt.Core.Automation.Commands
         {
             var a = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
 
-            var dgv = PropertyControls.GetPropertyControl<DataGridView>(this.ControlsList, nameof(v_UIAActionParameters));
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(this.ControlsList, nameof(v_UIAActionParameters));
             var table = v_UIAActionParameters;
             table.Rows.Clear();
             switch (a.ToLower())
@@ -422,7 +422,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void BeforeValidate()
         {
-            var dgvAction = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
+            var dgvAction = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_UIAActionParameters));
             DataTableControls.BeforeValidate(dgvAction, v_UIAActionParameters);
         }
     }

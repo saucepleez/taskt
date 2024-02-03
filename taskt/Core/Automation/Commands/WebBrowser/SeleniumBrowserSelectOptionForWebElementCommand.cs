@@ -140,7 +140,7 @@ namespace taskt.Core.Automation.Commands
         private void cmbSelectionType_SelectionChange(object sender, EventArgs e)
         {
             var showFlag = (((ComboBox)sender).SelectedItem?.ToString().ToLower() != "deselect all");
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_SelectionValue), showFlag);
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_SelectionValue), showFlag);
         }
 
         private void cmbScrollToElement_SelectionChange(object sender, EventArgs e)

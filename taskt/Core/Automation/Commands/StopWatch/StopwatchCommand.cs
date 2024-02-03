@@ -130,13 +130,13 @@ namespace taskt.Core.Automation.Commands
             var selectedAction = ((ComboBox)sender).SelectedItem?.ToString() ?? "";
             if (selectedAction == "Measure Stopwatch")
             {
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), true);
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), true);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), true);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), true);
             }
             else
             {
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), false);
-                GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), false);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_userVariableName), false);
+                FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ToStringFormat), false);
             }
         }
     }

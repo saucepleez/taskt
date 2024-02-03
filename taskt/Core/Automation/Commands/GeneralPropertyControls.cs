@@ -75,22 +75,5 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(5000)]
         public static string v_ComboBox { get; }
         #endregion
-
-        /// <summary>
-        /// show/hide Command parameter groups
-        /// </summary>
-        /// <param name="controlsList"></param>
-        /// <param name="parameterName"></param>
-        /// <param name="visible"></param>
-        public static void SetVisibleParameterControlGroup(Dictionary<string, Control> controlsList, string parameterName, bool visible)
-        {
-            foreach (var ctrl in controlsList)
-            {
-                if (ctrl.Key.Contains(parameterName))
-                {
-                    ctrl.Value.Visible = visible;
-                }
-            }
-        }
     }
 }

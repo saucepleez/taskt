@@ -1264,7 +1264,7 @@ namespace taskt.Core.Automation.Commands
         public static void MatchMethodComboBox_SelectionChangeCommitted(Dictionary<string, Control> controlsList, ComboBox matchMethodComboBox, string indexParameterName)
         {
             string item = matchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
-            GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
+            FormUIControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
         }
 
         #endregion

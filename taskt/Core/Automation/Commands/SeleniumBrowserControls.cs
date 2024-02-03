@@ -654,12 +654,12 @@ namespace taskt.Core.Automation.Commands
         public static void SearchMethodComboBox_SelectionChangeCommitted(Dictionary<string, Control> controlsList, ComboBox searchMethodComboBox, string indexParameterName)
         {
             string item = searchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
-            GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, item.StartsWith("find elements"));
+            FormUIControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, item.StartsWith("find elements"));
         }
 
         public static void ScrollToWebElement_SelectionChange(ComboBox scrollParameter, Dictionary<string, Control> controlsList, string instanceParameterName)
         {
-            GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, instanceParameterName, ((scrollParameter.SelectedItem?.ToString().ToLower() ?? "") != "no"));
+            FormUIControls.SetVisibleParameterControlGroup(controlsList, instanceParameterName, ((scrollParameter.SelectedItem?.ToString().ToLower() ?? "") != "no"));
         }
 
         #endregion

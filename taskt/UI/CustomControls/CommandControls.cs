@@ -15,6 +15,14 @@ namespace taskt.UI.CustomControls
 {
     public static class CommandControls
     {
+        #region const
+        public const string LabelPrefix = "lbl_";
+        public const string Label2ndPrefix = "lbl2_";
+        public const string HelperInfix = "_helper_";
+        public const string CustomHelperInfix = "_customhelper_";
+        public const string GroupPrefix = "group_";
+        #endregion
+
         public static Forms.ScriptBuilder.CommandEditor.frmCommandEditor CurrentEditor { get; set; }
 
         // todo: add colorful setting parameter

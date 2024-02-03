@@ -456,7 +456,7 @@ namespace taskt.Core.Automation.Commands
     //[XmlInclude(typeof(AddDataTableColumnsAndFillValuesByDataTableCommand))]
    
 
-    public abstract class ScriptCommand
+    public abstract class ScriptCommand : IParameterUI
     {
         [XmlAttribute]
         public string CommandID { get; set; }
@@ -516,7 +516,16 @@ namespace taskt.Core.Automation.Commands
 
         [XmlIgnore]
         [NonSerialized]
-        protected Dictionary<string, Control> ControlsList;
+        protected Dictionary<string, Control> _ControlsList;
+
+        [XmlIgnore]
+        public Dictionary<string, Control> ControlsList 
+        {
+            get
+            {
+                return this._ControlsList;
+            }
+        }
 
         public ScriptCommand()
         {
@@ -590,15 +599,15 @@ namespace taskt.Core.Automation.Commands
             {
                 RenderedControls.AddRange(CommandControls.MultiCreateInferenceDefaultControlGroupFor(this, editor, attrAutoRender.forceRenderComment));
 
-                ControlsList = new Dictionary<string, Control>();
+                this._ControlsList = new Dictionary<string, Control>();
                 foreach (Control control in RenderedControls)
                 {
-                    ControlsList.Add(control.Name, control);
+                    this._ControlsList.Add(control.Name, control);
                     if (control is FlowLayoutPanel flp)
                     {
                         foreach (Control c in flp.Controls)
                         {
-                            ControlsList.Add(c.Name, c);
+                            this._ControlsList.Add(c.Name, c);
                         }
                     }
                 }
