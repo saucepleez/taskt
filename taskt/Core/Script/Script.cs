@@ -1911,8 +1911,8 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_75(XDocument doc)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD);
-            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
             ChangeAttributeValue(doc,
@@ -1978,8 +1978,8 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_77(XDocument doc)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD);
-            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
             ChangeAttributeValue(doc,
@@ -2123,6 +2123,11 @@ namespace taskt.Core.Script
                 }), "v_SearchMethod", "v_CompareMethod"
             );
 
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_79(XDocument doc)
+        {
             return doc;
         }
 
