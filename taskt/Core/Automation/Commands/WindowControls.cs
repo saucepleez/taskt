@@ -35,15 +35,27 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// internal current window position keyword
         /// </summary>
-        public const string INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD = "%kwd_current_position%";
+        public const string INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD = "%kwd_current_window_position%";
         /// <summary>
         /// internal current window X position keyword
         /// </summary>
-        public const string INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD = "%kwd_current_xposition%";
+        public const string INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD = "%kwd_current_window_xposition%";
         /// <summary>
         /// internal current window Y position keyword
         /// </summary>
-        public const string INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD = "%kwd_current_yposition%";
+        public const string INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD = "%kwd_current_window_yposition%";
+        /// <summary>
+        /// internal current window size keyword
+        /// </summary>
+        public const string INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD = "%kwd_current_window_size%";
+        /// <summary>
+        /// internal current window width keyword
+        /// </summary>
+        public const string INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD = "%kwd_current_window_width%";
+        /// <summary>
+        /// internal current window height keyword
+        /// </summary>
+        public const string INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD = "%kwd_current_window_height%";
         #endregion
 
         #region virtualproperty
@@ -245,9 +257,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**0**", "Specify X Top Position")]
         [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "X Position")]
         [PropertyDetailSampleUsage("**{{{vXPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "X Position")]
-        [PropertyDetailSampleUsage("**%kwd_current_position%**", "Specify Current Position for X Position")]
-        [PropertyDetailSampleUsage("**%kwd_current_xposition%**", "Specify Current X Position for X Position", false)]
-        [PropertyDetailSampleUsage("**%kwd_current_yposition%**", "Specify Current Y Position for X Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_window_position%**", "Specify Current Position for X Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_xposition%**", "Specify Current X Position for X Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_window_yposition%**", "Specify Current Y Position for X Position", false)]
         [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
         [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
@@ -266,9 +278,9 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**0**", "Specify Y Left Position")]
         [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Y Position")]
         [PropertyDetailSampleUsage("**{{{vYPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Y Position")]
-        [PropertyDetailSampleUsage("**%kwd_current_position%**", "Specify Current Position for Y Position")]
-        [PropertyDetailSampleUsage("**%kwd_current_xposition%**", "Specify Current X Position for Y Position", false)]
-        [PropertyDetailSampleUsage("**%kwd_current_yposition%**", "Specify Current Y Position for Y Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_window_position%**", "Specify Current Position for Y Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_xposition%**", "Specify Current X Position for Y Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_window_yposition%**", "Specify Current Y Position for Y Position", false)]
         [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
         [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyTextBoxSetting(1, false)]
