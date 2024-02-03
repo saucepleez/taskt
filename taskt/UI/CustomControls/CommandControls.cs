@@ -1602,6 +1602,7 @@ namespace taskt.UI.CustomControls
 
             var systemVariables = GetSystemVariablesName();
 
+            // TODO: I feel like we can make smarter code
             var senderControl = (Control)sender;
             var parameterName = ((Control)(senderControl.Tag)).Name;
             var fm = (Forms.ScriptBuilder.CommandEditor.frmCommandEditor)senderControl.FindForm();
