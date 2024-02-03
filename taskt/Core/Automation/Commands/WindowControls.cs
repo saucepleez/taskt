@@ -230,7 +230,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Width")]
-        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Window_Size)]
+        [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Size)]
         [PropertyParameterOrder(5000)]
         public static string v_InputWidth { get; }
 
@@ -247,7 +247,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
-        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Window_Size)]
+        [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Size)]
         [PropertyDisplayText(true, "Height")]
         [PropertyParameterOrder(5000)]
         public static string v_InputHeight { get; }
