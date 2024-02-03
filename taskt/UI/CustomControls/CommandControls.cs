@@ -10,6 +10,7 @@ using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using static taskt.Core.Automation.Commands.PropertyControls;
+using static taskt.Core.Automation.Engine.SystemVariables;
 
 namespace taskt.UI.CustomControls
 {
@@ -1598,8 +1599,40 @@ namespace taskt.UI.CustomControls
         {
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            
-            variableList.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
+
+            var systemVariables = GetSystemVariablesName();
+
+            var senderControl = (Control)sender;
+            var parameterName = ((Control)(senderControl.Tag)).Name;
+            var fm = (Forms.ScriptBuilder.CommandEditor.frmCommandEditor)senderControl.FindForm();
+            var command = fm.selectedCommand;
+            (var prop, var vProp) = command.GetPropertyAndVirturalProperty(parameterName);
+            var attrs = GetCustomAttributesWithVirtual<PropertyAvailableSystemVariable>(prop, vProp);
+
+            foreach (var attr in attrs)
+            {
+                switch (attr.variable)
+                {
+                    case LimitedSystemVariableNames.Window_AllWindows:
+                        systemVariables.Add(Window_AllWindows.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Desktop:
+                        systemVariables.Add(Window_Desktop.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Position:
+                        systemVariables.Add(Window_CurrentPosition.VariableName);
+                        systemVariables.Add(Window_CurrentXPosition.VariableName);
+                        systemVariables.Add(Window_CurrentYPosition.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Size:
+                        systemVariables.Add(Window_CurrentSize.VariableName);
+                        systemVariables.Add(Window_CurrentWidth.VariableName);
+                        systemVariables.Add(Window_CurrentHeight.VariableName);
+                        break;
+                }
+            }
+
+            variableList.AddRange(systemVariables);
 
             using (var newVariableSelector = new Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(variableList))
             {
