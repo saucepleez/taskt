@@ -1306,7 +1306,10 @@ namespace taskt.UI.CustomControls
             sample = sample.Replace(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWindowName.VariableName, setting))
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentPosition.VariableName, setting))
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentXPosition.VariableName, setting))
-                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentYPosition.VariableName, setting));
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentYPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentSize.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWidth.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentHeight.VariableName, setting));
             var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
 
             if (planeText)
