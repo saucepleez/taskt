@@ -235,6 +235,47 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "Height")]
         [PropertyParameterOrder(5000)]
         public static string v_InputHeight { get; }
+
+        /// <summary>
+        /// input window X position
+        /// </summary>
+        [PropertyDescription("X horizontal coordinate (pixel) for the Window's Location")]
+        [InputSpecification("X Window Location", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**0**", "Specify X Top Position")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "X Position")]
+        [PropertyDetailSampleUsage("**{{{vXPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "X Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_position%**", "Specify Current Position for X Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_xposition%**", "Specify Current X Position for X Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_yposition%**", "Specify Current Y Position for X Position", false)]
+        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
+        [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "X Position")]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputXPosition { get; }
+
+        /// <summary>
+        /// intpu window Y position
+        /// </summary>
+        [PropertyDescription("Y vertical coordinate (pixel) for the Window's Location")]
+        [InputSpecification("Y Window Location", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**0**", "Specify Y Left Position")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Y Position")]
+        [PropertyDetailSampleUsage("**{{{vYPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Y Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_position%**", "Specify Current Position for Y Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_xposition%**", "Specify Current X Position for Y Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_yposition%**", "Specify Current Y Position for Y Position", false)]
+        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
+        [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyDisplayText(true, "Y Position")]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputYPosition { get; }
+
         #endregion
 
         #region enum, struct
