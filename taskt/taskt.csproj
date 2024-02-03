@@ -375,6 +375,7 @@
     <Compile Include="Core\Automation\Commands\Window\MoveWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\WindowPositionPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\WindowSizePropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\IParameterUI.cs" />
     <Compile Include="Core\Automation\Commands\_General\IPositionProperties.cs" />

@@ -99,37 +99,42 @@ namespace taskt.Core.Automation.Commands
                 {
                     foreach (var win in wins)
                     {
-                        var pos = WindowControls.GetWindowRect(win.Item1);
+                        //var pos = WindowControls.GetWindowRect(win.Item1);
 
-                        var variableXPosition = v_XPosition.ExpandValueOrUserVariable(engine);
-                        int xPos;
-                        if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
-                        {
-                            xPos = pos.left;
-                        }
-                        else if (variableXPosition == engine.engineSettings.CurrentWindowYPositionKeyword)
-                        {
-                            xPos = pos.top;
-                        }
-                        else
-                        {
-                            xPos = v_XPosition.ExpandValueOrUserVariableAsInteger("X Position", engine);
-                        }
+                        //var variableXPosition = v_XPosition.ExpandValueOrUserVariable(engine);
+                        //int xPos;
+                        //if ((variableXPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableXPosition == engine.engineSettings.CurrentWindowXPositionKeyword))
+                        //{
+                        //    xPos = pos.left;
+                        //}
+                        //else if (variableXPosition == engine.engineSettings.CurrentWindowYPositionKeyword)
+                        //{
+                        //    xPos = pos.top;
+                        //}
+                        //else
+                        //{
+                        //    xPos = v_XPosition.ExpandValueOrUserVariableAsInteger("X Position", engine);
+                        //}
 
-                        var variableYPosition = v_YPosition.ExpandValueOrUserVariable(engine);
-                        int yPos;
-                        if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
-                        {
-                            yPos = pos.top;
-                        }
-                        else if (variableYPosition == engine.engineSettings.CurrentWindowXPositionKeyword)
-                        {
-                            yPos = pos.left;
-                        }
-                        else
-                        {
-                            yPos = v_YPosition.ExpandValueOrUserVariableAsInteger("Y Position", engine);
-                        }
+                        //var variableYPosition = v_YPosition.ExpandValueOrUserVariable(engine);
+                        //int yPos;
+                        //if ((variableYPosition == engine.engineSettings.CurrentWindowPositionKeyword) || (variableYPosition == engine.engineSettings.CurrentWindowYPositionKeyword))
+                        //{
+                        //    yPos = pos.top;
+                        //}
+                        //else if (variableYPosition == engine.engineSettings.CurrentWindowXPositionKeyword)
+                        //{
+                        //    yPos = pos.left;
+                        //}
+                        //else
+                        //{
+                        //    yPos = v_YPosition.ExpandValueOrUserVariableAsInteger("Y Position", engine);
+                        //}
+
+                        var whnd = win.Item1;
+
+                        var xPos = this.ExpandValueOrVariableAsWindowXPosition(whnd, engine);
+                        var yPos = this.ExpandValueOrVariableAsWindowXPosition(whnd, engine);
 
                         WindowControls.SetWindowPosition(win.Item1, xPos, yPos);
                     }
