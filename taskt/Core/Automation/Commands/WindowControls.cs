@@ -23,27 +23,27 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// old intermediate current window keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_KEYWORD = "%kwd_current_window%";
+        public const string INTERNAL_CURRENT_WINDOW_KEYWORD = "%kwd_current_window%";
         /// <summary>
         /// old intermediate Desktop keyword
         /// </summary>
-        public const string INTERMEDIATE_DESKTOP_KEYWORD = "%kwd_desktop%";
+        public const string INTERNAL_DESKTOP_KEYWORD = "%kwd_desktop%";
         /// <summary>
         /// old intermediate all windows keyword
         /// </summary>
-        public const string INTERMEDIATE_ALL_WINDOWS_KEYWORD = "%kwd_all_windows%";
+        public const string INTERNAL_ALL_WINDOWS_KEYWORD = "%kwd_all_windows%";
         /// <summary>
         /// old intermediate current window position keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_POSITION_KEYWORD = "%kwd_current_position%";
+        public const string INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD = "%kwd_current_position%";
         /// <summary>
         /// old intermediate current window X position keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_X_POSITION_KEYWORD = "%kwd_current_xposition%";
+        public const string INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD = "%kwd_current_xposition%";
         /// <summary>
         /// old intermediate current window Y position keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_Y_POSITION_KEYWORD = "%kwd_current_yposition%";
+        public const string INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD = "%kwd_current_yposition%";
         #endregion
 
         #region virtualproperty

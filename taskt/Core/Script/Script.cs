@@ -1911,7 +1911,7 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_75(XDocument doc)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD);
             var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
@@ -1978,7 +1978,7 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_77(XDocument doc)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD);
             var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
