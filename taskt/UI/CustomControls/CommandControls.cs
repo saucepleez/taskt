@@ -1303,7 +1303,10 @@ namespace taskt.UI.CustomControls
             {
                 sample = Markdig.Markdown.ToPlainText(sample).Trim();
             }
-            sample = sample.Replace(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWindowName.VariableName, setting));
+            sample = sample.Replace(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWindowName.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentXPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentYPosition.VariableName, setting));
             var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
 
             if (planeText)
