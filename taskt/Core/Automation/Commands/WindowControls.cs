@@ -664,7 +664,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (window == engine.engineSettings.CurrentWindowKeyword)
             {
-                // current window
+                // current window keyword
                 var whnd = GetActiveWindowHandle();
                 var title = GetWindowTitle(whnd);
 
