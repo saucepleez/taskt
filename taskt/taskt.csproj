@@ -315,6 +315,8 @@
     <Compile Include="Core\ApplicationSettings\WhiteListIP.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelSheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelInstancePropertiesExtenstionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelWorksheetPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelInstanceProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetProperties.cs" />
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
