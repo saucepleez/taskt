@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
-using OpenQA.Selenium.Internal;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -11,6 +10,21 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class ExcelControls
     {
+        #region const
+        /// <summary>
+        /// internal current worksheet keyword
+        /// </summary>
+        public const string INTERNAL_EXCEL_CURRENT_WORKSHEET_KEYWORD = "%kwd_excel_current_worksheet%";
+        /// <summary>
+        /// internal next worksheet keyword
+        /// </summary>
+        public const string INTERNAL_EXCEL_NEXT_WORKSHEET_KEYWORD = "%kwd_excel_next_worksheet%";
+        /// <summary>
+        /// internal previous worksheet keyword
+        /// </summary>
+        public const string INTERNAL_EXCEL_PREVIOUS_WORKSHEET_KEYWORD = "%kwd_excel_previous_worksheet%";
+        #endregion
+
         #region virtual property
         /// <summary>
         /// excel instance property
@@ -513,25 +527,6 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region Func methods
-        //public static Func<Range, bool> CheckCellValueFunctionFromRange(string valueType)
-        //{
-        //    Func<Range, bool> func = null;
-        //    switch (valueType)
-        //    {
-        //        case "cell":
-        //            func = (rg) => { return !String.IsNullOrEmpty((string)rg.Text); };
-        //            break;
-
-        //        case "formula":
-        //            func = (rg) => { return ((string)rg.Formula).StartsWith("="); };
-        //            break;
-
-        //        case "back color":
-        //            func = (rg) => { return ((long)rg.Interior.Color) != 16777215; };
-        //            break;
-        //    }
-        //    return func;
-        //}
 
         /// <summary>
         /// get CheckCellValueFunction
