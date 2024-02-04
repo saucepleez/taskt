@@ -28,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -35,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("A1, B10, {vAddress}")]
         [Remarks("")]
         public string v_ExcelCellAddress1 { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please Enter the Second Cell Location (ex. A1 or B2)")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -42,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("A1, B10, [vAddress]")]
         [Remarks("")]
         public string v_ExcelCellAddress2 { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Assign to Variable")]
         [InputSpecification("Select or provide a variable from the variable list")]
