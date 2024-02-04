@@ -11,6 +11,6 @@ namespace taskt.Core.Automation.Commands.Excel
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         [PropertyParameterOrder(6000)]
-        public string v_SheetName { get; set; }
+        public virtual string v_SheetName { get; set; }
     }
 }
