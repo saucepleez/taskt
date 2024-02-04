@@ -14,15 +14,16 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelOpenWorkbookCommand : ScriptCommand
+    public class ExcelOpenWorkbookCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtensionAndExists, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsx,xlsm,xls,xlm,csv,ods")]
+        [PropertyParameterOrder(6000)]
         public string v_FilePath { get; set; }
 
         [XmlAttribute]
@@ -34,6 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vPassword}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Password")]
         [PropertyIsOptional(true)]
         [PropertyDisplayText(false, "")]
+        [PropertyParameterOrder(6001)]
         public string v_Password { get; set; }
 
         [XmlAttribute]
@@ -48,10 +50,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Ignore")]
         [PropertyUISelectionOption("Open")]
         [PropertyIsOptional(true, "Error")]
+        [PropertyParameterOrder(6002)]
         public string v_IfWorksheetExists { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(FilePathControls), nameof(FilePathControls.v_WaitTime))]
+        [PropertyParameterOrder(6003)]
         public string v_WaitForFile { get; set; }
 
         public ExcelOpenWorkbookCommand()

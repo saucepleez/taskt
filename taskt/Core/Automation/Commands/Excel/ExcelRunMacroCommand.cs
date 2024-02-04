@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelRunMacroCommand : ScriptCommand
+    public class ExcelRunMacroCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -30,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vMacro}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Macro")]
         [PropertyValidationRule("Macro", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Macro")]
+        [PropertyParameterOrder(6000)]
         public string v_MacroName { get; set; }
 
         [XmlAttribute]
@@ -40,6 +41,7 @@ namespace taskt.Core.Automation.Commands
         [Remarks("")]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyIsOptional(true)]
+        [PropertyParameterOrder(6001)]
         public string v_Argument1 { get; set; }
 
         public ExcelRunMacroCommand()

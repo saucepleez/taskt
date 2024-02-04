@@ -15,39 +15,46 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelGetRangeValuesAsDataTableCommand : ScriptCommand
+    public class ExcelGetRangeValuesAsDataTableCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
+        [PropertyParameterOrder(6000)]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
+        [PropertyParameterOrder(6001)]
         public string v_ColumnStart { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
+        [PropertyParameterOrder(6002)]
         public string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowStart))]
         [PropertyIsOptional(false)]
+        [PropertyParameterOrder(6003)]
         public string v_RowStart { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowEnd))]
+        [PropertyParameterOrder(6004)]
         public string v_RowEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
+        [PropertyParameterOrder(6005)]
         public string v_userVariableName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
+        [PropertyParameterOrder(6006)]
         public string v_ValueType { get; set; }
 
         public ExcelGetRangeValuesAsDataTableCommand()

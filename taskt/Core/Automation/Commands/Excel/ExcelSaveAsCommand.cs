@@ -14,16 +14,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelSaveAsCommand : ScriptCommand
+    public class ExcelSaveAsCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_FilePath))]
         [PropertyDescription("Excel File Path to Save")]
         [PropertyFilePathSetting(false, PropertyFilePathSetting.ExtensionBehavior.RequiredExtension, PropertyFilePathSetting.FileCounterBehavior.NoSupport, "xlsx")]
+        [PropertyParameterOrder(6000)]
         public string v_FileName { get; set; }
 
         [XmlAttribute]
@@ -39,6 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Overwrite")]
         [PropertyUISelectionOption("Ignore")]
         [PropertyIsOptional(true, "Error")]
+        [PropertyParameterOrder(6001)]
         public string v_IfExcelFileExists { get; set; }
 
         public ExcelSaveAsCommand()

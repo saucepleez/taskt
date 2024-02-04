@@ -14,17 +14,18 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelRenameWorksheetCommand : ScriptCommand
+    public class ExcelRenameWorksheetCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         [PropertyDescription("Target Worksheet Name to Rename")]
         [PropertyValidationRule("Target Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Target Sheet")]
+        [PropertyParameterOrder(6000)]
         public string v_sourceSheet { get; set; }
 
         [XmlAttribute]
@@ -33,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("New Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "New Sheet")]
         [PropertyIntermediateConvert("", "")]
+        [PropertyParameterOrder(6001)]
         public string v_newName { get; set; }
 
         public ExcelRenameWorksheetCommand()

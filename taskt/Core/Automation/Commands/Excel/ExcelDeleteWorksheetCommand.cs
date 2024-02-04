@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Xml.Serialization;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,15 +13,15 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelDeleteWorksheetCommand : ScriptCommand
+    public class ExcelDeleteWorksheetCommand : AExcelSheetCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
-        public string v_SheetName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
+        //public string v_SheetName { get; set; }
 
         public ExcelDeleteWorksheetCommand()
         {
