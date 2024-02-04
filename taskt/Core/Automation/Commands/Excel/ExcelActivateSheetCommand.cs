@@ -33,9 +33,11 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var excelInstance, var currentSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(var excelInstance, var currentSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            Microsoft.Office.Interop.Excel.Worksheet targetSheet = v_SheetName.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance);
+            //Microsoft.Office.Interop.Excel.Worksheet targetSheet = v_SheetName.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance);
+
+            (_, var targetSheet, var currentSheet) = this.ExpandValueOrVariableAsExcelInstnaceAndWorksheetAndCurrentSheet(engine);
 
             if (currentSheet.Name != targetSheet.Name)
             {
