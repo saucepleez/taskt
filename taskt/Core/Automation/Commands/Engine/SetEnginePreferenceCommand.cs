@@ -97,11 +97,11 @@ namespace taskt.Core.Automation.Commands
             {
                 case "Enable Automatic Calculations":
                 case "Disable Automatic Calculations":
-                    GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), false);
+                    FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), false);
                     break;
 
                 default:
-                    GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), true);
+                    FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_ParameterValue), true);
                     break;
             }
         }

@@ -231,20 +231,20 @@ namespace taskt.Core.Automation.Commands
 
         public override void AfterShown(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var cmb = PropertyControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_SeleniumElementAction));
-            var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
+            var cmb = FormUIControls.GetPropertyControl<ComboBox>(ControlsList, nameof(v_SeleniumElementAction));
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
             actionParameterProcess(dgv, cmb.SelectedItem?.ToString() ?? "");
         }
 
         private void cmbSearchType_SelectionChangeCommited(object sender, EventArgs e)
         {
             var searchType = ((ComboBox)sender).SelectedItem?.ToString().ToLower() ?? "";
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_SeleniumElementIndex), !searchType.StartsWith("find element "));
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_SeleniumElementIndex), !searchType.StartsWith("find element "));
         }
 
         private void cmbSeleniumAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            var dgv = PropertyControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_WebActionParameterTable));
 
             v_WebActionParameterTable.Clear();
 

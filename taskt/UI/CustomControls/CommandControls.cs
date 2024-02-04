@@ -10,11 +10,20 @@ using taskt.Core;
 using taskt.Core.Automation.Commands;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 using static taskt.Core.Automation.Commands.PropertyControls;
+using static taskt.Core.Automation.Engine.SystemVariables;
 
 namespace taskt.UI.CustomControls
 {
     public static class CommandControls
     {
+        #region const
+        public const string LABEL_PREFIX = "lbl_";
+        public const string LABEL_2ND_PREFIX = "lbl2_";
+        public const string HELPER_INFIX = "_helper_";
+        public const string CUSTOM_HELPER_INFIX = "_customhelper_";
+        public const string GROUP_PREFIX = "group_";
+        #endregion
+
         public static Forms.ScriptBuilder.CommandEditor.frmCommandEditor CurrentEditor { get; set; }
 
         // todo: add colorful setting parameter
@@ -284,7 +293,7 @@ namespace taskt.UI.CustomControls
             if (attr2ndLabel?.useSecondaryLabel ?? false)
             {
                 var label2 = CreateSimpleLabel();
-                label2.Name = Label2ndPrefix + propertyName;
+                label2.Name = LABEL_2ND_PREFIX + propertyName;
                 controlList.Add(label2);
             }
 
@@ -317,7 +326,7 @@ namespace taskt.UI.CustomControls
                 if (attrInto.secondLabelName != "")
                 {
                     var field = tp.GetField(attrInto.secondLabelName, BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception("The Name specified as 2nd-Label does not Exists. Name: '" + attrInto.bodyName + "'");
-                    var label2nd = controlList.Where(c => (c.Name == Label2ndPrefix + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
+                    var label2nd = controlList.Where(c => (c.Name == LABEL_2ND_PREFIX + propertyName)).FirstOrDefault() ?? throw new Exception("Second Label does not Exists.");
                     field.SetValue(command, label2nd);
                 }
             }
@@ -394,7 +403,7 @@ namespace taskt.UI.CustomControls
             var inputLabel = CreateSimpleLabel();
 
             inputLabel.Text = labelText;
-            inputLabel.Name = LabelPrefix + propertyName;
+            inputLabel.Name = LABEL_PREFIX + propertyName;
 
             if (additionalParams != null)
             {
@@ -879,7 +888,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultUIHelperFor(string propertyName, PropertyUIHelper setting, int num, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + HelperInfix + num, targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + HELPER_INFIX + num, targetControl);
             uiHelper.HelperType = setting.additionalHelper;
             switch (setting.additionalHelper)
             {
@@ -921,7 +930,7 @@ namespace taskt.UI.CustomControls
         /// <returns></returns>
         public static CommandItemControl CreateDefaultCustomUIHelperFor(string propertyName, ScriptCommand command, PropertyCustomUIHelper setting, int num, Control targetControl, Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            var uiHelper = CreateSimpleUIHelper(propertyName + CustomHelperInfix + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
+            var uiHelper = CreateSimpleUIHelper(propertyName + CUSTOM_HELPER_INFIX + (setting.nameKey == "" ? num.ToString() : setting.nameKey), targetControl);
             uiHelper.CommandDisplay = setting.labelText;
             (var trgMethod, var isOuterClass) = GetMethodInfo(setting.methodName, command);
 
@@ -1072,7 +1081,7 @@ namespace taskt.UI.CustomControls
         {
             FlowLayoutPanel flowPanel = new FlowLayoutPanel
             {
-                Name = GroupPrefix + name,
+                Name = GROUP_PREFIX + name,
                 FlowDirection = FlowDirection.TopDown,
                 WrapContents = false,
                 AutoSize = true,
@@ -1294,7 +1303,13 @@ namespace taskt.UI.CustomControls
             {
                 sample = Markdig.Markdown.ToPlainText(sample).Trim();
             }
-            sample = sample.Replace(WindowControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Core.Automation.Engine.SystemVariables.Window_CurrentWindowName.VariableName, setting));
+            sample = sample.Replace(WindowControls.INTERNAL_CURRENT_WINDOW_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWindowName.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentXPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentYPosition.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentSize.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWidth.VariableName, setting))
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentHeight.VariableName, setting));
             var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
 
             if (planeText)
@@ -1590,8 +1605,41 @@ namespace taskt.UI.CustomControls
         {
             //get copy of user variables and append system variables, then load to combobox
             var variableList = CurrentEditor.scriptVariables.Select(f => f.VariableName).ToList();
-            
-            variableList.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
+
+            var systemVariables = GetSystemVariablesName();
+
+            // TODO: I feel like we can make smarter code
+            var senderControl = (Control)sender;
+            var parameterName = ((Control)(senderControl.Tag)).Name;
+            var fm = (Forms.ScriptBuilder.CommandEditor.frmCommandEditor)senderControl.FindForm();
+            var command = fm.selectedCommand;
+            (var prop, var vProp) = command.GetPropertyAndVirturalProperty(parameterName);
+            var attrs = GetCustomAttributesWithVirtual<PropertyAvailableSystemVariable>(prop, vProp);
+
+            foreach (var attr in attrs)
+            {
+                switch (attr.variable)
+                {
+                    case LimitedSystemVariableNames.Window_AllWindows:
+                        systemVariables.Add(Window_AllWindows.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Desktop:
+                        systemVariables.Add(Window_Desktop.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Position:
+                        systemVariables.Add(Window_CurrentPosition.VariableName);
+                        systemVariables.Add(Window_CurrentXPosition.VariableName);
+                        systemVariables.Add(Window_CurrentYPosition.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Window_Size:
+                        systemVariables.Add(Window_CurrentSize.VariableName);
+                        systemVariables.Add(Window_CurrentWidth.VariableName);
+                        systemVariables.Add(Window_CurrentHeight.VariableName);
+                        break;
+                }
+            }
+
+            variableList.AddRange(systemVariables);
 
             using (var newVariableSelector = new Forms.ScriptBuilder.CommandEditor.Supplemental.frmItemSelector(variableList))
             {

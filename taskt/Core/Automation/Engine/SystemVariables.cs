@@ -78,7 +78,44 @@ namespace taskt.Core.Automation.Engine
         /// specify all windows
         /// </summary>
         public static readonly ScriptVariable Window_AllWindows = new ScriptVariable { VariableName = "Window.AllWindows", VariableValue = "" };
-        
+
+        /// <summary>
+        /// specify current window position
+        /// </summary>
+        public static readonly ScriptVariable Window_CurrentPosition = new ScriptVariable { VariableName = "Window.CurrentPosition", VariableValue = "" };
+        /// <summary>
+        /// specify current window x position
+        /// </summary>
+        public static readonly ScriptVariable Window_CurrentXPosition = new ScriptVariable { VariableName = "Window.CurrentXPosition", VariableValue = "" };
+        /// <summary>
+        /// specify current window y position
+        /// </summary>
+        public static readonly ScriptVariable Window_CurrentYPosition = new ScriptVariable { VariableName = "Window.CurrentYPosition", VariableValue = "" };
+        /// <summary>
+        /// specify current window size
+        /// </summary>
+        public static readonly ScriptVariable Window_CurrentSize = new ScriptVariable { VariableName = "Window.CurrentSize", VariableValue = "" };
+        /// <summary>
+        /// specify current window width size
+        /// </summary>
+        public static readonly ScriptVariable Window_CurrentWidth = new ScriptVariable { VariableName = "Window.CurrentWidth", VariableValue = "" };
+        /// <summary>
+        /// specify current window height size
+        /// </summary>
+        public static readonly ScriptVariable Window_CurrentHeight = new ScriptVariable { VariableName = "Window.CurrentHeight", VariableValue = "" };
+        #endregion
+
+        #region Enum
+
+        public enum LimitedSystemVariableNames
+        {
+            None,
+            Window_Desktop,
+            Window_AllWindows,
+            Window_Position,
+            Window_Size,
+        };
+
         #endregion
 
         private static readonly List<ScriptVariable> systemVariables = new List<ScriptVariable>()

@@ -156,18 +156,18 @@ namespace taskt.Core.Automation.Commands
             var inst = ControlsList.GetPropertyControl<ComboBox>(nameof(v_InstanceName));
             useInstance = useInstance && ((inst.SelectedItem?.ToString().ToLower() ?? "") != "invoke click");
 
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
         }
 
         private void cmdClickType_SelectinChange(object sender, EventArgs e)
         {
             var useOffset = (((ComboBox)sender).SelectedItem?.ToString().ToLower() ?? "") != "invoke click";
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_XOffset), useOffset); ;
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_YOffset), useOffset); ;
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_XOffset), useOffset); ;
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_YOffset), useOffset); ;
 
             var scroll = ControlsList.GetPropertyControl<ComboBox>(nameof(v_ScrollToElement));
             var useInstance = useOffset || ((scroll.SelectedItem?.ToString().ToLower() ?? "") != "no");
-            GeneralPropertyControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
+            FormUIControls.SetVisibleParameterControlGroup(ControlsList, nameof(v_InstanceName), useInstance);
         }
     }
 }

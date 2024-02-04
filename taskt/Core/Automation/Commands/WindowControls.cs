@@ -21,29 +21,41 @@ namespace taskt.Core.Automation.Commands
         #region fields
 
         /// <summary>
-        /// old intermediate current window keyword
+        /// internal current window keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_KEYWORD = "%kwd_current_window%";
+        public const string INTERNAL_CURRENT_WINDOW_KEYWORD = "%kwd_current_window%";
         /// <summary>
-        /// old intermediate Desktop keyword
+        /// internal Desktop keyword
         /// </summary>
-        public const string INTERMEDIATE_DESKTOP_KEYWORD = "%kwd_desktop%";
+        public const string INTERNAL_DESKTOP_KEYWORD = "%kwd_desktop%";
         /// <summary>
-        /// old intermediate all windows keyword
+        /// internal all windows keyword
         /// </summary>
-        public const string INTERMEDIATE_ALL_WINDOWS_KEYWORD = "%kwd_all_windows%";
+        public const string INTERNAL_ALL_WINDOWS_KEYWORD = "%kwd_all_windows%";
         /// <summary>
-        /// old intermediate current window position keyword
+        /// internal current window position keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_POSITION_KEYWORD = "%kwd_current_position%";
+        public const string INTERNAL_CURRENT_WINDOW_POSITION_KEYWORD = "%kwd_current_window_position%";
         /// <summary>
-        /// old intermediate current window X position keyword
+        /// internal current window X position keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_X_POSITION_KEYWORD = "%kwd_current_xposition%";
+        public const string INTERNAL_CURRENT_WINDOW_X_POSITION_KEYWORD = "%kwd_current_window_xposition%";
         /// <summary>
-        /// old intermediate current window Y position keyword
+        /// internal current window Y position keyword
         /// </summary>
-        public const string INTERMEDIATE_CURRENT_WINDOW_Y_POSITION_KEYWORD = "%kwd_current_yposition%";
+        public const string INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD = "%kwd_current_window_yposition%";
+        /// <summary>
+        /// internal current window size keyword
+        /// </summary>
+        public const string INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD = "%kwd_current_window_size%";
+        /// <summary>
+        /// internal current window width keyword
+        /// </summary>
+        public const string INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD = "%kwd_current_window_width%";
+        /// <summary>
+        /// internal current window height keyword
+        /// </summary>
+        public const string INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD = "%kwd_current_window_height%";
         #endregion
 
         #region virtualproperty
@@ -204,6 +216,84 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(5000)]
         public static string v_InputWindowHandle { get; }
 
+        /// <summary>
+        /// input window width
+        /// </summary>
+        [PropertyDescription("Window Width (Pixcel)")]
+        [InputSpecification("Window Width", true)]
+        [PropertyDetailSampleUsage("**640**", PropertyDetailSampleUsage.ValueType.Value, "Width")]
+        [PropertyDetailSampleUsage("**{{{vWidth}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Width")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_size%**", "Specify Current Window Width for Window Width")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_width%**", "Specify Current Window Width for Window Width", false)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Width", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyDisplayText(true, "Width")]
+        [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Size)]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputWidth { get; }
+
+        /// <summary>
+        /// input window height
+        /// </summary>
+        [PropertyDescription("Window Height (Pixcel)")]
+        [InputSpecification("Window Height", true)]
+        [PropertyDetailSampleUsage("**480**", PropertyDetailSampleUsage.ValueType.Value, "Height")]
+        [PropertyDetailSampleUsage("**{{{vHeight}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Height")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_size%**", "Specify Current Window Height for Window Height")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_height%**", "Specify Current Window Height for Window Height", false)]
+        [Remarks("")]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyValidationRule("Height", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
+        [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Size)]
+        [PropertyDisplayText(true, "Height")]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputHeight { get; }
+
+        /// <summary>
+        /// input window X position
+        /// </summary>
+        [PropertyDescription("X horizontal coordinate (pixel) for the Window's Location")]
+        [InputSpecification("X Window Location", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**0**", "Specify X Top Position")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "X Position")]
+        [PropertyDetailSampleUsage("**{{{vXPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "X Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_position%**", "Specify Current Position for X Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_xposition%**", "Specify Current X Position for X Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_window_yposition%**", "Specify Current Y Position for X Position", false)]
+        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1920")]
+        [PropertyValidationRule("X Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Position)]
+        [PropertyDisplayText(true, "X Position")]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputXPosition { get; }
+
+        /// <summary>
+        /// intpu window Y position
+        /// </summary>
+        [PropertyDescription("Y vertical coordinate (pixel) for the Window's Location")]
+        [InputSpecification("Y Window Location", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**0**", "Specify Y Left Position")]
+        [PropertyDetailSampleUsage("**100**", PropertyDetailSampleUsage.ValueType.Value, "Y Position")]
+        [PropertyDetailSampleUsage("**{{{vYPos}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Y Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_position%**", "Specify Current Position for Y Position")]
+        [PropertyDetailSampleUsage("**%kwd_current_window_xposition%**", "Specify Current X Position for Y Position", false)]
+        [PropertyDetailSampleUsage("**%kwd_current_window_yposition%**", "Specify Current Y Position for Y Position", false)]
+        [Remarks("This number is the pixel location on screen. Maximum value should be the maximum value allowed by your resolution. For 1920x1080, the valid range could be 0-1080")]
+        [PropertyValidationRule("Y Position", PropertyValidationRule.ValidationRuleFlags.Empty)]
+        [PropertyTextBoxSetting(1, false)]
+        [PropertyAvailableSystemVariable(SystemVariables.LimitedSystemVariableNames.Window_Position)]
+        [PropertyDisplayText(true, "Y Position")]
+        [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateWindowPosition), nameof(ApplicationSettings.EngineSettings.convertToRawWindowPosition))]
+        [PropertyParameterOrder(5000)]
+        public static string v_InputYPosition { get; }
+
         #endregion
 
         #region enum, struct
@@ -237,10 +327,16 @@ namespace taskt.Core.Automation.Commands
             SW_SHOWNORMAL = 1,
         }
 
-        public struct RECT
-        {
-            public int left, top, right, bottom;
-        }
+        ///// <summary>
+        ///// Window Rect
+        ///// </summary>
+        //public struct RECT
+        //{
+        //    public int left;
+        //    public int top;
+        //    public int right;
+        //    public int bottom;
+        //}
 
         public struct WINDOWPLACEMENT
         {
@@ -568,7 +664,7 @@ namespace taskt.Core.Automation.Commands
         {
             if (window == engine.engineSettings.CurrentWindowKeyword)
             {
-                // current window
+                // current window keyword
                 var whnd = GetActiveWindowHandle();
                 var title = GetWindowTitle(whnd);
 
@@ -1264,7 +1360,7 @@ namespace taskt.Core.Automation.Commands
         public static void MatchMethodComboBox_SelectionChangeCommitted(Dictionary<string, Control> controlsList, ComboBox matchMethodComboBox, string indexParameterName)
         {
             string item = matchMethodComboBox.SelectedItem?.ToString().ToLower() ?? "";
-            GeneralPropertyControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
+            FormUIControls.SetVisibleParameterControlGroup(controlsList, indexParameterName, (item == "index"));
         }
 
         #endregion

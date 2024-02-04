@@ -23,6 +23,7 @@ using System.IO;
 using taskt.Core.Automation.Commands;
 using System.Reflection;
 using taskt.Core.Automation.Engine;
+using OpenQA.Selenium.DevTools.V118.Target;
 
 namespace taskt.Core.Script
 {
@@ -363,6 +364,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_74(doc);
             convertTo3_5_1_75(doc);
             convertTo3_5_1_77(doc);
+            convertTo3_5_1_79(doc);
 
             return doc;
         }
@@ -1911,8 +1913,8 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_75(XDocument doc)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
-            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
             ChangeAttributeValue(doc,
@@ -1978,8 +1980,8 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_77(XDocument doc)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword(WindowControls.INTERMEDIATE_CURRENT_WINDOW_KEYWORD);
-            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Env_ActiveWindowTitle.VariableName);
+            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
             ChangeAttributeValue(doc,
@@ -2121,6 +2123,66 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_SearchMethod", "v_CompareMethod"
+            );
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_79(XDocument doc)
+        {
+            // change v_XPosition, v_YPosition keyword
+            var oldPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_position%");
+            var newPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentPosition.VariableName);
+
+            var oldXPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_xposition%");
+            var newXPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentXPosition.VariableName);
+
+            var oldYPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_yposition%");
+            var newYPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentYPosition.VariableName);
+
+            var changeAction = new Action<XAttribute>(attr =>
+            {
+                var v = attr.Value;
+                if (v == oldPosition)
+                {
+                    attr.SetValue(newPosition);
+                }
+                else if (v == oldXPosition)
+                {
+                    attr.SetValue(newXPosition);
+                }
+                else if (v == oldYPosition)
+                {
+                    attr.SetValue(newYPosition);
+                }
+            });
+
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "MoveWindowCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_XPosition", changeAction
+            );
+
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "MoveWindowCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_YPosition", changeAction
             );
 
             return doc;
