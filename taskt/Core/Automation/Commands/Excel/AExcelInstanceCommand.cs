@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for commands that using Excel instance
     /// </summary>
-    public abstract class AExcelInstanceCommand : IExcelInstanceProperties
+    public abstract class AExcelInstanceCommand : ScriptCommand, IExcelInstanceProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
