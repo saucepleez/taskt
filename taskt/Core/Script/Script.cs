@@ -23,7 +23,6 @@ using System.IO;
 using taskt.Core.Automation.Commands;
 using System.Reflection;
 using taskt.Core.Automation.Engine;
-using OpenQA.Selenium.DevTools.V118.Target;
 
 namespace taskt.Core.Script
 {
