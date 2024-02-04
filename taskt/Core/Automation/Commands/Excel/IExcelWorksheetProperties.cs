@@ -1,6 +1,9 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
-    public interface IExcelSheetProperties : IExcelInstanceProperties
+    /// <summary>
+    /// excel worksheet properties
+    /// </summary>
+    public interface IExcelWorksheetProperties : IExcelInstanceProperties
     {
         /// <summary>
         /// excel worksheet name

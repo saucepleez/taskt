@@ -316,7 +316,7 @@
     <Compile Include="Core\Automation\Commands\Excel\AExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelInstanceProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\IExcelSheetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetProperties.cs" />
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
     <Compile Include="Core\Automation\Commands\Math\AMathValueResultCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
