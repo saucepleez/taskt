@@ -45,6 +45,7 @@ namespace taskt.Core.Automation.Commands
 
             this.v_InstanceName = "";
         }
+
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var splittext = v_TextToSet.Split(',');
@@ -82,6 +83,7 @@ namespace taskt.Core.Automation.Commands
                 i++;
             }
         }
+
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
@@ -99,6 +101,7 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Append Row '" +v_TextToSet+ " to last row of workboook with Instance Name: '" + v_InstanceName + "']";
