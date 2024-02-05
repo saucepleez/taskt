@@ -40,9 +40,26 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (_, var sht) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(v_SheetName, engine, true);
+            //(_, var sht) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(v_SheetName, engine, true);
 
-            (sht != null).StoreInUserVariable(engine, v_applyToVariable);
+            //(sht != null).StoreInUserVariable(engine, v_applyToVariable);
+            try
+            {
+                this.ExpandValueOrVariableAsExcelInstanceAndWorksheet(engine);
+                true.StoreInUserVariable(engine, v_applyToVariable);
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+                if (msg.StartsWith("Worksheet '") && msg.EndsWith("' does not exists."))
+                {
+                    false.StoreInUserVariable(engine, v_applyToVariable);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
         }
     }
 }
