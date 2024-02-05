@@ -44,7 +44,8 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             var ifWorkbookExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorkbookExists), engine);
 
@@ -53,7 +54,7 @@ namespace taskt.Core.Automation.Commands
                 switch (ifWorkbookExists)
                 {
                     case "error":
-                        throw new Exception("Excel Instance '" + v_InstanceName + "' has Workbook.");
+                        throw new Exception($"Excel Instance '{v_InstanceName}' has Workbooks.");
 
                     case "ignore":
                         break;
