@@ -138,7 +138,7 @@ namespace taskt.Core.Automation.Commands
                 }
                 catch
                 {
-                    throw new Exception($"Worksheet '{expandSheetName}' does not exsits.");
+                    throw new Exception($"Worksheet '{expandSheetName}' does not exists.");
                 }
             }
         }
