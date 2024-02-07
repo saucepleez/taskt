@@ -364,6 +364,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_75(doc);
             convertTo3_5_1_77(doc);
             convertTo3_5_1_79(doc);
+            convertTo3_5_1_80(doc);
 
             return doc;
         }
@@ -2183,6 +2184,19 @@ namespace taskt.Core.Script
                     }
                 }), "v_YPosition", changeAction
             );
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_80(XDocument doc)
+        {
+            // Copy Worksheet
+            ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_newSheetName", "v_NewSheetName");
+
+            // Rename Worksheet
+            ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_newName", "v_NewSheetName");
 
             return doc;
         }

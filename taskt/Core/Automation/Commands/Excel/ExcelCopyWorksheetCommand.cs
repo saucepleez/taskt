@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Sheet Name to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Sheet Name to Copy")]
         [PropertyParameterOrder(6000)]
-        public string v_sourceSheet { get; set; }
+        public string v_TargetSheetName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true)]
         [PropertyIntermediateConvert("", "")]
         [PropertyParameterOrder(7000)]
-        public string v_newSheetName { get; set; }
+        public string v_NewSheetName { get; set; }
 
         public ExcelCopyWorksheetCommand()
         {
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
-            var newName = v_newSheetName.ExpandValueOrUserVariable(engine);
+            var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
             if (!string.IsNullOrEmpty(newName))
             {
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;

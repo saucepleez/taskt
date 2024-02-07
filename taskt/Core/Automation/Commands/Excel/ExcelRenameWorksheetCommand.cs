@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Target Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Target Sheet")]
         [PropertyParameterOrder(6000)]
-        public string v_sourceSheet { get; set; }
+        public string v_TargetSheetName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "New Sheet")]
         [PropertyIntermediateConvert("", "")]
         [PropertyParameterOrder(6001)]
-        public string v_newName { get; set; }
+        public string v_NewSheetName { get; set; }
 
         public ExcelRenameWorksheetCommand()
         {
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
         {
             (_, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var newName = v_newName.ExpandValueOrUserVariable(engine);
+            var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
 
             targetSheet.Name = newName;
         }
