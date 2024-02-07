@@ -740,7 +740,7 @@
     <Compile Include="Core\Automation\Commands\DatabaseRunQueryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Data\DateCalculationCommand.cs" />
     <Compile Include="Core\Automation\Commands\Loop\EndLoopCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelActivateSheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ExcelActivateWorksheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorkbookCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCloseExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateExcelInstanceCommand.cs" />

@@ -2198,6 +2198,9 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
             ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_newName", "v_NewSheetName");
 
+            // Activate Sheet -> Activate Worksheet
+            ChangeCommandName(doc, "ExcelActivateSheetCommand", "ExcelActivateWorksheetCommand", "Activate Worksheet");
+
             return doc;
         }
 
