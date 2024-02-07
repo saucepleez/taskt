@@ -29,15 +29,15 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyDescription("Search Method")]
         [InputSpecification("", true)]
-        [SampleUsage("**Contains** or **Start with** or **End with**")]
+        [SampleUsage("**Contains** or **Starts with** or **Ends with**")]
         [Remarks("")]
         [PropertyUISelectionOption("Contains")]
-        [PropertyUISelectionOption("Start with")]
-        [PropertyUISelectionOption("End with")]
+        [PropertyUISelectionOption("Starts with")]
+        [PropertyUISelectionOption("Ends with")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsOptional(true, "Contains")]
         [PropertyParameterOrder(7000)]
-        public string v_SearchMethod { get; set; }
+        public string v_CompareMethod { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
 
             var targetSheetName = v_SheetName.ExpandValueOrUserVariable(engine);
             
-            if (String.IsNullOrEmpty(targetSheetName))
+            if (string.IsNullOrEmpty(targetSheetName))
             {
                 foreach (Microsoft.Office.Interop.Excel.Worksheet sh in excelInstance.Worksheets)
                 {
@@ -71,17 +71,17 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_SearchMethod), "Search Method", engine);
+                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CompareMethod), "Search Method", engine);
 
                 switch (searchMethod)
                 {
                     case "contains":
                         func = (sht, search) => { return sht.Contains(search); };
                         break;
-                    case "start with":
+                    case "starts with":
                         func = (sht, search) => { return sht.StartsWith(search); };
                         break;
-                    case "end with":
+                    case "ends with":
                         func = (sht, search) => { return sht.EndsWith(search); };
                         break;
                 }

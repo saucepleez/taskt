@@ -2201,6 +2201,25 @@ namespace taskt.Core.Script
             // Activate Sheet -> Activate Worksheet
             ChangeCommandName(doc, "ExcelActivateSheetCommand", "ExcelActivateWorksheetCommand", "Activate Worksheet");
 
+            // ExcelGetWorksheetsCommand  v_SearchMethod -> v_CompareMethod
+            ChangeAttributeName(doc, "ExcelGetWorksheetsCommand", "v_SearchMethod", "v_CompareMethod");
+            // change v_CompareMethod value
+            ChangeAttributeValue(doc, "ExcelGetWorksheetsCommand", "v_CompareMethod",
+                new Action<XAttribute>(attr =>
+                {
+                    var v = attr.Value.ToLower();
+                    switch (v)
+                    {
+                        case "start with":
+                            attr.SetValue("Starts with");
+                            break;
+                        case "end with":
+                            attr.SetValue("Ends with");
+                            break;
+                    }
+                })
+            );
+
             return doc;
         }
 
