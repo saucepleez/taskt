@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelRenameWorksheetCommand : AExcelInstanceCommand
+    public class ExcelRenameWorksheetCommand : AExcelInstanceCommand, IExcelWorksheetCopyRenameProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Target Worksheet Name to Rename")]
         [PropertyValidationRule("Target Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Target Sheet")]
+        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Excel_Worksheet)]
         [PropertyParameterOrder(6000)]
         public string v_TargetSheetName { get; set; }
 
@@ -47,8 +48,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (_, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
 
+            // TODO: check sheet name is valid
             var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
 
             targetSheet.Name = newName;

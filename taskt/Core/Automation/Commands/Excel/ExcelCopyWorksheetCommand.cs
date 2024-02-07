@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCopyWorksheetCommand : AExcelInstanceCommand
+    public class ExcelCopyWorksheetCommand : AExcelInstanceCommand, IExcelWorksheetCopyRenameProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -25,6 +25,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Sheet Name to Copy")]
         [PropertyValidationRule("Sheet Name to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Sheet Name to Copy")]
+        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Excel_Worksheet)]
         [PropertyParameterOrder(6000)]
         public string v_TargetSheetName { get; set; }
 
@@ -47,10 +48,12 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(var excelInstance, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
+            // TODO: check sheet name is valid
             var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
             if (!string.IsNullOrEmpty(newName))
             {
