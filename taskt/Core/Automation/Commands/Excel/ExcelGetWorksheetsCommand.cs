@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.SubGruop("Worksheet")]
     [Attributes.ClassAttributes.CommandSettings("Get Worksheets")]
     [Attributes.ClassAttributes.Description("This command allows you to get a specific worksheet names")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to switch to a specific worksheet")]
