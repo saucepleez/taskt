@@ -146,11 +146,12 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// Expand value or variable as Worksheet Name
         /// </summary>
+        /// <param name="command">not used</param>
         /// <param name="sheet"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string ExpandValueOrVariableAsExcelWorksheetName(this string sheet, AutomationEngineInstance engine)
+        public static string ExpandValueOrVariableAsExcelWorksheetName(this IExcelInstanceProperties command, string sheet, AutomationEngineInstance engine)
         {
             var newSheet = sheet.ExpandValueOrUserVariable(engine);
 

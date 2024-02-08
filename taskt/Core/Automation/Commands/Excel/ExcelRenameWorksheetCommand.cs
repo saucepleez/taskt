@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
             (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
 
             //var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
-            var newName = v_NewSheetName.ExpandValueOrVariableAsExcelWorksheetName(engine);
+            var newName = this.ExpandValueOrVariableAsExcelWorksheetName(v_NewSheetName, engine);
 
             if (targetSheet.Name != newName)
             {

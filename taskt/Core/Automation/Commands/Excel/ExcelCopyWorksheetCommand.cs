@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
 
             try
             {
-                var newName = v_NewSheetName.ExpandValueOrVariableAsExcelWorksheetName(engine);
+                var newName = this.ExpandValueOrVariableAsExcelWorksheetName(v_NewSheetName, engine);
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
             }
             catch (Exception ex)
