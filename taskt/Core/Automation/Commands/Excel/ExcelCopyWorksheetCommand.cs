@@ -34,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("New Sheet Name")]
         [PropertyDisplayText(true, "New Sheet Name")]
         [PropertyIsOptional(true)]
+        [PropertyValidationRule("New Sheet Name", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyIntermediateConvert("", "")]
         [PropertyParameterOrder(7000)]
         public string v_NewSheetName { get; set; }
@@ -53,12 +54,24 @@ namespace taskt.Core.Automation.Commands
 
             targetSheet.Copy(Before: excelInstance.Worksheets[1]);
 
-            // TODO: check sheet name is valid
-            var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
-            if (!string.IsNullOrEmpty(newName))
+            try
             {
+                var newName = v_NewSheetName.ExpandValueOrVariableAsExcelWorksheetName(engine);
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
             }
+            catch (Exception ex)
+            {
+                if (ex.Message != "Worksheet name is Empty.")
+                {
+                    throw ex;
+                }
+            }
+
+            //var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
+            //if (!string.IsNullOrEmpty(newName))
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = newName;
+            //}
         }
     }
 }
