@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class ExcelControls
     {
-        #region const
+        #region const, field
         /// <summary>
         /// internal current worksheet keyword
         /// </summary>
@@ -23,6 +23,22 @@ namespace taskt.Core.Automation.Commands
         /// internal previous worksheet keyword
         /// </summary>
         public const string INTERNAL_EXCEL_PREVIOUS_WORKSHEET_KEYWORD = "%kwd_excel_previous_worksheet%";
+
+        /// <summary>
+        /// disallow contains worksheet charactors
+        /// </summary>
+        public static readonly List<string> Disallow_Contains_Worksheet_Charactors = new List<string>()
+        {
+            "/", "\\", "?", "*",
+            ":", "[", "]",
+        };
+        /// <summary>
+        /// disallow starts/ends worksheet charactors
+        /// </summary>
+        public static readonly List<string> Disallow_Starts_Ends_Worksheet_Charactors = new List<string>()
+        {
+            "'",
+        };
         #endregion
 
         #region virtual property
