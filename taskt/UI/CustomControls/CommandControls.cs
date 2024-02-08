@@ -1636,6 +1636,11 @@ namespace taskt.UI.CustomControls
                         systemVariables.Add(Window_CurrentWidth.VariableName);
                         systemVariables.Add(Window_CurrentHeight.VariableName);
                         break;
+                    case LimitedSystemVariableNames.Excel_Worksheet:
+                        systemVariables.Add(Excel_CurrentWorkSheet.VariableName);
+                        systemVariables.Add(Excel_NextWorkSheet.VariableName);
+                        systemVariables.Add(Excel_PreviousWorkSheet.VariableName);
+                        break;
                 }
             }
 
