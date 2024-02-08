@@ -142,5 +142,43 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
+
+        /// <summary>
+        /// Expand value or variable as Worksheet Name
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string ExpandValueOrVariableAsExcelWorksheetName(this string sheet, AutomationEngineInstance engine)
+        {
+            var newSheet = sheet.ExpandValueOrUserVariable(engine);
+
+            if (string.IsNullOrEmpty(newSheet))
+            {
+                throw new Exception("Worksheet name is Empty.");
+            }
+            else if (newSheet.Length >= 31)
+            {
+                throw new Exception($"Worksheet name is too long. Must be less than 31 characters.");
+            }
+
+            foreach(var s in ExcelControls.Disallow_Contains_Worksheet_Charactors)
+            {
+                if (newSheet.Contains(s))
+                {
+                    throw new Exception($"Worksheet name contains invalid character '{s}'. Worksheet: '{newSheet}'");
+                }
+            }
+            foreach(var s in ExcelControls.Disallow_Starts_Ends_Worksheet_Charactors)
+            {
+                if (newSheet.StartsWith(s) || newSheet.EndsWith(s))
+                {
+                    throw new Exception($"Worksheet name starts or ends with a character that is invalid '{s}'. Worksheet: '{newSheet}'");
+                }
+            }
+
+            return newSheet;
+        }
     }
 }
