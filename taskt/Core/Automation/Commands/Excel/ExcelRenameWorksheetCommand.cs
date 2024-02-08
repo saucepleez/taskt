@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -49,12 +50,31 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //(_, var targetSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-            (_, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
+            (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(engine);
 
-            // TODO: check sheet name is valid
-            var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
+            //var newName = v_NewSheetName.ExpandValueOrUserVariable(engine);
+            var newName = v_NewSheetName.ExpandValueOrVariableAsExcelWorksheetName(engine);
 
-            targetSheet.Name = newName;
+            if (targetSheet.Name != newName)
+            {
+                bool isExists = false;
+                foreach(Worksheet sht in excelInstance.Worksheets)
+                {
+                    if (sht.Name == newName)
+                    {
+                        isExists = true;
+                        break;
+                    }
+                }
+                if (!isExists)
+                {
+                    targetSheet.Name = newName;
+                }
+                else
+                {
+                    throw new Exception($"Worksheet Name '{newName}' is already exists.");
+                }
+            }
         }
     }
 }
