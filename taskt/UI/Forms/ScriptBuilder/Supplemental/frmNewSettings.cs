@@ -349,7 +349,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createTextBox("txtRemoveOldAutoSaveScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveAutoSaveFileDays), false);
             createLabel("lblRemoveOldAutoSaveScriptFile2", " days old", FontSize.Normal, true);
 
-            var showAutoSave = createButton("btnShowAutoSaveFolder", "Show AutoSave Folder", 250, true);
+            var showAutoSave = createButton("btnShowAutoSaveFolder", "Show 'AutoSave' Folder", 250, true);
             showAutoSave.Click += btnShowAutoSaveFolder_Click;
 
             createLabel("lblRunWithoutSavingTitle", "Run Without Saving Script File", FontSize.NormalBold, true);
@@ -357,7 +357,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createTextBox("txtRemoveOldRunwoSavingScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveRunWithtoutSavingFileDays), false);
             createLabel("lblRemoveOldRunwoSavingScriptFile2", " days old", FontSize.Normal, true);
 
-            var showRunWithout = createButton("btnShowRunWithoutFolder", "Show RunWithoutSaving Folder", 250, true);
+            var showRunWithout = createButton("btnShowRunWithoutFolder", "Show 'RunWithoutSaving' Folder", 250, true);
             showRunWithout.Click += btnShowRunWithoutSavingFolder_Click;
         }
         private void showApplicationSettingsFile()
