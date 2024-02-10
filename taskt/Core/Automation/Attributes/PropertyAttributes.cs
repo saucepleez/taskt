@@ -284,6 +284,21 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
 
+    [AttributeUsage(AttributeTargets.Property)]
+    public class PropertyAvailableSystemVariableBehavior : Attribute
+    {
+        public MultiAttributesBehavior behavior = MultiAttributesBehavior.Merge;
+        
+        public PropertyAvailableSystemVariableBehavior()
+        {
+
+        }
+        public PropertyAvailableSystemVariableBehavior(MultiAttributesBehavior behavior)
+        {
+            this.behavior = behavior;
+        }
+    }
+
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class PropertyAvailableSystemVariable : Attribute
     {

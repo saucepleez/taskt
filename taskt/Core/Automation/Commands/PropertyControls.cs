@@ -155,6 +155,9 @@ namespace taskt.Core.Automation.Commands
                 case nameof(PropertyUISelectionOption):
                     behavior = GetCustomAttributeWithVirtual<PropertyUISelectionOptionBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
                     break;
+                case nameof(PropertyAvailableSystemVariable):
+                    behavior = GetCustomAttributeWithVirtual<PropertyAvailableSystemVariableBehavior>(propInfo, virtualPropInfo)?.behavior ?? MultiAttributesBehavior.Merge;
+                    break;
             }
 
             if (behavior == MultiAttributesBehavior.Merge)
