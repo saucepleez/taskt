@@ -61,13 +61,13 @@ namespace taskt.Core.Automation.Commands
         public static string v_InputInstanceName { get; }
 
         /// <summary>
-        /// sheet name property
+        /// worksheet name property
         /// </summary>
-        [PropertyDescription("Sheet Name")]
-        [InputSpecification("Sheet Name", true)]
-        [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Sheet Name")]
-        [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Sheet Name")]
-        [PropertyDetailSampleUsage("**%kwd_current_worksheet%**", "Specify Current Sheet Name")]
+        [PropertyDescription("Worksheet Name")]
+        [InputSpecification("Worksheet Name", true)]
+        [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Worksheet Name")]
+        [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Worksheet Name")]
+        [PropertyDetailSampleUsage("**%kwd_excel_current_worksheet%**", "Specify Current Worksheet Name")]
         [Remarks("")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]

@@ -1309,7 +1309,8 @@ namespace taskt.UI.CustomControls
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentYPosition.VariableName, setting))
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentSize.VariableName, setting))
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWidth.VariableName, setting))
-                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentHeight.VariableName, setting));
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentHeight.VariableName, setting))
+                        .Replace(ExcelControls.INTERNAL_EXCEL_CURRENT_WORKSHEET_KEYWORD, VariableNameControls.GetWrappedVariableName(Excel_CurrentWorkSheet.VariableName, setting));
             var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
 
             if (planeText)
