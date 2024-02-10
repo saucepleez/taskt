@@ -365,6 +365,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_77(doc);
             convertTo3_5_1_79(doc);
             convertTo3_5_1_80(doc);
+            convertTo3_5_1_81(doc);
 
             return doc;
         }
@@ -2218,6 +2219,54 @@ namespace taskt.Core.Script
                             break;
                     }
                 })
+            );
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_81(XDocument doc)
+        {
+            var oldCurrent = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_worksheet%");
+            var newCurrent = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_CurrentWorkSheet.VariableName);
+
+            var oldNext = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_next_worksheet%");
+            var newNext = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_NextWorkSheet.VariableName);
+
+            var oldPrevious = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_previous_worksheet%");
+            var newPrevious = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_PreviousWorkSheet.VariableName);
+
+            var changeAction = new Action<XAttribute>(attr =>
+            {
+                var v = attr.Value;
+                if (v == oldCurrent)
+                {
+                    attr.SetValue(newCurrent);
+                }
+                else if (v == oldNext)
+                {
+                    attr.SetValue(newNext);
+                }
+                else if (v == oldPrevious)
+                {
+                    attr.SetValue(newPrevious);
+                }
+            });
+
+            // ExcelActivateWorksheetCommand
+            ChangeAttributeValue(doc, "ExcelActivateWorksheetCommand", "v_SheetName", changeAction);
+
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ExcelCopyWorksheetCommand":
+                        case "ExcelRenameWorksheetCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_TargetSheetName", changeAction
             );
 
             return doc;
