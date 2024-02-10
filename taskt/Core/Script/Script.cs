@@ -23,7 +23,6 @@ using System.IO;
 using taskt.Core.Automation.Commands;
 using System.Reflection;
 using taskt.Core.Automation.Engine;
-using OpenQA.Selenium.DevTools.V118.Target;
 
 namespace taskt.Core.Script
 {
@@ -365,6 +364,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_75(doc);
             convertTo3_5_1_77(doc);
             convertTo3_5_1_79(doc);
+            convertTo3_5_1_80(doc);
 
             return doc;
         }
@@ -2183,6 +2183,41 @@ namespace taskt.Core.Script
                             return false;
                     }
                 }), "v_YPosition", changeAction
+            );
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_80(XDocument doc)
+        {
+            // Copy Worksheet
+            ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_newSheetName", "v_NewSheetName");
+
+            // Rename Worksheet
+            ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_newName", "v_NewSheetName");
+
+            // Activate Sheet -> Activate Worksheet
+            ChangeCommandName(doc, "ExcelActivateSheetCommand", "ExcelActivateWorksheetCommand", "Activate Worksheet");
+
+            // ExcelGetWorksheetsCommand  v_SearchMethod -> v_CompareMethod
+            ChangeAttributeName(doc, "ExcelGetWorksheetsCommand", "v_SearchMethod", "v_CompareMethod");
+            // change v_CompareMethod value
+            ChangeAttributeValue(doc, "ExcelGetWorksheetsCommand", "v_CompareMethod",
+                new Action<XAttribute>(attr =>
+                {
+                    var v = attr.Value.ToLower();
+                    switch (v)
+                    {
+                        case "start with":
+                            attr.SetValue("Starts with");
+                            break;
+                        case "end with":
+                            attr.SetValue("Ends with");
+                            break;
+                    }
+                })
             );
 
             return doc;

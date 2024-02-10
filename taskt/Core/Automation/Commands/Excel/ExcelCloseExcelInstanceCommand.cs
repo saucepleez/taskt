@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCloseExcelInstanceCommand : ScriptCommand
+    public class ExcelCloseExcelInstanceCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("If the Workbook should be Saved")]
@@ -30,6 +30,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**False**", "Whether the Workbook needs to be Saved or not, Close it without saving")]
         [PropertyIsOptional(true, "False")]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyParameterOrder(6000)]
         public string v_ExcelSaveOnExit { get; set; }
 
         public ExcelCloseExcelInstanceCommand()

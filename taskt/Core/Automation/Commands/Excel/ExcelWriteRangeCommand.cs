@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -30,6 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please Enter the Datatable Variable Name to Set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -37,6 +37,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("Hello World or {vText}")]
         [Remarks("")]
         public string v_DataTableToSet { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please Enter the Cell Location to start from (ex. A1 or B2)")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -63,6 +64,7 @@ namespace taskt.Core.Automation.Commands
             this.v_InstanceName = "";
             this.v_AddHeaders = "Yes";
         }
+
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
@@ -143,6 +145,7 @@ namespace taskt.Core.Automation.Commands
 
             return requiredVariable;
         }
+
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
@@ -163,6 +166,7 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Writing Cells starting from '" + v_ExcelCellAddress + "', Instance Name: '" + v_InstanceName + "']";

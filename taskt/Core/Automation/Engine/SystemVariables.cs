@@ -91,6 +91,7 @@ namespace taskt.Core.Automation.Engine
         /// specify current window y position
         /// </summary>
         public static readonly ScriptVariable Window_CurrentYPosition = new ScriptVariable { VariableName = "Window.CurrentYPosition", VariableValue = "" };
+        
         /// <summary>
         /// specify current window size
         /// </summary>
@@ -103,6 +104,19 @@ namespace taskt.Core.Automation.Engine
         /// specify current window height size
         /// </summary>
         public static readonly ScriptVariable Window_CurrentHeight = new ScriptVariable { VariableName = "Window.CurrentHeight", VariableValue = "" };
+        
+        /// <summary>
+        /// specify current worksheet
+        /// </summary>
+        public static readonly ScriptVariable Excel_CurrentWorkSheet = new ScriptVariable { VariableName = "Excel.CurrentWorksheet", VariableValue = "" };
+        /// <summary>
+        /// specify next worksheet
+        /// </summary>
+        public static readonly ScriptVariable Excel_NextWorkSheet = new ScriptVariable { VariableName = "Excel.NextWorksheet", VariableValue = "" };
+        /// <summary>
+        /// specify previous worksheet
+        /// </summary>
+        public static readonly ScriptVariable Excel_PreviousWorkSheet = new ScriptVariable { VariableName = "Excel.PreviousWorksheet", VariableValue = "" };
         #endregion
 
         #region Enum
@@ -114,6 +128,7 @@ namespace taskt.Core.Automation.Engine
             Window_AllWindows,
             Window_Position,
             Window_Size,
+            Excel_Worksheet,
         };
 
         #endregion

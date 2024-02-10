@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Linq;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -28,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_InstanceName { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please Enter text to set")]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -45,6 +45,7 @@ namespace taskt.Core.Automation.Commands
 
             this.v_InstanceName = "";
         }
+
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
@@ -59,6 +60,7 @@ namespace taskt.Core.Automation.Commands
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
             excelSheet.Range[targetAddress].Value = targetText;
         }
+
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
@@ -77,6 +79,7 @@ namespace taskt.Core.Automation.Commands
 
             return RenderedControls;
         }
+
         public override string GetDisplayValue()
         {
             return base.GetDisplayValue() + " [Append last cell to: " + v_TextToSet + ", Instance Name: '" + v_InstanceName + "']";

@@ -15,30 +15,35 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelSetRowValuesFromDataTableCommand : ScriptCommand
+    public class ExcelSetRowValuesFromDataTableCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
+        [PropertyParameterOrder(6000)]
         public string v_ExcelRowIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
+        [PropertyParameterOrder(6001)]
         public string v_ColumnType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
+        [PropertyParameterOrder(6002)]
         public string v_ColumnStart { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
+        [PropertyParameterOrder(6003)]
         public string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
+        [PropertyParameterOrder(6004)]
         public string v_DataTableVariable { get; set; }
 
         [XmlAttribute]
@@ -51,15 +56,18 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vRow}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Row Index")]
         [PropertyValidationRule("DataTable Row Index", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "DataTable Row")]
+        [PropertyParameterOrder(6005)]
         public string v_DataTableRowIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
+        [PropertyParameterOrder(6006)]
         public string v_ValueType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
         [PropertyDescription("When DataTable Items Not Enough")]
+        [PropertyParameterOrder(6007)]
         public string v_IfDataTableNotEnough { get; set; }
 
         public ExcelSetRowValuesFromDataTableCommand()

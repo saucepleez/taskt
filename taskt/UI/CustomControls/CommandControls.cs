@@ -1309,7 +1309,8 @@ namespace taskt.UI.CustomControls
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_Y_POSITION_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentYPosition.VariableName, setting))
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_SIZE_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentSize.VariableName, setting))
                         .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_WIDTH_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentWidth.VariableName, setting))
-                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentHeight.VariableName, setting));
+                        .Replace(WindowControls.INTERNAL_CURRENT_WINDOW_HEIGHT_KEYWORD, VariableNameControls.GetWrappedVariableName(Window_CurrentHeight.VariableName, setting))
+                        .Replace(ExcelControls.INTERNAL_EXCEL_CURRENT_WORKSHEET_KEYWORD, VariableNameControls.GetWrappedVariableName(Excel_CurrentWorkSheet.VariableName, setting));
             var replacedSample = setting.replaceApplicationKeyword(Markdig.Markdown.ToPlainText(sample).Trim());
 
             if (planeText)
@@ -1396,46 +1397,7 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        ///// <summary>
-        ///// get Window Names list
-        ///// </summary>
-        ///// <param name="editor"></param>
-        ///// <param name="addCurrentWindow"></param>
-        ///// <param name="addAllWindows"></param>
-        ///// <param name="addDesktop"></param>
-        ///// <returns></returns>
-        //public static List<string> GetWindowNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        //{
-        //    var lst = new List<string>();
-
-        //    if (addCurrentWindow)
-        //    {
-        //        lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
-        //    }
-
-        //    if (addAllWindows)
-        //    {
-        //        lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
-        //    }
-        //    if (addDesktop)
-        //    {
-        //        lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
-        //    }
-        //    lst.AddRange(WindowNameControls.GetAllWindowTitles());
-
-        //    return lst;
-        //}
-
         #region create ComboBox items list
-        ///// <summary>
-        ///// get variable names list
-        ///// </summary>
-        ///// <param name="editor"></param>
-        ///// <returns></returns>
-        //public static List<string> GetVariableNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        //{
-        //    return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
-        //}
 
         /// <summary>
         /// get instance names list
@@ -1635,6 +1597,11 @@ namespace taskt.UI.CustomControls
                         systemVariables.Add(Window_CurrentSize.VariableName);
                         systemVariables.Add(Window_CurrentWidth.VariableName);
                         systemVariables.Add(Window_CurrentHeight.VariableName);
+                        break;
+                    case LimitedSystemVariableNames.Excel_Worksheet:
+                        systemVariables.Add(Excel_CurrentWorkSheet.VariableName);
+                        systemVariables.Add(Excel_NextWorkSheet.VariableName);
+                        systemVariables.Add(Excel_PreviousWorkSheet.VariableName);
                         break;
                 }
             }

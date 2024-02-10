@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
 {
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
-    [Attributes.ClassAttributes.SubGruop("Sheet")]
+    [Attributes.ClassAttributes.SubGruop("Worksheet")]
     [Attributes.ClassAttributes.CommandSettings("Add Worksheet")]
     [Attributes.ClassAttributes.Description("This command adds a new Excel Worksheet.")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to add a new worksheet to an Excel Instance")]
@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelAddWorksheetCommand : ScriptCommand
+    public class ExcelAddWorksheetCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
@@ -26,6 +26,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
         [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Sheet Name")]
         [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Sheet Name")]
+        [PropertyParameterOrder(6000)]
         public string v_NewSheetName { get; set; }
 
         public ExcelAddWorksheetCommand()
@@ -35,13 +36,14 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
         }
+
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             excelInstance.Worksheets.Add();
 
             var sheetName = v_NewSheetName.ExpandValueOrUserVariable(engine);
-            if (!String.IsNullOrEmpty(sheetName))
+            if (!string.IsNullOrEmpty(sheetName))
             {
                 ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
             }

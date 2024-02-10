@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
-using OpenQA.Selenium.Internal;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -11,6 +10,37 @@ namespace taskt.Core.Automation.Commands
     /// </summary>
     internal static class ExcelControls
     {
+        #region const, field
+        /// <summary>
+        /// internal current worksheet keyword
+        /// </summary>
+        public const string INTERNAL_EXCEL_CURRENT_WORKSHEET_KEYWORD = "%kwd_excel_current_worksheet%";
+        /// <summary>
+        /// internal next worksheet keyword
+        /// </summary>
+        public const string INTERNAL_EXCEL_NEXT_WORKSHEET_KEYWORD = "%kwd_excel_next_worksheet%";
+        /// <summary>
+        /// internal previous worksheet keyword
+        /// </summary>
+        public const string INTERNAL_EXCEL_PREVIOUS_WORKSHEET_KEYWORD = "%kwd_excel_previous_worksheet%";
+
+        /// <summary>
+        /// disallow contains worksheet charactors
+        /// </summary>
+        public static readonly List<string> Disallow_Contains_Worksheet_Charactors = new List<string>()
+        {
+            "/", "\\", "?", "*",
+            ":", "[", "]",
+        };
+        /// <summary>
+        /// disallow starts/ends worksheet charactors
+        /// </summary>
+        public static readonly List<string> Disallow_Starts_Ends_Worksheet_Charactors = new List<string>()
+        {
+            "'",
+        };
+        #endregion
+
         #region virtual property
         /// <summary>
         /// excel instance property
@@ -31,18 +61,19 @@ namespace taskt.Core.Automation.Commands
         public static string v_InputInstanceName { get; }
 
         /// <summary>
-        /// sheet name property
+        /// worksheet name property
         /// </summary>
-        [PropertyDescription("Sheet Name")]
-        [InputSpecification("Sheet Name", true)]
-        [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Sheet Name")]
-        [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Sheet Name")]
-        [PropertyDetailSampleUsage("**%kwd_current_worksheet%**", "Specify Current Sheet Name")]
+        [PropertyDescription("Worksheet Name")]
+        [InputSpecification("Worksheet Name", true)]
+        [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Worksheet Name")]
+        [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Worksheet Name")]
+        [PropertyDetailSampleUsage("**%kwd_excel_current_worksheet%**", "Specify Current Worksheet Name")]
         [Remarks("")]
         [PropertyTextBoxSetting(1, false)]
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyValidationRule("Sheet", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Sheet")]
+        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.Excel_Worksheet)]
         [PropertyIntermediateConvert(nameof(ApplicationSettings.EngineSettings.convertToIntermediateExcelSheet), nameof(ApplicationSettings.EngineSettings.convertToRawExcelSheet))]
         [PropertyParameterOrder(5000)]
         public static string v_SheetName { get; }
@@ -513,25 +544,6 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region Func methods
-        //public static Func<Range, bool> CheckCellValueFunctionFromRange(string valueType)
-        //{
-        //    Func<Range, bool> func = null;
-        //    switch (valueType)
-        //    {
-        //        case "cell":
-        //            func = (rg) => { return !String.IsNullOrEmpty((string)rg.Text); };
-        //            break;
-
-        //        case "formula":
-        //            func = (rg) => { return ((string)rg.Formula).StartsWith("="); };
-        //            break;
-
-        //        case "back color":
-        //            func = (rg) => { return ((long)rg.Interior.Color) != 16777215; };
-        //            break;
-        //    }
-        //    return func;
-        //}
 
         /// <summary>
         /// get CheckCellValueFunction

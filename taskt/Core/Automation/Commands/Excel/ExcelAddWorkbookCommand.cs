@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelAddWorkbookCommand : ScriptCommand
+    public class ExcelAddWorkbookCommand : AExcelInstanceCommand
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("When Workbook Exists")]
@@ -32,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Error")]
         [PropertyUISelectionOption("Add")]
         [PropertyIsOptional(true, "Error")]
+        [PropertyParameterOrder(6000)]
         public string v_IfWorkbookExists { get; set; }
 
         public ExcelAddWorkbookCommand()
@@ -43,7 +44,8 @@ namespace taskt.Core.Automation.Commands
         }
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             var ifWorkbookExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorkbookExists), engine);
 
@@ -52,7 +54,7 @@ namespace taskt.Core.Automation.Commands
                 switch (ifWorkbookExists)
                 {
                     case "error":
-                        throw new Exception("Excel Instance '" + v_InstanceName + "' has Workbook.");
+                        throw new Exception($"Excel Instance '{v_InstanceName}' has Workbooks.");
 
                     case "ignore":
                         break;
