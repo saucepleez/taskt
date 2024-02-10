@@ -410,6 +410,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             createLabel("lblTitle", "Keyword", FontSize.Large, true);
 
+            createLabel("lblAttention", "IMPORTANT", FontSize.NormalBold, true);
+            createLabel("lblAttentionText", "These keywords will eventually be discontinued.\rPlease use system variables from now on.", FontSize.Normal, true);
+
             createLabel("lblWindowKeyword", "Window Keyword", FontSize.NormalBold, true);
 
             createLabel("lblCurrentWindow", "Current Window Keyword", FontSize.Small, true);
