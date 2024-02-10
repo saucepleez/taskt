@@ -1397,46 +1397,7 @@ namespace taskt.UI.CustomControls
             return cbo;
         }
 
-        ///// <summary>
-        ///// get Window Names list
-        ///// </summary>
-        ///// <param name="editor"></param>
-        ///// <param name="addCurrentWindow"></param>
-        ///// <param name="addAllWindows"></param>
-        ///// <param name="addDesktop"></param>
-        ///// <returns></returns>
-        //public static List<string> GetWindowNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor = null, bool addCurrentWindow = true, bool addAllWindows = false, bool addDesktop = false)
-        //{
-        //    var lst = new List<string>();
-
-        //    if (addCurrentWindow)
-        //    {
-        //        lst.Add(editor?.appSettings.EngineSettings.CurrentWindowKeyword ?? "Current Window");
-        //    }
-
-        //    if (addAllWindows)
-        //    {
-        //        lst.Add(editor?.appSettings.EngineSettings.AllWindowsKeyword ?? "All Windows");
-        //    }
-        //    if (addDesktop)
-        //    {
-        //        lst.Add(editor.appSettings.EngineSettings.DesktopKeyword ?? "Desktop");
-        //    }
-        //    lst.AddRange(WindowNameControls.GetAllWindowTitles());
-
-        //    return lst;
-        //}
-
         #region create ComboBox items list
-        ///// <summary>
-        ///// get variable names list
-        ///// </summary>
-        ///// <param name="editor"></param>
-        ///// <returns></returns>
-        //public static List<string> GetVariableNames(Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
-        //{
-        //    return editor?.scriptVariables.Select(v => v.VariableName).ToList() ?? new List<string>();
-        //}
 
         /// <summary>
         /// get instance names list
