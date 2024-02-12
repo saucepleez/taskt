@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// window position properties extention methods
     /// </summary>
-    public static class EM_WindowPositionPropertiesExtentionMethods
+    public static class EM_WindowPositionPropertiesExtensionMethods
     {
         /// <summary>
         /// expand value or variable as Window X Position

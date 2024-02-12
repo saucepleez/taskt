@@ -2,7 +2,7 @@
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class EM_MathValueResultPropertiesExtentionMethods
+    public static class EM_MathValueResultPropertiesExtensionMethods
     {
         /// <summary>
         /// expand value or variable as Value

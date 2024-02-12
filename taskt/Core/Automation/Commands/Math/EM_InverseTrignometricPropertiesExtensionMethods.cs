@@ -2,7 +2,7 @@
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class EM_InverseTrignometricPropertiesExtentionMethods
+    public static class EM_InverseTrignometricPropertiesExtensionMethods
     {
         /// <summary>
         /// Inverse Trignometic Function Action

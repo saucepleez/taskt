@@ -4,7 +4,7 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class ExcelInstancePropertiesExtenstionMethods
+    public static class EM_ExcelInstancePropertiesExtenstionMethods
     {
         /// <summary>
         /// expand value or variable as Excel Instance

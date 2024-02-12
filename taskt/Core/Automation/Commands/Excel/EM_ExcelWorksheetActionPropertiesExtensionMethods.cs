@@ -3,7 +3,7 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class EM_ExcelWorksheetActionPropertiesExtentionMethods
+    public static class EM_ExcelWorksheetActionPropertiesExtensionMethods
     {
         /// <summary>
         /// expand value or variable as worksheet
