@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     /// abstruct command class for Math commands. only Value, Result parameters
     /// </summary>
     [Serializable]
-    public abstract class AMathValueResultCommand : ScriptCommand
+    public abstract class AMathValueResultCommand : ScriptCommand, IMathValueResultProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]

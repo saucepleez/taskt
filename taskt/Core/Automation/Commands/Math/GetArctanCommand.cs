@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
-    public class GetArctanCommand : AMathValueResultCommand, ITrignometricProperties
+    public class GetArctanCommand : ATrignometricCommand
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(NumberControls), nameof(NumberControls.v_Value))]
@@ -24,8 +24,9 @@ namespace taskt.Core.Automation.Commands
         //public string v_Result { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(MathControls), nameof(MathControls.v_AngleType))]
-        public string v_AngleType { get; set; }
+        //[PropertyVirtualProperty(nameof(MathControls), nameof(MathControls.v_AngleType))]
+        [PropertyParameterOrder(7000)]
+        public override string v_AngleType { get; set; }
 
         public GetArctanCommand()
         {
@@ -33,7 +34,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var v = (double)this.ExpandValueOrUserVariableAsDecimal(nameof(v_Value), engine);
+            //var v = (double)this.ExpandValueOrUserVariableAsDecimal(nameof(v_Value), engine);
+            var v = this.ExpandValueOrVariableAsAngleValue(engine);
 
             var r = Math.Atan(v);
             //switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_AngleType), engine))
@@ -45,7 +47,10 @@ namespace taskt.Core.Automation.Commands
             //        (r * 180.0 / Math.PI).StoreInUserVariable(engine, v_Result);
             //        break;
             //}
-            r = MathControls.ConvertAngleValueToRadian(this, r, engine);
+            //r = MathControls.ConvertAngleValueToRadian(this, r, engine);
+
+            r = this.ConvertAngleValueToRadian(r, engine);
+
             r.StoreInUserVariable(engine, v_Result);
         }
     }

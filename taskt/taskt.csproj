@@ -323,7 +323,10 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetCopyRenameProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetProperties.cs" />
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
+    <Compile Include="Core\Automation\Commands\Math\IInverseTrignometricProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Math\InverseTrignometricPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Math\AMathValueResultCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\TrignometricPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\AInverseTrignometricCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetLogarithmCommand.cs" />
@@ -337,7 +340,9 @@
     <Compile Include="Core\Automation\Commands\Math\GetTanCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetCosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSinCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\IMathValueResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\Math\ITrignometricProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Math\MathValueResultPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\ProcessControls.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementPositionCommand.cs" />

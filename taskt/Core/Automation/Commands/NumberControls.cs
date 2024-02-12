@@ -79,6 +79,63 @@ namespace taskt.Core.Automation.Commands
         public static string v_Value { get; }
         #endregion
 
+        ///// <summary>
+        ///// expand value or variable as Integer
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static int ExpandValueOrVariableAsInteger(string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    if (int.TryParse(value.ExpandValueOrUserVariable(engine), out int r))
+        //    {
+        //        return r;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"'{value}' is not Integer (Numerical) value.");
+        //    }
+        //}
+
+        ///// <summary>
+        ///// expand value or variable as Double
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static decimal ExpandValueOrVariableAsDecimal(string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    if (decimal.TryParse(value.ExpandValueOrUserVariable(engine), out decimal r))
+        //    {
+        //        return r;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"'{value}' is not Decimal (Numerical) value.");
+        //    }
+        //}
+
+        ///// <summary>
+        ///// expand value or variable as Decimal
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public static double ExpandValueOrVariableAsDouble(string value, Engine.AutomationEngineInstance engine)
+        //{
+        //    if (double.TryParse(value.ExpandValueOrUserVariable(engine), out double r))
+        //    {
+        //        return r;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"'{value}' is not Double (Numerical) value.");
+        //    }
+        //}
+
         /// <summary>
         /// expand value or user variable as Integer specified by parameterName. This method supports validate, first value. This method may use PropertyValidationRule, PropertyDisplayText, PropertyDescription attributes.
         /// </summary>

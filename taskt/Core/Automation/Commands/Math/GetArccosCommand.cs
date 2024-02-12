@@ -44,8 +44,10 @@ namespace taskt.Core.Automation.Commands
             //        new Func<double, bool>(v => {
             //            return (v >= -1 && v <= 1);
             //        }), engine);
-            var r = MathControls.InverseTrignometicFunctionAction(this, Math.Acos, MathControls.CheckAcosAsinRange, engine);
-            r.StoreInUserVariable(engine, v_Result);
+            //var r = MathControls.InverseTrignometicFunctionAction(this, Math.Acos, MathControls.CheckAcosAsinRange, engine);
+            //r.StoreInUserVariable(engine, v_Result);
+
+            this.InverseTrignometicFunctionAction(Math.Acos, MathControls.CheckAcosAsinRange, engine);
         }
     }
 }
