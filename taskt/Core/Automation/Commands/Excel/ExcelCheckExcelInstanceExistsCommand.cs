@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Excel Instance Exists, Result is **True**")]
         [PropertyParameterOrder(6000)]
-        public string v_applyToVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ExcelCheckExcelInstanceExistsCommand()
         {
@@ -39,11 +39,11 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
-                true.StoreInUserVariable(engine, v_applyToVariableName);
+                true.StoreInUserVariable(engine, v_Result);
             }
             catch
             {
-                false.StoreInUserVariable(engine, v_applyToVariableName);
+                false.StoreInUserVariable(engine, v_Result);
             }
         }
     }

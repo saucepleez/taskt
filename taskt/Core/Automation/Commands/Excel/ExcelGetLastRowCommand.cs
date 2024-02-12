@@ -39,7 +39,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyParameterOrder(6001)]
-        public string v_applyToVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ExcelGetLastRowCommand()
         {
@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
 
             var lastRow = (int)excelSheet.Cells[excelSheet.Rows.Count, columnLetter].End(Microsoft.Office.Interop.Excel.XlDirection.xlUp).Row;
 
-            lastRow.ToString().StoreInUserVariable(engine, v_applyToVariableName);
+            lastRow.ToString().StoreInUserVariable(engine, v_Result);
         }
     }
 }
