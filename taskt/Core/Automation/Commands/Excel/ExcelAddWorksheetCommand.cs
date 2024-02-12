@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Commands.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -14,20 +15,20 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelAddWorksheetCommand : AExcelInstanceCommand
+    public class ExcelAddWorksheetCommand : AExcelSheetCommand
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
         [PropertyDescription("New Worksheet Name")]
         [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
         [PropertyDetailSampleUsage("**mySheet**", PropertyDetailSampleUsage.ValueType.Value, "Worksheet Name")]
         [PropertyDetailSampleUsage("**{{{vSheet}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Worksheet Name")]
-        [PropertyParameterOrder(6000)]
-        public string v_NewSheetName { get; set; }
+        [PropertyAvailableSystemVariableBehavior(MultiAttributesBehavior.Overwrite)]
+        [PropertyAvailableSystemVariable(Engine.SystemVariables.LimitedSystemVariableNames.None)]
+        public override string v_SheetName { get; set; }
 
         public ExcelAddWorksheetCommand()
         {
@@ -39,14 +40,17 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
             excelInstance.Worksheets.Add();
 
-            var sheetName = v_NewSheetName.ExpandValueOrUserVariable(engine);
-            if (!string.IsNullOrEmpty(sheetName))
-            {
-                ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
-            }
+            //var sheetName = v_SheetName.ExpandValueOrUserVariable(engine);
+            var sheetName = this.ExpandValueOrVariableAsExcelWorksheetName(v_SheetName, engine);
+            ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
+            //if (!string.IsNullOrEmpty(sheetName))
+            //{
+            //    ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.ActiveSheet).Name = sheetName;
+            //}
         }
     }
 }

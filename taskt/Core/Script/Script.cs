@@ -2269,6 +2269,9 @@ namespace taskt.Core.Script
                 }), "v_TargetSheetName", changeAction
             );
 
+            // Add Worksheet command v_SheetName
+            ChangeAttributeName(doc, "ExcelAddWorksheetCommand", "v_NewSheetName", "v_SheetName");
+
             return doc;
         }
 
