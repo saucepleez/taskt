@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for IWindowSizeProperties Extension methods
     /// </summary>
-    public static class WindowSizePropertiesExtentionMethods
+    public static class EM_WindowSizePropertiesExtentionMethods
     {
         /// <summary>
         /// expand value or variable as Window Width

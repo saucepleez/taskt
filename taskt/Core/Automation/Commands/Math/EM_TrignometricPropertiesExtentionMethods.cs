@@ -3,7 +3,7 @@ using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
-    public static class TrignometricPropertiesExtentionMethods
+    public static class EM_TrignometricPropertiesExtentionMethods
     {
         /// <summary>
         /// convert angle value to radian

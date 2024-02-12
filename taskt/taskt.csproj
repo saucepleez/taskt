@@ -316,7 +316,7 @@
     <Compile Include="Core\Automation\Commands\Excel\AExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelInstancePropertiesExtenstionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\ExcelWorksheetActionPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\EM_ExcelWorksheetActionPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelWorksheetPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelInstanceProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetActionProperties.cs" />
@@ -324,9 +324,9 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetProperties.cs" />
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
     <Compile Include="Core\Automation\Commands\Math\IInverseTrignometricProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Math\InverseTrignometricPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Math\EM_InverseTrignometricPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Math\AMathValueResultCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Math\TrignometricPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Math\EM_TrignometricPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\AInverseTrignometricCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetLogarithmCommand.cs" />
@@ -342,7 +342,7 @@
     <Compile Include="Core\Automation\Commands\Math\GetSinCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\IMathValueResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\Math\ITrignometricProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Math\MathValueResultPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Math\EM_MathValueResultPropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\ProcessControls.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetPropertyValueFromUIElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationGetUIElementPositionCommand.cs" />
@@ -389,8 +389,8 @@
     <Compile Include="Core\Automation\Commands\Window\MoveWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\ResizeWindowByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\WindowPositionPropertiesExtentionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\Window\WindowSizePropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_WindowPositionPropertiesExtentionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Window\EM_WindowSizePropertiesExtentionMethods.cs" />
     <Compile Include="Core\Automation\Commands\_General\IParameterUI.cs" />
     <Compile Include="Core\Automation\Commands\_General\IPositionProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ISizeProperties.cs" />
