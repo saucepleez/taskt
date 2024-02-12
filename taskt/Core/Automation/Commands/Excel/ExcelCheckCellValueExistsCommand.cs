@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Value Exists, Result is **True**")]
         [PropertyParameterOrder(6001)]
-        public string v_userVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CheckableValueType))]
@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
             //var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
             var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(nameof(v_ValueType), this, engine);
 
-            chkFunc(rg).StoreInUserVariable(engine, v_userVariableName);
+            chkFunc(rg).StoreInUserVariable(engine, v_Result);
         }
 
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)

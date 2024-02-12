@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
         [PropertyParameterOrder(6004)]
-        public string v_userVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
                 newList.Add(getFunc(excelSheet, i, rowIndex));
             }
 
-            newList.StoreInUserVariable(engine, v_userVariableName);
+            newList.StoreInUserVariable(engine, v_Result);
         }
     }
 }

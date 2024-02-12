@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
         [PropertyParameterOrder(6004)]
-        public string v_userVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands
                 newDic.Add(address, getFunc(excelSheet, columnIndex, i));
             }
 
-            newDic.StoreInUserVariable(engine, v_userVariableName);
+            newDic.StoreInUserVariable(engine, v_Result);
         }
     }
 }

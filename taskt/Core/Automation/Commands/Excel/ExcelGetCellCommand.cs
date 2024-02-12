@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyParameterOrder(6001)]
-        public string v_userVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
             var func = ExcelControls.GetCellValueFunctionFromRange(valueType);
 
-            func(rg).StoreInUserVariable(engine, v_userVariableName);
+            func(rg).StoreInUserVariable(engine, v_Result);
         }
     }
 }

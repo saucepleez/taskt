@@ -2272,6 +2272,66 @@ namespace taskt.Core.Script
             // Add Worksheet command v_SheetName
             ChangeAttributeName(doc, "ExcelAddWorksheetCommand", "v_NewSheetName", "v_SheetName");
 
+            // change attribute v_applyToVariable -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ExcelCheckWorksheetExistsCommand":
+                        case "ExcelGetCurrentWorksheetCommand":
+                        case "ExcelGetExcelInfoCommand":
+                        case "ExcelGetWorksheetInfoCommand":
+                        case "ExcelGetWorksheetsCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_applyToVariable", "v_Result"
+            );
+
+            // change attribute v_applyToVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ExcelCheckExcelInstanceExistsCommand":
+                        case "ExcelGetLastRowCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_applyToVariableName", "v_Result"
+            );
+
+            // change attribute v_userVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ExcelCheckCellValueExistsCommand":
+                        case "ExcelCheckCellValueExistsRCCommand":
+                        case "ExcelGetCellCommand":
+                        case "ExcelGetCellRCCommand":
+                        case "ExcelGetColumnValuesAsDataTableCommand":
+                        case "ExcelGetColumnValuesAsDictionaryCommand":
+                        case "ExcelGetColumnValuesAsListCommand":
+                        case "ExcelGetRangeValuesAsDataTableCommand":
+                        case "ExcelGetRowValuesAsDataTableCommand":
+                        case "ExcelGetRowValuesAsDictionaryCommand":
+                        case "ExcelGetRowValuesAsListCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_userVariableName", "v_Result"
+            );
+
             return doc;
         }
 

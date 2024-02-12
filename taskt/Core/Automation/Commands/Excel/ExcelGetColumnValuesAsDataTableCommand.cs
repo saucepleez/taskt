@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
         [PropertyParameterOrder(6004)]
-        public string v_userVariableName { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                 tblRow++;
             }
 
-            newDT.StoreInUserVariable(engine, v_userVariableName);
+            newDT.StoreInUserVariable(engine, v_Result);
         }
     }
 }
