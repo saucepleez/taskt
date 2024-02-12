@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Sheet Exists, Result is **True**")]
         [PropertyParameterOrder(7000)]
-        public string v_applyToVariable { get; set; }
+        public string v_Result { get; set; }
 
         public ExcelCheckWorksheetExistsCommand()
         {
@@ -46,14 +46,14 @@ namespace taskt.Core.Automation.Commands
             try
             {
                 this.ExpandValueOrVariableAsExcelInstanceAndWorksheet(engine);
-                true.StoreInUserVariable(engine, v_applyToVariable);
+                true.StoreInUserVariable(engine, v_Result);
             }
             catch (Exception ex)
             {
                 var msg = ex.Message;
                 if (msg.StartsWith("Worksheet '") && msg.EndsWith("' does not exists."))
                 {
-                    false.StoreInUserVariable(engine, v_applyToVariable);
+                    false.StoreInUserVariable(engine, v_Result);
                 }
                 else
                 {

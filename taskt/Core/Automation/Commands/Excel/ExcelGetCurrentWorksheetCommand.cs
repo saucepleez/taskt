@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyParameterOrder(6000)]
-        public string v_applyToVariable { get; set; }
+        public string v_Result { get; set; }
 
         public ExcelGetCurrentWorksheetCommand()
         {
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            excelSheet.Name.StoreInUserVariable(engine, v_applyToVariable);
+            excelSheet.Name.StoreInUserVariable(engine, v_Result);
         }
     }
 }
