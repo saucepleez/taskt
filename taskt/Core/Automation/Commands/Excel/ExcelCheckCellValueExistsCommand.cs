@@ -25,7 +25,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CellRangeLocation))]
         [PropertyParameterOrder(6000)]
-        public string v_ExcelCellAddress { get; set; }
+        public string v_CellLocation { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         {
             (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
+            var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             //var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
 

@@ -2332,6 +2332,23 @@ namespace taskt.Core.Script
                 "v_userVariableName", "v_Result"
             );
 
+            // change attribute v_ExcelCellAddress -> v_CellLocation
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ExcelCheckCellValueExistsCommand":
+                        case "ExcelGetCellCommand":
+                        case "ExcelSetCellCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_ExcelCellAddress", "v_CellLocation"
+            );
+
             return doc;
         }
 

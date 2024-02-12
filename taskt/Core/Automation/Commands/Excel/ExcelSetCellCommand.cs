@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CellRangeLocation))]
         [PropertyParameterOrder(6001)]
-        public string v_ExcelCellAddress { get; set; }
+        public string v_CellLocation { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
         {
             (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var rg = v_ExcelCellAddress.GetExcelRange(engine, excelInstance, excelSheet, this);
+            var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
 
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
 
