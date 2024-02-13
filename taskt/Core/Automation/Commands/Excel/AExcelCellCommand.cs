@@ -2,6 +2,9 @@
 
 namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// for commands that using Excel Cell
+    /// </summary>
     public abstract class AExcelCellCommand : AExcelInstanceCommand, IExcelCellProperties
     {
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CellRangeLocation))]
