@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
-namespace taskt.Core.Automation.Commands.Excel
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// for commands that using Excel Sheet
