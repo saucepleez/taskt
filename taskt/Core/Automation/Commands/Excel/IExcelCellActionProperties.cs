@@ -1,10 +1,10 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
-    public interface IExcelCellActionProperties : IExcelCellProperties
+    /// <summary>
+    /// Excel **Single** cell action properties
+    /// </summary>
+    public interface IExcelCellActionProperties : IExcelCellProperties, IExcelValueTypeProperties
     {
-        /// <summary>
-        /// cell value type
-        /// </summary>
-        string v_ValueType { get; set; }
+        // only implememnts
     }
 }

@@ -316,6 +316,7 @@
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelSheetCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\EM_ExcelCellPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelInstancePropertiesExtenstionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelWorksheetActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelWorksheetPropertiesExtensionMethods.cs" />
