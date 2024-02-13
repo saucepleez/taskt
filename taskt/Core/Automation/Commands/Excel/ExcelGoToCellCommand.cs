@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -35,9 +33,11 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
+            //var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
+
+            var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
 
             rg.Select();
         }
