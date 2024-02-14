@@ -319,11 +319,14 @@
     <Compile Include="Core\Automation\Commands\Excel\AExcelSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelCellPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelInstancePropertiesExtenstionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\EM_ExcelRCLocationPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelValueTypePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelWorksheetActionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelWorksheetPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelCellActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelCellProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcellRCLocationActionProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelValueTypeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelInstanceProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetActionProperties.cs" />
