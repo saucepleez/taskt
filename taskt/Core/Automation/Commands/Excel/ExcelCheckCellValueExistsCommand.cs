@@ -16,28 +16,28 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelCheckCellValueExistsCommand : AExcelInstanceCommand
+    public class ExcelCheckCellValueExistsCommand : AExcelCellActionCommand
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CellRangeLocation))]
-        [PropertyParameterOrder(6000)]
-        public string v_CellLocation { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CellRangeLocation))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_CellLocation { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Value Exists, Result is **True**")]
-        [PropertyParameterOrder(6001)]
+        [PropertyParameterOrder(6500)]
         public string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CheckableValueType))]
-        [PropertySelectionChangeEvent(nameof(cmbValueType_SelectedIndexChanged))]
-        [PropertyParameterOrder(6002)]
-        public string v_ValueType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CheckableValueType))]
+        //[PropertySelectionChangeEvent(nameof(cmbValueType_SelectedIndexChanged))]
+        //[PropertyParameterOrder(6002)]
+        //public string v_ValueType { get; set; }
 
         public ExcelCheckCellValueExistsCommand()
         {
@@ -49,15 +49,19 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
+            //var rg = v_CellLocation.GetExcelRange(engine, excelInstance, excelSheet, this);
 
-            //var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
+            ////var valueType = this.GetUISelectionValue(nameof(v_ValueType), engine);
 
-            //var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
-            var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(nameof(v_ValueType), this, engine);
+            ////var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(valueType);
+            //var chkFunc = ExcelControls.CheckCellValueFunctionFromRange(nameof(v_ValueType), this, engine);
 
+            //chkFunc(rg).StoreInUserVariable(engine, v_Result);
+
+            var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
+            var chkFunc = this.ExpandValueOrVariableAsCheckRangeFunction(engine);
             chkFunc(rg).StoreInUserVariable(engine, v_Result);
         }
 
