@@ -34,12 +34,12 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
         [PropertyParameterOrder(6001)]
-        public string v_ExcelCellRow { get; set; }
+        public string v_CellRow { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
         [PropertyParameterOrder(6002)]
-        public string v_ExcelCellColumn { get; set; }
+        public string v_CellColumn { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
@@ -60,7 +60,7 @@ namespace taskt.Core.Automation.Commands
         {
             (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            var rg = this.GetExcelRange(nameof(v_ExcelCellRow), nameof(v_ExcelCellColumn), engine, excelInstance, excelSheet);
+            var rg = this.GetExcelRange(nameof(v_CellRow), nameof(v_CellColumn), engine, excelInstance, excelSheet);
 
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
 

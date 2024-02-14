@@ -2349,6 +2349,21 @@ namespace taskt.Core.Script
                 "v_ExcelCellAddress", "v_CellLocation"
             );
 
+            // ExcelGetCellRCCommand, ExcelSetCellRCCommand attributes v_CellRow, v_CellColumn
+            var searchFunc = new Func<XElement, bool>(el =>
+            {
+                switch (el.Attribute("CommandName").Value)
+                {
+                    case "ExcelGetCellRCCommand":
+                    case "ExcelSetCellRCCommand":
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            ChangeAttributeName(doc, searchFunc, "v_ExcelCellRow", "v_CellRow");
+            ChangeAttributeName(doc, searchFunc, "v_ExcelCellColumn", "v_CellColumn");
+
             return doc;
         }
 
