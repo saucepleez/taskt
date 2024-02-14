@@ -9,21 +9,42 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// check Correct Cell Location
         /// </summary>
-        /// <param name="range"></param>
         /// <param name="excelInstance"></param>
+        /// <param name="range"></param>
+        /// <param name="rg"></param>
         /// <returns></returns>
-        public static bool CheckCorrectLocation(string range, Application excelInstance)
+        public static bool CellLocationTryParse(this Application excelInstance, string range, out Range rg)
         {
             try
             {
-                var rg = excelInstance.Range[range];
+                rg = excelInstance.Range[range];
                 return true;
             }
             catch
             {
+                rg = null;
                 return false;
             }
         }
+
+        ///// <summary>
+        ///// check Correct Cell Location
+        ///// </summary>
+        ///// <param name="range"></param>
+        ///// <param name="excelInstance"></param>
+        ///// <returns></returns>
+        //public static bool CheckCorrectLocation(string range, Application excelInstance)
+        //{
+        //    try
+        //    {
+        //        var rg = excelInstance.Range[range];
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         /// <summary>
         /// expand value or variable as Single Cell Location
@@ -37,9 +58,8 @@ namespace taskt.Core.Automation.Commands
             var excelInstance = command.ExpandValueOrVariableAsExcelInstance(engine);
 
             var r = command.v_CellLocation.ExpandValueOrUserVariable(engine);
-            if (CheckCorrectLocation(r, excelInstance))
+            if (excelInstance.CellLocationTryParse(r, out Range rg))
             {
-                var rg = excelInstance.Range[r];
                 if (rg.Count == 1)
                 {
                     return rg;
