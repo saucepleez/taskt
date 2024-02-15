@@ -11,6 +11,6 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
         [PropertyParameterOrder(8000)]
-        public string v_ValueType { get; set; }
+        public virtual string v_ValueType { get; set; }
     }
 }
