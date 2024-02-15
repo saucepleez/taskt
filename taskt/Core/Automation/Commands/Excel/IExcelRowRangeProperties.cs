@@ -1,5 +1,8 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
+    /// <summary>
+    /// row Range properties
+    /// </summary>
     public interface IExcelRowRangeProperties : IExcelRCRangeProperties
     {
         /// <summary>
