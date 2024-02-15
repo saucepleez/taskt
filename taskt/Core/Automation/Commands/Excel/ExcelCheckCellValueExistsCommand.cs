@@ -33,11 +33,11 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(6500)]
         public string v_Result { get; set; }
 
-        //[XmlAttribute]
+        [XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_CheckableValueType))]
-        //[PropertySelectionChangeEvent(nameof(cmbValueType_SelectedIndexChanged))]
+        [PropertySelectionChangeEvent(nameof(cmbValueType_SelectedIndexChanged))]
         //[PropertyParameterOrder(6002)]
-        //public string v_ValueType { get; set; }
+        public override string v_ValueType { get; set; }
 
         public ExcelCheckCellValueExistsCommand()
         {
