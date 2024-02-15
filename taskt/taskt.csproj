@@ -318,6 +318,8 @@
     <Compile Include="Core\Automation\Commands\Excel\AExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelRCLocationActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelRCLocationCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\AExcelRowRangeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\AExcelRowRangeGetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelCellPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelInstancePropertiesExtenstionMethods.cs" />
