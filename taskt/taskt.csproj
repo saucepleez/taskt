@@ -330,6 +330,7 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCRangeProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeGetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelValueTypeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelInstanceProperties.cs" />
