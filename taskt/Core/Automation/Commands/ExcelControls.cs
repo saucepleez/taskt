@@ -545,72 +545,72 @@ namespace taskt.Core.Automation.Commands
 
         #region Func methods
 
-        /// <summary>
-        /// get CheckCellValueFunction
-        /// </summary>
-        /// <param name="parameterName"></param>
-        /// <param name="command"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        public static Func<Range, bool> CheckCellValueFunctionFromRange(string parameterName, ScriptCommand command, Engine.AutomationEngineInstance engine)
-        {
-            var valueType = command.ExpandValueOrUserVariableAsSelectionItem(parameterName, engine);
-            Func<Range, bool> func = null;
-            switch (valueType)
-            {
-                case "cell":
-                    func = (rg) => { return !String.IsNullOrEmpty((string)rg.Text); };
-                    break;
+        ///// <summary>
+        ///// get CheckCellValueFunction
+        ///// </summary>
+        ///// <param name="parameterName"></param>
+        ///// <param name="command"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        //public static Func<Range, bool> CheckCellValueFunctionFromRange(string parameterName, ScriptCommand command, Engine.AutomationEngineInstance engine)
+        //{
+        //    var valueType = command.ExpandValueOrUserVariableAsSelectionItem(parameterName, engine);
+        //    Func<Range, bool> func = null;
+        //    switch (valueType)
+        //    {
+        //        case "cell":
+        //            func = (rg) => { return !String.IsNullOrEmpty((string)rg.Text); };
+        //            break;
 
-                case "formula":
-                    func = (rg) => { return ((string)rg.Formula).StartsWith("="); };
-                    break;
+        //        case "formula":
+        //            func = (rg) => { return ((string)rg.Formula).StartsWith("="); };
+        //            break;
 
-                case "back color":
-                    func = (rg) => { return ((long)rg.Interior.Color) != 16777215; };
-                    break;
-            }
-            return func;
-        }
+        //        case "back color":
+        //            func = (rg) => { return ((long)rg.Interior.Color) != 16777215; };
+        //            break;
+        //    }
+        //    return func;
+        //}
 
-        public static Func<Range, string> GetCellValueFunctionFromRange(string valueType)
-        {
-            Func<Range, string> getFunc = null;
-            switch (valueType)
-            {
-                case "cell":
-                    getFunc = (rg) =>
-                    {
-                        return (string)rg.Text;
-                    };
-                    break;
-                case "formula":
-                    getFunc = (rg) =>
-                    {
-                        return (string)rg.Formula;
-                    };
-                    break;
-                case "format":
-                    getFunc = (rg) =>
-                    {
-                        return (string)rg.NumberFormatLocal;
-                    };
-                    break;
-                case "fore color":
-                    getFunc = (rg) =>
-                    {
-                        return ((long)rg.Font.Color).ToString();
-                    };
-                    break;
-                case "back color":
-                    getFunc = (rg) =>
-                    {
-                        return ((long)rg.Interior.Color).ToString();
-                    };
-                    break;
-            }
-            return getFunc;
-        }
+        //public static Func<Range, string> GetCellValueFunctionFromRange(string valueType)
+        //{
+        //    Func<Range, string> getFunc = null;
+        //    switch (valueType)
+        //    {
+        //        case "cell":
+        //            getFunc = (rg) =>
+        //            {
+        //                return (string)rg.Text;
+        //            };
+        //            break;
+        //        case "formula":
+        //            getFunc = (rg) =>
+        //            {
+        //                return (string)rg.Formula;
+        //            };
+        //            break;
+        //        case "format":
+        //            getFunc = (rg) =>
+        //            {
+        //                return (string)rg.NumberFormatLocal;
+        //            };
+        //            break;
+        //        case "fore color":
+        //            getFunc = (rg) =>
+        //            {
+        //                return ((long)rg.Font.Color).ToString();
+        //            };
+        //            break;
+        //        case "back color":
+        //            getFunc = (rg) =>
+        //            {
+        //                return ((long)rg.Interior.Color).ToString();
+        //            };
+        //            break;
+        //    }
+        //    return getFunc;
+        //}
 
         public static Func<Worksheet, int, int, string> GetCellValueFunction(string valueType)
         {
@@ -651,58 +651,58 @@ namespace taskt.Core.Automation.Commands
             return getFunc;
         }
 
-        public static Action<string, Worksheet, Range> SetCellValueFunctionFromRange(string valueType)
-        {
-            Action<string, Worksheet, Range> setFunc = null;
+        //public static Action<string, Worksheet, Range> SetCellValueFunctionFromRange(string valueType)
+        //{
+        //    Action<string, Worksheet, Range> setFunc = null;
 
-            Func<string, long> longConvert = (str) =>
-            {
-                if (long.TryParse(str, out long v))
-                {
-                    return v;
-                }
-                else
-                {
-                    throw new Exception("Value '" + str + "' is not color.");
-                }
-            };
+        //    Func<string, long> longConvert = (str) =>
+        //    {
+        //        if (long.TryParse(str, out long v))
+        //        {
+        //            return v;
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("Value '" + str + "' is not color.");
+        //        }
+        //    };
 
-            switch (valueType)
-            {
-                case "cell":
-                    setFunc = (value, sheet, rg) =>
-                    {
-                        rg.Value = value;
-                    };
-                    break;
-                case "formula":
-                    setFunc = (value, sheet, rg) =>
-                    {
-                        rg.Formula = value;
-                    };
-                    break;
-                case "format":
-                    setFunc = (value, sheet, rg) =>
-                    {
-                        rg.NumberFormatLocal = value;
-                    };
-                    break;
-                case "fore color":
-                    setFunc = (value, sheet, rg) =>
-                    {
-                        rg.Font.Color = longConvert(value);
-                    };
-                    break;
-                case "back color":
-                    setFunc = (value, sheet, rg) =>
-                    {
-                        rg.Interior.Color = longConvert(value);
-                    };
-                    break;
-            }
+        //    switch (valueType)
+        //    {
+        //        case "cell":
+        //            setFunc = (value, sheet, rg) =>
+        //            {
+        //                rg.Value = value;
+        //            };
+        //            break;
+        //        case "formula":
+        //            setFunc = (value, sheet, rg) =>
+        //            {
+        //                rg.Formula = value;
+        //            };
+        //            break;
+        //        case "format":
+        //            setFunc = (value, sheet, rg) =>
+        //            {
+        //                rg.NumberFormatLocal = value;
+        //            };
+        //            break;
+        //        case "fore color":
+        //            setFunc = (value, sheet, rg) =>
+        //            {
+        //                rg.Font.Color = longConvert(value);
+        //            };
+        //            break;
+        //        case "back color":
+        //            setFunc = (value, sheet, rg) =>
+        //            {
+        //                rg.Interior.Color = longConvert(value);
+        //            };
+        //            break;
+        //    }
 
-            return setFunc;
-        }
+        //    return setFunc;
+        //}
 
         public static Action<string, Worksheet, int, int> SetCellValueFunction(string valueType)
         {
@@ -783,10 +783,10 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static int GetLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
-        {
-            return GetLastRowIndex(sheet, GetColumnIndex(sheet, column), startRow, targetType);
-        }
+        //public static int GetLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
+        //{
+        //    return GetLastRowIndex(sheet, GetColumnIndex(sheet, column), startRow, targetType);
+        //}
 
         public static int GetLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
         {
@@ -810,10 +810,10 @@ namespace taskt.Core.Automation.Commands
             return --lastRow;
         }
 
-        public static int GetLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
-        {
-            return GetLastColumnIndex(sheet, row, GetColumnIndex(sheet, startColum), targetType);
-        }
+        //public static int GetLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
+        //{
+        //    return GetLastColumnIndex(sheet, row, GetColumnIndex(sheet, startColum), targetType);
+        //}
 
         public static int GetLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
         {
@@ -1014,44 +1014,44 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region convert methods
-        public static string GetoExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
-        {
-            var location = value.ExpandValueOrUserVariable(engine);
-            if (CheckCorrectRange(location, excelInstance))
-            {
-                return location;
-            }
-            else
-            {
-                throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
-            }
-        }
+        //public static string GetoExcelRangeLocation(this string value, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        //{
+        //    var location = value.ExpandValueOrUserVariable(engine);
+        //    if (CheckCorrectRange(location, excelInstance))
+        //    {
+        //        return location;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Location '" + value + "' is not Range. Value: '" + location + "'.");
+        //    }
+        //}
 
-        public static (int row, int column) GetExcelRCLocation(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
-        {
-            int row = command.ExpandValueOrUserVariableAsInteger(rowPropertyName, "Row", engine);
-            int column = command.ExpandValueOrUserVariableAsInteger(columnPropertyName, "Column", engine);
-            if (CheckCorrectRC(row, column, excelInstance))
-            {
-                return (row, column);
-            }
-            else
-            {
-                throw new Exception("Invalid Location. Row: " + row + ", Column: " + column);
-            }
-        }
+        //public static (int row, int column) GetExcelRCLocation(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance)
+        //{
+        //    int row = command.ExpandValueOrUserVariableAsInteger(rowPropertyName, "Row", engine);
+        //    int column = command.ExpandValueOrUserVariableAsInteger(columnPropertyName, "Column", engine);
+        //    if (CheckCorrectRC(row, column, excelInstance))
+        //    {
+        //        return (row, column);
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Invalid Location. Row: " + row + ", Column: " + column);
+        //    }
+        //}
 
-        public static Range GetExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
-        {
-            string pos = location.GetoExcelRangeLocation(engine, excelInstance);
-            return excelSheet.Range[pos];
-        }
+        //public static Range GetExcelRange(this string location, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet, ScriptCommand command)
+        //{
+        //    string pos = location.GetoExcelRangeLocation(engine, excelInstance);
+        //    return excelSheet.Range[pos];
+        //}
 
-        public static Range GetExcelRange(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet)
-        {
-            var rc = command.GetExcelRCLocation(rowPropertyName, columnPropertyName, engine, excelInstance);
-            return excelSheet.Cells[rc.row, rc.column];
-        }
+        //public static Range GetExcelRange(this ScriptCommand command, string rowPropertyName, string columnPropertyName, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, Worksheet excelSheet)
+        //{
+        //    var rc = command.GetExcelRCLocation(rowPropertyName, columnPropertyName, engine, excelInstance);
+        //    return excelSheet.Cells[rc.row, rc.column];
+        //}
         #endregion
 
         #region check methods
@@ -1060,10 +1060,10 @@ namespace taskt.Core.Automation.Commands
             return CheckCorrectRange(columnName + "1", excelSheet);
         }
 
-        public static bool CheckCorrectColumnIndex(int columnIndex, Worksheet excelSheet)
-        {
-            return CheckCorrectRC(1, columnIndex, excelSheet);
-        }
+        //public static bool CheckCorrectColumnIndex(int columnIndex, Worksheet excelSheet)
+        //{
+        //    return CheckCorrectRC(1, columnIndex, excelSheet);
+        //}
 
         public static bool CheckCorrectRange(string range, Worksheet excelSheet)
         {
@@ -1091,33 +1091,33 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static bool CheckCorrectColumnName(string columnName, Application excelInstance)
-        {
-            return CheckCorrectRange(columnName + "1", excelInstance);
-        }
+        //public static bool CheckCorrectColumnName(string columnName, Application excelInstance)
+        //{
+        //    return CheckCorrectRange(columnName + "1", excelInstance);
+        //}
 
-        public static bool CheckCorrectRowIndex(int rowIndex, Application excelInstance)
-        {
-            return CheckCorrectRC(rowIndex, 1, excelInstance);
-        }
+        //public static bool CheckCorrectRowIndex(int rowIndex, Application excelInstance)
+        //{
+        //    return CheckCorrectRC(rowIndex, 1, excelInstance);
+        //}
 
-        public static bool CheckCorrectColumnIndex(int columnIndex, Application excelInstance)
-        {
-            return CheckCorrectRC(1, columnIndex, excelInstance);
-        }
+        //public static bool CheckCorrectColumnIndex(int columnIndex, Application excelInstance)
+        //{
+        //    return CheckCorrectRC(1, columnIndex, excelInstance);
+        //}
 
-        public static bool CheckCorrectRange(this string range, Application excelInstance)
-        {
-            try
-            {
-                var rg = excelInstance.Range[range];
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //public static bool CheckCorrectRange(this string range, Application excelInstance)
+        //{
+        //    try
+        //    {
+        //        var rg = excelInstance.Range[range];
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public static bool CheckCorrectRC(int row, int column, Application excelInstance)
         {
