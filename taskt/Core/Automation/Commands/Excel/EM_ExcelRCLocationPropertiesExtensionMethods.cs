@@ -6,28 +6,6 @@ namespace taskt.Core.Automation.Commands
     public static class EM_ExcelRCLocationPropertiesExtensionMethods
     {
         /// <summary>
-        /// try parse RC Location
-        /// </summary>
-        /// <param name="excelInstance"></param>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <param name="rg"></param>
-        /// <returns></returns>
-        public static bool RCLocationTryParse(this Application excelInstance, int row, int column, out Range rg)
-        {
-            try
-            {
-                rg = excelInstance.Cells[row, column];
-                return true;
-            }
-            catch
-            {
-                rg = null;
-                return false;
-            }
-        }
-
-        /// <summary>
         /// expand value or variable as Excel Cell Location
         /// </summary>
         /// <param name="command"></param>

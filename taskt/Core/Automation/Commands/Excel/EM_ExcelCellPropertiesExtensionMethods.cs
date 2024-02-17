@@ -6,27 +6,6 @@ namespace taskt.Core.Automation.Commands
 {
     public static class EM_ExcelCellPropertiesExtensionMethods
     {
-        /// <summary>
-        /// check Correct Cell Location
-        /// </summary>
-        /// <param name="excelInstance"></param>
-        /// <param name="range"></param>
-        /// <param name="rg"></param>
-        /// <returns></returns>
-        public static bool CellLocationTryParse(this Application excelInstance, string range, out Range rg)
-        {
-            try
-            {
-                rg = excelInstance.Range[range];
-                return true;
-            }
-            catch
-            {
-                rg = null;
-                return false;
-            }
-        }
-
         ///// <summary>
         ///// check Correct Cell Location
         ///// </summary>

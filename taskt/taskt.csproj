@@ -322,6 +322,7 @@
     <Compile Include="Core\Automation\Commands\Excel\AExcelRowRangeGetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelSheetCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelCellPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\EM_ExcelApplicationExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelInstancePropertiesExtenstionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelRCLocationPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelValueTypePropertiesExtensionMethods.cs" />
