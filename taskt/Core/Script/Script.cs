@@ -2379,6 +2379,9 @@ namespace taskt.Core.Script
             // ExcelSetRowValuesFromListCommand v_WhenItemNotEnough
             ChangeAttributeName(doc, "ExcelSetRowValuesFromListCommand", "v_IfListNotEnough", "v_WhenItemNotEnough");
 
+            // ExcelSetRowValuesFromDataTableCommand v_RowIndex
+            ChangeAttributeName(doc, "ExcelSetRowValuesFromDataTableCommand", "v_ExcelRowIndex", "v_RowIndex");
+
             return doc;
         }
 
