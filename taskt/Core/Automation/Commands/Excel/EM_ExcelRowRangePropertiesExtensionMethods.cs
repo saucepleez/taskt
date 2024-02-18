@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="objectSizeFunc"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsRangeIndecies(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine, Func<int> objectSizeFunc = null)
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsExcelRangeIndecies(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine, Func<int> objectSizeFunc = null)
         {
             (_, var sheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 

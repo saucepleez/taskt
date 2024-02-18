@@ -12,9 +12,9 @@ namespace taskt.Core.Automation.Commands
         /// <param name="objectSizeFunc"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsRangeIndecies(this IExcelRowRangeSetProperties command, Engine.AutomationEngineInstance engine, Func<int> objectSizeFunc)
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsExcelRangeIndecies(this IExcelRowRangeSetProperties command, Engine.AutomationEngineInstance engine, Func<int> objectSizeFunc)
         {
-            (var row, var columnStart, var columnEnd) = ((IExcelRowRangeProperties)command).ExpandValueOrVariableAsRangeIndecies(engine, objectSizeFunc);
+            (var row, var columnStart, var columnEnd) = ((IExcelRowRangeProperties)command).ExpandValueOrVariableAsExcelRangeIndecies(engine, objectSizeFunc);
 
             var whenItemNotEnough = ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_WhenItemNotEnough), "When Item Not Enough", engine);
 

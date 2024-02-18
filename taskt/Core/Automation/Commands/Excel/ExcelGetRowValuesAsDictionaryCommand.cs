@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             //        nameof(v_ColumnType), nameof(v_ColumnStart), nameof(v_ColumnEnd),
             //        nameof(v_ValueType), engine, excelSheet, this
             //    );
-            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsRangeIndecies(engine);
+            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);

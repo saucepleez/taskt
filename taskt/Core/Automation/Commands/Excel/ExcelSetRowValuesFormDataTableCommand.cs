@@ -126,7 +126,7 @@ namespace taskt.Core.Automation.Commands
             var dtRowIndex = v_DataTableRowIndex.ExpandValueOrUserVariableAsInteger("DataTable Row Index", engine);
 
             (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (var row, var columnStart, var columnEnd) = this.ExpandValueOrVariableAsRangeIndecies(engine, new Func<int>(() => myDT.Columns.Count));
+            (var row, var columnStart, var columnEnd) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myDT.Columns.Count));
             int max = (columnEnd - columnStart) + 1;
             var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
             for (int i = 0; i < max; i++)
