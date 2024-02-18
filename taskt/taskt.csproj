@@ -315,6 +315,8 @@
     <Compile Include="Core\ApplicationSettings\WhiteListIP.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellActionCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\AExcelColumnRangeCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\AExcelColumnRangeGetCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelRCLocationActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelRCLocationCommand.cs" />
