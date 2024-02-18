@@ -3,7 +3,7 @@
     /// <summary>
     /// excel worksheet properties
     /// </summary>
-    public interface IExcelWorksheetProperties : IExcelInstanceProperties
+    public interface IExcelWorksheetProperties : ILExcelInstanceProperties
     {
         /// <summary>
         /// excel worksheet name

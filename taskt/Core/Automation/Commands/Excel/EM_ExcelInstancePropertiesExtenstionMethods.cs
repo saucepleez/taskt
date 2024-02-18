@@ -13,7 +13,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Application ExpandValueOrVariableAsExcelInstance(this IExcelInstanceProperties command, AutomationEngineInstance engine)
+        public static Application ExpandValueOrVariableAsExcelInstance(this ILExcelInstanceProperties command, AutomationEngineInstance engine)
         {
             string ins = command.v_InstanceName.ExpandValueOrUserVariable(engine);
             var instanceObject = engine.GetAppInstance(ins);
@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (Application, Worksheet) ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(this IExcelInstanceProperties command, AutomationEngineInstance engine)
+        public static (Application, Worksheet) ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(this ILExcelInstanceProperties command, AutomationEngineInstance engine)
         {
             var ins = command.ExpandValueOrVariableAsExcelInstance(engine);
             if (ins.Worksheets.Count > 0)
@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Worksheet ExpandValueOrVariableAsExcelWorksheet(this IExcelInstanceProperties command, string sheetName, AutomationEngineInstance engine)
+        public static Worksheet ExpandValueOrVariableAsExcelWorksheet(this ILExcelInstanceProperties command, string sheetName, AutomationEngineInstance engine)
         {
             (var ins, var currentSheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
@@ -151,7 +151,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string ExpandValueOrVariableAsExcelWorksheetName(this IExcelInstanceProperties command, string sheet, AutomationEngineInstance engine)
+        public static string ExpandValueOrVariableAsExcelWorksheetName(this ILExcelInstanceProperties command, string sheet, AutomationEngineInstance engine)
         {
             var newSheet = sheet.ExpandValueOrUserVariable(engine);
 

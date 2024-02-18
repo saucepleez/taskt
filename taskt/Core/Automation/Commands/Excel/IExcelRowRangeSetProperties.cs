@@ -3,7 +3,7 @@
     /// <summary>
     /// for Excel Row Range Set properties
     /// </summary>
-    public interface IExcelRowRangeSetProperties : IExcelRowRangeProperties, IExcelRangeSetProperties
+    public interface IExcelRowRangeSetProperties : IExcelRowRangeProperties, ILExcelRangeSetProperties
     {
         // only implements
     }

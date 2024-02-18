@@ -3,7 +3,7 @@
     /// <summary>
     /// excel range Set properties
     /// </summary>
-    public interface IExcelRangeSetProperties
+    public interface ILExcelRangeSetProperties
     {
         /// <summary>
         /// behavior when specified Item(List/Dictionary/DataTable) items not enough

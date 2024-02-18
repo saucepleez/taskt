@@ -3,7 +3,7 @@
     /// <summary>
     /// Range properties specified Row, Column
     /// </summary>
-    public interface IExcelRCRangeProperties : IExcelInstanceProperties, IExcelRCValueTypeProperties
+    public interface IExcelRCRangeProperties : ILExcelInstanceProperties, IExcelRCValueTypeProperties
     {
         /// <summary>
         /// column type Name(Range) or Index

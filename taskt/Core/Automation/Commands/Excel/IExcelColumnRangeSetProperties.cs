@@ -3,7 +3,7 @@
     /// <summary>
     /// excel column range set properties
     /// </summary>
-    public interface IExcelColumnRangeSetProperties : IExcelColumnRangeProperties, IExcelRangeSetProperties
+    public interface IExcelColumnRangeSetProperties : IExcelColumnRangeProperties, ILExcelRangeSetProperties
     {
         // only implements
     }

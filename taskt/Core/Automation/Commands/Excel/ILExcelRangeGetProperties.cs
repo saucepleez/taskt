@@ -3,7 +3,7 @@
     /// <summary>
     /// excel Range get properties
     /// </summary>
-    public interface IExcelRangeGetProperties
+    public interface ILExcelRangeGetProperties
     {
         /// <summary>
         /// variable name to store result

@@ -3,7 +3,7 @@
     /// <summary>
     /// excel instance properties
     /// </summary>
-    public interface IExcelInstanceProperties
+    public interface ILExcelInstanceProperties
     {
         /// <summary>
         /// excel instance name

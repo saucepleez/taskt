@@ -342,8 +342,8 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeGetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeSetProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\IExcelRangeGetProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\IExcelRangeSetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ILExcelRangeGetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ILExcelRangeSetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCRangeProperties.cs" />
@@ -351,8 +351,8 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeGetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeSetProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\IExcelValueTypeProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Excel\IExcelInstanceProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ILExcelValueTypeProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ILExcelInstanceProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetCopyRenameProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetProperties.cs" />

@@ -3,7 +3,7 @@
     /// <summary>
     /// for Cell value type properties
     /// </summary>
-    public interface IExcelCellValueTypeProperties : IExcelValueTypeProperties
+    public interface IExcelCellValueTypeProperties : ILExcelValueTypeProperties
     {
         // only implements
     }
