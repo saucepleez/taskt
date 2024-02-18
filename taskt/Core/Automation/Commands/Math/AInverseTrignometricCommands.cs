@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     /// abstract class for Inverse Trignometric Commands
     /// </summary>
     [Serializable]
-    public abstract class AInverseTrignometricCommand : ATrignometricCommand, IInverseTrignometricProperties
+    public abstract class AInverseTrignometricCommands : ATrignometricCommands, IInverseTrignometricProperties
     {
         [XmlAttribute]
         [PropertyParameterOrder(7000)]

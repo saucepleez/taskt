@@ -10,7 +10,7 @@ namespace taskt.Core.Automation.Commands
     /// Abstract class for Any Window Name commands 
     /// </summary>
     [Serializable]
-    public abstract class AAnyWindowNameCommand : ScriptCommand, IAnyWindowNameProperties
+    public abstract class AAnyWindowNameCommands : ScriptCommand, IAnyWindowNameProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_WindowName))]
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(8200)]
         public virtual string v_HandleResult { get; set; }
 
-        public AAnyWindowNameCommand()
+        public AAnyWindowNameCommands()
         {
         }
 

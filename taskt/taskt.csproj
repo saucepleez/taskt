@@ -358,10 +358,10 @@
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
     <Compile Include="Core\Automation\Commands\Math\IInverseTrignometricProperties.cs" />
     <Compile Include="Core\Automation\Commands\Math\EM_InverseTrignometricPropertiesExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\Math\AMathValueResultCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\AMathValueResultCommands.cs" />
     <Compile Include="Core\Automation\Commands\Math\EM_TrignometricPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetAbsoluteCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Math\AInverseTrignometricCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\AInverseTrignometricCommands.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetLogarithmCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSquareRootCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetPowerCommand.cs" />
@@ -369,7 +369,7 @@
     <Compile Include="Core\Automation\Commands\Math\GetArctanCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetArccosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetArcsinCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Math\ATrignometricCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Math\ATrignometricCommands.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetTanCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetCosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSinCommand.cs" />
@@ -400,10 +400,10 @@
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserClearTextInWebElementCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserWaitForWebElementToExistsCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSearchWebElementCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\AWindowHandleCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AWindowHandleCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\ActivateWindowByWindowHandleCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\AAnyWindowNameCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\AWindowNameCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AAnyWindowNameCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Window\AWindowNameCommands.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetProcessNameFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowHandleFromWindowName.cs" />
     <Compile Include="Core\Automation\Commands\Window\CheckWindowHandleExistsCommand.cs" />
