@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for commands that using Excel Sheet
     /// </summary>
-    public abstract class AExcelSheetCommand : AExcelInstanceCommand, IExcelWorksheetProperties
+    public abstract class AExcelSheetCommands : AExcelInstanceCommands, IExcelWorksheetProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]

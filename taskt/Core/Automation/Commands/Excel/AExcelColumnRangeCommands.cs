@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Excel column Range commands
     /// </summary>
-    public abstract class AExcelColumnRangeCommand : AExcelInstanceCommand, IExcelColumnRangeProperties
+    public abstract class AExcelColumnRangeCommands : AExcelInstanceCommands, IExcelColumnRangeProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]

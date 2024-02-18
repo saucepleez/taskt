@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for commands that using Excel Cell get, set, etc...
     /// </summary>
-    public abstract class AExcelCellActionCommand : AExcelCellCommand, IExcelCellActionProperties
+    public abstract class AExcelCellActionCommands : AExcelCellCommands, IExcelCellActionProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]

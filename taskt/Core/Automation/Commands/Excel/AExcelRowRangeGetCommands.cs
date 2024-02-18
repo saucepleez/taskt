@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for row Range Get commands
     /// </summary>
-    public abstract class AExcelRowRangeGetCommand : AExcelRowRangeCommand, IExcelRowRangeGetProperties
+    public abstract class AExcelRowRangeGetCommands : AExcelRowRangeCommands, IExcelRowRangeGetProperties
     {
         [XmlAttribute]
         [PropertyParameterOrder(10000)]

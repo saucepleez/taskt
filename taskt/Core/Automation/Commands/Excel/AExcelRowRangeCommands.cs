@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for row Range some action commands
     /// </summary>
-    public abstract class AExcelRowRangeCommand : AExcelInstanceCommand, IExcelRowRangeProperties
+    public abstract class AExcelRowRangeCommands : AExcelInstanceCommands, IExcelRowRangeProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]

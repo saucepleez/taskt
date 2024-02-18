@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for excel column range get commands
     /// </summary>
-    public abstract class AExcelColumnRangeGetCommands : AExcelColumnRangeCommand, IExcelColumnRangeGetProperties
+    public abstract class AExcelColumnRangeGetCommands : AExcelColumnRangeCommands, IExcelColumnRangeGetProperties
     {
         [XmlAttribute]
         [PropertyParameterOrder(10000)]

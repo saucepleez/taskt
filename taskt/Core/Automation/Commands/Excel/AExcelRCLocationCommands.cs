@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     /// <summary>
     /// for Excel RC Location commands
     /// </summary>
-    public abstract class AExcelRCLocationCommand : AExcelInstanceCommand, IExcelRCLocationProperties
+    public abstract class AExcelRCLocationCommands : AExcelInstanceCommands, IExcelRCLocationProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
