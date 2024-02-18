@@ -366,6 +366,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_79(doc);
             convertTo3_5_1_80(doc);
             convertTo3_5_1_81(doc);
+            convertTo3_5_1_82(doc);
 
             return doc;
         }
@@ -2363,6 +2364,20 @@ namespace taskt.Core.Script
             });
             ChangeAttributeName(doc, searchFunc, "v_ExcelCellRow", "v_CellRow");
             ChangeAttributeName(doc, searchFunc, "v_ExcelCellColumn", "v_CellColumn");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_82(XDocument doc)
+        {
+            // ExcelSetRowValuesFromDataTableCommand v_WhenItemNotEnough
+            ChangeAttributeName(doc, "ExcelSetRowValuesFromDataTableCommand", "v_IfDataTableNotEnough", "v_WhenItemNotEnough");
+
+            // ExcelSetRowValuesFromDictionaryCommand v_WhenItemNotEnough
+            ChangeAttributeName(doc, "ExcelSetRowValuesFromDictionaryCommand", "v_IfDictionaryNotEnough", "v_WhenItemNotEnough");
+
+            // ExcelSetRowValuesFromListCommand v_WhenItemNotEnough
+            ChangeAttributeName(doc, "ExcelSetRowValuesFromListCommand", "v_IfListNotEnough", "v_WhenItemNotEnough");
 
             return doc;
         }

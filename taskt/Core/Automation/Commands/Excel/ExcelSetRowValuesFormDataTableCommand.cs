@@ -68,7 +68,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
         [PropertyDescription("When DataTable Items Not Enough")]
         [PropertyParameterOrder(6007)]
-        public string v_IfDataTableNotEnough { get; set; }
+        public string v_WhenItemNotEnough { get; set; }
 
         public ExcelSetRowValuesFromDataTableCommand()
         {
@@ -99,7 +99,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("DataTable Row " + v_DataTableRowIndex + " is not exists");
             }
 
-            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDataTableNotEnough), "If DataTable Not Enough", engine);
+            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If DataTable Not Enough", engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifDataTableNotEnough == "error")
             {

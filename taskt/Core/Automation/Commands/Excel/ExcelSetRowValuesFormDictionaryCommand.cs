@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
         [PropertyDescription("When Dictionary Items Not Enough")]
         [PropertyParameterOrder(6006)]
-        public string v_IfDictionaryNotEnough { get; set; }
+        public string v_WhenItemNotEnough { get; set; }
 
         public ExcelSetRowValuesFromDictionaryCommand()
         {
@@ -80,7 +80,7 @@ namespace taskt.Core.Automation.Commands
                 );
 
             //string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
-            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDictionaryNotEnough), "If Dictionary Not Enough", engine);
+            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If Dictionary Not Enough", engine);
             int range = columnEndIndex - columnStartIndex + 1;
             if (ifListNotEnough == "error")
             {
