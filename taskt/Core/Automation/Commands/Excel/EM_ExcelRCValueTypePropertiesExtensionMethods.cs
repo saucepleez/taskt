@@ -95,5 +95,41 @@ namespace taskt.Core.Automation.Commands
 
             return setFunc;
         }
+
+        /// <summary>
+        /// expand value or variable as Check Range Value Function
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static Func<Worksheet, int, int, bool> ExpandValueOrVariableAsCheckFunction(this IExcelRCValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        {
+            Func<Worksheet, int, int, bool> func = null;
+            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
+            {
+                case "cell":
+                    func = (sheet, row, column) =>
+                    {
+                        return !string.IsNullOrEmpty(((Range)sheet.Cells[row, column]).Text);
+                    };
+                    break;
+
+                case "formula":
+                    func = (sheet, row, column) =>
+                    {
+                        return ((Range)sheet.Cells[row, column]).Formula.StartsWith("=");
+                    };
+                    break;
+
+                case "back color":
+                    func = (sheet, row, column) =>
+                    {
+                        return ((Range)sheet.Cells[row, column]).Interior.Color != 16777215;
+                    };
+                    break;
+            }
+            return func;
+        }
     }
 }

@@ -66,9 +66,14 @@ namespace taskt.Core.Automation.Commands
 
             //chkFunc(rg).StoreInUserVariable(engine, v_Result);
 
-            var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
-            var chkFunc = this.ExpandValueOrVariableAsCheckRangeFunction(engine);
-            chkFunc(rg).StoreInUserVariable(engine, v_Result);
+            //var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
+            //var chkFunc = this.ExpandValueOrVariableAsCheckRangeFunction(engine);
+            //chkFunc(rg).StoreInUserVariable(engine, v_Result);
+
+            (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            (var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
+            var chkFunc = this.ExpandValueOrVariableAsCheckFunction(engine);
+            chkFunc(sheet, row, column).StoreInUserVariable(engine, v_Result);
         }
 
         private void cmbValueType_SelectedIndexChanged(object sender, EventArgs e)
