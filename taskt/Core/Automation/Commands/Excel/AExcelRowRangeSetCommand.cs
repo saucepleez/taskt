@@ -7,8 +7,8 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
-        [PropertyDescription("When DataTable Items Not Enough")]
+        [PropertyDescription("When Items Not Enough")]
         [PropertyParameterOrder(12000)]
-        public string v_WhenItemNotEnough { get; set; }
+        public abstract string v_WhenItemNotEnough { get; set; }
     }
 }

@@ -11,26 +11,26 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
         [PropertyParameterOrder(6000)]
-        public string v_RowIndex { get; set; }
+        public virtual string v_RowIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
         [PropertyParameterOrder(7000)]
-        public string v_ColumnType { get; set; }
+        public virtual string v_ColumnType { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
         [PropertyParameterOrder(8000)]
-        public string v_ColumnStart { get; set; }
+        public virtual string v_ColumnStart { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
         [PropertyParameterOrder(9000)]
-        public string v_ColumnEnd { get; set; }
+        public virtual string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
         [PropertyParameterOrder(11000)]
-        public string v_ValueType { get; set; }
+        public virtual string v_ValueType { get; set; }
     }
 }
