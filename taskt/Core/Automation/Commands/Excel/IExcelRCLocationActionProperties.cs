@@ -1,6 +1,4 @@
-﻿using taskt.Core.Automation.Commands.Excel;
-
-namespace taskt.Core.Automation.Commands
+﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// cell RC row/column action properties
