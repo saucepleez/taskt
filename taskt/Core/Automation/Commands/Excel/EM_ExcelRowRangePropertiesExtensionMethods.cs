@@ -1,61 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
     public static class EM_ExcelRowRangePropertiesExtensionMethods
     {
-        public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine)
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsRangeIndecies(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine)
         {
-            (var excelInstance, var sheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            (_, var sheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
-            //int rowIndex = command.ExpandValueOrUserVariableAsInteger(rowValueName, "Row Index", engine);
             var rowIndex = ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_RowIndex), "Row Index", engine);
 
-            //string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
             var valueType = ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine);
 
             int columnStartIndex = 0;
             int columnEndIndex = 0;
 
-            string columnStartValue = command.GetRawPropertyValueAsString(columnStartName, "Start Column");
-            string columnEndValue = command.GetRawPropertyValueAsString(columnEndName, "End Column");
+            string columnStartValue = ((ScriptCommand)command).GetRawPropertyValueAsString(nameof(command.v_ColumnStart), "Start Column");
+            string columnEndValue = ((ScriptCommand)command).GetRawPropertyValueAsString(nameof(command.v_ColumnEnd), "End Column");
 
-            string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
-            switch (columnType)
+            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ColumnType), "Column Type", engine))
             {
                 case "range":
-                    if (String.IsNullOrEmpty(columnStartValue))
+                    if (string.IsNullOrEmpty(columnStartValue))
                     {
                         columnStartValue = "A";
                     }
-                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ExpandValueOrUserVariable(engine));
+                    columnStartIndex = sheet.ToColumnIndex(columnStartValue.ExpandValueOrUserVariable(engine));
 
 
-                    if (String.IsNullOrEmpty(columnEndValue))
+                    if (string.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = sheet.GetLastColumnIndex(rowIndex, columnStartIndex, valueType);
                     }
                     else
                     {
-                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ExpandValueOrUserVariable(engine));
+                        columnEndIndex = sheet.ToColumnIndex(columnEndValue.ExpandValueOrUserVariable(engine));
                     }
                     break;
 
                 case "rc":
-                    if (String.IsNullOrEmpty(columnStartValue))
+                    if (string.IsNullOrEmpty(columnStartValue))
                     {
                         columnStartValue = "1";
                     }
                     columnStartIndex = columnStartValue.ExpandValueOrUserVariableAsInteger("Start Column", engine);
 
-                    if (String.IsNullOrEmpty(columnEndValue))
+                    if (string.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = sheet.GetLastColumnIndex(rowIndex, columnStartIndex, valueType);
                     }
                     else
                     {
@@ -64,16 +57,18 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
+            // swap column
             if (columnStartIndex > columnEndIndex)
             {
-                int t = columnStartIndex;
-                columnStartIndex = columnEndIndex;
-                columnEndIndex = t;
+                (columnEndIndex, columnStartIndex) = (columnStartIndex, columnEndIndex);
             }
 
-            CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelSheet);
+            if (!sheet.RCRangeTryParse(rowIndex, columnStartIndex, rowIndex, columnEndIndex, out _))
+            {
+                throw new Exception($"Invalid Range. Row Index: '{rowIndex}', Column Start Index: '{columnStartIndex}', Column End Index: '{columnEndIndex}'");
+            }
 
-            return (rowIndex, columnStartIndex, columnEndIndex, valueType);
+            return (rowIndex, columnStartIndex, columnEndIndex);
         }
     }
 }

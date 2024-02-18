@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
         public static Func<Range, bool> ExpandValueOrVariableAsCheckRangeFunction(this IExcelValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Func<Range, bool> func = null;
-            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), engine))
+            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
             {
                 case "cell":
                     func = (rg) => 
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
         public static Func<Range, string> ExpandValueOrVariableAsGetRangeFunction(this IExcelValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Func<Range, string> getFunc = null;
-            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), engine))
+            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
             {
                 case "cell":
                     getFunc = (rg) =>
@@ -108,7 +108,7 @@ namespace taskt.Core.Automation.Commands
             };
 
             Action<Range, string> setFunc = null;
-            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), engine))
+            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
             {
                 case "cell":
                     setFunc = (rg, value) =>
@@ -138,6 +138,97 @@ namespace taskt.Core.Automation.Commands
                     setFunc = (rg, value) =>
                     {
                         rg.Interior.Color = longConvert(value);
+                    };
+                    break;
+            }
+
+            return setFunc;
+        }
+
+        /// <summary>
+        /// expand value or variable as get cell value Function
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static Func<Worksheet, int, int, string> ExpandValueOrVariableAsGetCellValueFunction(this IExcelValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        {
+            Func<Worksheet, int, int, string> getFunc = null;
+            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
+            {
+                case "cell":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return (string)((Range)sheet.Cells[row, column]).Text;
+                    };
+                    break;
+                case "formula":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return (string)((Range)sheet.Cells[row, column]).Formula;
+                    };
+                    break;
+                case "format":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return (string)((Range)sheet.Cells[row, column]).NumberFormatLocal;
+                    };
+                    break;
+                case "fore color":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return ((long)((Range)sheet.Cells[row, column]).Font.Color).ToString();
+                    };
+                    break;
+                case "back color":
+                    getFunc = (sheet, column, row) =>
+                    {
+                        return ((long)((Range)sheet.Cells[row, column]).Interior.Color).ToString();
+                    };
+                    break;
+            }
+            return getFunc;
+        }
+
+        /// <summary>
+        /// expand value or variable as set cell value Action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        public static Action<string, Worksheet, int, int> ExpandValueOrVaribleAsSetCellValueAction(this IExcelValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        {
+            Action<string, Worksheet, int, int> setFunc = null;
+            switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
+            {
+                case "cell":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Range)sheet.Cells[row, column]).Value = value;
+                    };
+                    break;
+                case "formula":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Range)sheet.Cells[row, column]).Formula = value;
+                    };
+                    break;
+                case "format":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Range)sheet.Cells[row, column]).NumberFormatLocal = value;
+                    };
+                    break;
+                case "fore color":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Range)sheet.Cells[row, column]).Font.Color = long.Parse(value);
+                    };
+                    break;
+                case "back color":
+                    setFunc = (value, sheet, column, row) =>
+                    {
+                        ((Range)sheet.Cells[row, column]).Interior.Color = long.Parse(value);
                     };
                     break;
             }

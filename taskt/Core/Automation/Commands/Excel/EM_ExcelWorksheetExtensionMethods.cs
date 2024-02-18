@@ -49,6 +49,32 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
+        /// try parse RC Range
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="startRow"></param>
+        /// <param name="startColumn"></param>
+        /// <param name="endRow"></param>
+        /// <param name="endColumn"></param>
+        /// <param name="ret"></param>
+        /// <returns></returns>
+        public static bool RCRangeTryParse(this Worksheet sheet, int startRow, int startColumn, int endRow, int endColumn, out (int startRow, int startColumn, int endRow, int endColumn) ret)
+        {
+            ret = (0, 0, 0, 0);
+            if (!sheet.RCLocationTryParse(startRow, endColumn, out _))
+            {
+                return false;
+            }
+            if (!sheet.RCLocationTryParse(endRow, endColumn, out _))
+            {
+                return false;
+            }
+
+            ret = (startRow,  startColumn, endRow, endColumn);
+            return true;
+        }
+
+        /// <summary>
         /// try parse RC row
         /// </summary>
         /// <param name="sheet"></param>
@@ -172,7 +198,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="column"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string ToCellLocation(Worksheet sheet, int row, int column)
+        public static string ToCellLocation(this Worksheet sheet, int row, int column)
         {
             //if (CheckCorrectRC(row, column, sheet))
             //{
@@ -193,14 +219,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get last index specified by column index
+        /// get last row index
         /// </summary>
         /// <param name="sheet"></param>
         /// <param name="column">Column Index</param>
         /// <param name="startRow"></param>
         /// <param name="targetType"></param>
         /// <returns></returns>
-        public static int LastIndex(this Worksheet sheet, int column, int startRow, string targetType)
+        public static int LastRowIndex(this Worksheet sheet, int column, int startRow, string targetType)
         {
             int lastRow = startRow;
             switch (targetType.ToLower())
@@ -220,6 +246,36 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
             return --lastRow;
+        }
+
+        /// <summary>
+        /// get last column Index
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="startColum"></param>
+        /// <param name="targetType"></param>
+        /// <returns></returns>
+        public static int GetLastColumnIndex(this Worksheet sheet, int row, int startColum, string targetType)
+        {
+            int lastColumn = startColum;
+            switch (targetType.ToLower())
+            {
+                case "formula":
+                    while ((string)(((Range)sheet.Cells[row, lastColumn]).Formula) != "")
+                    {
+                        lastColumn++;
+                    }
+                    break;
+
+                default:
+                    while ((string)(((Range)sheet.Cells[row, lastColumn]).Text) != "")
+                    {
+                        lastColumn++;
+                    }
+                    break;
+            }
+            return --lastColumn;
         }
     }
 }

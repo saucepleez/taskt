@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using System;
+using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -107,6 +108,63 @@ namespace taskt.Core.Automation.Commands
             {
                 column = "";
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// convert column Name to column Index
+        /// </summary>
+        /// <param name="excelInstance"></param>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static int ToColumnIndex(this Application excelInstance, string columnName)
+        {
+            try
+            {
+                return ((Range)excelInstance.Columns[columnName]).Column;
+            }
+            catch
+            {
+                throw new Exception($"Strange Column Name '{columnName}'.");
+            }
+        }
+
+        /// <summary>
+        /// convert column Index to column Name
+        /// </summary>
+        /// <param name="excelInstance"></param>
+        /// <param name="columnIndex"></param>
+        /// <returns></returns>
+        public static string ToColumnName(this Application excelInstance, int columnIndex)
+        {
+            try
+            {
+                return ((Range)excelInstance.Cells[1, columnIndex]).Address.Split('$')[1];
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// convert RC Location to Cell Location
+        /// </summary>
+        /// <param name="excelInstance"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string ToCellLocation(this Application excelInstance, int row, int column)
+        {
+            try
+            {
+                return ((Range)excelInstance.Cells[row, column]).Address.Replace("$", "");
+            }
+            catch
+            {
+                throw new Exception($"Strange Excel RC Location. Row: '{row}', Column: '{column}'");
             }
         }
     }
