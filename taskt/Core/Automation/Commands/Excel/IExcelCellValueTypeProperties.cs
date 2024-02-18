@@ -1,4 +1,4 @@
-﻿namespace taskt.Core.Automation.Commands.Excel
+﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// for Cell value type properties
