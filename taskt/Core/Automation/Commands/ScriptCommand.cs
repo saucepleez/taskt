@@ -11,7 +11,7 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    public abstract class ScriptCommand : IParameterUI
+    public abstract class ScriptCommand : ILParameterUI
     {
         [XmlAttribute]
         public string CommandID { get; set; }

@@ -3,7 +3,7 @@
     /// <summary>
     /// any window name commands properties
     /// </summary>
-    public interface IAnyWindowNameProperties
+    public interface ILAnyWindowNameProperties
     {
         /// <summary>
         /// window name

@@ -3,7 +3,7 @@
     /// <summary>
     /// window size properties
     /// </summary>
-    public interface IWindowSizeProperties : ISizeProperties
+    public interface IWindowSizeProperties : ILSizeProperties
     {
     }
 }

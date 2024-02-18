@@ -374,7 +374,7 @@
     <Compile Include="Core\Automation\Commands\Math\GetTanCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetCosCommand.cs" />
     <Compile Include="Core\Automation\Commands\Math\GetSinCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Math\IMathValueResultProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Math\ILMathValueResultProperties.cs" />
     <Compile Include="Core\Automation\Commands\Math\ITrignometricProperties.cs" />
     <Compile Include="Core\Automation\Commands\Math\EM_MathValueResultPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\ProcessControls.cs" />
@@ -415,8 +415,8 @@
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizeFromWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowSizeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\GetWindowStateFromWindowHandleCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Window\IAnyWindowNameProperties.cs" />
-    <Compile Include="Core\Automation\Commands\Window\IWindowHandleProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\ILAnyWindowNameProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Window\ILWindowHandleProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowNameProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowPositionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Window\IWindowSizeProperties.cs" />
@@ -425,9 +425,9 @@
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowPositionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowSizePropertiesExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\_General\IParameterUI.cs" />
-    <Compile Include="Core\Automation\Commands\_General\IPositionProperties.cs" />
-    <Compile Include="Core\Automation\Commands\_General\ISizeProperties.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ILParameterUI.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ILPositionProperties.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ILSizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\RECT.cs" />
     <Compile Include="Core\Automation\Engine\SystemVariables.cs" />
     <Compile Include="Core\Automation\Commands\FormUIControls.cs" />

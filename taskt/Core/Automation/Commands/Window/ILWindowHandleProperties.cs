@@ -3,7 +3,7 @@
     /// <summary>
     /// window handle command properties
     /// </summary>
-    public interface IWindowHandleProperties
+    public interface ILWindowHandleProperties
     {
         /// <summary>
         /// window handle

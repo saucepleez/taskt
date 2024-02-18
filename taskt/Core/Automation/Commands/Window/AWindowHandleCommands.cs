@@ -8,7 +8,7 @@ namespace taskt.Core.Automation.Commands
     /// Abstract class for Window Handle command
     /// </summary>
     [Serializable]
-    public abstract class AWindowHandleCommands : ScriptCommand, IWindowHandleProperties
+    public abstract class AWindowHandleCommands : ScriptCommand, ILWindowHandleProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(WindowControls), nameof(WindowControls.v_InputWindowHandle))]

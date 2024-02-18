@@ -3,7 +3,7 @@
     /// <summary>
     /// Math commands value-result
     /// </summary>
-    public interface IMathValueResultProperties
+    public interface ILMathValueResultProperties
     {
         /// <summary>
         /// value

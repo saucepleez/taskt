@@ -3,7 +3,7 @@
     /// <summary>
     /// window position properties
     /// </summary>
-    public interface IWindowPositionProperties : IPositionProperties
+    public interface IWindowPositionProperties : ILPositionProperties
     {
     }
 }

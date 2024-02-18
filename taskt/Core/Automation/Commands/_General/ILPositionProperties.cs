@@ -3,7 +3,7 @@
     /// <summary>
     /// general position properties
     /// </summary>
-    public interface IPositionProperties
+    public interface ILPositionProperties
     {
         /// <summary>
         /// x position

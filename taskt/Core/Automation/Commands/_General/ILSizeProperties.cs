@@ -3,7 +3,7 @@
     /// <summary>
     /// general size properties
     /// </summary>
-    public interface ISizeProperties
+    public interface ILSizeProperties
     {
         /// <summary>
         /// width
