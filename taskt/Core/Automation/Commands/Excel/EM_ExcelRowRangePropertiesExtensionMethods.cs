@@ -5,13 +5,25 @@ namespace taskt.Core.Automation.Commands
 {
     public static class EM_ExcelRowRangePropertiesExtensionMethods
     {
-        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsRangeIndecies(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine)
+        /// <summary>
+        /// expand value or variable As Range Indecies (Row-Start, Column-Start, Row-End, Column-End)
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="engine"></param>
+        /// <param name="lastColumnFunc"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsRangeIndecies(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine, Func<int> lastColumnFunc = null)
         {
             (_, var sheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             var rowIndex = ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_RowIndex), "Row Index", engine);
 
-            var valueType = ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine);
+            var sheetLastColumn = new Func<int, int, int>((r, c) =>
+            {
+                var valueType = ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine);
+                return sheet.GetLastColumnIndex(r, c, valueType);
+            });
 
             int columnStartIndex = 0;
             int columnEndIndex = 0;
@@ -31,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (string.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = sheet.GetLastColumnIndex(rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = (lastColumnFunc != null) ? lastColumnFunc() : sheetLastColumn(rowIndex, columnStartIndex);
                     }
                     else
                     {
@@ -48,7 +60,7 @@ namespace taskt.Core.Automation.Commands
 
                     if (string.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = sheet.GetLastColumnIndex(rowIndex, columnStartIndex, valueType);
+                        columnEndIndex = (lastColumnFunc != null) ? lastColumnFunc() : sheetLastColumn(rowIndex, columnStartIndex);
                     }
                     else
                     {
