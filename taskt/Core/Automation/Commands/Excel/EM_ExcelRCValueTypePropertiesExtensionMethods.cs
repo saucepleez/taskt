@@ -6,7 +6,7 @@ namespace taskt.Core.Automation.Commands
     public static class EM_ExcelRCValueTypePropertiesExtensionMethods
     {
         /// <summary>
-        /// expand value or variable as get cell value Function
+        /// expand value or variable as get cell value Function(sheet, row, column)
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// expand value or variable as set cell value Action
+        /// expand value or variable as set cell value Action(value, sheet, row, column)
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
@@ -97,7 +97,7 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// expand value or variable as Check Range Value Function
+        /// expand value or variable as Check Range Value Function(sheet, row, column)
         /// </summary>
         /// <param name="parameterName"></param>
         /// <param name="command"></param>
