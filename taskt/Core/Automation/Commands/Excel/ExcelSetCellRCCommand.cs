@@ -70,10 +70,16 @@ namespace taskt.Core.Automation.Commands
 
             //setFunc(targetText, excelSheet, rg);
 
-            var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
-            var setFunc = this.ExpandValueOrVariableAsSetRangeAction(engine);
+            //var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
+            //var setFunc = this.ExpandValueOrVariableAsSetRangeAction(engine);
+            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
+            //setFunc(rg, targetText);
+
+            (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            (var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
+            var setFunc = this.ExpandValueOrVaribleAsSetCellValueAction(engine);
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-            setFunc(rg, targetText);
+            setFunc(targetText, sheet, row, column);
         }
     }
 }
