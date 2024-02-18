@@ -73,7 +73,7 @@ namespace taskt.Core.Automation.Commands
             (int rowIndex, int columnStartIndex, int columnEndIndex) = this.ExpandValueOrVariableAsRangeIndecies(engine);
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
-            var getFunc = this.ExpandValueOrVariableAsGetCellValueFunction(engine);
+            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
             DataTable newDT = new DataTable();
             newDT.Rows.Add();

@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             //chkFunc(rg).StoreInUserVariable(engine, v_Result);
 
             var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
-            var chkFunc = this.ExpandValueOrVariableAsCheckRangeFunction(engine);
+            var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
             chkFunc(rg).StoreInUserVariable(engine, v_Result);
         }
 

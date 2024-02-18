@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
 
             (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
             (var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
-            var setFunc = this.ExpandValueOrVaribleAsSetCellValueAction(engine);
+            var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
             setFunc(targetText, sheet, row, column);
         }

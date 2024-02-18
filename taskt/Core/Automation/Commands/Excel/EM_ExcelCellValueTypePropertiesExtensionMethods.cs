@@ -12,7 +12,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Func<Range, bool> ExpandValueOrVariableAsCheckRangeFunction(this IExcelCellValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<Range, bool> ExpandValueOrVariableAsCheckValueFunction(this IExcelCellValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Func<Range, bool> func = null;
             switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Func<Range, string> ExpandValueOrVariableAsGetRangeFunction(this IExcelCellValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<Range, string> ExpandValueOrVariableAsGetValueFunction(this IExcelCellValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Func<Range, string> getFunc = null;
             switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
@@ -93,7 +93,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Action<Range, string> ExpandValueOrVariableAsSetRangeAction(this IExcelCellValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        public static Action<Range, string> ExpandValueOrVariableAsSetValueAction(this IExcelCellValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Func<string, long> longConvert = (str) =>
             {

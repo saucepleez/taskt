@@ -11,7 +11,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Func<Worksheet, int, int, string> ExpandValueOrVariableAsGetCellValueFunction(this IExcelRCValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<Worksheet, int, int, string> ExpandValueOrVariableAsGetValueFunction(this IExcelRCValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Func<Worksheet, int, int, string> getFunc = null;
             switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Action<string, Worksheet, int, int> ExpandValueOrVaribleAsSetCellValueAction(this IExcelRCValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        public static Action<string, Worksheet, int, int> ExpandValueOrVaribleAsSetValueAction(this IExcelRCValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Action<string, Worksheet, int, int> setFunc = null;
             switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
@@ -103,7 +103,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Func<Worksheet, int, int, bool> ExpandValueOrVariableAsCheckFunction(this IExcelRCValueTypeProperties command, Engine.AutomationEngineInstance engine)
+        public static Func<Worksheet, int, int, bool> ExpandValueOrVariableAsCheckValueFunction(this IExcelRCValueTypeProperties command, Engine.AutomationEngineInstance engine)
         {
             Func<Worksheet, int, int, bool> func = null;
             switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))

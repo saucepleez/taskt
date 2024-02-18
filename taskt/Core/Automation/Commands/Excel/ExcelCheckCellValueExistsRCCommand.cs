@@ -72,7 +72,7 @@ namespace taskt.Core.Automation.Commands
 
             (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
             (var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
-            var chkFunc = this.ExpandValueOrVariableAsCheckFunction(engine);
+            var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
             chkFunc(sheet, row, column).StoreInUserVariable(engine, v_Result);
         }
 

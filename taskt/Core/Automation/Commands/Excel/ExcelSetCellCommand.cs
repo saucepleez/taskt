@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             //setFunc(targetText, excelSheet, rg);
 
             var rg = this.ExpandValueOrVariableAsExcelSingleCellLocation(engine);
-            var setFunc = this.ExpandValueOrVariableAsSetRangeAction(engine);
+            var setFunc = this.ExpandValueOrVariableAsSetValueAction(engine);
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
             setFunc(rg, targetText);
         }
