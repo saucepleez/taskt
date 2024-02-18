@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
             //    );
 
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (int rowIndex, int columnStartIndex, int columnEndIndex) =this.ExpandValueOrVariableAsRangeIndecies(engine);
+            (int rowIndex, int columnStartIndex, int columnEndIndex) = this.ExpandValueOrVariableAsRangeIndecies(engine);
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
             var getFunc = this.ExpandValueOrVariableAsGetCellValueFunction(engine);
@@ -81,7 +81,8 @@ namespace taskt.Core.Automation.Commands
             int tblCol = 0;
             for (int i = columnStartIndex; i <= columnEndIndex; i++)
             {
-                newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, i));
+                //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, i));
+                newDT.Columns.Add(excelSheet.ToColumnName(i));
                 newDT.Rows[0][tblCol] = getFunc(excelSheet, i, rowIndex);
                 tblCol++;
             }
