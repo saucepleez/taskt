@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -10,19 +9,26 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="command"></param>
         /// <param name="engine"></param>
-        /// <param name="lastColumnFunc"></param>
+        /// <param name="objectSizeFunc"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsRangeIndecies(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine, Func<int> lastColumnFunc = null)
+        public static (int rowIndex, int columnStartIndex, int columnEndIndex) ExpandValueOrVariableAsRangeIndecies(this IExcelRowRangeProperties command, Engine.AutomationEngineInstance engine, Func<int> objectSizeFunc = null)
         {
             (_, var sheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             var rowIndex = ((ScriptCommand)command).ExpandValueOrUserVariableAsInteger(nameof(command.v_RowIndex), "Row Index", engine);
 
-            var sheetLastColumn = new Func<int, int, int>((r, c) =>
+            var innerLastColumnFunc = new Func<int, int, int>((rowStart, columnStart) =>
             {
-                var valueType = ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine);
-                return sheet.GetLastColumnIndex(r, c, valueType);
+                if (objectSizeFunc != null)
+                {
+                    return columnStart + objectSizeFunc() - 1;
+                }
+                else
+                {
+                    var valueType = ((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine);
+                    return sheet.GetLastColumnIndex(rowStart, columnStart, valueType);
+                }
             });
 
             int columnStartIndex = 0;
@@ -43,7 +49,8 @@ namespace taskt.Core.Automation.Commands
 
                     if (string.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = (lastColumnFunc != null) ? lastColumnFunc() : sheetLastColumn(rowIndex, columnStartIndex);
+                        //columnEndIndex = (lastColumnFunc != null) ? lastColumnFunc() : sheetLastColumn(rowIndex, columnStartIndex);
+                        columnEndIndex = innerLastColumnFunc(rowIndex, columnStartIndex);
                     }
                     else
                     {
@@ -60,7 +67,8 @@ namespace taskt.Core.Automation.Commands
 
                     if (string.IsNullOrEmpty(columnEndValue))
                     {
-                        columnEndIndex = (lastColumnFunc != null) ? lastColumnFunc() : sheetLastColumn(rowIndex, columnStartIndex);
+                        //columnEndIndex = (lastColumnFunc != null) ? lastColumnFunc() : sheetLastColumn(rowIndex, columnStartIndex);
+                        columnEndIndex = innerLastColumnFunc(rowIndex, columnStartIndex);
                     }
                     else
                     {
