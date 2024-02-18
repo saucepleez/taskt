@@ -77,7 +77,7 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
 
-            // swap column
+            // swap values
             if (columnStartIndex > columnEndIndex)
             {
                 (columnEndIndex, columnStartIndex) = (columnStartIndex, columnEndIndex);
