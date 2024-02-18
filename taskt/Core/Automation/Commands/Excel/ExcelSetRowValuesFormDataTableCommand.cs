@@ -62,11 +62,11 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(6006)]
         //public string v_ValueType { get; set; }
 
-        //[XmlAttribute]
+        [XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
-        //[PropertyDescription("When DataTable Items Not Enough")]
+        [PropertyDescription("When DataTable Items Not Enough")]
         //[PropertyParameterOrder(6007)]
-        //public string v_WhenItemNotEnough { get; set; }
+        public override string v_WhenItemNotEnough { get; set; }
 
         public ExcelSetRowValuesFromDataTableCommand()
         {

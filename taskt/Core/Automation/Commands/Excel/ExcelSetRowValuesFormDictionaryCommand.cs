@@ -15,47 +15,47 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelSetRowValuesFromDictionaryCommand : AExcelInstanceCommand
+    public class ExcelSetRowValuesFromDictionaryCommand : AExcelRowRangeSetCommand
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
-        [PropertyParameterOrder(6000)]
-        public string v_RowIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowLocation))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_RowIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
-        [PropertyParameterOrder(6001)]
-        public string v_ColumnType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
+        //[PropertyParameterOrder(6001)]
+        //public string v_ColumnType { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
-        [PropertyParameterOrder(6002)]
-        public string v_ColumnStart { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnStart))]
+        //[PropertyParameterOrder(6002)]
+        //public string v_ColumnStart { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
-        [PropertyParameterOrder(6003)]
-        public string v_ColumnEnd { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnEnd))]
+        //[PropertyParameterOrder(6003)]
+        //public string v_ColumnEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
-        [PropertyParameterOrder(6004)]
+        [PropertyParameterOrder(10000)]
         public string v_DictionaryVariable { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
-        [PropertyParameterOrder(6005)]
-        public string v_ValueType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
+        //[PropertyParameterOrder(6005)]
+        //public string v_ValueType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
         [PropertyDescription("When Dictionary Items Not Enough")]
-        [PropertyParameterOrder(6006)]
-        public string v_WhenItemNotEnough { get; set; }
+        //[PropertyParameterOrder(6006)]
+        public override string v_WhenItemNotEnough { get; set; }
 
         public ExcelSetRowValuesFromDictionaryCommand()
         {
@@ -69,39 +69,42 @@ namespace taskt.Core.Automation.Commands
         {
             (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
 
-            Dictionary<string, string> myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
+            var myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
 
-            (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
-                ExcelControls.GetRangeIndeiesRowDirection(
-                    nameof(v_RowIndex), nameof(v_ColumnType),
-                    nameof(v_ColumnStart), nameof(v_ColumnEnd),
-                    nameof(v_ValueType), engine, excelSheet, this,
-                    myDic
-                );
+            //(int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
+            //    ExcelControls.GetRangeIndeiesRowDirection(
+            //        nameof(v_RowIndex), nameof(v_ColumnType),
+            //        nameof(v_ColumnStart), nameof(v_ColumnEnd),
+            //        nameof(v_ValueType), engine, excelSheet, this,
+            //        myDic
+            //    );
 
-            //string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
-            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If Dictionary Not Enough", engine);
-            int range = columnEndIndex - columnStartIndex + 1;
-            if (ifListNotEnough == "error")
-            {
-                if (range > myDic.Count)
-                {
-                    throw new Exception("Dictionary Items not enough");
-                }
-            }
+            ////string ifListNotEnough = v_IfDictionaryNotEnough.GetUISelectionValue("v_IfDictionaryNotEnough", this, engine);
+            //string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If Dictionary Not Enough", engine);
+            //int range = columnEndIndex - columnStartIndex + 1;
+            //if (ifListNotEnough == "error")
+            //{
+            //    if (range > myDic.Count)
+            //    {
+            //        throw new Exception("Dictionary Items not enough");
+            //    }
+            //}
 
-            int max = range;
-            if (range > myDic.Count)
-            {
-                max = myDic.Count;
-            }
+            //int max = range;
+            //if (range > myDic.Count)
+            //{
+            //    max = myDic.Count;
+            //}
+            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsRangeIndecies(engine, new Func<int>(() => myDic.Count));
 
             //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
-            var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
+            //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
+            var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
 
             string[] keys = new string[myDic.Count];
             myDic.Keys.CopyTo(keys, 0);
 
+            var max = columnEndIndex - columnStartIndex + 1;
             for (int i = 0; i < max; i++)
             {
                 setFunc(myDic[keys[i]], excelSheet, columnStartIndex + i, rowIndex);
