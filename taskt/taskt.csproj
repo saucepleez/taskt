@@ -336,6 +336,11 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelCellActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelCellProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelCellValueTypeProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeGetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeSetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelRangeGetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelRangeSetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCRangeProperties.cs" />
