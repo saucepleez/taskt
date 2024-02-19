@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// excel Range get properties
     /// </summary>
-    public interface ILExcelRangeGetProperties
+    public interface ILExcelRangeGetProperties : ILExpandableProperties
     {
         /// <summary>
         /// variable name to store result

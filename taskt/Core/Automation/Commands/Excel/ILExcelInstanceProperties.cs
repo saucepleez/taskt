@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// excel instance properties
     /// </summary>
-    public interface ILExcelInstanceProperties
+    public interface ILExcelInstanceProperties : ILExpandableProperties
     {
         /// <summary>
         /// excel instance name

@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// excel range Set properties
     /// </summary>
-    public interface ILExcelRangeSetProperties
+    public interface ILExcelRangeSetProperties : ILExpandableProperties
     {
         /// <summary>
         /// behavior when specified Item(List/Dictionary/DataTable) items not enough
