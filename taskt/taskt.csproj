@@ -317,6 +317,7 @@
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelColumnRangeCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelColumnRangeGetCommands.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\AExcelColumnRangeSetCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelInstanceCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelRCLocationActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelRCLocationCommands.cs" />
@@ -328,6 +329,7 @@
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelApplicationExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelCellValueTypePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelColumnRangePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\EM_ExcelColumnRangeSetPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelInstancePropertiesExtenstionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelRCLocationPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelRCValueTypePropertiesExtensionMethods.cs" />
