@@ -425,7 +425,8 @@
     <Compile Include="Core\Automation\Commands\Window\SetWindowStateByWindowHandleCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowPositionPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Window\EM_WindowSizePropertiesExtensionMethods.cs" />
-    <Compile Include="Core\Automation\Commands\_General\ILParameterUI.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ILExpandableProperties.cs" />
+    <Compile Include="Core\Automation\Commands\_General\ILUIParameterProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ILPositionProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ILSizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\RECT.cs" />
