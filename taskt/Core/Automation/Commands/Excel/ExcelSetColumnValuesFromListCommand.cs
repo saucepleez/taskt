@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
         [PropertyDescription("When List Items Not Enough")]
         [PropertyParameterOrder(6006)]
-        public string v_IfListNotEnough { get; set; }
+        public string v_WhenItemNotEnough { get; set; }
 
         public ExcelSetColumnValuesFromListCommand()
         {
@@ -82,7 +82,7 @@ namespace taskt.Core.Automation.Commands
 
             int range = rowEnd - rowStart + 1;
 
-            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfListNotEnough), "If List Not Enough", engine);
+            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If List Not Enough", engine);
             if (ifListNotEnough == "error")
             {
                 if (range > myList.Count)

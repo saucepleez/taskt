@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
         [PropertyParameterOrder(6001)]
-        public string v_ExcelColumnIndex { get; set; }
+        public string v_ColumnIndex { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowStart))]
@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
         [PropertyDescription("When DataTable Items Not Enough")]
         [PropertyParameterOrder(6007)]
-        public string v_IfDataTableNotEnough { get; set; }
+        public string v_WhenItemNotEnough { get; set; }
 
         public ExcelSetColumnValuesFromDataTableCommand()
         {
@@ -89,7 +89,7 @@ namespace taskt.Core.Automation.Commands
 
             (int excelColumnIndex, int rowStart, int rowEnd, string valueType) =
                 ExcelControls.GetRangeIndeiesColumnDirection(
-                    nameof(v_ExcelColumnIndex), nameof(v_ColumnType),
+                    nameof(v_ColumnIndex), nameof(v_ColumnType),
                     nameof(v_RowStart), nameof(v_RowEnd),
                     nameof(v_ValueType), engine, excelSheet, this,
                     myDT
@@ -103,7 +103,7 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception("Column index " + v_DataTableColumnIndex + " is not exists");
             }
 
-            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfDataTableNotEnough), "Id DataTable Not Enough", engine);
+            string ifDataTableNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "Id DataTable Not Enough", engine);
             if (ifDataTableNotEnough == "error")
             {
                 if (range > myDT.Rows.Count)
