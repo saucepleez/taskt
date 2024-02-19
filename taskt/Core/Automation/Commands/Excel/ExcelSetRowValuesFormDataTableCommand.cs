@@ -124,6 +124,10 @@ namespace taskt.Core.Automation.Commands
 
             var myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
             var dtRowIndex = v_DataTableRowIndex.ExpandValueOrUserVariableAsInteger("DataTable Row Index", engine);
+            if (dtRowIndex >= myDT.Rows.Count)
+            {
+                throw new Exception($"DataTable Row '{v_DataTableRowIndex}' is not exists.");
+            }
 
             (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
             (var row, var columnStart, var columnEnd) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myDT.Columns.Count));
