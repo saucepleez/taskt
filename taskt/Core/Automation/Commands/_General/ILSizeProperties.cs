@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// general size properties
     /// </summary>
-    public interface ILSizeProperties
+    public interface ILSizeProperties : ILExpandableProperties
     {
         /// <summary>
         /// width

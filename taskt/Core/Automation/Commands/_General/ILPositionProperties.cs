@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// general position properties
     /// </summary>
-    public interface ILPositionProperties
+    public interface ILPositionProperties : ILExpandableProperties
     {
         /// <summary>
         /// x position

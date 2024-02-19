@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// Math commands value-result
     /// </summary>
-    public interface ILMathValueResultProperties
+    public interface ILMathValueResultProperties : ILExpandableProperties
     {
         /// <summary>
         /// value

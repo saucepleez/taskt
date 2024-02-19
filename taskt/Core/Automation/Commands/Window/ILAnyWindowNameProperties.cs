@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// any window name commands properties
     /// </summary>
-    public interface ILAnyWindowNameProperties
+    public interface ILAnyWindowNameProperties : ILExpandableProperties
     {
         /// <summary>
         /// window name

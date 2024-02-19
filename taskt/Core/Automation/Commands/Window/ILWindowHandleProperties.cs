@@ -1,9 +1,11 @@
-﻿namespace taskt.Core.Automation.Commands
+﻿using taskt.Core.Automation.Commands._General;
+
+namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// window handle command properties
     /// </summary>
-    public interface ILWindowHandleProperties
+    public interface ILWindowHandleProperties : ILExpandableProperties
     {
         /// <summary>
         /// window handle
