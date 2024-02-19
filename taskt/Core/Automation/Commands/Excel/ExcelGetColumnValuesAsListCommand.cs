@@ -15,41 +15,41 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelGetColumnValuesAsListCommand : AExcelInstanceCommands
+    public class ExcelGetColumnValuesAsListCommand : AExcelColumnRangeGetCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
-        [PropertyParameterOrder(6000)]
-        public string v_ColumnType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_ColumnType { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
-        [PropertyParameterOrder(6001)]
-        public string v_ColumnIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
+        //[PropertyParameterOrder(6001)]
+        //public string v_ColumnIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowStart))]
-        [PropertyParameterOrder(6002)]
-        public string v_RowStart { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowStart))]
+        //[PropertyParameterOrder(6002)]
+        //public string v_RowStart { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowEnd))]
-        [PropertyParameterOrder(6003)]
-        public string v_RowEnd { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowEnd))]
+        //[PropertyParameterOrder(6003)]
+        //public string v_RowEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        [PropertyParameterOrder(6004)]
-        public string v_Result { get; set; }
+        //[PropertyParameterOrder(6004)]
+        public override string v_Result { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
-        [PropertyParameterOrder(6005)]
-        public string v_ValueType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
+        //[PropertyParameterOrder(6005)]
+        //public string v_ValueType { get; set; }
 
         public ExcelGetColumnValuesAsListCommand()
         {
@@ -61,20 +61,23 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
-            (int columnIndex, int rowStart, int rowEnd, string valueType) =
-                ExcelControls.GetRangeIndeiesColumnDirection(
-                    nameof(v_ColumnIndex), nameof(v_ColumnType),
-                    nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType),
-                    engine, excelSheet, this
-                );
+            //(int columnIndex, int rowStart, int rowEnd, string valueType) =
+            //    ExcelControls.GetRangeIndeiesColumnDirection(
+            //        nameof(v_ColumnIndex), nameof(v_ColumnType),
+            //        nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType),
+            //        engine, excelSheet, this
+            //    );
+            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
 
-            Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
+            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
+            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
             List<string> newList = new List<string>();
 
-            for (int i = rowStart; i <= rowEnd; i++)
+            for (int i = rowStartIndex; i <= rowEndIndex; i++)
             {
                 newList.Add(getFunc(excelSheet, columnIndex, i));
             }
