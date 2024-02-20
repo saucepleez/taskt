@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -15,47 +14,47 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelSetColumnValuesFromListCommand : AExcelInstanceCommands
+    public class ExcelSetColumnValuesFromListCommand : AExcelColumnRangeSetCommands
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         //public string v_InstanceName { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
-        [PropertyParameterOrder(6000)]
-        public string v_ColumnType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnType))]
+        //[PropertyParameterOrder(6000)]
+        //public string v_ColumnType { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
-        [PropertyParameterOrder(6001)]
-        public string v_ColumnIndex { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
+        //[PropertyParameterOrder(6001)]
+        //public string v_ColumnIndex { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowStart))]
-        [PropertyParameterOrder(6002)]
-        public string v_RowStart { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowStart))]
+        //[PropertyParameterOrder(6002)]
+        //public string v_RowStart { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowEnd))]
-        [PropertyParameterOrder(6003)]
-        public string v_RowEnd { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_RowEnd))]
+        //[PropertyParameterOrder(6003)]
+        //public string v_RowEnd { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_InputListName))]
-        [PropertyParameterOrder(6004)]
+        [PropertyParameterOrder(10000)]
         public string v_ListVariable { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
-        [PropertyParameterOrder(6005)]
-        public string v_ValueType { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueType))]
+        //[PropertyParameterOrder(6005)]
+        //public string v_ValueType { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
+        //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_WhenItemNotEnough))]
         [PropertyDescription("When List Items Not Enough")]
-        [PropertyParameterOrder(6006)]
-        public string v_WhenItemNotEnough { get; set; }
+        //[PropertyParameterOrder(6006)]
+        public override string v_WhenItemNotEnough { get; set; }
 
         public ExcelSetColumnValuesFromListCommand()
         {
@@ -67,42 +66,45 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
-            
-            List<string> myList = v_ListVariable.ExpandUserVariableAsList(engine);
+            var myList = v_ListVariable.ExpandUserVariableAsList(engine);
 
-            (int columnIndex, int rowStart, int rowEnd, string valueType) =
-               ExcelControls.GetRangeIndeiesColumnDirection(
-                   nameof(v_ColumnIndex), nameof(v_ColumnType),
-                   nameof(v_RowStart), nameof(v_RowEnd),
-                   nameof(v_ValueType), engine, excelSheet, this,
-                   myList
-               );
+            //(int columnIndex, int rowStart, int rowEnd, string valueType) =
+            //   ExcelControls.GetRangeIndeiesColumnDirection(
+            //       nameof(v_ColumnIndex), nameof(v_ColumnType),
+            //       nameof(v_RowStart), nameof(v_RowEnd),
+            //       nameof(v_ValueType), engine, excelSheet, this,
+            //       myList
+            //   );
 
-            int range = rowEnd - rowStart + 1;
+            //int range = rowEnd - rowStart + 1;
 
-            string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If List Not Enough", engine);
-            if (ifListNotEnough == "error")
-            {
-                if (range > myList.Count)
-                {
-                    throw new Exception("List items not enough");
-                }
-            }
+            //string ifListNotEnough = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenItemNotEnough), "If List Not Enough", engine);
+            //if (ifListNotEnough == "error")
+            //{
+            //    if (range > myList.Count)
+            //    {
+            //        throw new Exception("List items not enough");
+            //    }
+            //}
 
-            int max = range;
-            if (range > myList.Count)
-            {
-                max = myList.Count;
-            }
+            //int max = range;
+            //if (range > myList.Count)
+            //{
+            //    max = myList.Count;
+            //}
+            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myList.Count));
 
             //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
-            var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
+            //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
+            var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
 
+            int max = rowEndIndex - rowStartIndex + 1;
             for (int i = 0; i < max; i++)
             {
-                setFunc(myList[i], excelSheet, columnIndex, rowStart + i);
+                setFunc(myList[i], excelSheet, columnIndex, rowStartIndex + i);
             }
         }
     }
