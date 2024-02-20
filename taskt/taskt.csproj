@@ -344,6 +344,9 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeGetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRangeSetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRowRangeGetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRowRangeProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\IExcelColumnRowRangeSetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ILExcelRangeGetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ILExcelRangeSetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRCLocationActionProperties.cs" />
