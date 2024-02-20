@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -82,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                     try
                     {
 
-                        ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[1]).Name;
+                        ret = ((Worksheet)excelInstance.Worksheets[1]).Name;
                     }
                     catch
                     {
@@ -92,7 +93,7 @@ namespace taskt.Core.Automation.Commands
                 case "last sheet":
                     try
                     {
-                        ret = ((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
+                        ret = ((Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name;
                     }
                     catch
                     {
