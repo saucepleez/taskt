@@ -334,19 +334,19 @@ namespace taskt.Core.Automation.Commands
             return (instanceObject, GetCurrentWorksheet(instanceObject));
         }
 
-        /// <summary>
-        /// expand value or UserVariable as Excel instance and worksheet
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="engine"></param>
-        /// <param name="returnNullIfSheetDoesNotExists"></param>
-        /// <returns></returns>
-        public static (Application instance, Worksheet sheet) ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(this string instanceName, string sheetName, Automation.Engine.AutomationEngineInstance engine, bool returnNullIfSheetDoesNotExists = false)
-        {
-            var instanceObject = instanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
-            var sheet = sheetName.ExpandValueOrUserVariableAsExcelWorksheet(engine, instanceObject, returnNullIfSheetDoesNotExists);
-            return (instanceObject, sheet);
-        }
+        ///// <summary>
+        ///// expand value or UserVariable as Excel instance and worksheet
+        ///// </summary>
+        ///// <param name="info"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="returnNullIfSheetDoesNotExists"></param>
+        ///// <returns></returns>
+        //public static (Application instance, Worksheet sheet) ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(this string instanceName, string sheetName, Automation.Engine.AutomationEngineInstance engine, bool returnNullIfSheetDoesNotExists = false)
+        //{
+        //    var instanceObject = instanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+        //    var sheet = sheetName.ExpandValueOrUserVariableAsExcelWorksheet(engine, instanceObject, returnNullIfSheetDoesNotExists);
+        //    return (instanceObject, sheet);
+        //}
 
         /// <summary>
         /// expand value or user variable as Excel Worksheet
@@ -1078,18 +1078,18 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static bool CheckCorrectRC(int row, int column, Worksheet excelSheet)
-        {
-            try
-            {
-                var rc = excelSheet.Cells[row, column];
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //public static bool CheckCorrectRC(int row, int column, Worksheet excelSheet)
+        //{
+        //    try
+        //    {
+        //        var rc = excelSheet.Cells[row, column];
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         //public static bool CheckCorrectColumnName(string columnName, Application excelInstance)
         //{
