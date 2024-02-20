@@ -79,7 +79,7 @@ namespace taskt.Core.Automation.Commands
             (var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
             var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
             var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-            setFunc(targetText, sheet, row, column);
+            setFunc(targetText, sheet, column, row);
         }
     }
 }

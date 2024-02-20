@@ -109,21 +109,21 @@ namespace taskt.Core.Automation.Commands
             switch (((ScriptCommand)command).ExpandValueOrUserVariableAsSelectionItem(nameof(command.v_ValueType), "Value Type", engine))
             {
                 case "cell":
-                    func = (sheet, row, column) =>
+                    func = (sheet, column, row) =>
                     {
                         return !string.IsNullOrEmpty(((Range)sheet.Cells[row, column]).Text);
                     };
                     break;
 
                 case "formula":
-                    func = (sheet, row, column) =>
+                    func = (sheet, column, row) =>
                     {
                         return ((Range)sheet.Cells[row, column]).Formula.StartsWith("=");
                     };
                     break;
 
                 case "back color":
-                    func = (sheet, row, column) =>
+                    func = (sheet, column, row) =>
                     {
                         return ((Range)sheet.Cells[row, column]).Interior.Color != 16777215;
                     };

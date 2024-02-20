@@ -65,7 +65,7 @@ namespace taskt.Core.Automation.Commands
             (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
             (int row, int column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-            getFunc(sheet, row, column).StoreInUserVariable(engine, v_Result);
+            getFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
         }
     }
 }
