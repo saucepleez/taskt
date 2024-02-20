@@ -704,45 +704,45 @@ namespace taskt.Core.Automation.Commands
         //    return setFunc;
         //}
 
-        public static Action<string, Worksheet, int, int> SetCellValueFunction(string valueType)
-        {
-            Action<string, Worksheet, int, int> setFunc = null;
-            switch (valueType)
-            {
-                case "cell":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Range)sheet.Cells[row, column]).Value = value;
-                    };
-                    break;
-                case "formula":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Range)sheet.Cells[row, column]).Formula = value;
-                    };
-                    break;
-                case "format":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Range)sheet.Cells[row, column]).NumberFormatLocal = value;
-                    };
-                    break;
-                case "fore color":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Range)sheet.Cells[row, column]).Font.Color = long.Parse(value);
-                    };
-                    break;
-                case "back color":
-                    setFunc = (value, sheet, column, row) =>
-                    {
-                        ((Range)sheet.Cells[row, column]).Interior.Color = long.Parse(value);
-                    };
-                    break;
-            }
+        //public static Action<string, Worksheet, int, int> SetCellValueFunction(string valueType)
+        //{
+        //    Action<string, Worksheet, int, int> setFunc = null;
+        //    switch (valueType)
+        //    {
+        //        case "cell":
+        //            setFunc = (value, sheet, column, row) =>
+        //            {
+        //                ((Range)sheet.Cells[row, column]).Value = value;
+        //            };
+        //            break;
+        //        case "formula":
+        //            setFunc = (value, sheet, column, row) =>
+        //            {
+        //                ((Range)sheet.Cells[row, column]).Formula = value;
+        //            };
+        //            break;
+        //        case "format":
+        //            setFunc = (value, sheet, column, row) =>
+        //            {
+        //                ((Range)sheet.Cells[row, column]).NumberFormatLocal = value;
+        //            };
+        //            break;
+        //        case "fore color":
+        //            setFunc = (value, sheet, column, row) =>
+        //            {
+        //                ((Range)sheet.Cells[row, column]).Font.Color = long.Parse(value);
+        //            };
+        //            break;
+        //        case "back color":
+        //            setFunc = (value, sheet, column, row) =>
+        //            {
+        //                ((Range)sheet.Cells[row, column]).Interior.Color = long.Parse(value);
+        //            };
+        //            break;
+        //    }
 
-            return setFunc;
-        }
+        //    return setFunc;
+        //}
         #endregion
 
         #region cell-range methods
@@ -771,17 +771,17 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        public static string GetAddress(Worksheet sheet, int row, int column)
-        {
-            if (CheckCorrectRC(row, column, sheet))
-            {
-                return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
-            }
-            else
-            {
-                throw new Exception("Strange Excel Location. Row: " + row + ", Column: " + column);
-            }
-        }
+        //public static string GetAddress(Worksheet sheet, int row, int column)
+        //{
+        //    if (CheckCorrectRC(row, column, sheet))
+        //    {
+        //        return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Strange Excel Location. Row: " + row + ", Column: " + column);
+        //    }
+        //}
 
         //public static int GetLastRowIndex(Worksheet sheet, string column, int startRow, string targetType)
         //{
@@ -837,180 +837,180 @@ namespace taskt.Core.Automation.Commands
             return --lastColumn;
         }
 
-        public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
-        {
-            string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
+        //public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
+        //{
+        //    string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
 
-            int columnIndex = 0;
-            switch (columnType)
-            {
-                case "range":
-                    string col = command.ExpandValueOrUserVariable(columnValueName, "Column", engine);
-                    columnIndex = GetColumnIndex(excelSheet, col);
-                    break;
-                case "rc":
-                    columnIndex = command.ExpandValueOrUserVariableAsInteger(columnValueName, "Column", engine);
-                    break;
-            }
+        //    int columnIndex = 0;
+        //    switch (columnType)
+        //    {
+        //        case "range":
+        //            string col = command.ExpandValueOrUserVariable(columnValueName, "Column", engine);
+        //            columnIndex = GetColumnIndex(excelSheet, col);
+        //            break;
+        //        case "rc":
+        //            columnIndex = command.ExpandValueOrUserVariableAsInteger(columnValueName, "Column", engine);
+        //            break;
+        //    }
 
-            string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
+        //    string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
 
-            int rowStartIndex = command.ExpandValueOrUserVariableAsInteger(rowStartName, "Start Row", engine);
-            string rowEndValue = command.GetRawPropertyValueAsString(rowEndName, "End Row");
-            int rowEndIndex;
-            if (String.IsNullOrEmpty(rowEndValue))
-            {
-                if (targetObject == null)
-                {
-                    rowEndIndex = GetLastRowIndex(excelSheet, columnIndex, rowStartIndex, valueType);
-                }
-                else
-                {
-                    int size;
-                    if (targetObject is List<string>)
-                    {
-                        size = ((List<string>)targetObject).Count;
-                    }
-                    else if (targetObject is Dictionary<string, string>)
-                    {
-                        size = ((Dictionary<string, string>)targetObject).Count;
-                    }
-                    else if (targetObject is System.Data.DataTable)
-                    {
-                        size = ((System.Data.DataTable)targetObject).Rows.Count;
-                    }
-                    else if (targetObject is int)
-                    {
-                        size = (int)targetObject;
-                    }
-                    else
-                    {
-                        throw new Exception("target object is strange data.");
-                    }
-                    rowEndIndex = rowStartIndex + size - 1;
-                }
-            }
-            else
-            {
-                rowEndIndex = rowEndValue.ExpandValueOrUserVariableAsInteger("End Row", engine);
-            }
+        //    int rowStartIndex = command.ExpandValueOrUserVariableAsInteger(rowStartName, "Start Row", engine);
+        //    string rowEndValue = command.GetRawPropertyValueAsString(rowEndName, "End Row");
+        //    int rowEndIndex;
+        //    if (String.IsNullOrEmpty(rowEndValue))
+        //    {
+        //        if (targetObject == null)
+        //        {
+        //            rowEndIndex = GetLastRowIndex(excelSheet, columnIndex, rowStartIndex, valueType);
+        //        }
+        //        else
+        //        {
+        //            int size;
+        //            if (targetObject is List<string>)
+        //            {
+        //                size = ((List<string>)targetObject).Count;
+        //            }
+        //            else if (targetObject is Dictionary<string, string>)
+        //            {
+        //                size = ((Dictionary<string, string>)targetObject).Count;
+        //            }
+        //            else if (targetObject is System.Data.DataTable)
+        //            {
+        //                size = ((System.Data.DataTable)targetObject).Rows.Count;
+        //            }
+        //            else if (targetObject is int)
+        //            {
+        //                size = (int)targetObject;
+        //            }
+        //            else
+        //            {
+        //                throw new Exception("target object is strange data.");
+        //            }
+        //            rowEndIndex = rowStartIndex + size - 1;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        rowEndIndex = rowEndValue.ExpandValueOrUserVariableAsInteger("End Row", engine);
+        //    }
 
-            if (rowStartIndex > rowEndIndex)
-            {
-                int t = rowStartIndex;
-                rowStartIndex = rowEndIndex;
-                rowEndIndex = t;
-            }
+        //    if (rowStartIndex > rowEndIndex)
+        //    {
+        //        int t = rowStartIndex;
+        //        rowStartIndex = rowEndIndex;
+        //        rowEndIndex = t;
+        //    }
 
-            CheckCorrectRCRange(rowStartIndex, columnIndex, rowEndIndex, columnIndex, excelSheet);
+        //    CheckCorrectRCRange(rowStartIndex, columnIndex, rowEndIndex, columnIndex, excelSheet);
 
-            return (columnIndex, rowStartIndex, rowEndIndex, valueType);
-        }
+        //    return (columnIndex, rowStartIndex, rowEndIndex, valueType);
+        //}
 
-        public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(string rowValueName, string columnTypeName, string columnStartName, string columnEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
-        {
-            int rowIndex = command.ExpandValueOrUserVariableAsInteger(rowValueName, "Row Index", engine);
+        //public static (int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) GetRangeIndeiesRowDirection(string rowValueName, string columnTypeName, string columnStartName, string columnEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
+        //{
+        //    int rowIndex = command.ExpandValueOrUserVariableAsInteger(rowValueName, "Row Index", engine);
 
-            string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
+        //    string valueType = command.ExpandValueOrUserVariableAsSelectionItem(valueTypeName, "Value Type", engine);
 
-            int columnStartIndex = 0;
-            int columnEndIndex = 0;
+        //    int columnStartIndex = 0;
+        //    int columnEndIndex = 0;
 
-            string columnStartValue = command.GetRawPropertyValueAsString(columnStartName, "Start Column");
-            string columnEndValue = command.GetRawPropertyValueAsString(columnEndName, "End Column");
+        //    string columnStartValue = command.GetRawPropertyValueAsString(columnStartName, "Start Column");
+        //    string columnEndValue = command.GetRawPropertyValueAsString(columnEndName, "End Column");
 
-            Func<int> getLastRowFromObject = () =>
-            {
-                int size;
-                if (targetObject is List<string>)
-                {
-                    size = ((List<string>)targetObject).Count;
-                }
-                else if (targetObject is Dictionary<string, string>)
-                {
-                    size = ((Dictionary<string, string>)targetObject).Count;
-                }
-                else if (targetObject is System.Data.DataTable)
-                {
-                    size = ((System.Data.DataTable)targetObject).Columns.Count;
-                }
-                else if (targetObject is int)
-                {
-                    size = (int)targetObject;
-                }
-                else
-                {
-                    throw new Exception("target object is strange data.");
-                }
-                return columnStartIndex + size - 1;
-            };
+        //    Func<int> getLastRowFromObject = () =>
+        //    {
+        //        int size;
+        //        if (targetObject is List<string>)
+        //        {
+        //            size = ((List<string>)targetObject).Count;
+        //        }
+        //        else if (targetObject is Dictionary<string, string>)
+        //        {
+        //            size = ((Dictionary<string, string>)targetObject).Count;
+        //        }
+        //        else if (targetObject is System.Data.DataTable)
+        //        {
+        //            size = ((System.Data.DataTable)targetObject).Columns.Count;
+        //        }
+        //        else if (targetObject is int)
+        //        {
+        //            size = (int)targetObject;
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("target object is strange data.");
+        //        }
+        //        return columnStartIndex + size - 1;
+        //    };
 
-            string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
-            switch (columnType)
-            {
-                case "range":
-                    if (String.IsNullOrEmpty(columnStartValue))
-                    {
-                        columnStartValue = "A";
-                    }
-                    columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ExpandValueOrUserVariable(engine));
+        //    string columnType = command.ExpandValueOrUserVariableAsSelectionItem(columnTypeName, "Column Type", engine);
+        //    switch (columnType)
+        //    {
+        //        case "range":
+        //            if (String.IsNullOrEmpty(columnStartValue))
+        //            {
+        //                columnStartValue = "A";
+        //            }
+        //            columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ExpandValueOrUserVariable(engine));
 
                     
-                    if (String.IsNullOrEmpty(columnEndValue))
-                    {
-                        if (targetObject == null)
-                        {
-                            columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
-                        }
-                        else
-                        {
-                            columnEndIndex = getLastRowFromObject();
-                        }
-                    }
-                    else
-                    {
-                        columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ExpandValueOrUserVariable(engine));
+        //            if (String.IsNullOrEmpty(columnEndValue))
+        //            {
+        //                if (targetObject == null)
+        //                {
+        //                    columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+        //                }
+        //                else
+        //                {
+        //                    columnEndIndex = getLastRowFromObject();
+        //                }
+        //            }
+        //            else
+        //            {
+        //                columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ExpandValueOrUserVariable(engine));
                         
-                    }
-                    break;
+        //            }
+        //            break;
 
-                case "rc":
-                    if (String.IsNullOrEmpty(columnStartValue))
-                    {
-                        columnStartValue = "1";
-                    }
-                    columnStartIndex = columnStartValue.ExpandValueOrUserVariableAsInteger("Start Column", engine);
+        //        case "rc":
+        //            if (String.IsNullOrEmpty(columnStartValue))
+        //            {
+        //                columnStartValue = "1";
+        //            }
+        //            columnStartIndex = columnStartValue.ExpandValueOrUserVariableAsInteger("Start Column", engine);
 
-                    if (String.IsNullOrEmpty(columnEndValue))
-                    {
-                        if (targetObject == null)
-                        {
-                            columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
-                        }
-                        else
-                        {
-                            columnEndIndex = getLastRowFromObject();
-                        }
-                    }
-                    else
-                    {
-                        columnEndIndex = columnEndValue.ExpandValueOrUserVariableAsInteger("Column End", engine);
-                    }
+        //            if (String.IsNullOrEmpty(columnEndValue))
+        //            {
+        //                if (targetObject == null)
+        //                {
+        //                    columnEndIndex = ExcelControls.GetLastColumnIndex(excelSheet, rowIndex, columnStartIndex, valueType);
+        //                }
+        //                else
+        //                {
+        //                    columnEndIndex = getLastRowFromObject();
+        //                }
+        //            }
+        //            else
+        //            {
+        //                columnEndIndex = columnEndValue.ExpandValueOrUserVariableAsInteger("Column End", engine);
+        //            }
 
-                    break;
-            }
+        //            break;
+        //    }
 
-            if (columnStartIndex > columnEndIndex)
-            {
-                int t = columnStartIndex;
-                columnStartIndex = columnEndIndex;
-                columnEndIndex = t;
-            }
+        //    if (columnStartIndex > columnEndIndex)
+        //    {
+        //        int t = columnStartIndex;
+        //        columnStartIndex = columnEndIndex;
+        //        columnEndIndex = t;
+        //    }
 
-            CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelSheet);
+        //    CheckCorrectRCRange(rowIndex, columnStartIndex, rowIndex, columnEndIndex, excelSheet);
 
-            return (rowIndex, columnStartIndex, columnEndIndex, valueType);
-        }
+        //    return (rowIndex, columnStartIndex, columnEndIndex, valueType);
+        //}
         #endregion
 
         #region convert methods
@@ -1158,32 +1158,33 @@ namespace taskt.Core.Automation.Commands
             }
             return true;
         }
-        public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Worksheet excelSheet, bool throwExceptionWhenInvalidRange = true)
-        {
-            if (!CheckCorrectRC(startRow, startColumn, excelSheet))
-            {
-                if (throwExceptionWhenInvalidRange)
-                {
-                    throw new Exception("Invalid Start Location. Row: " + startRow + ", Column: " + startColumn);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            if (!CheckCorrectRC(endRow, endColumn, excelSheet))
-            {
-                if (throwExceptionWhenInvalidRange)
-                {
-                    throw new Exception("Invalid End Location. Row: " + endRow + ", Column: " + endColumn);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+
+        //public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Worksheet excelSheet, bool throwExceptionWhenInvalidRange = true)
+        //{
+        //    if (!CheckCorrectRC(startRow, startColumn, excelSheet))
+        //    {
+        //        if (throwExceptionWhenInvalidRange)
+        //        {
+        //            throw new Exception("Invalid Start Location. Row: " + startRow + ", Column: " + startColumn);
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    if (!CheckCorrectRC(endRow, endColumn, excelSheet))
+        //    {
+        //        if (throwExceptionWhenInvalidRange)
+        //        {
+        //            throw new Exception("Invalid End Location. Row: " + endRow + ", Column: " + endColumn);
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
         #endregion
     }
 }
