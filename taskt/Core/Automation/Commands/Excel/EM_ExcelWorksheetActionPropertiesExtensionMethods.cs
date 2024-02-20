@@ -1,5 +1,4 @@
 ﻿using Microsoft.Office.Interop.Excel;
-using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -11,7 +10,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static Worksheet ExpandValueOrVariableAsExcelTargetWorksheet(this IExcelWorksheetActionProperties command, AutomationEngineInstance engine)
+        public static Worksheet ExpandValueOrVariableAsExcelTargetWorksheet(this IExcelWorksheetActionProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandValueOrVariableAsExcelWorksheet(command.v_TargetSheetName, engine);
         }
@@ -22,7 +21,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (Application, Worksheet) ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(this IExcelWorksheetActionProperties command, AutomationEngineInstance engine)
+        public static (Application, Worksheet) ExpandValueOrVariableAsExcelInstanceAndTargetWorksheet(this IExcelWorksheetActionProperties command, Engine.AutomationEngineInstance engine)
         {
             return (command.ExpandValueOrVariableAsExcelInstance(engine),
                     command.ExpandValueOrVariableAsExcelTargetWorksheet(engine));

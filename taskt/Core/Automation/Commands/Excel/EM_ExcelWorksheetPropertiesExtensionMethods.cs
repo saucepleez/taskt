@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Office.Interop.Excel;
-using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -13,7 +12,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Worksheet ExpandValueOrVariableAsExcelWorksheet(this IExcelWorksheetProperties command, AutomationEngineInstance engine)
+        public static Worksheet ExpandValueOrVariableAsExcelWorksheet(this IExcelWorksheetProperties command, Engine.AutomationEngineInstance engine)
         {
             return command.ExpandValueOrVariableAsExcelWorksheet(command.v_SheetName, engine);
         }
@@ -24,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (Application, Worksheet) ExpandValueOrVariableAsExcelInstanceAndWorksheet(this IExcelWorksheetProperties command, AutomationEngineInstance engine)
+        public static (Application, Worksheet) ExpandValueOrVariableAsExcelInstanceAndWorksheet(this IExcelWorksheetProperties command, Engine.AutomationEngineInstance engine)
         {
             return (command.ExpandValueOrVariableAsExcelInstance(engine),
                     command.ExpandValueOrVariableAsExcelWorksheet(engine));
@@ -36,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (Application instance, Worksheet targetSheet, Worksheet currentSheet) ExpandValueOrVariableAsExcelInstnaceAndWorksheetAndCurrentSheet(this IExcelWorksheetProperties command, AutomationEngineInstance engine)
+        public static (Application instance, Worksheet targetSheet, Worksheet currentSheet) ExpandValueOrVariableAsExcelInstnaceAndWorksheetAndCurrentSheet(this IExcelWorksheetProperties command, Engine.AutomationEngineInstance engine)
         {
             (var ins, var current) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
             var sht = command.ExpandValueOrVariableAsExcelWorksheet(engine);

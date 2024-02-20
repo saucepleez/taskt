@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Office.Interop.Excel;
 
 namespace taskt.Core.Automation.Commands
 {

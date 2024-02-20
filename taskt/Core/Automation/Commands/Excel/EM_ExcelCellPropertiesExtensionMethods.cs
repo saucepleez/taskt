@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Office.Interop.Excel;
-using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -32,7 +31,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="engine"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Range ExpandValueOrVariableAsExcelSingleCellLocation(this IExcelCellProperties command, AutomationEngineInstance engine)
+        public static Range ExpandValueOrVariableAsExcelSingleCellLocation(this IExcelCellProperties command, Engine.AutomationEngineInstance engine)
         {
             var excelInstance = command.ExpandValueOrVariableAsExcelInstance(engine);
 
@@ -60,7 +59,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="command"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        public static (Application, Range) ExpandValueOrVariableAsExcelInstanceAndSingleCellLocation(this IExcelCellProperties command, AutomationEngineInstance engine)
+        public static (Application, Range) ExpandValueOrVariableAsExcelInstanceAndSingleCellLocation(this IExcelCellProperties command, Engine.AutomationEngineInstance engine)
         {
             return (command.ExpandValueOrVariableAsExcelInstance(engine),
                     command.ExpandValueOrVariableAsExcelSingleCellLocation(engine));
