@@ -141,7 +141,7 @@ namespace taskt.Core.Automation.Commands
             for (int i = 0; i < colRange; i++) 
             {
                 //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, columnStartIndex + i));
-                newDT.Columns.Add(excelSheet.ToColumnName(i));
+                newDT.Columns.Add(excelSheet.ToColumnName(columnStartIndex + i));
             }
 
             for (int i = 0; i < rowRange; i++)
