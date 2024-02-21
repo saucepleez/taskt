@@ -62,7 +62,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             //(int columnIndex, int rowStart, int rowEnd, string valueType) =
             //    ExcelControls.GetRangeIndeiesColumnDirection(
@@ -70,12 +69,14 @@ namespace taskt.Core.Automation.Commands
             //        nameof(v_RowStart), nameof(v_RowEnd), nameof(v_ValueType),
             //        engine, excelSheet, this
             //    );
-            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
+
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
-            List<string> newList = new List<string>();
+            var newList = new List<string>();
 
             for (int i = rowStartIndex; i <= rowEndIndex; i++)
             {
