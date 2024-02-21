@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -62,10 +63,16 @@ namespace taskt.Core.Automation.Commands
 
             //var rg = this.ExpandValueOrVariableAsExcelCellLocation(engine);
 
-            (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (int row, int column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
-            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
-            getFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
+            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(int row, int column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
+            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+            //getFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
+
+            this.RCLocationAction(new Action<Worksheet, int, int>((sheet, column, row) =>
+            {
+                var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+                getFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
+            }), engine);
         }
     }
 }

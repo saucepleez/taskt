@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -75,11 +76,18 @@ namespace taskt.Core.Automation.Commands
             //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
             //setFunc(rg, targetText);
 
-            (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
-            var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-            var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
-            setFunc(targetText, sheet, column, row);
+            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var row, var column) = this.ExpandValueOrVariableAsCellRowAndColumnIndex(engine);
+            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
+            //var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
+            //setFunc(targetText, sheet, column, row);
+
+            this.RCLocationAction(new Action<Worksheet, int, int>((sheet, column, row) =>
+            {
+                var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
+                var targetText = v_TextToSet.ExpandValueOrUserVariable(engine);
+                setFunc(targetText, sheet, column, row);
+            }), engine);
         }
     }
 }
