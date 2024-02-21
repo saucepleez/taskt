@@ -348,92 +348,92 @@ namespace taskt.Core.Automation.Commands
         //    return (instanceObject, sheet);
         //}
 
-        /// <summary>
-        /// expand value or user variable as Excel Worksheet
-        /// </summary>
-        /// <param name="sheetVariable"></param>
-        /// <param name="engine"></param>
-        /// <param name="excelInstance"></param>
-        /// <param name="returnNullIfSheetDoesNotExists"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception">worksheet does not exists</exception>
-        public static Worksheet ExpandValueOrUserVariableAsExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, bool returnNullIfSheetDoesNotExists = false)
-        {
-            var sheet = sheetVariable.ExpandValueOrUserVariable(engine);
-            if (sheet == engine.engineSettings.CurrentWorksheetKeyword)
-            {
-                try
-                {
-                    //return (Worksheet)excelInstance.ActiveSheet;
-                    return GetCurrentWorksheet(excelInstance);
-                }
-                catch
-                {
-                    if (returnNullIfSheetDoesNotExists)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        throw new Exception("No Worksheet exists.");
-                    }
-                }
-            }
-            else if (sheet == engine.engineSettings.NextWorksheetKeyword)
-            {
-                try
-                {
-                    return GetNextWorksheet(excelInstance);
-                }
-                catch
-                {
-                    if (returnNullIfSheetDoesNotExists)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        throw new Exception("Next Worksheet not found.");
-                    }
-                }
-            }
-            else if (sheet == engine.engineSettings.PreviousWorksheetKeyword)
-            {
-                try
-                {
-                    return GetPreviousWorksheet(excelInstance);
-                }
-                catch
-                {
-                    if (returnNullIfSheetDoesNotExists)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        throw new Exception("Previous Worksheet not found.");
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    return (Worksheet)excelInstance.Worksheets[sheet];
-                }
-                catch
-                {
-                    if (returnNullIfSheetDoesNotExists)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        throw new Exception("Worksheet " + sheet + " does not exists.");
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// expand value or user variable as Excel Worksheet
+        ///// </summary>
+        ///// <param name="sheetVariable"></param>
+        ///// <param name="engine"></param>
+        ///// <param name="excelInstance"></param>
+        ///// <param name="returnNullIfSheetDoesNotExists"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception">worksheet does not exists</exception>
+        //public static Worksheet ExpandValueOrUserVariableAsExcelWorksheet(this string sheetVariable, Automation.Engine.AutomationEngineInstance engine, Application excelInstance, bool returnNullIfSheetDoesNotExists = false)
+        //{
+        //    var sheet = sheetVariable.ExpandValueOrUserVariable(engine);
+        //    if (sheet == engine.engineSettings.CurrentWorksheetKeyword)
+        //    {
+        //        try
+        //        {
+        //            //return (Worksheet)excelInstance.ActiveSheet;
+        //            return GetCurrentWorksheet(excelInstance);
+        //        }
+        //        catch
+        //        {
+        //            if (returnNullIfSheetDoesNotExists)
+        //            {
+        //                return null;
+        //            }
+        //            else
+        //            {
+        //                throw new Exception("No Worksheet exists.");
+        //            }
+        //        }
+        //    }
+        //    else if (sheet == engine.engineSettings.NextWorksheetKeyword)
+        //    {
+        //        try
+        //        {
+        //            return GetNextWorksheet(excelInstance);
+        //        }
+        //        catch
+        //        {
+        //            if (returnNullIfSheetDoesNotExists)
+        //            {
+        //                return null;
+        //            }
+        //            else
+        //            {
+        //                throw new Exception("Next Worksheet not found.");
+        //            }
+        //        }
+        //    }
+        //    else if (sheet == engine.engineSettings.PreviousWorksheetKeyword)
+        //    {
+        //        try
+        //        {
+        //            return GetPreviousWorksheet(excelInstance);
+        //        }
+        //        catch
+        //        {
+        //            if (returnNullIfSheetDoesNotExists)
+        //            {
+        //                return null;
+        //            }
+        //            else
+        //            {
+        //                throw new Exception("Previous Worksheet not found.");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            return (Worksheet)excelInstance.Worksheets[sheet];
+        //        }
+        //        catch
+        //        {
+        //            if (returnNullIfSheetDoesNotExists)
+        //            {
+        //                return null;
+        //            }
+        //            else
+        //            {
+        //                throw new Exception("Worksheet " + sheet + " does not exists.");
+        //            }
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// get current worksheet
@@ -452,95 +452,95 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        /// <summary>
-        /// get next worksheet
-        /// </summary>
-        /// <param name="excelInstance"></param>
-        /// <param name="mySheet"></param>
-        /// <returns></returns>
-        private static Worksheet GetNextWorksheet(Application excelInstance, Worksheet mySheet = null)
-        {
-            Worksheet currentSheet;
-            if (mySheet == null)
-            {
-                try
-                {
-                    //currentSheet = (Worksheet)excelInstance.ActiveSheet;
-                    currentSheet = GetCurrentWorksheet(excelInstance);
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                currentSheet = mySheet;
-            }
+        ///// <summary>
+        ///// get next worksheet
+        ///// </summary>
+        ///// <param name="excelInstance"></param>
+        ///// <param name="mySheet"></param>
+        ///// <returns></returns>
+        //private static Worksheet GetNextWorksheet(Application excelInstance, Worksheet mySheet = null)
+        //{
+        //    Worksheet currentSheet;
+        //    if (mySheet == null)
+        //    {
+        //        try
+        //        {
+        //            //currentSheet = (Worksheet)excelInstance.ActiveSheet;
+        //            currentSheet = GetCurrentWorksheet(excelInstance);
+        //        }
+        //        catch
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        currentSheet = mySheet;
+        //    }
 
-            int idx = 1;
-            foreach (Worksheet sht in excelInstance.Worksheets)
-            {
-                if (sht.Name == currentSheet.Name)
-                {
-                    break;
-                }
-                idx++;
-            }
-            if (idx < excelInstance.Worksheets.Count)
-            {
-                return (Worksheet)excelInstance.Worksheets[idx + 1];
-            }
-            else
-            {
-                return null;
-            }
-        }
+        //    int idx = 1;
+        //    foreach (Worksheet sht in excelInstance.Worksheets)
+        //    {
+        //        if (sht.Name == currentSheet.Name)
+        //        {
+        //            break;
+        //        }
+        //        idx++;
+        //    }
+        //    if (idx < excelInstance.Worksheets.Count)
+        //    {
+        //        return (Worksheet)excelInstance.Worksheets[idx + 1];
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
 
-        /// <summary>
-        /// get previous worksheet
-        /// </summary>
-        /// <param name="excelInstance"></param>
-        /// <param name="mySheet"></param>
-        /// <returns></returns>
-        private static Worksheet GetPreviousWorksheet(Application excelInstance, Worksheet mySheet = null)
-        {
-            Worksheet currentSheet;
-            if (mySheet == null)
-            {
-                try
-                {
-                    //currentSheet = (Worksheet)excelInstance.ActiveSheet;
-                    currentSheet = GetCurrentWorksheet(excelInstance);
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                currentSheet = mySheet;
-            }
+        ///// <summary>
+        ///// get previous worksheet
+        ///// </summary>
+        ///// <param name="excelInstance"></param>
+        ///// <param name="mySheet"></param>
+        ///// <returns></returns>
+        //private static Worksheet GetPreviousWorksheet(Application excelInstance, Worksheet mySheet = null)
+        //{
+        //    Worksheet currentSheet;
+        //    if (mySheet == null)
+        //    {
+        //        try
+        //        {
+        //            //currentSheet = (Worksheet)excelInstance.ActiveSheet;
+        //            currentSheet = GetCurrentWorksheet(excelInstance);
+        //        }
+        //        catch
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        currentSheet = mySheet;
+        //    }
 
-            int idx = 1;
-            foreach (Worksheet sht in excelInstance.Worksheets)
-            {
-                if (sht.Name == currentSheet.Name)
-                {
-                    break;
-                }
-                idx++;
-            }
-            if (idx > 1)
-            {
-                return (Worksheet)excelInstance.Worksheets[idx - 1];
-            }
-            else
-            {
-                return null;
-            }
-        }
+        //    int idx = 1;
+        //    foreach (Worksheet sht in excelInstance.Worksheets)
+        //    {
+        //        if (sht.Name == currentSheet.Name)
+        //        {
+        //            break;
+        //        }
+        //        idx++;
+        //    }
+        //    if (idx > 1)
+        //    {
+        //        return (Worksheet)excelInstance.Worksheets[idx - 1];
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
         #endregion
 
         #region Func methods
