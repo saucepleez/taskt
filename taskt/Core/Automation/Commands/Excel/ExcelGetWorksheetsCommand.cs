@@ -21,12 +21,14 @@ namespace taskt.Core.Automation.Commands
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
         //public string v_InstanceName { get; set; }
 
-        //[XmlAttribute]
+        [XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_SheetName))]
-        //public string v_SheetName { get; set; }
+        [PropertyIsOptional(true)]
+        [PropertyValidationRule("Worksheet", PropertyValidationRule.ValidationRuleFlags.None)]
+        public override string v_SheetName { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Search Method")]
+        [PropertyDescription("Compare Method")]
         [InputSpecification("", true)]
         [SampleUsage("**Contains** or **Starts with** or **Ends with**")]
         [Remarks("")]
@@ -53,9 +55,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            List<string> sheetNames = new List<string>();
+            var sheetNames = new List<string>();
 
             var targetSheetName = v_SheetName.ExpandValueOrUserVariable(engine);
             
@@ -70,9 +73,8 @@ namespace taskt.Core.Automation.Commands
             {
                 Func<string, string, bool> func = null;
 
-                var searchMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CompareMethod), "Search Method", engine);
-
-                switch (searchMethod)
+                var compareMethod = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_CompareMethod), "Compare Method", engine);
+                switch (compareMethod)
                 {
                     case "contains":
                         func = (sht, search) => { return sht.Contains(search); };
