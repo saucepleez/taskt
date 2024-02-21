@@ -612,44 +612,44 @@ namespace taskt.Core.Automation.Commands
         //    return getFunc;
         //}
 
-        public static Func<Worksheet, int, int, string> GetCellValueFunction(string valueType)
-        {
-            Func<Worksheet, int, int, string> getFunc = null;
-            switch (valueType)
-            {
-                case "cell":
-                    getFunc = (sheet, column, row) =>
-                    {
-                        return (string)((Range)sheet.Cells[row, column]).Text;
-                    };
-                    break;
-                case "formula":
-                    getFunc = (sheet, column, row) =>
-                    {
-                        return (string)((Range)sheet.Cells[row, column]).Formula;
-                    };
-                    break;
-                case "format":
-                    getFunc = (sheet, column, row) =>
-                    {
-                        return (string)((Range)sheet.Cells[row, column]).NumberFormatLocal;
-                    };
-                    break;
-                case "fore color":
-                    getFunc = (sheet, column, row) =>
-                    {
-                        return ((long)((Range)sheet.Cells[row, column]).Font.Color).ToString();
-                    };
-                    break;
-                case "back color":
-                    getFunc = (sheet, column, row) =>
-                    {
-                        return ((long)((Range)sheet.Cells[row, column]).Interior.Color).ToString();
-                    };
-                    break;
-            }
-            return getFunc;
-        }
+        //public static Func<Worksheet, int, int, string> GetCellValueFunction(string valueType)
+        //{
+        //    Func<Worksheet, int, int, string> getFunc = null;
+        //    switch (valueType)
+        //    {
+        //        case "cell":
+        //            getFunc = (sheet, column, row) =>
+        //            {
+        //                return (string)((Range)sheet.Cells[row, column]).Text;
+        //            };
+        //            break;
+        //        case "formula":
+        //            getFunc = (sheet, column, row) =>
+        //            {
+        //                return (string)((Range)sheet.Cells[row, column]).Formula;
+        //            };
+        //            break;
+        //        case "format":
+        //            getFunc = (sheet, column, row) =>
+        //            {
+        //                return (string)((Range)sheet.Cells[row, column]).NumberFormatLocal;
+        //            };
+        //            break;
+        //        case "fore color":
+        //            getFunc = (sheet, column, row) =>
+        //            {
+        //                return ((long)((Range)sheet.Cells[row, column]).Font.Color).ToString();
+        //            };
+        //            break;
+        //        case "back color":
+        //            getFunc = (sheet, column, row) =>
+        //            {
+        //                return ((long)((Range)sheet.Cells[row, column]).Interior.Color).ToString();
+        //            };
+        //            break;
+        //    }
+        //    return getFunc;
+        //}
 
         //public static Action<string, Worksheet, Range> SetCellValueFunctionFromRange(string valueType)
         //{
@@ -747,29 +747,29 @@ namespace taskt.Core.Automation.Commands
 
         #region cell-range methods
 
-        public static int GetColumnIndex(Worksheet sheet, string columnName)
-        {
-            if (CheckCorrectColumnName(columnName, sheet))
-            {
-                return ((Range)sheet.Columns[columnName]).Column;
-            }
-            else
-            {
-                throw new Exception("Strange Column Name '" + columnName + "'");
-            }
-        }
+        //public static int GetColumnIndex(Worksheet sheet, string columnName)
+        //{
+        //    if (CheckCorrectColumnName(columnName, sheet))
+        //    {
+        //        return ((Range)sheet.Columns[columnName]).Column;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Strange Column Name '" + columnName + "'");
+        //    }
+        //}
 
-        public static string GetColumnName(Worksheet sheet, int columnIndex)
-        {
-            if (columnIndex < 1)
-            {
-                return "";
-            }
-            else
-            {
-                return ((Range)sheet.Cells[1, columnIndex]).Address.Split('$')[1];
-            }
-        }
+        //public static string GetColumnName(Worksheet sheet, int columnIndex)
+        //{
+        //    if (columnIndex < 1)
+        //    {
+        //        return "";
+        //    }
+        //    else
+        //    {
+        //        return ((Range)sheet.Cells[1, columnIndex]).Address.Split('$')[1];
+        //    }
+        //}
 
         //public static string GetAddress(Worksheet sheet, int row, int column)
         //{
@@ -788,54 +788,54 @@ namespace taskt.Core.Automation.Commands
         //    return GetLastRowIndex(sheet, GetColumnIndex(sheet, column), startRow, targetType);
         //}
 
-        public static int GetLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
-        {
-            int lastRow = startRow;
-            switch (targetType.ToLower())
-            {
-                case "formula":
-                    while ((string)(((Range)sheet.Cells[lastRow, column]).Formula) != "")
-                    {
-                        lastRow++;
-                    }
-                    break;
+        //public static int GetLastRowIndex(Worksheet sheet, int column, int startRow, string targetType)
+        //{
+        //    int lastRow = startRow;
+        //    switch (targetType.ToLower())
+        //    {
+        //        case "formula":
+        //            while ((string)(((Range)sheet.Cells[lastRow, column]).Formula) != "")
+        //            {
+        //                lastRow++;
+        //            }
+        //            break;
 
-                default:
-                    while((string)(((Range)sheet.Cells[lastRow, column]).Text) != "")
-                    {
-                        lastRow++;
-                    }
-                    break;
-            }
-            return --lastRow;
-        }
+        //        default:
+        //            while((string)(((Range)sheet.Cells[lastRow, column]).Text) != "")
+        //            {
+        //                lastRow++;
+        //            }
+        //            break;
+        //    }
+        //    return --lastRow;
+        //}
 
         //public static int GetLastColumnIndex(Worksheet sheet, int row, string startColum, string targetType)
         //{
         //    return GetLastColumnIndex(sheet, row, GetColumnIndex(sheet, startColum), targetType);
         //}
 
-        public static int GetLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
-        {
-            int lastColumn = startColum;
-            switch (targetType.ToLower())
-            {
-                case "formula":
-                    while ((string)(((Range)sheet.Cells[row, lastColumn]).Formula) != "")
-                    {
-                        lastColumn++;
-                    }
-                    break;
+        //public static int GetLastColumnIndex(Worksheet sheet, int row, int startColum, string targetType)
+        //{
+        //    int lastColumn = startColum;
+        //    switch (targetType.ToLower())
+        //    {
+        //        case "formula":
+        //            while ((string)(((Range)sheet.Cells[row, lastColumn]).Formula) != "")
+        //            {
+        //                lastColumn++;
+        //            }
+        //            break;
 
-                default:
-                    while ((string)(((Range)sheet.Cells[row, lastColumn]).Text) != "")
-                    {
-                        lastColumn++;
-                    }
-                    break;
-            }
-            return --lastColumn;
-        }
+        //        default:
+        //            while ((string)(((Range)sheet.Cells[row, lastColumn]).Text) != "")
+        //            {
+        //                lastColumn++;
+        //            }
+        //            break;
+        //    }
+        //    return --lastColumn;
+        //}
 
         //public static (int columnIndex, int rowStartIndex, int rowEndIndex, string valueType) GetRangeIndeiesColumnDirection(string columnValueName, string columnTypeName, string rowStartName, string rowEndName, string valueTypeName, Automation.Engine.AutomationEngineInstance engine, Worksheet excelSheet, ScriptCommand command, object targetObject = null)
         //{
@@ -1055,28 +1055,28 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region check methods
-        public static bool CheckCorrectColumnName(string columnName, Worksheet excelSheet)
-        {
-            return CheckCorrectRange(columnName + "1", excelSheet);
-        }
+        //public static bool CheckCorrectColumnName(string columnName, Worksheet excelSheet)
+        //{
+        //    return CheckCorrectRange(columnName + "1", excelSheet);
+        //}
 
         //public static bool CheckCorrectColumnIndex(int columnIndex, Worksheet excelSheet)
         //{
         //    return CheckCorrectRC(1, columnIndex, excelSheet);
         //}
 
-        public static bool CheckCorrectRange(string range, Worksheet excelSheet)
-        {
-            try
-            {
-                var rg = excelSheet.Range[range];
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //public static bool CheckCorrectRange(string range, Worksheet excelSheet)
+        //{
+        //    try
+        //    {
+        //        var rg = excelSheet.Range[range];
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         //public static bool CheckCorrectRC(int row, int column, Worksheet excelSheet)
         //{
@@ -1119,45 +1119,45 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
-        public static bool CheckCorrectRC(int row, int column, Application excelInstance)
-        {
-            try
-            {
-                var rc = excelInstance.Cells[row, column];
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //public static bool CheckCorrectRC(int row, int column, Application excelInstance)
+        //{
+        //    try
+        //    {
+        //        var rc = excelInstance.Cells[row, column];
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
-        public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Application excelInstance, bool throwExceptionWhenInvalidRange = true)
-        {
-            if (!CheckCorrectRC(startRow, startColumn, excelInstance))
-            {
-                if (throwExceptionWhenInvalidRange)
-                {
-                    throw new Exception("Invalid Start Location. Row: " + startRow + ", Column: " + startColumn);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            if (!CheckCorrectRC(endRow, endColumn, excelInstance))
-            {
-                if (throwExceptionWhenInvalidRange)
-                {
-                    throw new Exception("Invalid End Location. Row: " + endRow + ", Column: " + endColumn);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        //public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Application excelInstance, bool throwExceptionWhenInvalidRange = true)
+        //{
+        //    if (!CheckCorrectRC(startRow, startColumn, excelInstance))
+        //    {
+        //        if (throwExceptionWhenInvalidRange)
+        //        {
+        //            throw new Exception("Invalid Start Location. Row: " + startRow + ", Column: " + startColumn);
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    if (!CheckCorrectRC(endRow, endColumn, excelInstance))
+        //    {
+        //        if (throwExceptionWhenInvalidRange)
+        //        {
+        //            throw new Exception("Invalid End Location. Row: " + endRow + ", Column: " + endColumn);
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
 
         //public static bool CheckCorrectRCRange(int startRow, int startColumn, int endRow, int endColumn, Worksheet excelSheet, bool throwExceptionWhenInvalidRange = true)
         //{
