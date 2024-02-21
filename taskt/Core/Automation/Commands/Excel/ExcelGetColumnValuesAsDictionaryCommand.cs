@@ -88,11 +88,13 @@ namespace taskt.Core.Automation.Commands
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
             var newDic = new Dictionary<string, string>();
-            
-            for (int i = rowStartIndex; i <= rowEndIndex; i++)
+
+            int max = rowEndIndex - rowStartIndex + 1;
+            for (int i = 0; i < max; i++)
             {
-                string address = excelSheet.ToCellLocation(i, columnIndex);
-                newDic.Add(address, getFunc(excelSheet, columnIndex, i));
+                var pos = rowStartIndex + i;
+                string address = excelSheet.ToCellLocation(pos, columnIndex);
+                newDic.Add(address, getFunc(excelSheet, columnIndex, pos));
             }
 
             newDic.StoreInUserVariable(engine, v_Result);

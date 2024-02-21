@@ -92,11 +92,12 @@ namespace taskt.Core.Automation.Commands
             var newDT = new DataTable();
             newDT.Columns.Add(sheet.ToColumnName(columnIndex));
 
+            int max = rowEndIndex - rowStartIndex + 1;
             int rowCnt = 0;
-            for (int i = rowStartIndex; i <= rowEndIndex; i++)
+            for (int i = 0; i < max; i++)
             {
                 newDT.Rows.Add();
-                newDT.Rows[rowCnt][0] = getFunc(sheet, columnIndex, i);
+                newDT.Rows[rowCnt][0] = getFunc(sheet, columnIndex, rowStartIndex + i);
                 rowCnt++;
             }
             newDT.StoreInUserVariable(engine, v_Result);
