@@ -47,7 +47,7 @@ namespace taskt.Core.Automation.Commands
             //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
             var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
-            var ifWorkbookExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorkbookExists), engine);
+            var ifWorkbookExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorkbookExists), "When Workbook Exists", engine);
 
             if (excelInstance.Workbooks.Count > 0)
             {
