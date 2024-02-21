@@ -61,10 +61,7 @@ namespace taskt.Core.Automation.Commands
             (var excelInstance, var targetSheet) = this.ExpandValueOrVariableAsExcelInstanceAndWorksheet(engine);
 
             string ret = "";
-            int idx = 1;
-
-            var infoType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine);
-            switch (infoType)
+            switch (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_InfoType), "Info Type", engine))
             {
                 case "name":
                     ret = targetSheet.Name;
@@ -79,14 +76,33 @@ namespace taskt.Core.Automation.Commands
                     ret = (((Microsoft.Office.Interop.Excel.Worksheet)excelInstance.Worksheets[excelInstance.Worksheets.Count]).Name == targetSheet.Name) ? "TRUE" : "FALSE";
                     break;
                 case "next sheet":
-                    var nextSheet = engine.engineSettings.NextWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
-                    ret = (nextSheet == null) ? "" : nextSheet.Name;
+                    //var nextSheet = engine.engineSettings.NextWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
+                    //ret = (nextSheet == null) ? "" : nextSheet.Name;
+                    try
+                    {
+                        var nextSheet = this.ExpandValueOrVariableAsExcelWorksheet(VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Excel_NextWorkSheet.VariableName, engine), engine);
+                        ret = nextSheet.Name;
+                    }
+                    catch
+                    {
+                        ret = "";
+                    }
                     break;
                 case "previous sheet":
-                    var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
-                    ret = (prevSheet == null) ? "" : prevSheet.Name;
+                    //var prevSheet = engine.engineSettings.PreviousWorksheetKeyword.ExpandValueOrUserVariableAsExcelWorksheet(engine, excelInstance, true);
+                    //ret = (prevSheet == null) ? "" : prevSheet.Name;
+                    try
+                    {
+                        var nextSheet = this.ExpandValueOrVariableAsExcelWorksheet(VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Excel_PreviousWorkSheet.VariableName, engine), engine);
+                        ret = nextSheet.Name;
+                    }
+                    catch
+                    {
+                        ret = "";
+                    }
                     break;
                 case "sheet index":
+                    int idx = 1;
                     foreach (Microsoft.Office.Interop.Excel.Worksheet sht in excelInstance.Worksheets)
                     {
                         if (sht.Name == targetSheet.Name)
