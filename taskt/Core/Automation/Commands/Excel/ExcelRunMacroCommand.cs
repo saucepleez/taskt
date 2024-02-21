@@ -54,13 +54,14 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             var vMacroName = v_MacroName.ExpandValueOrUserVariable(engine);
 
             var vArg1 = v_Argument1.ExpandValueOrUserVariable(engine);
 
-            if (String.IsNullOrEmpty(vArg1))
+            if (string.IsNullOrEmpty(vArg1))
             {
                 excelInstance.Run(vMacroName);
             }

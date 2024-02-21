@@ -30,7 +30,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             if (excelInstance.ActiveWorkbook != null)
             {
@@ -41,12 +42,12 @@ namespace taskt.Core.Automation.Commands
                 }
                 else
                 {
-                    throw new Exception("Excel Instance '" + v_InstanceName + "' Workbook does not saved Excel File.");
+                    throw new Exception($"Excel Instance '{v_InstanceName}' Workbook does not saved Excel File.");
                 }
             }
             else
             {
-                throw new Exception("Excel Instance '" + v_InstanceName + "' has no Workbook.");
+                throw new Exception($"Excel Instance '{v_InstanceName}' has no Workbook.");
             }
         }
     }

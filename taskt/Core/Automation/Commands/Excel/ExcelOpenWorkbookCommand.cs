@@ -68,7 +68,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             var vFilePath = FilePathControls.WaitForFile(this, nameof(v_FilePath), nameof(v_WaitForFile), engine);
 
@@ -86,7 +87,7 @@ namespace taskt.Core.Automation.Commands
 
             Action openFileProcess = () =>
             {
-                if (String.IsNullOrEmpty(pass))
+                if (string.IsNullOrEmpty(pass))
                 {
                     excelInstance.Workbooks.Open(vFilePath);
                 }
@@ -105,7 +106,7 @@ namespace taskt.Core.Automation.Commands
                 switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfWorksheetExists), "If Worksheet Exists", engine))
                 {
                     case "error":
-                        throw new Exception("Excel Instance '" + v_InstanceName + "' has Worksheets.");
+                        throw new Exception($"Excel Instance '{v_InstanceName}' has Worksheets.");
                         
                     case "ignore":
                         // nothing

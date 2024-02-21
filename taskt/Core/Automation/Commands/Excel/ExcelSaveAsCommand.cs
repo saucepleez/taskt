@@ -53,7 +53,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+            var excelInstance = this.ExpandValueOrVariableAsExcelInstance(engine);
 
             //string fileName;
             //if (FilePathControls.ContainsFileCounter(v_FileName, engine))
@@ -86,7 +87,7 @@ namespace taskt.Core.Automation.Commands
                     switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfExcelFileExists), "If Excel File Exists", engine))
                     {
                         case "error":
-                            throw new Exception("Excel file '" + v_FileName + "' is already exists.");
+                            throw new Exception($"Excel file '{v_FileName}' is already exists.");
                             
                         case "overwrite":
                             saveAsProcess();
@@ -99,7 +100,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                throw new Exception("Excel Instance '" + v_InstanceName + "' has no Workbook.");
+                throw new Exception($"Excel Instance '{v_InstanceName}' has Worksheets.");
             }
         }
     }
