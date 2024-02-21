@@ -67,9 +67,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-
-            var myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
 
             //(int columnIndex, int rowStart, int rowEnd, string valueType) =
             //    ExcelControls.GetRangeIndeiesColumnDirection(
@@ -96,10 +93,16 @@ namespace taskt.Core.Automation.Commands
             //    max = myDic.Count;
             //}
 
-            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myDic.Count));
+
 
             //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
             //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
+
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+
+            var myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
+
+            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myDic.Count));
             var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
 
             // copy key list
