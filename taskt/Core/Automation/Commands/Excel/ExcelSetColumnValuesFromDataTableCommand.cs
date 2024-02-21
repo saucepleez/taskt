@@ -84,15 +84,8 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
-            DataTable myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
             //int dtColumnIndex = this.ExpandValueOrUserVariableAsInteger(nameof(v_DataTableColumnIndex), "DataTable Column Index", engine);
-            var dtColumnIndex = v_DataTableColumnIndex.ExpandValueOrUserVariableAsInteger("DataTable Column Index", engine);
-            if ((dtColumnIndex < 0) || (dtColumnIndex >= myDT.Columns.Count))
-            {
-                throw new Exception($"Column index '{v_DataTableColumnIndex}' is not exists");
-            }
 
             //(int excelColumnIndex, int rowStart, int rowEnd, string valueType) =
             //    ExcelControls.GetRangeIndeiesColumnDirection(
@@ -119,10 +112,19 @@ namespace taskt.Core.Automation.Commands
             //    max = myDT.Rows.Count;
             //}
 
-            (var excelColumnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myDT.Rows.Count));
-
             //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
             //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
+
+            DataTable myDT = v_DataTableVariable.ExpandUserVariableAsDataTable(engine);
+            var dtColumnIndex = v_DataTableColumnIndex.ExpandValueOrUserVariableAsInteger("DataTable Column Index", engine);
+            if ((dtColumnIndex < 0) || (dtColumnIndex >= myDT.Columns.Count))
+            {
+                throw new Exception($"Column index '{v_DataTableColumnIndex}' is not exists");
+            }
+
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            (var excelColumnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myDT.Rows.Count));
+
             var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
 
             int max = rowEndIndex - rowStartIndex + 1;
