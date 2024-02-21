@@ -93,12 +93,12 @@ namespace taskt.Core.Automation.Commands
             newDT.Columns.Add(sheet.ToColumnName(columnIndex));
 
             int max = rowEndIndex - rowStartIndex + 1;
-            int rowCnt = 0;
+            //int rowCnt = 0;
             for (int i = 0; i < max; i++)
             {
                 newDT.Rows.Add();
-                newDT.Rows[rowCnt][0] = getFunc(sheet, columnIndex, rowStartIndex + i);
-                rowCnt++;
+                newDT.Rows[i][0] = getFunc(sheet, columnIndex, rowStartIndex + i);
+                //rowCnt++;
             }
             newDT.StoreInUserVariable(engine, v_Result);
         }
