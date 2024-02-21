@@ -51,9 +51,10 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
-            if (String.IsNullOrEmpty(v_ColumnLetter))
+            if (string.IsNullOrEmpty(v_ColumnLetter))
             {
                 v_ColumnLetter = "A";
             }

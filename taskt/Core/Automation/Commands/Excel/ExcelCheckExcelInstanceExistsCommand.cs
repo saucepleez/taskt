@@ -38,7 +38,8 @@ namespace taskt.Core.Automation.Commands
         {
             try
             {
-                var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+                //var excelInstance = v_InstanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+                this.ExpandValueOrVariableAsExcelInstance(engine);
                 true.StoreInUserVariable(engine, v_Result);
             }
             catch
