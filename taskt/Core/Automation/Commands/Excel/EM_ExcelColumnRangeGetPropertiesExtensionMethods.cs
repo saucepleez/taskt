@@ -15,6 +15,7 @@ namespace taskt.Core.Automation.Commands
         public static void ColumnRangeAction(this IExcelColumnRangeGetProperties command, Action<Worksheet, string, int, int, int> loopAction, AutomationEngineInstance engine)
         {
             (_, var sheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+
             (var columnIndex, var rowStartIndex, var rowEndIndex) = command.ExpandValueOrVariableAsExcelRangeIndicies(engine);
             var getFunc = command.ExpandValueOrVariableAsGetValueFunction(engine);
 

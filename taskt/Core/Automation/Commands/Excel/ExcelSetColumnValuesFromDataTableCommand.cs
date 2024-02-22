@@ -122,17 +122,25 @@ namespace taskt.Core.Automation.Commands
                 throw new Exception($"Column index '{v_DataTableColumnIndex}' is not exists");
             }
 
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (var excelColumnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myDT.Rows.Count));
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var excelColumnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine, new Func<int>(() => myDT.Rows.Count));
 
-            var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
+            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
 
-            int max = rowEndIndex - rowStartIndex + 1;
-            for (int i = 0; i < max; i++)
-            {
-                string value = myDT.Rows[i][dtColumnIndex]?.ToString() ?? "";
-                setFunc(value, excelSheet, excelColumnIndex, rowStartIndex + i);
-            }
+            //int max = rowEndIndex - rowStartIndex + 1;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    string value = myDT.Rows[i][dtColumnIndex]?.ToString() ?? "";
+            //    setFunc(value, excelSheet, excelColumnIndex, rowStartIndex + i);
+            //}
+
+            this.ColumnRangeAction(
+                new Func<int>(() => myDT.Rows.Count),
+                new Func<int, string>((index) =>
+                {
+                    return myDT.Rows[index][dtColumnIndex]?.ToString() ?? "";
+                }), engine
+            );
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -32,6 +33,27 @@ namespace taskt.Core.Automation.Commands
                 }
             }
             return (columnIndex, rowStartIndex, rowEndIndex);
+        }
+
+        /// <summary>
+        /// column range action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="objectSizeFunc"></param>
+        /// <param name="valueFunc">arg is (index)</param>
+        /// <param name="engine"></param>
+        public static void ColumnRangeAction(this IExcelColumnRangeSetProperties command, Func<int> objectSizeFunc, Func<int, string> valueFunc, AutomationEngineInstance engine)
+        {
+            (_, var excelSheet) = command.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+
+            (var columnIndex, var rowStartIndex, var rowEndIndex) = command.ExpandValueOrVariableAsExcelRangeIndicies(engine, objectSizeFunc);
+            var setFunc = command.ExpandValueOrVaribleAsSetValueAction(engine);
+
+            int max = rowEndIndex - rowStartIndex + 1;
+            for (int i = 0; i < max; i++)
+            {
+                setFunc(valueFunc(i), excelSheet, columnIndex, rowStartIndex + i);
+            }
         }
     }
 }
