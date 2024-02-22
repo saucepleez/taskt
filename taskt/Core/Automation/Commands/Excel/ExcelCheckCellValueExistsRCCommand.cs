@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -76,7 +75,7 @@ namespace taskt.Core.Automation.Commands
             //var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
             //chkFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
 
-            this.RCLocationAction(new Action<Worksheet, int, int>((sheet, column, row) =>
+            this.RCLocationAction(new Action<Microsoft.Office.Interop.Excel.Worksheet, int, int>((sheet, column, row) =>
             {
                 var chkFunc = this.ExpandValueOrVariableAsCheckValueFunction(engine);
                 chkFunc(sheet, column, row).StoreInUserVariable(engine, v_Result);
