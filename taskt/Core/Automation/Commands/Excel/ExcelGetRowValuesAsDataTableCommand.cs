@@ -69,10 +69,11 @@ namespace taskt.Core.Automation.Commands
             //        nameof(v_ValueType), engine, excelSheet, this
             //    );
 
+            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
+
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
             (int rowIndex, int columnStartIndex, int columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
 
-            //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
             DataTable newDT = new DataTable();

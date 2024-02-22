@@ -62,7 +62,6 @@ namespace taskt.Core.Automation.Commands
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
             //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             //(int rowIndex, int columnStartIndex, int columnEndIndex, string valueType) =
             //    ExcelControls.GetRangeIndeiesRowDirection(
@@ -70,9 +69,11 @@ namespace taskt.Core.Automation.Commands
             //        nameof(v_ColumnType), nameof(v_ColumnStart), nameof(v_ColumnEnd),
             //        nameof(v_ValueType), engine, excelSheet, this
             //    );
-            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
+
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
             var newDic = new Dictionary<string, string>();
