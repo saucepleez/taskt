@@ -82,20 +82,32 @@ namespace taskt.Core.Automation.Commands
 
             //newDic.StoreInUserVariable(engine, v_Result);
 
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
 
-            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+
+            //var newDic = new Dictionary<string, string>();
+
+            //int max = rowEndIndex - rowStartIndex + 1;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    var pos = rowStartIndex + i;
+            //    string address = excelSheet.ToCellLocation(pos, columnIndex);
+            //    newDic.Add(address, getFunc(excelSheet, columnIndex, pos));
+            //}
+
+            //newDic.StoreInUserVariable(engine, v_Result);
 
             var newDic = new Dictionary<string, string>();
 
-            int max = rowEndIndex - rowStartIndex + 1;
-            for (int i = 0; i < max; i++)
-            {
-                var pos = rowStartIndex + i;
-                string address = excelSheet.ToCellLocation(pos, columnIndex);
-                newDic.Add(address, getFunc(excelSheet, columnIndex, pos));
-            }
+            this.ColumnRangeAction(
+                new Action<Microsoft.Office.Interop.Excel.Worksheet, string, int, int, int>((sheet, value, column, row, count) =>
+                {
+                    string address = sheet.ToCellLocation(row, column);
+                    newDic.Add(address, value);
+                }), engine
+            );
 
             newDic.StoreInUserVariable(engine, v_Result);
         }

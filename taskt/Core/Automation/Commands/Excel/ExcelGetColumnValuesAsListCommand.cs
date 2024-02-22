@@ -72,17 +72,28 @@ namespace taskt.Core.Automation.Commands
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
-            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
+            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+
+            //var newList = new List<string>();
+
+            //int max = rowEndIndex - rowStartIndex + 1;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    newList.Add(getFunc(excelSheet, columnIndex, rowStartIndex + i));
+            //}
+
+            //newList.StoreInUserVariable(engine, v_Result);
 
             var newList = new List<string>();
 
-            int max = rowEndIndex - rowStartIndex + 1;
-            for (int i = 0; i < max; i++)
-            {
-                newList.Add(getFunc(excelSheet, columnIndex, rowStartIndex + i));
-            }
+            this.ColumnRangeAction(
+                new Action<Microsoft.Office.Interop.Excel.Worksheet, string, int, int, int>((sheet, value, column, row, count) =>
+                {
+                    newList.Add(value);
+                }), engine
+            );
 
             newList.StoreInUserVariable(engine, v_Result);
         }

@@ -330,6 +330,7 @@
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelCellPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelApplicationExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelCellValueTypePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\EM_ExcelColumnRangeGetPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelColumnRangePropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelColumnRangeSetPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Excel\EM_ExcelColumnRowRangePropertiesExtensionMethods.cs" />

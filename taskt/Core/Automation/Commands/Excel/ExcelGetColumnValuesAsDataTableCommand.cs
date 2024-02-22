@@ -85,21 +85,36 @@ namespace taskt.Core.Automation.Commands
 
             //newDT.StoreInUserVariable(engine, v_Result);
 
-            (_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
-            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+            //(_, var sheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var columnIndex, var rowStartIndex, var rowEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndicies(engine);
+            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+
+            //var newDT = new DataTable();
+            //newDT.Columns.Add(sheet.ToColumnName(columnIndex));
+
+            //int max = rowEndIndex - rowStartIndex + 1;
+            ////int rowCnt = 0;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    newDT.Rows.Add();
+            //    newDT.Rows[i][0] = getFunc(sheet, columnIndex, rowStartIndex + i);
+            //    //rowCnt++;
+            //}
+            //newDT.StoreInUserVariable(engine, v_Result);
 
             var newDT = new DataTable();
-            newDT.Columns.Add(sheet.ToColumnName(columnIndex));
 
-            int max = rowEndIndex - rowStartIndex + 1;
-            //int rowCnt = 0;
-            for (int i = 0; i < max; i++)
-            {
-                newDT.Rows.Add();
-                newDT.Rows[i][0] = getFunc(sheet, columnIndex, rowStartIndex + i);
-                //rowCnt++;
-            }
+            this.ColumnRangeAction(
+                new Action<Microsoft.Office.Interop.Excel.Worksheet, string, int, int, int>((sheet, value, column, row, count) =>
+                {
+                    if (count == 0)
+                    {
+                        newDT.Columns.Add(sheet.ToColumnName(column));
+                    }
+                    newDT.Rows.Add();
+                    newDT.Rows[count][0] = value;
+                }), engine
+            );
             newDT.StoreInUserVariable(engine, v_Result);
         }
     }
