@@ -78,11 +78,13 @@ namespace taskt.Core.Automation.Commands
 
             var newDic = new Dictionary<string, string>();
 
-            for (int i = columnStartIndex; i <= columnEndIndex; i++)
+            int max = columnEndIndex - columnStartIndex + 1;
+            for (int i = 0; i < max; i++)
             {
                 //string keyName = ExcelControls.GetAddress(excelSheet, rowIndex, i);
-                var keyName = excelSheet.ToColumnName(i);
-                newDic.Add(keyName, getFunc(excelSheet, i, rowIndex));
+                var pos = columnStartIndex + i;
+                var keyName = excelSheet.ToColumnName(pos);
+                newDic.Add(keyName, getFunc(excelSheet, pos, rowIndex));
             }
 
             newDic.StoreInUserVariable(engine, v_Result);

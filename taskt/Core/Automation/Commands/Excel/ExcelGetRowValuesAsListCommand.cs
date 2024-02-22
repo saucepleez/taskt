@@ -78,9 +78,10 @@ namespace taskt.Core.Automation.Commands
 
             List<string> newList = new List<string>();
 
-            for (int i = columnStartIndex; i <= columnEndIndex; i++)
+            int max = columnEndIndex - columnStartIndex + 1;
+            for (int i = 0; i < max; i++)
             {
-                newList.Add(getFunc(excelSheet, i, rowIndex));
+                newList.Add(getFunc(excelSheet, columnStartIndex + i, rowIndex));
             }
 
             newList.StoreInUserVariable(engine, v_Result);

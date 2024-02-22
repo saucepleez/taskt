@@ -79,13 +79,15 @@ namespace taskt.Core.Automation.Commands
             DataTable newDT = new DataTable();
             newDT.Rows.Add();
 
-            int colCnt = 0;
-            for (int i = columnStartIndex; i <= columnEndIndex; i++)
+            int max = columnEndIndex - columnStartIndex + 1;
+            //int colCnt = 0;
+            for (int i = 0; i < max; i++)
             {
                 //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, i));
-                newDT.Columns.Add(excelSheet.ToColumnName(i));
-                newDT.Rows[0][colCnt] = getFunc(excelSheet, i, rowIndex);
-                colCnt++;
+                var pos = columnStartIndex + i;
+                newDT.Columns.Add(excelSheet.ToColumnName(pos));
+                newDT.Rows[0][i] = getFunc(excelSheet, pos, rowIndex);
+                //colCnt++;
             }
 
             newDT.StoreInUserVariable(engine, v_Result);
