@@ -300,39 +300,39 @@ namespace taskt.Core.Automation.Commands
         #endregion
 
         #region instance, worksheet methods
-        /// <summary>
-        /// expand value or UserVariable as Excel Instance
-        /// </summary>
-        /// <param name="instanceName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception">value is not Excel Instance</exception>
-        public static Application ExpandValueOrUserVariableAsExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
-        {
-            string ins = instanceName.ExpandValueOrUserVariable(engine);
-            var instanceObject = engine.GetAppInstance(ins);
-            if (instanceObject is Application app)
-            {
-                return app;
-            }
-            else
-            {
-                throw new Exception("Instance '" + instanceName + "' is not Excel Instance");
-            }
-        }
+        ///// <summary>
+        ///// expand value or UserVariable as Excel Instance
+        ///// </summary>
+        ///// <param name="instanceName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception">value is not Excel Instance</exception>
+        //public static Application ExpandValueOrUserVariableAsExcelInstance(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    string ins = instanceName.ExpandValueOrUserVariable(engine);
+        //    var instanceObject = engine.GetAppInstance(ins);
+        //    if (instanceObject is Application app)
+        //    {
+        //        return app;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Instance '" + instanceName + "' is not Excel Instance");
+        //    }
+        //}
 
-        /// <summary>
-        /// expancd value or UserVariable as Excel instance and worksheet
-        /// </summary>
-        /// <param name="instanceName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="">value is not Excel Instance</exception>
-        public static (Application instance, Worksheet sheet) ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
-        {
-            var instanceObject = instanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
-            return (instanceObject, GetCurrentWorksheet(instanceObject));
-        }
+        ///// <summary>
+        ///// expancd value or UserVariable as Excel instance and worksheet
+        ///// </summary>
+        ///// <param name="instanceName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="">value is not Excel Instance</exception>
+        //public static (Application instance, Worksheet sheet) ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(this string instanceName, Automation.Engine.AutomationEngineInstance engine)
+        //{
+        //    var instanceObject = instanceName.ExpandValueOrUserVariableAsExcelInstance(engine);
+        //    return (instanceObject, GetCurrentWorksheet(instanceObject));
+        //}
 
         ///// <summary>
         ///// expand value or UserVariable as Excel instance and worksheet
@@ -435,22 +435,22 @@ namespace taskt.Core.Automation.Commands
         //    }
         //}
 
-        /// <summary>
-        /// get current worksheet
-        /// </summary>
-        /// <param name="excelInstance"></param>
-        /// <returns></returns>
-        private static Worksheet GetCurrentWorksheet(Application excelInstance)
-        {
-            if (excelInstance.Sheets.Count == 0)
-            {
-                return null;
-            }
-            else
-            {
-                return excelInstance.ActiveSheet;
-            }
-        }
+        ///// <summary>
+        ///// get current worksheet
+        ///// </summary>
+        ///// <param name="excelInstance"></param>
+        ///// <returns></returns>
+        //private static Worksheet GetCurrentWorksheet(Application excelInstance)
+        //{
+        //    if (excelInstance.Sheets.Count == 0)
+        //    {
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        return excelInstance.ActiveSheet;
+        //    }
+        //}
 
         ///// <summary>
         ///// get next worksheet
