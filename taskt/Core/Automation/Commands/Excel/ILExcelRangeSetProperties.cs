@@ -1,6 +1,4 @@
-﻿using taskt.Core.Automation.Commands._General;
-
-namespace taskt.Core.Automation.Commands
+﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// excel range Set properties

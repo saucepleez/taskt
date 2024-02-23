@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Office.Interop.Excel;
+﻿using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -297,6 +295,21 @@ namespace taskt.Core.Automation.Commands
         [PropertyDisplayText(true, "File")]
         [PropertyParameterOrder(5000)]
         public static string v_FilePath { get; }
+
+        /// <summary>
+        /// value to set
+        /// </summary>
+        [PropertyDescription("Value to Set")]
+        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        [InputSpecification("Value to Set", true)]
+        [PropertyShowSampleUsageInDescription(true)]
+        [PropertyDetailSampleUsage("**Hello**", PropertyDetailSampleUsage.ValueType.Value, "Value to Set")]
+        [PropertyDetailSampleUsage("**{{{vText}}}**", PropertyDetailSampleUsage.ValueType.VariableName, "Value to Set")]
+        [Remarks("")]
+        [PropertyTextBoxSetting(1, true)]
+        [PropertyDisplayText(true, "Value")]
+        [PropertyParameterOrder(5000)]
+        public static string v_ValueToSet { get; }
         #endregion
 
         #region instance, worksheet methods
@@ -955,7 +968,7 @@ namespace taskt.Core.Automation.Commands
         //            }
         //            columnStartIndex = ExcelControls.GetColumnIndex(excelSheet, columnStartValue.ExpandValueOrUserVariable(engine));
 
-                    
+
         //            if (String.IsNullOrEmpty(columnEndValue))
         //            {
         //                if (targetObject == null)
@@ -970,7 +983,7 @@ namespace taskt.Core.Automation.Commands
         //            else
         //            {
         //                columnEndIndex = ExcelControls.GetColumnIndex(excelSheet, columnEndValue.ExpandValueOrUserVariable(engine));
-                        
+
         //            }
         //            break;
 

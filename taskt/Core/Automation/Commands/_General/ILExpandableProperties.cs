@@ -1,4 +1,4 @@
-﻿namespace taskt.Core.Automation.Commands._General
+﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// expandable properties (base of interfaces)
