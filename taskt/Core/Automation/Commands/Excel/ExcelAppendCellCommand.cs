@@ -16,17 +16,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to set a value to the last cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
-    public class ExcelAppendCellCommand : ScriptCommand
+    public class ExcelAppendCellCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **excelInstance**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **excelInstance**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please Enter text to set")]
@@ -34,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter the text value that will be set.")]
         [SampleUsage("Hello World or {vText}")]
         [Remarks("")]
+        [PropertyParameterOrder(6000)]
         public string v_TextToSet { get; set; }
 
         public ExcelAppendCellCommand()
@@ -43,12 +44,13 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
 
-            this.v_InstanceName = "";
+            //this.v_InstanceName = "";
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             int test = 0;
             test = excelSheet.Columns.Count;

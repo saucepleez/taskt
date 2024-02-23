@@ -16,17 +16,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to get a value from a specific cell.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
-    public class ExcelGetRangeCommand : ScriptCommand
+    public class ExcelGetRangeCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **excelInstance**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **excelInstance**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
@@ -34,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter the actual location of the cell.")]
         [SampleUsage("A1, B10, {vAddress}")]
         [Remarks("")]
+        [PropertyParameterOrder(6000)]
         public string v_ExcelCellAddress1 { get; set; }
 
         [XmlAttribute]
@@ -42,6 +43,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter the actual location of the cell.")]
         [SampleUsage("A1, B10, [vAddress]")]
         [Remarks("")]
+        [PropertyParameterOrder(6001)]
         public string v_ExcelCellAddress2 { get; set; }
 
         [XmlAttribute]
@@ -49,6 +51,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Select or provide a variable from the variable list")]
         [SampleUsage("**vSomeVariable**")]
         [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyParameterOrder(6002)]
         public string v_userVariableName { get; set; }
 
         public ExcelGetRangeCommand()
@@ -58,12 +61,13 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
 
-            this.v_InstanceName = "";
+            //this.v_InstanceName = "";
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             var targetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(engine);
             var targetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(engine);

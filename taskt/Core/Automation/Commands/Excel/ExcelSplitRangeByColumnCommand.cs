@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using taskt.UI.CustomControls;
-using taskt.UI.Forms;
 using System.Data;
 using System.Linq;
 using System.IO;
@@ -19,17 +18,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to split a range into separate ranges.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements 'Excel Interop' to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
-    public class ExcelSplitRangeByColumnCommand : ScriptCommand
+    public class ExcelSplitRangeByColumnCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **excelInstance**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **excelInstance**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please Enter the First Cell Location (ex. A1 or B2)")]
@@ -37,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter the actual location of the cell.")]
         [SampleUsage("A1, B10, {vAddress}")]
         [Remarks("")]
+        [PropertyParameterOrder(6000)]
         public string v_ExcelCellAddress1 { get; set; }
 
         [XmlAttribute]
@@ -45,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter the actual location of the cell.")]
         [SampleUsage("A1, B10, {vAddress}")]
         [Remarks("")]
+        [PropertyParameterOrder(6001)]
         public string v_ExcelCellAddress2 { get; set; }
 
         [XmlAttribute]
@@ -53,6 +54,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter the name of the column you wish to split by.")]
         [SampleUsage("ColA, {vColumn}")]
         [Remarks("")]
+        [PropertyParameterOrder(6003)]
         public string v_ColumnName { get; set; }
 
         [XmlAttribute]
@@ -62,6 +64,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter or Select the new directory for the split Excel Files.")]
         [SampleUsage("C:\\temp\\new path\\ or {vTextFolderPath}")]
         [Remarks("")]
+        [PropertyParameterOrder(6004)]
         public string v_OutputDirectory { get; set; }
 
         [XmlAttribute]
@@ -71,6 +74,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Specify the file format type for the split ranges")]
         [SampleUsage("Select either **xlsx* or **csv**")]
         [Remarks("")]
+        [PropertyParameterOrder(6005)]
         public string v_FileType { get; set; }
 
         [XmlAttribute]
@@ -78,6 +82,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Select or provide a variable from the variable list")]
         [SampleUsage("**vSomeVariable**")]
         [Remarks("If you have enabled the setting **Create Missing Variables at Runtime** then you are not required to pre-define your variables, however, it is highly recommended.")]
+        [PropertyParameterOrder(6006)]
         public string v_userVariableName { get; set; }
 
         public ExcelSplitRangeByColumnCommand()
@@ -87,13 +92,14 @@ namespace taskt.Core.Automation.Commands
             //this.CommandEnabled = true;
             //this.CustomRendering = true;
 
+            //this.v_InstanceName = "";
             this.v_FileType = "xlsx";
-            this.v_InstanceName = "";
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(var excelInstance, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (var excelInstance, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             var vTargetAddress1 = v_ExcelCellAddress1.ExpandValueOrUserVariable(engine);
             var vTargetAddress2 = v_ExcelCellAddress2.ExpandValueOrUserVariable(engine);

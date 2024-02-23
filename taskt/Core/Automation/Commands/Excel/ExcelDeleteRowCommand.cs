@@ -16,17 +16,17 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to delete an entire row from the current sheet.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command implements Excel Interop to achieve automation.")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
-    public class ExcelDeleteRowCommand : ScriptCommand
+    public class ExcelDeleteRowCommand : AExcelInstanceCommands
     {
-        [XmlAttribute]
-        [PropertyDescription("Please Enter the instance name")]
-        [InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
-        [SampleUsage("**myInstance** or **excelInstance**")]
-        [Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
-        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_InstanceName { get; set; }
+        //[XmlAttribute]
+        //[PropertyDescription("Please Enter the instance name")]
+        //[InputSpecification("Enter the unique instance name that was specified in the **Create Excel** command")]
+        //[SampleUsage("**myInstance** or **excelInstance**")]
+        //[Remarks("Failure to enter the correct instance name or failure to first call **Create Excel** command will cause an error")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[PropertyInstanceType(PropertyInstanceType.InstanceType.Excel)]
+        //[PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        //public string v_InstanceName { get; set; }
 
         [XmlAttribute]
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
@@ -34,6 +34,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Enter the number of the row that should be deleted.")]
         [SampleUsage("1, 5, {vNumber}")]
         [Remarks("")]
+        [PropertyParameterOrder(6000)]
         public string v_RowNumber { get; set; }
 
         [XmlAttribute]
@@ -43,6 +44,7 @@ namespace taskt.Core.Automation.Commands
         [InputSpecification("Indicate whether the row below will be shifted up to replace the old row.")]
         [SampleUsage("Select 'Yes' or 'No'")]
         [Remarks("")]
+        [PropertyParameterOrder(6001)]
         public string v_ShiftUp { get; set; }
 
         public ExcelDeleteRowCommand()
@@ -55,7 +57,8 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
             string rowToDelete = v_RowNumber.ExpandValueOrUserVariable(engine);
 
