@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExcelSetCellCommand : AExcelCellActionCommands
+    public class ExcelSetCellCommand : AExcelCellActionCommands, ILExcelValueSetProperties
     {
         //[XmlAttribute]
         //[PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_InputInstanceName))]
@@ -26,13 +26,15 @@ namespace taskt.Core.Automation.Commands
         //public string v_CellLocation { get; set; }
 
         [XmlAttribute]
-        [PropertyDescription("Text to Set")]
-        [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
-        [InputSpecification("Text to Set", true)]
-        [SampleUsage("**Hello** or **{{{vText}}}**")]
-        [Remarks("")]
-        [PropertyShowSampleUsageInDescription(true)]
-        [PropertyDisplayText(true, "Value")]
+        //[PropertyDescription("Text to Set")]
+        //[PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
+        //[InputSpecification("Text to Set", true)]
+        //[SampleUsage("**Hello** or **{{{vText}}}**")]
+        //[Remarks("")]
+        //[PropertyShowSampleUsageInDescription(true)]
+        //[PropertyDisplayText(true, "Value")]
+        //[PropertyParameterOrder(6500)]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ValueToSet))]
         [PropertyParameterOrder(6500)]
         public string v_TextToSet { get; set; }
 
