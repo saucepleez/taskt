@@ -72,20 +72,32 @@ namespace taskt.Core.Automation.Commands
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
-            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
+            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+
+            //var newDic = new Dictionary<string, string>();
+
+            //int max = columnEndIndex - columnStartIndex + 1;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    //string keyName = ExcelControls.GetAddress(excelSheet, rowIndex, i);
+            //    var pos = columnStartIndex + i;
+            //    var keyName = excelSheet.ToCellLocation(pos);
+            //    newDic.Add(keyName, getFunc(excelSheet, pos, rowIndex));
+            //}
+
+            //newDic.StoreInUserVariable(engine, v_Result);
 
             var newDic = new Dictionary<string, string>();
 
-            int max = columnEndIndex - columnStartIndex + 1;
-            for (int i = 0; i < max; i++)
-            {
-                //string keyName = ExcelControls.GetAddress(excelSheet, rowIndex, i);
-                var pos = columnStartIndex + i;
-                var keyName = excelSheet.ToColumnName(pos);
-                newDic.Add(keyName, getFunc(excelSheet, pos, rowIndex));
-            }
+            this.RowRangeAction(
+                new Action<Microsoft.Office.Interop.Excel.Worksheet, string, int, int, int>((sheet, value, colum, row, count) =>
+                {
+                    var keyName = sheet.ToCellLocation(row, colum);
+                    newDic.Add(keyName, value);
+                }), engine
+            );
 
             newDic.StoreInUserVariable(engine, v_Result);
         }

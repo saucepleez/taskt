@@ -71,24 +71,37 @@ namespace taskt.Core.Automation.Commands
 
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
 
-            (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
-            (int rowIndex, int columnStartIndex, int columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+            //(int rowIndex, int columnStartIndex, int columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine);
 
-            var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+            //var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
+
+            //DataTable newDT = new DataTable();
+            //newDT.Rows.Add();
+
+            //int max = columnEndIndex - columnStartIndex + 1;
+            ////int colCnt = 0;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, i));
+            //    var pos = columnStartIndex + i;
+            //    newDT.Columns.Add(excelSheet.ToColumnName(pos));
+            //    newDT.Rows[0][i] = getFunc(excelSheet, pos, rowIndex);
+            //    //colCnt++;
+            //}
+
+            //newDT.StoreInUserVariable(engine, v_Result);
 
             DataTable newDT = new DataTable();
             newDT.Rows.Add();
 
-            int max = columnEndIndex - columnStartIndex + 1;
-            //int colCnt = 0;
-            for (int i = 0; i < max; i++)
-            {
-                //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, i));
-                var pos = columnStartIndex + i;
-                newDT.Columns.Add(excelSheet.ToColumnName(pos));
-                newDT.Rows[0][i] = getFunc(excelSheet, pos, rowIndex);
-                //colCnt++;
-            }
+            this.RowRangeAction(
+                new Action<Microsoft.Office.Interop.Excel.Worksheet, string, int, int, int>((sheet, value, column, row, count) => 
+                {
+                    newDT.Columns.Add(sheet.ToColumnName(column));
+                    newDT.Rows[0][count] = value;
+                }), engine
+            );
 
             newDT.StoreInUserVariable(engine, v_Result);
         }

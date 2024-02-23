@@ -2,7 +2,7 @@
 using Microsoft.Office.Interop.Excel;
 using taskt.Core.Automation.Engine;
 
-namespace taskt.Core.Automation.Commands.Excel
+namespace taskt.Core.Automation.Commands
 {
     public static class EM_ExcelRowRangeGetPropertiesExtensionMethods
     {
