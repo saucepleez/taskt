@@ -361,6 +361,7 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeGetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelRowRangeSetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\ILExcelValueSetProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ILExcelValueTypeProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ILExcelInstanceProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetActionProperties.cs" />
