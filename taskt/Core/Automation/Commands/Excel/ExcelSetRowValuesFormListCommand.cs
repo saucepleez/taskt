@@ -93,18 +93,27 @@ namespace taskt.Core.Automation.Commands
             //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
             //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
 
-            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+
+            //var myList = v_ListVariable.ExpandUserVariableAsList(engine);
+
+            //(var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myList.Count));
+
+            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
+            //var max = columnEndIndex - columnStartIndex + 1;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    setFunc(myList[i], excelSheet, columnStartIndex + i, rowIndex);
+            //}
 
             var myList = v_ListVariable.ExpandUserVariableAsList(engine);
-
-            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myList.Count));
-
-            var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-            var max = columnEndIndex - columnStartIndex + 1;
-            for (int i = 0; i < max; i++)
-            {
-                setFunc(myList[i], excelSheet, columnStartIndex + i, rowIndex);
-            }
+            this.RowRangeAction(
+                new Func<int>(() => myList.Count),
+                new Func<int, string>((count) =>
+                {
+                    return myList[count];
+                }), engine
+            );
         }
     }
 }

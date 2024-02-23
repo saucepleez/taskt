@@ -95,21 +95,33 @@ namespace taskt.Core.Automation.Commands
             //Action<string, Microsoft.Office.Interop.Excel.Worksheet, int, int> setFunc = ExcelControls.SetCellValueFunction(v_ValueType.ExpandValueOrUserVariableAsSelectionItem("v_ValueType", this, engine));
             //var setFunc = ExcelControls.SetCellValueFunction(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), engine));
 
-            (_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
+            //(_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
+
+            //var myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
+
+            //(var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myDic.Count));
+            //var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
+
+            //string[] keys = new string[myDic.Count];
+            //myDic.Keys.CopyTo(keys, 0);
+
+            //var max = columnEndIndex - columnStartIndex + 1;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    setFunc(myDic[keys[i]], excelSheet, columnStartIndex + i, rowIndex);
+            //}
 
             var myDic = v_DictionaryVariable.ExpandUserVariableAsDictinary(engine);
-
-            (var rowIndex, var columnStartIndex, var columnEndIndex) = this.ExpandValueOrVariableAsExcelRangeIndecies(engine, new Func<int>(() => myDic.Count));
-            var setFunc = this.ExpandValueOrVaribleAsSetValueAction(engine);
-
             string[] keys = new string[myDic.Count];
             myDic.Keys.CopyTo(keys, 0);
 
-            var max = columnEndIndex - columnStartIndex + 1;
-            for (int i = 0; i < max; i++)
-            {
-                setFunc(myDic[keys[i]], excelSheet, columnStartIndex + i, rowIndex);
-            }
+            this.RowRangeAction(
+                new Func<int>(() => myDic.Count),
+                new Func<int, string>((count) =>
+                {
+                    return myDic[keys[count]];
+                }), engine
+            );
         }
     }
 }
