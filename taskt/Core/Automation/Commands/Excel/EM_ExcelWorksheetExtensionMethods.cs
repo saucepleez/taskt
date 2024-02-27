@@ -246,7 +246,43 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
             return --lastRow;
-            //return (lastRow <= 1) ? 1 : (--lastRow);
+        }
+
+        /// <summary>
+        /// get first blank row index
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="column"></param>
+        /// <param name="startRow"></param>
+        /// <param name="targetType"></param>
+        /// <returns></returns>
+        public static int FirstBlankRowIndex(this Worksheet sheet, int column, int startRow, string targetType)
+        {
+            var rowIndex = sheet.LastRowIndex(column, startRow, targetType);
+
+            if (rowIndex < 1)
+            {
+                rowIndex = 1;
+            }
+
+            switch (targetType.ToLower())
+            {
+                case "formula":
+                    if ((string)(((Range)sheet.Cells[rowIndex, column]).Formula) != "")
+                    {
+                        rowIndex++;
+                    }
+                    break;
+
+                default:
+                    if ((string)(((Range)sheet.Cells[rowIndex, column]).Text) != "")
+                    {
+                        rowIndex++;
+                    }
+                    break;
+            }
+
+            return rowIndex;
         }
 
         /// <summary>
@@ -277,7 +313,6 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
             return --lastColumn;
-            //return (lastColumn <= 1) ? 1 : (--lastColumn);
         }
     }
 }
