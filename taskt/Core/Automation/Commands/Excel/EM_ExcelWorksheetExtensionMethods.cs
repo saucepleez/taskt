@@ -290,12 +290,12 @@ namespace taskt.Core.Automation.Commands
         /// </summary>
         /// <param name="sheet"></param>
         /// <param name="row"></param>
-        /// <param name="startColum"></param>
+        /// <param name="startColumn"></param>
         /// <param name="targetType"></param>
         /// <returns></returns>
-        public static int GetLastColumnIndex(this Worksheet sheet, int row, int startColum, string targetType)
+        public static int GetLastColumnIndex(this Worksheet sheet, int row, int startColumn, string targetType)
         {
-            int lastColumn = startColum;
+            int lastColumn = startColumn;
             switch (targetType.ToLower())
             {
                 case "formula":
@@ -313,6 +313,31 @@ namespace taskt.Core.Automation.Commands
                     break;
             }
             return --lastColumn;
+        }
+
+        private static Range CellRange(this Worksheet sheet, int row, int column)
+        {
+            return (Range)sheet.Cells[row, column];
+        }
+
+        public static string CellText(this Worksheet sheet, int row, int column)
+        {
+            return (string)sheet.CellRange(row, column).Text;
+        }
+
+        public static string CellText(this Worksheet sheet, string rg)
+        {
+            return (string)sheet.Range[rg].Text;
+        }
+
+        public static string CellFormula(this Worksheet sheet, int row, int column)
+        {
+            return (string)sheet.CellRange(row, column).Formula;
+        }
+
+        public static string CellFormula(this Worksheet sheet, string rg)
+        {
+            return (string)sheet.Range[rg].Formula;
         }
     }
 }
