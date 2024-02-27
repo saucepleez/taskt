@@ -245,8 +245,8 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
             }
-            //return --lastRow;
-            return (lastRow <= 1) ? 1 : (--lastRow);
+            return --lastRow;
+            //return (lastRow <= 1) ? 1 : (--lastRow);
         }
 
         /// <summary>
@@ -276,8 +276,8 @@ namespace taskt.Core.Automation.Commands
                     }
                     break;
             }
-            //return --lastColumn;
-            return (lastColumn <= 1) ? 1 : (--lastColumn);
+            return --lastColumn;
+            //return (lastColumn <= 1) ? 1 : (--lastColumn);
         }
     }
 }
