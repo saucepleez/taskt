@@ -210,7 +210,7 @@ namespace taskt.Core.Automation.Commands
             //}
             try
             {
-                return ((Range)sheet.Cells[row, column]).Address.Replace("$", "");
+                return sheet.CellRange(row, column).Address.Replace("$", "");
             }
             catch
             {
@@ -232,14 +232,16 @@ namespace taskt.Core.Automation.Commands
             switch (targetType.ToLower())
             {
                 case "formula":
-                    while ((string)(((Range)sheet.Cells[lastRow, column]).Formula) != "")
+                    //while ((string)(((Range)sheet.Cells[lastRow, column]).Formula) != "")
+                    while (!string.IsNullOrEmpty(sheet.CellFormula(lastRow, column)))
                     {
                         lastRow++;
                     }
                     break;
 
                 default:
-                    while ((string)(((Range)sheet.Cells[lastRow, column]).Text) != "")
+                    //while ((string)(((Range)sheet.Cells[lastRow, column]).Text) != "")
+                    while(!string.IsNullOrEmpty(sheet.CellText(lastRow, column)))
                     {
                         lastRow++;
                     }
@@ -268,14 +270,16 @@ namespace taskt.Core.Automation.Commands
             switch (targetType.ToLower())
             {
                 case "formula":
-                    if ((string)(((Range)sheet.Cells[rowIndex, column]).Formula) != "")
+                    //if ((string)(((Range)sheet.Cells[rowIndex, column]).Formula) != "")
+                    if (!string.IsNullOrEmpty(sheet.CellFormula(rowIndex, column)))
                     {
                         rowIndex++;
                     }
                     break;
 
                 default:
-                    if ((string)(((Range)sheet.Cells[rowIndex, column]).Text) != "")
+                    //if ((string)(((Range)sheet.Cells[rowIndex, column]).Text) != "")
+                    if (!string.IsNullOrEmpty(sheet.CellText(rowIndex, column)))
                     {
                         rowIndex++;
                     }
@@ -299,14 +303,16 @@ namespace taskt.Core.Automation.Commands
             switch (targetType.ToLower())
             {
                 case "formula":
-                    while ((string)(((Range)sheet.Cells[row, lastColumn]).Formula) != "")
+                    //while ((string)(((Range)sheet.Cells[row, lastColumn]).Formula) != "")
+                    while(!string.IsNullOrEmpty(sheet.CellFormula(row, lastColumn)))
                     {
                         lastColumn++;
                     }
                     break;
 
                 default:
-                    while ((string)(((Range)sheet.Cells[row, lastColumn]).Text) != "")
+                    //while ((string)(((Range)sheet.Cells[row, lastColumn]).Text) != "")
+                    while(!string.IsNullOrEmpty(sheet.CellText(row, lastColumn)))
                     {
                         lastColumn++;
                     }
@@ -315,29 +321,131 @@ namespace taskt.Core.Automation.Commands
             return --lastColumn;
         }
 
+        /// <summary>
+        /// get cell range from row, column index
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         private static Range CellRange(this Worksheet sheet, int row, int column)
         {
             return (Range)sheet.Cells[row, column];
         }
 
+        /// <summary>
+        /// get cell text from RC
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public static string CellText(this Worksheet sheet, int row, int column)
         {
             return (string)sheet.CellRange(row, column).Text;
         }
 
-        public static string CellText(this Worksheet sheet, string rg)
+        /// <summary>
+        /// get cell text from range
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static string CellText(this Worksheet sheet, string range)
         {
-            return (string)sheet.Range[rg].Text;
+            return (string)sheet.Range[range].Text;
         }
 
+        /// <summary>
+        /// get cell formula from RC
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public static string CellFormula(this Worksheet sheet, int row, int column)
         {
             return (string)sheet.CellRange(row, column).Formula;
         }
 
-        public static string CellFormula(this Worksheet sheet, string rg)
+        /// <summary>
+        /// get cell formula from range
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static string CellFormula(this Worksheet sheet, string range)
         {
-            return (string)sheet.Range[rg].Formula;
+            return (string)sheet.Range[range].Formula;
+        }
+
+        /// <summary>
+        /// get cell format from RC
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        public static string CellFormat(this Worksheet sheet, int row, int column)
+        {
+            return (string)sheet.CellRange(row, column).NumberFormatLocal;
+        }
+
+        /// <summary>
+        /// get cell format from range
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static string CellFormat(this Worksheet sheet, string range)
+        {
+            return (string)sheet.Range[range].NumberFormatLocal;
+        }
+
+        /// <summary>
+        /// get cell fore color from RC
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        public static long CellForeColor(this Worksheet sheet, int row, int column)
+        {
+            return (long)sheet.CellRange(row, column).Font.Color;
+        }
+
+        /// <summary>
+        /// get cell fore color from range
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static long CellForeColor(this Worksheet sheet, string range)
+        {
+            return (long)sheet.Range[range].Font.Color;
+        }
+
+        /// <summary>
+        /// get cell back color from RC
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        public static long CellBackColor(this Worksheet sheet, int row, int column)
+        {
+            return (long)sheet.CellRange(row, column).Interior.Color;
+        }
+
+        /// <summary>
+        /// get cell back color from range
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static long CellBackColor(this Worksheet sheet, string range)
+        {
+            return (long)sheet.Range[range].Interior.Color;
         }
     }
 }
