@@ -403,24 +403,24 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// get cell fore color from RC
+        /// get cell font color from RC
         /// </summary>
         /// <param name="sheet"></param>
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        public static long CellForeColor(this Worksheet sheet, int row, int column)
+        public static long CellFontColor(this Worksheet sheet, int row, int column)
         {
             return (long)sheet.CellRange(row, column).Font.Color;
         }
 
         /// <summary>
-        /// get cell fore color from range
+        /// get cell font color from range
         /// </summary>
         /// <param name="sheet"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public static long CellForeColor(this Worksheet sheet, string range)
+        public static long CellFontColor(this Worksheet sheet, string range)
         {
             return (long)sheet.Range[range].Font.Color;
         }

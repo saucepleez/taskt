@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
                     getFunc = (sheet, column, row) =>
                     {
                         //return ((long)((Range)sheet.Cells[row, column]).Font.Color).ToString();
-                        return sheet.CellForeColor(row, column).ToString();
+                        return sheet.CellFontColor(row, column).ToString();
                     };
                     break;
                 case "back color":
