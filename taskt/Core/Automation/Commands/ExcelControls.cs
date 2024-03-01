@@ -21,6 +21,10 @@ namespace taskt.Core.Automation.Commands
         /// internal previous worksheet keyword
         /// </summary>
         public const string INTERNAL_EXCEL_PREVIOUS_WORKSHEET_KEYWORD = "%kwd_excel_previous_worksheet%";
+        /// <summary>
+        /// white color value
+        /// </summary>
+        public const long EXCEL_WHITE_COLOR = 16777215;
 
         /// <summary>
         /// disallow contains worksheet charactors

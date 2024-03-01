@@ -138,7 +138,7 @@ namespace taskt.Core.Automation.Commands
                     func = (sheet, column, row) =>
                     {
                         //return ((Range)sheet.Cells[row, column]).Interior.Color != 16777215;
-                        return sheet.CellBackColor(row, column) != 16777215;
+                        return sheet.CellBackColor(row, column) != ExcelControls.EXCEL_WHITE_COLOR;
                     };
                     break;
             }

@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
                 case "back color":
                     func = (rg) =>
                     {
-                        return ((long)rg.Interior.Color) != 16777215;
+                        return ((long)rg.Interior.Color) != ExcelControls.EXCEL_WHITE_COLOR;
                     };
                     break;
             }
