@@ -328,7 +328,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="row"></param>
         /// <param name="column"></param>
         /// <returns></returns>
-        private static Range CellRange(this Worksheet sheet, int row, int column)
+        public static Range CellRange(this Worksheet sheet, int row, int column)
         {
             return (Range)sheet.Cells[row, column];
         }
