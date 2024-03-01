@@ -29,6 +29,10 @@ namespace taskt.Core.Automation.Commands
         /// black color valur
         /// </summary>
         public const long EXCEL_BLACK_COLOR= 0;
+        /// <summary>
+        /// default format (NumberFormat)
+        /// </summary>
+        public const string EXCEL_DEFAULT_FORMAT = "General";
 
         /// <summary>
         /// disallow contains worksheet charactors

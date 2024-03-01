@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("1, 5, {vNumber}")]
         [Remarks("")]
         [PropertyParameterOrder(6000)]
-        public string v_RowNumber { get; set; }
+        public string v_RowIndex { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Should the cells below shift upward after deletion?")]
@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("Select 'Yes' or 'No'")]
         [Remarks("")]
         [PropertyParameterOrder(6001)]
-        public string v_ShiftUp { get; set; }
+        public string v_Shift { get; set; }
 
         public ExcelDeleteRowCommand()
         {
@@ -60,11 +60,11 @@ namespace taskt.Core.Automation.Commands
             //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
-            string rowToDelete = v_RowNumber.ExpandValueOrUserVariable(engine);
+            string rowToDelete = v_RowIndex.ExpandValueOrUserVariable(engine);
 
             var cells = excelSheet.Range["A" + rowToDelete, Type.Missing];
             var entireRow = cells.EntireRow;
-            if (v_ShiftUp == "Yes")
+            if (v_Shift == "Yes")
             {
                 entireRow.Delete();
             }
@@ -96,7 +96,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Row Number: " + v_RowNumber + ", Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Row Number: " + v_RowIndex + ", Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

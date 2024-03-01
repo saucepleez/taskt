@@ -35,7 +35,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("A1, B10, {vAddress}")]
         [Remarks("")]
         [PropertyParameterOrder(6000)]
-        public string v_Range { get; set; }
+        public string v_CellLocation { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Should the cells below shift upward after deletion?")]
@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("Select 'Yes' or 'No'")]
         [Remarks("")]
         [PropertyParameterOrder(6001)]
-        public string v_ShiftUp { get; set; }
+        public string v_Shift { get; set; }
 
         public ExcelDeleteCellCommand()
         {
@@ -60,10 +60,10 @@ namespace taskt.Core.Automation.Commands
             //(_, var excelSheet) = v_InstanceName.ExpandValueOrUserVariableAsExcelInstanceAndWorksheet(engine);
             (_, var excelSheet) = this.ExpandValueOrVariableAsExcelInstanceAndCurrentWorksheet(engine);
 
-            string range = v_Range.ExpandValueOrUserVariable(engine);
+            string range = v_CellLocation.ExpandValueOrUserVariable(engine);
             var cells = excelSheet.Range[range, Type.Missing];
 
-            if (v_ShiftUp == "Yes")
+            if (v_Shift == "Yes")
             {
                 cells.Delete();
             }
@@ -95,7 +95,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + " [Range: " + v_Range + ", Instance Name: '" + v_InstanceName + "']";
+            return base.GetDisplayValue() + " [Range: " + v_CellLocation + ", Instance Name: '" + v_InstanceName + "']";
         }
     }
 }

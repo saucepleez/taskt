@@ -2416,6 +2416,26 @@ namespace taskt.Core.Script
             // ExcelSetColumnValuesFromDataTableCommand v_ColumnIndex
             ChangeAttributeName(doc, "ExcelSetColumnValuesFromDataTableCommand", "v_ExcelColumnIndex", "v_ColumnIndex");
 
+            // ExcelDeleteCellCommand v_CellLocation
+            ChangeAttributeName(doc, "ExcelDeleteCellCommand", "v_Range", "v_CellLocation");
+
+            // ExcelDeleteRowCommand v_RowIndex
+            ChangeAttributeName(doc, "ExcelDeleteRowCommand", "v_RowNumber", "v_RowIndex");
+
+            // ExcelDeleteCellCommand, ExcelDeleteRowCommand v_Shift
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ExcelDeleteCellCommand":
+                        case "ExcelDeleteRowCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_ShiftUp", "v_Shift");
+
             return doc;
         }
 
