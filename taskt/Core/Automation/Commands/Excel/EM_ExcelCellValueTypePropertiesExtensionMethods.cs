@@ -70,7 +70,7 @@ namespace taskt.Core.Automation.Commands
                         return (string)rg.NumberFormatLocal;
                     };
                     break;
-                case "fore color":
+                case "font color":
                     getFunc = (rg) =>
                     {
                         return ((long)rg.Font.Color).ToString();
@@ -128,7 +128,7 @@ namespace taskt.Core.Automation.Commands
                         rg.NumberFormatLocal = value;
                     };
                     break;
-                case "fore color":
+                case "font color":
                     setFunc = (rg, value) =>
                     {
                         rg.Font.Color = longConvert(value);

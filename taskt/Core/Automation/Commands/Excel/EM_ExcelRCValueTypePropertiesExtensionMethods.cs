@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
                         return sheet.CellFormat(row, column);
                     };
                     break;
-                case "fore color":
+                case "font color":
                     getFunc = (sheet, column, row) =>
                     {
                         //return ((long)((Range)sheet.Cells[row, column]).Font.Color).ToString();
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
                         sheet.CellRange(row, column).NumberFormatLocal = value;
                     };
                     break;
-                case "fore color":
+                case "font color":
                     setFunc = (value, sheet, column, row) =>
                     {
                         //((Range)sheet.Cells[row, column]).Font.Color = long.Parse(value);
