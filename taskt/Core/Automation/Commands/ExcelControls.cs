@@ -25,6 +25,10 @@ namespace taskt.Core.Automation.Commands
         /// white color value
         /// </summary>
         public const long EXCEL_WHITE_COLOR = 16777215;
+        /// <summary>
+        /// black color valur
+        /// </summary>
+        public const long EXCEL_BLACK_COLOR= 0;
 
         /// <summary>
         /// disallow contains worksheet charactors
