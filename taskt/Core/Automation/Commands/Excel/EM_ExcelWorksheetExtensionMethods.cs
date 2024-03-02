@@ -229,24 +229,31 @@ namespace taskt.Core.Automation.Commands
         public static int LastRowIndex(this Worksheet sheet, int column, int startRow, string targetType)
         {
             int lastRow = startRow;
-            switch (targetType.ToLower())
-            {
-                case "formula":
-                    //while ((string)(((Range)sheet.Cells[lastRow, column]).Formula) != "")
-                    while (!string.IsNullOrEmpty(sheet.CellFormula(lastRow, column)))
-                    {
-                        lastRow++;
-                    }
-                    break;
+            //switch (targetType.ToLower())
+            //{
+            //    case "formula":
+            //        //while ((string)(((Range)sheet.Cells[lastRow, column]).Formula) != "")
+            //        while (!string.IsNullOrEmpty(sheet.CellFormula(lastRow, column)))
+            //        {
+            //            lastRow++;
+            //        }
+            //        break;
 
-                default:
-                    //while ((string)(((Range)sheet.Cells[lastRow, column]).Text) != "")
-                    while(!string.IsNullOrEmpty(sheet.CellText(lastRow, column)))
-                    {
-                        lastRow++;
-                    }
-                    break;
+            //    default:
+            //        //while ((string)(((Range)sheet.Cells[lastRow, column]).Text) != "")
+            //        while(!string.IsNullOrEmpty(sheet.CellText(lastRow, column)))
+            //        {
+            //            lastRow++;
+            //        }
+            //        break;
+            //}
+
+            var func = GetCheckNotEmptyFunction(targetType);
+            while(func(sheet, lastRow, column))
+            {
+                lastRow++;
             }
+
             return --lastRow;
         }
 
@@ -267,23 +274,29 @@ namespace taskt.Core.Automation.Commands
                 rowIndex = 1;
             }
 
-            switch (targetType.ToLower())
-            {
-                case "formula":
-                    //if ((string)(((Range)sheet.Cells[rowIndex, column]).Formula) != "")
-                    if (!string.IsNullOrEmpty(sheet.CellFormula(rowIndex, column)))
-                    {
-                        rowIndex++;
-                    }
-                    break;
+            //switch (targetType.ToLower())
+            //{
+            //    case "formula":
+            //        //if ((string)(((Range)sheet.Cells[rowIndex, column]).Formula) != "")
+            //        if (!string.IsNullOrEmpty(sheet.CellFormula(rowIndex, column)))
+            //        {
+            //            rowIndex++;
+            //        }
+            //        break;
 
-                default:
-                    //if ((string)(((Range)sheet.Cells[rowIndex, column]).Text) != "")
-                    if (!string.IsNullOrEmpty(sheet.CellText(rowIndex, column)))
-                    {
-                        rowIndex++;
-                    }
-                    break;
+            //    default:
+            //        //if ((string)(((Range)sheet.Cells[rowIndex, column]).Text) != "")
+            //        if (!string.IsNullOrEmpty(sheet.CellText(rowIndex, column)))
+            //        {
+            //            rowIndex++;
+            //        }
+            //        break;
+            //}
+
+            var func = GetCheckNotEmptyFunction(targetType);
+            if (func(sheet, rowIndex, column))
+            {
+                rowIndex++;
             }
 
             return rowIndex;
@@ -300,25 +313,59 @@ namespace taskt.Core.Automation.Commands
         public static int GetLastColumnIndex(this Worksheet sheet, int row, int startColumn, string targetType)
         {
             int lastColumn = startColumn;
+            //switch (targetType.ToLower())
+            //{
+            //    case "formula":
+            //        //while ((string)(((Range)sheet.Cells[row, lastColumn]).Formula) != "")
+            //        while(!string.IsNullOrEmpty(sheet.CellFormula(row, lastColumn)))
+            //        {
+            //            lastColumn++;
+            //        }
+            //        break;
+
+            //    default:
+            //        //while ((string)(((Range)sheet.Cells[row, lastColumn]).Text) != "")
+            //        while(!string.IsNullOrEmpty(sheet.CellText(row, lastColumn)))
+            //        {
+            //            lastColumn++;
+            //        }
+            //        break;
+            //}
+
+            var func = GetCheckNotEmptyFunction(targetType);
+            while(func(sheet, row, lastColumn))
+            {
+                lastColumn++;
+            }
+
+            return --lastColumn;
+        }
+
+        /// <summary>
+        /// get empty check Func
+        /// </summary>
+        /// <param name="targetType"></param>
+        /// <returns>args is (Worksheet, row, column)</returns>
+        private static Func<Worksheet, int, int, bool> GetCheckNotEmptyFunction(string targetType)
+        {
             switch (targetType.ToLower())
             {
                 case "formula":
-                    //while ((string)(((Range)sheet.Cells[row, lastColumn]).Formula) != "")
-                    while(!string.IsNullOrEmpty(sheet.CellFormula(row, lastColumn)))
+                    return new Func<Worksheet, int, int, bool>((sheet, row, column) =>
                     {
-                        lastColumn++;
-                    }
-                    break;
+                        return !string.IsNullOrEmpty(sheet.CellFormula(row, column));
+                    });
 
-                default:
-                    //while ((string)(((Range)sheet.Cells[row, lastColumn]).Text) != "")
-                    while(!string.IsNullOrEmpty(sheet.CellText(row, lastColumn)))
+                case "back color":
+                    return new Func<Worksheet, int, int, bool>((sheet, row, column) =>
                     {
-                        lastColumn++;
-                    }
-                    break;
+                        return (sheet.CellBackColor(row, column) != ExcelControls.EXCEL_WHITE_COLOR);
+                    });
+                default:
+                    return new Func<Worksheet, int, int, bool>((sheet, row, column) => {
+                        return !string.IsNullOrEmpty(sheet.CellText(row, column));
+                    });
             }
-            return --lastColumn;
         }
 
         /// <summary>
