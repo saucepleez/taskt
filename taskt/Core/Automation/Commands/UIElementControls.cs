@@ -22,14 +22,14 @@ namespace taskt.Core.Automation.Commands
         /// <summary>
         /// UIElement type for Reflection
         /// </summary>
-        private static Type TypeOfAutomationElement = typeof(AutomationElement);
+        private static readonly Type TypeOfAutomationElement = typeof(AutomationElement);
 
         /// <summary>
         /// ControlType type for Reflection
         /// </summary>
-        private static Type TypeOfControlType = typeof(ControlType);
+        private static readonly Type TypeOfControlType = typeof(ControlType);
 
-        private static string[] TargetControlTypes = new string[]
+        private static readonly string[] TargetControlTypes = new string[]
         {
             "AcceleratorKey", "AccessKey", "AutomationId", "ClassName", "ControlType",
             "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
