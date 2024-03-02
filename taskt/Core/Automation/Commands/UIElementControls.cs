@@ -591,7 +591,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="rootElement"></param>
         /// <param name="searchCondition"></param>
         /// <returns></returns>
-        private static AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition)
+        private static AutomationElement DeepSearchGUIElement(AutomationElement rootElement, Condition searchCondition, DateTime endTime)
         {
             TreeWalker walker = TreeWalker.RawViewWalker;
 
@@ -609,7 +609,7 @@ namespace taskt.Core.Automation.Commands
                 };
             }
 
-            var ret = WalkerSearch(rootElement, conditions, walker);
+            var ret = WalkerSearch(rootElement, conditions, walker, endTime);
             return ret;
         }
 
@@ -620,7 +620,7 @@ namespace taskt.Core.Automation.Commands
         /// <param name="searchConditions"></param>
         /// <param name="walker"></param>
         /// <returns></returns>
-        private static AutomationElement WalkerSearch(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker)
+        private static AutomationElement WalkerSearch(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
             AutomationElement ret = null;
@@ -663,11 +663,16 @@ namespace taskt.Core.Automation.Commands
                     ret = node;
                     break;
                 }
+                // Time up! not found.
+                if (DateTime.Now > endTime)
+                {
+                    break;
+                }
 
                 // search child node
                 if (walker.GetFirstChild(node) != null)
                 {
-                    ret = WalkerSearch(node, searchConditions, walker);
+                    ret = WalkerSearch(node, searchConditions, walker, endTime);
                     if (ret != null)
                     {
                         break;
@@ -688,16 +693,16 @@ namespace taskt.Core.Automation.Commands
         /// <param name="conditionTable"></param>
         /// <param name="engine"></param>
         /// <returns></returns>
-        private static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine)
+        private static AutomationElement SearchGUIElement(AutomationElement rootElement, DataTable conditionTable, Engine.AutomationEngineInstance engine, DateTime endTime)
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
-            // NOTE: koko dousuru
+            // NOTE: stop hung up
             //var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
             //                rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
             //                DeepSearchGUIElement(rootElement, searchConditions);
 
-            var element = DeepSearchGUIElement(rootElement, searchConditions);
+            var element = DeepSearchGUIElement(rootElement, searchConditions, endTime);
 
             // if element not found, don't throw exception here
             return element;
@@ -717,7 +722,8 @@ namespace taskt.Core.Automation.Commands
             var ret = WaitControls.WaitProcess(waitTime, "AutomationElement",
                 new Func<(bool, object)>(() =>
                 {
-                    var e = SearchGUIElement(elem, conditionTable, engine);
+                    var endTime = DateTime.Now.AddSeconds(waitTime);
+                    var e = SearchGUIElement(elem, conditionTable, engine, endTime);
                     if (e != null)
                     {
                         return (true, e);
