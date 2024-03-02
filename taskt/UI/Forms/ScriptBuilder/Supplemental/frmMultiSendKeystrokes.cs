@@ -181,7 +181,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             cmbWindowName.BeginUpdate();
             cmbWindowName.Items.Clear();
 
-            cmbWindowName.Items.Add(appSetttings.EngineSettings.CurrentWindowKeyword);
+            //cmbWindowName.Items.Add(appSetttings.EngineSettings.CurrentWindowKeyword);
+            cmbWindowName.Items.Add(VariableNameControls.GetWrappedVariableName(Core.Automation.Engine.SystemVariables.Window_CurrentWindowName.VariableName, appSetttings));
             cmbWindowName.Items.AddRange(windowNames.ToArray());
 
             if (cmbWindowName.Items.Contains(currentWindow))

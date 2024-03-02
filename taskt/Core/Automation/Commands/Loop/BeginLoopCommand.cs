@@ -967,15 +967,17 @@ namespace taskt.Core.Automation.Commands
 
         private void linkWindowNameSelector_Click(object sender, EventArgs e, UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
-            List<string> windowNames = new List<string>();
-
-            windowNames.Add(editor.appSettings.EngineSettings.CurrentWindowKeyword);
+            List<string> windowNames = new List<string>
+            {
+                //editor.appSettings.EngineSettings.CurrentWindowKeyword
+                VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, editor.appSettings),
+            };
 
             System.Diagnostics.Process[] processlist = System.Diagnostics.Process.GetProcesses();
             //pull the main window title for each
             foreach (var process in processlist)
             {
-                if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                if (!string.IsNullOrEmpty(process.MainWindowTitle))
                 {
                     //add to the control list of available windows
                     windowNames.Add(process.MainWindowTitle);

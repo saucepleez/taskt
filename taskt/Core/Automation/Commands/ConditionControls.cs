@@ -380,7 +380,8 @@ namespace taskt.Core.Automation.Commands
             var param = DataTableControls.GetFieldValues(actionParameterTable, "Parameter Name", "Parameter Value", engine);
             string windowName = param["Window Name"];
 
-            if (windowName == engine.engineSettings.CurrentWindowKeyword)
+            //if (windowName == engine.engineSettings.CurrentWindowKeyword)
+            if (windowName == VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, engine))
             {
                 //windowName = User32.User32Functions.GetActiveWindowTitle();
                 windowName = WindowControls.GetActiveWindowTitle();
@@ -762,7 +763,8 @@ namespace taskt.Core.Automation.Commands
             actionParameterBox.Visible = true;
             if (sender != null)
             {
-                actionParameters.Rows.Add("Window Name", settings.EngineSettings.CurrentWindowKeyword);
+                //actionParameters.Rows.Add("Window Name", settings.EngineSettings.CurrentWindowKeyword);
+                actionParameters.Rows.Add("Window Name", VariableNameControls.GetWrappedVariableName(Engine.SystemVariables.Window_CurrentWindowName.VariableName, settings));
                 actionParameters.Rows.Add("Element Search Method", "");
                 actionParameters.Rows.Add("Element Search Parameter", "");
                 actionParameterBox.DataSource = actionParameters;
@@ -788,7 +790,7 @@ namespace taskt.Core.Automation.Commands
             parameterName.Items.Add("LocalizedControlType");
             parameterName.Items.Add("Name");
             parameterName.Items.Add("NativeWindowHandle");
-            parameterName.Items.Add("ProcessID");
+            parameterName.Items.Add("ProcessId");
 
             //assign cell as a combobox
             actionParameterBox.Rows[1].Cells[1] = parameterName;
