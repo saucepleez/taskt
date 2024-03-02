@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
         public virtual string v_ColumnType {  get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnLocation))]
+        [PropertyVirtualProperty(nameof(ExcelControls), nameof(ExcelControls.v_ColumnNameOrIndex))]
         [PropertyIsOptional(true)]
         [PropertyValidationRule("Column", PropertyValidationRule.ValidationRuleFlags.None)]
         [PropertyParameterOrder(8000)]
