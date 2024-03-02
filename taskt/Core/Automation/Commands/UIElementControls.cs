@@ -514,6 +514,7 @@ namespace taskt.Core.Automation.Commands
                             throw new Exception($"Invalid ParamterValue. Value must be 'True' or 'False'. ParameterName: '{parameterName}', ParameteValue: '{parameterValue}'");
                         }
                         break;
+
                     case "NativeWindowHandle":
                     case "ProcessId":
                         if (string.IsNullOrEmpty(parameterValue))
