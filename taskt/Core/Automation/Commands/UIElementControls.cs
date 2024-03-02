@@ -611,18 +611,19 @@ namespace taskt.Core.Automation.Commands
                 };
             }
 
-            var ret = WalkerSearch(rootElement, conditions, walker, endTime);
+            var ret = WalkerSearch_WidthFirst(rootElement, conditions, walker, endTime);
+            //var ret = WalkerSearch_WidthFirst_Reverse(rootElement, conditions, walker, endTime);
             return ret;
         }
 
         /// <summary>
-        /// Search GUI Element used by TreeWalker
+        /// Search GUI Element used by TreeWalker (WidthFirst)
         /// </summary>
         /// <param name="rootElement"></param>
         /// <param name="searchConditions"></param>
         /// <param name="walker"></param>
         /// <returns></returns>
-        private static AutomationElement WalkerSearch(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
+        private static AutomationElement WalkerSearch_WidthFirst(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
             AutomationElement ret = null;
@@ -674,7 +675,7 @@ namespace taskt.Core.Automation.Commands
                 // search child node
                 if (walker.GetFirstChild(node) != null)
                 {
-                    ret = WalkerSearch(node, searchConditions, walker, endTime);
+                    ret = WalkerSearch_WidthFirst(node, searchConditions, walker, endTime);
                     if (ret != null)
                     {
                         break;
@@ -683,6 +684,80 @@ namespace taskt.Core.Automation.Commands
 
                 // next sibling
                 node = walker.GetNextSibling(node);
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Search GUI Element used by TreeWalker (WidthFirst, Reverse)
+        /// </summary>
+        /// <param name="rootElement"></param>
+        /// <param name="searchConditions"></param>
+        /// <param name="walker"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        private static AutomationElement WalkerSearch_WidthFirst_Reverse(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
+        {
+            AutomationElement node = walker.GetLastChild(rootElement);
+            AutomationElement ret = null;
+
+            while (node != null)
+            {
+                // DBG
+                //Console.WriteLine($"# Node: {node.Current.Name}");
+
+                bool result = true;
+                foreach (var c in searchConditions)
+                {
+                    object p = node.GetCurrentPropertyValue(c.Property);
+
+                    switch (c.Property.ProgrammaticName)
+                    {
+                        case "AutomationElementIdentifiers.ControlTypeProperty":
+                            // ControlType compare
+                            result &= (c.Value.ToString() == ((ControlType)p).Id.ToString());
+                            // DBG
+                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
+                            break;
+
+                        default:
+                            // normal compare
+                            result &= (c.Value.ToString() == p.ToString());
+                            // DBG
+                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
+                            break;
+                    }
+
+                    if (!result)
+                    {
+                        break;
+                    }
+                }
+
+                if (result)
+                {
+                    ret = node;
+                    break;
+                }
+                // Time up! not found.
+                if (DateTime.Now > endTime)
+                {
+                    break;
+                }
+
+                // search child node
+                if (walker.GetLastChild(node) != null)
+                {
+                    ret = WalkerSearch_WidthFirst_Reverse(node, searchConditions, walker, endTime);
+                    if (ret != null)
+                    {
+                        break;
+                    }
+                }
+
+                // next sibling
+                node = walker.GetPreviousSibling(node);
             }
 
             return ret;
