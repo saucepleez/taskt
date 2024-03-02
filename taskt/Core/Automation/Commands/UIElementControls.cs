@@ -532,27 +532,11 @@ namespace taskt.Core.Automation.Commands
                     case "IsOffscreen":
                     case "IsPassword":
                     case "IsRequiredForForm":
-                        //if (bool.TryParse(parameterValue, out bool bValue))
-                        //{
-                        //    propCondition = CreatePropertyCondition(parameterName, bValue);
-                        //}
-                        //else
-                        //{
-                        //    throw new Exception($"Invalid parameter value, not bool. ParameterName: '{parameterName}', ParameterValue: '{parameterValue}'");
-                        //}
                         propCondition = CreatePropertyCondition(parameterName, bool.Parse(parameterValue));
                         break;
 
                     case "NativeWindowHandle":
                     case "ProcessId":
-                        //if (Int32.TryParse(parameterValue, out Int32 iValue))
-                        //{
-                        //    propCondition = CreatePropertyCondition(parameterName, iValue);
-                        //}
-                        //else
-                        //{
-                        //    throw new Exception($"Invalid parameter value, not Int32. ParameterName: '{parameterName}', ParameterValue: '{parameterValue}'");
-                        //}
                         propCondition = CreatePropertyCondition(parameterName, Int32.Parse(parameterValue));
                         break;
 
