@@ -638,13 +638,6 @@ namespace taskt.Core.Automation.Commands
 
             while (node != null)
             {
-                //var result = searchConditions.All(c => node.GetCurrentPropertyValue(c.Property) == c.Value);
-                //if (result)
-                //{
-                //    ret = node;
-                //    break;
-                //}
-
                 // DBG
                 Console.WriteLine($"# Node: {node.Current.Name}");
 
@@ -652,10 +645,25 @@ namespace taskt.Core.Automation.Commands
                 foreach (var c in searchConditions)
                 {
                     object p = node.GetCurrentPropertyValue(c.Property);
-                    result &= (c.Value.ToString() == p.ToString());
 
-                    // DBG
-                    Console.WriteLine($"Property: '{c.Property}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
+                    switch (c.Property.ProgrammaticName)
+                    {
+                        case "AutomationElementIdentifiers.ControlTypeProperty":
+                            // ControlType compare
+                            result &= (c.Value.ToString() == ((ControlType)p).Id.ToString());
+                            // DBG
+                            Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
+                            break;
+
+                        default:
+                            // normal compare
+                            result &= (c.Value.ToString() == p.ToString());
+                            // DBG
+                            Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
+                            break;
+                    }
+
+                    
                     if (!result)
                     {
                         break;
