@@ -364,17 +364,6 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        //public static void InspectToolParserClicked(DataTable table, ComboBox windowNames = null)
-        //{
-        //    using (UI.Forms.Supplement_Forms.frmInspectParser frm = new UI.Forms.Supplement_Forms.frmInspectParser())
-        //    {
-        //        if (frm.ShowDialog() == DialogResult.OK)
-        //        {
-        //            parseInspectToolResult(frm.inspectResult, table, windowNames);
-        //        }
-        //    }
-        //}
-
         private static string parseControlTypeInspectToolResult(string value)
         {
             var spt = value.Split(' ');
@@ -529,7 +518,7 @@ namespace taskt.Core.Automation.Commands
                 }
 
                 // DBG
-                Debug.WriteLine($"Name: '{parameterName}', Value: '{parameterValue}'");
+                //Debug.WriteLine($"Name: '{parameterName}', Value: '{parameterValue}'");
 
                 PropertyCondition propCondition = null;
 
@@ -639,7 +628,7 @@ namespace taskt.Core.Automation.Commands
             while (node != null)
             {
                 // DBG
-                Console.WriteLine($"# Node: {node.Current.Name}");
+                //Console.WriteLine($"# Node: {node.Current.Name}");
 
                 bool result = true;
                 foreach (var c in searchConditions)
@@ -652,25 +641,22 @@ namespace taskt.Core.Automation.Commands
                             // ControlType compare
                             result &= (c.Value.ToString() == ((ControlType)p).Id.ToString());
                             // DBG
-                            Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
+                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{((ControlType)p).Id.ToString()}'");
                             break;
 
                         default:
                             // normal compare
                             result &= (c.Value.ToString() == p.ToString());
                             // DBG
-                            Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
+                            //Console.WriteLine($"Property: '{c.Property.ProgrammaticName}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
                             break;
                     }
 
-                    
                     if (!result)
                     {
                         break;
                     }
                 }
-
-                //bool result = searchConditions.All(c => node.GetCurrentPropertyValue(c.Property).ToString() == c.Value.ToString());
 
                 if (result)
                 {
@@ -706,6 +692,7 @@ namespace taskt.Core.Automation.Commands
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
+            // NOTE: koko dousuru
             //var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
             //                rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
             //                DeepSearchGUIElement(rootElement, searchConditions);
@@ -1195,14 +1182,6 @@ namespace taskt.Core.Automation.Commands
             }
         }
 
-        //public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, AutomationElement elem, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
-        //{
-        //    var xpath = command.ConvertToUserVariableAsXPath(xpathName, engine);
-        //    var wait = command.ConvertToUserVariableAsInteger(waitTimeName, engine);
-
-        //    return SearchGUIElementByXPath(elem, xpath, wait, engine);
-        //}
-
         public static AutomationElement SearchGUIElementByXPath(ScriptCommand command, string rootElementName, string xpathName, string waitTimeName, Engine.AutomationEngineInstance engine)
         {
             var element = command.ExpandUserVariableAsUIElement(rootElementName, engine);
@@ -1532,28 +1511,6 @@ namespace taskt.Core.Automation.Commands
                 }
             }
         }
-
-        //public static void GUIInspectTool_UsedByXPath_Clicked(TextBox txtXPath)
-        //{
-        //    using(var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
-        //    {
-        //        if (fm.ShowDialog() == DialogResult.OK)
-        //        {
-        //            txtXPath.Text = fm.XPath;
-        //        }
-        //    }
-        //}
-        //public static void GUIInspectTool_UsedByInspectResult_Clicked(DataTable searchParams)
-        //{
-        //    using (var fm = new UI.Forms.Supplement_Forms.frmGUIInspect())
-        //    {
-        //        if (fm.ShowDialog() == DialogResult.OK)
-        //        {
-        //            string result = fm.InspectResult;
-        //            parseInspectToolResult(result, searchParams);
-        //        }
-        //    }
-        //}
 
         public static void UIAutomationDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
