@@ -8,6 +8,7 @@ using System.Xml.XPath;
 using System.Security;
 using System.Windows.Forms;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using System.Diagnostics;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -34,7 +35,7 @@ namespace taskt.Core.Automation.Commands
             "FrameworkId", "HasKeyboardFocus", "HelpText", "IsContentElement",
             "IsControlElement", "IsEnabled", "IsKeyboardFocusable", "IsOffscreen",
             "IsPassword", "IsRequiredForForm", "ItemStatus", "ItemType",
-            "LocalizedControlType", "Name", "NativeWindowHandle", "ProcessID",
+            "LocalizedControlType", "Name", "NativeWindowHandle", "ProcessId",
         };
         #endregion
 
@@ -330,7 +331,7 @@ namespace taskt.Core.Automation.Commands
                             case "LocalizedControlType":
                             case "Name":
                             case "NativeWindowHandle":
-                            case "ProcessID":
+                            case "ProcessId":
                                 DataTableControls.SetParameterValue(table, value, name, "ParameterName", "ParameterValue");
                                 break;
 
@@ -439,6 +440,12 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
+            //// value correct
+            //if (propertyName.ToLower() == "processid")
+            //{
+            //    propertyName = "ProcessId";
+            //}
+
             var conditionProp = (AutomationProperty)TypeOfAutomationElement.GetField(propertyName + "Property")?.GetValue(null) ??
                                     throw new Exception("Property '" + propertyName + "' does not Exists");
 
@@ -481,15 +488,111 @@ namespace taskt.Core.Automation.Commands
                 var parameterName = row.Field<string>("ParameterName") ?? "";
                 var parameterValue = row.Field<string>("ParameterValue") ?? ""; ;
 
-                PropertyCondition propCondition;
-                if (bool.TryParse(parameterValue, out bool bValue))
+                // value correction
+                switch (parameterName)
                 {
-                    propCondition = CreatePropertyCondition(parameterName, bValue);
+                    case "HasKeyboardFocus":
+                    case "IsContentElement":
+                    case "IsControlElement":
+                    case "IsEnabled":
+                    case "IsKeyboardFocusable":
+                    case "IsOffscreen":
+                    case "IsPassword":
+                    case "IsRequiredForForm":
+                        if (string.IsNullOrEmpty(parameterValue))
+                        {
+                            parameterValue = "False";
+                        }
+                        else
+                        {
+                            switch (parameterValue.ToLower())
+                            {
+                                case "yes":
+                                    parameterValue = "True";
+                                    break;
+                                case "no":
+                                    parameterValue = "False";
+                                    break;
+                            }
+                        }
+                        if (!bool.TryParse(parameterValue, out _))
+                        {
+                            throw new Exception($"Invalid ParamterValue. Value must be 'True' or 'False'. ParameterName: '{parameterName}', ParameteValue: '{parameterValue}'");
+                        }
+                        break;
+                    case "NativeWindowHandle":
+                    case "ProcessId":
+                        if (string.IsNullOrEmpty(parameterValue))
+                        {
+                            parameterValue = "0";
+                        }
+                        if (!Int32.TryParse(parameterValue, out _))
+                        {
+                            throw new Exception($"Invalid ParamterValue. Value must be Int32 value. ParameterName: '{parameterName}', ParameteValue: '{parameterValue}'");
+                        }
+                        break;
                 }
-                else
+
+                // DBG
+                Debug.WriteLine($"Name: '{parameterName}', Value: '{parameterValue}'");
+
+                PropertyCondition propCondition = null;
+                //if (bool.TryParse(parameterValue, out bool bValue))
+                //{
+                //    propCondition = CreatePropertyCondition(parameterName, bValue);
+                //}
+                //else
+                //{
+                //    propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                //}
+
+                switch (parameterName)
                 {
-                    propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                    case "HasKeyboardFocus":
+                    case "IsContentElement":
+                    case "IsControlElement":
+                    case "IsEnabled":
+                    case "IsKeyboardFocusable":
+                    case "IsOffscreen":
+                    case "IsPassword":
+                    case "IsRequiredForForm":
+                        if (bool.TryParse(parameterValue, out bool bValue))
+                        {
+                            propCondition = CreatePropertyCondition(parameterName, bValue);
+                        }
+                        else
+                        {
+                            throw new Exception($"Invalid parameter value, not bool. ParameterName: '{parameterName}', ParameterValue: '{parameterValue}'");
+                        }
+                        break;
+
+                    case "NativeWindowHandle":
+                    case "ProcessId":
+                        if (Int32.TryParse(parameterValue, out Int32 iValue))
+                        {
+                            propCondition = CreatePropertyCondition(parameterName, iValue);
+                        }
+                        else
+                        {
+                            throw new Exception($"Invalid parameter value, not Int32. ParameterName: '{parameterName}', ParameterValue: '{parameterValue}'");
+                        }
+                        break;
+
+                    case "AcceleratorKey":
+                    case "AccessKey":
+                    case "AutomationId":
+                    case "ClassName":
+                    case "ControlType":
+                    case "FrameworkId":
+                    case "HelpText":
+                    case "ItemStatus":
+                    case "ItemType":
+                    case "LocalizedControlType":
+                    case "Name":
+                        propCondition = CreatePropertyCondition(parameterName, parameterValue);
+                        break;
                 }
+
                 conditionList.Add(propCondition);
             }
 
@@ -548,7 +651,32 @@ namespace taskt.Core.Automation.Commands
 
             while (node != null)
             {
-                var result = searchConditions.All(c => node.GetCurrentPropertyValue(c.Property) == c.Value);
+                //var result = searchConditions.All(c => node.GetCurrentPropertyValue(c.Property) == c.Value);
+                //if (result)
+                //{
+                //    ret = node;
+                //    break;
+                //}
+
+                // DBG
+                Console.WriteLine($"# Node: {node.Current.Name}");
+
+                bool result = true;
+                foreach (var c in searchConditions)
+                {
+                    object p = node.GetCurrentPropertyValue(c.Property);
+                    result &= (c.Value.ToString() == p.ToString());
+
+                    // DBG
+                    Console.WriteLine($"Property: '{c.Property}', Value Cond: '{c.Value.ToString()}', Value Node: '{p.ToString()}'");
+                    if (!result)
+                    {
+                        break;
+                    }
+                }
+
+                //bool result = searchConditions.All(c => node.GetCurrentPropertyValue(c.Property).ToString() == c.Value.ToString());
+
                 if (result)
                 {
                     ret = node;
@@ -583,9 +711,11 @@ namespace taskt.Core.Automation.Commands
         {
             Condition searchConditions = CreateSearchCondition(conditionTable, engine);
 
-            var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
-                            rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
-                            DeepSearchGUIElement(rootElement, searchConditions);
+            //var element = rootElement.FindFirst(TreeScope.Descendants, searchConditions) ??
+            //                rootElement.FindFirst(TreeScope.Subtree, searchConditions) ??
+            //                DeepSearchGUIElement(rootElement, searchConditions);
+
+            var element = DeepSearchGUIElement(rootElement, searchConditions);
 
             // if element not found, don't throw exception here
             return element;
