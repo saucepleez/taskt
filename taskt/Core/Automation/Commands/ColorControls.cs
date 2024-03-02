@@ -1,5 +1,4 @@
-﻿using System;
-using taskt.Core.Automation.Attributes.PropertyAttributes;
+﻿using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -39,29 +38,29 @@ namespace taskt.Core.Automation.Commands
         [PropertyParameterOrder(5000)]
         public static string v_ColorValue { get; }
 
-        /// <summary>
-        /// Expand user variable as Color. This type is System.Drawing.Color.
-        /// </summary>
-        /// <param name="variableName"></param>
-        /// <param name="engine"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception">Value is not Color</exception>
-        public static System.Drawing.Color ExpandUserVariableAsColor(this string variableName, Engine.AutomationEngineInstance engine)
-        {
-            var v = variableName.GetRawVariable(engine);
-            if (v.VariableValue is System.Drawing.Color color)
-            {
-                return color;
-            }
-            else
-            {
-                throw new Exception("Variable " + variableName + " is not Color");
-            }
-        }
+        ///// <summary>
+        ///// Expand user variable as Color. This type is System.Drawing.Color.
+        ///// </summary>
+        ///// <param name="variableName"></param>
+        ///// <param name="engine"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception">Value is not Color</exception>
+        //public static System.Drawing.Color ExpandUserVariableAsColor(this string variableName, Engine.AutomationEngineInstance engine)
+        //{
+        //    var v = variableName.GetRawVariable(engine);
+        //    if (v.VariableValue is System.Drawing.Color color)
+        //    {
+        //        return color;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Variable " + variableName + " is not Color");
+        //    }
+        //}
 
-        public static void StoreInUserVariable(this System.Drawing.Color value, Engine.AutomationEngineInstance engine, string targetVariable)
-        {
-            ExtensionMethods.StoreInUserVariable(targetVariable, value, engine);
-        }
+        //public static void StoreInUserVariable(this System.Drawing.Color value, Engine.AutomationEngineInstance engine, string targetVariable)
+        //{
+        //    ExtensionMethods.StoreInUserVariable(targetVariable, value, engine);
+        //}
     }
 }

@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateColorFromExcelColorCommand : ScriptCommand
+    public class CreateColorFromExcelColorCommand : ScriptCommand, ICanHandleColor
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
@@ -53,8 +53,9 @@ namespace taskt.Core.Automation.Commands
             color >>= 8;
             int b = color;
 
-            Color co = Color.FromArgb(255, r, g, b);
-            co.StoreInUserVariable(engine, v_Color);
+            var co = Color.FromArgb(255, r, g, b);
+            //co.StoreInUserVariable(engine, v_Color);
+            this.StoreColorInUserVariable(co, nameof(v_Color), engine);
         }
     }
 }
