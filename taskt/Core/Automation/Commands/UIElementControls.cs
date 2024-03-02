@@ -756,7 +756,7 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
 
-                // next sibling
+                // previous sibling
                 node = walker.GetPreviousSibling(node);
             }
 
