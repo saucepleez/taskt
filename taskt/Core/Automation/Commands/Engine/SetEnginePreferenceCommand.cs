@@ -23,6 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Start Variable Marker")]
         [PropertyUISelectionOption("End Variable Marker")]
         [PropertyUISelectionOption("Engine Delay")]
+        // TODO: remove this item
         [PropertyUISelectionOption("Current Window Keyword")]
         [PropertyValidationRule("Parameter Type", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Parameter Type")]
