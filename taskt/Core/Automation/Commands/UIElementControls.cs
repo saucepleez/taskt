@@ -440,12 +440,6 @@ namespace taskt.Core.Automation.Commands
         /// <exception cref="Exception"></exception>
         private static PropertyCondition CreatePropertyCondition(string propertyName, object propertyValue)
         {
-            //// value correct
-            //if (propertyName.ToLower() == "processid")
-            //{
-            //    propertyName = "ProcessId";
-            //}
-
             var conditionProp = (AutomationProperty)TypeOfAutomationElement.GetField(propertyName + "Property")?.GetValue(null) ??
                                     throw new Exception("Property '" + propertyName + "' does not Exists");
 
@@ -537,14 +531,6 @@ namespace taskt.Core.Automation.Commands
                 Debug.WriteLine($"Name: '{parameterName}', Value: '{parameterValue}'");
 
                 PropertyCondition propCondition = null;
-                //if (bool.TryParse(parameterValue, out bool bValue))
-                //{
-                //    propCondition = CreatePropertyCondition(parameterName, bValue);
-                //}
-                //else
-                //{
-                //    propCondition = CreatePropertyCondition(parameterName, parameterValue);
-                //}
 
                 switch (parameterName)
                 {
