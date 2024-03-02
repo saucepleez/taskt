@@ -793,12 +793,14 @@ namespace taskt.Core.Automation.Commands
             // TODO: use system variable like keyword
             if (addAllWindows)
             {
-                lst.Add(settings?.EngineSettings.AllWindowsKeyword ?? "All Windows");
+                //lst.Add(settings?.EngineSettings.AllWindowsKeyword ?? "All Windows");
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_AllWindows.VariableName, settings));
             }
             
             if (addDesktop)
             {
-                lst.Add(settings?.EngineSettings.DesktopKeyword ?? "Desktop");
+                //lst.Add(settings?.EngineSettings.DesktopKeyword ?? "Desktop");
+                lst.Add(VariableNameControls.GetWrappedVariableName(SystemVariables.Window_Desktop.VariableName, settings));
             }
 
             lst.AddRange(GetAllWindowTitles());
