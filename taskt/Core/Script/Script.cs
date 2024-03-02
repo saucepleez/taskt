@@ -2436,6 +2436,9 @@ namespace taskt.Core.Script
                     }
                 }), "v_ShiftUp", "v_Shift");
 
+            // ExcelGetLastRowCommand v_ColumnIndex
+            ChangeAttributeName(doc, "ExcelGetLastRowCommand", "v_ColumnLetter", "v_ColumnIndex");
+
             return doc;
         }
 
