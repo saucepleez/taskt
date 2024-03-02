@@ -595,19 +595,19 @@ namespace taskt.Core.Automation.Commands
                 };
             }
 
-            var ret = WalkerSearch_WidthFirst(rootElement, conditions, walker, endTime);
+            var ret = WalkerSearch_DepthFirst(rootElement, conditions, walker, endTime);
             //var ret = WalkerSearch_WidthFirst_Reverse(rootElement, conditions, walker, endTime);
             return ret;
         }
 
         /// <summary>
-        /// Search GUI Element used by TreeWalker (WidthFirst)
+        /// Search GUI Element used by TreeWalker (Depth First)
         /// </summary>
         /// <param name="rootElement"></param>
         /// <param name="searchConditions"></param>
         /// <param name="walker"></param>
         /// <returns></returns>
-        private static AutomationElement WalkerSearch_WidthFirst(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
+        private static AutomationElement WalkerSearch_DepthFirst(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
             AutomationElement ret = null;
@@ -659,7 +659,7 @@ namespace taskt.Core.Automation.Commands
                 // search child node
                 if (walker.GetFirstChild(node) != null)
                 {
-                    ret = WalkerSearch_WidthFirst(node, searchConditions, walker, endTime);
+                    ret = WalkerSearch_DepthFirst(node, searchConditions, walker, endTime);
                     if (ret != null)
                     {
                         break;
@@ -674,14 +674,14 @@ namespace taskt.Core.Automation.Commands
         }
 
         /// <summary>
-        /// Search GUI Element used by TreeWalker (WidthFirst, Reverse)
+        /// Search GUI Element used by TreeWalker (Depth First, Reverse)
         /// </summary>
         /// <param name="rootElement"></param>
         /// <param name="searchConditions"></param>
         /// <param name="walker"></param>
         /// <param name="endTime"></param>
         /// <returns></returns>
-        private static AutomationElement WalkerSearch_WidthFirst_Reverse(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
+        private static AutomationElement WalkerSearch_DepthFirst_Reverse(AutomationElement rootElement, PropertyCondition[] searchConditions, TreeWalker walker, DateTime endTime)
         {
             AutomationElement node = walker.GetLastChild(rootElement);
             AutomationElement ret = null;
@@ -733,7 +733,7 @@ namespace taskt.Core.Automation.Commands
                 // search child node
                 if (walker.GetLastChild(node) != null)
                 {
-                    ret = WalkerSearch_WidthFirst_Reverse(node, searchConditions, walker, endTime);
+                    ret = WalkerSearch_DepthFirst_Reverse(node, searchConditions, walker, endTime);
                     if (ret != null)
                     {
                         break;
