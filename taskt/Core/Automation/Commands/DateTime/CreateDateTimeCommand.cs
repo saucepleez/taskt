@@ -14,11 +14,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateDateTimeCommand : ScriptCommand
+    public class CreateDateTimeCommand : ADateTimeCreateCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_OutputDateTime))]
-        public string v_DateTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_OutputDateTime))]
+        //public string v_DateTime { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Year to set")]
@@ -32,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Year", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero)]
         [PropertyDisplayText(true, "Year")]
+        [PropertyParameterOrder(6000)]
         public string v_Year { get; set; }
 
         [XmlAttribute]
@@ -47,6 +48,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Month", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyValueRange(1, 12)]
         [PropertyDisplayText(true, "Month")]
+        [PropertyParameterOrder(6001)]
         public string v_Month { get; set; }
 
         [XmlAttribute]
@@ -62,6 +64,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Day", PropertyValidationRule.ValidationRuleFlags.EqualsZero | PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyValueRange(1, 31)]
         [PropertyDisplayText(true, "Day")]
+        [PropertyParameterOrder(6002)]
         public string v_Day { get; set; }
 
         [XmlAttribute]
@@ -77,6 +80,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Hour", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyValueRange(0, 23)]
         [PropertyDisplayText(true, "Hour")]
+        [PropertyParameterOrder(6003)]
         public string v_Hour { get; set; }
 
         [XmlAttribute]
@@ -92,6 +96,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Minute", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyValueRange(0, 59)]
         [PropertyDisplayText(true, "Minute")]
+        [PropertyParameterOrder(6004)]
         public string v_Minute { get; set; }
 
         [XmlAttribute]
@@ -107,6 +112,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyValidationRule("Second", PropertyValidationRule.ValidationRuleFlags.LessThanZero | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyValueRange(0, 59)]
         [PropertyDisplayText(true, "Second")]
+        [PropertyParameterOrder(6005)]
         public string v_Second { get; set; }
 
         public CreateDateTimeCommand()
@@ -131,8 +137,16 @@ namespace taskt.Core.Automation.Commands
 
             int second = this.ExpandValueOrUserVariableAsInteger(nameof(v_Second), engine);
 
-            DateTime myDT = new DateTime(year, month, day, hour, minute, second);
-            myDT.StoreInUserVariable(engine, v_DateTime);
+            try
+            {
+                DateTime myDT = new DateTime(year, month, day, hour, minute, second);
+                //myDT.StoreInUserVariable(engine, v_DateTime);
+                this.StoreDateTimeInUserVariable(myDT, nameof(v_DateTime), engine);
+            }
+            catch
+            {
+                throw new Exception($"Specified DateTime is not DateTime. Year: '{year}', Month: '{month}', Day: '{day}', Hour: '{hour}', Minute: '{minute}', Second: '{second}'");
+            }
         }
     }
 }
