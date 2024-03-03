@@ -25,7 +25,11 @@ namespace taskt.Core.Automation.Attributes.PropertyAttributes
         }
     }
     #endregion
-    
+
+    #region Replace pattern
+    // TODO: make sometime
+    #endregion
+
     #region Virtual Property
     [AttributeUsage(AttributeTargets.Property)]
     public class PropertyVirtualProperty : Attribute
