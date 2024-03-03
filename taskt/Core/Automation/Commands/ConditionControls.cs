@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
-using System.Runtime.CompilerServices;
 
 namespace taskt.Core.Automation.Commands
 {
