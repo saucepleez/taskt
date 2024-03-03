@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class MailKitGetEMailTextCommand : ScriptCommand
+    public class MailKitGetEMailTextCommand : ScriptCommand, ICanHandleDateTime
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(EMailControls), nameof(EMailControls.v_InputEMailName))]
@@ -92,11 +92,13 @@ namespace taskt.Core.Automation.Commands
 
                 // Date
                 case "date":
-                    (mail.Date.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    //(mail.Date.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    this.StoreDateTimeInUserVariable((mail.Date.DateTime), nameof(v_ResultVariable), engine);
                     return;
 
                 case "resent-date":
-                    (mail.ResentDate.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    //(mail.ResentDate.DateTime).StoreInUserVariable(engine, v_ResultVariable);
+                    this.StoreDateTimeInUserVariable((mail.ResentDate.Date), nameof(v_ResultVariable), engine);
                     return;
             }
 
