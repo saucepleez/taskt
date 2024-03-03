@@ -16,11 +16,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class FormatDateTimeCommand : ScriptCommand
+    public class FormatDateTimeCommand : ADateTimeConvertCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
-        public string v_DateTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
+        //public string v_DateTime { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("DateTime Format")]
@@ -35,11 +35,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Format", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Format")]
+        [PropertyParameterOrder(6000)]
         public string v_Format { get; set; }
 
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_Result { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //public string v_Result { get; set; }
 
         public FormatDateTimeCommand()
         {
@@ -51,7 +52,9 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
+            //var myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
+            var myDT = this.ExpandValueOrVariableAsDateTime(engine);
+            
             string format = v_Format.ExpandValueOrUserVariable(engine);
 
             myDT.ToString(format).StoreInUserVariable(engine, v_Result);
