@@ -10,6 +10,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_OutputDateTime))]
+        [PropertyParameterOrder(5000)]
         public virtual string v_DateTime { get; set; }
     }
 }
