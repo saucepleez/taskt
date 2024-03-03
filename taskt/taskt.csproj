@@ -316,10 +316,12 @@
     <Compile Include="Core\Automation\Commands\Color\EM_CanHandleColorExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Color\ICanHandleColor.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\ADateTimeConvertCommands.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\ADateTimeCreateCommands.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\EM_DateTimeConvertPropertiesExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\EM_CanHandleDateTimExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\ICanHandleDateTime.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\IDateTimeConvertProperties.cs" />
+    <Compile Include="Core\Automation\Commands\DateTime\IDateTimeCreateProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelColumnRangeCommands.cs" />
