@@ -16,6 +16,6 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyParameterOrder(7000)]
-        public abstract string v_Result { get; set; }
+        public virtual string v_Result { get; set; }
     }
 }
