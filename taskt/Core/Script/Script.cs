@@ -1137,8 +1137,8 @@ namespace taskt.Core.Script
             }));
             var moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy file")).ToList();
             var copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy file")).ToList();
-            ChangeCommandName(moveCommands, "MoveFileCommand", "Move File");
-            ChangeCommandName(copyCommands, "CopyFileCommand", "Copy File");
+            ChangeCommandNameProcess(moveCommands, "MoveFileCommand", "Move File");
+            ChangeCommandNameProcess(copyCommands, "CopyFileCommand", "Copy File");
             foreach(var cmd in commands)
             {
                 cmd.Attribute("v_OperationType").Remove();
@@ -1161,8 +1161,8 @@ namespace taskt.Core.Script
             }));
             moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy folder")).ToList();
             copyCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() == "copy folder")).ToList();
-            ChangeCommandName(moveCommands, "MoveFolderCommand", "Move Folder");
-            ChangeCommandName(copyCommands, "CopyFolderCommand", "Copy Folder");
+            ChangeCommandNameProcess(moveCommands, "MoveFolderCommand", "Move Folder");
+            ChangeCommandNameProcess(copyCommands, "CopyFolderCommand", "Copy Folder");
             foreach (var cmd in commands)
             {
                 cmd.Attribute("v_OperationType").Remove();
@@ -1853,7 +1853,7 @@ namespace taskt.Core.Script
 
             if (cmds.Count() > 0)
             {
-                ChangeCommandName(macroCommands, "ExcelRunMacroCommand", "Run Macro");
+                ChangeCommandNameProcess(macroCommands, "ExcelRunMacroCommand", "Run Macro");
             }
 
             return doc;
@@ -2492,7 +2492,7 @@ namespace taskt.Core.Script
         /// <param name="commands"></param>
         /// <param name="newName"></param>
         /// <param name="newSelectioName"></param>
-        private static void ChangeCommandName(IEnumerable<XElement> commands, string newName, string newSelectioName)
+        private static void ChangeCommandNameProcess(IEnumerable<XElement> commands, string newName, string newSelectioName)
         {
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
             foreach (var cmd in commands)
@@ -2514,7 +2514,7 @@ namespace taskt.Core.Script
         private static XDocument ChangeCommandName(XDocument doc, Func<XElement, bool> searchFunc, string newName, string newSelectioName)
         {
             IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
-            ChangeCommandName(commands, newName, newSelectioName);
+            ChangeCommandNameProcess(commands, newName, newSelectioName);
             return doc;
         }
 
@@ -2528,11 +2528,6 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeCommandName(XDocument doc, string targetName, string newName, string newSelectioName)
         {
-            //return ChangeCommandName(doc, new Func<XElement, bool>(el =>
-            //{
-            //    return (el.Attribute("CommandName").Value == targetName);
-            //}), newName, newSelectioName);
-
             return ChangeCommandName(doc, GetSearchCommandsFunc(targetName), newName, newSelectioName);
         }
 
@@ -2565,11 +2560,6 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeValue(XDocument doc, string targetCommand, string targetAttribute, Action<XAttribute> changeFunc)
         {
-            //return ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
-            //{
-            //    return (el.Attribute("CommandName").Value == targetCommand);
-            //}), targetAttribute, changeFunc);
-
             return ChangeAttributeValue(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, changeFunc);
         }
 
@@ -2620,12 +2610,6 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeTableCellValue(XDocument doc, string commandName, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
-            //ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
-            //{
-            //    return el.Attribute("CommandName").Value == commandName;
-            //}), tableParameterName, tableCellName, changeFunc, defaultCellValue);
-            //return doc;
-
             return ChangeTableCellValue(doc, GetSearchCommandsFunc(commandName), tableParameterName, tableCellName, changeFunc, defaultCellValue);
         }
 
@@ -2702,12 +2686,6 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ModifyTable(XDocument doc, string targetCommand, string tableParameterName, Action<XElement, XElement, List<XElement>, string> modifyFunc)
         {
-            //ModifyTable(doc, new Func<XElement, bool>(el =>
-            //{
-            //    return el.Attribute("CommandName").Value == targetCommand;
-            //}), tableParameterName, modifyFunc);
-            //return doc;
-
             return ModifyTable(doc, GetSearchCommandsFunc(targetCommand), tableParameterName, modifyFunc);
         }
 
@@ -2852,19 +2830,14 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
-        /// change attribute name. target command is specified Func<>
+        /// change attribute name process
         /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="searchFunc"></param>
+        /// <param name="commands"></param>
         /// <param name="targetAttribute"></param>
         /// <param name="newAttribute"></param>
-        /// <returns></returns>
-        private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
+        private static void ChangeAttributeNameProcess(List<XElement> commands, string targetAttribute, string newAttribute)
         {
-            var commands = doc.Descendants("ScriptCommand")
-                .Where(searchFunc).ToList();
-
-            foreach(var cmd in commands)
+            foreach (var cmd in commands)
             {
                 var trgAttr = cmd.Attribute(targetAttribute);
                 var newAttr = cmd.Attribute(newAttribute);
@@ -2877,6 +2850,35 @@ namespace taskt.Core.Script
                     trgAttr.Remove();
                 }
             }
+        }
+
+        /// <summary>
+        /// change attribute name. target command is specified Func<>
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="newAttribute"></param>
+        /// <returns></returns>
+        private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                .Where(searchFunc).ToList();
+
+            //foreach(var cmd in commands)
+            //{
+            //    var trgAttr = cmd.Attribute(targetAttribute);
+            //    var newAttr = cmd.Attribute(newAttribute);
+            //    if (trgAttr != null)
+            //    {
+            //        if (newAttr == null)
+            //        {
+            //            cmd.SetAttributeValue(newAttribute, trgAttr.Value);
+            //        }
+            //        trgAttr.Remove();
+            //    }
+            //}
+            ChangeAttributeNameProcess(commands, targetAttribute, newAttribute);
 
             return doc;
         }
@@ -2891,11 +2893,6 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeName(XDocument doc, string targetCommand, string targetAttribute, string newAttribute)
         {
-            //return ChangeAttributeName(doc, new Func<XElement, bool>(el =>
-            //{
-            //    return el.Attribute("CommandName").Value == targetCommand;
-            //}), targetAttribute, newAttribute);
-
             return ChangeAttributeName(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, newAttribute);
         }
     }
