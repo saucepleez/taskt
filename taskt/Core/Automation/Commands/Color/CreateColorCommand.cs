@@ -15,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateColorCommand : ScriptCommand, ICanHandleColor
+    public class CreateColorCommand : AColorCreateCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
-        public string v_Color { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
+        //public string v_Color { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_ColorValue))]
@@ -27,6 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vRed}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Red")]
         [PropertyValidationRule("Red", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Red")]
+        [PropertyParameterOrder(6000)]
         public string v_Red { get; set; }
 
         [XmlAttribute]
@@ -35,6 +36,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vGreen}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Green")]
         [PropertyValidationRule("Green", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Green")]
+        [PropertyParameterOrder(6001)]
         public string v_Green { get; set; }
 
         [XmlAttribute]
@@ -43,6 +45,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**{{{vBlue}}}**", PropertyDetailSampleUsage.ValueType.VariableValue, "Blue")]
         [PropertyValidationRule("Blue", PropertyValidationRule.ValidationRuleFlags.Empty | PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Blue")]
+        [PropertyParameterOrder(6002)]
         public string v_Blue { get; set; }
 
         [XmlAttribute]
@@ -52,6 +55,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyIsOptional(true, "255")]
         [PropertyValidationRule("Alpha", PropertyValidationRule.ValidationRuleFlags.NotBetween)]
         [PropertyDisplayText(true, "Alpha")]
+        [PropertyParameterOrder(6003)]
         public string v_Alpha { get; set; }
 
         public CreateColorCommand()

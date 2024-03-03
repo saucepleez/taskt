@@ -15,11 +15,11 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateColorFromExcelColorCommand : ScriptCommand, ICanHandleColor
+    public class CreateColorFromExcelColorCommand : AColorCreateCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
-        public string v_Color { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(ColorControls), nameof(ColorControls.v_InputColorVariableName))]
+        //public string v_Color { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Excel Color Value")]
@@ -32,6 +32,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyTextBoxSetting(1, false)]
         [PropertyValidationRule("Excel Color", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Color Value")]
+        [PropertyParameterOrder(6000)]
         public string v_ExcelColor { get; set; }
 
         public CreateColorFromExcelColorCommand()
