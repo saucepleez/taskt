@@ -313,8 +313,10 @@
     <Compile Include="Core\ApplicationSettings\LocalListenerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\ServerSettings.cs" />
     <Compile Include="Core\ApplicationSettings\WhiteListIP.cs" />
+    <Compile Include="Core\Automation\Commands\Color\AColorCreateCommands.cs" />
     <Compile Include="Core\Automation\Commands\Color\EM_CanHandleColorExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Color\ICanHandleColor.cs" />
+    <Compile Include="Core\Automation\Commands\Color\IColorCreateProperties.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\ADateTimeConvertCommands.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\ADateTimeCreateCommands.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\EM_DateTimeConvertPropertiesExtensionMethods.cs" />
