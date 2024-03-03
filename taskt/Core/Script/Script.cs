@@ -367,6 +367,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_80(doc);
             convertTo3_5_1_81(doc);
             convertTo3_5_1_83(doc);
+            convertTo3_5_1_84(doc);
 
             return doc;
         }
@@ -2438,6 +2439,14 @@ namespace taskt.Core.Script
 
             // ExcelGetLastRowCommand v_ColumnIndex
             ChangeAttributeName(doc, "ExcelGetLastRowCommand", "v_ColumnLetter", "v_ColumnIndex");
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_84(XDocument doc)
+        {
+            // ConvertDateTimeToExcelSerialCommand v_Result
+            ChangeAttributeName(doc, "ConvertDateTimeToExcelSerialCommand", "v_Serial", "v_Result");
 
             return doc;
         }

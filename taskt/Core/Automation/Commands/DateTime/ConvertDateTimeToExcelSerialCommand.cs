@@ -14,19 +14,19 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ConvertDateTimeToExcelSerialCommand : ScriptCommand
+    public class ConvertDateTimeToExcelSerialCommand : ADateTimeConvertCommands
     {
-        [XmlAttribute]
-        [PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
-        public string v_DateTime { get; set; }
+        //[XmlAttribute]
+        //[PropertyVirtualProperty(nameof(DateTimeControls), nameof(DateTimeControls.v_InputDateTime))]
+        //public string v_DateTime { get; set; }
 
         [XmlAttribute]
-        [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
+        //[PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Excel Serial Value")]
-        [PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
-        [PropertyDetailSampleUsage("**vSerial**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        [PropertyDetailSampleUsage("**{{{vSerial}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
-        public string v_Serial { get; set; }
+        //[PropertyDetailSampleUsageBehavior(MultiAttributesBehavior.Overwrite)]
+        //[PropertyDetailSampleUsage("**vSerial**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        //[PropertyDetailSampleUsage("**{{{vSerial}}}**", PropertyDetailSampleUsage.ValueType.VariableName)]
+        public override string v_Result { get; set; }
 
         public ConvertDateTimeToExcelSerialCommand()
         {
@@ -38,10 +38,14 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DateTime myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
+            //DateTime myDT = v_DateTime.ExpandUserVariableAsDateTime(engine);
+            //var myDT = this.ExpandValueOrVariableAsDateTime(nameof(v_DateTime), engine);
+            var myDT = this.ExpandValueOrVariableAsDateTime(engine);
 
-            double serial = myDT.ToOADate();
-            serial.ToString().StoreInUserVariable(engine, v_Serial);
+            //double serial = myDT.ToOADate();
+            //serial.ToString().StoreInUserVariable(engine, v_Serial);
+
+            myDT.ToOADate().StoreInUserVariable(engine, v_Result);
         }
     }
 }
