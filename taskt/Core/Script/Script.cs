@@ -2863,7 +2863,7 @@ namespace taskt.Core.Script
         private static XDocument ChangeAttributeName(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, string newAttribute)
         {
             var commands = doc.Descendants("ScriptCommand")
-                .Where(searchFunc).ToList();
+                            .Where(searchFunc).ToList();
 
             //foreach(var cmd in commands)
             //{
@@ -2894,6 +2894,53 @@ namespace taskt.Core.Script
         private static XDocument ChangeAttributeName(XDocument doc, string targetCommand, string targetAttribute, string newAttribute)
         {
             return ChangeAttributeName(doc, GetSearchCommandsFunc(targetCommand), targetAttribute, newAttribute);
+        }
+
+        /// <summary>
+        /// change to other command
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="newCommand"></param>
+        /// <param name="newSelectionName"></param>
+        /// <param name="attributes"></param>
+        private static void ChangeToOtherCommandProcess(List<XElement> commands, string newCommand, string newSelectionName, List<(string, string)> attributes)
+        {
+            ChangeCommandNameProcess(commands, newCommand, newSelectionName);
+            foreach((string oldAttr, string newAttr) in attributes)
+            {
+                ChangeAttributeNameProcess(commands, oldAttr, newAttr);
+            }
+        }
+
+        /// <summary>
+        /// change to other command, specified commands search Func
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="newCommand"></param>
+        /// <param name="newSelectionName"></param>
+        /// <param name="attributes"></param>
+        /// <returns></returns>
+        private static XDocument ChangeToOtherCommand(XDocument doc, Func<XElement, bool> searchFunc, string newCommand, string newSelectionName, List<(string, string)> attributes)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            ChangeToOtherCommandProcess(commands, newCommand, newSelectionName, attributes);
+            return doc;
+        }
+
+        /// <summary>
+        /// change to other command, specified command name
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="newCommand"></param>
+        /// <param name="newSelectionName"></param>
+        /// <param name="attributes"></param>
+        /// <returns></returns>
+        private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributes)
+        {
+            return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributes);
         }
     }
 }
