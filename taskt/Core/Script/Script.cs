@@ -2448,6 +2448,14 @@ namespace taskt.Core.Script
             // ConvertDateTimeToExcelSerialCommand v_Result
             ChangeAttributeName(doc, "ConvertDateTimeToExcelSerialCommand", "v_Serial", "v_Result");
 
+            // GetDataRowCommand -> ConvertDataTableRowToListCommand
+            ChangeToOtherCommand(doc, "GetDataRowCommand", "ConvertDataTableRowToListCommand", "Convert DataTable Row To List",
+                new List<(string, string)>()
+                {
+                    ("v_UserVariableName", "v_OutputVariableName"),
+                }
+            );
+
             return doc;
         }
 
