@@ -2456,6 +2456,27 @@ namespace taskt.Core.Script
                 }
             );
 
+            // GetDataRowValueCommand attribute v_Option value
+            ChangeAttributeValue(doc, "GetDataRowValueCommand", "v_Option",
+                new Action<XAttribute>(attr =>
+                {
+                    if (attr.Value.ToLower() == "column name")
+                    {
+                        attr.SetValue("Key");
+                    }
+                })
+            );
+            // GetDataRowValueCommand -> GetDictionaryValueCommand
+            ChangeToOtherCommand(doc, "GetDataRowValueCommand", "GetDictionaryValueCommand", "Get Dictionary Value",
+                new List<(string, string)>()
+                {
+                    ("v_DataRowName", "v_InputData"),
+                    ("v_Option", "v_KeyType"),
+                    ("v_DataValueIndex", "v_Key"),
+                    ("v_UserVariableName", "v_OutputVariable"),
+                }
+            );
+
             return doc;
         }
 
