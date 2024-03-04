@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.CustomControls;
@@ -60,13 +59,20 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable dataTable = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            //DataTable dataTable = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
 
-            int index = int.Parse(v_DataRowIndex.ExpandValueOrUserVariable(engine));
+            //int index = int.Parse(v_DataRowIndex.ExpandValueOrUserVariable(engine));
 
-            DataRow row = dataTable.Rows[index];
+            //DataRow row = dataTable.Rows[index];
 
-            row.StoreInUserVariable(engine, v_UserVariableName);
+            //row.StoreInUserVariable(engine, v_UserVariableName);
+            var convertToList = new ConvertDataTableRowToListCommand()
+            {
+                v_DataTableName = this.v_DataTableName,
+                v_DataRowIndex = this.v_DataRowIndex,
+                v_OutputVariableName = this.v_UserVariableName,
+            };
+            convertToList.RunCommand(engine);
         }
        
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
