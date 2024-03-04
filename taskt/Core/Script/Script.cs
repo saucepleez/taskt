@@ -2456,6 +2456,7 @@ namespace taskt.Core.Script
                 }
             );
 
+            // GetDataRowValueCommand
             // GetDataRowValueCommand attribute v_Option value
             ChangeAttributeValue(doc, "GetDataRowValueCommand", "v_Option",
                 new Action<XAttribute>(attr =>
@@ -2524,7 +2525,7 @@ namespace taskt.Core.Script
         /// <param name="commands"></param>
         /// <param name="newName"></param>
         /// <param name="newSelectioName"></param>
-        private static void ChangeCommandNameProcess(IEnumerable<XElement> commands, string newName, string newSelectioName)
+        private static void ChangeCommandNameProcess(List<XElement> commands, string newName, string newSelectioName)
         {
             XNamespace ns = "http://www.w3.org/2001/XMLSchema-instance";
             foreach (var cmd in commands)
@@ -2545,7 +2546,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeCommandName(XDocument doc, Func<XElement, bool> searchFunc, string newName, string newSelectioName)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
+            var commands = doc.Descendants("ScriptCommand").Where(searchFunc).ToList();
             ChangeCommandNameProcess(commands, newName, newSelectioName);
             return doc;
         }
@@ -2564,6 +2565,20 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
+        /// change attribute value process
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="targetAttribute"></param>
+        /// <param name="changeFunc"></param>
+        private static void ChangeAttributeValueProcess(List<XElement> commands, string targetAttribute, Action<XAttribute> changeFunc)
+        {
+            foreach (var cmd in commands)
+            {
+                changeFunc(cmd.Attribute(targetAttribute));
+            }
+        }
+
+        /// <summary>
         /// change attribute value. target commands are searched by specified Func<>
         /// </summary>
         /// <param name="doc"></param>
@@ -2573,12 +2588,13 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeAttributeValue(XDocument doc, Func<XElement, bool> searchFunc, string targetAttribute, Action<XAttribute> changeFunc)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand")
-                .Where(searchFunc);
-            foreach(var cmd in commands)
-            {
-                changeFunc(cmd.Attribute(targetAttribute));
-            }
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            //foreach(var cmd in commands)
+            //{
+            //    changeFunc(cmd.Attribute(targetAttribute));
+            //}
+            ChangeAttributeValueProcess(commands, targetAttribute, changeFunc);
             return doc;
         }
 
@@ -2607,7 +2623,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ChangeTableCellValue(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, string tableCellName, Action<XElement> changeFunc, string defaultCellValue)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
+            var commands = doc.Descendants("ScriptCommand").Where(searchFunc).ToList();
 
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
@@ -2692,7 +2708,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static XDocument ModifyTable(XDocument doc, Func<XElement, bool> searchFunc, string tableParameterName, Action<XElement, XElement, List<XElement>, string> modifyFunc)
         {
-            IEnumerable<XElement> commands = doc.Descendants("ScriptCommand").Where(searchFunc);
+            var commands = doc.Descendants("ScriptCommand").Where(searchFunc).ToList();
 
             //XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
             foreach (var cmd in commands)
