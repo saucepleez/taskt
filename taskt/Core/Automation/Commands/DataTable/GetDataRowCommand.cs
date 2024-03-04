@@ -66,13 +66,13 @@ namespace taskt.Core.Automation.Commands
             //DataRow row = dataTable.Rows[index];
 
             //row.StoreInUserVariable(engine, v_UserVariableName);
-            var convertToList = new ConvertDataTableRowToListCommand()
+            var convertToDic = new ConvertDataTableRowToDictionaryCommand()
             {
                 v_DataTableName = this.v_DataTableName,
                 v_DataRowIndex = this.v_DataRowIndex,
                 v_OutputVariableName = this.v_UserVariableName,
             };
-            convertToList.RunCommand(engine);
+            convertToDic.RunCommand(engine);
         }
        
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
