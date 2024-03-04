@@ -2477,6 +2477,9 @@ namespace taskt.Core.Script
                 }
             );
 
+            // RemoveDataRowCommand -> SearchAndDeleteDataTableRowsCommand
+            ChangeCommandName(doc, "RemoveDataRowCommand", "SearchAndDeleteDataTableRowsCommand", "Search And Delete DataTable Rows");
+
             return doc;
         }
 

@@ -744,7 +744,7 @@
     <Compile Include="Core\Automation\Commands\Remote\RemoteAPICommand.cs" />
     <Compile Include="Core\Automation\Commands\Remote\RemoteTaskCommand.cs" />
     <Compile Include="Core\Automation\Commands\DataTable\FilterDataTableCommand.cs" />
-    <Compile Include="Core\Automation\Commands\DataTable\RemoveDataRowCommand.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\SearchAndDeleteDataTableRowsCommand.cs" />
     <Compile Include="Core\Automation\Commands\Folder\RenameFolderCommand.cs" />
     <Compile Include="Core\Automation\Commands\ApplicationScriptFile\LoadScriptFileCommand.cs" />
     <Compile Include="Core\Automation\Commands\WebBrowser\SeleniumBrowserSwitchWebBrowserFrameCommand.cs" />
