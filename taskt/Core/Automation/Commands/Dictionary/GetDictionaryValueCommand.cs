@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
 namespace taskt.Core.Automation.Commands
@@ -34,6 +35,20 @@ namespace taskt.Core.Automation.Commands
         [PropertyDetailSampleUsage("**Set Empty**", "Result is Empty Value")]
         public string v_IfKeyDoesNotExists { get; set; }
 
+        [XmlAttribute]
+        [PropertyDescription("Key Type")]
+        [InputSpecification("")]
+        [Remarks("")]
+        [PropertyUISelectionOption("Key")]
+        [PropertyUISelectionOption("Index")]
+        [PropertyDetailSampleUsage("**Key**", "Key Value is Dictionary Key Name")]
+        [PropertyDetailSampleUsage("**Key**", "Key Value is Dictionary Key Index")]
+        [PropertyIsOptional(true, "Key")]
+        [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
+        [PropertyValidationRule("Key Type", PropertyValidationRule.ValidationRuleFlags.None)]
+        [PropertyDisplayText(false, "Result")]
+        public string v_KeyType { get; set; }
+
         public GetDictionaryValueCommand()
         {
             //this.CommandName = "GetDictionaryValueCommand";
@@ -44,6 +59,30 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
+            if (this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_KeyType), engine) == "index")
+            {
+                var getKeys = new GetDictionaryKeysListCommand()
+                {
+                    v_InputData = this.v_InputData,
+                    v_OutputVariable = VariableNameControls.GetInnerVariableName(0, engine),
+                };
+                getKeys.RunCommand(engine);
+                var keys = (List<string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
+                var index = this.ExpandValueOrUserVariableAsInteger(nameof(v_Key), "Key", engine);
+                if (index < 0)
+                {
+                    index += keys.Count;
+                }
+                if (index >= 0 && index < keys.Count)
+                {
+                    v_Key = keys[index];    // override Key name
+                }
+                else
+                {
+                    throw new Exception($"Index value is Out of Range. Value: '{v_Key}', Expand Value: '{index}'");
+                }
+            }
+
             (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_InputData), nameof(v_Key), engine);
 
             if (dic.ContainsKey(vKey))
