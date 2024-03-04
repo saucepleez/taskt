@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using taskt.UI.CustomControls;
@@ -68,28 +67,42 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;
+            //DataRow dataRow = (DataRow)v_DataRowName.GetRawVariable(engine).VariableValue;
 
-            var valueIndex = v_DataValueIndex.ExpandValueOrUserVariable(engine);
+            //var valueIndex = v_DataValueIndex.ExpandValueOrUserVariable(engine);
 
-            if (String.IsNullOrEmpty(v_Option))
+            //if (String.IsNullOrEmpty(v_Option))
+            //{
+            //    v_Option = "Index";
+            //}
+
+            //string value = "";
+            //if (v_Option == "Index")
+            //{
+            //    int index = int.Parse(valueIndex);
+            //    value = dataRow[index].ToString();
+            //}
+            //else if (v_Option == "Column Name")
+            //{
+            //    string index = valueIndex;
+            //    value = dataRow.Field<string>(index);
+            //}
+
+            //value.StoreInUserVariable(engine, v_UserVariableName);
+
+            var t = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_Option), "Type", engine);
+            if (t == "column name")
             {
-                v_Option = "Index";
+                v_Option = "Key";
             }
-
-            string value = "";
-            if (v_Option == "Index")
+            var getDic = new GetDictionaryValueCommand()
             {
-                int index = int.Parse(valueIndex);
-                value = dataRow[index].ToString();
-            }
-            else if (v_Option == "Column Name")
-            {
-                string index = valueIndex;
-                value = dataRow.Field<string>(index);
-            }
-
-            value.StoreInUserVariable(engine, v_UserVariableName);
+                v_InputData = this.v_DataRowName,
+                v_Key = this.v_DataValueIndex,
+                v_OutputVariable = this.v_UserVariableName,
+                v_KeyType = this.v_Option,
+            };
+            getDic.RunCommand(engine);
         }
 
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
