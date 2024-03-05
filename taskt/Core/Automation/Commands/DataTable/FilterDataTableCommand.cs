@@ -4,7 +4,6 @@ using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -29,6 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         public string v_DataTableName { get; set; }
+
         [XmlAttribute]
         [PropertyDescription("Please indicate the output DataTable Variable Name")]
         [InputSpecification("Enter a unique DataTable name for future reference.")]
@@ -83,8 +83,6 @@ namespace taskt.Core.Automation.Commands
 
             foreach (Tuple<string, string> tuple in t)
             {
-
-
                 foreach (DataRow item in listrows)
                 {
                     if (item[tuple.Item1] != null)
@@ -96,6 +94,7 @@ namespace taskt.Core.Automation.Commands
                     }
                 }
             }
+
             DataTable outputDT = new DataTable();
             int x = 0;
             foreach(DataColumn column in Dt.Columns)
@@ -103,10 +102,12 @@ namespace taskt.Core.Automation.Commands
                 outputDT.Columns.Add(Dt.Columns[x].ToString());
                 x++;
             }
+
             foreach (DataRow item in templist)
             {
                 outputDT.Rows.Add(item.ItemArray);
             }
+
             Dt.AcceptChanges();
 
             outputDT.StoreInUserVariable(engine, v_OutputDTName);
