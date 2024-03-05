@@ -2536,6 +2536,36 @@ namespace taskt.Core.Script
                 }
             );
 
+            // ParseDatasetRowCommand (ParseRowCommand) -> GetDataTableValueCommand
+            ChangeToOtherCommand(doc, "ParseRowCommand", "GetDataTableValueCommand", "Get DataTable Value",
+                new List<(string, string)>()
+                {
+                    ("v_DatasetName", "v_DataTableName"),
+                    ("v_ColumnParseType", "v_ColumnType"),
+                    ("v_ColumnParameter", "v_ColumnIndex"),
+                    ("v_applyToVariableName", "v_UserVariableName"),
+                    ("v_SpecifiedRow", "v_RowIndex"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_ColumnParseType",
+                        new Action<XAttribute>(attr =>
+                        {
+                            switch (attr.Value.ToLower())
+                            {
+                                case "by column name":
+                                    attr.SetValue("Column Name");
+                                    break;
+                                case "by column index":
+                                    attr.SetValue("Index");
+                                    break;
+                            }
+                        })
+                    ),
+                }
+            );
+
             return doc;
         }
 

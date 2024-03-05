@@ -72,48 +72,69 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            //try to find dataset based on variable name
-            var dataSourceVariable = engine.VariableList.FirstOrDefault(f => engine.engineSettings.VariableStartMarker + f.VariableName + engine.engineSettings.VariableEndMarker == v_DatasetName);
+            ////try to find dataset based on variable name
+            //var dataSourceVariable = engine.VariableList.FirstOrDefault(f => engine.engineSettings.VariableStartMarker + f.VariableName + engine.engineSettings.VariableEndMarker == v_DatasetName);
 
-            if (dataSourceVariable == null)
+            //if (dataSourceVariable == null)
+            //{
+            //    //see if match is found without encasing
+            //    dataSourceVariable = engine.VariableList.FirstOrDefault(f => f.VariableName == v_DatasetName);
+
+            //    //no match was found
+            //    if (dataSourceVariable == null)
+            //    {
+            //        throw new Exception($"Data Source {v_DatasetName} Not Found! Did you input the correct name?");
+            //    }
+            //}
+
+            //var columnName = v_ColumnParameter.ExpandValueOrUserVariable(engine);
+            //var parseStrat = v_ColumnParseType.ExpandValueOrUserVariable(engine);
+            ////get datatable
+            //var dataTable = (DataTable)dataSourceVariable.VariableValue;
+
+            //int requiredRowNumber;
+            //if (!int.TryParse(this.v_SpecifiedRow.ExpandValueOrUserVariable(engine), out requiredRowNumber))
+            //{
+            //    requiredRowNumber = dataSourceVariable.CurrentPosition;
+            //}
+
+            ////get required row
+            //var requiredRow = dataTable.Rows[requiredRowNumber];
+
+            ////parse column name based on requirement
+            //object requiredColumn;
+            //if (parseStrat == "By Column Index")
+            //{
+            //    requiredColumn = requiredRow[int.Parse(columnName)];
+            //}
+            //else
+            //{
+            //    requiredColumn = requiredRow[columnName];
+            //}
+
+            ////store value in variable
+            //requiredColumn.ToString().StoreInUserVariable(engine, v_applyToVariableName);
+
+            string colType = "";
+            switch(this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ColumnParseType), engine))
             {
-                //see if match is found without encasing
-                dataSourceVariable = engine.VariableList.FirstOrDefault(f => f.VariableName == v_DatasetName);
-
-                //no match was found
-                if (dataSourceVariable == null)
-                {
-                    throw new Exception($"Data Source {v_DatasetName} Not Found! Did you input the correct name?");
-                }
+                case "by column name":
+                    colType = "Column Name";
+                    break;
+                case "by column index":
+                    colType = "Index";
+                    break;
             }
 
-            var columnName = v_ColumnParameter.ExpandValueOrUserVariable(engine);
-            var parseStrat = v_ColumnParseType.ExpandValueOrUserVariable(engine);
-            //get datatable
-            var dataTable = (DataTable)dataSourceVariable.VariableValue;
-
-            int requiredRowNumber;
-            if (!int.TryParse(this.v_SpecifiedRow.ExpandValueOrUserVariable(engine), out requiredRowNumber))
+            var getTableValue = new GetDataTableValueCommand()
             {
-                requiredRowNumber = dataSourceVariable.CurrentPosition;
-            }
-
-            //get required row
-            var requiredRow = dataTable.Rows[requiredRowNumber];
-
-            //parse column name based on requirement
-            object requiredColumn;
-            if (parseStrat == "By Column Index")
-            {
-                requiredColumn = requiredRow[int.Parse(columnName)];
-            }
-            else
-            {
-                requiredColumn = requiredRow[columnName];
-            }
-
-            //store value in variable
-            requiredColumn.ToString().StoreInUserVariable(engine, v_applyToVariableName);
+                v_DataTableName = this.v_DatasetName,
+                v_ColumnType = colType,
+                v_ColumnIndex = this.v_ColumnParseType,
+                v_RowIndex = this.v_SpecifiedRow,
+                v_UserVariableName = this.v_applyToVariableName,
+            };
+            getTableValue.RunCommand(engine);
         }
 
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
