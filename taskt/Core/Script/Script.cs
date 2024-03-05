@@ -23,6 +23,7 @@ using System.IO;
 using taskt.Core.Automation.Commands;
 using System.Reflection;
 using taskt.Core.Automation.Engine;
+using System.Text.RegularExpressions;
 
 namespace taskt.Core.Script
 {
@@ -2505,6 +2506,31 @@ namespace taskt.Core.Script
                                 string c = attr.Value;
                                 attr.SetValue($"Please specify Row Index. Converted by taskt. {c}");
                             }
+                        })
+                    )
+                }
+            );
+
+            // ExcelWriteRowCommand -> ExcelSetRowValuesFromDictionaryCommand
+            ChangeToOtherCommand(doc, "ExcelWriteRowCommand", "ExcelSetRowValuesFromDictionaryCommand", "Set Row Values From Dictionary",
+                new List<(string, string)>()
+                {
+                    ("v_DataRowToSet", "v_DictionaryVariable"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_ExcelCellAddress",
+                        new Action<XAttribute>(attr =>
+                        {
+                            var rg = attr.Value;
+                            var rowIndex = Regex.Match(rg, @"\d+").Value;
+                            var columnName = Regex.Replace(rg, @"[\d-]", string.Empty);
+
+                            var elem = attr.Parent;
+                            elem.SetAttributeValue("v_RowIndex", rowIndex);
+                            elem.SetAttributeValue("v_ColumnStart", columnName);
+                            attr.Remove();
                         })
                     )
                 }
