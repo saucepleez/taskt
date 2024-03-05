@@ -4,7 +4,6 @@ using System.Linq;
 using System.Xml.Serialization;
 using System.Data;
 using System.Windows.Forms;
-using taskt.UI.Forms;
 using taskt.UI.CustomControls;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
 
@@ -60,6 +59,7 @@ namespace taskt.Core.Automation.Commands
         [SampleUsage("**0** or **vRowNumber**")]
         [Remarks("")]
         public string v_SpecifiedRow { get; set; }
+
         public ParseDatasetRowCommand()
         {
             this.CommandName = "ParseRowCommand";
@@ -85,7 +85,6 @@ namespace taskt.Core.Automation.Commands
                 {
                     throw new Exception($"Data Source {v_DatasetName} Not Found! Did you input the correct name?");
                 }
-
             }
 
             var columnName = v_ColumnParameter.ExpandValueOrUserVariable(engine);
@@ -94,7 +93,6 @@ namespace taskt.Core.Automation.Commands
             var dataTable = (DataTable)dataSourceVariable.VariableValue;
 
             int requiredRowNumber;
-
             if (!int.TryParse(this.v_SpecifiedRow.ExpandValueOrUserVariable(engine), out requiredRowNumber))
             {
                 requiredRowNumber = dataSourceVariable.CurrentPosition;
@@ -114,11 +112,10 @@ namespace taskt.Core.Automation.Commands
                 requiredColumn = requiredRow[columnName];
             }
 
-
             //store value in variable
             requiredColumn.ToString().StoreInUserVariable(engine, v_applyToVariableName);
-
         }
+
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
         {
             base.Render(editor);
