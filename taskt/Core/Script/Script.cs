@@ -2458,15 +2458,6 @@ namespace taskt.Core.Script
 
             // GetDataRowValueCommand
             // GetDataRowValueCommand attribute v_Option value
-            ChangeAttributeValue(doc, "GetDataRowValueCommand", "v_Option",
-                new Action<XAttribute>(attr =>
-                {
-                    if (attr.Value.ToLower() == "column name")
-                    {
-                        attr.SetValue("Key");
-                    }
-                })
-            );
             // GetDataRowValueCommand -> GetDictionaryValueCommand
             ChangeToOtherCommand(doc, "GetDataRowValueCommand", "GetDictionaryValueCommand", "Get Dictionary Value",
                 new List<(string, string)>()
@@ -2475,11 +2466,49 @@ namespace taskt.Core.Script
                     ("v_Option", "v_KeyType"),
                     ("v_DataValueIndex", "v_Key"),
                     ("v_UserVariableName", "v_OutputVariable"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_Option", 
+                        new Action<XAttribute>(attr =>
+                        {
+                            if (attr.Value.ToLower() == "column name")
+                            {
+                                attr.SetValue("Key");
+                            }
+                        })
+                    )
                 }
             );
 
             // RemoveDataRowCommand -> SearchAndDeleteDataTableRowsCommand
             ChangeCommandName(doc, "RemoveDataRowCommand", "SearchAndDeleteDataTableRowsCommand", "Search And Delete DataTable Rows");
+
+            // WriteDataRowValueCommand -> SetDataTableValueCommand
+            ChangeToOtherCommand(doc, "WriteDataRowValueCommand", "SetDataTableValueCommand", "Set DataTable Value",
+                new List<(string, string)>()
+                {
+                    ("v_DataRowName", "v_DataTableName"),
+                    ("v_Option", "v_ColumnType"),
+                    ("v_DataValueIndex", "v_ColumnIndex"),
+                    ("v_DataRowValue", "v_NewValue"),
+                },
+                new List<(string, Action<XAttribute>)>()
+                {
+                    (
+                        "v_Comment",
+                        new Action<XAttribute>(attr =>
+                        {
+                            if (!attr.Value.StartsWith("Please specify Row Index. Converted by taskt."))
+                            {
+                                string c = attr.Value;
+                                attr.SetValue($"Please specify Row Index. Converted by taskt. {c}");
+                            }
+                        })
+                    )
+                }
+            );
 
             return doc;
         }
@@ -2951,9 +2980,20 @@ namespace taskt.Core.Script
         /// <param name="newCommand"></param>
         /// <param name="newSelectionName"></param>
         /// <param name="attributes"></param>
-        private static void ChangeToOtherCommandProcess(List<XElement> commands, string newCommand, string newSelectionName, List<(string, string)> attributes)
+        /// <param name="preAttributeFunc">(attribute name, change action)</param>
+        private static void ChangeToOtherCommandProcess(List<XElement> commands, string newCommand, string newSelectionName, List<(string, string)> attributes, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
+            // attribute values
+            if (preAttributeFunc != null)
+            {
+                foreach((var attr, var func) in preAttributeFunc)
+                {
+                    ChangeAttributeValueProcess(commands, attr, func);
+                }
+            }
+            // command name
             ChangeCommandNameProcess(commands, newCommand, newSelectionName);
+            // attribute names
             foreach((string oldAttr, string newAttr) in attributes)
             {
                 ChangeAttributeNameProcess(commands, oldAttr, newAttr);
@@ -2968,12 +3008,13 @@ namespace taskt.Core.Script
         /// <param name="newCommand"></param>
         /// <param name="newSelectionName"></param>
         /// <param name="attributes"></param>
+        /// <param name="preAttributeFunc">(attribute name, change action)</param>
         /// <returns></returns>
-        private static XDocument ChangeToOtherCommand(XDocument doc, Func<XElement, bool> searchFunc, string newCommand, string newSelectionName, List<(string, string)> attributes)
+        private static XDocument ChangeToOtherCommand(XDocument doc, Func<XElement, bool> searchFunc, string newCommand, string newSelectionName, List<(string, string)> attributes, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
             var commands = doc.Descendants("ScriptCommand")
                             .Where(searchFunc).ToList();
-            ChangeToOtherCommandProcess(commands, newCommand, newSelectionName, attributes);
+            ChangeToOtherCommandProcess(commands, newCommand, newSelectionName, attributes, preAttributeFunc);
             return doc;
         }
 
@@ -2985,10 +3026,11 @@ namespace taskt.Core.Script
         /// <param name="newCommand"></param>
         /// <param name="newSelectionName"></param>
         /// <param name="attributes"></param>
+        /// <param name="preAttributeFunc">(attribute name, change action)</param>
         /// <returns></returns>
-        private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributes)
+        private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributes, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
-            return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributes);
+            return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributes, preAttributeFunc);
         }
     }
 }
