@@ -167,6 +167,11 @@ namespace taskt.Core.Script
         /// </summary>
         public static Script DeserializeFile(string scriptFilePath, EngineSettings engineSettings, XmlSerializer serializer = null)
         {
+            // backup before converted
+            var fileName = $"bc-{Path.GetFileNameWithoutExtension(scriptFilePath)}-{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.xml";
+            var bkFile = Path.Combine(GetBeforeConvertedFolderPath(), fileName);
+            File.Copy(scriptFilePath, bkFile);
+
             XDocument xmlScript = XDocument.Load(scriptFilePath);
 
             // pre-convert
@@ -294,6 +299,16 @@ namespace taskt.Core.Script
         {
             var tasktExePath = Assembly.GetEntryAssembly().Location;
             return Path.Combine(Path.GetDirectoryName(tasktExePath), "RunWithoutSaving");
+        }
+
+        /// <summary>
+        /// get BeforeConverted Folder Path
+        /// </summary>
+        /// <returns></returns>
+        public static string GetBeforeConvertedFolderPath()
+        {
+            var tasktExePath = Assembly.GetEntryAssembly().Location;
+            return Path.Combine(Path.GetDirectoryName(tasktExePath), "BeforeConverted");
         }
 
         /// <summary>
@@ -2659,7 +2674,13 @@ namespace taskt.Core.Script
         {
             foreach (var cmd in commands)
             {
-                changeFunc(cmd.Attribute(targetAttribute));
+                var attr = cmd.Attribute(targetAttribute);
+                if (attr == null)
+                {
+                    cmd.SetAttributeValue(targetAttribute, "");
+                    attr = cmd.Attribute(targetAttribute);
+                }
+                changeFunc(attr);
             }
         }
 

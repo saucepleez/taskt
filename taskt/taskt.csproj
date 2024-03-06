@@ -1527,6 +1527,7 @@ robocopy "$(ProjectDir)Samples" "$(ProjectDir)$(OutDir)Samples" *.exe /xo /E /S
 robocopy "$(ProjectDir)Manual" "$(ProjectDir)$(OutDir)Manual" *.txt /xo /E /S
 mkdir "$(ProjectDir)$(OutDir)AutoSave"
 mkdir "$(ProjectDir)$(OutDir)RunWithoutSaving"
+mkdir "$(ProjectDir)$(OutDir)BeforeConverted"
 if %25ERRORLEVEL%25 LSS 8 EXIT 0</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Selenium.WebDriver.4.16.2\build\Selenium.WebDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.4.16.2\build\Selenium.WebDriver.targets')" />
