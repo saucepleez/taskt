@@ -26,6 +26,12 @@ namespace taskt.UI.Forms.Splash
             {
                 Directory.CreateDirectory(runPath);
             }
+
+            var befPath = Script.GetBeforeConvertedFolderPath();
+            if (!Directory.Exists(befPath))
+            {
+                Directory.CreateDirectory(befPath);
+            }
         }
     }
 }
