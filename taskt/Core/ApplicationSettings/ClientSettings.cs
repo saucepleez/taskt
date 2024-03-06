@@ -141,6 +141,22 @@ namespace taskt.Core
             }
         }
 
+        private int _RemoveBeforeConvertedFileDays;
+        public int RemoveBeforeConvertedFileDays
+        {
+            get
+            {
+                return _RemoveBeforeConvertedFileDays;
+            }
+            set
+            {
+                if (value > 1)
+                {
+                    _RemoveBeforeConvertedFileDays = value;
+                }
+            }
+        }
+
         public bool SupportIECommand { get; set; }
 
         private static readonly string InterDefaultBrowserInstanceNameKeyword = "%kwd_default_browser_instance%";
@@ -197,6 +213,8 @@ namespace taskt.Core
             RemoveAutoSaveFileDays = 7;
 
             RemoveRunWithtoutSavingFileDays = 30;
+
+            RemoveBeforeConvertedFileDays = 30;
 
             SupportIECommand = false;
         }

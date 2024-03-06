@@ -360,9 +360,17 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             var showRunWithout = createButton("btnShowRunWithoutFolder", "Show 'RunWithoutSaving' Folder", 250, true);
             showRunWithout.Click += btnShowRunWithoutSavingFolder_Click;
 
-            createLabel("lblRunWithoutSavingTitle", "Before Converted Script File", FontSize.NormalBold, true);
+            createLabel("lblRunBeforeConvertedTitle", "Before Converted Script File", FontSize.NormalBold, true);
+            createLabel("lblRemoveOldBeforeConvertedScriptFile", "Delete 'Before Converted' Script Files that are more than ");
+            createTextBox("txtRemoveOldBeforeConvertedScriptFileDays", 40, newAppSettings.ClientSettings, nameof(newAppSettings.ClientSettings.RemoveBeforeConvertedFileDays), false);
+            createLabel("lblRemoveOldBeforeConvertedScriptFile2", " days old", FontSize.Normal, true);
+
             var showBeforeConverted = createButton("btnShowBeforeConvertedFolder", "Show 'BeforeConverted' Folder", 250, true);
             showBeforeConverted.Click += btnShowBeforeConvertedFolder_Click;
+
+            // NOTE: scrollbar trap (why?)
+            createLabel("lblFooterA", "", FontSize.NormalBold, true);
+            createLabel("lblFooterB", "", FontSize.NormalBold, true);
         }
         private void showApplicationSettingsFile()
         {

@@ -307,6 +307,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             // remove old auto saved files
             RemoveOldAutoSavedFiles();
             RemoveOldRunWithoutSavingScriptFiles();
+            RemoveOldBeforeConvertedScriptFiles();
 
             // check update
             if ((appSettings.ClientSettings.CheckForUpdateAtStartup) && (this.parentBuilder == null))
@@ -2602,6 +2603,11 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void RemoveOldRunWithoutSavingScriptFiles()
         {
             RemoveOldScriptFiles(Script.GetRunWithoutSavingFolderPath(), appSettings.ClientSettings.RemoveRunWithtoutSavingFileDays);
+        }
+
+        private void RemoveOldBeforeConvertedScriptFiles()
+        {
+            RemoveOldScriptFiles(Script.GetBeforeConvertedFolderPath(), appSettings.ClientSettings.RemoveBeforeConvertedFileDays);
         }
 
         private void RemoveOldScriptFiles(string folderPath, int days)
