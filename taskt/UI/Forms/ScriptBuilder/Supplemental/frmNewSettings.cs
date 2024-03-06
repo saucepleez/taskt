@@ -359,6 +359,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
             var showRunWithout = createButton("btnShowRunWithoutFolder", "Show 'RunWithoutSaving' Folder", 250, true);
             showRunWithout.Click += btnShowRunWithoutSavingFolder_Click;
+
+            createLabel("lblRunWithoutSavingTitle", "Before Converted Script File", FontSize.NormalBold, true);
+            var showBeforeConverted = createButton("btnShowBeforeConvertedFolder", "Show 'BeforeConverted' Folder", 250, true);
+            showBeforeConverted.Click += btnShowBeforeConvertedFolder_Click;
         }
         private void showApplicationSettingsFile()
         {
@@ -1312,6 +1316,11 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void btnShowRunWithoutSavingFolder_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(taskt.Core.Script.Script.GetRunWithoutSavingFolderPath());
+        }
+
+        private void btnShowBeforeConvertedFolder_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(taskt.Core.Script.Script.GetBeforeConvertedFolderPath());
         }
         #endregion
     }
