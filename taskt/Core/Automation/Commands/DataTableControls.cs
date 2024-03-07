@@ -686,7 +686,7 @@ namespace taskt.Core.Automation.Commands
                 foreach (DataRow row in dt.Rows)
                 {
                     var key = row.Field<string>(parameterNameColumn) ?? "";
-                    if (!parameterNameColumn.Contains(key))
+                    if (!parameterNames.Contains(key))
                     {
                         return false;
                     }
@@ -786,6 +786,15 @@ namespace taskt.Core.Automation.Commands
                         table.Rows[i].Delete();
                     }
                 }
+                table.AcceptChanges();
+            }
+        }
+
+        public static void BeforeValidate_NoRowAdding(DataGridView dgv, DataTable table)
+        {
+            if (dgv.IsCurrentCellDirty || dgv.IsCurrentRowDirty)
+            {
+                dgv.CommitEdit(DataGridViewDataErrorContexts.Commit);;
                 table.AcceptChanges();
             }
         }
