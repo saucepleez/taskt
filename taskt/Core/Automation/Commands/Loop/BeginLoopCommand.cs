@@ -498,5 +498,13 @@ namespace taskt.Core.Automation.Commands
                 base.ConvertToRaw(settings);
             }
         }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            //var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_LoopActionParameterTable));
+            DataTableControls.BeforeValidate_NoRowAdding(LoopGridViewHelper, v_LoopActionParameterTable);
+        }
     }
 }
