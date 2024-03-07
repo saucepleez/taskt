@@ -1364,7 +1364,7 @@ namespace taskt.Core.Automation.Commands
                 case "is not numeric":
                     break;
                 default:
-                    int x = actionParametersBox.Rows.Count;
+                    //int x = actionParametersBox.Rows.Count;
                     var cmb = new DataGridViewComboBoxCell();
                     cmb.Items.AddRange(new string[] { "Yes", "No" });
                     actionParametersBox.Rows[1].Cells[1] = cmb;
