@@ -132,6 +132,9 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 case "Automation Engine - Parser":
                     showAutomationEngineParserSettings();
                     break;
+                case "Automation Engine - UIElement Inspect":
+                    showAutomationUIElementInspect();
+                    break;
                 case "Automation Engine - Variable":
                     showAutomationEngineVariableSettings();
                     break;
@@ -416,6 +419,23 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             createCheckBox("chkUserNewParser", "Use New Parser (beta)", newAppSettings.EngineSettings, "UseNewParser", true);
             createCheckBox("chkIgnoreFirstMarker", "Ignore First Variable Marker In Output Parameter (Check is strongly recommended)", newAppSettings.EngineSettings, "IgnoreFirstVariableMarkerInOutputParameter", true);
         }
+
+        private void showAutomationUIElementInspect()
+        {
+            removeSettingControls();
+
+            createLabel("lblTitle", "UIElement Inspcet (beta)", FontSize.Large, true);
+
+            createLabel("lblDepath", "Depath of Nodes: ");
+            var txtDepath = createTextBox("txtDepath", 120, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.MaxUIElementInpectDepth), true);
+
+            createLabel("lblSibling", "Number of Sibling Nodes: ");
+            var txtSibling = createTextBox("txtSibling", 120, newAppSettings.EngineSettings, nameof(newAppSettings.EngineSettings.MaxUIElementInspectSiblingNodes), true);
+
+            txtDepath.Enabled = false;
+            txtSibling.Enabled = false;
+        }
+
         private void showAutomationEngineKeywordSettings()
         {
             removeSettingControls();
