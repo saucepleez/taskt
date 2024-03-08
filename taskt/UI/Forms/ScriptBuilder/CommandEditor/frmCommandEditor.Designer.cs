@@ -47,6 +47,8 @@
             // 
             // cboSelectedCommand
             // 
+            this.cboSelectedCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboSelectedCommand.BackColor = System.Drawing.Color.WhiteSmoke;
             this.cboSelectedCommand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSelectedCommand.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
