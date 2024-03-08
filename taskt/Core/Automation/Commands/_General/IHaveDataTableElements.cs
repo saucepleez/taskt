@@ -5,5 +5,6 @@
     /// </summary>
     public interface IHaveDataTableElements
     {
+        void BeforeValidate();
     }
 }
