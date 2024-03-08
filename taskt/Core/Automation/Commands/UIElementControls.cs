@@ -1278,14 +1278,16 @@ namespace taskt.Core.Automation.Commands
             var tree = CreateTreeNodeFromAutomationElement(root);
             xml = CreateXmlElement(root);
 
-            GetChildElementTreeNode(tree, xml, root, walker);
+            GetChildElementTreeNode(tree, xml, root, walker, 1, engine);
 
             return tree;
         }
 
-        private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker)
+        private static void GetChildElementTreeNode(TreeNode tree, XElement xml, AutomationElement rootElement, TreeWalker walker, int depth, Engine.AutomationEngineInstance engine)
         {
             AutomationElement node = walker.GetFirstChild(rootElement);
+
+            int siblingCount = 0;
             while(node != null)
             {
                 var item = CreateTreeNodeFromAutomationElement(node);
@@ -1294,9 +1296,15 @@ namespace taskt.Core.Automation.Commands
                 var childXml = CreateXmlElement(node);
                 xml.Add(childXml);
 
-                if (walker.GetFirstChild(node) != null)
+                if ((walker.GetFirstChild(node) != null) && (depth < engine.engineSettings.MaxUIElementInpectDepth))
                 {
-                    GetChildElementTreeNode(item, childXml, node, walker);
+                    GetChildElementTreeNode(item, childXml, node, walker, (depth + 1), engine);
+                }
+
+                siblingCount++;
+                if (siblingCount >= engine.engineSettings.MaxUIElementInspectSiblingNodes)
+                {
+                    break;
                 }
 
                 node = walker.GetNextSibling(node);
