@@ -2352,13 +2352,13 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void multiSendKeystrokesEditToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var commands = Supplemental.frmMultiSendKeystrokes.GetConsecutiveSendKeystrokesCommands(lstScriptActions, appSettings);
+            var commands = Supplemental.frmMultiEnterKeys.GetConsecutiveSendKeystrokesCommands(lstScriptActions, appSettings);
             if (commands.Count == 0)
             {
                 return;
             }
 
-            using (var fm = new Supplemental.frmMultiSendKeystrokes(appSettings, scriptVariables, commands))
+            using (var fm = new Supplemental.frmMultiEnterKeys(appSettings, scriptVariables, commands))
             {
                 if (fm.ShowDialog() == DialogResult.OK)
                 {

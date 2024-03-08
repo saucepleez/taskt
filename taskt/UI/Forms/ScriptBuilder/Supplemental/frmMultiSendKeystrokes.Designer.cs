@@ -1,6 +1,6 @@
 ﻿namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
-    partial class frmMultiSendKeystrokes
+    partial class frmMultiEnterKeys
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMultiSendKeystrokes));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMultiEnterKeys));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelFooter = new System.Windows.Forms.Panel();
             this.uiBtnAdd = new taskt.UI.CustomControls.UIPictureButton();
@@ -180,7 +180,7 @@
             this.lnkWindowNameUpToDate.Location = new System.Drawing.Point(6, 50);
             this.lnkWindowNameUpToDate.Margin = new System.Windows.Forms.Padding(0);
             this.lnkWindowNameUpToDate.Name = "lnkWindowNameUpToDate";
-            this.lnkWindowNameUpToDate.Size = new System.Drawing.Size(528, 18);
+            this.lnkWindowNameUpToDate.Size = new System.Drawing.Size(85, 17);
             this.lnkWindowNameUpToDate.TabIndex = 12;
             this.lnkWindowNameUpToDate.Click += new System.EventHandler(this.lnkWindowNameUpToDate_Click);
             // 
@@ -224,7 +224,7 @@
             this.lnkWaitTimeVariable.Location = new System.Drawing.Point(5, 388);
             this.lnkWaitTimeVariable.Margin = new System.Windows.Forms.Padding(0);
             this.lnkWaitTimeVariable.Name = "lnkWaitTimeVariable";
-            this.lnkWaitTimeVariable.Size = new System.Drawing.Size(528, 18);
+            this.lnkWaitTimeVariable.Size = new System.Drawing.Size(105, 17);
             this.lnkWaitTimeVariable.TabIndex = 9;
             this.lnkWaitTimeVariable.Click += new System.EventHandler(this.lnkWaitTimeVariable_Click);
             // 
@@ -256,7 +256,7 @@
             this.lnkKeyStrokesVariable.Location = new System.Drawing.Point(7, 200);
             this.lnkKeyStrokesVariable.Margin = new System.Windows.Forms.Padding(0);
             this.lnkKeyStrokesVariable.Name = "lnkKeyStrokesVariable";
-            this.lnkKeyStrokesVariable.Size = new System.Drawing.Size(528, 18);
+            this.lnkKeyStrokesVariable.Size = new System.Drawing.Size(105, 17);
             this.lnkKeyStrokesVariable.TabIndex = 7;
             this.lnkKeyStrokesVariable.Click += new System.EventHandler(this.lnkKeyStrokesVariable_Click);
             // 
@@ -280,9 +280,9 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(3, 179);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(254, 21);
+            this.label4.Size = new System.Drawing.Size(311, 21);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Send to Text (Separate by NewLine)";
+            this.label4.Text = "Text of Keys to Send. (Separate by NewLine)";
             // 
             // cmbSearchMethod
             // 
@@ -303,9 +303,9 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(5, 109);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(321, 21);
+            this.label3.Size = new System.Drawing.Size(338, 21);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Window Search Method (Default is Contains)";
+            this.label3.Text = "Window Compare Method (Default is Contains)";
             // 
             // lnkWindoNameVariable
             // 
@@ -323,7 +323,7 @@
             this.lnkWindoNameVariable.Location = new System.Drawing.Point(5, 30);
             this.lnkWindoNameVariable.Margin = new System.Windows.Forms.Padding(0);
             this.lnkWindoNameVariable.Name = "lnkWindoNameVariable";
-            this.lnkWindoNameVariable.Size = new System.Drawing.Size(528, 18);
+            this.lnkWindoNameVariable.Size = new System.Drawing.Size(105, 17);
             this.lnkWindoNameVariable.TabIndex = 1;
             this.lnkWindoNameVariable.Click += new System.EventHandler(this.lnkWindoNameVariable_Click);
             // 

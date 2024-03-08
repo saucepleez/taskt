@@ -7,7 +7,7 @@ using taskt.Core.Automation.Commands;
 
 namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
-    public partial class frmMultiSendKeystrokes : ThemedForm
+    public partial class frmMultiEnterKeys : ThemedForm
     {
         private Core.ApplicationSettings appSetttings;
         private List<Core.Script.ScriptVariable> scriptVariables;
@@ -20,7 +20,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
 
         #region form events
-        public frmMultiSendKeystrokes(Core.ApplicationSettings appSetttings, List<Core.Script.ScriptVariable> scriptVariables, List<ScriptCommand> keyCommands = null)
+        public frmMultiEnterKeys(Core.ApplicationSettings appSetttings, List<Core.Script.ScriptVariable> scriptVariables, List<ScriptCommand> keyCommands = null)
         {
             InitializeComponent();
             this.appSetttings = appSetttings;
