@@ -53,6 +53,7 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
             //taskt.Core.CommandsTreeControls.ShowCommandsTree(tvCommands, treeAllCommands);
 
             tvCommands.ImageList = treeAllCommandsImage;
+            tvCommands.Sort();
 
             tvCommands.EndUpdate();
             tvCommands.ResumeLayout();
