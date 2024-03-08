@@ -138,9 +138,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(3, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(222, 30);
+            this.label1.Size = new System.Drawing.Size(163, 30);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Multi SendKeystrokes";
+            this.label1.Text = "Multi EnterKeys";
             // 
             // panelBody
             // 
@@ -339,7 +339,7 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Window Name";
             // 
-            // frmMultiSendKeystrokes
+            // frmMultiEnterKeys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -347,8 +347,8 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmMultiSendKeystrokes";
-            this.Text = "Multi SendKeystrokes";
+            this.Name = "frmMultiEnterKeys";
+            this.Text = "Multi EnterKeys";
             this.Load += new System.EventHandler(this.frmMultiSendKeystrokes_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelFooter.ResumeLayout(false);
