@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently loop actions based on either condition. Any 'BeginLoop' command must have a following 'EndLoop' command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_startloop))]
-    public class BeginLoopCommand : ScriptCommand
+    public class BeginLoopCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of Loop Command")]

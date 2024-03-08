@@ -14,7 +14,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently take an action based on either condition. Any 'BeginIf' command must have a following 'EndIf' command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_begin_if))]
-    public class BeginIfCommand : ScriptCommand
+    public class BeginIfCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [Attributes.PropertyAttributes.PropertyDescription("Please select type of If Command")]

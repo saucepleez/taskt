@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to check if a statement is 'true' or 'false' and subsequently take an action based on either condition. Any 'BeginIf' command must have a following 'EndIf' command.")]
     [Attributes.ClassAttributes.ImplementationDescription("This command evaluates supplied arguments and if evaluated to true runs sub elements")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_begin_multi_if))]
-    public class BeginMultiIfCommand : ScriptCommand
+    public class BeginMultiIfCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlElement]
         [Attributes.PropertyAttributes.PropertyDescription("Multiple If Conditions - All Must Be True")]
