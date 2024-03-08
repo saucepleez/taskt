@@ -276,5 +276,13 @@ namespace taskt.Core.Automation.Commands
 
             return this.IsValid;
         }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_KeyActions));
+            DataTableControls.BeforeValidate(dgv, v_KeyActions);
+        }
     }
 }
