@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_function))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class ExtractionTextCommand : ScriptCommand
+    public class ExtractionTextCommand : ScriptCommand, IHaveDataTableElements
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(TextControls), nameof(TextControls.v_Text_MultiLine))]
@@ -210,6 +210,14 @@ namespace taskt.Core.Automation.Commands
                 pos = targetText.IndexOf(searchText, pos + 1);
             }
             return positions;
+        }
+
+        public override void BeforeValidate()
+        {
+            base.BeforeValidate();
+
+            var dgv = FormUIControls.GetPropertyControl<DataGridView>(ControlsList, nameof(v_TextExtractionTable));
+            DataTableControls.BeforeValidate_NoRowAdding(dgv, v_TextExtractionTable);
         }
     }
 }
