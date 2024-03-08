@@ -1406,7 +1406,27 @@ namespace taskt.UI.Forms.ScriptBuilder
             foreach (ListViewItem item in lstScriptActions.SelectedItems)
             {
                 var selectedCommand = (ScriptCommand)item.Tag;
-                selectedCommand.PauseBeforeExeucution = !selectedCommand.PauseBeforeExeucution;
+                selectedCommand.PauseBeforeExeucution = true;
+            }
+
+            ChangeSaveState(true);
+
+            lstScriptActions.Invalidate();
+        }
+
+        private void SetDontPauseBeforeExecution()
+        {
+            //warn if nothing was selected
+            if (lstScriptActions.SelectedItems.Count == 0)
+            {
+                Notify("No code was selected!");
+            }
+
+            //get each item and set appropriately
+            foreach (ListViewItem item in lstScriptActions.SelectedItems)
+            {
+                var selectedCommand = (ScriptCommand)item.Tag;
+                selectedCommand.PauseBeforeExeucution = false;
             }
 
             ChangeSaveState(true);
@@ -2234,6 +2254,12 @@ namespace taskt.UI.Forms.ScriptBuilder
         private void pauseBeforeExecutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetPauseBeforeExecution();
+        }
+
+
+        private void dontPauseBeforeExecutionToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SetDontPauseBeforeExecution();
         }
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -3650,6 +3676,11 @@ namespace taskt.UI.Forms.ScriptBuilder
             SetPauseBeforeExecution();
         }
 
+        private void dontPauseBeforeExecutionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetDontPauseBeforeExecution();
+        }
+
         private void SelectAllStripMenuItem_Click(object sender, EventArgs e)
         {
             SelectAllRows();
@@ -4068,6 +4099,7 @@ namespace taskt.UI.Forms.ScriptBuilder
             isRememberChildCommandEditorPosition = true;
         }
         #endregion
+
     }
 }
 
