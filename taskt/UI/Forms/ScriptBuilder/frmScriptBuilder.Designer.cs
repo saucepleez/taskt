@@ -53,6 +53,7 @@
             this.enableSelectedActionsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableSelectedActionsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseBeforeExeutionStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dontPauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editSplitMenuSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.SelectAllStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CutScriptStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -163,6 +164,7 @@
             this.enableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableSelectedCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dontPauseBeforeExecutionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.lstContextStripSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutSelectedActionssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -200,8 +202,6 @@
             this.myToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.miniMapLoadingDelayTimer = new System.Windows.Forms.Timer(this.components);
             this.autoSaveTimer = new System.Windows.Forms.Timer(this.components);
-            this.dontPauseBeforeExecutionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dontPauseBeforeExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpControls.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -501,6 +501,16 @@
             this.pauseBeforeExeutionStripMenuItem.Size = new System.Drawing.Size(301, 22);
             this.pauseBeforeExeutionStripMenuItem.Text = "&Pause Before Execution";
             this.pauseBeforeExeutionStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExeutionStripMenuItem_Click);
+            // 
+            // dontPauseBeforeExecutionToolStripMenuItem
+            // 
+            this.dontPauseBeforeExecutionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.dontPauseBeforeExecutionToolStripMenuItem.Name = "dontPauseBeforeExecutionToolStripMenuItem";
+            this.dontPauseBeforeExecutionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.P)));
+            this.dontPauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(301, 22);
+            this.dontPauseBeforeExecutionToolStripMenuItem.Text = "Don\'t Pause Before Execution";
+            this.dontPauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.dontPauseBeforeExecutionToolStripMenuItem_Click);
             // 
             // editSplitMenuSeparator2
             // 
@@ -1769,7 +1779,7 @@
             this.showScriptInfoMenuItem,
             this.variableManagerToolStripMenuItem});
             this.lstContextStrip.Name = "lstContextStrip";
-            this.lstContextStrip.Size = new System.Drawing.Size(386, 514);
+            this.lstContextStrip.Size = new System.Drawing.Size(386, 536);
             // 
             // editThisCodeToolStripMenuItem
             // 
@@ -1785,7 +1795,7 @@
             // 
             this.multiSendKeystrokesEditToolStripMenuItem.Name = "multiSendKeystrokesEditToolStripMenuItem";
             this.multiSendKeystrokesEditToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
-            this.multiSendKeystrokesEditToolStripMenuItem.Text = "Multi SendKyestrokes Edit";
+            this.multiSendKeystrokesEditToolStripMenuItem.Text = "Multi Enter Keys Edit";
             this.multiSendKeystrokesEditToolStripMenuItem.Click += new System.EventHandler(this.multiSendKeystrokesEditToolStripMenuItem_Click);
             // 
             // helpThisCommandToolStripMenuItem1
@@ -1836,6 +1846,15 @@
             this.pauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(385, 24);
             this.pauseBeforeExecutionToolStripMenuItem.Text = "&Pause Before Execution";
             this.pauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.pauseBeforeExecutionToolStripMenuItem_Click);
+            // 
+            // dontPauseBeforeExecutionToolStripMenuItem1
+            // 
+            this.dontPauseBeforeExecutionToolStripMenuItem1.Name = "dontPauseBeforeExecutionToolStripMenuItem1";
+            this.dontPauseBeforeExecutionToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.P)));
+            this.dontPauseBeforeExecutionToolStripMenuItem1.Size = new System.Drawing.Size(385, 24);
+            this.dontPauseBeforeExecutionToolStripMenuItem1.Text = "Don\'t Pause Before Execution";
+            this.dontPauseBeforeExecutionToolStripMenuItem1.Click += new System.EventHandler(this.dontPauseBeforeExecutionToolStripMenuItem1_Click);
             // 
             // lstContextStripSep2
             // 
@@ -2106,25 +2125,6 @@
             // 
             this.autoSaveTimer.Interval = 1000;
             this.autoSaveTimer.Tick += new System.EventHandler(this.autoSaveTimer_Tick);
-            // 
-            // dontPauseBeforeExecutionToolStripMenuItem1
-            // 
-            this.dontPauseBeforeExecutionToolStripMenuItem1.Name = "dontPauseBeforeExecutionToolStripMenuItem1";
-            this.dontPauseBeforeExecutionToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.P)));
-            this.dontPauseBeforeExecutionToolStripMenuItem1.Size = new System.Drawing.Size(385, 24);
-            this.dontPauseBeforeExecutionToolStripMenuItem1.Text = "Don\'t Pause Before Execution";
-            this.dontPauseBeforeExecutionToolStripMenuItem1.Click += new System.EventHandler(this.dontPauseBeforeExecutionToolStripMenuItem1_Click);
-            // 
-            // dontPauseBeforeExecutionToolStripMenuItem
-            // 
-            this.dontPauseBeforeExecutionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.dontPauseBeforeExecutionToolStripMenuItem.Name = "dontPauseBeforeExecutionToolStripMenuItem";
-            this.dontPauseBeforeExecutionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.P)));
-            this.dontPauseBeforeExecutionToolStripMenuItem.Size = new System.Drawing.Size(301, 22);
-            this.dontPauseBeforeExecutionToolStripMenuItem.Text = "Don\'t Pause Before Execution";
-            this.dontPauseBeforeExecutionToolStripMenuItem.Click += new System.EventHandler(this.dontPauseBeforeExecutionToolStripMenuItem_Click);
             // 
             // frmScriptBuilder
             // 
