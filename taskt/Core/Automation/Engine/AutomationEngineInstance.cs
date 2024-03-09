@@ -429,66 +429,94 @@ namespace taskt.Core.Automation.Engine
             }
         }
 
-        public void AddAppInstance(string instanceName, object appObject) {
+        /// <summary>
+        /// add App Instance in Engine List (wrapper)
+        /// </summary>
+        /// <param name="instanceName"></param>
+        /// <param name="appObject"></param>
+        /// <exception cref="Exception"></exception>
+        public void AddAppInstance(string instanceName, object appObject) 
+        {
+            //if (AppInstances.ContainsKey(instanceName) && engineSettings.OverrideExistingAppInstances)
+            //{
+            //    ReportProgress("Overriding Existing Instance: " + instanceName);
+            //    AppInstances.Remove(instanceName);
+            //}
+            //else if (AppInstances.ContainsKey(instanceName) && !engineSettings.OverrideExistingAppInstances)
+            //{
+            //    throw new Exception("App Instance already exists and override has been disabled in engine settings! Enable override existing app instances or use unique instance names!");
+            //}
 
-            if (AppInstances.ContainsKey(instanceName) && engineSettings.OverrideExistingAppInstances)
-            {
-                ReportProgress("Overriding Existing Instance: " + instanceName);
-                AppInstances.Remove(instanceName);
-            }
-            else if (AppInstances.ContainsKey(instanceName) && !engineSettings.OverrideExistingAppInstances)
-            {
-                throw new Exception("App Instance already exists and override has been disabled in engine settings! Enable override existing app instances or use unique instance names!");
-            }
-
-            try
-            {
-                this.AppInstances.Add(instanceName, appObject);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //try
+            //{
+            //    this.AppInstances.Add(instanceName, appObject);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+            this.AddAppInstance(instanceName, appObject, this);
         }
 
+        /// <summary>
+        /// get App Instance from Engine List (wrapper)
+        /// </summary>
+        /// <param name="instanceName"></param>
+        /// <returns></returns>
         public object GetAppInstance(string instanceName)
         {
-            try
-            {
-                if (AppInstances.TryGetValue(instanceName, out object appObject))
-                {
-                    return appObject;
-                }
-                else
-                {
-                    throw new Exception("App Instance '" + instanceName + "' not found!");
-                }
-            }
-            catch (Exception ex)
-            {
+            //try
+            //{
+            //    if (AppInstances.TryGetValue(instanceName, out object appObject))
+            //    {
+            //        return appObject;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("App Instance '" + instanceName + "' not found!");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-                throw ex;
-            }
+            //    throw ex;
+            //}
+            return ((IAppInstancesProperties)this).GetAppInstance(instanceName);
         }
 
+        /// <summary>
+        /// remove App Instance from Engine List (wrapper)
+        /// </summary>
+        /// <param name="instanceName"></param>
         public void RemoveAppInstance(string instanceName)
         {
-            try
-            {
-                if (AppInstances.ContainsKey(instanceName))
-                {
-                    AppInstances.Remove(instanceName);
-                }
-                else
-                {
-                    throw new Exception("App Instance '" + instanceName + "' not found!");
-                }
-            }
-            catch (Exception ex)
-            {
+            //try
+            //{
+            //    if (AppInstances.ContainsKey(instanceName))
+            //    {
+            //        AppInstances.Remove(instanceName);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("App Instance '" + instanceName + "' not found!");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-                throw ex;
-            }
+            //    throw ex;
+            //}
+            ((IAppInstancesProperties)this).RemoveAppInstance(instanceName);
+        }
+
+        /// <summary>
+        /// Get New App Instance name (wrapper)
+        /// </summary>
+        /// <param name="prefixName"></param>
+        /// <returns></returns>
+        public string GetNewAppInstanceName(string prefixName = "")
+        {
+            return ((IAppInstancesProperties)this).GetNewInstanceName(prefixName);
         }
 
         public void AddVariable(string variableName, object variableValue)
