@@ -12,12 +12,18 @@ using taskt.Core.Script;
 
 namespace taskt.Core.Automation.Engine
 {
-    public class AutomationEngineInstance
+    public class AutomationEngineInstance : IAppInstancesProperties
     {
-
-        //engine variables
+        /// <summary>
+        /// script variable list
+        /// </summary>
         public List<ScriptVariable> VariableList { get; set; }
+
+        /// <summary>
+        /// app instances list
+        /// </summary>
         public Dictionary<string, object> AppInstances { get; set; }
+
         public Dictionary<string, Script.Script> PreloadedTasks { get; set; }
         public ErrorHandlingCommand ErrorHandler;
         public List<ScriptError> ErrorsOccured { get; set; }
@@ -266,6 +272,7 @@ namespace taskt.Core.Automation.Engine
                 ScriptFinished(ScriptFinishedEventArgs.ScriptFinishedResult.Error, ex.ToString());
             }
         }
+
         public void ExecuteCommand(ScriptAction command)
         {
             //get command
@@ -471,7 +478,6 @@ namespace taskt.Core.Automation.Engine
                 if (AppInstances.ContainsKey(instanceName))
                 {
                     AppInstances.Remove(instanceName);
-                    
                 }
                 else
                 {
@@ -483,7 +489,6 @@ namespace taskt.Core.Automation.Engine
 
                 throw ex;
             }
-
         }
 
         public void AddVariable(string variableName, object variableValue)

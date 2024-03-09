@@ -456,6 +456,8 @@
     <Compile Include="Core\Automation\Commands\_General\ILPositionProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\ILSizeProperties.cs" />
     <Compile Include="Core\Automation\Commands\_General\RECT.cs" />
+    <Compile Include="Core\Automation\Engine\EM_AppInstancesPropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Engine\IAppInstancesProperties.cs" />
     <Compile Include="Core\Automation\Engine\SystemVariables.cs" />
     <Compile Include="Core\Automation\Commands\FormUIControls.cs" />
     <Compile Include="Core\Update\ApplicationUpdate.cs" />
