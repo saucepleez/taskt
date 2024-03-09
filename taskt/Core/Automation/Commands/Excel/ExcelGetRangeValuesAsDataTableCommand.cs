@@ -57,6 +57,12 @@ namespace taskt.Core.Automation.Commands
         //[PropertyParameterOrder(6006)]
         //public string v_ValueType { get; set; }
 
+        [XmlAttribute]
+        [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
+        [PropertyDescription("Use the First Row as the Column Names (Value Type is Cell only)")]
+        [PropertyIsOptional(true, "No")]
+        public string v_FirstRowAsColumnName { get; set; }
+
         public ExcelGetRangeValuesAsDataTableCommand()
         {
             //this.CommandName = "ExcelGetRangeValuesAsDataTableCommand";
@@ -133,6 +139,27 @@ namespace taskt.Core.Automation.Commands
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
+            var valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
+
+            Func<int, int, string> headerFunc;
+            int loopFirstValue;
+            if ((valueType == "cell") && (this.ExpandValueOrUserVariableAsYesNo(nameof(v_FirstRowAsColumnName), engine)))
+            {
+                headerFunc = (row, col) =>
+                {
+                    return excelSheet.CellText(row, col);
+                };
+                loopFirstValue = 1;
+            }
+            else
+            {
+                headerFunc = (row, col) =>
+                {
+                    return excelSheet.ToColumnName(col);
+                };
+                loopFirstValue = 0;
+            }
+
             int rowRange = rowEndIndex - rowStartIndex + 1;
             int colRange = columnEndIndex - columnStartIndex + 1;
 
@@ -141,16 +168,19 @@ namespace taskt.Core.Automation.Commands
             for (int i = 0; i < colRange; i++) 
             {
                 //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, columnStartIndex + i));
-                newDT.Columns.Add(excelSheet.ToColumnName(columnStartIndex + i));
+                //newDT.Columns.Add(excelSheet.ToColumnName(columnStartIndex + i));
+                newDT.Columns.Add(headerFunc(rowStartIndex, columnStartIndex + i));
             }
 
-            for (int i = 0; i < rowRange; i++)
+            int rowCount = 0;
+            for (int i = loopFirstValue; i < rowRange; i++)
             {
                 newDT.Rows.Add();
                 for (int j = 0; j < colRange; j++)
                 {
-                    newDT.Rows[i][j] = getFunc(excelSheet, columnStartIndex + j, rowStartIndex + i);
+                    newDT.Rows[rowCount][j] = getFunc(excelSheet, columnStartIndex + j, rowStartIndex + i);
                 }
+                rowCount++;
             }
 
             newDT.StoreInUserVariable(engine, v_Result);
