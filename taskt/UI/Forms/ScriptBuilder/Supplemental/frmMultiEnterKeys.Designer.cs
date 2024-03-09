@@ -42,18 +42,18 @@
             this.lnkWindoNameVariable = new taskt.UI.CustomControls.CommandItemControl();
             this.lnkWindowNameUpToDate = new taskt.UI.CustomControls.CommandItemControl();
             this.cmbWindowName = new System.Windows.Forms.ComboBox();
-            this.txtWaitTime = new System.Windows.Forms.TextBox();
-            this.lnkWaitTimeVariable = new taskt.UI.CustomControls.CommandItemControl();
-            this.lblWaitTimeAfter = new System.Windows.Forms.Label();
-            this.lnkKeyStrokesVariable = new taskt.UI.CustomControls.CommandItemControl();
-            this.txtTextToSend = new System.Windows.Forms.TextBox();
-            this.lblTextToSend = new System.Windows.Forms.Label();
-            this.cmbSearchMethod = new System.Windows.Forms.ComboBox();
-            this.lblCompareMethod = new System.Windows.Forms.Label();
             this.flowCompareMethod = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowTextToSend = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowWaitTimeAfter = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblCompareMethod = new System.Windows.Forms.Label();
             this.lnkCompareMethodVariable = new taskt.UI.CustomControls.CommandItemControl();
+            this.cmbCompareMethod = new System.Windows.Forms.ComboBox();
+            this.flowTextToSend = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblTextToSend = new System.Windows.Forms.Label();
+            this.lnkTextToSend = new taskt.UI.CustomControls.CommandItemControl();
+            this.txtTextToSend = new System.Windows.Forms.TextBox();
+            this.flowWaitTimeAfter = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblWaitTimeAfter = new System.Windows.Forms.Label();
+            this.lnkWaitTimeAfterVariable = new taskt.UI.CustomControls.CommandItemControl();
+            this.txtWaitTimeAfter = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiBtnAdd)).BeginInit();
@@ -230,7 +230,7 @@
             this.lnkWindoNameVariable.Name = "lnkWindoNameVariable";
             this.lnkWindoNameVariable.Size = new System.Drawing.Size(105, 17);
             this.lnkWindoNameVariable.TabIndex = 14;
-            this.lnkWindoNameVariable.Click += new System.EventHandler(this.lnkWindoNameVariable_Click);
+            this.lnkWindoNameVariable.Click += new System.EventHandler(this.lnkInsertVariable_Click);
             // 
             // lnkWindowNameUpToDate
             // 
@@ -264,110 +264,19 @@
             this.cmbWindowName.Name = "cmbWindowName";
             this.cmbWindowName.Size = new System.Drawing.Size(521, 28);
             this.cmbWindowName.TabIndex = 15;
-            this.cmbWindowName.Click += new System.EventHandler(this.cmbWindowName_Click);
-            this.cmbWindowName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cmbWindowName_KeyUp);
             // 
-            // txtWaitTime
+            // flowCompareMethod
             // 
-            this.txtWaitTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtWaitTime.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtWaitTime.Location = new System.Drawing.Point(3, 49);
-            this.txtWaitTime.Name = "txtWaitTime";
-            this.txtWaitTime.Size = new System.Drawing.Size(521, 27);
-            this.txtWaitTime.TabIndex = 10;
-            this.txtWaitTime.Text = "500";
-            // 
-            // lnkWaitTimeVariable
-            // 
-            this.lnkWaitTimeVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkWaitTimeVariable.CommandDisplay = "Insert Variable";
-            this.lnkWaitTimeVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkWaitTimeVariable.CommandImage")));
-            this.lnkWaitTimeVariable.DataSource = null;
-            this.lnkWaitTimeVariable.DrawIcon = global::taskt.Properties.Resources.taskt_variable_helper;
-            this.lnkWaitTimeVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkWaitTimeVariable.ForeColor = System.Drawing.Color.White;
-            this.lnkWaitTimeVariable.FunctionalDescription = null;
-            this.lnkWaitTimeVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
-            this.lnkWaitTimeVariable.ImplementationDescription = null;
-            this.lnkWaitTimeVariable.Location = new System.Drawing.Point(0, 29);
-            this.lnkWaitTimeVariable.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkWaitTimeVariable.Name = "lnkWaitTimeVariable";
-            this.lnkWaitTimeVariable.Size = new System.Drawing.Size(105, 17);
-            this.lnkWaitTimeVariable.TabIndex = 9;
-            this.lnkWaitTimeVariable.Click += new System.EventHandler(this.lnkWaitTimeVariable_Click);
-            // 
-            // lblWaitTimeAfter
-            // 
-            this.lblWaitTimeAfter.AutoSize = true;
-            this.lblWaitTimeAfter.BackColor = System.Drawing.Color.Transparent;
-            this.flowWaitTimeAfter.SetFlowBreak(this.lblWaitTimeAfter, true);
-            this.lblWaitTimeAfter.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblWaitTimeAfter.ForeColor = System.Drawing.Color.White;
-            this.lblWaitTimeAfter.Location = new System.Drawing.Point(3, 8);
-            this.lblWaitTimeAfter.Name = "lblWaitTimeAfter";
-            this.lblWaitTimeAfter.Size = new System.Drawing.Size(323, 21);
-            this.lblWaitTimeAfter.TabIndex = 8;
-            this.lblWaitTimeAfter.Text = "Waiting time after Keystrokes (Default is 500)";
-            // 
-            // lnkKeyStrokesVariable
-            // 
-            this.lnkKeyStrokesVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkKeyStrokesVariable.CommandDisplay = "Insert Variable";
-            this.lnkKeyStrokesVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkKeyStrokesVariable.CommandImage")));
-            this.lnkKeyStrokesVariable.DataSource = null;
-            this.lnkKeyStrokesVariable.DrawIcon = global::taskt.Properties.Resources.taskt_variable_helper;
-            this.flowTextToSend.SetFlowBreak(this.lnkKeyStrokesVariable, true);
-            this.lnkKeyStrokesVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkKeyStrokesVariable.ForeColor = System.Drawing.Color.White;
-            this.lnkKeyStrokesVariable.FunctionalDescription = null;
-            this.lnkKeyStrokesVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
-            this.lnkKeyStrokesVariable.ImplementationDescription = null;
-            this.lnkKeyStrokesVariable.Location = new System.Drawing.Point(0, 29);
-            this.lnkKeyStrokesVariable.Margin = new System.Windows.Forms.Padding(0);
-            this.lnkKeyStrokesVariable.Name = "lnkKeyStrokesVariable";
-            this.lnkKeyStrokesVariable.Size = new System.Drawing.Size(105, 17);
-            this.lnkKeyStrokesVariable.TabIndex = 7;
-            this.lnkKeyStrokesVariable.Click += new System.EventHandler(this.lnkKeyStrokesVariable_Click);
-            // 
-            // txtTextToSend
-            // 
-            this.txtTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTextToSend.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtTextToSend.Location = new System.Drawing.Point(3, 49);
-            this.txtTextToSend.Multiline = true;
-            this.txtTextToSend.Name = "txtTextToSend";
-            this.txtTextToSend.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtTextToSend.Size = new System.Drawing.Size(521, 130);
-            this.txtTextToSend.TabIndex = 6;
-            // 
-            // lblTextToSend
-            // 
-            this.lblTextToSend.AutoSize = true;
-            this.lblTextToSend.BackColor = System.Drawing.Color.Transparent;
-            this.flowTextToSend.SetFlowBreak(this.lblTextToSend, true);
-            this.lblTextToSend.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblTextToSend.ForeColor = System.Drawing.Color.White;
-            this.lblTextToSend.Location = new System.Drawing.Point(3, 8);
-            this.lblTextToSend.Name = "lblTextToSend";
-            this.lblTextToSend.Size = new System.Drawing.Size(311, 21);
-            this.lblTextToSend.TabIndex = 5;
-            this.lblTextToSend.Text = "Text of Keys to Send. (Separate by NewLine)";
-            // 
-            // cmbSearchMethod
-            // 
-            this.cmbSearchMethod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowCompareMethod.SetFlowBreak(this.cmbSearchMethod, true);
-            this.cmbSearchMethod.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.cmbSearchMethod.FormattingEnabled = true;
-            this.cmbSearchMethod.Location = new System.Drawing.Point(3, 49);
-            this.cmbSearchMethod.Name = "cmbSearchMethod";
-            this.cmbSearchMethod.Size = new System.Drawing.Size(521, 28);
-            this.cmbSearchMethod.TabIndex = 4;
+            this.flowCompareMethod.AutoSize = true;
+            this.flowCompareMethod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.flowCompareMethod.Controls.Add(this.lblCompareMethod);
+            this.flowCompareMethod.Controls.Add(this.lnkCompareMethodVariable);
+            this.flowCompareMethod.Controls.Add(this.cmbCompareMethod);
+            this.flowCompareMethod.Location = new System.Drawing.Point(3, 114);
+            this.flowCompareMethod.Name = "flowCompareMethod";
+            this.flowCompareMethod.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
+            this.flowCompareMethod.Size = new System.Drawing.Size(527, 96);
+            this.flowCompareMethod.TabIndex = 14;
             // 
             // lblCompareMethod
             // 
@@ -383,49 +292,6 @@
             this.lblCompareMethod.Size = new System.Drawing.Size(338, 21);
             this.lblCompareMethod.TabIndex = 3;
             this.lblCompareMethod.Text = "Window Compare Method (Default is Contains)";
-            // 
-            // flowCompareMethod
-            // 
-            this.flowCompareMethod.AutoSize = true;
-            this.flowCompareMethod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
-            this.flowCompareMethod.Controls.Add(this.lblCompareMethod);
-            this.flowCompareMethod.Controls.Add(this.lnkCompareMethodVariable);
-            this.flowCompareMethod.Controls.Add(this.cmbSearchMethod);
-            this.flowCompareMethod.Location = new System.Drawing.Point(3, 114);
-            this.flowCompareMethod.Name = "flowCompareMethod";
-            this.flowCompareMethod.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
-            this.flowCompareMethod.Size = new System.Drawing.Size(527, 96);
-            this.flowCompareMethod.TabIndex = 14;
-            // 
-            // flowTextToSend
-            // 
-            this.flowTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowTextToSend.AutoSize = true;
-            this.flowTextToSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(80)))), ((int)(((byte)(59)))));
-            this.flowTextToSend.Controls.Add(this.lblTextToSend);
-            this.flowTextToSend.Controls.Add(this.lnkKeyStrokesVariable);
-            this.flowTextToSend.Controls.Add(this.txtTextToSend);
-            this.flowTextToSend.Location = new System.Drawing.Point(3, 216);
-            this.flowTextToSend.Name = "flowTextToSend";
-            this.flowTextToSend.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
-            this.flowTextToSend.Size = new System.Drawing.Size(527, 198);
-            this.flowTextToSend.TabIndex = 15;
-            // 
-            // flowWaitTimeAfter
-            // 
-            this.flowWaitTimeAfter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowWaitTimeAfter.AutoSize = true;
-            this.flowWaitTimeAfter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(80)))));
-            this.flowWaitTimeAfter.Controls.Add(this.lblWaitTimeAfter);
-            this.flowWaitTimeAfter.Controls.Add(this.lnkWaitTimeVariable);
-            this.flowWaitTimeAfter.Controls.Add(this.txtWaitTime);
-            this.flowWaitTimeAfter.Location = new System.Drawing.Point(3, 420);
-            this.flowWaitTimeAfter.Name = "flowWaitTimeAfter";
-            this.flowWaitTimeAfter.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
-            this.flowWaitTimeAfter.Size = new System.Drawing.Size(527, 95);
-            this.flowWaitTimeAfter.TabIndex = 16;
             // 
             // lnkCompareMethodVariable
             // 
@@ -446,7 +312,139 @@
             this.lnkCompareMethodVariable.Name = "lnkCompareMethodVariable";
             this.lnkCompareMethodVariable.Size = new System.Drawing.Size(105, 17);
             this.lnkCompareMethodVariable.TabIndex = 15;
-            this.lnkCompareMethodVariable.Click += new System.EventHandler(this.lnkCompareMethodVariable_Click);
+            this.lnkCompareMethodVariable.Click += new System.EventHandler(this.lnkInsertVariable_Click);
+            // 
+            // cmbCompareMethod
+            // 
+            this.cmbCompareMethod.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowCompareMethod.SetFlowBreak(this.cmbCompareMethod, true);
+            this.cmbCompareMethod.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cmbCompareMethod.FormattingEnabled = true;
+            this.cmbCompareMethod.Location = new System.Drawing.Point(3, 49);
+            this.cmbCompareMethod.Name = "cmbCompareMethod";
+            this.cmbCompareMethod.Size = new System.Drawing.Size(521, 28);
+            this.cmbCompareMethod.TabIndex = 4;
+            // 
+            // flowTextToSend
+            // 
+            this.flowTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowTextToSend.AutoSize = true;
+            this.flowTextToSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(80)))), ((int)(((byte)(59)))));
+            this.flowTextToSend.Controls.Add(this.lblTextToSend);
+            this.flowTextToSend.Controls.Add(this.lnkTextToSend);
+            this.flowTextToSend.Controls.Add(this.txtTextToSend);
+            this.flowTextToSend.Location = new System.Drawing.Point(3, 216);
+            this.flowTextToSend.Name = "flowTextToSend";
+            this.flowTextToSend.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
+            this.flowTextToSend.Size = new System.Drawing.Size(527, 198);
+            this.flowTextToSend.TabIndex = 15;
+            // 
+            // lblTextToSend
+            // 
+            this.lblTextToSend.AutoSize = true;
+            this.lblTextToSend.BackColor = System.Drawing.Color.Transparent;
+            this.flowTextToSend.SetFlowBreak(this.lblTextToSend, true);
+            this.lblTextToSend.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblTextToSend.ForeColor = System.Drawing.Color.White;
+            this.lblTextToSend.Location = new System.Drawing.Point(3, 8);
+            this.lblTextToSend.Name = "lblTextToSend";
+            this.lblTextToSend.Size = new System.Drawing.Size(311, 21);
+            this.lblTextToSend.TabIndex = 5;
+            this.lblTextToSend.Text = "Text of Keys to Send. (Separate by NewLine)";
+            // 
+            // lnkTextToSend
+            // 
+            this.lnkTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkTextToSend.CommandDisplay = "Insert Variable";
+            this.lnkTextToSend.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkTextToSend.CommandImage")));
+            this.lnkTextToSend.DataSource = null;
+            this.lnkTextToSend.DrawIcon = global::taskt.Properties.Resources.taskt_variable_helper;
+            this.flowTextToSend.SetFlowBreak(this.lnkTextToSend, true);
+            this.lnkTextToSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkTextToSend.ForeColor = System.Drawing.Color.White;
+            this.lnkTextToSend.FunctionalDescription = null;
+            this.lnkTextToSend.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
+            this.lnkTextToSend.ImplementationDescription = null;
+            this.lnkTextToSend.Location = new System.Drawing.Point(0, 29);
+            this.lnkTextToSend.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkTextToSend.Name = "lnkTextToSend";
+            this.lnkTextToSend.Size = new System.Drawing.Size(105, 17);
+            this.lnkTextToSend.TabIndex = 7;
+            this.lnkTextToSend.Click += new System.EventHandler(this.lnkInsertVariable_Click);
+            // 
+            // txtTextToSend
+            // 
+            this.txtTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTextToSend.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtTextToSend.Location = new System.Drawing.Point(3, 49);
+            this.txtTextToSend.Multiline = true;
+            this.txtTextToSend.Name = "txtTextToSend";
+            this.txtTextToSend.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtTextToSend.Size = new System.Drawing.Size(521, 130);
+            this.txtTextToSend.TabIndex = 6;
+            // 
+            // flowWaitTimeAfter
+            // 
+            this.flowWaitTimeAfter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowWaitTimeAfter.AutoSize = true;
+            this.flowWaitTimeAfter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(80)))));
+            this.flowWaitTimeAfter.Controls.Add(this.lblWaitTimeAfter);
+            this.flowWaitTimeAfter.Controls.Add(this.lnkWaitTimeAfterVariable);
+            this.flowWaitTimeAfter.Controls.Add(this.txtWaitTimeAfter);
+            this.flowWaitTimeAfter.Location = new System.Drawing.Point(3, 420);
+            this.flowWaitTimeAfter.Name = "flowWaitTimeAfter";
+            this.flowWaitTimeAfter.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
+            this.flowWaitTimeAfter.Size = new System.Drawing.Size(527, 95);
+            this.flowWaitTimeAfter.TabIndex = 16;
+            // 
+            // lblWaitTimeAfter
+            // 
+            this.lblWaitTimeAfter.AutoSize = true;
+            this.lblWaitTimeAfter.BackColor = System.Drawing.Color.Transparent;
+            this.flowWaitTimeAfter.SetFlowBreak(this.lblWaitTimeAfter, true);
+            this.lblWaitTimeAfter.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblWaitTimeAfter.ForeColor = System.Drawing.Color.White;
+            this.lblWaitTimeAfter.Location = new System.Drawing.Point(3, 8);
+            this.lblWaitTimeAfter.Name = "lblWaitTimeAfter";
+            this.lblWaitTimeAfter.Size = new System.Drawing.Size(323, 21);
+            this.lblWaitTimeAfter.TabIndex = 8;
+            this.lblWaitTimeAfter.Text = "Waiting time after Keystrokes (Default is 500)";
+            // 
+            // lnkWaitTimeAfterVariable
+            // 
+            this.lnkWaitTimeAfterVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkWaitTimeAfterVariable.CommandDisplay = "Insert Variable";
+            this.lnkWaitTimeAfterVariable.CommandImage = ((System.Drawing.Image)(resources.GetObject("lnkWaitTimeAfterVariable.CommandImage")));
+            this.lnkWaitTimeAfterVariable.DataSource = null;
+            this.lnkWaitTimeAfterVariable.DrawIcon = global::taskt.Properties.Resources.taskt_variable_helper;
+            this.lnkWaitTimeAfterVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkWaitTimeAfterVariable.ForeColor = System.Drawing.Color.White;
+            this.lnkWaitTimeAfterVariable.FunctionalDescription = null;
+            this.lnkWaitTimeAfterVariable.HelperType = taskt.Core.Automation.Attributes.PropertyAttributes.PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper;
+            this.lnkWaitTimeAfterVariable.ImplementationDescription = null;
+            this.lnkWaitTimeAfterVariable.Location = new System.Drawing.Point(0, 29);
+            this.lnkWaitTimeAfterVariable.Margin = new System.Windows.Forms.Padding(0);
+            this.lnkWaitTimeAfterVariable.Name = "lnkWaitTimeAfterVariable";
+            this.lnkWaitTimeAfterVariable.Size = new System.Drawing.Size(105, 17);
+            this.lnkWaitTimeAfterVariable.TabIndex = 9;
+            this.lnkWaitTimeAfterVariable.Click += new System.EventHandler(this.lnkInsertVariable_Click);
+            // 
+            // txtWaitTimeAfter
+            // 
+            this.txtWaitTimeAfter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtWaitTimeAfter.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtWaitTimeAfter.Location = new System.Drawing.Point(3, 49);
+            this.txtWaitTimeAfter.Name = "txtWaitTimeAfter";
+            this.txtWaitTimeAfter.Size = new System.Drawing.Size(521, 27);
+            this.txtWaitTimeAfter.TabIndex = 10;
+            this.txtWaitTimeAfter.Text = "500";
             // 
             // frmMultiEnterKeys
             // 
@@ -495,13 +493,13 @@
         private CustomControls.CommandItemControl lnkWindoNameVariable;
         private CustomControls.CommandItemControl lnkWindowNameUpToDate;
         private System.Windows.Forms.ComboBox cmbWindowName;
-        private System.Windows.Forms.TextBox txtWaitTime;
-        private CustomControls.CommandItemControl lnkWaitTimeVariable;
+        private System.Windows.Forms.TextBox txtWaitTimeAfter;
+        private CustomControls.CommandItemControl lnkWaitTimeAfterVariable;
         private System.Windows.Forms.Label lblWaitTimeAfter;
-        private CustomControls.CommandItemControl lnkKeyStrokesVariable;
+        private CustomControls.CommandItemControl lnkTextToSend;
         private System.Windows.Forms.TextBox txtTextToSend;
         private System.Windows.Forms.Label lblTextToSend;
-        private System.Windows.Forms.ComboBox cmbSearchMethod;
+        private System.Windows.Forms.ComboBox cmbCompareMethod;
         private System.Windows.Forms.Label lblCompareMethod;
         private System.Windows.Forms.FlowLayoutPanel flowCompareMethod;
         private System.Windows.Forms.FlowLayoutPanel flowTextToSend;

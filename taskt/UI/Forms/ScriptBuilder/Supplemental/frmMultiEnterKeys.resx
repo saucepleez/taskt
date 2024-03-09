@@ -307,7 +307,7 @@
         a6RNMnnar2qLnJ0WbCKwk5JbaaSwh2IP0udFT/r81sYmkzjOX+xxazvN9T4UAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="lnkKeyStrokesVariable.CommandImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="lnkTextToSend.CommandImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
         DwAAjA8AAP1SAACBQAAAfXkAAOmLAAA85QAAGcxzPIV3AAAKL2lDQ1BJQ0MgUHJvZmlsZQAASMedlndU
@@ -370,7 +370,7 @@
         a6RNMnnar2qLnJ0WbCKwk5JbaaSwh2IP0udFT/r81sYmkzjOX+xxazvN9T4UAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="lnkWaitTimeVariable.CommandImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="lnkWaitTimeAfterVariable.CommandImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
         DwAAjA8AAP1SAACBQAAAfXkAAOmLAAA85QAAGcxzPIV3AAAKL2lDQ1BJQ0MgUHJvZmlsZQAASMedlndU

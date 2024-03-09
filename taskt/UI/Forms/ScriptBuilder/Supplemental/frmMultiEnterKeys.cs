@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using taskt.Core.Automation.Commands;
+using taskt.UI.CustomControls;
 
 namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
@@ -26,7 +27,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             this.appSetttings = appSetttings;
             this.scriptVariables = scriptVariables;
 
-            cmbSearchMethod.Items.AddRange(
+            cmbCompareMethod.Items.AddRange(
                 new string[] { "", "Contains", "Starts with", "Ends with", "Exact Match"}
             );
 
@@ -40,8 +41,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 
                 EnterKeysCommand firstKeystroke = (EnterKeysCommand)keyCommands[0];
                 cmbWindowName.Text = firstKeystroke.v_WindowName;
-                cmbSearchMethod.Text = firstKeystroke.v_CompareMethod;
-                txtWaitTime.Text = firstKeystroke.v_WaitTime;
+                cmbCompareMethod.Text = firstKeystroke.v_CompareMethod;
+                txtWaitTimeAfter.Text = firstKeystroke.v_WaitTime;
 
                 string keystrokes = "";
                 foreach(var cmd in keyCommands)
@@ -51,6 +52,18 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 }
                 txtTextToSend.Text = keystrokes.Substring(0, keystrokes.Length - 2);
             }
+
+            // Insert Variable
+            lnkWindoNameVariable.Tag = cmbWindowName;
+            lnkCompareMethodVariable.Tag = cmbCompareMethod;
+            lnkTextToSend.Tag = txtTextToSend;
+            lnkWaitTimeAfterVariable.Tag = txtWaitTimeAfter;
+
+            // ComboBox events
+            cmbWindowName.Click += combobox_Click;
+            cmbWindowName.KeyUp += combobox_KeyUp;
+            cmbCompareMethod.Click += combobox_Click;
+            cmbCompareMethod.KeyUp += combobox_KeyUp;
         }
 
         private void frmMultiSendKeystrokes_Load(object sender, EventArgs e)
@@ -64,6 +77,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         {
             UpdateWindowNames();
         }
+
         private void lnkWindoNameVariable_Click(object sender, EventArgs e)
         {
             using (var fm = CreateVariableSelectForm())
@@ -125,13 +139,13 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             {
                 if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
                 {
-                    ConcatenateVariableName((string)fm.selectedItem, txtWaitTime, appSetttings);
+                    ConcatenateVariableName((string)fm.selectedItem, txtWaitTimeAfter, appSetttings);
                 }
             }
         }
         #endregion
 
-        #region footer buttons
+        #region footer buttons events
         private void uiBtnAdd_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
@@ -140,6 +154,116 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void uiBtnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+        #endregion
+
+        #region General Events
+        /// <summary>
+        /// combobox key up
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void combobox_KeyUp(object sender, KeyEventArgs e)
+        {
+            SetCursorPosition((ComboBox)sender);
+        }
+
+        /// <summary>
+        /// combobox click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void combobox_Click(object sender, EventArgs e)
+        {
+            SetCursorPosition((ComboBox)sender);
+        }
+
+        /// <summary>
+        /// set cursor position
+        /// </summary>
+        /// <param name="cmb"></param>
+        private static void SetCursorPosition(ComboBox cmb)
+        {
+            cmb.Tag = cmb.SelectionStart;
+        }
+
+        /// <summary>
+        /// lnkInsertVariable clicked event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lnkInsertVariable_Click(object sender, EventArgs e)
+        {
+            using (var fm = CreateVariableSelectForm())
+            {
+                if ((fm.ShowDialog() == DialogResult.OK) && (fm.selectedItem != null))
+                {
+                    string variableName = VariableNameControls.GetWrappedVariableName((string)fm.selectedItem, appSetttings);
+
+                    var ctrl = (Control)((CommandItemControl)sender).Tag;
+                    if (ctrl is TextBox txt)
+                    {
+                        ConcatenateVariableName(variableName, txt, appSetttings);
+                    }
+                    else if (ctrl is ComboBox cmb)
+                    {
+                        ConcatenateVariableName(variableName, cmb, appSetttings);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// create variable name selector form
+        /// </summary>
+        /// <returns></returns>
+        private CommandEditor.Supplemental.frmItemSelector CreateVariableSelectForm()
+        {
+            var variableList = scriptVariables.Select(f => f.VariableName).ToList();
+            variableList.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
+
+            return (new CommandEditor.Supplemental.frmItemSelector(variableList, "Select Variable", "Select Variable"));
+        }
+
+        /// <summary>
+        /// concatenate variable name to TextBox
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="txt"></param>
+        /// <param name="settings"></param>
+        private static void ConcatenateVariableName(string variableName, TextBox txt, Core.ApplicationSettings settings)
+        {
+            variableName = VariableNameControls.GetWrappedVariableName(variableName, settings);
+            if (settings.ClientSettings.InsertVariableAtCursor)
+            {
+                string current = txt.Text;
+                txt.Text = current.Substring(0, txt.SelectionStart) + variableName + current.Substring(txt.SelectionStart);
+            }
+            else
+            {
+                txt.Text += variableName;
+            }
+        }
+
+        /// <summary>
+        /// concatenate variable name to ComboBox
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="cmb"></param>
+        /// <param name="settings"></param>
+        private static void ConcatenateVariableName(string variableName, ComboBox cmb, Core.ApplicationSettings settings)
+        {
+            variableName = VariableNameControls.GetWrappedVariableName(variableName, settings);
+            if (settings.ClientSettings.InsertVariableAtCursor)
+            {
+                string currentValue = cmb.Text;
+                int pos = int.Parse(cmb.Tag?.ToString() ?? "0");
+                cmb.Text = currentValue.Substring(0, pos) + variableName + currentValue.Substring(pos);
+            }
+            else
+            {
+                cmb.Text += variableName;
+            }
         }
         #endregion
 
@@ -160,10 +284,10 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                     new EnterKeysCommand()
                     {
                         v_WindowName = cmbWindowName.Text,
-                        v_CompareMethod = cmbSearchMethod.Text,
+                        v_CompareMethod = cmbCompareMethod.Text,
                         v_TextToSend = s,
                         v_EncryptionOption = "",
-                        v_WaitTime = txtWaitTime.Text
+                        v_WaitTime = txtWaitTimeAfter.Text
                     }
                 );
             }
@@ -200,30 +324,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             }
 
             cmbWindowName.EndUpdate();
-        }
-
-        private CommandEditor.Supplemental.frmItemSelector CreateVariableSelectForm()
-        {
-            var variableList = scriptVariables.Select(f => f.VariableName).ToList();
-            //variableList.AddRange(Core.Common.GenerateSystemVariables().Select(f => f.VariableName));
-            variableList.AddRange(Core.Automation.Engine.SystemVariables.GetSystemVariablesName());
-
-            return (new CommandEditor.Supplemental.frmItemSelector(variableList, "Select Variable", "Select Variable"));
-        }
-
-        private static void ConcatenateVariableName(string variableName, TextBox txt, Core.ApplicationSettings settings)
-        {
-            //variableName = settings.EngineSettings.wrapVariableMarker(variableName);
-            variableName = VariableNameControls.GetWrappedVariableName(variableName, settings);
-            if (settings.ClientSettings.InsertVariableAtCursor)
-            {
-                string current = txt.Text;
-                txt.Text = current.Substring(0, txt.SelectionStart) + variableName + current.Substring(txt.SelectionStart);
-            }
-            else
-            {
-                txt.Text += variableName;
-            }
         }
         #endregion
 
@@ -325,6 +425,5 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             }
         }
         #endregion
-
     }
 }
