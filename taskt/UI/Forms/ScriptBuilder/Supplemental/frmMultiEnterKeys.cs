@@ -316,6 +316,5 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             }
         }
         #endregion
-
     }
 }
