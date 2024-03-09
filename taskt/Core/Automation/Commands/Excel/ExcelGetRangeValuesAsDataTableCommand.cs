@@ -61,6 +61,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Use the First Row as the Column Names (Value Type is Cell only)")]
         [PropertyIsOptional(true, "No")]
+        [PropertyParameterOrder(13000)]
         public string v_FirstRowAsColumnName { get; set; }
 
         public ExcelGetRangeValuesAsDataTableCommand()

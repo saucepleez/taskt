@@ -815,7 +815,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelAddWorkbookCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCloseExcelInstanceCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelCreateExcelInstanceCommand.cs" />
-    <Compile Include="Core\Automation\Commands\DataTable\LoadDataTableCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\LoadDataTableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteCellCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelDeleteRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetCellCommand.cs" />
