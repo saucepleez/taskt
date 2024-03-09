@@ -230,6 +230,7 @@
             this.lnkWindoNameVariable.Name = "lnkWindoNameVariable";
             this.lnkWindoNameVariable.Size = new System.Drawing.Size(105, 17);
             this.lnkWindoNameVariable.TabIndex = 14;
+            this.lnkWindoNameVariable.Click += new System.EventHandler(this.lnkWindoNameVariable_Click);
             // 
             // lnkWindowNameUpToDate
             // 
@@ -250,6 +251,7 @@
             this.lnkWindowNameUpToDate.Name = "lnkWindowNameUpToDate";
             this.lnkWindowNameUpToDate.Size = new System.Drawing.Size(85, 17);
             this.lnkWindowNameUpToDate.TabIndex = 16;
+            this.lnkWindowNameUpToDate.Click += new System.EventHandler(this.lnkWindowNameUpToDate_Click);
             // 
             // cmbWindowName
             // 
@@ -262,6 +264,8 @@
             this.cmbWindowName.Name = "cmbWindowName";
             this.cmbWindowName.Size = new System.Drawing.Size(521, 28);
             this.cmbWindowName.TabIndex = 15;
+            this.cmbWindowName.Click += new System.EventHandler(this.cmbWindowName_Click);
+            this.cmbWindowName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cmbWindowName_KeyUp);
             // 
             // txtWaitTime
             // 
@@ -442,6 +446,7 @@
             this.lnkCompareMethodVariable.Name = "lnkCompareMethodVariable";
             this.lnkCompareMethodVariable.Size = new System.Drawing.Size(105, 17);
             this.lnkCompareMethodVariable.TabIndex = 15;
+            this.lnkCompareMethodVariable.Click += new System.EventHandler(this.lnkCompareMethodVariable_Click);
             // 
             // frmMultiEnterKeys
             // 

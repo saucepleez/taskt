@@ -85,6 +85,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 }
             }
         }
+
         private void cmbWindowName_KeyUp(object sender, KeyEventArgs e)
         {
             cmbWindowName.Tag = cmbWindowName.SelectionStart;
@@ -93,6 +94,14 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         private void cmbWindowName_Click(object sender, EventArgs e)
         {
             cmbWindowName.Tag = cmbWindowName.SelectionStart;
+        }
+        #endregion
+
+        #region compare method events
+
+        private void lnkCompareMethodVariable_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
@@ -316,5 +325,6 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             }
         }
         #endregion
+
     }
 }
