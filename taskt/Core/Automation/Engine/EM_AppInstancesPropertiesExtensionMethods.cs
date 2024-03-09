@@ -7,6 +7,14 @@ namespace taskt.Core.Automation.Engine
     /// </summary>
     public static class EM_AppInstancesPropertiesExtensionMethods
     {
+        /// <summary>
+        /// Add App Instance
+        /// </summary>
+        /// <param name="me"></param>
+        /// <param name="instanceName"></param>
+        /// <param name="appInstance"></param>
+        /// <param name="engine"></param>
+        /// <exception cref="Exception"></exception>
         public static void AddAppInstance(this IAppInstancesProperties me, string instanceName, object appInstance, AutomationEngineInstance engine)
         {
             //if (me.AppInstances.ContainsKey(instanceName) && engine.engineSettings.OverrideExistingAppInstances)
