@@ -171,8 +171,8 @@
             this.flowBody.AutoSize = true;
             this.flowBody.BackColor = System.Drawing.Color.Transparent;
             this.flowBody.Controls.Add(this.flowWindowName);
-            this.flowBody.Controls.Add(this.flowCompareMethod);
             this.flowBody.Controls.Add(this.flowTextToSend);
+            this.flowBody.Controls.Add(this.flowCompareMethod);
             this.flowBody.Controls.Add(this.flowWaitTimeAfter);
             this.flowBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowBody.Location = new System.Drawing.Point(0, 0);
@@ -268,11 +268,11 @@
             // flowCompareMethod
             // 
             this.flowCompareMethod.AutoSize = true;
-            this.flowCompareMethod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.flowCompareMethod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(80)))), ((int)(((byte)(59)))));
             this.flowCompareMethod.Controls.Add(this.lblCompareMethod);
             this.flowCompareMethod.Controls.Add(this.lnkCompareMethodVariable);
             this.flowCompareMethod.Controls.Add(this.cmbCompareMethod);
-            this.flowCompareMethod.Location = new System.Drawing.Point(3, 114);
+            this.flowCompareMethod.Location = new System.Drawing.Point(3, 318);
             this.flowCompareMethod.Name = "flowCompareMethod";
             this.flowCompareMethod.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
             this.flowCompareMethod.Size = new System.Drawing.Size(527, 96);
@@ -331,11 +331,11 @@
             this.flowTextToSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowTextToSend.AutoSize = true;
-            this.flowTextToSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(80)))), ((int)(((byte)(59)))));
+            this.flowTextToSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.flowTextToSend.Controls.Add(this.lblTextToSend);
             this.flowTextToSend.Controls.Add(this.lnkTextToSend);
             this.flowTextToSend.Controls.Add(this.txtTextToSend);
-            this.flowTextToSend.Location = new System.Drawing.Point(3, 216);
+            this.flowTextToSend.Location = new System.Drawing.Point(3, 114);
             this.flowTextToSend.Name = "flowTextToSend";
             this.flowTextToSend.Padding = new System.Windows.Forms.Padding(0, 8, 0, 16);
             this.flowTextToSend.Size = new System.Drawing.Size(527, 198);
