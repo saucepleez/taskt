@@ -735,7 +735,7 @@
     <Compile Include="Core\Automation\Commands\Excel\ExcelAppendRowCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetRangeCommand .cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelGetRangeCommandASDT.cs" />
-    <Compile Include="Core\Automation\Commands\Dictionary\LoadDictionaryCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Excel\LoadDictionaryCommand.cs" />
     <Compile Include="Core\Automation\Commands\Excel\ExcelWriteRangeCommand.cs" />
     <Compile Include="Core\Automation\Commands\Error\FinallyCommand.cs" />
     <Compile Include="Core\Automation\Commands\Text\EncryptDecryptTextCommand.cs" />
