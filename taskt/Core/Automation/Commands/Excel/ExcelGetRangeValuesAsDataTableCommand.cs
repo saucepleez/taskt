@@ -140,50 +140,38 @@ namespace taskt.Core.Automation.Commands
             //Func<Microsoft.Office.Interop.Excel.Worksheet, int, int, string> getFunc = ExcelControls.GetCellValueFunction(valueType);
             var getFunc = this.ExpandValueOrVariableAsGetValueFunction(engine);
 
-            var valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
-
-            Func<int, int, string> headerFunc;
-            int loopFirstValue;
-            if ((valueType == "cell") && (this.ExpandValueOrUserVariableAsYesNo(nameof(v_FirstRowAsColumnName), engine)))
-            {
-                headerFunc = (row, col) =>
-                {
-                    return excelSheet.CellText(row, col);
-                };
-                loopFirstValue = 1;
-            }
-            else
-            {
-                headerFunc = (row, col) =>
-                {
-                    return excelSheet.ToColumnName(col);
-                };
-                loopFirstValue = 0;
-            }
-
             int rowRange = rowEndIndex - rowStartIndex + 1;
             int colRange = columnEndIndex - columnStartIndex + 1;
 
-            DataTable newDT = new DataTable();
+            var newDT = new DataTable();
             // set columns
             for (int i = 0; i < colRange; i++) 
             {
                 //newDT.Columns.Add(ExcelControls.GetColumnName(excelSheet, columnStartIndex + i));
-                //newDT.Columns.Add(excelSheet.ToColumnName(columnStartIndex + i));
-                newDT.Columns.Add(headerFunc(rowStartIndex, columnStartIndex + i));
+                newDT.Columns.Add(excelSheet.ToColumnName(columnStartIndex + i));
             }
 
-            int rowCount = 0;
-            for (int i = loopFirstValue; i < rowRange; i++)
+            for (int i = 0; i < rowRange; i++)
             {
                 newDT.Rows.Add();
                 for (int j = 0; j < colRange; j++)
                 {
-                    newDT.Rows[rowCount][j] = getFunc(excelSheet, columnStartIndex + j, rowStartIndex + i);
+                    newDT.Rows[i][j] = getFunc(excelSheet, columnStartIndex + j, rowStartIndex + i);
                 }
-                rowCount++;
             }
 
+            var valueType = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_ValueType), "Value Type", engine);
+            if ((valueType == "cell") && (this.ExpandValueOrUserVariableAsYesNo(nameof(v_FirstRowAsColumnName), engine)))
+            {
+                if (newDT.Rows.Count > 0)
+                {
+                    for (int i = newDT.Columns.Count - 1; i >= 0; i--)
+                    {
+                        newDT.Columns[i].ColumnName = newDT.Rows[0]?.ToString() ?? "";
+                    }
+                    newDT.Rows[0].Delete();
+                }
+            }
             newDT.StoreInUserVariable(engine, v_Result);
         }
     }
