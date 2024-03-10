@@ -8,13 +8,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("File/Book")]
+    [Attributes.ClassAttributes.CommandSettings("Create Dictionary From Excel File")]
     [Attributes.ClassAttributes.Description("This command Open a File and Get Cell Values as a Dictionary")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Open a File and Get Cell Values as a Dictionary")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class LoadDictionaryCommand : ScriptCommand
+    public class CreateDictionaryFromExcelFile : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Please Enter the Dictionary Variable Name")]
@@ -91,12 +92,12 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Value Column")]
         public string v_ValueColumn { get; set; }
 
-        public LoadDictionaryCommand()
+        public CreateDictionaryFromExcelFile()
         {
-            this.CommandName = "LoadDictionaryCommand";
-            this.SelectionName = "Load Dictionary";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "LoadDictionaryCommand";
+            //this.SelectionName = "Load Dictionary";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)

@@ -7,13 +7,14 @@ namespace taskt.Core.Automation.Commands
     [Serializable]
     [Attributes.ClassAttributes.Group("Excel Commands")]
     [Attributes.ClassAttributes.SubGruop("File/Book")]
+    [Attributes.ClassAttributes.CommandSettings("Create DataTable From Excel File")]
     [Attributes.ClassAttributes.Description("This command Open a File and Get Cell Values as a DataTable")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to Open a File and Get Cell Values as a DataTable")]
     [Attributes.ClassAttributes.ImplementationDescription("")]
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_spreadsheet))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class LoadDataTableCommand : ScriptCommand
+    public class ExcelCreateDataTableFromExcelFile : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Please create a DataTable Variable Name")]
@@ -29,7 +30,7 @@ namespace taskt.Core.Automation.Commands
         //[PropertyValidationRule("DataTable", PropertyValidationRule.ValidationRuleFlags.Empty)]
         //[PropertyDisplayText(true, "DataTable")]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        public string v_DataSetName { get; set; }
+        public string v_DataTableName { get; set; }
 
         [XmlAttribute]
         //[PropertyDescription("Please indicate the workbook file path")]
@@ -85,16 +86,16 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(SelectionItemsControls), nameof(SelectionItemsControls.v_YesNoComboBox))]
         [PropertyDescription("Use the First Row as the Column Names (Value Type is Cell only)")]
         [PropertyIsOptional(true, "No")]
-        public string v_ContainsHeaderRow { get; set; }
+        public string v_FirstRowAsColumnName { get; set; }
 
-        public LoadDataTableCommand()
+        public ExcelCreateDataTableFromExcelFile()
         {
-            this.CommandName = "LoadDataTableCommand";
-            this.SelectionName = "Load DataTable";
-            this.CommandEnabled = true;
-            this.CustomRendering = true;
+            //this.CommandName = "LoadDataTableCommand";
+            //this.SelectionName = "Load DataTable";
+            //this.CommandEnabled = true;
+            //this.CustomRendering = true;
 
-            this.v_ContainsHeaderRow = "Yes";
+            //this.v_ContainsHeaderRow = "Yes";
         }
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
@@ -152,8 +153,8 @@ namespace taskt.Core.Automation.Commands
                 v_RowStart = rowIndex.ToString(),
                 v_ColumnStart = columnIndex,
                 v_ColumnType = this.v_ColumnType,
-                v_Result = this.v_DataSetName,
-                v_FirstRowAsColumnName = this.v_ContainsHeaderRow,
+                v_Result = this.v_DataTableName,
+                v_FirstRowAsColumnName = this.v_FirstRowAsColumnName,
             };
             convertDataTable.RunCommand(engine);
 

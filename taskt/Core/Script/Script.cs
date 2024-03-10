@@ -384,6 +384,7 @@ namespace taskt.Core.Script
             convertTo3_5_1_81(doc);
             convertTo3_5_1_83(doc);
             convertTo3_5_1_84(doc);
+            convertTo3_5_1_86(doc);
 
             return doc;
         }
@@ -2580,6 +2581,23 @@ namespace taskt.Core.Script
                     ),
                 }
             );
+
+            return doc;
+        }
+
+        private static XDocument convertTo3_5_1_86(XDocument doc)
+        {
+            // LoadDataTableCommand -> ExcelCreateDataTableFromExcelFile
+            ChangeToOtherCommand(doc, "LoadDataTableCommand", "ExcelCreateDataTableFromExcelFile", "Create DataTable From Excel File",
+                new List<(string, string)>()
+                {
+                    ("v_DataSetName", "v_DataTableName"),
+                    ("v_ContainsHeaderRow", "v_FirstRowAsColumnName"),
+                }
+            );
+
+            // LoadDictionaryCommand -> CreateDictionaryFromExcelFile
+            ChangeCommandName(doc, "LoadDictionaryCommand", "CreateDictionaryFromExcelFile", "Create Dictionary From Excel File");
 
             return doc;
         }
