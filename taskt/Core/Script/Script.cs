@@ -2599,6 +2599,24 @@ namespace taskt.Core.Script
             // LoadDictionaryCommand -> CreateDictionaryFromExcelFile
             ChangeCommandName(doc, "LoadDictionaryCommand", "CreateDictionaryFromExcelFile", "Create Dictionary From Excel File");
 
+            // SetEnginePreferenceCommand
+            ChangeAttributeValue(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    return (el.Attribute("CommandName").Value == "SetEnginePreferenceCommand") &&
+                            (el.Attribute("v_PreferenceType").Value.ToLower() == "current window keyword");
+                }),
+                "v_Comment",
+                new Action<XAttribute>(attr =>
+                {
+                    var v = attr.Value;
+                    if (!v.StartsWith("'Current Window Keyword' will eventually become unavailable."))
+                    {
+                        attr.SetValue($"'Current Window Keyword' will eventually become unavailable. {v}");
+                    }
+                })
+            );
+
             return doc;
         }
 
