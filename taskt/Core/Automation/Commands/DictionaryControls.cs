@@ -221,7 +221,7 @@ namespace taskt.Core.Automation.Commands
             var v = dicVariable.GetRawVariable(engine);
             string keyVariable = command.ExpandValueOrUserVariable(keyName, "Key", engine);
             string key;
-            if (String.IsNullOrEmpty(keyVariable))
+            if (string.IsNullOrEmpty(keyVariable))
             {
                 int pos = v.CurrentPosition;
                 string[] keys = dictionary.Keys.ToArray();
