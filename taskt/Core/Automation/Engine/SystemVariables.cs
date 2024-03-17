@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Engine
         public static readonly ScriptVariable Folder_ScriptPath = new ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Folders.GetScriptsFolderPath() };
         public static readonly ScriptVariable Folder_RootPath = new ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Folders.GetRootFolderPath() };
         public static readonly ScriptVariable Folder_AttendedTasksPath = new ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Folders.GetAttendedTasksFolderPath() };
-        public static readonly ScriptVariable Folder_ResoucesPath = new ScriptVariable { VariableName = "Folder.ResourcePath", VariableValue = Folders.GetResourceFolderPath() };
+        public static readonly ScriptVariable Folder_ResoucesPath = new ScriptVariable { VariableName = "Folder.ResourcesPath", VariableValue = Folders.GetResourcesFolderPath() };
         public static readonly ScriptVariable Folder_SamplesPath = new ScriptVariable { VariableName = "Folder.SamplesPath", VariableValue = Folders.GetSamplesFolderPath() };
 
         public static readonly ScriptVariable DateTime_Now = new ScriptVariable { VariableName = "DateTime.Now", VariableValue = "" };

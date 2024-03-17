@@ -65,6 +65,7 @@ namespace taskt.Core.IO
         /// <exception cref="NotImplementedException"></exception>
         public static string GetFolder(FolderType folderType)
         {
+            // TODO: eventually stop using
             switch (folderType)
             {
                 case FolderType.RootFolder:
@@ -167,7 +168,7 @@ namespace taskt.Core.IO
         /// get Resouces folder path in taskt excecution file folder
         /// </summary>
         /// <returns></returns>
-        public static string GetResourceFolderPath()
+        public static string GetResourcesFolderPath()
         {
             return Path.Combine(TASKT_EXECUTE_FOLDER_PATH, $"{RESOURCES_FOLDER_NAME}\\");
         }
