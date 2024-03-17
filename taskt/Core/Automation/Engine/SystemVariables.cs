@@ -18,9 +18,11 @@ namespace taskt.Core.Automation.Engine
         public static readonly ScriptVariable Folder_Desktop = new ScriptVariable { VariableName = "Folder.Desktop", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
         public static readonly ScriptVariable Folder_Documents = new ScriptVariable { VariableName = "Folder.Documents", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) };
         public static readonly ScriptVariable Folder_AppData = new ScriptVariable { VariableName = "Folder.AppData", VariableValue = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
-        public static readonly ScriptVariable Folder_ScriptPath = new ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Folders.GetFolder(Folders.FolderType.ScriptsFolder) };
-        public static readonly ScriptVariable Folder_RootPath = new ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Folders.GetFolder(Folders.FolderType.RootFolder) };
-        public static readonly ScriptVariable Folder_AttendedTasksPath = new ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Folders.GetFolder(Folders.FolderType.AttendedTasksFolder) };
+        public static readonly ScriptVariable Folder_ScriptPath = new ScriptVariable { VariableName = "Folder.ScriptPath", VariableValue = Folders.GetScriptsFolderPath() };
+        public static readonly ScriptVariable Folder_RootPath = new ScriptVariable { VariableName = "Folder.RootPath", VariableValue = Folders.GetRootFolderPath() };
+        public static readonly ScriptVariable Folder_AttendedTasksPath = new ScriptVariable { VariableName = "Folder.AttendedTasksPath", VariableValue = Folders.GetAttendedTasksFolderPath() };
+        public static readonly ScriptVariable Folder_ResoucesPath = new ScriptVariable { VariableName = "Folder.ResourcePath", VariableValue = Folders.GetResourceFolderPath() };
+        public static readonly ScriptVariable Folder_SamplesPath = new ScriptVariable { VariableName = "Folder.SamplesPath", VariableValue = Folders.GetSamplesFolderPath() };
 
         public static readonly ScriptVariable DateTime_Now = new ScriptVariable { VariableName = "DateTime.Now", VariableValue = "" };
         public static readonly ScriptVariable DateTime_Now_Month = new ScriptVariable { VariableName = "DateTime.Now.Month", VariableValue = "" };
@@ -142,6 +144,8 @@ namespace taskt.Core.Automation.Engine
             Folder_ScriptPath,
             Folder_RootPath,
             Folder_AttendedTasksPath,
+            Folder_ResoucesPath,
+            Folder_SamplesPath,
 
             // datetime
             DateTime_Now,
