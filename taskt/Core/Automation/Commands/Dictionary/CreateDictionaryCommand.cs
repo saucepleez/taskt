@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        public string v_DictionaryName { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlElement]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_KeyAndValue))]
@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
 
             outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
 
-            outputDictionary.StoreInUserVariable(engine, v_DictionaryName);
+            outputDictionary.StoreInUserVariable(engine, v_Dictionary);
         }
 
         public override void BeforeValidate()

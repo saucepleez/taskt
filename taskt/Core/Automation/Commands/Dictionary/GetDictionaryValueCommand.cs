@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Key))]
@@ -63,7 +63,7 @@ namespace taskt.Core.Automation.Commands
             {
                 var getKeys = new GetDictionaryKeysListCommand()
                 {
-                    v_InputData = this.v_InputData,
+                    v_Dictionary = this.v_Dictionary,
                     v_OutputVariable = VariableNameControls.GetInnerVariableName(0, engine),
                 };
                 getKeys.RunCommand(engine);
@@ -83,7 +83,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_InputData), nameof(v_Key), engine);
+            (var dic, var vKey) = this.ExpandUserVariablesAsDictionaryAndKey(nameof(v_Dictionary), nameof(v_Key), engine);
 
             if (dic.ContainsKey(vKey))
             {

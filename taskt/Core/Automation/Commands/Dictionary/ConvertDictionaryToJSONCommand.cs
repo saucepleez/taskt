@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
+            var dic = v_Dictionary.ExpandUserVariableAsDictinary(engine);
 
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(dic);
             json.StoreInUserVariable(engine, v_OutputVariable);

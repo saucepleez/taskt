@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
-        public string v_InputData { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_Key))]
@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
         {
             var vKey = v_Key.ExpandValueOrUserVariable(engine);
 
-            var dic = v_InputData.ExpandUserVariableAsDictinary(engine);
+            var dic = v_Dictionary.ExpandUserVariableAsDictinary(engine);
             dic.ContainsKey(vKey).StoreInUserVariable(engine, v_applyToVariable);
         }
     }
