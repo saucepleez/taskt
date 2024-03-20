@@ -2658,6 +2658,9 @@ namespace taskt.Core.Script
             // FilterDictionaryCommand v_InputDictionary
             ChangeAttributeName(doc, "FilterDictionaryCommand", "v_InputDictionary", "v_TargetDictionary");
 
+            // CheckDictionaryKeyExistsCommand v_applyToVariable
+            ChangeAttributeName(doc, "CheckDictionaryKeyExistsCommand", "v_applyToVariable", "v_Result");
+
             return doc;
         }
 

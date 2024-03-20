@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
         [Remarks("When the Key Exists, the Result is **True**")]
-        public string v_applyToVariable { get; set; }
+        public string v_Result { get; set; }
 
         public CheckDictionaryKeyExistsCommand()
         {
@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
             var vKey = v_Key.ExpandValueOrUserVariable(engine);
 
             var dic = v_Dictionary.ExpandUserVariableAsDictinary(engine);
-            dic.ContainsKey(vKey).StoreInUserVariable(engine, v_applyToVariable);
+            dic.ContainsKey(vKey).StoreInUserVariable(engine, v_Result);
         }
     }
 }
