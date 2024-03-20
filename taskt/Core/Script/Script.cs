@@ -313,17 +313,17 @@ namespace taskt.Core.Script
         //    return Path.Combine(Path.GetDirectoryName(tasktExePath), "BeforeConverted");
         //}
 
-        ///// <summary>
-        ///// get file path when use 'Run Without Saving'
-        ///// </summary>
-        ///// <returns></returns>
-        //public static string GetRunWithoutSavingScriptFilePath()
-        //{
-        //    //var runPath = GetRunWithoutSavingFolderPath();
-        //    var runPath = IO.Folders.GetRunWithoutSavingFolderPath();
-        //    var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-        //    return Path.Combine(runPath, "run-") + saveTime + ".xml";
-        //}
+        /// <summary>
+        /// get file path when use 'Run Without Saving'
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRunWithoutSavingScriptFilePath()
+        {
+            //var runPath = GetRunWithoutSavingFolderPath();
+            var runPath = IO.Folders.GetRunWithoutSavingFolderPath();
+            var saveTime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            return Path.Combine(runPath, "run-") + saveTime + ".xml";
+        }
 
         /// <summary>
         /// script xml converter
