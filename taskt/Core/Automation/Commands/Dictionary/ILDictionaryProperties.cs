@@ -1,9 +1,9 @@
-﻿namespace taskt.Core.Automation.Commands.Dictionary
+﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// Dictionary action properties
+    /// Dictionary properties
     /// </summary>
-    public interface IDictionaryActionProperties : ICanHandleDictionary
+    public interface ILDictionaryProperties : ICanHandleDictionary, ILExpandableProperties
     {
         /// <summary>
         /// Dictionary variable name

@@ -326,7 +326,7 @@
     <Compile Include="Core\Automation\Commands\DateTime\IDateTimeCreateProperties.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\EM_CanHandleDictionary.cs" />
     <Compile Include="Core\Automation\Commands\Dictionary\ICanHandleDictionary.cs" />
-    <Compile Include="Core\Automation\Commands\Dictionary\IDictionaryActionProperties.cs" />
+    <Compile Include="Core\Automation\Commands\Dictionary\ILDictionaryProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellActionCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelCellCommands.cs" />
     <Compile Include="Core\Automation\Commands\Excel\AExcelColumnRangeCommands.cs" />
