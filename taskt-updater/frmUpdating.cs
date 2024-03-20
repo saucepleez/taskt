@@ -123,7 +123,9 @@ namespace taskt_updater
                         this.Close();
                         break;
                     case "/r":
-                        string startTasktFolder = Directory.GetParent(topLevelFolder).Parent.Parent.FullName;
+                        string startTasktFolder = Directory.GetParent(topLevelFolder).FullName;
+                        //DBG
+                        //MessageBox.Show(startTasktFolder);
                         var tasktProcess = new System.Diagnostics.Process();
                         tasktProcess.StartInfo.FileName = Path.Combine(startTasktFolder, "taskt.exe");
                         tasktProcess.Start();
