@@ -64,7 +64,7 @@ namespace taskt.Core.Automation.Commands
                 var getKeys = new GetDictionaryKeysListCommand()
                 {
                     v_Dictionary = this.v_Dictionary,
-                    v_OutputVariable = VariableNameControls.GetInnerVariableName(0, engine),
+                    v_Result = VariableNameControls.GetInnerVariableName(0, engine),
                 };
                 getKeys.RunCommand(engine);
                 var keys = (List<string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;

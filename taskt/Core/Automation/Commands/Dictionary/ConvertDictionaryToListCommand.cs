@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_OutputVariable { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDictionaryToListCommand()
         {
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             var dic = v_Dictionary.ExpandUserVariableAsDictinary(engine);
 
-            dic.Values.ToList().StoreInUserVariable(engine, v_OutputVariable);
+            dic.Values.ToList().StoreInUserVariable(engine, v_Result);
         }
     }
 }

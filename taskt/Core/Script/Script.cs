@@ -2759,6 +2759,26 @@ namespace taskt.Core.Script
                 }
             );
 
+            // Dictioanry commands v_OutputVariable -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ConvertDictionaryToDataTableCommand":
+                        case "ConvertDictionaryToJSONCommand":
+                        case "ConvertDictionaryToListCommand":
+                        case "GetDictionaryKeyFromValueCommand":
+                        case "GetDictionaryKeysListCommand":
+                        case "GetDictionaryValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                "v_OutputVariable", "v_Result"
+            );
+
             return doc;
         }
 

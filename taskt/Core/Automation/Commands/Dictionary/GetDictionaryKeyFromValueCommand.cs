@@ -29,7 +29,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
         [PropertyDescription("Variable Name to Store Key name")]
         [Remarks("When value not found, Result is Empty")]
-        public string v_OutputVariable { get; set; }
+        public string v_Result { get; set; }
 
         public GetDictionaryKeyFromValueCommand()
         {
@@ -49,11 +49,11 @@ namespace taskt.Core.Automation.Commands
             {
                 if (item.Value == vValue)
                 {
-                    item.Key.StoreInUserVariable(engine, v_OutputVariable);
+                    item.Key.StoreInUserVariable(engine, v_Result);
                     return;
                 }
             }
-            "".StoreInUserVariable(engine, v_OutputVariable);
+            "".StoreInUserVariable(engine, v_Result);
         }
     }
 }
