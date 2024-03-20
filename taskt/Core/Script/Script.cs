@@ -2737,14 +2737,28 @@ namespace taskt.Core.Script
                     }
                 }), "v_InputData", "v_Dictionary");
 
-            // AddDictionaryItemCommand v_DictionaryName -> v_Dictionary
-            ChangeAttributeName(doc, "AddDictionaryItemCommand", "v_DictionaryName", "v_Dictionary");
+            // AddDictionaryItemCommand, CreateDictionaryCommand v_DictionaryName -> v_Dictionary
+            ChangeAttributeName(doc, 
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "AddDictionaryItemCommand":
+                        case "CreateDictionaryCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_DictionaryName", "v_Dictionary");
 
             // CopyDictionaryCommand v_InputData -> v_TargetDictionary
             ChangeAttributeName(doc, "CopyDictionaryCommand", "v_InputData", "v_TargetDictionary");
 
             // FilterDictionaryCommand v_InputDictionary -> v_TargetDictionary
             ChangeAttributeName(doc, "FilterDictionaryCommand", "v_InputDictionary", "v_TargetDictionary");
+
+            // ReplaceDictionaryCommand v_TargetDictionary -> v_Dictionary
+            ChangeAttributeName(doc, "ReplaceDictionaryCommand", "v_TargetDictionary", "v_Dictionary");
 
             // CheckDictionaryKeyExistsCommand v_applyToVariable -> v_Result
             ChangeAttributeName(doc, "CheckDictionaryKeyExistsCommand", "v_applyToVariable", "v_Result");
