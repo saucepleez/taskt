@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace taskt.Core.Automation.Commands.Dictionary
+namespace taskt.Core.Automation.Commands
 {
     public static class EM_CanHandleDictionary
     {

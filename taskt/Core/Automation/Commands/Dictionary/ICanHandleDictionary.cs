@@ -1,4 +1,4 @@
-﻿namespace taskt.Core.Automation.Commands.Dictionary
+﻿namespace taskt.Core.Automation.Commands
 {
     /// <summary>
     /// for handle Dictionary
