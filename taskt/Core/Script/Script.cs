@@ -2779,6 +2779,12 @@ namespace taskt.Core.Script
                 "v_OutputVariable", "v_Result"
             );
 
+            // CopyDictionaryCommand v_OutputName -> v_NewDictionary
+            ChangeAttributeName(doc, "CopyDictionaryCommand", "v_OutputName", "v_NewDictionary");
+
+            // FilterDictionaryCommand v_OutputDictionary -> v_NewDictionary
+            ChangeAttributeName(doc, "FilterDictionaryCommand", "v_OutputDictionary", "v_NewDictionary");
+
             return doc;
         }
 

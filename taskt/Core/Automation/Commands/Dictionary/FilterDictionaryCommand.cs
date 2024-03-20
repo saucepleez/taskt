@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
-        public string v_OutputDictionary { get; set; }
+        public string v_NewDictionary { get; set; }
 
         public FilterDictionaryCommand()
         {
@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            res.StoreInUserVariable(engine, v_OutputDictionary);
+            res.StoreInUserVariable(engine, v_NewDictionary);
         }
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)

@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
-        public string v_OutputName { get; set; }
+        public string v_NewDictionary { get; set; }
 
         public CopyDictionaryCommand()
         {
@@ -42,7 +42,7 @@ namespace taskt.Core.Automation.Commands
 
             var newDic = new Dictionary<string, string>(srcDic);
 
-            newDic.StoreInUserVariable(engine, v_OutputName);
+            newDic.StoreInUserVariable(engine, v_NewDictionary);
         }
     }
 }
