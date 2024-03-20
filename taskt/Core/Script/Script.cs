@@ -1885,49 +1885,105 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "WaitForWindowToExistsCommand", "v_LengthToWait", "v_WaitTime");
             ChangeAttributeName(doc, "GetWindowHandleFromWindowNameCommand", "v_WindowHandle", "v_HandleResult");
 
-            var getWinPositionCommandsSearch = new Func<XElement, bool>(el =>
-            {
-                switch (el.Attribute("CommandName").Value)
+            //var getWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "GetWindowPositionCommand":
+            //        case "GetWindowPositionFromWindowHandleCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
+            //ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
+
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
                 {
-                    case "GetWindowPositionCommand":
-                    case "GetWindowPositionFromWindowHandleCommand":
-                        return true;
-                    default:
-                        return false;
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "GetWindowPositionCommand":
+                        case "GetWindowPositionFromWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_VariablePositionX", "v_XPosition"),
+                    ("v_VariablePositionY", "v_YPosition"),
                 }
-            });
-            ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionX", "v_XPosition");
-            ChangeAttributeName(doc, getWinPositionCommandsSearch, "v_VariablePositionY", "v_YPosition");
+            );
 
             ChangeAttributeName(doc, "GetWindowSizeCommand", "v_With", "v_Width");
 
-            var moveWinPositionCommandsSearch = new Func<XElement, bool>(el =>
-            {
-                switch (el.Attribute("CommandName").Value)
-                {
-                    case "MoveWindowCommand":
-                    case "MoveWindowByWindowHandleCommand":
-                        return true;
-                    default:
-                        return false;
-                }
-            });
-            ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_XWindowPosition", "v_XPosition");
-            ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_YWindowPosition", "v_YPosition");
+            //var moveWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "MoveWindowCommand":
+            //        case "MoveWindowByWindowHandleCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_XWindowPosition", "v_XPosition");
+            //ChangeAttributeName(doc, moveWinPositionCommandsSearch, "v_YWindowPosition", "v_YPosition");
 
-            var resizeWinPositionCommandsSearch = new Func<XElement, bool>(el =>
-            {
-                switch (el.Attribute("CommandName").Value)
+            ChangeMultiAttributeNames(doc,
+                new Func<XElement, bool>(el =>
                 {
-                    case "ResizeWindowCommand":
-                    case "ResizeWindowByWindowHandleCommand":
-                        return true;
-                    default:
-                        return false;
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "MoveWindowCommand":
+                        case "MoveWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_XWindowPosition", "v_XPosition"),
+                    ("v_YWindowPosition", "v_YPosition"),
                 }
-            });
-            ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_XWindowSize", "v_Width");
-            ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_YWindowSize", "v_Height");
+            );
+
+            //var resizeWinPositionCommandsSearch = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "ResizeWindowCommand":
+            //        case "ResizeWindowByWindowHandleCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_XWindowSize", "v_Width");
+            //ChangeAttributeName(doc, resizeWinPositionCommandsSearch, "v_YWindowSize", "v_Height");
+
+            ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "ResizeWindowCommand":
+                        case "ResizeWindowByWindowHandleCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
+                new List<(string, string)>()
+                {
+                    ("v_XWindowSize", "v_Width"),
+                    ("v_YWindowSize", "v_Height"),
+                }
+            );
 
             ChangeAttributeName(doc, "GetWindowStateCommand", "v_UserVariableName", "v_WindowState");
             ChangeAttributeName(doc, "GetWindowStateFromWindowHandleCommand", "v_Result", "v_WindowState");
@@ -2215,12 +2271,26 @@ namespace taskt.Core.Script
         private static XDocument convertTo3_5_1_80(XDocument doc)
         {
             // Copy Worksheet
-            ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
-            ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_newSheetName", "v_NewSheetName");
+            //ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            //ChangeAttributeName(doc, "ExcelCopyWorksheetCommand", "v_newSheetName", "v_NewSheetName");
+            ChangeMultiAttributeNames(doc, "ExcelCopyWorksheetCommand",
+                new List<(string, string)>()
+                {
+                    ("v_sourceSheet", "v_TargetSheetName"),
+                    ("v_newSheetName", "v_NewSheetName"),
+                }
+            );
 
             // Rename Worksheet
-            ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
-            ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_newName", "v_NewSheetName");
+            //ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_sourceSheet", "v_TargetSheetName");
+            //ChangeAttributeName(doc, "ExcelRenameWorksheetCommand", "v_newName", "v_NewSheetName");
+            ChangeMultiAttributeNames(doc, "ExcelRenameWorksheetCommand",
+                new List<(string, string)>()
+                {
+                    ("v_sourceSheet", "v_TargetSheetName"),
+                    ("v_newName", "v_NewSheetName"),
+                }
+            );
 
             // Activate Sheet -> Activate Worksheet
             ChangeCommandName(doc, "ExcelActivateSheetCommand", "ExcelActivateWorksheetCommand", "Activate Worksheet");
@@ -2373,19 +2443,37 @@ namespace taskt.Core.Script
             );
 
             // ExcelGetCellRCCommand, ExcelSetCellRCCommand attributes v_CellRow, v_CellColumn
-            var searchFunc = new Func<XElement, bool>(el =>
-            {
-                switch (el.Attribute("CommandName").Value)
-                {
-                    case "ExcelGetCellRCCommand":
-                    case "ExcelSetCellRCCommand":
-                        return true;
-                    default:
-                        return false;
-                }
-            });
-            ChangeAttributeName(doc, searchFunc, "v_ExcelCellRow", "v_CellRow");
-            ChangeAttributeName(doc, searchFunc, "v_ExcelCellColumn", "v_CellColumn");
+            //var searchFunc = new Func<XElement, bool>(el =>
+            //{
+            //    switch (el.Attribute("CommandName").Value)
+            //    {
+            //        case "ExcelGetCellRCCommand":
+            //        case "ExcelSetCellRCCommand":
+            //            return true;
+            //        default:
+            //            return false;
+            //    }
+            //});
+            //ChangeAttributeName(doc, searchFunc, "v_ExcelCellRow", "v_CellRow");
+            //ChangeAttributeName(doc, searchFunc, "v_ExcelCellColumn", "v_CellColumn");
+            ChangeMultiAttributeNames(doc,
+                 new Func<XElement, bool>(el =>
+                 {
+                     switch (el.Attribute("CommandName").Value)
+                     {
+                         case "ExcelGetCellRCCommand":
+                         case "ExcelSetCellRCCommand":
+                             return true;
+                         default:
+                             return false;
+                     }
+                 }),
+                 new List<(string, string)>()
+                 {
+                     ("v_ExcelCellRow", "v_CellRow"),
+                     ("v_ExcelCellColumn", "v_CellColumn"),
+                 }
+            );
 
             return doc;
         }
