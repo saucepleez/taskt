@@ -3099,19 +3099,6 @@ namespace taskt.Core.Script
             var commands = doc.Descendants("ScriptCommand")
                             .Where(searchFunc).ToList();
 
-            //foreach(var cmd in commands)
-            //{
-            //    var trgAttr = cmd.Attribute(targetAttribute);
-            //    var newAttr = cmd.Attribute(newAttribute);
-            //    if (trgAttr != null)
-            //    {
-            //        if (newAttr == null)
-            //        {
-            //            cmd.SetAttributeValue(newAttribute, trgAttr.Value);
-            //        }
-            //        trgAttr.Remove();
-            //    }
-            //}
             ChangeAttributeNameProcess(commands, targetAttribute, newAttribute);
 
             return doc;
@@ -3131,14 +3118,54 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
+        /// Change multi attribute names process
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
+        private static void ChangeMultiAttributeNamesProcess(List<XElement> commands, List<(string, string)> attributePairs)
+        {
+            foreach((var targetAttribute, var newAttribute) in attributePairs)
+            {
+                ChangeAttributeNameProcess(commands, targetAttribute, newAttribute);
+            }
+        }
+
+        /// <summary>
+        /// change multi attribute names
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="searchFunc"></param>
+        /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
+        /// <returns></returns>
+        private static XDocument ChangeMultiAttributeNames(XDocument doc, Func<XElement, bool> searchFunc, List<(string, string)> attributePairs)
+        {
+            var commands = doc.Descendants("ScriptCommand")
+                            .Where(searchFunc).ToList();
+            ChangeMultiAttributeNamesProcess(commands, attributePairs);
+            return doc;
+        }
+
+        /// <summary>
+        /// change multi attribute name
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="targetCommand"></param>
+        /// <param name="attributePairs">(targetAttributeName, newAttributeName)</param>
+        /// <returns></returns>
+        private static XDocument ChangeMultiAttributeNames(XDocument doc, string targetCommand, List<(string, string)> attributePairs)
+        {
+            return ChangeMultiAttributeNames(doc, GetSearchCommandsFunc(targetCommand), attributePairs);
+        }
+
+        /// <summary>
         /// change to other command
         /// </summary>
         /// <param name="commands"></param>
         /// <param name="newCommand"></param>
         /// <param name="newSelectionName"></param>
-        /// <param name="attributes"></param>
+        /// <param name="attributePairs">(targetAttribute, newAttributeName)</param>
         /// <param name="preAttributeFunc">(attribute name, change action)</param>
-        private static void ChangeToOtherCommandProcess(List<XElement> commands, string newCommand, string newSelectionName, List<(string, string)> attributes, List<(string, Action<XAttribute>)> preAttributeFunc = null)
+        private static void ChangeToOtherCommandProcess(List<XElement> commands, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
             // attribute values
             if (preAttributeFunc != null)
@@ -3151,10 +3178,11 @@ namespace taskt.Core.Script
             // command name
             ChangeCommandNameProcess(commands, newCommand, newSelectionName);
             // attribute names
-            foreach((string oldAttr, string newAttr) in attributes)
-            {
-                ChangeAttributeNameProcess(commands, oldAttr, newAttr);
-            }
+            //foreach((string oldAttr, string newAttr) in attributes)
+            //{
+            //    ChangeAttributeNameProcess(commands, oldAttr, newAttr);
+            //}
+            ChangeMultiAttributeNamesProcess(commands, attributePairs);
         }
 
         /// <summary>
@@ -3164,14 +3192,14 @@ namespace taskt.Core.Script
         /// <param name="searchFunc"></param>
         /// <param name="newCommand"></param>
         /// <param name="newSelectionName"></param>
-        /// <param name="attributes"></param>
+        /// <param name="attributePairs">(targetAttribute, newAttributeName)</param>
         /// <param name="preAttributeFunc">(attribute name, change action)</param>
         /// <returns></returns>
-        private static XDocument ChangeToOtherCommand(XDocument doc, Func<XElement, bool> searchFunc, string newCommand, string newSelectionName, List<(string, string)> attributes, List<(string, Action<XAttribute>)> preAttributeFunc = null)
+        private static XDocument ChangeToOtherCommand(XDocument doc, Func<XElement, bool> searchFunc, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
             var commands = doc.Descendants("ScriptCommand")
                             .Where(searchFunc).ToList();
-            ChangeToOtherCommandProcess(commands, newCommand, newSelectionName, attributes, preAttributeFunc);
+            ChangeToOtherCommandProcess(commands, newCommand, newSelectionName, attributePairs, preAttributeFunc);
             return doc;
         }
 
@@ -3182,12 +3210,12 @@ namespace taskt.Core.Script
         /// <param name="targetCommand"></param>
         /// <param name="newCommand"></param>
         /// <param name="newSelectionName"></param>
-        /// <param name="attributes"></param>
+        /// <param name="attributePairs">(targetAttribute, newAttributeName)</param>
         /// <param name="preAttributeFunc">(attribute name, change action)</param>
         /// <returns></returns>
-        private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributes, List<(string, Action<XAttribute>)> preAttributeFunc = null)
+        private static XDocument ChangeToOtherCommand(XDocument doc, string targetCommand, string newCommand, string newSelectionName, List<(string, string)> attributePairs, List<(string, Action<XAttribute>)> preAttributeFunc = null)
         {
-            return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributes, preAttributeFunc);
+            return ChangeToOtherCommand(doc, GetSearchCommandsFunc(targetCommand), newCommand, newSelectionName, attributePairs, preAttributeFunc);
         }
     }
 }
