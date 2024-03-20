@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_OutputVariable { get; set; }
+        public string v_Result { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_WhenKeyDoesNotExists))]
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
 
             if (dic.ContainsKey(vKey))
             {
-                dic[vKey].StoreInUserVariable(engine, v_OutputVariable);
+                dic[vKey].StoreInUserVariable(engine, v_Result);
             }
             else
             {
@@ -98,7 +98,7 @@ namespace taskt.Core.Automation.Commands
                         throw new Exception("Key " + v_Key + " does not exists in the Dictionary");
 
                     case "set empty":
-                        "".StoreInUserVariable(engine, v_OutputVariable);
+                        "".StoreInUserVariable(engine, v_Result);
                         break;
                 }
             }
