@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using taskt.Core.IO;
 
 namespace taskt.UI.Forms.ScriptBuilder.Supplemental
 {
@@ -941,18 +942,43 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             {
                 if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
+                    var checkPaths = new List<(string, string)>
+                    {
+                        (Folders.GetAutoSaveFolderPath(), Folders.AUTOSAVE_FOLDER_NAME),
+                        (Folders.GetRunWithoutSavingFolderPath(), Folders.RUN_WITHOUT_SAVING_FOLDER_NAME),
+                        (Folders.GetBeforeConvertedFolderPath(), Folders.BEFORE_CONVERTED_FOLDER_NAME),
+                        (Folders.GetResourcesFolderPath(), Folders.RESOURCES_FOLDER_NAME),
+                        (Folders.GetSamplesFolderPath(), Folders.SAMPLES_FOLDER_NAME),
+                    };
+
                     var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);
 
                     var newFullPath = System.IO.Path.GetFullPath(newAttendedTaskFolder);
-                    if (newFullPath == Core.Script.Script.GetAutoSaveFolderPath())
+                    
+                    ////if (newFullPath == Core.Script.Script.GetAutoSaveFolderPath())
+                    //if (newFullPath == Folders.GetAutoSaveFolderPath())
+                    //{
+                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.AUTOSAVE_FOLDER_NAME}' folder");
+                    //    return;
+                    //}
+                    ////if (newFullPath == Core.Script.Script.GetRunWithoutSavingFolderPath())
+                    //if (newFullPath == Folders.GetRunWithoutSavingFolderPath())
+                    //{
+                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.RUN_WITHOUT_SAVING_FOLDER_NAME}' folder");
+                    //    return;
+                    //}
+                    //if (newFullPath == Folders.GetBeforeConvertedFolderPath())
+                    //{
+                    //    MessageBox.Show($"Selected folder is in the same location as the '{Folders.BEFORE_CONVERTED_FOLDER_NAME}' folder");
+                    //    return;
+                    //}
+
+                    foreach((var path, var folderName) in checkPaths)
                     {
-                        MessageBox.Show("Selected folder is in the same location as the 'AutoSave' folder");
-                        return;
-                    }
-                    if (newFullPath == Core.Script.Script.GetRunWithoutSavingFolderPath())
-                    {
-                        MessageBox.Show("Selected folder is in the same location as the 'RunWithoutSaving' folder");
-                        return;
+                        if (newFullPath == path)
+                        {
+                            MessageBox.Show($"Selected folder is in the same location as the '{folderName}' folder");
+                        }
                     }
 
                     txt.Text = newAttendedTaskFolder;
@@ -1242,7 +1268,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             string resourcePath = System.IO.Path.GetDirectoryName(myAssembly.Location) + "\\Resources";
 
             System.Diagnostics.Process p = new System.Diagnostics.Process();
-            p.StartInfo.FileName = System.Environment.GetEnvironmentVariable("ComSpec");
+            p.StartInfo.FileName = Environment.GetEnvironmentVariable("ComSpec");
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardInput = false;
@@ -1298,7 +1324,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                 {
                     try
                     {
-                        newAppSettings = taskt.Core.ApplicationSettings.Open(frm.FileName);
+                        newAppSettings = Core.ApplicationSettings.Open(frm.FileName);
                         MessageBox.Show("Imported", "taskt", MessageBoxButtons.OK);
                     }
                     catch
@@ -1339,16 +1365,19 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
         }
         private void btnShowAutoSaveFolder_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(taskt.Core.Script.Script.GetAutoSaveFolderPath());
+            //System.Diagnostics.Process.Start(Core.Script.Script.GetAutoSaveFolderPath());
+            System.Diagnostics.Process.Start(Core.IO.Folders.GetAutoSaveFolderPath());
         }
         private void btnShowRunWithoutSavingFolder_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(taskt.Core.Script.Script.GetRunWithoutSavingFolderPath());
+            //System.Diagnostics.Process.Start(Core.Script.Script.GetRunWithoutSavingFolderPath());
+            System.Diagnostics.Process.Start(Core.IO.Folders.GetRunWithoutSavingFolderPath());
         }
 
         private void btnShowBeforeConvertedFolder_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(taskt.Core.Script.Script.GetBeforeConvertedFolderPath());
+            //System.Diagnostics.Process.Start(Core.Script.Script.GetBeforeConvertedFolderPath());
+            System.Diagnostics.Process.Start(Core.IO.Folders.GetBeforeConvertedFolderPath());
         }
         #endregion
     }

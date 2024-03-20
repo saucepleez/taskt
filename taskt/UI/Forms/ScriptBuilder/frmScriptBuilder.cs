@@ -3814,7 +3814,8 @@ namespace taskt.UI.Forms.ScriptBuilder
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var tempFilePath = Script.GetRunWithoutSavingScriptFilePath();
+            //var tempFilePath = Script.GetRunWithoutSavingScriptFilePath();
+            var tempFilePath = Core.IO.Folders.GetRunWithoutSavingFolderPath();
             var currentFilePath = this.ScriptFilePath;
             var currentDontSaveFlag = this.dontSaveFlag;
 
