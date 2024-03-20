@@ -949,6 +949,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
                         (Folders.GetBeforeConvertedFolderPath(), Folders.BEFORE_CONVERTED_FOLDER_NAME),
                         (Folders.GetResourcesFolderPath(), Folders.RESOURCES_FOLDER_NAME),
                         (Folders.GetSamplesFolderPath(), Folders.SAMPLES_FOLDER_NAME),
+                        (Folders.GetUpdateWorkingFolderPath(), Folders.UPDATE_FOLDER_NAME),
                     };
 
                     var newAttendedTaskFolder = System.IO.Path.Combine(fbd.SelectedPath);

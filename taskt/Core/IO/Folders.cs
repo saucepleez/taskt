@@ -46,6 +46,10 @@ namespace taskt.Core.IO
         /// BeforeConverted folder name
         /// </summary>
         public const string BEFORE_CONVERTED_FOLDER_NAME = "BeforeConverted";
+        /// <summary>
+        /// taskt update working folder name
+        /// </summary>
+        public const string UPDATE_FOLDER_NAME = "temp";
 
         public enum FolderType
         {
@@ -207,6 +211,15 @@ namespace taskt.Core.IO
         public static string GetBeforeConvertedFolderPath()
         {
             return Path.Combine(TASKT_EXECUTE_FOLDER_PATH, $"{BEFORE_CONVERTED_FOLDER_NAME}\\");
+        }
+
+        /// <summary>
+        /// get update working folder name
+        /// </summary>
+        /// <returns></returns>
+        public static string GetUpdateWorkingFolderPath()
+        {
+            return Path.Combine(TASKT_EXECUTE_FOLDER_PATH, $"{UPDATE_FOLDER_NAME}\\");
         }
     }
 }
