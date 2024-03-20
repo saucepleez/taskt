@@ -4,9 +4,9 @@ using taskt.Core.Automation.Attributes.PropertyAttributes;
 namespace taskt.Core.Automation.Commands
 {
     /// <summary>
-    /// for Dictionary commands
+    /// for Input Dictionary commands
     /// </summary>
-    public abstract class ADictionaryCommands : ScriptCommand, ILDictionaryProperties
+    public abstract class AInputDictionaryCommands : ScriptCommand, ILDictionaryProperties
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
