@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Dictionary Variable Name to Copy")]
         [PropertyValidationRule("Dictionary to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "Dictionary to Copy")]
-        public string v_InputData { get; set; }
+        public string v_TargetDictionary { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_NewOutputDictionaryName))]
@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var srcDic = v_InputData.ExpandUserVariableAsDictinary(engine);
+            var srcDic = v_TargetDictionary.ExpandUserVariableAsDictinary(engine);
 
             var newDic = new Dictionary<string, string>(srcDic);
 

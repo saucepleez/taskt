@@ -2623,6 +2623,43 @@ namespace taskt.Core.Script
             return doc;
         }
 
+        private static XDocument convertTo3_5_1_87(XDocument doc)
+        {
+            // Dictionary commands
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (el.Attribute("CommandName").Value)
+                    {
+                        case "CheckDictionaryKeyExistsCommand":
+                        case "ConvertDictionaryToDataTableCommand":
+                        case "ConvertDictionaryToJSONCommand":
+                        case "ConvertDictionaryToListCommand":
+                        case "CreateDictionaryCommand":
+                        case "GetDictionaryKeyFromValueCommand":
+                        case "GetDictionaryKeysListCommand":
+                        case "GetDictionaryValueCommand":
+                        case "RemoveDictionaryItemCommand":
+                        case "ReplaceDictionaryCommand":
+                        case "SetDictionaryValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_InputData", "v_Dictionary");
+
+            // AddDictionaryItemCommand v_DictionaryName
+            ChangeAttributeName(doc, "AddDictionaryItemCommand", "v_DictionaryName", "v_Dictionary");
+
+            // CopyDictionaryCommand v_InputData
+            ChangeAttributeName(doc, "CopyDictionaryCommand", "v_InputData", "v_TargetDictionary");
+
+            // FilterDictionaryCommand v_InputDictionary
+            ChangeAttributeName(doc, "FilterDictionaryCommand", "v_InputDictionary", "v_TargetDictionary");
+
+            return doc;
+        }
+
         /// <summary>
         /// get specfied commands
         /// </summary>

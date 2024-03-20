@@ -21,7 +21,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_BothDictionaryName))]
-        public string v_DictionaryName { get; set; }
+        public string v_Dictionary { get; set; }
 
         [XmlElement]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_KeyAndValue))]
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            var outputDictionary = v_DictionaryName.ExpandUserVariableAsDictinary(engine);
+            var outputDictionary = v_Dictionary.ExpandUserVariableAsDictinary(engine);
 
             outputDictionary.AddDataAndValueFromDataTable(v_ColumnNameDataTable, engine);
         }
