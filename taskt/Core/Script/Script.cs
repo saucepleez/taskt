@@ -2714,7 +2714,7 @@ namespace taskt.Core.Script
 
         private static XDocument convertTo3_5_1_87(XDocument doc)
         {
-            // Dictionary commands
+            // Dictionary commands v_InputData -> v_Dictionary
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
@@ -2737,17 +2737,27 @@ namespace taskt.Core.Script
                     }
                 }), "v_InputData", "v_Dictionary");
 
-            // AddDictionaryItemCommand v_DictionaryName
+            // AddDictionaryItemCommand v_DictionaryName -> v_Dictionary
             ChangeAttributeName(doc, "AddDictionaryItemCommand", "v_DictionaryName", "v_Dictionary");
 
-            // CopyDictionaryCommand v_InputData
+            // CopyDictionaryCommand v_InputData -> v_TargetDictionary
             ChangeAttributeName(doc, "CopyDictionaryCommand", "v_InputData", "v_TargetDictionary");
 
-            // FilterDictionaryCommand v_InputDictionary
+            // FilterDictionaryCommand v_InputDictionary -> v_TargetDictionary
             ChangeAttributeName(doc, "FilterDictionaryCommand", "v_InputDictionary", "v_TargetDictionary");
 
-            // CheckDictionaryKeyExistsCommand v_applyToVariable
+            // CheckDictionaryKeyExistsCommand v_applyToVariable -> v_Result
             ChangeAttributeName(doc, "CheckDictionaryKeyExistsCommand", "v_applyToVariable", "v_Result");
+
+            // ConcatenateDictionaryCommand attributes
+            ChangeMultiAttributeNames(doc, "ConcatenateDictionaryCommand",
+                new List<(string, string)>()
+                {
+                    ("v_InputDataA", "v_DictionaryA"),
+                    ("v_InputDataB", "v_DictionaryB"),
+                    ("v_OutputName", "v_NewDictionary"),
+                }
+            );
 
             return doc;
         }
