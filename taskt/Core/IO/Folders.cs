@@ -29,23 +29,23 @@ namespace taskt.Core.IO
         /// <summary>
         /// Resouces folder name
         /// </summary>
-        private const string RESOURCES_FOLDER_NAME = "Resources";
+        public const string RESOURCES_FOLDER_NAME = "Resources";
         /// <summary>
         /// Samples folder name
         /// </summary>
-        private const string SAMPLES_FOLDER_NAME = "Samples";
+        public const string SAMPLES_FOLDER_NAME = "Samples";
         /// <summary>
         /// AutoSave folder name
         /// </summary>
-        private const string AUTOSAVE_FOLDER_NAME = "AutoSave";
+        public const string AUTOSAVE_FOLDER_NAME = "AutoSave";
         /// <summary>
         /// RunWithoutSaving folder name
         /// </summary>
-        private const string RUN_WITHOUT_SAVING_FOLDER_NAME = "RunWithoutSaving";
+        public const string RUN_WITHOUT_SAVING_FOLDER_NAME = "RunWithoutSaving";
         /// <summary>
         /// BeforeConverted folder name
         /// </summary>
-        private const string BEFORE_CONVERTED_FOLDER_NAME = "BeforeConverted";
+        public const string BEFORE_CONVERTED_FOLDER_NAME = "BeforeConverted";
 
         public enum FolderType
         {
