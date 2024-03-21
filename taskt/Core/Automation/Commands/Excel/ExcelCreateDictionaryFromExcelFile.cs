@@ -15,7 +15,7 @@ namespace taskt.Core.Automation.Commands
     [Attributes.ClassAttributes.CommandIcon(nameof(Properties.Resources.command_dictionary))]
     [Attributes.ClassAttributes.EnableAutomateRender(true)]
     [Attributes.ClassAttributes.EnableAutomateDisplayText(true)]
-    public class CreateDictionaryFromExcelFile : ScriptCommand
+    public class ExcelCreateDictionaryFromExcelFile : ScriptCommand
     {
         [XmlAttribute]
         //[PropertyDescription("Please Enter the Dictionary Variable Name")]
@@ -92,7 +92,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("Value Column")]
         public string v_ValueColumn { get; set; }
 
-        public CreateDictionaryFromExcelFile()
+        public ExcelCreateDictionaryFromExcelFile()
         {
             //this.CommandName = "LoadDictionaryCommand";
             //this.SelectionName = "Load Dictionary";

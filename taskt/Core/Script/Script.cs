@@ -2799,6 +2799,9 @@ namespace taskt.Core.Script
             // FilterDictionaryCommand v_OutputDictionary -> v_NewDictionary
             ChangeAttributeName(doc, "FilterDictionaryCommand", "v_OutputDictionary", "v_NewDictionary");
 
+            // CreateDictionaryFromExcelFile -> ExcelCreateDictionaryFromExcelFile
+            ChangeCommandName(doc, "CreateDictionaryFromExcelFile", "ExcelCreateDictionaryFromExcelFile", "Create Dictionary From Excel File");
+
             return doc;
         }
 
