@@ -2784,6 +2784,19 @@ namespace taskt.Core.Script
                     }
                 }), "v_DataTableName", "v_DataTable"
             );
+
+            // FilterDataTable commands v_InputDataTable -> v_TargetDataTable
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        default:
+                            return false;
+                    }
+                }), "v_InputDataTable", "v_TargetDataTable"
+            );
+                
         }
 
         /// <summary>

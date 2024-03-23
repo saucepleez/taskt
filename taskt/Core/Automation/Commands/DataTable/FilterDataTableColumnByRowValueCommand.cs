@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("DataTable Variable Name to Filter")]
         [PropertyValidationRule("DataTable to Filter", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable to Filter")]
-        public string v_InputDataTable { get; set; }
+        public string v_TargetDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var targetDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_InputDataTable), nameof(v_TargetRowIndex), engine);
+            (var targetDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_TargetDataTable), nameof(v_TargetRowIndex), engine);
 
             var parameters = DataTableControls.GetFieldValues(v_FilterActionParameterTable, "ParameterName", "ParameterValue", engine);
             var checkFunc = ConditionControls.GetFilterDeterminStatementTruthFunc(nameof(v_TargetType), nameof(v_FilterAction), parameters, engine, this);

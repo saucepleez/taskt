@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUIHelper(PropertyUIHelper.UIAdditionalHelperType.ShowVariableHelper)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_DataTableName { get; set; }
+        public string v_TargetDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please indicate the output DataTable Variable Name")]
@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable Dt = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            DataTable Dt = (DataTable)v_TargetDataTable.GetRawVariable(engine).VariableValue;
 
             var vSearchItem = v_SearchItem.ExpandValueOrUserVariable(engine);
             var t = new List<Tuple<string, string>>();
@@ -125,7 +125,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue()+ "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_DataTableName + " and put them in DataTable: "+ v_OutputDTName+"]";
+            return base.GetDisplayValue()+ "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_TargetDataTable + " and put them in DataTable: "+ v_OutputDTName+"]";
         }
     }
 }
