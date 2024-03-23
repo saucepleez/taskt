@@ -2841,6 +2841,21 @@ namespace taskt.Core.Script
                 }), "v_OutputVariableName", "v_Result"
             );
 
+            // DataTableCommands v_UserVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "GetDataTableRowCountCommand":
+                        case "GetDataTableValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_UserVariableName", "v_Result"
+            );
+
             // CopyDataTableCommand v_DatTableName -> v_TargetDataTable
             ChangeAttributeName(doc, "CopyDataTableCommand", "v_DatTableName", "v_TargetDataTable");
         }

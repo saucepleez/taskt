@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_UserVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public GetDataTableValueCommand()
         {
@@ -50,7 +50,7 @@ namespace taskt.Core.Automation.Commands
 
             string v = myDT.Rows[rowIndex][columnIndex]?.ToString() ?? "";
 
-            v.StoreInUserVariable(engine, v_UserVariableName);
+            v.StoreInUserVariable(engine, v_Result);
         }
     }
 }
