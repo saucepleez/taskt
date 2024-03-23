@@ -61,7 +61,7 @@ namespace taskt.Core.Automation.Commands
             new GetDataTableColumnListCommand
             {
                 v_DataTable = this.v_DataTable,
-                v_OutputList = VariableNameControls.GetInnerVariableName(0, engine)
+                v_Result = VariableNameControls.GetInnerVariableName(0, engine)
             }.RunCommand(engine);
             var columns = (List<string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
 

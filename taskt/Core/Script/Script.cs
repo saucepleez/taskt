@@ -2856,6 +2856,9 @@ namespace taskt.Core.Script
                 }), "v_UserVariableName", "v_Result"
             );
 
+            // GetDataTableColumnListCommand v_OutputList -> v_Result
+            ChangeAttributeName(doc, "GetDataTableColumnListCommand", "v_OutputList", "v_Result");
+
             // CopyDataTableCommand v_DatTableName -> v_TargetDataTable
             ChangeAttributeName(doc, "CopyDataTableCommand", "v_DatTableName", "v_TargetDataTable");
         }

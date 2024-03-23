@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_OutputList { get; set; }
+        public string v_Result { get; set; }
 
         public GetDataTableColumnListCommand()
         {
@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
         {
             DataTable myDT = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
-            myDT.Columns.Cast<DataColumn>().Select(col => col.ColumnName).ToList().StoreInUserVariable(engine, v_OutputList);
+            myDT.Columns.Cast<DataColumn>().Select(col => col.ColumnName).ToList().StoreInUserVariable(engine, v_Result);
         }
     }
 }
