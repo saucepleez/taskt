@@ -977,10 +977,10 @@ namespace taskt.Core
             StoreInUserVariable(targetVariable, str, engine, false);
         }
 
-        public static void StoreInUserVariable(this DataRow value, Automation.Engine.AutomationEngineInstance engine, string targetVariable)
-        {
-            StoreInUserVariable(targetVariable, value, engine, false);
-        }
+        //public static void StoreInUserVariable(this DataRow value, Automation.Engine.AutomationEngineInstance engine, string targetVariable)
+        //{
+        //    StoreInUserVariable(targetVariable, value, engine, false);
+        //}
 
         /// <summary>
         /// Formats item as a variable (enclosing brackets)s
