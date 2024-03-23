@@ -27,6 +27,7 @@ namespace taskt.Core.Server
         public static string TasktResult { get; set; }
         public static event EventHandler ListeningStarted;
         public static event EventHandler ListeningStopped;
+
         static LocalTCPListener()
         {
             automationLogger = new Core.Logging().CreateLogger("Automation Client", Serilog.RollingInterval.Day);
