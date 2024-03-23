@@ -482,7 +482,7 @@ namespace taskt.Core.Script
         {
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
             ChangeAttributeValue(doc, new Func<XElement, bool>( el => {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "ActivateWindowCommand":
                     case "CheckWindowNameExistsCommand":
@@ -536,7 +536,7 @@ namespace taskt.Core.Script
             // AddListItem.v_userVariableName, SetListIndex.v_userVariableName -> *.v_ListName
             ChangeAttributeName(doc, new Func<XElement, bool>(el =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "AddListItemCommand":
                     case "SetListIndexCommand":
@@ -569,7 +569,7 @@ namespace taskt.Core.Script
             // change "Start with" -> "Starts with", "End with" -> "Ends with"
             ChangeAttributeValue(doc, new Func<XElement, bool>(el =>
             {
-                switch(el.Attribute("CommandName").Value)
+                switch(GetCommandName(el))
                 {
                     case "GetFilesCommand":
                     case "GetFoldersCommand":
@@ -599,7 +599,7 @@ namespace taskt.Core.Script
             // ModifyVariableCommand -> ModifyTextCommand
             ChangeCommandName(doc, new Func<XElement, bool>( el => 
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "ModifyVariableCommand":
                     case "StringCaseCommand":
@@ -672,7 +672,7 @@ namespace taskt.Core.Script
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return (
-                        (el.Attribute("CommandName").Value == "BeginIfCommand") &&
+                        (GetCommandName(el) == "BeginIfCommand") &&
                         ((el.Attribute("v_IfActionType")?.Value ?? "") == "Web Element Exists")
                     );
             }), "v_IfActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
@@ -681,7 +681,7 @@ namespace taskt.Core.Script
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
                 return (
-                    (el.Attribute("CommandName").Value == "BeginLoopCommand") &&
+                    (GetCommandName(el) == "BeginLoopCommand") &&
                     ((el.Attribute("v_LoopActionType")?.Value ?? "") == "Web Element Exists")
                 );
             }), "v_LoopActionParameterTable", "Parameter_x0020_Name", changeFunc, "WebBrowser Instance Name");
@@ -733,7 +733,7 @@ namespace taskt.Core.Script
             // BeginIf add Window Search Method cell parameter
             ModifyTable(doc, new Func<XElement, bool>(el =>
             {
-                if (el.Attribute("CommandName").Value == "BeginIfCommand")
+                if (GetCommandName(el) == "BeginIfCommand")
                 {
                     switch (el.Attribute("v_IfActionType")?.Value.ToLower() ?? "")
                     {
@@ -753,7 +753,7 @@ namespace taskt.Core.Script
             // BeginLoop add Window Search Method parameter
             ModifyTable(doc, new Func<XElement, bool>(el =>
             {
-                if (el.Attribute("CommandName").Value == "BeginLoopCommand")
+                if (GetCommandName(el) == "BeginLoopCommand")
                 {
                     switch (el.Attribute("v_LoopActionType")?.Value.ToLower() ?? "")
                     {
@@ -779,7 +779,7 @@ namespace taskt.Core.Script
             // UI Automation Boolean Fix
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "UIAutomationGetChidrenElementsInformationCommand":
                     case "UIAutomationGetChildElementCommand":
@@ -1037,7 +1037,7 @@ namespace taskt.Core.Script
         {
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "UIAutomationCheckElementExistCommand":
                     case "UIAutomationWaitForElementExistCommand":
@@ -1153,7 +1153,7 @@ namespace taskt.Core.Script
             //});
             var commands = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                return (el.Attribute("CommandName").Value == "MoveFileCommand") &&
+                return (GetCommandName(el) == "MoveFileCommand") &&
                     (el.Attribute("v_OperationType") != null);
             }));
             var moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy file")).ToList();
@@ -1177,7 +1177,7 @@ namespace taskt.Core.Script
             //});
             commands = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                return (el.Attribute("CommandName").Value == "MoveFolderCommand") &&
+                return (GetCommandName(el) == "MoveFolderCommand") &&
                     (el.Attribute("v_OperationType") != null);
             }));
             moveCommands = commands.Where(el => (el.Attribute("v_OperationType").Value.ToLower() != "copy folder")).ToList();
@@ -1214,7 +1214,7 @@ namespace taskt.Core.Script
             //});
             var commands = GetCommands(doc, new Func<XElement, bool>(el =>
             {
-                return ((el.Attribute("CommandName").Value == "UIAutomationClickElementCommand") &&
+                return ((GetCommandName(el) == "UIAutomationClickElementCommand") &&
                             (el.Attribute("v_ClickType") == null));
             }));
             XNamespace ns = "urn:schemas-microsoft-com:xml-diffgram-v1";
@@ -1613,7 +1613,7 @@ namespace taskt.Core.Script
             // WebElementAction: Set Text (Encrypted Text param)
             cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
-                return (el.Attribute("CommandName").Value == "SeleniumBrowserWebElementActionCommand") &&
+                return (GetCommandName(el) == "SeleniumBrowserWebElementActionCommand") &&
                         (el.Attribute("v_SeleniumElementAction").Value.ToLower() == "set text");
             }));
             foreach(var cmd in cmds)
@@ -1666,7 +1666,7 @@ namespace taskt.Core.Script
             //ChangeCommandName(doc, "ExcelCreateApplicationCommand", "ExcelCreateExcelInstanceCommand", "Create Excel Instance");
             ChangeCommandName(doc, new Func<XElement, bool>((el) =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "ExcelCreateApplicationCommand":
                     case "ExcelOpenApplicationCommand":
@@ -1715,7 +1715,7 @@ namespace taskt.Core.Script
             // UIAutomationUIElementAction: Get Value From UIElement -> Get Property Value From UIElement
             ChangeAttributeValue(doc, new Func<XElement, bool>((el) =>
                 {
-                    return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                    return (GetCommandName(el) == "UIAutomationUIElementActionCommand") &&
                             (el.Attribute("v_AutomationType").Value.ToLower() == "get value from uielement");
                 }), "v_AutomationType", new Action<XAttribute>((attr) =>
                 {
@@ -1726,7 +1726,7 @@ namespace taskt.Core.Script
             // UIAutomationUIElementAction: Get Property Value From UIElement parameter
             var cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
-                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                return (GetCommandName(el) == "UIAutomationUIElementActionCommand") &&
                         (el.Attribute("v_AutomationType").Value.ToLower() == "get property value from uielement");
             }));
             foreach (var cmd in cmds)
@@ -1746,7 +1746,7 @@ namespace taskt.Core.Script
             // UIAutomationUIElementAction: Click UIElement
             cmds = GetCommands(doc, new Func<XElement, bool>((el) =>
             {
-                return (el.Attribute("CommandName").Value == "UIAutomationUIElementActionCommand") &&
+                return (GetCommandName(el) == "UIAutomationUIElementActionCommand") &&
                         (el.Attribute("v_AutomationType").Value.ToLower() == "click uielement");
             }));
             foreach (var cmd in cmds)
@@ -1799,7 +1799,7 @@ namespace taskt.Core.Script
 
             ChangeTableCellValue(doc, new Func<XElement, bool>(el =>
             {
-                switch (el.Attribute("CommandName").Value)
+                switch (GetCommandName(el))
                 {
                     case "UIAutomationCheckUIElementExistCommand":
                     case "UIAutomationGetChildrenUIElementsInformationCommand":
@@ -1902,7 +1902,7 @@ namespace taskt.Core.Script
             ChangeMultiAttributeNames(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "GetWindowPositionCommand":
                         case "GetWindowPositionFromWindowHandleCommand":
@@ -1937,7 +1937,7 @@ namespace taskt.Core.Script
             ChangeMultiAttributeNames(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "MoveWindowCommand":
                         case "MoveWindowByWindowHandleCommand":
@@ -1969,7 +1969,7 @@ namespace taskt.Core.Script
 
             ChangeMultiAttributeNames(doc, new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ResizeWindowCommand":
                         case "ResizeWindowByWindowHandleCommand":
@@ -2011,7 +2011,7 @@ namespace taskt.Core.Script
             ChangeAttributeValue(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ActivateWindowCommand":
                         case "CheckWindowNameExistsCommand":
@@ -2079,7 +2079,7 @@ namespace taskt.Core.Script
             ChangeAttributeValue(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "TakeScreenshotCommand":
                         case "EnterKeysCommand":
@@ -2108,7 +2108,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ActivateWindowByWindowHandleCommand":
                         case "ActivateWindowCommand":
@@ -2145,7 +2145,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         // Image
                         case "TakeScreenshotCommand":
@@ -2164,7 +2164,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "UIAutomationSearchUIElementAndWindowByXPathCommand":
                         case "UIAutomationSearchUIElementAndWindowCommand":
@@ -2182,7 +2182,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         // Window
                         case "ActivateWindowCommand":
@@ -2255,7 +2255,7 @@ namespace taskt.Core.Script
             ChangeAttributeValue(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "MoveWindowCommand":
                         case "MoveWindowByWindowHandleCommand":
@@ -2269,7 +2269,7 @@ namespace taskt.Core.Script
             ChangeAttributeValue(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "MoveWindowCommand":
                         case "MoveWindowByWindowHandleCommand":
@@ -2369,7 +2369,7 @@ namespace taskt.Core.Script
             ChangeAttributeValue(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelCopyWorksheetCommand":
                         case "ExcelRenameWorksheetCommand":
@@ -2387,7 +2387,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelCheckWorksheetExistsCommand":
                         case "ExcelGetCurrentWorksheetCommand":
@@ -2406,7 +2406,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelCheckExcelInstanceExistsCommand":
                         case "ExcelGetLastRowCommand":
@@ -2422,7 +2422,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelCheckCellValueExistsCommand":
                         case "ExcelCheckCellValueExistsRCCommand":
@@ -2447,7 +2447,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelCheckCellValueExistsCommand":
                         case "ExcelGetCellCommand":
@@ -2477,7 +2477,7 @@ namespace taskt.Core.Script
             ChangeMultiAttributeNames(doc,
                  new Func<XElement, bool>(el =>
                  {
-                     switch (el.Attribute("CommandName").Value)
+                     switch (GetCommandName(el))
                      {
                          case "ExcelGetCellRCCommand":
                          case "ExcelSetCellRCCommand":
@@ -2501,7 +2501,7 @@ namespace taskt.Core.Script
             // ExcelSetRowValuesFromDataTableCommand, ExcelSetColumnValuesFromDataTableCommand v_WhenItemNotEnough
             ChangeAttributeName(doc, 
                 new Func<XElement, bool>(el => {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromDataTableCommand":
                         case "ExcelSetColumnValuesFromDataTableCommand":
@@ -2515,7 +2515,7 @@ namespace taskt.Core.Script
             // ExcelSetRowValuesFromDictionaryCommand, ExcelSetColumnValuesFromDictionaryCommand v_WhenItemNotEnough
             ChangeAttributeName(doc, 
                 new Func<XElement, bool>(el => {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromDictionaryCommand":
                         case "ExcelSetColumnValuesFromDictionaryCommand":
@@ -2528,7 +2528,7 @@ namespace taskt.Core.Script
             // ExcelSetRowValuesFromListCommand, ExcelSetColumnValuesFromListCommand v_WhenItemNotEnough
             ChangeAttributeName(doc, 
                 new Func<XElement, bool>(el => {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelSetRowValuesFromListCommand":
                         case "ExcelSetColumnValuesFromListCommand":
@@ -2554,7 +2554,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ExcelDeleteCellCommand":
                         case "ExcelDeleteRowCommand":
@@ -2713,7 +2713,7 @@ namespace taskt.Core.Script
             ChangeAttributeValue(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    return (el.Attribute("CommandName").Value == "SetEnginePreferenceCommand") &&
+                    return (GetCommandName(el) == "SetEnginePreferenceCommand") &&
                             (el.Attribute("v_PreferenceType").Value.ToLower() == "current window keyword");
                 }),
                 "v_Comment",
@@ -2736,7 +2736,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "CheckDictionaryKeyExistsCommand":
                         case "ConvertDictionaryToDataTableCommand":
@@ -2759,7 +2759,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, 
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "AddDictionaryItemCommand":
                         case "CreateDictionaryCommand":
@@ -2795,7 +2795,7 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc,
                 new Func<XElement, bool>(el =>
                 {
-                    switch (el.Attribute("CommandName").Value)
+                    switch (GetCommandName(el))
                     {
                         case "ConvertDictionaryToDataTableCommand":
                         case "ConvertDictionaryToJSONCommand":
@@ -2872,6 +2872,16 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
+        /// get command name
+        /// </summary>
+        /// <param name="elem"></param>
+        /// <returns></returns>
+        private static string GetCommandName(XElement elem)
+        {
+            return elem.Attribute("CommandName")?.Value ?? "";
+        }
+
+        /// <summary>
         /// get specfied commands
         /// </summary>
         /// <param name="doc"></param>
@@ -2891,7 +2901,7 @@ namespace taskt.Core.Script
         {
             return new Func<XElement, bool>(el =>
             {
-                return (el.Attribute("CommandName").Value == targetCommand);
+                return (GetCommandName(el) == targetCommand);
             });
         }
 
@@ -2903,7 +2913,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static IEnumerable<XElement> GetCommands(XDocument doc, string commandName)
         {
-            return GetCommands(doc, new Func<XElement, bool>(el => el.Attribute("CommandName").Value == commandName));
+            return GetCommands(doc, new Func<XElement, bool>(el => GetCommandName(el) == commandName));
         }
 
         /// <summary>
