@@ -2860,7 +2860,14 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "GetDataTableColumnListCommand", "v_OutputList", "v_Result");
 
             // CopyDataTableCommand v_DatTableName -> v_TargetDataTable
-            ChangeAttributeName(doc, "CopyDataTableCommand", "v_DatTableName", "v_TargetDataTable");
+            //ChangeAttributeName(doc, "CopyDataTableCommand", "v_DatTableName", "v_TargetDataTable");
+            ChangeMultiAttributeNames(doc, "CopyDataTableCommand",
+                new List<(string, string)>()
+                {
+                    ("v_DatTableName", "v_TargetDataTable"),
+                    ("v_OutputVariableName", "v_NewDataTable"),
+                }
+            );
         }
 
         /// <summary>

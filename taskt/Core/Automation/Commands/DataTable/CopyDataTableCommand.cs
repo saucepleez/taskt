@@ -26,7 +26,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_NewDataTable { get; set; }
 
         public CopyDataTableCommand()
         {
@@ -56,7 +56,7 @@ namespace taskt.Core.Automation.Commands
                 newDT.Rows.Add(newRow);
             }
 
-            newDT.StoreInUserVariable(engine, v_OutputVariableName);
+            newDT.StoreInUserVariable(engine, v_NewDataTable);
         }
     }
 }
