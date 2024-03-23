@@ -284,10 +284,12 @@ namespace taskt.Core.Server
                         //file was found at path provided
                         dataParameter = File.ReadAllText(dataParameter);
                     }
-                    else if (File.Exists(Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), dataParameter)))
+                    //else if (File.Exists(Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), dataParameter)))
+                    else if (File.Exists(Path.Combine(IO.Folders.GetScriptsFolderPath(), dataParameter)))
                     {
                         //file was found at fallback to scripts folder
-                        dataParameter = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), dataParameter);
+                        //dataParameter = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), dataParameter);
+                        dataParameter = Path.Combine(IO.Folders.GetScriptsFolderPath(), dataParameter);
                         dataParameter = File.ReadAllText(dataParameter);
                     }
                     else
@@ -518,10 +520,12 @@ namespace taskt.Core.Server
                     //file was found at path provided
                     scriptData = File.ReadAllText(scriptData);
                 }
-                else if (File.Exists(Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), scriptData)))
+                //else if (File.Exists(Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), scriptData)))
+                else if (File.Exists(Path.Combine(IO.Folders.GetScriptsFolderPath(), scriptData)))
                 {
                     //file was found at fallback to scripts folder
-                    scriptData = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), scriptData);
+                    //scriptData = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.ScriptsFolder), scriptData);
+                    scriptData = Path.Combine(IO.Folders.GetScriptsFolderPath(), scriptData);
                     scriptData = File.ReadAllText(scriptData);
                 }
                 else
