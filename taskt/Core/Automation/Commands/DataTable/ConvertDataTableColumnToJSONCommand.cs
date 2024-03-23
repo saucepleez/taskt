@@ -31,7 +31,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableColumnToJSONCommand()
         {
@@ -48,14 +48,14 @@ namespace taskt.Core.Automation.Commands
                 v_DataTable = this.v_DataTable,
                 v_ColumnType = this.v_ColumnType,
                 v_DataColumnIndex = this.v_DataColumnIndex,
-                v_OutputVariableName = VariableNameControls.GetInnerVariableName(0, engine)
+                v_Result = VariableNameControls.GetInnerVariableName(0, engine)
             };
             listCommand.RunCommand(engine);
 
             List<string> myList = (List<string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
 
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(myList);
-            json.StoreInUserVariable(engine, v_OutputVariableName);
+            json.StoreInUserVariable(engine, v_Result);
         }
     }
 }

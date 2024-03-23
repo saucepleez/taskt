@@ -2817,6 +2817,30 @@ namespace taskt.Core.Script
                 }), "v_InputDataTable", "v_DataTable"
             );
 
+            // DataTableCommands v_OutputVariableName -> v_Result
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "CheckDataTableColumnExistsCommand":
+                        case "ConvertDataTableColumnToDataTableCommand":
+                        case "ConvertDataTableColumnToDictionaryCommand":
+                        case "ConvertDataTableColumnToJSONCommand":
+                        case "ConvertDataTableColumnToListCommand":
+                        case "ConvertDataTableRowToDataTableCommand":
+                        case "ConvertDataTableRowToDictionaryCommand":
+                        case "ConvertDataTableRowToJSONCommand":
+                        case "ConvertDataTableRowToListCommand":
+                        case "ConvertDataTableToJSONCommand":
+                        case "GetDataTableColumnCountCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_OutputVariableName", "v_Result"
+            );
+
             // CopyDataTableCommand v_DatTableName -> v_TargetDataTable
             ChangeAttributeName(doc, "CopyDataTableCommand", "v_DatTableName", "v_TargetDataTable");
         }

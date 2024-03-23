@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(ListControls), nameof(ListControls.v_OutputListName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableRowToListCommand()
         {
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
                 myList.Add(srcDT.Rows[index][i]?.ToString() ?? "");
             }
 
-            myList.StoreInUserVariable(engine, v_OutputVariableName);
+            myList.StoreInUserVariable(engine, v_Result);
         }
     }
 }

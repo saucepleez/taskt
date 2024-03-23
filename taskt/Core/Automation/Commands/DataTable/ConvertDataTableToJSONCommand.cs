@@ -24,7 +24,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableToJSONCommand()
         {
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
             }
 
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(jsonList);
-            json.StoreInUserVariable(engine, v_OutputVariableName);
+            json.StoreInUserVariable(engine, v_Result);
         }
     }
 }

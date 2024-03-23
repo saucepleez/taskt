@@ -23,7 +23,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_Result))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public GetDataTableColumnCountCommand()
         {
@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
         {
             DataTable myDT = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
-            myDT.Columns.Count.ToString().StoreInUserVariable(engine, v_OutputVariableName);
+            myDT.Columns.Count.ToString().StoreInUserVariable(engine, v_Result);
         }
     }
 }

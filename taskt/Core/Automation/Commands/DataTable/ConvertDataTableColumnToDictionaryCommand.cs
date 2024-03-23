@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_OutputDictionaryName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableColumnToDictionaryCommand()
         {
@@ -71,7 +71,7 @@ namespace taskt.Core.Automation.Commands
             {
                 myDic.Add(prefix + i.ToString(), srcDT.Rows[i][colIndex]?.ToString() ?? "");
             }
-            myDic.StoreInUserVariable(engine, v_OutputVariableName);
+            myDic.StoreInUserVariable(engine, v_Result);
         }
     }
 }

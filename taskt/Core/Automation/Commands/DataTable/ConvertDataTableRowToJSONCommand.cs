@@ -43,7 +43,7 @@ namespace taskt.Core.Automation.Commands
             {
                 v_DataTable = this.v_DataTableName,
                 v_DataRowIndex = this.v_DataRowIndex,
-                v_OutputVariableName = VariableNameControls.GetInnerVariableName(0, engine)
+                v_Result = VariableNameControls.GetInnerVariableName(0, engine)
             };
             dicCommand.RunCommand(engine);
 

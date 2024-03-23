@@ -32,7 +32,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableColumnToDataTableCommand()
         {
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
                 myDT.Rows[i][0] = srcDT.Rows[i][colIndex]?.ToString() ?? "";
             }
 
-            myDT.StoreInUserVariable(engine, v_OutputVariableName);
+            myDT.StoreInUserVariable(engine, v_Result);
         }
     }
 }

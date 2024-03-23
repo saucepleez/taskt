@@ -37,7 +37,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(BooleanControls), nameof(BooleanControls.v_Result))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public CheckDataTableColumnExistsCommand()
         {
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
             string targetColumnName = v_ColumnName.ExpandValueOrUserVariable(engine);
 
-            myDT.Columns.Contains(targetColumnName).StoreInUserVariable(engine, v_OutputVariableName);
+            myDT.Columns.Contains(targetColumnName).StoreInUserVariable(engine, v_Result);
         }
     }
 }
