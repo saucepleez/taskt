@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace taskt.Core
 {
@@ -12,10 +10,10 @@ namespace taskt.Core
         public List<ExecutionMetric> ExecutionMetricsSummary()
         {
             //create execution file path
-            var filePath = System.IO.Path.Combine(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            var filePath = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
 
             //throw if file doesnt exist
-            if (!System.IO.File.Exists(filePath))
+            if (!File.Exists(filePath))
             {
                 throw new System.IO.FileNotFoundException("Execution Summary Log does not exist!");
             }
@@ -24,7 +22,7 @@ namespace taskt.Core
             var scriptsFinishedArgs = new List<Core.Automation.Engine.ScriptFinishedEventArgs>();
            
             //get all text from log file
-            var logFileLines = System.IO.File.ReadAllLines(filePath);
+            var logFileLines = File.ReadAllLines(filePath);
 
             //loop each line from log file
             foreach (var line in logFileLines)
@@ -100,8 +98,8 @@ namespace taskt.Core
 
         public void ClearExecutionMetrics()
         {
-            var filePath = System.IO.Path.Combine(Core.IO.Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
-            System.IO.File.WriteAllText(filePath, string.Empty);
+            var filePath = Path.Combine(IO.Folders.GetFolder(IO.Folders.FolderType.LogFolder), "taskt Execution Summary Logs.txt");
+            File.WriteAllText(filePath, string.Empty);
         }
     }
 
