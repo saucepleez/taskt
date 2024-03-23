@@ -176,7 +176,7 @@ namespace taskt.Core.Script
             XDocument xmlScript = XDocument.Load(scriptFilePath);
 
             // pre-convert
-            convertOldScript(xmlScript);
+            convertOldScript(xmlScript, engineSettings);
 
             using (var reader = xmlScript.Root.CreateReader())
             {
@@ -330,7 +330,7 @@ namespace taskt.Core.Script
         /// </summary>
         /// <param name="doc"></param>
         /// <returns></returns>
-        private static XDocument convertOldScript(XDocument doc)
+        private static XDocument convertOldScript(XDocument doc, EngineSettings engine)
         {
             // very important!
             // ** DO NOT USE nameof to change command name **
@@ -380,11 +380,11 @@ namespace taskt.Core.Script
             convertTo3_5_1_62(doc);
             convertTo3_5_1_72(doc);
             convertTo3_5_1_74(doc);
-            convertTo3_5_1_75(doc);
-            convertTo3_5_1_77(doc);
-            convertTo3_5_1_79(doc);
+            convertTo3_5_1_75(doc, engine);
+            convertTo3_5_1_77(doc, engine);
+            convertTo3_5_1_79(doc, engine);
             convertTo3_5_1_80(doc);
-            convertTo3_5_1_81(doc);
+            convertTo3_5_1_81(doc, engine);
             convertTo3_5_1_83(doc);
             convertTo3_5_1_84(doc);
             convertTo3_5_1_86(doc);
@@ -1991,10 +1991,21 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_1_75(XDocument doc)
+        private static XDocument convertTo3_5_1_75(XDocument doc, EngineSettings engine)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
-            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
+            //string oldKW;
+            //string newKW;
+            //if (engine.ExportIntermediateXML)
+            //{
+            //    oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            //    newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
+            //}
+            //else
+            //{
+            //    oldKW = engine.CurrentWindowKeyword;
+            //    newKW = string.Concat(engine.VariableStartMarker, SystemVariables.Window_CurrentWindowName.VariableValue, engine.VariableEndMarker);
+            //}
+            (var oldKW, var newKW) = GetOldNewCurrentWindow(engine);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
             ChangeAttributeValue(doc,
@@ -2058,10 +2069,11 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_1_77(XDocument doc)
+        private static XDocument convertTo3_5_1_77(XDocument doc, EngineSettings engine)
         {
-            var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
-            var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
+            //var oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            //var newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
+            (var oldKW, var newKW) = GetOldNewCurrentWindow(engine);
 
             // keyword "Current Window" -> {Window.CurrentWindowName}
             ChangeAttributeValue(doc,
@@ -2208,17 +2220,20 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_1_79(XDocument doc)
+        private static XDocument convertTo3_5_1_79(XDocument doc, EngineSettings engine)
         {
             // change v_XPosition, v_YPosition keyword
-            var oldPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_position%");
-            var newPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentPosition.VariableName);
+            //var oldPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_position%");
+            //var newPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentPosition.VariableName);
+            (var oldPosition, var newPosition) = GetOldNewKeyword("%kwd_current_position%", engine.CurrentWindowPositionKeyword, SystemVariables.Window_CurrentPosition, engine);
 
-            var oldXPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_xposition%");
-            var newXPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentXPosition.VariableName);
+            //var oldXPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_xposition%");
+            //var newXPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentXPosition.VariableName);
+            (var oldXPosition, var newXPosition) = GetOldNewKeyword("%kwd_current_xposition%", engine.CurrentWindowXPositionKeyword, SystemVariables.Window_CurrentXPosition, engine);
 
-            var oldYPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_yposition%");
-            var newYPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentYPosition.VariableName);
+            //var oldYPosition = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_yposition%");
+            //var newYPosition = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentYPosition.VariableName);
+            (var oldYPosition, var newYPosition) = GetOldNewKeyword("%kwd_current_yposition%", engine.CurrentWindowYPositionKeyword, SystemVariables.Window_CurrentYPosition, engine);
 
             var changeAction = new Action<XAttribute>(attr =>
             {
@@ -2317,16 +2332,19 @@ namespace taskt.Core.Script
             return doc;
         }
 
-        private static XDocument convertTo3_5_1_81(XDocument doc)
+        private static XDocument convertTo3_5_1_81(XDocument doc, EngineSettings engine)
         {
-            var oldCurrent = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_worksheet%");
-            var newCurrent = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_CurrentWorkSheet.VariableName);
+            //var oldCurrent = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_worksheet%");
+            //var newCurrent = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_CurrentWorkSheet.VariableName);
+            (var oldCurrent, var newCurrent) = GetOldNewKeyword("%kwd_current_worksheet%", engine.CurrentWorksheetKeyword, SystemVariables.Excel_CurrentWorkSheet, engine);
 
-            var oldNext = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_next_worksheet%");
-            var newNext = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_NextWorkSheet.VariableName);
+            //var oldNext = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_next_worksheet%");
+            //var newNext = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_NextWorkSheet.VariableName);
+            (var oldNext, var newNext) = GetOldNewKeyword("%kwd_next_worksheet%", engine.NextWorksheetKeyword, SystemVariables.Excel_NextWorkSheet, engine);
 
-            var oldPrevious = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_previous_worksheet%");
-            var newPrevious = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_PreviousWorkSheet.VariableName);
+            //var oldPrevious = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_previous_worksheet%");
+            //var newPrevious = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Excel_PreviousWorkSheet.VariableName);
+            (var oldPrevious, var newPrevious) = GetOldNewKeyword("%kwd_previous_worksheet%", engine.PreviousWorksheetKeyword, SystemVariables.Excel_PreviousWorkSheet, engine);
 
             var changeAction = new Action<XAttribute>(attr =>
             {
@@ -2803,6 +2821,54 @@ namespace taskt.Core.Script
             ChangeCommandName(doc, "CreateDictionaryFromExcelFile", "ExcelCreateDictionaryFromExcelFile", "Create Dictionary From Excel File");
 
             return doc;
+        }
+
+        /// <summary>
+        /// get old, new current window keyword
+        /// </summary>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static (string oldKeyword, string newKeyword) GetOldNewCurrentWindow(EngineSettings engine)
+        {
+            //string oldKW;
+            //string newKW;
+            //if (engine.ExportIntermediateXML)
+            //{
+            //    oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
+            //    newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
+            //}
+            //else
+            //{
+            //    oldKW = engine.CurrentWindowKeyword;
+            //    newKW = string.Concat(engine.VariableStartMarker, SystemVariables.Window_CurrentWindowName.VariableName, engine.VariableEndMarker);
+            //}
+            //return (oldKW, newKW);
+            return GetOldNewKeyword("%kwd_current_window%", engine.CurrentWindowKeyword, SystemVariables.Window_CurrentWindowName, engine);
+        }
+
+        /// <summary>
+        /// get old new keyword
+        /// </summary>
+        /// <param name="intermediateKeyword"></param>
+        /// <param name="rawKeyword"></param>
+        /// <param name="systemVariable"></param>
+        /// <param name="engine"></param>
+        /// <returns></returns>
+        private static (string oldKeyword, string newKeyword) GetOldNewKeyword(string intermediateKeyword, string rawKeyword, ScriptVariable systemVariable, EngineSettings engine)
+        {
+            string oldKW;
+            string newKW;
+            if (engine.ExportIntermediateXML)
+            {
+                oldKW = IntermediateControls.GetWrappedIntermediateKeyword(intermediateKeyword);
+                newKW = IntermediateControls.GetWrappedIntermediateVariable(systemVariable.VariableName);
+            }
+            else
+            {
+                oldKW = rawKeyword;
+                newKW = string.Concat(engine.VariableStartMarker, systemVariable.VariableName, engine.VariableEndMarker);
+            }
+            return (oldKW, newKW);
         }
 
         /// <summary>
