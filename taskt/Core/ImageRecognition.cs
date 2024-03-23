@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace taskt.Core
 {
@@ -18,5 +13,4 @@ namespace taskt.Core
         public int yLocation { get; set; }
         bool matchFound { get; set; }
     }
-
 }
