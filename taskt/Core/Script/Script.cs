@@ -2735,6 +2735,10 @@ namespace taskt.Core.Script
                 {
                     switch (GetCommandName(el))
                     {
+                        case "GetDictionaryValueCommand":
+                        case "RemoveDictionaryItemCommand":
+                        case "SetDictionaryValueCommand":
+                            return true;
                         default:
                             return false;
                     }
