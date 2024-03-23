@@ -2878,7 +2878,7 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static string GetCommandName(XElement elem)
         {
-            return elem.Attribute("CommandName")?.Value ?? "";
+            return elem.Attribute("CommandName").Value;
         }
 
         /// <summary>
