@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("DataTable Variable Name to be Setted")]
         [PropertyValidationRule("DataTable to be Setted", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable to be Setted")]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var myDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTableName), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
+            (var myDT, var colIndex) = this.ExpandUserVariablesAsDataTableAndColumnIndex(nameof(v_DataTable), nameof(v_ColumnType), nameof(v_SetColumnName), engine);
 
             string trgColName = myDT.Columns[colIndex].ColumnName;
 

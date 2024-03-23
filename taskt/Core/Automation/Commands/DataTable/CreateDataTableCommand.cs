@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_OutputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlElement]
         [PropertyDescription("Column Names")]
@@ -69,7 +69,7 @@ namespace taskt.Core.Automation.Commands
                 newDT.Columns.Add(row.Field<string>("Column Name"));
             }
 
-            newDT.StoreInUserVariable(engine, v_DataTableName);
+            newDT.StoreInUserVariable(engine, v_DataTable);
         }
 
         public override void BeforeValidate()

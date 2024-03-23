@@ -28,7 +28,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyShowSampleUsageInDescription(true)]
         [PropertyInstanceType(PropertyInstanceType.InstanceType.DataTable)]
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please indicate tuples to delete column rows")]
@@ -58,7 +58,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable Dt = (DataTable)v_DataTableName.GetRawVariable(engine).VariableValue;
+            DataTable Dt = (DataTable)v_DataTable.GetRawVariable(engine).VariableValue;
 
             var vSearchItem = v_SearchItem.ExpandValueOrUserVariable(engine);
 
@@ -158,7 +158,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue() + "[Remove all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_DataTableName + "]";
+            return base.GetDisplayValue() + "[Remove all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_DataTable + "]";
         }
     }
 }

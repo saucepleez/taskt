@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         [PropertyDescription("DataTable Variable Name to be Setted")]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
@@ -51,7 +51,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var myDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTableName), nameof(v_RowIndex), engine);
+            (var myDT, var rowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_DataTable), nameof(v_RowIndex), engine);
 
             (var addDT, var srcRowIndex) = this.ExpandUserVariablesAsDataTableAndRowIndex(nameof(v_RowName), nameof(v_SrcRowIndex), engine);
             string ifNotColumnExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_NotExistsKey), "Column not exists", engine);
@@ -59,7 +59,7 @@ namespace taskt.Core.Automation.Commands
             // get columns list
             new GetDataTableColumnListCommand
             {
-                v_DataTableName = this.v_DataTableName,
+                v_DataTable = this.v_DataTable,
                 v_OutputList = VariableNameControls.GetInnerVariableName(0, engine)
             }.RunCommand(engine);
             var columns = (List<string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;

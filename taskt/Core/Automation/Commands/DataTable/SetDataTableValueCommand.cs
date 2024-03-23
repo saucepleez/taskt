@@ -18,7 +18,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -53,7 +53,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            (var myDT, var rowIndex, var columnIndex) = this.ExpandUserVariablesAsDataTableAndRowColumnIndices(nameof(v_DataTableName), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
+            (var myDT, var rowIndex, var columnIndex) = this.ExpandUserVariablesAsDataTableAndRowColumnIndices(nameof(v_DataTable), nameof(v_RowIndex), nameof(v_ColumnType), nameof(v_ColumnIndex), engine);
 
             string newValue = v_NewValue.ExpandValueOrUserVariable(engine);
 

@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_ColumnType))]
@@ -45,7 +45,7 @@ namespace taskt.Core.Automation.Commands
         {
             var listCommand = new ConvertDataTableColumnToListCommand
             {
-                v_DataTableName = this.v_DataTableName,
+                v_DataTable = this.v_DataTable,
                 v_ColumnType = this.v_ColumnType,
                 v_DataColumnIndex = this.v_DataColumnIndex,
                 v_OutputVariableName = VariableNameControls.GetInnerVariableName(0, engine)

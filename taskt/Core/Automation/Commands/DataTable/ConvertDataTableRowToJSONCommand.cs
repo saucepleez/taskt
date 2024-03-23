@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         {
             var dicCommand = new ConvertDataTableRowToDictionaryCommand
             {
-                v_DataTableName = this.v_DataTableName,
+                v_DataTable = this.v_DataTableName,
                 v_DataRowIndex = this.v_DataRowIndex,
                 v_OutputVariableName = VariableNameControls.GetInnerVariableName(0, engine)
             };

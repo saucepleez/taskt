@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlElement]
         [PropertyDescription("Column Names and Values")]
@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable dataTable = v_DataTableName.ExpandUserVariableAsDataTable(engine);
+            DataTable dataTable = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
             var newRow = dataTable.NewRow();
 

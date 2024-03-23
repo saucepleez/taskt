@@ -2744,6 +2744,46 @@ namespace taskt.Core.Script
                     }
                 }), "v_IfKeyDoesNotExists", "v_WhenKeyDoesNotExists"
             );
+
+            // DataTableCommand v_DataTableName -> v_DataTable
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "AddDataTableColumnCommand":
+                        case "AddDataTableRowByDictionaryCommand":
+                        case "AddDataTableRowCommand":
+                        case "AddDataTableRowsByDataTableCommand":
+                        case "CheckDataTableColumnExistsCommand":
+                        case "ConvertDataTableColumnToDataTableCommand":
+                        case "ConvertDataTableColumnToDictionaryCommand":
+                        case "ConvertDataTableColumnToJSONCommand":
+                        case "ConvertDataTableColumnToListCommand":
+                        case "ConvertDataTableRowToDataTableCommand":
+                        case "ConvertDataTableRowToDictionaryCommand":
+                        case "ConvertDataTableRowToJSONCommand":
+                        case "ConvertDataTableRowToListCommand":
+                        case "ConvertDataTableToJSONCommand":
+                        case "CreateDataTableCommand":
+                        case "DeleteDataTableColumnCommand":
+                        case "DeleteDataTableRowCommand":
+                        case "GetDataTableColumnCountCommand":
+                        case "GetDataTableColumnListCommand":
+                        case "GetDataTableRowCountCommand":
+                        case "GetDataTableValueCommand":
+                        case "SearchAndDeleteDataTableRowsCommand":
+                        case "SetDataTableColumnValuesByDataTableCommand":
+                        case "SetDataTableColumnValuesByListCommand":
+                        case "SetDataTableRowValuesByDataTableCommand":
+                        case "SetDataTableRowValuesByDictionaryCommand":
+                        case "SetDataTableValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_DataTableName", "v_DataTable"
+            );
         }
 
         /// <summary>

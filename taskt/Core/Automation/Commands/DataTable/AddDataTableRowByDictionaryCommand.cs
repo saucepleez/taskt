@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
         [PropertyDescription("DataTable Variable Name to be Added a Row")]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_InputDictionaryName))]
@@ -44,7 +44,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
+            DataTable myDT = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
             Dictionary<string, string> myDic = v_RowName.ExpandUserVariableAsDictinary(engine);
 

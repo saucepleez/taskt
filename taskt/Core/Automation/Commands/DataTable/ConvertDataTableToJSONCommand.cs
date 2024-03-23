@@ -20,7 +20,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
@@ -36,7 +36,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable srcDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
+            DataTable srcDT = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
             List<Dictionary<string, string>> jsonList = new List<Dictionary<string, string>>();
             for (int j = 0; j < srcDT.Rows.Count; j++)

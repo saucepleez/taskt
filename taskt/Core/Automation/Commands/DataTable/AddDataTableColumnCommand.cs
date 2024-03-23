@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_BothDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(GeneralPropertyControls), nameof(GeneralPropertyControls.v_DisallowNewLine_OneLineTextBox))]
@@ -54,7 +54,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
+            DataTable myDT = v_DataTable.ExpandUserVariableAsDataTable(engine);
 
             string newColName = v_AddColumnName.ExpandValueOrUserVariable(engine);
 
