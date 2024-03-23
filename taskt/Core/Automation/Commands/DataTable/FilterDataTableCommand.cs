@@ -40,7 +40,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyRecommendedUIControl(PropertyRecommendedUIControl.RecommendeUIControlType.ComboBox)]
         [PropertyIsVariablesList(true)]
         [PropertyParameterDirection(PropertyParameterDirection.ParameterDirection.Output)]
-        public string v_OutputDTName { get; set; }
+        public string v_NewDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Please indicate tuples to filter by.")]
@@ -110,7 +110,7 @@ namespace taskt.Core.Automation.Commands
 
             Dt.AcceptChanges();
 
-            outputDT.StoreInUserVariable(engine, v_OutputDTName);
+            outputDT.StoreInUserVariable(engine, v_NewDataTable);
         }
 
         public override List<Control> Render(UI.Forms.ScriptBuilder.CommandEditor.frmCommandEditor editor)
@@ -125,7 +125,7 @@ namespace taskt.Core.Automation.Commands
 
         public override string GetDisplayValue()
         {
-            return base.GetDisplayValue()+ "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_TargetDataTable + " and put them in DataTable: "+ v_OutputDTName+"]";
+            return base.GetDisplayValue()+ "[Filter all datarows with the filter: " + v_SearchItem + " from DataTable: " + v_TargetDataTable + " and put them in DataTable: "+ v_NewDataTable+"]";
         }
     }
 }

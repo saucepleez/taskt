@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
-        public string v_OutputDataTable { get; set; }
+        public string v_NewDataTable { get; set; }
 
         public FilterDataTableRowByColumnValueCommand()
         {
@@ -87,7 +87,7 @@ namespace taskt.Core.Automation.Commands
                 }
             }
 
-            res.StoreInUserVariable(engine, v_OutputDataTable);
+            res.StoreInUserVariable(engine, v_NewDataTable);
         }
 
         private void cmbTargetType_SelectionChangeCommited(object sender, EventArgs e)

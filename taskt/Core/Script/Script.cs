@@ -2800,6 +2800,21 @@ namespace taskt.Core.Script
                     }
                 }), "v_InputDataTable", "v_TargetDataTable"
             );
+            // v_OutputDataTable -> v_NewDataTable
+            ChangeAttributeName(doc,
+                new Func<XElement, bool>(el =>
+                {
+                    switch (GetCommandName(el))
+                    {
+                        case "FilterDataTableColumnByRowValueCommand":
+                        case "FilterDataTableRowByColumnValueCommand":
+                            return true;
+                        default:
+                            return false;
+                    }
+                }), "v_OutputDataTable", "v_NewDataTable"
+            );
+            ChangeAttributeName(doc, "FilterDataTableCommand", "v_OutputDTName", "v_NewDataTable");
 
             // ReplaceDataTable commands v_InputDataTable -> v_DataTable
             ChangeAttributeName(doc,
