@@ -51,66 +51,66 @@ namespace taskt.Core.IO
         /// </summary>
         public const string UPDATE_FOLDER_NAME = "temp";
 
-        public enum FolderType
-        {
-            RootFolder,
-            SettingsFolder,
-            ScriptsFolder,
-            LogFolder,
-            TempFolder,
-            AttendedTasksFolder
-        }
+        //public enum FolderType
+        //{
+        //    RootFolder,
+        //    SettingsFolder,
+        //    ScriptsFolder,
+        //    LogFolder,
+        //    TempFolder,
+        //    AttendedTasksFolder
+        //}
 
-        /// <summary>
-        /// get some taskt folders path
-        /// </summary>
-        /// <param name="folderType"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static string GetFolder(FolderType folderType)
-        {
-            // TODO: eventually stop using
-            switch (folderType)
-            {
-                case FolderType.RootFolder:
-                    //return root folder from settings
-                    //var rootSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                    //var rootFolder = rootSettings.ClientSettings.RootFolder;
-                    //return rootFolder;
-                    return GetRootFolderPath();
+        ///// <summary>
+        ///// get some taskt folders path
+        ///// </summary>
+        ///// <param name="folderType"></param>
+        ///// <returns></returns>
+        ///// <exception cref="NotImplementedException"></exception>
+        //public static string GetFolder(FolderType folderType)
+        //{
+        //    // TODO: eventually stop using
+        //    switch (folderType)
+        //    {
+        //        case FolderType.RootFolder:
+        //            //return root folder from settings
+        //            //var rootSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+        //            //var rootFolder = rootSettings.ClientSettings.RootFolder;
+        //            //return rootFolder;
+        //            return GetRootFolderPath();
 
-                case FolderType.AttendedTasksFolder:
-                    //return attended tasks folder from settings
-                    //var attendedSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
-                    //var attentedTasksFolder = attendedSettings.ClientSettings.AttendedTasksFolder;
-                    //return attentedTasksFolder;
-                    return GetAttendedTasksFolderPath();
+        //        case FolderType.AttendedTasksFolder:
+        //            //return attended tasks folder from settings
+        //            //var attendedSettings = new Core.ApplicationSettings().GetOrCreateApplicationSettings();
+        //            //var attentedTasksFolder = attendedSettings.ClientSettings.AttendedTasksFolder;
+        //            //return attentedTasksFolder;
+        //            return GetAttendedTasksFolderPath();
 
-                case FolderType.SettingsFolder:
-                    //return app data taskt folder
-                    //return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\taskt\\";
-                    return GetSettingsFolderPath();
+        //        case FolderType.SettingsFolder:
+        //            //return app data taskt folder
+        //            //return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\taskt\\";
+        //            return GetSettingsFolderPath();
 
-                case FolderType.ScriptsFolder:
-                    //return scripts folder
-                    //return System.IO.Path.Combine(GetFolder(FolderType.RootFolder), "My Scripts\\");
-                    return GetScriptsFolderPath();
+        //        case FolderType.ScriptsFolder:
+        //            //return scripts folder
+        //            //return System.IO.Path.Combine(GetFolder(FolderType.RootFolder), "My Scripts\\");
+        //            return GetScriptsFolderPath();
 
-                case FolderType.LogFolder:
-                    //return logs folder
-                    //return System.IO.Path.Combine(GetFolder(FolderType.RootFolder), "Logs\\");
-                    return GetLogsFolderPath();
+        //        case FolderType.LogFolder:
+        //            //return logs folder
+        //            //return System.IO.Path.Combine(GetFolder(FolderType.RootFolder), "Logs\\");
+        //            return GetLogsFolderPath();
 
-                case FolderType.TempFolder:
-                    //return temp folder
-                    //return System.IO.Path.GetTempPath() + "\\taskt\\";
-                    return GetTempFolderPath();
+        //        case FolderType.TempFolder:
+        //            //return temp folder
+        //            //return System.IO.Path.GetTempPath() + "\\taskt\\";
+        //            return GetTempFolderPath();
 
-                default:
-                    //enum is not implemented
-                    throw new NotImplementedException("FolderType " + folderType.ToString() + " Not Supported");
-            }
-        }
+        //        default:
+        //            //enum is not implemented
+        //            throw new NotImplementedException("FolderType " + folderType.ToString() + " Not Supported");
+        //    }
+        //}
 
         /// <summary>
         /// get taskt root folder in Documents
