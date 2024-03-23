@@ -36,7 +36,8 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             txtAppPath.Text = System.Reflection.Assembly.GetEntryAssembly().Location;
 
             //get path to scripts folder
-            rpaScriptsFolder = Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+            //rpaScriptsFolder = Folders.GetFolder(Core.IO.Folders.FolderType.ScriptsFolder);
+            rpaScriptsFolder = Folders.GetScriptsFolderPath();
 
             var files = System.IO.Directory.GetFiles(rpaScriptsFolder);
 
@@ -52,6 +53,7 @@ namespace taskt.UI.Forms.ScriptBuilder.Supplemental
             //call bgw to pull schedule info
             RefreshTasks();
         }
+
         private void uiBtnOk_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(txtRecurCount.Text))
