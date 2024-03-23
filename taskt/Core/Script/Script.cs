@@ -2786,33 +2786,7 @@ namespace taskt.Core.Script
             );
 
             // FilterDataTable commands v_InputDataTable -> v_TargetDataTable
-            //ChangeAttributeName(doc,
-            //    new Func<XElement, bool>(el =>
-            //    {
-            //        switch (GetCommandName(el))
-            //        {
-            //            case "FilterDataTableColumnByRowValueCommand":
-            //            case "FilterDataTableRowByColumnValueCommand":
-            //                return true;
-            //            default:
-            //                return false;
-            //        }
-            //    }), "v_InputDataTable", "v_TargetDataTable"
-            //);
-            //// v_OutputDataTable -> v_NewDataTable
-            //ChangeAttributeName(doc,
-            //    new Func<XElement, bool>(el =>
-            //    {
-            //        switch (GetCommandName(el))
-            //        {
-            //            case "FilterDataTableColumnByRowValueCommand":
-            //            case "FilterDataTableRowByColumnValueCommand":
-            //                return true;
-            //            default:
-            //                return false;
-            //        }
-            //    }), "v_OutputDataTable", "v_NewDataTable"
-            //);
+            // v_OutputDataTable -> v_NewDataTable
             ChangeMultiAttributeNames(doc,
                 new Func<XElement, bool>(el =>
                 {
@@ -2898,7 +2872,6 @@ namespace taskt.Core.Script
             ChangeAttributeName(doc, "GetDataTableColumnListCommand", "v_OutputList", "v_Result");
 
             // CopyDataTableCommand v_DatTableName -> v_TargetDataTable
-            //ChangeAttributeName(doc, "CopyDataTableCommand", "v_DatTableName", "v_TargetDataTable");
             ChangeMultiAttributeNames(doc, "CopyDataTableCommand",
                 new List<(string, string)>()
                 {
