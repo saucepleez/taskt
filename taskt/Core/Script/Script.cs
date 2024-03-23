@@ -2816,6 +2816,9 @@ namespace taskt.Core.Script
                     }
                 }), "v_InputDataTable", "v_DataTable"
             );
+
+            // CopyDataTableCommand v_DatTableName -> v_TargetDataTable
+            ChangeAttributeName(doc, "CopyDataTableCommand", "v_DatTableName", "v_TargetDataTable");
         }
 
         /// <summary>

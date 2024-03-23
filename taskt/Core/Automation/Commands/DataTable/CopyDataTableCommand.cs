@@ -22,7 +22,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyDescription("DataTable Variable Name to Copy")]
         [PropertyValidationRule("DataTable to Copy", PropertyValidationRule.ValidationRuleFlags.Empty)]
         [PropertyDisplayText(true, "DataTable to Copy")]
-        public string v_DataTableName { get; set; }
+        public string v_TargetDataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_NewOutputDataTableName))]
@@ -38,7 +38,7 @@ namespace taskt.Core.Automation.Commands
 
         public override void RunCommand(Engine.AutomationEngineInstance engine)
         {
-            DataTable myDT = v_DataTableName.ExpandUserVariableAsDataTable(engine);
+            DataTable myDT = v_TargetDataTable.ExpandUserVariableAsDataTable(engine);
 
             DataTable newDT = new DataTable();
             foreach(DataColumn col in myDT.Columns)
