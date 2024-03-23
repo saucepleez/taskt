@@ -421,51 +421,51 @@ namespace taskt.Core.Automation.Engine
             return ((IAppInstancesProperties)this).GetNewInstanceName(prefixName);
         }
 
-        public void AddVariable(string variableName, object variableValue)
-        {
-            if (VariableList.Any(f => f.VariableName == variableName))
-            {
-                //update existing variable
-                var existingVariable = VariableList.FirstOrDefault(f => f.VariableName == variableName);
-                existingVariable.VariableName = variableName;
-                existingVariable.VariableValue = variableValue;
-            }
-            else if (VariableList.Any(f => "{" + f.VariableName + "}" == variableName))
-            {
-                //update existing edge-case variable due to user error
-                var existingVariable = VariableList.FirstOrDefault(f => "{" + f.VariableName + "}" == variableName);
-                existingVariable.VariableName = variableName;
-                existingVariable.VariableValue = variableValue;
-            }
-            else
-            {
-                //add new variable
-                var newVariable = new ScriptVariable();
-                newVariable.VariableName = variableName;
-                newVariable.VariableValue = variableValue;
-                VariableList.Add(newVariable);
-            }
-        }
+        //public void AddVariable(string variableName, object variableValue)
+        //{
+        //    if (VariableList.Any(f => f.VariableName == variableName))
+        //    {
+        //        //update existing variable
+        //        var existingVariable = VariableList.FirstOrDefault(f => f.VariableName == variableName);
+        //        existingVariable.VariableName = variableName;
+        //        existingVariable.VariableValue = variableValue;
+        //    }
+        //    else if (VariableList.Any(f => "{" + f.VariableName + "}" == variableName))
+        //    {
+        //        //update existing edge-case variable due to user error
+        //        var existingVariable = VariableList.FirstOrDefault(f => "{" + f.VariableName + "}" == variableName);
+        //        existingVariable.VariableName = variableName;
+        //        existingVariable.VariableValue = variableValue;
+        //    }
+        //    else
+        //    {
+        //        //add new variable
+        //        var newVariable = new ScriptVariable();
+        //        newVariable.VariableName = variableName;
+        //        newVariable.VariableValue = variableValue;
+        //        VariableList.Add(newVariable);
+        //    }
+        //}
 
-        public void StoreComplexObjectInVariable(string variableName, object value)
-        {
-            ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
+        //public void StoreComplexObjectInVariable(string variableName, object value)
+        //{
+        //    ScriptVariable storeVariable = VariableList.Where(x => x.VariableName == variableName).FirstOrDefault();
 
-            if (storeVariable == null)
-            {
-                //create and set variable
-                VariableList.Add(new ScriptVariable
-                {
-                    VariableName = variableName,
-                    VariableValue = value
-               });            
-            }
-            else
-            {
-                //set variable
-                storeVariable.VariableValue = value;
-            }
-        }
+        //    if (storeVariable == null)
+        //    {
+        //        //create and set variable
+        //        VariableList.Add(new ScriptVariable
+        //        {
+        //            VariableName = variableName,
+        //            VariableValue = value
+        //       });            
+        //    }
+        //    else
+        //    {
+        //        //set variable
+        //        storeVariable.VariableValue = value;
+        //    }
+        //}
 
         private void ClearInnerVariables()
         {
