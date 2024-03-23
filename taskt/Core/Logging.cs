@@ -17,14 +17,16 @@ namespace taskt.Core
         public Serilog.Core.Logger CreateLogger(string componentName, RollingInterval logInterval)
         {
             return new LoggerConfiguration()
-            .WriteTo.File(Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+            //.WriteTo.File(Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+            .WriteTo.File(Folders.GetLogsFolderPath() + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
             .CreateLogger();
 
         }
         public Serilog.Core.Logger CreateJsonLogger(string componentName, RollingInterval logInterval)
         {
             return new LoggerConfiguration()
-            .WriteTo.File(new CompactJsonFormatter(), Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+            //.WriteTo.File(new CompactJsonFormatter(), Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+            .WriteTo.File(new CompactJsonFormatter(), Folders.GetLogsFolderPath() + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
             .CreateLogger();
 
         }

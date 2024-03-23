@@ -93,7 +93,8 @@ namespace taskt.Core.Automation.Commands
             if (FilePathControls.IsURL(vSourceFile))
             {
                 //create temp directory
-                var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);
+                //var tempDir = Folders.GetFolder(Folders.FolderType.TempFolder);
+                var tempDir = Folders.GetTempFolderPath();
                 var tempFile = Path.Combine(tempDir, $"{ Guid.NewGuid()}." + vFileType);
 
                 //check if directory does not exist then create directory

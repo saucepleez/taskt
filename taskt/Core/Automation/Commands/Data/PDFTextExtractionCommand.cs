@@ -68,7 +68,8 @@ namespace taskt.Core.Automation.Commands
             if (vSourceFileType == "File URL")
             {
                 //create temp directory
-                var tempDir = Core.IO.Folders.GetFolder(Folders.FolderType.TempFolder);
+                //var tempDir = Core.IO.Folders.GetFolder(Folders.FolderType.TempFolder);
+                var tempDir = Folders.GetTempFolderPath();
                 var tempFile = System.IO.Path.Combine(tempDir, $"{ Guid.NewGuid()}.pdf");
 
                 //check if directory does not exist then create directory

@@ -23,8 +23,9 @@ namespace taskt.Core
         public void Save(ApplicationSettings appSettings)
         {
             //create settings directory
-           
-            var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
+
+            //var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
+            var settingsDir = Folders.GetSettingsFolderPath();
 
             //if directory does not exist then create directory
             if (!Directory.Exists(settingsDir))
@@ -58,10 +59,11 @@ namespace taskt.Core
         public ApplicationSettings GetOrCreateApplicationSettings()
         {
             //create settings directory
-            var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
+            //var settingsDir = Folders.GetFolder(Folders.FolderType.SettingsFolder);
+            //var settingsDir = Folders.GetSettingsFolderPath();
 
             //create file path
-            var filePath = Path.Combine(settingsDir, "AppSettings.xml");
+            var filePath = Path.Combine(Folders.GetSettingsFolderPath(), "AppSettings.xml");
 
             ApplicationSettings appSettings;
             if (File.Exists(filePath))
