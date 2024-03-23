@@ -33,7 +33,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyVirtualProperty(nameof(DictionaryControls), nameof(DictionaryControls.v_WhenKeyDoesNotExists))]
         [PropertyUISelectionOption("Set Empty")]
         [PropertyDetailSampleUsage("**Set Empty**", "Result is Empty Value")]
-        public string v_IfKeyDoesNotExists { get; set; }
+        public string v_WhenKeyDoesNotExists { get; set; }
 
         [XmlAttribute]
         [PropertyDescription("Key Type")]
@@ -91,7 +91,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                string ifNotExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                string ifNotExists = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExists)
                 {
                     case "error":

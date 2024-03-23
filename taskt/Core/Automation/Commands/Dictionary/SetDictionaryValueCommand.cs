@@ -34,7 +34,7 @@ namespace taskt.Core.Automation.Commands
         [PropertyUISelectionOption("Add")]
         [PropertyDetailSampleUsage("**Ignore**", "Don't Set the Dictionary Item")]
         [PropertyDetailSampleUsage("**Add**", "Add New Dictionary Item")]
-        public string v_IfKeyDoesNotExists { get; set; }
+        public string v_WhenKeyDoesNotExists { get; set; }
 
         public SetDictionaryValueCommand()
         {
@@ -55,7 +55,7 @@ namespace taskt.Core.Automation.Commands
             }
             else
             {
-                string ifNotExits = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_IfKeyDoesNotExists), "Key Not Exists", engine);
+                string ifNotExits = this.ExpandValueOrUserVariableAsSelectionItem(nameof(v_WhenKeyDoesNotExists), "Key Not Exists", engine);
                 switch (ifNotExits)
                 {
                     case "error":
