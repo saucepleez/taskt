@@ -2830,19 +2830,6 @@ namespace taskt.Core.Script
         /// <returns></returns>
         private static (string oldKeyword, string newKeyword) GetOldNewCurrentWindow(EngineSettings engine)
         {
-            //string oldKW;
-            //string newKW;
-            //if (engine.ExportIntermediateXML)
-            //{
-            //    oldKW = IntermediateControls.GetWrappedIntermediateKeyword("%kwd_current_window%");
-            //    newKW = IntermediateControls.GetWrappedIntermediateVariable(SystemVariables.Window_CurrentWindowName.VariableName);
-            //}
-            //else
-            //{
-            //    oldKW = engine.CurrentWindowKeyword;
-            //    newKW = string.Concat(engine.VariableStartMarker, SystemVariables.Window_CurrentWindowName.VariableName, engine.VariableEndMarker);
-            //}
-            //return (oldKW, newKW);
             return GetOldNewKeyword("%kwd_current_window%", engine.CurrentWindowKeyword, SystemVariables.Window_CurrentWindowName, engine);
         }
 
@@ -2993,10 +2980,6 @@ namespace taskt.Core.Script
         {
             var commands = doc.Descendants("ScriptCommand")
                             .Where(searchFunc).ToList();
-            //foreach(var cmd in commands)
-            //{
-            //    changeFunc(cmd.Attribute(targetAttribute));
-            //}
             ChangeAttributeValueProcess(commands, targetAttribute, changeFunc);
             return doc;
         }
@@ -3395,10 +3378,6 @@ namespace taskt.Core.Script
             // command name
             ChangeCommandNameProcess(commands, newCommand, newSelectionName);
             // attribute names
-            //foreach((string oldAttr, string newAttr) in attributes)
-            //{
-            //    ChangeAttributeNameProcess(commands, oldAttr, newAttr);
-            //}
             ChangeMultiAttributeNamesProcess(commands, attributePairs);
         }
 
