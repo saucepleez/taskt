@@ -1,5 +1,6 @@
 ﻿using System;
 using taskt.Core.Automation.Attributes.PropertyAttributes;
+using taskt.Core.Automation.Engine;
 
 namespace taskt.Core.Automation.Commands
 {
@@ -47,10 +48,11 @@ namespace taskt.Core.Automation.Commands
                     var catchCommandItem = parentCommand.AdditionalScriptCommands[catchIndex];
                     var catchCommand = (CatchExceptionCommand)catchCommandItem.ScriptCommand;
 
-                    catchCommand.StackTrace = ex.ToString();
-                    catchCommand.ErrorMessage = ex.Message;
-                    engine.AddVariable("Catch:StackTrace", catchCommand.StackTrace);
-                    engine.AddVariable("Catch:ErrorMessage", catchCommand.ErrorMessage);
+                    //catchCommand.StackTrace = ex.ToString();
+                    //catchCommand.ErrorMessage = ex.Message;
+                    //engine.AddVariable("Catch:StackTrace", catchCommand.StackTrace);
+                    //engine.AddVariable("Catch:ErrorMessage", catchCommand.ErrorMessage);
+                    SystemVariables.Update_ErrorCatch(catchCommand, ex);
 
                     //assify = (input >= 0) ? "nonnegative" : "negative";
                     var endCatch = (finallyIndex != -1) ? finallyIndex : endTryIndex;

@@ -250,6 +250,7 @@ namespace taskt.Core.Automation.Engine
             return systemVariables.Select(t => t.VariableName).ToList();
         }
 
+        // TODO: I want to do better with class inheritance, etc.
         /// <summary>
         /// update Loop.CurrentIndex value
         /// </summary>
@@ -257,6 +258,18 @@ namespace taskt.Core.Automation.Engine
         public static void Update_LoopCurrentIndex(int value)
         {
             Loop_CurrentIndex.VariableValue = value.ToString();
+        }
+
+        /// <summary>
+        /// update Error System variables
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="ex"></param>
+        public static void Update_ErrorCatch(ScriptCommand command, Exception ex)
+        {
+            Error_Line.VariableValue = command.LineNumber.ToString();
+            Error_StackTrace.VariableValue = ex.StackTrace;
+            Error_Message.VariableValue = ex.Message;
         }
     }
 }
