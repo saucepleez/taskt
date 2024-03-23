@@ -48,16 +48,9 @@ namespace taskt.Core
             //create list to return
             var executionMetrics = new List<ExecutionMetric>();
 
-
             //group by file name and create execution time average
-            var groupedTasks = scriptsFinishedArgs
-                .GroupBy(f => f.FileName);
+            var groupedTasks = scriptsFinishedArgs.GroupBy(f => f.FileName);
           
-
-
-
-
-
             //loop through each group
             foreach (var task in groupedTasks)
             {
@@ -81,20 +74,15 @@ namespace taskt.Core
 
                     //add metric to list
                     executionMetrics.Add(metric);
-
                 }
                 catch (Exception)
                 {
                     //do nothing
                 }
-                
-
-
             }
 
             //return metric
             return executionMetrics;
-
         }
 
         public void ClearExecutionMetrics()
@@ -110,6 +98,5 @@ namespace taskt.Core
        public string FileName { get; set; }
        public TimeSpan AverageExecutionTime { get; set; }
        public List<Automation.Engine.ScriptFinishedEventArgs> ExecutionData { get; set; }
-        
     }
 }
