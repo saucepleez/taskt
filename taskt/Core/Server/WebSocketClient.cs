@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Threading;
 
 namespace taskt.Core.Server
 {
     /// <summary>
     /// taskt SocketClient wraps WebSocket4Net and manages local client connection to taskt Server
     /// </summary>
-   public static class SocketClient
+    public static class SocketClient
     {
         public static UI.Forms.ScriptBuilder.frmScriptBuilder associatedBuilder;
         private static string publicKey;
