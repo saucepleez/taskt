@@ -19,7 +19,7 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_InputDataTableName))]
-        public string v_DataTableName { get; set; }
+        public string v_DataTable { get; set; }
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(DataTableControls), nameof(DataTableControls.v_RowIndex))]
@@ -27,7 +27,7 @@ namespace taskt.Core.Automation.Commands
 
         [XmlAttribute]
         [PropertyVirtualProperty(nameof(JSONControls), nameof(JSONControls.v_OutputJSONName))]
-        public string v_OutputVariableName { get; set; }
+        public string v_Result { get; set; }
 
         public ConvertDataTableRowToJSONCommand()
         {
@@ -41,7 +41,7 @@ namespace taskt.Core.Automation.Commands
         {
             var dicCommand = new ConvertDataTableRowToDictionaryCommand
             {
-                v_DataTable = this.v_DataTableName,
+                v_DataTable = this.v_DataTable,
                 v_DataRowIndex = this.v_DataRowIndex,
                 v_Result = VariableNameControls.GetInnerVariableName(0, engine)
             };
@@ -49,7 +49,7 @@ namespace taskt.Core.Automation.Commands
 
             Dictionary<string, string> tDic = (Dictionary<string, string>)VariableNameControls.GetInnerVariable(0, engine).VariableValue;
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(tDic);
-            json.StoreInUserVariable(engine, v_OutputVariableName);
+            json.StoreInUserVariable(engine, v_Result);
         }
     }
 }
