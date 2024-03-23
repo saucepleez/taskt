@@ -317,6 +317,10 @@
     <Compile Include="Core\Automation\Commands\Color\EM_CanHandleColorExtensionMethods.cs" />
     <Compile Include="Core\Automation\Commands\Color\ICanHandleColor.cs" />
     <Compile Include="Core\Automation\Commands\Color\IColorCreateProperties.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\EM_CanHandleDataTable.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\EM_DataTablePropertiesExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ICanHandleDataTable.cs" />
+    <Compile Include="Core\Automation\Commands\DataTable\ILDataTableProperties.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\ADateTimeConvertCommands.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\ADateTimeCreateCommands.cs" />
     <Compile Include="Core\Automation\Commands\DateTime\EM_DateTimeConvertPropertiesExtensionMethods.cs" />
