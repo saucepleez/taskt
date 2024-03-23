@@ -64,13 +64,11 @@ namespace taskt.Core.Server
                 automationLogger.Information("Listening Service is not Enabled! Unable to Automatically Start Listening!");
             }
 
-
             automationLogger.Information("Automation Listener Finished Initializing");
-
         }
+
         public static void StartListening(int port)
         {
-
             if (!listenerSettings.LocalListeningEnabled)
             {
                 automationLogger.Information("Listening Service is not Enabled! Unable to Start Listening!");
@@ -82,8 +80,8 @@ namespace taskt.Core.Server
                 Thread.CurrentThread.IsBackground = true;
                 StartAutomationListener(port);
             }).Start();
-
         }
+
         public static void StartAutomationListener(int port)
         {
             try
@@ -151,14 +149,11 @@ namespace taskt.Core.Server
                                     SendResponse(ResponseCode.Unauthorized, $"Unauthorized", stream);
                                     return;
                                 }
-
                             }
                             else
                             {
                                 automationLogger.Information($"Listener does not require IP Verification");
                             }
-
-
 
                             if (listenerSettings.RequireListenerAuthenticationKey)
                             {
@@ -226,9 +221,9 @@ namespace taskt.Core.Server
                 ListeningStopped?.Invoke(null, null);
             }
         }
+
         private static void ProcessRequest(string data, string[] messageContent, NetworkStream stream)
         {
-
             if ((data.StartsWith("POST /ExecuteScript")) || (data.StartsWith("POST /AwaitScript")))
             {
                 automationLogger.Information($"Client Requests Script Execution");
@@ -247,14 +242,12 @@ namespace taskt.Core.Server
 
                         break;
                     }
-
                     else if (item.StartsWith("ScriptLocation: "))
                     {
                         dataParameter = item.Replace("ScriptLocation: ", "");
                         isFileLocation = true;
                         break;
                     }
-
                 }
 
                 //check to see if nothing was provided
@@ -263,7 +256,6 @@ namespace taskt.Core.Server
                     automationLogger.Information($"Client Script Data Not Found");
                     return;
                 }
-
 
                 if (dataParameter.TryParseBase64(out var base64SourceString))
                 {
@@ -274,7 +266,6 @@ namespace taskt.Core.Server
                 {
                     automationLogger.Information($"Client Did Not Pass Base64 String");
                 }
-
 
                 //check if data parameter references file location
                 if (isFileLocation)
@@ -305,7 +296,6 @@ namespace taskt.Core.Server
                 //log execution
                 automationLogger.Information($"Executing Script: {dataParameter}");
 
-
                 //invoke builder and pass it script data to execute
                 associatedBuilder.Invoke(new MethodInvoker(delegate ()
                 {
@@ -315,7 +305,6 @@ namespace taskt.Core.Server
                     //instance = newEngine.engineInstance;
                     newEngine.Show();
                 }));
-
 
                 if (data.StartsWith("POST /AwaitScript"))
                 {
@@ -333,16 +322,12 @@ namespace taskt.Core.Server
 
                     //send response back to client
                     SendResponse(ResponseCode.OK, automationInstance.TasktResult, stream);
-
                 }
                 else
                 {
                     //return success immediately
                     SendResponse(ResponseCode.OK, "Script Launched Successfully", stream);
                 }
-
-
-
             }
             else if (data.StartsWith("POST /ExecuteCommand"))
             {
@@ -367,7 +352,6 @@ namespace taskt.Core.Server
                     automationLogger.Information($"Client Command Data Not Found");
                     return;
                 }
-
 
                 if (dataParameter.TryParseBase64(out var base64SourceString))
                 {
@@ -400,10 +384,7 @@ namespace taskt.Core.Server
                 {
                     SendResponse(ResponseCode.InternalServerError, $"An error occured: {ex.ToString()}", stream);
                 }
-
-
             }
-
             else if (data.StartsWith("POST /EngineStatus"))
             {
                 automationLogger.Information($"Returning Engine Status: {Client.ClientStatus}");
@@ -465,6 +446,7 @@ namespace taskt.Core.Server
         {
             automationListener.Stop();
         }
+
         public static string SendAutomationTask(string endpoint, string parameterType, string timeout, string scriptData = "", string awaitPreference = "")
         {
 
@@ -487,8 +469,6 @@ namespace taskt.Core.Server
             //check type of execution needed
             if (parameterType == "Run Raw Script Data")
             {
-
-
                 //handle await preference
                 if (awaitPreference == "Await For Result")
                 {
@@ -504,7 +484,6 @@ namespace taskt.Core.Server
             }
             else if (parameterType == "Run Local File")
             {
-
                 //handle await preference
                 if (awaitPreference == "Await For Result")
                 {
@@ -535,11 +514,9 @@ namespace taskt.Core.Server
 
                 //add script data
                 request.AddParameter("ScriptData", scriptData.ConvertToBase64(), RestSharp.ParameterType.HttpHeader);
-
             }
             else if (parameterType == "Run Remote File")
             {
-
                 //handle await preference
                 if (awaitPreference == "Await For Result")
                 {
@@ -555,12 +532,10 @@ namespace taskt.Core.Server
             }
             else if (parameterType == "Run Command Json")
             {
-
                 request.Resource = "/ExecuteCommand";
 
                 //add script data
                 request.AddParameter("CommandData", scriptData.ConvertToBase64(), RestSharp.ParameterType.HttpHeader);
-
             }
             else if (parameterType == "Get Engine Status")
             {
@@ -572,7 +547,6 @@ namespace taskt.Core.Server
             }
 
             request.Timeout = int.Parse(timeout);
-
 
             var resp = client.Execute(request);
 
