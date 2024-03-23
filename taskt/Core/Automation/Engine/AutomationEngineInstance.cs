@@ -331,19 +331,6 @@ namespace taskt.Core.Automation.Engine
                 if ((parentCommand is BeginNumberOfTimesLoopCommand) || (parentCommand is BeginContinousLoopCommand) || (parentCommand is BeginListLoopCommand) || (parentCommand is BeginIfCommand) || (parentCommand is BeginMultiIfCommand) || (parentCommand is TryCommand) || (parentCommand is BeginLoopCommand) || (parentCommand is BeginMultiLoopCommand))
                 {
                     //run the command and pass bgw/command as this command will recursively call this method for sub commands
-
-                    //var tp = parentCommand.GetType();
-                    //var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance), typeof(ScriptAction) });
-
-                    //if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
-                    //{
-                    //    parentCommand.RunCommand(this, command);
-                    //}
-                    //else
-                    //{
-                    //    parentCommand.RunCommand((object)this, command);
-                    //}
-
                     parentCommand.RunCommand(this, command);
                 }
                 else if (parentCommand is SequenceCommand)
@@ -351,45 +338,10 @@ namespace taskt.Core.Automation.Engine
                     // todo: execute runcommand
                     parentCommand.RunCommand(this, command);
                 }
-                //else if (parentCommand is Core.Automation.Commands.StopCurrentScriptFileCommand)
-                //{
-                //    IsCancellationPending = true;
-                //    return;
-                //}
-                //else if (parentCommand is Core.Automation.Commands.ExitLoopCommand)
-                //{
-                //    CurrentLoopCancelled = true;
-                //}
-                //else if (parentCommand is Core.Automation.Commands.NextLoopCommand)
-                //{
-                //    CurrentLoopContinuing = true;
-                //}
-                //else if(parentCommand is Core.Automation.Commands.SetEngineDelayCommand)
-                //{
-                //    //get variable
-                //    var setEngineCommand = (Core.Automation.Commands.SetEngineDelayCommand)parentCommand;                    
-                //    var engineDelay = setEngineCommand.v_EngineSpeed.ConvertToUserVariable(this);
-                //    var delay = int.Parse(engineDelay);
-
-                //    //update delay setting
-                //    this.engineSettings.DelayBetweenCommands = delay;
-                //}
                 else
                 {
                     //sleep required time
                     Thread.Sleep(engineSettings.DelayBetweenCommands);
-
-                    //var tp = parentCommand.GetType();
-                    //var method = tp.GetMethod(nameof(parentCommand.RunCommand), new Type[] { typeof(AutomationEngineInstance) });
-
-                    //if (method.DeclaringType != method.GetBaseDefinition().DeclaringType)
-                    //{
-                    //    parentCommand.RunCommand(this);
-                    //}
-                    //else
-                    //{
-                    //    parentCommand.RunCommand((object)this);
-                    //}
 
                     //run the command
                     parentCommand.RunCommand(this);
@@ -437,24 +389,6 @@ namespace taskt.Core.Automation.Engine
         /// <exception cref="Exception"></exception>
         public void AddAppInstance(string instanceName, object appObject) 
         {
-            //if (AppInstances.ContainsKey(instanceName) && engineSettings.OverrideExistingAppInstances)
-            //{
-            //    ReportProgress("Overriding Existing Instance: " + instanceName);
-            //    AppInstances.Remove(instanceName);
-            //}
-            //else if (AppInstances.ContainsKey(instanceName) && !engineSettings.OverrideExistingAppInstances)
-            //{
-            //    throw new Exception("App Instance already exists and override has been disabled in engine settings! Enable override existing app instances or use unique instance names!");
-            //}
-
-            //try
-            //{
-            //    this.AppInstances.Add(instanceName, appObject);
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
             this.AddAppInstance(instanceName, appObject, this);
         }
 
@@ -465,22 +399,6 @@ namespace taskt.Core.Automation.Engine
         /// <returns></returns>
         public object GetAppInstance(string instanceName)
         {
-            //try
-            //{
-            //    if (AppInstances.TryGetValue(instanceName, out object appObject))
-            //    {
-            //        return appObject;
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("App Instance '" + instanceName + "' not found!");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    throw ex;
-            //}
             return ((IAppInstancesProperties)this).GetAppInstance(instanceName);
         }
 
@@ -490,22 +408,6 @@ namespace taskt.Core.Automation.Engine
         /// <param name="instanceName"></param>
         public void RemoveAppInstance(string instanceName)
         {
-            //try
-            //{
-            //    if (AppInstances.ContainsKey(instanceName))
-            //    {
-            //        AppInstances.Remove(instanceName);
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("App Instance '" + instanceName + "' not found!");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    throw ex;
-            //}
             ((IAppInstancesProperties)this).RemoveAppInstance(instanceName);
         }
 
