@@ -12,7 +12,7 @@
 
         public const string LatestJSONURL = "https://raw.githubusercontent.com/saucepleez/taskt/development-branch/taskt/latest.json";
 
-        public const string ChromeDriverURL = "https://chromedriver.chromium.org/downloads";
+        public const string ChromeDriverURL = "https://googlechromelabs.github.io/chrome-for-testing/";
         public const string EdgeDriverURL = "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/";
         public const string GeckoDriverURL = "https://github.com/mozilla/geckodriver/releases/";
         public const string IEDriverURL = "https://www.selenium.dev/downloads/";
