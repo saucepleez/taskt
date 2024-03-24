@@ -2814,6 +2814,7 @@ namespace taskt.UI.Forms.ScriptBuilder
                 {
                     Notify("Error Parsing File: Commands not found!");
                 }
+                deserializedScript.ReGenerateCommandID();   // change command ids
 
                 //variables for comments
                 var fileName = new System.IO.FileInfo(filePath).Name;
@@ -2853,7 +2854,6 @@ namespace taskt.UI.Forms.ScriptBuilder
 
                 //notify
                 Notify("Script Imported Successfully!");
-
             }
             catch (Exception ex)
             {

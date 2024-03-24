@@ -326,6 +326,33 @@ namespace taskt.Core.Script
         }
 
         /// <summary>
+        /// ReGenerate all commandID
+        /// </summary>
+        public void ReGenerateCommandID()
+        {
+            foreach(var command in this.Commands)
+            {
+                ReGenerateCommandIDProcess(command);
+            }
+        }
+
+        /// <summary>
+        /// ReGenerate commands ID process
+        /// </summary>
+        /// <param name="script"></param>
+        public static void ReGenerateCommandIDProcess(ScriptAction script)
+        {
+            script.ScriptCommand.GenerateID();
+            if ((script.AdditionalScriptCommands?.Count ?? 0) > 0)
+            {
+                foreach(var command in script.AdditionalScriptCommands)
+                {
+                    ReGenerateCommandIDProcess(command);
+                }
+            }
+        }
+
+        /// <summary>
         /// script xml converter
         /// </summary>
         /// <param name="doc"></param>
