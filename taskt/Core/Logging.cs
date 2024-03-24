@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Serilog;
+﻿using Serilog;
 using Serilog.Formatting.Compact;
 using taskt.Core.IO;
 
@@ -17,20 +12,17 @@ namespace taskt.Core
         public Serilog.Core.Logger CreateLogger(string componentName, RollingInterval logInterval)
         {
             return new LoggerConfiguration()
-            //.WriteTo.File(Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
-            .WriteTo.File(Folders.GetLogsFolderPath() + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
-            .CreateLogger();
-
+                    //.WriteTo.File(Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+                    .WriteTo.File(Folders.GetLogsFolderPath() + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+                    .CreateLogger();
         }
+
         public Serilog.Core.Logger CreateJsonLogger(string componentName, RollingInterval logInterval)
         {
             return new LoggerConfiguration()
-            //.WriteTo.File(new CompactJsonFormatter(), Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
-            .WriteTo.File(new CompactJsonFormatter(), Folders.GetLogsFolderPath() + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
-            .CreateLogger();
-
+                    //.WriteTo.File(new CompactJsonFormatter(), Folders.GetFolder(Core.IO.Folders.FolderType.LogFolder) + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+                    .WriteTo.File(new CompactJsonFormatter(), Folders.GetLogsFolderPath() + "\\taskt " + componentName + " Logs.txt", rollingInterval: logInterval)
+                    .CreateLogger();
         }
-
     }
-    
 }
