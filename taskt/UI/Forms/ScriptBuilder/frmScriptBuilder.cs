@@ -1287,7 +1287,10 @@ namespace taskt.UI.Forms.ScriptBuilder
 
                 foreach (ListViewItem item in lstScriptActions.SelectedItems)
                 {
-                    commands.Add((ScriptCommand)item.Tag);
+                    var newCommand = ((ScriptCommand)item.Tag).Clone();
+                    newCommand.GenerateID();
+                    commands.Add(newCommand);
+                    //commands.Add((ScriptCommand)item.Tag);
                 }
 
                 // set clipborad xml string
