@@ -143,6 +143,32 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
         private void createJSONTree(JToken root, TreeNode tree)
         {
+            var JArrayFunc = new Action<JArray, TreeNode>((ary, tnode) =>
+            {
+                tnode.Text = $"\"{parsePath(ary.Path)}\" - Array";
+                tnode.Tag = ary.ToString();
+                createJSONTree(ary, tnode);
+            });
+            var JObjectFunc = new Action<JObject, TreeNode>((obj, tnode) =>
+            {
+                tnode.Text = $"\"{parsePath(obj.Path)}\" - Object";
+                tnode.Tag = obj.ToString();
+                createJSONTree(obj, tnode);
+            });
+            var JValueFunc = new Action<JValue, TreeNode>((v, tnode) =>
+            {
+                tnode.Text = $"\"{parsePath(v.Path)}\" - Value";
+
+                if (v.Value == null)
+                {
+                    tnode.Tag = "null";
+                }
+                else
+                {
+                    tnode.Tag = v.Value.ToString();
+                }
+            });
+
             JToken node = root.First;
             while (node != null)
             {
@@ -161,42 +187,53 @@ namespace taskt.UI.Forms.ScriptBuilder.CommandEditor.Supplemental
 
                         if (value is JValue v)
                         {
-                            tnode.Text = "\"" + parsePath(v.Path) + "\" - Value";
+                            //tnode.Text = $"\"{parsePath(v.Path)}\" - Value";
 
-                            if (v.Value == null)
-                            {
-                                tnode.Tag = "null";
-                            }
-                            else
-                            {
-                                tnode.Tag = ((JValue)value).Value.ToString();
-                            }
+                            //if (v.Value == null)
+                            //{
+                            //    tnode.Tag = "null";
+                            //}
+                            //else
+                            //{
+                            //    tnode.Tag = ((JValue)value).Value.ToString();
+                            //}
+                            JValueFunc(v, tnode);
                         }
                         else if (value is JArray ary)
                         {
-                            tnode.Text = "\"" + parsePath(ary.Path) + "\" - Array";
-                            tnode.Tag = ary.ToString();
-
-                            createJSONTree(ary, tnode);
+                            //tnode.Text = $"\"{parsePath(ary.Path)}\" - Array";
+                            //tnode.Tag = ary.ToString();
+                            //createJSONTree(ary, tnode);
+                            JArrayFunc(ary, tnode);
                         }
                         else if (value is JObject obj)
                         {
-                            tnode.Text = "\"" + parsePath(obj.Path) + "\" - Object";
-                            tnode.Tag = obj.ToString();
-                            createJSONTree(obj, tnode);
+                            //tnode.Text = $"\"{parsePath(obj.Path)}\" - Object";
+                            //tnode.Tag = obj.ToString();
+                            //createJSONTree(obj, tnode);
+                            JObjectFunc(obj, tnode);
                         }
                     }
                 }
                 else if (tryValue is JObject obj)
                 {
-                    tnode.Text = "\"" + parsePath(obj.Path) + "\" - Object";
-                    tnode.Tag = obj.ToString();
-                    createJSONTree(obj, tnode);
+                    //tnode.Text = $"\"{parsePath(obj.Path)}\" - Object";
+                    //tnode.Tag = obj.ToString();
+                    //createJSONTree(obj, tnode);
+                    JObjectFunc(obj, tnode);
                 }
-                else if (tryValue is JValue jv)
+                else if (tryValue is JArray ary)
                 {
-                    tnode.Text = "\"" + parsePath(jv.Path) + "\" - Value";
-                    tnode.Tag = jv.ToString();
+                    //tnode.Text = $"\"{parsePath(ary.Path)}\" - Array";
+                    //tnode.Tag = ary.ToString();
+                    //createJSONTree(ary, tnode);
+                    JArrayFunc(ary, tnode);
+                }
+                else if (tryValue is JValue v)
+                {
+                    //tnode.Text = $"\"{parsePath(jv.Path)}\" - Value";
+                    //tnode.Tag = jv.ToString();
+                    JValueFunc(v, tnode);
                 }
 
                 tree.Nodes.Add(tnode);
