@@ -390,6 +390,9 @@
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetActionProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetCopyRenameProperties.cs" />
     <Compile Include="Core\Automation\Commands\Excel\IExcelWorksheetProperties.cs" />
+    <Compile Include="Core\Automation\Commands\List\EM_CanHandleListExtensionMethods.cs" />
+    <Compile Include="Core\Automation\Commands\List\ICanHandleList.cs" />
+    <Compile Include="Core\Automation\Commands\List\ILListProperties.cs" />
     <Compile Include="Core\Automation\Commands\MathControls.cs" />
     <Compile Include="Core\Automation\Commands\Math\IInverseTrignometricProperties.cs" />
     <Compile Include="Core\Automation\Commands\Math\EM_InverseTrignometricPropertiesExtensionMethods.cs" />
