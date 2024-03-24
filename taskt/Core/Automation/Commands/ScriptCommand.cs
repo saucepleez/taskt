@@ -15,18 +15,25 @@ namespace taskt.Core.Automation.Commands
     {
         [XmlAttribute]
         public string CommandID { get; set; }
+
         [XmlAttribute]
         public string CommandName { get; set; }
+
         [XmlAttribute]
         public bool IsCommented { get; set; }
+
         [XmlAttribute]
         public string SelectionName { get; set; }
+
         [XmlAttribute]
         public int DefaultPause { get; set; }
+
         [XmlAttribute]
         public int LineNumber { get; set; }
+
         [XmlAttribute]
         public bool PauseBeforeExeucution { get; set; }
+
         [XmlIgnore]
         public Color DisplayForeColor { get; set; }
 
