@@ -1,6 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
-    public interface ICanHandleDataTable
+    public interface ICanHandleDataTable : ILExpandableProperties
     {
         // nothing
     }

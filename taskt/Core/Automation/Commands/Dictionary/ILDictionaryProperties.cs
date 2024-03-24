@@ -3,7 +3,7 @@
     /// <summary>
     /// Dictionary properties
     /// </summary>
-    public interface ILDictionaryProperties : ICanHandleDictionary, ILExpandableProperties
+    public interface ILDictionaryProperties : ICanHandleDictionary
     {
         /// <summary>
         /// Dictionary variable name

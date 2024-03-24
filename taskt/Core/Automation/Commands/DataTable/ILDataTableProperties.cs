@@ -1,6 +1,6 @@
 ﻿namespace taskt.Core.Automation.Commands
 {
-    public interface ILDataTableProperties : ILExpandableProperties, ICanHandleDataTable
+    public interface ILDataTableProperties : ICanHandleDataTable
     {
         /// <summary>
         /// DataTable variabe name

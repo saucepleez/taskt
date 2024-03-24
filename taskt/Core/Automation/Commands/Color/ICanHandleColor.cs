@@ -3,7 +3,7 @@
     /// <summary>
     /// for Color Variable type
     /// </summary>
-    public interface ICanHandleColor
+    public interface ICanHandleColor : ILExpandableProperties
     {
     }
 }
