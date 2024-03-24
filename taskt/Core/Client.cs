@@ -2,6 +2,7 @@
 
 namespace taskt.Core
 {
+    // TODO: why static ?
     public static class Client
     {
         private static bool engineBusy;
