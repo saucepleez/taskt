@@ -5,8 +5,7 @@ using System.Linq;
 namespace taskt.Core.Automation.Commands
 {
     [Serializable]
-    [Attributes.ClassAttributes.Group("Misc Commands")]
-    [Attributes.ClassAttributes.SubGruop("Other")]
+    [Attributes.ClassAttributes.Group("Script Commands")]
     [Attributes.ClassAttributes.CommandSettings("Sequence")]
     [Attributes.ClassAttributes.Description("Command that groups multiple actions")]
     [Attributes.ClassAttributes.UsesDescription("Use this command when you want to group multiple commands together.")]

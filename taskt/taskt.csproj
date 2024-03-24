@@ -776,7 +776,7 @@
     <Compile Include="Core\Automation\Commands\System\GetOSVariableCommand.cs" />
     <Compile Include="Core\Automation\Commands\Engine\GetBotStoreDataCommand.cs" />
     <Compile Include="Core\Automation\Commands\Window\CloseWindowCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\CommentCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Script\CommentCommand.cs" />
     <Compile Include="Core\Automation\Commands\DialogMessage\ShowMessageCommand.cs" />
     <Compile Include="Core\Automation\Commands\JSON\ParseJSONArray.cs" />
     <Compile Include="Core\Automation\Commands\NLG\NLGCreateNLGInstanceCommand.cs" />
@@ -815,7 +815,7 @@
     <Compile Include="Core\Automation\Commands\KeyMouse\EnterKeysCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\ClickMouseCommand.cs" />
     <Compile Include="Core\Automation\Commands\KeyMouse\MoveMouseCommand.cs" />
-    <Compile Include="Core\Automation\Commands\Misc\SequenceCommand.cs" />
+    <Compile Include="Core\Automation\Commands\Script\SequenceCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\ThickAppClickItemCommand.cs" />
     <Compile Include="Core\Automation\Commands\_RemovedCommands\ThickAppGetTextCommand.cs" />
     <Compile Include="Core\Automation\Commands\UIAutomation\UIAutomationUIElementActionCommand.cs" />
